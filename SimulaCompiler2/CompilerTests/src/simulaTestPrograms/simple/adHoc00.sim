@@ -1,0 +1,16 @@
+
+begin
+	ref(FILE) x;
+	boolean b;
+	text t;
+
+	inspect sysout do begin image:=notext; setpos(1) end;
+
+	inspect x
+	when infile do begin
+		b := endfile;
+		t:-intext(12)
+	end
+	when outfile do outtext(t)
+	otherwise t:-notext;
+end;

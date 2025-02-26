@@ -1,0 +1,27 @@
+
+begin
+	ref(A) virq;
+
+	class A; begin
+		ref(A) next;
+		integer type;
+	end;
+
+	procedure P; begin
+		sysout.outimage; sysout.outtext("SCANNER: when IECWI, IEND (3)"); sysout.outimage;  ! TODO: TESTING ;
+%		virq:-favirt;
+		while true do inspect virq do begin
+			sysout.outimage; sysout.outtext("SCANNER: when IECWI, IEND (4)"); sysout.outimage;  ! TODO: TESTING ;
+			virq:-next;
+		end otherwise begin
+			sysout.outimage; sysout.outtext("SCANNER: when IECWI, IEND (3b)" & edit(virq.type)); sysout.outimage;  ! TODO: TESTING ;
+			goto EXvloop;
+		end;
+                  
+	EXvloop:
+
+		sysout.outimage; sysout.outtext("SCANNER: when IECWI, IEND (5)"); sysout.outimage;  ! TODO: TESTING ;
+	end P;
+	
+	P;
+end;
