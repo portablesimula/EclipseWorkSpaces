@@ -1,0 +1,14 @@
+
+begin
+	boolean b;
+	text t;
+
+	begin
+		integer i;
+		goto E;
+	end;
+	goto F;
+	outtext("");
+	F:
+		
+E:end;

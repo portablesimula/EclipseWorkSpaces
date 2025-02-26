@@ -1,0 +1,7 @@
+
+begin
+	integer i;
+	outtext("Skriv et tall: "); breakoutimage;
+	i := inint;
+	outtext("Jeg leste: "); outint(i,0); outimage;
+end;

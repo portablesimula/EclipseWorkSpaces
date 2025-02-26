@@ -1,0 +1,25 @@
+begin
+
+   text t;
+
+   class A;
+   begin
+      integer         i, j, k;
+   end of class A;
+
+   A class B;;
+
+   ref(A)            ra;
+   integer            l;
+
+   ra :- new A;
+
+
+
+   inspect ra
+%   when A do outtext("Case A")
+   when B do outtext("Case B")
+   otherwise outtext("Case Otherwise");
+
+
+end;
