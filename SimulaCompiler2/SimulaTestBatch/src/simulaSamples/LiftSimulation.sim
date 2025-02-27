@@ -1,4 +1,4 @@
-Drawing("Elevator simulation",1000,1000) begin 
+Drawing("Elevator simulation",1000,900) begin 
 -----------------------------------------------------------------------------------------
 -- This is a simulation model of a number of elevators in an office buiding.
 --
@@ -399,7 +399,7 @@ Simulation begin
     Process class Reporter; begin 
         integer lb=150;    -- Shaft left border
         integer width=40;  -- Shaft width
-        integer ffdist=70; -- floors to floor distance
+        integer ffdist=60; -- floors to floor distance
         real prevTime,timeStep; -- Used to synchronize time
         ref(TextElement) simTimeLabel,maxWaitLabel,meanWaitLabel,totalWaitLabel;
         ref(TextElement) arriveLabel,leftLabel,toLuchLabel,fromLunchLabel; 
