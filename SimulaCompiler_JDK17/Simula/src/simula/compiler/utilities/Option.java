@@ -152,7 +152,7 @@ public final class Option {
 		Option.CaseSensitive=false;
 		Option.verbose = false;
 		Option.noExecution = false;
-		Option.WARNINGS=false;
+		Option.WARNINGS=true;
 		Option.EXTENSIONS=true;
 		
 		Option.internal.InitCompilerOptions();
@@ -165,7 +165,7 @@ public final class Option {
 		Option.CaseSensitive = properties.getProperty("simula.compiler.option.CaseSensitive", "false").equalsIgnoreCase("true");
 		Option.verbose = properties.getProperty("simula.compiler.option.verbose", "false").equalsIgnoreCase("true");
 		Option.noExecution = properties.getProperty("simula.compiler.option.noExecution", "false").equalsIgnoreCase("true");
-		Option.WARNINGS = properties.getProperty("simula.compiler.option.WARNINGS", "false").equalsIgnoreCase("true");
+		Option.WARNINGS = properties.getProperty("simula.compiler.option.WARNINGS", "true").equalsIgnoreCase("true");
 		Option.EXTENSIONS = properties.getProperty("simula.compiler.option.EXTENSIONS", "true").equalsIgnoreCase("true");
 	}
 	
