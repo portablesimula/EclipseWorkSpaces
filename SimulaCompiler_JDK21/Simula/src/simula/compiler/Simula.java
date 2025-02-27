@@ -160,7 +160,7 @@ public final class Simula {
 		String sourceFileDir = null;
 		Vector<String> fileNames = new Vector<String>();
 		Option.verbose=false;
-		Option.WARNINGS=false;
+		Option.WARNINGS=true;
 		Option.EXTENSIONS=true;
 		Global.initSimulaProperties();
 //		boolean noConsole = false;
