@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 
 /// Utility class containing a lot of common stuff.
 /// 
-/// Link to GitHub: <a href="https://github.com/portablesimula/SimulaCompiler2/blob/master/Simula/src/simula/runtime/RTS_UTIL.java"><b>Source File</b></a>.
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/SimulaCompiler_JDK17/Simula/src/simula/runtime/RTS_UTIL.java"><b>Source File</b></a>.
 /// 
 /// @author Øystein Myhre Andersen
 public final class RTS_UTIL {

@@ -100,7 +100,7 @@ import simula.compiler.utilities.Util;
 /// This class is prefix to StandardClass and PrefixedBlockDeclaration.
 /// 
 /// Link to GitHub: <a href=
-/// "https://github.com/portablesimula/SimulaCompiler2/blob/master/Simula/src/simula/compiler/syntaxClass/declaration/ClassDeclaration.java">
+/// "https://github.com/portablesimula/EclipseWorkSpaces/blob/main/SimulaCompiler_JDK17/Simula/src/simula/compiler/syntaxClass/declaration/ClassDeclaration.java">
 /// <b>Source File</b></a>.
 /// 
 /// @author SIMULA Standards Group

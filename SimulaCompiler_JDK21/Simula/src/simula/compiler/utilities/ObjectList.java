@@ -15,7 +15,7 @@ import simula.compiler.syntaxClass.SyntaxClass;
 /// Utility class to hold a list of objects.
 /// 
 /// Link to GitHub: <a href=
-/// "https://github.com/portablesimula/SimulaCompiler2/blob/master/Simula/src/simula/compiler/utilities/LabelList.java">
+/// "https://github.com/portablesimula/EclipseWorkSpaces/blob/main/SimulaCompiler_JDK17/Simula/src/simula/compiler/utilities/LabelList.java">
 /// <b>Source File</b></a>.
 /// 
 /// @author Øystein Myhre Andersen

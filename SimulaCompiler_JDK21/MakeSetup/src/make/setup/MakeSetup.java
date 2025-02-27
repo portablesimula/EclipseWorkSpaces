@@ -55,9 +55,9 @@ public final class MakeSetup {
 
 	private static String SETUP_IDENT;
 	private static void setSetupIdent() {
-		if(EARLY_ACCESS)
+//		if(EARLY_ACCESS)
 			 SETUP_IDENT="SimulaSetup-R21";  // Used to produce a TestSetup
-		else SETUP_IDENT="SimulaSetup";    // Used to produce a Release
+//		else SETUP_IDENT="SimulaSetup";    // Used to produce a Release
 	}
 
 	public static void main(String[] args) {

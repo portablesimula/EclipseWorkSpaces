@@ -40,7 +40,7 @@ import simula.compiler.utilities.Util;
 ///         reference-comparator =  == | =/= 
 /// </pre>
 /// Link to GitHub: <a href=
-/// "https://github.com/portablesimula/SimulaCompiler2/blob/master/Simula/src/simula/compiler/syntaxClass/expression/RelationalOperation.java">
+/// "https://github.com/portablesimula/EclipseWorkSpaces/blob/main/SimulaCompiler_JDK17/Simula/src/simula/compiler/syntaxClass/expression/RelationalOperation.java">
 /// <b>Source File</b></a>.
 /// 
 /// @author Øystein Myhre Andersen

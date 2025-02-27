@@ -12,7 +12,7 @@ package simula.runtime;
 /// This class is used to hold bound pairs in RTS_ARRAY objects.
 /// 
 /// Link to GitHub: <a href=
-/// "https://github.com/portablesimula/SimulaCompiler2/blob/master/Simula/src/simula/runtime/RTS_BOUNDS.java"><b>Source File</b></a>.
+/// "https://github.com/portablesimula/EclipseWorkSpaces/blob/main/SimulaCompiler_JDK17/Simula/src/simula/runtime/RTS_BOUNDS.java"><b>Source File</b></a>.
 /// 
 /// @author Øystein Myhre Andersen
 public final class RTS_BOUNDS {

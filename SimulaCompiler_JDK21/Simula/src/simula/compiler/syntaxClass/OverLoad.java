@@ -8,7 +8,7 @@ package simula.compiler.syntaxClass;
 /// Utility class OverLoad.
 /// 
 /// Link to GitHub: <a href=
-/// "https://github.com/portablesimula/SimulaCompiler2/blob/master/Simula/src/simula/compiler/utilities/OverLoad.java"><b>Source File</b></a>.
+/// "https://github.com/portablesimula/EclipseWorkSpaces/blob/main/SimulaCompiler_JDK17/Simula/src/simula/compiler/utilities/OverLoad.java"><b>Source File</b></a>.
 /// 
 /// @author Øystein Myhre Andersen
 public final class OverLoad extends Type {

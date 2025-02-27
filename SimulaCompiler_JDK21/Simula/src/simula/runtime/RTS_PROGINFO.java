@@ -10,7 +10,7 @@ package simula.runtime;
 /// This class is used to hold a mapping of source line numbers and java lines.
 /// This class not used when generating Java ClassFile directly.
 /// 
-/// Link to GitHub: <a href="https://github.com/portablesimula/SimulaCompiler2/blob/master/Simula/src/simula/runtime/RTS_PROGINFO.java"><b>Source File</b></a>.
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/SimulaCompiler_JDK17/Simula/src/simula/runtime/RTS_PROGINFO.java"><b>Source File</b></a>.
 /// 
 /// @author Øystein Myhre Andersen
 public class RTS_PROGINFO {

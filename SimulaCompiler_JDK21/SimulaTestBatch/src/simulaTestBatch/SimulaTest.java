@@ -1,6 +1,6 @@
 // JavaLine 1 <== SourceLine 2
 package simulaTestBatch;
-// Simula-2.0 Compiled at Wed Feb 26 07:44:28 CET 2025
+// Simula-2.0 Compiled at Thu Feb 27 10:05:43 CET 2025
 import simula.runtime.*;
 @SuppressWarnings("unchecked")
 public class SimulaTest extends RTS_CLASS {

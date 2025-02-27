@@ -79,7 +79,7 @@ import simula.compiler.utilities.Util;
 /// </pre>
 /// 
 /// Link to GitHub: <a href=
-/// "https://github.com/portablesimula/SimulaCompiler2/blob/master/Simula/src/simula/compiler/SyntaxClass.java"><b>Source
+/// "https://github.com/portablesimula/EclipseWorkSpaces/blob/main/SimulaCompiler_JDK17/Simula/src/simula/compiler/SyntaxClass.java"><b>Source
 /// File</b></a>.
 /// 
 /// @author Øystein Myhre Andersen
