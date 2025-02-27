@@ -442,7 +442,7 @@ Simulation begin
         --- Reporter - Story board (simulation events)
         -----------------------------------------------
         setStroke(2.5); setFontStyleBold;
-        setDrawColor(black); setFontSize(24);
+        setDrawColor(black); setFontSize(18);
         drawText("Simulated time",100,50);            simTimeLabel:-drawText(" ",300,50); 
         drawText("Max waiting time",100,80);          maxWaitLabel:-drawText(" ",300,80); 
         drawText("Mean waiting time",100,110);        meanWaitLabel:-drawText(" ",300,110); 
