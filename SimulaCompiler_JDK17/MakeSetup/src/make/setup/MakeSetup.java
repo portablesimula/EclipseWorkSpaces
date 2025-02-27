@@ -46,18 +46,18 @@ public final class MakeSetup {
 	private final static String RELEASE_HOME=GIT_BINARIES+"\\"+RELEASE_ID;
 	private final static String RELEASE_SAMPLES=RELEASE_HOME+"\\samples";
 	private final static String GITHUB_ROOT="C:\\GitHub";
-	private final static String SETUP_ROOT="C:\\GitHub\\SimulaCompiler3\\MakeSetup";
-	private final static String SIMULA_ROOT="C:\\GitHub\\SimulaCompiler3\\Simula";
-	private final static String TESTBATCH_ROOT="C:\\GitHub\\SimulaCompiler3\\SimulaTestBatch";
+	private final static String SETUP_ROOT="C:\\GitHub\\EclipseWorkSpaces/SimulaCompiler_JDK17\\MakeSetup";
+	private final static String SIMULA_ROOT="C:\\GitHub\\EclipseWorkSpaces/SimulaCompiler_JDK17\\Simula";
+	private final static String TESTBATCH_ROOT="C:\\GitHub\\EclipseWorkSpaces/SimulaCompiler_JDK17\\SimulaTestBatch";
 //	private final static String COMPILER_BIN=SIMULA_ROOT+"\\bin17";
 	private final static String COMPILER_BIN=SIMULA_ROOT+"\\bin";
 	private final static String INSTALLER_BIN=SETUP_ROOT+"\\bin";
 
 	private static String SETUP_IDENT;
 	private static void setSetupIdent() {
-		if(EARLY_ACCESS)
+//		if(EARLY_ACCESS)
 			 SETUP_IDENT="SimulaSetup-R17";  // Used to produce a TestSetup
-		else SETUP_IDENT="SimulaSetup";    // Used to produce a Release
+//		else SETUP_IDENT="SimulaSetup";    // Used to produce a Release
 	}
 
 	public static void main(String[] args) {
@@ -68,16 +68,16 @@ public final class MakeSetup {
 //			printSystemProperties();
 			updateSetupProperties();
 
-			makeSimulaCompiler3();
+			makeSimulaCompiler_JDK17();
 			makeRuntimeSystemJar();
 			copySimulaRuntimeSystem();
 			copySimulaIconFiles();
-//			dummyExecuteSimulaCompiler3();
+//			dummyExecuteEclipseWorkSpaces/SimulaCompiler_JDK17();
 //			copySimulaReleaseTestBats();
 //			compileAndExecuteSimulaPrograms();
 			copySimulaReleaseTests();
 			makeSimulaInstaller();
-//			executeSimulaCompiler3Editor();
+//			executeEclipseWorkSpaces/SimulaCompiler_JDK17Editor();
 			executeSimulaSetup();
 			} catch(Exception e) { e.printStackTrace(); }
 	}
@@ -85,7 +85,7 @@ public final class MakeSetup {
 	// ***************************************************************
 	// *** MAKE SIMULA COMPILER JAR
 	// ***************************************************************
-	private static void makeSimulaCompiler3() throws IOException	{
+	private static void makeSimulaCompiler_JDK17() throws IOException	{
 		printHeading("Make Simula Compiler.jar in "+RELEASE_HOME);
 		deleteFiles(RELEASE_HOME);
 		list(RELEASE_HOME);
@@ -242,16 +242,16 @@ public final class MakeSetup {
 //	// ***************************************************************
 //	// *** DUMMY EXECUTE SIMULA COMPILER JAR
 //	// ***************************************************************
-//	private static void dummyExecuteSimulaCompiler3() throws IOException	{
-//		printHeading("Dummy Execute SimulaCompiler3: "+RELEASE_HOME+"\\simula.jar");
+//	private static void dummyExecuteEclipseWorkSpaces/SimulaCompiler_JDK17() throws IOException	{
+//		printHeading("Dummy Execute EclipseWorkSpaces/SimulaCompiler_JDK17: "+RELEASE_HOME+"\\simula.jar");
 //		execute("java -jar "+RELEASE_HOME+"\\simula.jar");
 //	}
 	
 //	// ***************************************************************
 //	// *** EXECUTE SIMULA COMPILER EDITOR
 //	// ***************************************************************
-//	private static void executeSimulaCompiler3Editor() throws IOException	{
-//		printHeading("Execute SimulaCompiler3Editor: "+RELEASE_HOME+"\\simula.jar");
+//	private static void executeEclipseWorkSpaces/SimulaCompiler_JDK17Editor() throws IOException	{
+//		printHeading("Execute EclipseWorkSpaces/SimulaCompiler_JDK17Editor: "+RELEASE_HOME+"\\simula.jar");
 //		execute("java -jar "+RELEASE_HOME+"\\simula.jar");
 //	}
 	

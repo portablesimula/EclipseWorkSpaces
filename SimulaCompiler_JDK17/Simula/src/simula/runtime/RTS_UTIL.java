@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 
 /// Utility class containing a lot of common stuff.
 /// 
-/// Link to GitHub: <a href="https://github.com/portablesimula/SimulaCompiler3/blob/master/Simula/src/simula/runtime/RTS_UTIL.java"><b>Source File</b></a>.
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/SimulaCompiler2/blob/master/Simula/src/simula/runtime/RTS_UTIL.java"><b>Source File</b></a>.
 /// 
 /// @author Øystein Myhre Andersen
 public final class RTS_UTIL {
@@ -446,7 +446,7 @@ public final class RTS_UTIL {
 			if(RTS_Option.GOTO_TRACING) {
 				System.out.println("RTS_UTIL.endProgram: "+exitValue);
 			}
-			System.out.println("RTS_UTIL.endProgram: "+exitValue+" TESTING TRY: EXIT DIRECTLY");
+//			System.out.println("RTS_UTIL.endProgram: "+exitValue+" TESTING TRY: EXIT DIRECTLY");
 //			throw new RTS_EndProgram("Simula - endProgram");
 			System.exit(0);
 		}

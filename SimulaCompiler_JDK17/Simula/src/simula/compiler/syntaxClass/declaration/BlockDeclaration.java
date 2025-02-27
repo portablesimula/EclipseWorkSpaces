@@ -34,7 +34,7 @@ import simula.compiler.utilities.Util;
 /// It contains a number of useful fields and methods common to its subclasses.
 /// 
 /// Link to GitHub: <a href=
-/// "https://github.com/portablesimula/SimulaCompiler3/blob/master/Simula/src/simula/compiler/syntaxClass/declaration/BlockDeclaration.java">
+/// "https://github.com/portablesimula/EclipseWorkSpaces/SimulaCompiler2/blob/master/Simula/src/simula/compiler/syntaxClass/declaration/BlockDeclaration.java">
 /// <b>Source File</b></a>.
 /// 
 /// @author Øystein Myhre Andersen

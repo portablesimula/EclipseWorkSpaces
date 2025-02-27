@@ -88,7 +88,7 @@ import simula.compiler.utilities.Util;
 /// a formal procedure.
 ///  
 /// Link to GitHub: <a href=
-/// "https://github.com/portablesimula/SimulaCompiler3/blob/master/Simula/src/simula/compiler/syntaxClass/declaration/ExternalDeclaration.java">
+/// "https://github.com/portablesimula/EclipseWorkSpaces/SimulaCompiler2/blob/master/Simula/src/simula/compiler/syntaxClass/declaration/ExternalDeclaration.java">
 /// <b>Source File</b></a>.
 /// 
 /// @author SIMULA Standards Group

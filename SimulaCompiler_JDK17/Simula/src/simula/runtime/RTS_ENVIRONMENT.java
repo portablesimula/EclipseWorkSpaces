@@ -18,7 +18,7 @@ import java.time.format.DateTimeFormatter;
 /// contains procedures for mathematical functions, text generation, random
 /// drawing, etc.
 /// 
-/// Link to GitHub: <a href="https://github.com/portablesimula/SimulaCompiler3/blob/master/Simula/src/simula/runtime/RTS_ENVIRONMENT.java"><b>Source File</b></a>.
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/SimulaCompiler2/blob/master/Simula/src/simula/runtime/RTS_ENVIRONMENT.java"><b>Source File</b></a>.
 /// 
 /// @author SIMULA Standards Group
 /// @author Øystein Myhre Andersen

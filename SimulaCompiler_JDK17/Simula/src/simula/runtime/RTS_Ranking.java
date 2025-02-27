@@ -13,7 +13,7 @@ import static simula.runtime.RTS_UTIL.*;
 /// 
 /// Used by [RTS_Simulation], [RTS_Process] and [RTS_EVENT_NOTICE].
 /// 
-/// Link to GitHub: <a href="https://github.com/portablesimula/SimulaCompiler3/blob/master/Simula/src/simula/runtime/RTS_Ranking.java"><b>Source File</b></a>.
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/SimulaCompiler2/blob/master/Simula/src/simula/runtime/RTS_Ranking.java"><b>Source File</b></a>.
 /// @author Øystein Myhre Andersen
 public class RTS_Ranking {
 	

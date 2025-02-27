@@ -17,7 +17,7 @@ import javax.swing.UIManager;
 
 /// A set of all static Utility Methods
 /// 
-/// Link to GitHub: <a href="https://github.com/portablesimula/SimulaCompiler3/blob/master/Simula/src/simula/compiler/utilities/Util.java"><b>Source File</b></a>.
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/SimulaCompiler2/blob/master/Simula/src/simula/compiler/utilities/Util.java"><b>Source File</b></a>.
 /// 
 /// @author Øystein Myhre Andersen
 public final class Util { 

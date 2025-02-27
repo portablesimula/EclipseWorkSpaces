@@ -18,7 +18,7 @@ import simula.compiler.utilities.RTS;
 /// Virtual match.
 /// 
 /// Link to GitHub: <a href=
-/// "https://github.com/portablesimula/SimulaCompiler3/blob/master/Simula/src/simula/compiler/syntaxClass/declaration/VirtualMatch.java">
+/// "https://github.com/portablesimula/EclipseWorkSpaces/SimulaCompiler2/blob/master/Simula/src/simula/compiler/syntaxClass/declaration/VirtualMatch.java">
 /// <b>Source File</b></a>.
 /// 
 /// @author Øystein Myhre Andersen

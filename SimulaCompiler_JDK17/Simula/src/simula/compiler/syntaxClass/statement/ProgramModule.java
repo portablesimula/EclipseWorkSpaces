@@ -30,7 +30,7 @@ import simula.compiler.utilities.Util;
 /// Simula Program Module.
 /// 
 /// Link to GitHub: <a href=
-/// "https://github.com/portablesimula/SimulaCompiler3/blob/master/Simula/src/simula/compiler/syntaxClass/statement/ProgramModule.java">
+/// "https://github.com/portablesimula/EclipseWorkSpaces/SimulaCompiler2/blob/master/Simula/src/simula/compiler/syntaxClass/statement/ProgramModule.java">
 /// <b>Source File</b></a>.
 /// 
 /// <pre>

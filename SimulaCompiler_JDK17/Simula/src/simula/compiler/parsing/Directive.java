@@ -11,7 +11,7 @@ import simula.compiler.utilities.Util;
 
 /// Utility class Directive.
 /// 
-/// Link to GitHub: <a href="https://github.com/portablesimula/SimulaCompiler3/blob/master/Simula/src/simula/compiler/parsing/Directive.java"><b>Source File</b></a>.
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/SimulaCompiler2/blob/master/Simula/src/simula/compiler/parsing/Directive.java"><b>Source File</b></a>.
 /// 
 /// @author Øystein Myhre Andersen
 public class Directive {
