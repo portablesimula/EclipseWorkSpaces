@@ -42,8 +42,8 @@ public final class MakeSetup {
 	private final static boolean EARLY_ACCESS = true;   // Used to produce a Release
 //	private final static boolean EARLY_ACCESS = false;  // Used to produce a Early Access
 	
-	private final static String GIT_BINARIES="C:\\GitHub\\Binaries";
-	private final static String RELEASE_HOME=GIT_BINARIES+"\\"+RELEASE_ID;
+	private final static String SETUP_TEMPS="C:\\GitHub\\MakeSetup_Temps";
+	private final static String RELEASE_HOME=SETUP_TEMPS+"\\"+RELEASE_ID;
 	private final static String RELEASE_SAMPLES=RELEASE_HOME+"\\samples";
 	private final static String GITHUB_ROOT="C:\\GitHub";
 	private final static String SETUP_ROOT="C:\\GitHub\\EclipseWorkSpaces/SimulaCompiler2\\MakeSetup";
@@ -61,9 +61,12 @@ public final class MakeSetup {
 
 	public static void main(String[] args) {
         //System.setProperty("file.encoding","UTF-8");
-		printHeading("Make Simula Compiler, GIT_BINARIES="+GIT_BINARIES);
+		printHeading("Make Simula Compiler, SETUP_TEMPS="+SETUP_TEMPS);
 		try {
 			setSetupIdent();
+			deleteFiles(SETUP_TEMPS);
+//			new File(SETUP_TEMPS).mkdirs();
+
 //			printSystemProperties();
 			updateSetupProperties();
 
@@ -86,19 +89,14 @@ public final class MakeSetup {
 	// ***************************************************************
 	private static void makeSimulaCompiler2() throws IOException	{
 		printHeading("Make Simula Compiler.jar in "+RELEASE_HOME);
-		deleteFiles(RELEASE_HOME);
-		list(RELEASE_HOME);
+//		deleteFiles(RELEASE_HOME);
+//		list(RELEASE_HOME);
 		File releaseHome=new File(RELEASE_HOME);
 		releaseHome.mkdirs();
-//		String compilerManifest=SIMULA_ROOT+"\\src\\make\\setup\\CompilerManifest.MF";
 		String compilerManifest=SETUP_ROOT+"\\src\\make\\setup\\CompilerManifest.MF";
-//		execute("jar cmf "+compilerManifest+" "+RELEASE_HOME+"\\simula.jar -C "+COMPILER_BIN+" ./simula/common -C "+COMPILER_BIN+" ./simula/compiler -C "+COMPILER_BIN+" ./org/objectweb/asm");
 		execute("jar","cmf",compilerManifest,RELEASE_HOME+"\\simula.jar",
-//				"-C",COMPILER_BIN,"./simula/common",
 				"-C", COMPILER_BIN, "./simula/editor",
-				"-C", COMPILER_BIN, "./simula/compiler");//,
-//				"-C", COMPILER_BIN, "./org/objectweb/asm");
-//		execute("jar -tvf "+RELEASE_HOME+"\\simula.jar");
+				"-C", COMPILER_BIN, "./simula/compiler");
 		execute("jar", "-tvf", RELEASE_HOME+"\\simula.jar");
 	}
 	
@@ -272,7 +270,7 @@ public final class MakeSetup {
 	// *** MAKE SIMULA INSTALLER JAR
 	// ***************************************************************
 	private static void makeSimulaInstaller() throws IOException	{
-		printHeading("Make Simula Setup.jar in "+GIT_BINARIES);
+		printHeading("Make Simula Setup.jar in "+SETUP_TEMPS);
 		File releaseHome=new File(RELEASE_HOME);
 		releaseHome.mkdirs();
 //		String SETUP_SRC=SIMULA_ROOT+"\\src\\make\\setup";
@@ -289,14 +287,14 @@ public final class MakeSetup {
 		
 		String files=" -C "+RELEASE_HOME+"."  // Complete Simula Release
 				    +" -C "+INSTALLER_BIN+" ./make/setup";
-		System.out.println("jar cmf "+installerManifest+" "+GIT_BINARIES+"\\"+SETUP_IDENT+files);
+		System.out.println("jar cmf "+installerManifest+" "+SETUP_TEMPS+"\\"+SETUP_IDENT+".jar"+files);
 		
-		execute("jar", "cmf", installerManifest, GIT_BINARIES+"\\"+SETUP_IDENT,
+		execute("jar", "cmf", installerManifest, SETUP_TEMPS+"\\"+SETUP_IDENT+".jar",
 				"-C",RELEASE_HOME, ".",  // Complete Simula Release
 			    "-C",INSTALLER_BIN, "./make/setup");
-		printHeading("BEGIN -- List Simula Setup.jar in "+GIT_BINARIES);
-		execute("jar","-tvf",GIT_BINARIES+"\\"+SETUP_IDENT);
-		printHeading("END -- List Simula Setup.jar in "+GIT_BINARIES);
+		printHeading("BEGIN -- List Simula Setup.jar in "+SETUP_TEMPS);
+		execute("jar","-tvf",SETUP_TEMPS+"\\"+SETUP_IDENT+".jar");
+		printHeading("END -- List Simula Setup.jar in "+SETUP_TEMPS);
 		copySetupJAR();
 	}
 	
@@ -304,7 +302,7 @@ public final class MakeSetup {
 	// *** COPY SIMULA INSTALLER JAR
 	// ***************************************************************
 	private static void copySetupJAR() throws IOException	{
-		File source=new File(GIT_BINARIES+"\\"+SETUP_IDENT);
+		File source=new File(SETUP_TEMPS+"\\"+SETUP_IDENT+".jar");
 		File target2=new File(GITHUB_ROOT+"\\github.io\\setup\\"+SETUP_IDENT+".jar");
 		System.out.println("source="+source);
 		System.out.println("target2="+target2);
