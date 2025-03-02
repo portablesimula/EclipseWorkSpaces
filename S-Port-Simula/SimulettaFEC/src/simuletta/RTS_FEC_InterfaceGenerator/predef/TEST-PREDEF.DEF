@@ -1,0 +1,24 @@
+--% DEFINITION
+--% SETOPT +X
+Class _PREDEFMODULE=="!03! 0";
+begin
+
+   class file=="!04! 2 *F_FI_DESC *F_FI_PROT" (_filename=="!03! 1 *F_NAME"); value _filename; text _filename;
+   begin text procedure filename=="!08! 2 *F_FILNAM1 *F_FILNAM2"; ;
+%-S      text procedure datasetname=="!08! 2 *F_FILSET1 *F_FILSET2"; ;
+         boolean procedure isopen=="!07! 2 *F_ISOPEN1 *F_ISOPEN2"; ;
+         boolean procedure setaccess=="!08! 2 *F_SETACC1 *F_SETACC2"(_t=="!16! 0"); text _t; ;
+   end -- file;
+
+--   class simulation== "!04! 2 *S_SMLN_DESC *S_SMLN_PROT";
+--   begin
+
+--         ref(process)mainx=="!14! 1 *S_MAIN";
+
+--         class process=="!09! 3 *S_PROC_DESC *S_PROC_PROT *S_PROC_TAIL";
+--         begin
+--         end --process;
+
+--   end --simulation;
+
+end -- of PREDEFMODULE;
