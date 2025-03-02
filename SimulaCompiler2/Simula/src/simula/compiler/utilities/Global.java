@@ -263,9 +263,9 @@ public final class Global {
 		simulaHome = new File(simulaProperties.getProperty("simula.home"));
 		String version = simulaProperties.getProperty("simula.version");
 		releaseHome = new File(simulaHome, "/"+version);
-		System.out.println("Global.loadProperties: simulaHome="+simulaHome);
-		System.out.println("Global.loadProperties: Version="+version);
-		System.out.println("Global.loadProperties: releaseHome="+releaseHome);
+//		System.out.println("Global.loadProperties: simulaHome="+simulaHome);
+//		System.out.println("Global.loadProperties: Version="+version);
+//		System.out.println("Global.loadProperties: releaseHome="+releaseHome);
 	}
 
 	// **********************************************************

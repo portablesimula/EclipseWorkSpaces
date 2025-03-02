@@ -131,7 +131,8 @@ public class RTS_SPORT_Option {
 	/// Name of attribute file for the predefined classes etc. 
 	/// 
 	/// NOTE: This file is created when front-end compiling the RTS:
-	static String PredefFileName = "C:/GitHub/S-Port-Simula/SimulaFEC/Attrs/FEC/PREDEF.atr";
+	static String PredefFileName = "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/Attrs/FEC/PREDEF.atr";
+//	static String PredefFileName = "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/Attrs/FEC/PREDEF.atr";
 
 	/// Name of a file containing seldom used information for the front end compiler,
 	/// such as extended error messages.

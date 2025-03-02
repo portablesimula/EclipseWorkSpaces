@@ -1,9 +1,0 @@
-/**
- * 
- */
-/**
- * 
- */
-module JavaCodeFEC {
-	requires Simula;
-}
