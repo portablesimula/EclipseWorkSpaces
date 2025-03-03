@@ -11,8 +11,8 @@ public class Full_TestBatch2Scode {
 	static int fecTraceLevel = 0;
 	static String selectors = null;
 
-	static String SOURCE_DIR = "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch_FEC/src/simulaTestBatch/";
-	static String SCODE_DIR  = "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch_FEC/src/simulaTestBatch/scode/";
+	static String SOURCE_DIR = "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/";
+	static String SCODE_DIR  = "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/";
 
 	public static void main(String[] argv) {
 		long startTimeMs = System.currentTimeMillis( );
