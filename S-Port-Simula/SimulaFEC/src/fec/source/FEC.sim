@@ -1,0 +1,96 @@
+% Procedure FECMAIN;
+%      --------------------------------------------------------------
+%      ---                                                        ---
+%      ---  COPYRIGHT 1985,86 by                                  ---
+%      ---  Simula a.s.                                           ---
+%      ---  Oslo, Norway                                          ---
+%      ---                                                        ---
+%      ---                                                        ---
+%      ---              P O R T A B L E     S I M U L A           ---
+%      ---                                                        ---
+%      ---           F R O N T - E N D    C O M P I L E R         ---
+%      ---                                                        ---
+%      ---                 M a i n   P r o g r a m                ---
+%      ---                                                        ---
+%      ---                  R e l e a s e   $SREL                 ---
+%      ---                                                        ---
+%      --------------------------------------------------------------
+begin External class CLASS_SCODMAIN;
+
+%SPORT ON
+%REUSE ON
+%-Z %RECORD ON
+
+%+I %INSERT $SIMSRC/fec/common.mne
+
+CLASS_SCODMAIN
+begin
+      integer numberoflines;
+
+      procedure ENDCOMP; goto FINI;
+
+%+T TRC("FECMAIN",sourceline,"PASS 1 BEGIN");
+    !****************   P  A  S  S    1   ****************;
+    !******;                                        !*****;
+    !******;        numberoflines := Pass1;         !*****;
+    !******;                                        !*****;
+    !*****************************************************;
+
+%+T TRC("FECMAIN",sourceline,"PASS 2 BEGIN");
+    !****************   P  A  S  S    2   ****************;
+    !*****;                                         !*****;
+    !*****;    new codegenerator(nscodename);       !*****;
+    !*****;        call(checker0);                  !*****;
+    !*****;                                         !*****;
+    !*****************************************************;
+
+
+FINI:
+      if currentpass = '1' then ClosePass1 !*** will close L2OUPT;
+      else begin
+           inspect coder when visiblegenerator do begin
+              if SCF == none then begin
+                 if termstatus<'3' then termstatus:='3' end
+              else SCF.close;
+           end;
+           inspect checker0 when semchecker do inspect Afile do begin
+              if AOF=/=none then AOF.close;
+              if CURF=/=none then CURF.close;
+           end;
+      end;
+
+      if L2INPT=/=none then L2INPT.close;
+      if listfile=/=none then begin if listfile=/=sysout
+      then listfile.close end;
+
+
+      if numerrfound > 0 then
+      begin outimage; outtext("   NUMBER OF ERRORS:   ");
+            outint(numerrfound,0); outimage;
+            if termstatus<'4' then termstatus:='4';
+      end;
+      if numwarnfound>0 then
+      begin outtext("   NUMBER OF WARNINGS: ");
+            outint(numwarnfound,0); outimage;
+      end;
+
+      ! NOW: termstatus=0 means normal running, and S-code completed,
+             termstatus=3 means normal running, but S-code not produced,
+             termstatus=4 means running, but errors found
+             termstatus=5 means term by testincerr or the like,
+             termstatus=6 means term by internerr ;
+
+      if ERRORFILE =/= none then ERRORFILE.close;
+      ! --- make fec size even number of bytes --- ;
+%     inspect ERRORFILE do close;
+      if listfile=/=none and then listfile=/=sysout
+      then listfile.close;
+
+      giveintinfo(1,rank(termstatus)-48 !rank('0'););
+      giveintinfo(2,maxnumoftags);  giveintinfo(3,numberoflines);
+      giveintinfo(4,numerrfound);
+      !*** now also signal FEC end to environment ***;
+      giveintinfo(5,numwarnfound);
+
+end COMMON-block;
+end of FECMAIN;
