@@ -16,6 +16,8 @@ import bec.value.Value;
  */
 public class SVM_SUB extends SVM_Instruction {
 
+	private final boolean DEBUG = false;
+
 	public SVM_SUB() {
 		this.opcode = SVM_Instruction.iSUB;
 	}
@@ -26,7 +28,7 @@ public class SVM_SUB extends SVM_Instruction {
 		Value sos = RTStack.pop().value();
 //		System.out.println("SVM_SUB: " + sos + " - " + tos);
 		Value res = (sos == null)? tos.neg() : sos.sub(tos);
-//		System.out.println("SVM_SUB: " + sos + " - " + tos + " = " + res);
+		if(DEBUG) System.out.println("SVM_SUB: " + sos + " - " + tos + " ==> " + res);
 		RTStack.push(res, "SVM_SUB: " + sos + " - " + tos + " = " + res);
 		Global.PSC.ofst++;
 //		Util.IERR("");
@@ -44,7 +46,7 @@ public class SVM_SUB extends SVM_Instruction {
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
-		oupt.writeKind(opcode);
+		oupt.writeOpcode(opcode);
 	}
 
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {

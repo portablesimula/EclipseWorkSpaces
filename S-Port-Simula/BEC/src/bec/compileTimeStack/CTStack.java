@@ -21,8 +21,20 @@ public class CTStack {
 	public static StackItem SAV; // Last Compile-time stack-item for which
                           		 // the corresponding Runtime-item is saved.
                           		 // NOTE: SAV =/= none implies TOS =/= none
-
-
+	
+	private static final boolean DEBUG = false;
+	
+	public static int size() {
+		if(TOS == null) return 0;
+		StackItem item;
+		int n = 1;
+		item = TOS;
+		while(item != BOS) {
+			n++; item = item.suc;
+		}
+		return(n);
+	}
+	
 	public static void push(StackItem s) {
 		if(s.suc != null || s.pred != null) STKERR("CODER.CheckPush");
 		if(TOS == null) {
@@ -200,18 +212,24 @@ public class CTStack {
 //	           Pop; pushTemp(type);
 //	      endcase;
 		StackItem tos = CTStack.TOS;
-		System.out.println("CTStack.getTosValueIn86: reg="+reg+" TOS="+TOS);
+		if(DEBUG) System.out.println("CTStack.getTosValueIn86: reg="+reg+" TOS="+TOS);
 		if(tos instanceof AddressItem) {
 			Global.PSEG.emit(new SVM_POP2REG(reg), "getTosValueIn86'Address: ");
-			Global.PSEG.dump("getTosValueIn86'Address: ");
-			Util.IERR("NOT IMPL");
+			if(DEBUG) {
+				Global.PSEG.dump("getTosValueIn86'Address: ");
+				Util.IERR("NOT IMPL");
+			}
 		} else if(tos instanceof Temp) {
 			Global.PSEG.emit(new SVM_POP2REG(reg), "getTosValueIn86'Temp: ");
-			Global.PSEG.dump("getTosValueIn86'Temp: ");
-//			Util.IERR("NOT IMPL");			
+			if(DEBUG) {
+				Global.PSEG.dump("getTosValueIn86'Temp: ");
+//				Util.IERR("NOT IMPL");		
+			}
 		} else if(tos instanceof ConstItem) {
-			Global.PSEG.dump("getTosValueIn86: ");
-			Util.IERR("NOT IMPL");			
+			if(DEBUG) {
+				Global.PSEG.dump("getTosValueIn86: ");
+				Util.IERR("NOT IMPL");	
+			}
 		}
 	}
 

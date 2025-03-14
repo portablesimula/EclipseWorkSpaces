@@ -2,6 +2,7 @@ package bec.compileTimeStack;
 
 import bec.util.Scode;
 import bec.util.Type;
+import bec.virtualMachine.RTRegister;
 
 public class Temp extends StackItem {
 	int reg;
@@ -17,6 +18,6 @@ public class Temp extends StackItem {
 	}
 	
 	public String toString() {
-		return "Temp " + Scode.edTag(type.tag) + " " + comment;
+		return "Temp " + Scode.edTag(type.tag) + ", reg=" + RTRegister.edReg(reg) + ", count=" + count + " " + comment;
 	}
 }

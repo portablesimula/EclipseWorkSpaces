@@ -57,7 +57,7 @@ public class Variable extends Descriptor {
 		var.type = Type.ofScode();
 		var.repCount = (Scode.accept(Scode.S_REP)) ? Scode.inNumber() : 1;
 		var.address = seg.nextAddress();
-		seg.emitDefaultValue(var.type.size(), "IMPORT " + var.type);
+		seg.emitDefaultValue(var.type.size(), var.repCount, "IMPORT " + var.type);
 		return var;
 	}
 	
@@ -79,7 +79,7 @@ public class Variable extends Descriptor {
 		var.repCount = (Scode.accept(Scode.S_REP)) ? Scode.inNumber() : 1;
 		var.address = seg.nextAddress();
 //		type.emitDefaultValue(seg, "EXPORT " + type);
-		seg.emitDefaultValue(var.type.size(), "EXPORT " + var.type);
+		seg.emitDefaultValue(var.type.size(), var.repCount, "EXPORT " + var.type);
 		return var;
 	}
 	
@@ -131,7 +131,7 @@ public class Variable extends Descriptor {
 //			Util.IERR("");
 //		}
 		for(int i=0;i<var.repCount;i++) {
-			seg.emitDefaultValue(var.type.size(), "LOCAL " + var.type);			
+			seg.emitDefaultValue(var.type.size(), var.repCount, "LOCAL " + var.type);			
 		}
 //		Global.dumpDISPL("Variable.ofGlobal: ");
 //		seg.dump("Variable.ofGlobal: ");
@@ -169,11 +169,12 @@ public class Variable extends Descriptor {
 			else Util.IERR("MISSING: " + system);
 			Global.DSEG.emit(value, var.toString());
 		} else {
+//			System.out.println("Variable.ofGlobal: "+var);
 //			System.out.println("Variable.ofGlobal: size="+var.type.size());
 //			System.out.println("Variable.ofGlobal: repCount="+var.repCount);
-			int count = var.type.size() * var.repCount;
+			int count = var.type.size();
 			if(count == 0) Util.IERR("");
-			seg.emitDefaultValue(count, "GLOBAL " + var.type);
+			seg.emitDefaultValue(count, var.repCount, "GLOBAL " + var.type);
 		}
 
 //		Global.dumpDISPL("Variable.ofGlobal: ");
@@ -196,7 +197,7 @@ public class Variable extends Descriptor {
 	}
 	
 	public String toString() {
-		String s = "Variable " +Kind.edKind(kind) + " " + tag + ", type=" + type + " " + address;
+		String s = "Variable " +Kind.edKind(kind) + " " + tag + ", type=" + type + ", repCount=" + repCount+ " " + address;
 //		if(system != null) s += " " + "SYSTEM " + system;
 		return s;
 	}

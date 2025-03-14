@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
+import bec.compileTimeStack.CTStack;
 import bec.descriptor.Kind;
 import bec.instruction.CALL;
 import bec.segment.DataSegment;
@@ -11,6 +12,7 @@ import bec.segment.Segment;
 import bec.util.Global;
 import bec.util.Type;
 import bec.util.Util;
+import bec.value.BooleanValue;
 import bec.value.GeneralAddress;
 import bec.value.IntegerValue;
 import bec.value.ObjectAddress;
@@ -35,7 +37,11 @@ public class SVM_CALLSYS extends SVM_Instruction {
 //		Util.IERR("");
 		
 		switch(kind) {
+			case P_VERBOSE: verbose(); break;
+			case P_INITIA:  initia(); break;
 			case P_TERMIN:  terminate(); break;
+			case P_STREQL:  stringEqual(); break;
+			case P_GINTIN:  getIntinfo(); break;
 			case P_PUTSTR:  putstr(); break;
 			case P_PRINTO:  printo(); break;
 			case P_PUTINT2: putint2(); break;
@@ -47,10 +53,10 @@ public class SVM_CALLSYS extends SVM_Instruction {
 	}
 	
 	private void ENTER(String ident, int exportSize, int importSize) {
-		if(Global.EXEC_TRACE > 4) {
+		if(Global.EXEC_TRACE > 4)
 			RTStack.dumpRTStack(ident+"ENTER: ");
-		}
 		RTFrame frame = new RTFrame(exportSize, importSize); 
+//			RTStack.dumpRTStack(ident+"ENTER: ");
 		frame.enclFrame = RTStack.curFrame;
 		frame.rtStackIndex = RTStack.size() - (exportSize + importSize);
 		RTStack.curFrame = frame;
@@ -61,15 +67,74 @@ public class SVM_CALLSYS extends SVM_Instruction {
 	
 	private void EXIT(String ident) {
 //		RTStack.dumpRTStack(ident+"RETURN: Continue with " + RTStack.curFrame.rutAddr);	
-		RTStack.curFrame = RTStack.curFrame.enclFrame;
+//		RTStack.curFrame = RTStack.curFrame.enclFrame;
 		if(Global.EXEC_TRACE > 2) {
 			RTStack.curFrame.dump(ident+"RETURN: Called from " + RTStack.curFrame.rutAddr);		
 		}
+		RTStack.curFrame = RTStack.curFrame.enclFrame;
 	}
 	
 	@Override	
 	public String toString() {
 		return "CALLSYS  " + edKind(kind);
+	}
+	
+	/**
+	 * Visible sysroutine("VERBOSE") VERBOSE;
+	 *  import range(0:127) index; export integer result  end;
+	 *  
+	 *  FRAME:
+	 *      0: null                        EXPORT T[3:INT'RESULT]
+	 *
+	 *  PROFILE:
+	 *      0: null                        RETUR
+	 *      2: null                        EXPORT T[3:INT.RESULT]
+	 */
+	private void verbose() {
+		if(CALL.USE_FRAME_ON_STACK) {
+//			RTStack.push(new BooleanValue(true), "EXPORT");
+			RTStack.push(null, "EXPORT");
+			ENTER("VERBOSE: ", 1, 0); // exportSize, importSize
+//			System.out.println("SVM_SYSCALL.verbose: ");
+			EXIT("VERBOSE: ");
+		} else {
+//			DataSegment DSEG = (DataSegment) Segment.lookup("DSEG_SYSR_VERBOSE");
+//			IntegerValue code = (IntegerValue) DSEG.load(1);
+//			System.out.println("SVM_SYSCALL.getIntinfo: code="+code.value);
+//			String str = edString(DSEG.ofOffset(2));
+//			System.out.println("SVM_SYSCALL.getIntinfo: "+str+" with exit code " + code.value);
+//			System.exit(code.value);
+			Util.IERR("");
+		}
+	}
+	
+	/**
+	 * Visible sysroutine("INITIA") INITIA;
+	 *  import entry(PXCHDL) exchdl  end;
+	 *  
+	 *  FRAME:
+	 *  	0: PSEG_MNTR_PXCHDL[0]	IMPORT entry(PXCHDL) exchdl
+	 *
+	 *  PROFILE:
+	 *      0: null					RETUR
+	 *      1: PSEG_MNTR_PXCHDL[0]	IMPORT entry(PXCHDL) exchdl
+	 */
+	private void initia() {
+		if(CALL.USE_FRAME_ON_STACK) {
+			ENTER("INITIA: ", 0, 1); // exportSize, importSize
+			ProgramAddress exchdl = (ProgramAddress) RTStack.pop().value();
+			System.out.println("SVM_SYSCALL.initia: "+exchdl);
+			EXIT("INITIA: ");
+//			Util.IERR(""+exchdl);
+		} else {
+			Util.IERR("");
+			DataSegment DSEG = (DataSegment) Segment.lookup("DSEG_SYSR_INITIA");
+			IntegerValue code = (IntegerValue) DSEG.load(1);
+			System.out.println("SVM_SYSCALL.initia: code="+code.value);
+			String str = edString(DSEG.ofOffset(2));
+			System.out.println("SVM_SYSCALL.initia: "+str+" with exit code " + code.value);
+			System.exit(code.value);
+		}
 	}
 	
 	/**
@@ -105,6 +170,91 @@ public class SVM_CALLSYS extends SVM_Instruction {
 			System.exit(code.value);
 		}
 	}
+	
+	
+	/**
+	 *  Visible sysroutine("STREQL") STREQL;
+	 *   import infix(string) str1,str2; export boolean res  end;
+
+	 * Visible sysroutine("TERMIN") TERMIN;
+	 *  import range(0:3) code; infix(string) msg  end;
+	 *  
+	 *  FRAME:
+	 *      0: null                        EXPORT T[BOOL'RESULT]
+	 *      1: CSEG_TEST6[0]               IMPORT T[32:STRING1.CHRADR]
+	 *      2: null                        IMPORT T[32:STRING1.OFST]
+	 *      3: C-INT 11                    IMPORT T[32:STRING1.NCHR]
+	 *      4: CSEG_TEST6[0]               IMPORT T[32:STRING1.CHRADR]
+	 *      5: null                        IMPORT T[32:STRING1.OFST]
+	 *      6: C-INT 11                    IMPORT T[32:STRING1.NCHR]
+	 *
+	 *  PROFILE:
+	 *      0: null                        RETUR
+	 *      1: C-INT 0                     IMPORT T[3:INT.CODE]
+	 *      2: CSEG_TEST6[0]               IMPORT T[32:STRING.CHRADR]
+	 *      3: null                        IMPORT T[32:STRING.OFST]
+	 *      4: C-INT 11                    IMPORT T[32:STRING.NCHR]
+	 */
+	private void stringEqual() {
+		if(CALL.USE_FRAME_ON_STACK) {
+			ENTER("STREQL: ", 1, 6); // exportSize, importSize
+			String str1 = RTStack.popString();
+//			System.out.println("SVM_SYSCALL.stringEqual: str1="+str1);
+//			RTStack.dumpRTStack(str1);
+			String str2 = RTStack.popString();
+//			System.out.println("SVM_SYSCALL.stringEqual: str2="+str2);
+			boolean result = str1.equals(str2);
+			RTStack.push(new BooleanValue(result), "EXPORT");
+			EXIT("STREQL: " + result);
+//			Util.IERR(""+result);
+		} else {
+			DataSegment DSEG = (DataSegment) Segment.lookup("DSEG_SYSR_TERMIN");
+			IntegerValue code = (IntegerValue) DSEG.load(1);
+			System.out.println("SVM_SYSCALL.terminate: code="+code.value);
+			String str = edString(DSEG.ofOffset(2));
+			System.out.println("SVM_SYSCALL.terminate: "+str+" with exit code " + code.value);
+			System.exit(code.value);
+		}
+	}
+		
+		/**
+		 * Visible sysroutine("GINTIN") GINTIN;
+		 *  import range(0:127) index; export integer result  end;
+		 *  
+		 *  FRAME:
+		 *      0: null                        EXPORT T[3:INT'RESULT]
+		 *      1: C-INT 0                     IMPORT T[3:INT.INDEX]
+		 *
+		 *  PROFILE:
+		 *      0: null                        RETUR
+		 *      1: C-INT 0                     IMPORT T[3:INT.INDEX]
+		 *      2: null                        EXPORT T[3:INT.RESULT]
+		 */
+		private void getIntinfo() {
+			if(CALL.USE_FRAME_ON_STACK) {
+				ENTER("GINTIN: ", 1, 1); // exportSize, importSize
+				int index = RTStack.popInt();
+				System.out.println("SVM_SYSCALL.getIntinfo: "+index);
+				int result=0;
+				switch(index) {
+					case 24: result = 1; break;// 24 How many work areas may be requested (see chapter 5)?
+					
+					case 99: Segment.lookup("DSEG_RT").dump("",0,100); break; // AD'HOC DUMP UTILITY
+					default: Util.IERR("");
+				}
+				RTStack.push(new IntegerValue(Type.T_INT, result), "EXPORT");
+				EXIT("GINTIN: ");
+			} else {
+//				DataSegment DSEG = (DataSegment) Segment.lookup("DSEG_SYSR_GINTIN");
+//				IntegerValue code = (IntegerValue) DSEG.load(1);
+//				System.out.println("SVM_SYSCALL.getIntinfo: code="+code.value);
+//				String str = edString(DSEG.ofOffset(2));
+//				System.out.println("SVM_SYSCALL.getIntinfo: "+str+" with exit code " + code.value);
+//				System.exit(code.value);
+				Util.IERR("");
+			}
+		}
+
 
 	/**
 	 *  Visible sysroutine("PRINTO") PRINTO;
@@ -130,12 +280,13 @@ public class SVM_CALLSYS extends SVM_Instruction {
 //			System.out.println("SVM_SYSCALL.printo: chradr="+chradr);
 //			System.out.println("SVM_SYSCALL.printo: ofst="+ofst);
 //			System.out.println("SVM_SYSCALL.printo: nchr="+nchr);
+//			chradr.segment().dump("SVM_SYSCALL.printo: ");
 
-			ObjectAddress x = chradr.ofset(ofst);
+			ObjectAddress x = chradr.addOffset(ofst);
 			StringBuilder sb = new StringBuilder();
 			for(int i=0;i<nchr;i++) {
-				IntegerValue ival = (IntegerValue) x.load(); x.ofst++;
-				char c = (char) ival.value;
+				IntegerValue ival = (IntegerValue) x.load(); x.incrOffset();
+				char c = (ival == null)? '.' : ((char) ival.value);
 				sb.append(c);
 			}
 			System.out.println(sb);
@@ -176,29 +327,31 @@ public class SVM_CALLSYS extends SVM_Instruction {
 	 *                                         
 	 */
 	private void putstr() {
+		boolean DEBUG = false;
 		if(CALL.USE_FRAME_ON_STACK) {
 			ENTER("PUTSTR: ", 1, 6); // exportSize, importSize
 			
-			int valNchr = RTStack.popInt();
-			int valOfst = RTStack.popInt();
-			ObjectAddress valAddr = (ObjectAddress) RTStack.pop().value();
-//			System.out.println("SVM_SYSCALL.putstr: valAddr="+valAddr);
-//			System.out.println("SVM_SYSCALL.putstr: valOfst="+valOfst);
-//			System.out.println("SVM_SYSCALL.putstr: valNchr="+valNchr);
-			if(valOfst != 0) valAddr.ofst += valOfst;
-//			System.out.println("SVM_SYSCALL.putstr: valAddr="+valAddr);
+//			RTStack.dumpRTStack("SVM_SYSCALL.putstr:");
+//			RTStack.curFrame.dump("SVM_SYSCALL.putstr:");
 			
+			int valNchr = RTStack.popInt();
+			ObjectAddress valAddr = RTStack.popGADDR();
+			if(DEBUG) {
+//				valAddr.segment().dump("SVM_SYSCALL.putstr:");
+				System.out.println("SVM_SYSCALL.putstr: valAddr="+valAddr);
+				System.out.println("SVM_SYSCALL.putstr: valNchr="+valNchr);
+			}
 			int itemNchr = RTStack.popInt();
-			int itemOfst = RTStack.popInt();
-			ObjectAddress itemAddr = (ObjectAddress) RTStack.pop().value();
-//			System.out.println("SVM_SYSCALL.putstr: itemAddr="+itemAddr);
-//			System.out.println("SVM_SYSCALL.putstr: itemOfst="+itemOfst);
-//			System.out.println("SVM_SYSCALL.putstr: itemNchr="+itemNchr);
-			if(itemOfst != 0) itemAddr.ofst += itemOfst;
-//			System.out.println("SVM_SYSCALL.putstr: itemAddr="+itemAddr);
-
+			ObjectAddress itemAddr = RTStack.popGADDR();
+			if(DEBUG) {
+//				itemAddr.segment().dump("SVM_SYSCALL.putstr:");
+				System.out.println("SVM_SYSCALL.putstr: itemAddr="+itemAddr);
+				System.out.println("SVM_SYSCALL.putstr: itemNchr="+itemNchr);
+			}
+//			Segment.lookup("DSEG_RT").dump("SVM_CALLSYS.putstr BEFORE:",0,110);
 			move(valAddr, itemAddr, valNchr);
 //			itemAddr.segment().dump("SVM_SYSCALL.putstr: ");
+//			Segment.lookup("DSEG_RT").dump("SVM_CALLSYS.putstr AFTER:",0,110);
 
 			RTStack.push(new IntegerValue(Type.T_INT, valNchr), "EXPORT");
 			EXIT("PUTSTR: ");
@@ -213,7 +366,9 @@ public class SVM_CALLSYS extends SVM_Instruction {
 //			System.out.println("SVM_SYSCALL.putstr: itemAddr="+itemAddr);
 //			System.out.println("SVM_SYSCALL.putstr: ofst="+ofst);
 //			System.out.println("SVM_SYSCALL.putstr: nchr="+nchr);
-			if(ofst != null) itemAddr.ofst += ofst.value;
+			
+//			if(ofst != null) itemAddr.ofst += ofst.value; // TODO: RETT DETTE
+			
 //			System.out.println("SVM_SYSCALL.putstr: itemAddr="+itemAddr);
 			DataSegment itmSeg = itemAddr.segment();
 //			itmSeg.dump("SVM_SYSCALL.putstr: ");
@@ -224,7 +379,9 @@ public class SVM_CALLSYS extends SVM_Instruction {
 //			System.out.println("SVM_SYSCALL.putstr: valAddr="+valAddr);
 //			System.out.println("SVM_SYSCALL.putstr: valOfst="+valOfst);
 //			System.out.println("SVM_SYSCALL.putstr: valNchr="+valNchr);
-			if(valOfst != null) valAddr.ofst += valOfst.value;
+			
+//			if(valOfst != null) valAddr.ofst += valOfst.value; // TODO: RETT DETTE
+			
 //			System.out.println("SVM_SYSCALL.putstr: valAddr="+valAddr);
 			DataSegment valSeg = valAddr.segment();
 //			valSeg.dump("SVM_SYSCALL.putstr: ");
@@ -265,12 +422,13 @@ public class SVM_CALLSYS extends SVM_Instruction {
 //		System.out.println("SVM_SYSCALL.putstr: val="+val);
 
 		int itemNchr = RTStack.popInt();
-		int itemOfst = RTStack.popInt();
-		ObjectAddress itemAddr = (ObjectAddress) RTStack.pop().value();
+//		int itemOfst = RTStack.popInt();
+//		ObjectAddress itemAddr = (ObjectAddress) RTStack.pop().value();
+//		if(itemOfst != 0) itemAddr.ofst += itemOfst;
+		ObjectAddress itemAddr = RTStack.popGADDR();
 //		System.out.println("SVM_SYSCALL.putstr: itemAddr="+itemAddr);
 //		System.out.println("SVM_SYSCALL.putstr: itemOfst="+itemOfst); itemOfst=8;
 //		System.out.println("SVM_SYSCALL.putstr: itemNchr="+itemNchr);
-		if(itemOfst != 0) itemAddr.ofst += itemOfst;
 //		System.out.println("SVM_SYSCALL.putstr: itemAddr="+itemAddr);
 		
 //		itemAddr.segment().dump("SVM_SYSCALL.putstr: ");
@@ -289,22 +447,22 @@ public class SVM_CALLSYS extends SVM_Instruction {
 	
 	private void move(String src, ObjectAddress dst, int count) {
 //		ObjectAddress from = src.ofset(0);
-		ObjectAddress into = dst.ofset(0);
+		ObjectAddress into = dst.addOffset(0);
 		for(int i=0;i<count;i++) {
 //			Value x = from.load(); from.ofst++;
 			Value x = new IntegerValue(Type.T_CHAR, src.charAt(i));
-//			System.out.println("SVM_SYSCALL.move: x="+x);
-			into.store(x, "MOVE DEST: "); into.ofst++;
+			System.out.println("SVM_SYSCALL.move: x="+x+" ==> "+into);
+			into.store(x, "MOVE DEST: "); into.incrOffset();
 		}
 	}
 	
 	private void move(ObjectAddress src, ObjectAddress dst, int count) {
-		ObjectAddress from = src.ofset(0);
-		ObjectAddress into = dst.ofset(0);
+		ObjectAddress from = src.addOffset(0);
+		ObjectAddress into = dst.addOffset(0);
 		for(int i=0;i<count;i++) {
-			Value x = from.load(); from.ofst++;
+			Value x = from.load(); from.incrOffset();
 //			System.out.println("SVM_SYSCALL.move: x="+x);
-			into.store(x, "MOVE DEST: "); into.ofst++;
+			into.store(x, "MOVE DEST: "); into.incrOffset();
 		}
 	}
 	
@@ -317,19 +475,19 @@ public class SVM_CALLSYS extends SVM_Instruction {
 	 */
 	private String edString(ObjectAddress addr) {
 		DataSegment DSEG = (DataSegment) addr.segment();
-		DSEG.dump("SVM_SYSCALL.terminate: "+DSEG.load(addr.ofst).getClass().getSimpleName());
-		Value value = DSEG.load(addr.ofst);
+		DSEG.dump("SVM_SYSCALL.terminate: "+DSEG.load(addr.getOfst()).getClass().getSimpleName());
+		Value value = DSEG.load(addr.getOfst());
 		ObjectAddress chradr = (ObjectAddress) value;
-		IntegerValue ofst = (IntegerValue) DSEG.load(addr.ofst+1);
-		IntegerValue nchr = (IntegerValue) DSEG.load(addr.ofst+2);	
+		IntegerValue ofst = (IntegerValue) DSEG.load(addr.getOfst()+1);
+		int offset = (ofst == null)? 0 : ofst.value;
+		IntegerValue nchr = (IntegerValue) DSEG.load(addr.getOfst()+2);	
 //		System.out.println("SVM_SYSCALL.edString: chradr="+chradr);
 //		System.out.println("SVM_SYSCALL.edString: ofst="+ofst);
 //		System.out.println("SVM_SYSCALL.edString: nchr="+nchr);
-		int offset = (ofst == null)? 0 : ofst.value;
-		ObjectAddress x = chradr.ofset(offset);
+		ObjectAddress x = chradr.addOffset(offset);
 		StringBuilder sb = new StringBuilder();
 		for(int i=0;i<nchr.value;i++) {
-			IntegerValue ival = (IntegerValue) x.load(); x.ofst++;
+			IntegerValue ival = (IntegerValue) x.load(); x.incrOffset();
 			char c = (char) ival.value;
 //			System.out.println("SVM_SYSCALL.edString: c="+c);
 			sb.append(c);
@@ -345,7 +503,7 @@ public class SVM_CALLSYS extends SVM_Instruction {
 		switch(kind) {
 		case P_TERMIN: return "TERMIN";
 		case P_INTRHA: return "INTRHA";
-		case P_STREQL: return "STRWQL";
+		case P_STREQL: return "STREQL";
 		case P_PRINTO: return "PRINTO";
 		case P_INITIA: return "INITIA";
 		case P_SETOPT: return "SETOPT";
@@ -745,7 +903,7 @@ public class SVM_CALLSYS extends SVM_Instruction {
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
-		oupt.writeKind(opcode);
+		oupt.writeOpcode(opcode);
 		oupt.writeKind(kind);
 	}
 

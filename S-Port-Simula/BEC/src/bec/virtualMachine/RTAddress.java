@@ -6,31 +6,34 @@ import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.compileTimeStack.AddressItem;
 import bec.util.Global;
+import bec.util.Util;
 import bec.value.ObjectAddress;
 import bec.value.Value;
 
 public class RTAddress {
 	public ObjectAddress objadr;
 	public int offset;
-	public RTIndex objIndex;
-	public RTIndex atrIndex;
+	public AddressItem.State objState;
 
 	public RTAddress(AddressItem itm) {
+//		this.objState  = itm.objState;
+		this.objState  = itm.atrState;
 		this.objadr = itm.objadr;
 		this.offset = itm.offset;
-		if(itm.objReg > 0) this.objIndex = new RTIndex(itm.size, itm.objReg);
-		if(itm.atrReg > 0) this.atrIndex = new RTIndex(itm.size, itm.atrReg);
 	}
 
 	public RTAddress(ObjectAddress objadr) {
 		this.objadr = objadr;
 	}
-	
+
 	public ObjectAddress toObjectAddress() {
-		ObjectAddress target = this.objadr.ofset(this.offset);
-		if(this.objIndex != null) target.ofst += RTRegister.getIndex(objIndex.reg) * objIndex.size;
-		if(this.atrIndex != null) target.ofst += RTRegister.getIndex(atrIndex.reg) * atrIndex.size;
-		return target;
+		if(objState == AddressItem.State.Calculated) {
+			ObjectAddress temp = RTStack.popGADDR();
+			ObjectAddress res = temp.addOffset(offset);
+			return res;
+		} else {
+			return this.objadr.addOffset(offset);
+		}
 	}
 	
 	public Value load() {
@@ -42,9 +45,19 @@ public class RTAddress {
 	}
 
 	public String toString() {
-		String s = "" + objadr + "[" + offset;
-		if(objIndex != null) s += "+" + objIndex;
-		if(atrIndex != null) s += "+" + atrIndex;
+		if(objadr != null) {
+			String s = "SEGADR["+objadr.segID+':' + objadr.getOfst() + "+" + offset;
+			return s + "]";			
+		}
+		String relID = null;
+		if(objState != null) switch(objState) {
+			case Calculated: relID = "Temp";  break;
+			case FromConst:  relID = "Const"; break;
+			case NotStacked: relID = "Frame"; break;
+			default: Util.IERR("");
+		}
+		int ofst = (objadr==null)? 0 : objadr.getOfst();
+		String s = "RELADR["+relID+':' + ofst + "+" + offset;
 		return s + "]";
 	}
 
@@ -56,10 +69,6 @@ public class RTAddress {
 		boolean present = inpt.readBoolean();
 		if(present) this.objadr = (ObjectAddress) Value.read(inpt);
 		this.offset = inpt.readShort();
-		present = inpt.readBoolean();
-		if(present) this.objIndex = RTIndex.read(inpt);
-		present = inpt.readBoolean();
-		if(present) this.atrIndex = RTIndex.read(inpt);
 		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + this);
 	}
 
@@ -72,14 +81,6 @@ public class RTAddress {
 			objadr.write(oupt);
 		} else oupt.writeBoolean(false);
 		oupt.writeShort(offset);
-		if(objIndex != null) {
-			oupt.writeBoolean(true);
-			objIndex.write(oupt);
-		} else oupt.writeBoolean(false);
-		if(atrIndex != null) {
-			oupt.writeBoolean(true);
-			atrIndex.write(oupt);
-		} else oupt.writeBoolean(false);
 	}
 
 	public static RTAddress read(AttributeInputStream inpt) throws IOException {

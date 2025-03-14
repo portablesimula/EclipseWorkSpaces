@@ -59,7 +59,7 @@ public class MainProgram extends S_Module {
 //        DefLABEL(qEPROC,MainEntry.fix.val,entx.val);
 //        peepExhaust(true); ENDASM;
 		
-		if(Global.PRINT_SVM_CODE) {
+		if(Global.PRINT_GENERATED_SVM_CODE) {
 			Global.CSEG.dump("END MainProgram: ");
 			Global.DSEG.dump("END MainProgram: ");
 			Global.PSEG.dump("END MainProgram: ");
@@ -70,8 +70,7 @@ public class MainProgram extends S_Module {
 		if(Scode.curinstr != Scode.S_ENDPROGRAM)
 			Util.IERR("Illegal termination of program");
 		
-		System.out.println("\n\nNEW MainProgram: BEGIN EXECUTE: " + mainEntry);
-//		MemAddr PSC = mainEntry;
+		if(Global.verbose) System.out.println("\n\nNEW MainProgram: BEGIN EXECUTE: " + mainEntry);
 		Global.PSC = mainEntry;
 		while(true) {
 			Global.PSC.execute();

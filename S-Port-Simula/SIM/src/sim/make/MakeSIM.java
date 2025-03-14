@@ -197,7 +197,7 @@ public class MakeSIM {
 //				System.out.println("ALIVE: "+process.isAlive());
 			}
 			System.out.println("RETURN: "+process.exitValue());
-			Thread.dumpStack();
+//			Thread.dumpStack();
 			return (process.exitValue());
 
 		} catch(Exception e) {

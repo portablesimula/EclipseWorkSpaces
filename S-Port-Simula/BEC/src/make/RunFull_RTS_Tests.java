@@ -23,6 +23,7 @@ public final class RunFull_RTS_Tests {
 		Global.verbose = true;
 //		Scode.inputTrace = 4;
 //		Scode.listing = true;
+		Global.PRINT_GENERATED_SVM_CODE = true;
 
 		// Set Compiler Options.
 //		Option.EXTENSIONS=false;
@@ -30,21 +31,21 @@ public final class RunFull_RTS_Tests {
 
 		Vector<String> names = new Vector<String>();
 		names.add("RT.scd");
-		names.add("SYSR.scd");
-		names.add("KNWN.scd");
-		names.add("UTIL.scd");
-		
-		names.add("STRG.scd");
-		names.add("CENT.scd");
-		names.add("CINT.scd");
-		names.add("ARR.scd");
-		names.add("FORM.scd");
-		names.add("LIBR.scd");
-		names.add("FIL.scd");
-		names.add("SMST.scd");
-		names.add("SML.scd");
-		names.add("EDIT.scd");
-		names.add("MNTR.scd");
+//		names.add("SYSR.scd");
+//		names.add("KNWN.scd");
+//		names.add("UTIL.scd");
+//		
+//		names.add("STRG.scd");
+//		names.add("CENT.scd");
+//		names.add("CINT.scd");
+//		names.add("ARR.scd");
+//		names.add("FORM.scd");
+//		names.add("LIBR.scd");
+//		names.add("FIL.scd");
+//		names.add("SMST.scd");
+//		names.add("SML.scd");
+//		names.add("EDIT.scd");
+//		names.add("MNTR.scd");
 
 		for (String name : names) {
 			String fileName = rtsSCodeDir + name;

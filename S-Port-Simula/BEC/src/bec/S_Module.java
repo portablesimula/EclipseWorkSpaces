@@ -3,6 +3,7 @@ package bec;
 import bec.descriptor.LabelDescr;
 import bec.descriptor.ProfileDescr;
 import bec.descriptor.RoutineDescr;
+import bec.descriptor.Variable;
 import bec.instruction.Instruction;
 import bec.statement.IfConstrction;
 import bec.statement.InsertStatement;
@@ -40,11 +41,12 @@ public abstract class S_Module {
 				case Scode.S_SAVE ->		new ProtectStatement();
 				case Scode.S_INSERT ->		new InsertStatement(false);
 				case Scode.S_SYSINSERT ->	new InsertStatement(true);
+				case Scode.S_LOCAL ->		Variable.ofGlobal(Global.DSEG);
 				default -> { if(! Instruction.inInstruction()) break LOOP; }
 			}
 			Scode.inputInstr();
 		}
-		System.out.println("S_Module.programElements: Terminated by: " + Scode.edInstr(Scode.curinstr));
+//		System.out.println("S_Module.programElements: Terminated by: " + Scode.edInstr(Scode.curinstr));
 //		Util.IERR("");
 	}
 

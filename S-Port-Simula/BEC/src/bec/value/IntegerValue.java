@@ -16,7 +16,8 @@ public class IntegerValue extends Value {
 	public int value;
 	
 	public IntegerValue(Type type, int value) {
-		this.type = Type.T_INT;
+//		this.type = Type.T_INT;
+		this.type = type;
 		this.value = value;
 	}
 
@@ -67,10 +68,14 @@ public class IntegerValue extends Value {
 	@Override
 	public Value add(Value other) {
 		if(other == null) return this;
-		IntegerValue val2 = (IntegerValue) other;
-		int res = value + val2.value;
-		if(res == 0) return null;
-		return new IntegerValue(this.type, res);
+		if(other instanceof ObjectAddress oaddr) {
+			return oaddr.add(other);
+		} else {
+			IntegerValue val2 = (IntegerValue) other;
+			int res = value + val2.value;
+			if(res == 0) return null;
+			return new IntegerValue(this.type, res);
+		}
 	}
 
 	@Override
@@ -108,7 +113,13 @@ public class IntegerValue extends Value {
 	}
 
 	public String toString() {
-		return "C-INT " + value; // + "   " + (char)value;
+		switch(type.tag) {
+			case Scode.TAG_INT:   return "C-INT "   + value;
+			case Scode.TAG_CHAR:  return "C-CHAR "  + (char)value;
+			case Scode.TAG_SIZE:  return "C-SIZE "  + value;
+			case Scode.TAG_AADDR: return "C-AADDR " + value;
+			default: return "C-" +type + " " + value; 
+		}
 	}
 	
 

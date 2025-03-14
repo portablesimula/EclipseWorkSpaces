@@ -35,6 +35,7 @@ public abstract class INDEX extends Instruction {
 		CTStack.pop();
 		AddressItem adr = (AddressItem) CTStack.TOS;
 		adr.objReg = RTRegister.qEAX;
+		adr.atrState = AddressItem.State.Calculated;
 		
 		if(instr == Scode.S_INDEXV) Util.GQfetch("INDEXV");
 

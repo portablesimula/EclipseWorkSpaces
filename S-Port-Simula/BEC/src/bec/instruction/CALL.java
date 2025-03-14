@@ -19,12 +19,13 @@ import bec.virtualMachine.SVM_CALL;
 import bec.virtualMachine.SVM_CALL_DSEG;
 import bec.virtualMachine.SVM_NOOP;
 import bec.virtualMachine.SVM_NOT_IMPL;
-import bec.virtualMachine.SVM_POP2MEM;
+import bec.virtualMachine.SVM_PEEK2MEM;
 import bec.virtualMachine.SVM_PRECALL;
 import bec.virtualMachine.SVM_PUSH;
 import bec.virtualMachine.SVM_CALLSYS;
 
 public abstract class CALL extends Instruction {
+	private static final boolean DEBUG = false;
 	
 	public static final boolean USE_FRAME_ON_STACK = true;
 	/**
@@ -54,6 +55,9 @@ public abstract class CALL extends Instruction {
 //		spec.print("Call.ofScode-1: ");
 		ProfileItem pitem = new ProfileItem(Type.T_VOID,spec);
 		pitem.nasspar = nParStaced;
+		
+		for(int i=0;i<nParStaced;i++) CTStack.pop();
+		
 		CTStack.push(pitem);
 //	    CTStack.dumpStack("Call.ofScode-1: ");
 //	    Util.IERR("");
@@ -76,9 +80,11 @@ public abstract class CALL extends Instruction {
 				Scode.inputInstr();
 				putPar(pitem,1);
 		      	Global.PSEG.emit(new SVM_NOOP(), "ASSPAR ");
-				System.out.println("CallInstruction: ASSPAR: nasspar="+pitem.nasspar);
-//			    CTStack.dumpStack("Call.ofScode-2: ");
-//			    Util.IERR("");
+		      	if(DEBUG) {
+		      		System.out.println("CallInstruction: ASSPAR: nasspar="+pitem.nasspar);
+//			    	CTStack.dumpStack("Call.ofScode-2: ");
+//			    	Util.IERR("");
+		      	}
 			}
 			else if(Scode.curinstr == Scode.S_ASSREP) {
 				int nRep = Scode.inByte();
@@ -97,7 +103,7 @@ public abstract class CALL extends Instruction {
 		}
 //	    Util.IERR("");
 //	    ---------  Final Actions  ---------
-		System.out.println("CallInstruction: FINAL: " + pitem.spc);
+		if(DEBUG) System.out.println("CallInstruction: FINAL: " + pitem.spc);
 	    if(pitem.nasspar != pitem.spc.params.size())
 	    	Util.IERR("Wrong number of Parameters: got " + pitem.nasspar + ", required" + +pitem.spc.params.size());
 //	    ---------  Call Routine  ---------
@@ -106,7 +112,7 @@ public abstract class CALL extends Instruction {
 //			Util.IERR("");
 		    if(CALL_TOS) {
 //		    	Util.IERR("NOT IMPL");
-		    	Global.PSEG.emit(new SVM_NOT_IMPL(), "");
+		    	Global.PSEG.emit(new SVM_NOT_IMPL("CALL: CALL_TOS"), "");
 
 		    	Global.PSEG.emit(SVM_CALL.ofTOS(spec.returSlot), "");
 		    	CTStack.pop();
@@ -145,7 +151,7 @@ public abstract class CALL extends Instruction {
 		Variable export = spec.getExport();
 		if(export != null) {
 			Type returnType = export.type;
-			System.out.println("CallInstructil.callSYS: returnType="+returnType);
+			if(DEBUG) System.out.println("CallInstruction.callSYS: returnType="+returnType);
 			CTStack.pushTemp(returnType, RTRegister.qEAX, 1, "EXPORT: ");
 			if(! CALL.USE_FRAME_ON_STACK) {
 				Global.PSEG.emit(new SVM_PUSH(new RTAddress(export.address), returnType.size()), "CallInstruction: EXPORT " + spec);
@@ -180,7 +186,7 @@ public abstract class CALL extends Instruction {
 		if(! CALL.USE_FRAME_ON_STACK) {
 			int parSize = parType.size();
 			ObjectAddress parAddr = param.address;
-			Global.PSEG.emit(new SVM_POP2MEM(parAddr, parSize), "putPar: ");
+			Global.PSEG.emit(new SVM_PEEK2MEM(parAddr, parSize), "putPar: ");
 		}
 		
 //		pItm.spc.printTree(2);
@@ -199,8 +205,8 @@ public abstract class CALL extends Instruction {
 				if(! CALL.USE_FRAME_ON_STACK) {
 					int parSize = parType.size();
 					ObjectAddress parAddr = param.address;
-					parAddr = parAddr.ofset(parSize);
-					Global.PSEG.emit(new SVM_POP2MEM(parAddr, parSize), "putPar: ASSREP: ");
+					parAddr = parAddr.addOffset(parSize);
+					Global.PSEG.emit(new SVM_PEEK2MEM(parAddr, parSize), "putPar: ASSREP: ");
 				}
 			}
 //			CTStack.dumpStack("putPar: ");

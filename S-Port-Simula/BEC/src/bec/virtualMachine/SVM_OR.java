@@ -42,7 +42,7 @@ public class SVM_OR extends SVM_Instruction {
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
-		oupt.writeKind(opcode);
+		oupt.writeOpcode(opcode);
 	}
 
 	public static SVM_OR read(AttributeInputStream inpt) throws IOException {

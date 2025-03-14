@@ -65,7 +65,8 @@ public class RecordDescr extends Descriptor {
 		rec.attributes = new Vector<Attribute>();
 		while(Scode.accept(Scode.S_ATTR)) {
 			Attribute attr = new Attribute(comnSize);
-			comnSize = comnSize + attr.size;
+//			comnSize = comnSize + attr.size;
+			comnSize = comnSize + attr.allocSize();
 			if(attr.repCount == 0) rec.nbrep = attr.size;
 			rec.attributes.add(attr);
 		}
@@ -77,7 +78,8 @@ public class RecordDescr extends Descriptor {
 			int altSize = comnSize;
 			while(Scode.accept(Scode.S_ATTR)) {
 				Attribute attr = new Attribute(altSize);
-				altSize = altSize + attr.size;
+//				altSize = altSize + attr.size;
+				altSize = altSize + attr.allocSize();
 				alt.attributes.add(attr);
 			}
 			rec.size = Math.max(rec.size, altSize);

@@ -1,5 +1,6 @@
 package bec.util;
 
+import bec.compileTimeStack.CTStack;
 import java.io.FileInputStream;
 import java.io.IOException;
 
@@ -9,7 +10,7 @@ public class Scode {
 	private static int SBUF_nxt;
 	public static int curinstr;	// Current instr-byte read from scode
 	
-	public static StringBuilder traceBuff;         // Input Trace's StringBuilder
+	private static StringBuilder traceBuff;         // Input Trace's StringBuilder
 	public static int curline;		// Current source line number
 //	public static int inputTrace;	// Input trace switch
 //	public static boolean listing = false;
@@ -39,7 +40,7 @@ public class Scode {
         Scode.TAGIDENT.set(13, "TEXT");
 
 		String fileName = Global.scodeSource;
-		System.out.println("Open SCode file: " + fileName);
+//		System.out.println("Open SCode file: " + fileName);
 		try (FileInputStream scode = new FileInputStream(fileName)) {
 			SBUF = scode.readAllBytes();
 			SBUF_nxt = 0;
@@ -60,8 +61,21 @@ public class Scode {
 		System.out.println("============ "+title+"ENDOF Dump TAGIDENT ================");
 	}
 
+	public static void initTraceBuff(String head) {
+		Scode.traceBuff = new StringBuilder(head);		
+	}
+	
+	public static void flushTraceBuff() {
+		if(Global.SCODE_INPUT_TRACE) System.out.println(traceBuff);	
+		traceBuff = null;
+		if(Global.PRINT_GENERATED_SVM_CODE) {
+			if(Global.PSEG != null) Global.PSEG.listInstructions();
+		}
+	}
+
 	public static void close() {
-		if(Global.SCODE_INPUT_TRACE) System.out.println(traceBuff);		
+//		if(Global.SCODE_INPUT_TRACE) System.out.println(traceBuff);	
+		flushTraceBuff();
 	}
 	
 	public static int nextByte() {
@@ -91,8 +105,13 @@ public class Scode {
 			Util.IERR("Illegal instruction["+(SBUF_nxt -1)+"]: " + Scode.curinstr);
 		}
 		if(Global.SCODE_INPUT_TRACE) {
-			if(traceBuff != null) System.out.println(traceBuff);
-			Util.ITRC("Ininstr["+(SBUF_nxt-1)+"]", edInstr(Scode.curinstr));
+			if(traceBuff != null) {
+//				System.out.println(traceBuff);
+				flushTraceBuff();
+			}
+			String instr = edInstr(Scode.curinstr);
+			while(instr.length() < 10) instr = instr + ' ';
+			Util.ITRC("Ininstr["+(SBUF_nxt-1)+",CTStack="+CTStack.size()+']', instr);
 //			System.out.println("Scode.inputInstr: " + edInstr(Scode.curinstr)+":"+Scode.curinstr);
 		}
 	}

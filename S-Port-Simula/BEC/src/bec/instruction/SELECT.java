@@ -24,6 +24,8 @@ import bec.virtualMachine.SVM_NOT_IMPL;
  */
 public abstract class SELECT extends Instruction {
 
+	private static final boolean DEBUG = false;
+
 	/**
 	 * addressing_instruction ::= select attribute:tag | selectv attribute:tag
 	 */
@@ -35,12 +37,12 @@ public abstract class SELECT extends Instruction {
 		CTStack.TOS.type = attr.type;
 		AddressItem adr = (AddressItem) CTStack.TOS;
 		adr.offset = adr.offset + attr.rela;
-		System.out.println("SELECT.ofScode: ofst="+adr.offset + ", rela=" + attr.rela);
+		if(DEBUG) System.out.println("SELECT.ofScode: ofst="+adr.offset + ", rela=" + attr.rela);
 		adr.type = attr.type;
 		adr.size = attr.size;
 		if(adr.atrState == AddressItem.State.FromConst) {
 			adr.atrState = AddressItem.State.NotStacked;
-			Global.PSEG.emit(new SVM_NOT_IMPL(), "SELECT: ");
+			Global.PSEG.emit(new SVM_NOT_IMPL("SELECT: "+attr), "SELECT: ");
 //             qPOPKill(AllignFac);
 		}
 		if(instr == Scode.S_SELECTV) Util.GQfetch("SELECTV " + tag + ": ");

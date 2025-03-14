@@ -10,8 +10,10 @@ import bec.util.Type;
 import bec.util.Util;
 
 public class TextValue extends Value {
-	public ObjectAddress addr; // Pointer to StringValue or a sequence of Characters.
+	public ObjectAddress addr; // Pointer to a sequence of Characters.
 	public int length;
+	
+	private static final boolean DEBUG = false;
 	
 	private TextValue() {
 		this.type = Type.T_TEXT;
@@ -25,8 +27,13 @@ public class TextValue extends Value {
 		String str = Scode.inLongString();
 
 		TextValue txtval = new TextValue();
-		txtval.addr = Global.CSEG.emitChars(str, null);			
+		txtval.addr = Global.CSEG.emitChars(str, "Part of: "+str);			
 		txtval.length = str.length();
+		if(DEBUG) {
+			System.out.println("TextValue.ofScode: str="+str+"  ==> "+txtval);
+			Global.CSEG.dump(str);
+			Util.IERR("");
+		}
 		return txtval;
 	}
 	
@@ -34,9 +41,9 @@ public class TextValue extends Value {
 		// SENERE: SJEKK BRUKEN AV DENNE METODEN
 		if(addr == null) return null;
 		StringBuilder sb = new StringBuilder();
-		ObjectAddress x = addr.ofset(0);
+		ObjectAddress x = addr.addOffset(0);
 		for(int i=0;i<length;i++) {
-			IntegerValue val = (IntegerValue) x.load(); x.ofst++;
+			IntegerValue val = (IntegerValue) x.load(); x.incrOffset();
 //			if(val.type != Type.T_CHAR) Util.IERR(""+val.type);
 			sb.append((char)val.value);
 		}
@@ -45,7 +52,7 @@ public class TextValue extends Value {
 	}
 	
 	public String toString() {
-		return "TEXT at " + addr;
+		return "TEXT with length "+length+" at " + addr;
 	}
 	
 

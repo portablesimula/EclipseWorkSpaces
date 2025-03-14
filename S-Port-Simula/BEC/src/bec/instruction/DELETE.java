@@ -1,5 +1,7 @@
 package bec.instruction;
 
+import bec.util.Scode;
+import bec.util.Tag;
 import bec.util.Util;
 
 public abstract class DELETE extends Instruction {
@@ -10,7 +12,9 @@ public abstract class DELETE extends Instruction {
      * check stacks empty;
 	 */
 	public static void ofScode() {
-		Util.IERR("NOT IMPL");
+		Scode.dumpBytes(10);
+		Tag tag = Tag.ofScode();
+//		Util.IERR("NOT IMPL");
 	}
 
 }

@@ -55,6 +55,9 @@ public class Segment { // extends Descriptor {
 	public void dump(String title) {
 	}
 	
+	public void dump(String title,int from,int to) {
+	}
+	
 	public static void dumpAll(String title) {
 		for(Segment seg:Global.SEGMAP.values()) {
 			seg.dump(title);

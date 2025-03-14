@@ -23,7 +23,7 @@ public abstract class FJUMP extends Instruction {
 		
 //		CTStack.dumpStack();
 		Global.DESTAB[destination] = Global.PSEG.nextAddress();
-		Global.PSEG.emit(new SVM_JUMP(null), "FJUMP: ");
+		Global.PSEG.emit(new SVM_JUMP(null), "FJUMP: "+destination);
 //		Global.PSEG.dump();
 //		Util.IERR(""+this);
 	}

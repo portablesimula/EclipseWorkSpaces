@@ -46,7 +46,7 @@ public class SVM_SWITCH extends SVM_Instruction {
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
-		oupt.writeKind(opcode);
+		oupt.writeOpcode(opcode);
 		int n = DESTAB.length;
 		oupt.writeShort(n);
 		for(int i=0;i<n;i++) {

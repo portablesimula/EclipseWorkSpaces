@@ -14,6 +14,7 @@ import bec.util.Scode;
 import bec.util.Tag;
 import bec.util.Type;
 import bec.util.Util;
+import bec.virtualMachine.RTFrame;
 import bec.virtualMachine.RTStack;
 import bec.virtualMachine.SVM_Instruction;
 
@@ -63,6 +64,10 @@ public class ProgramAddress extends Value {
 		return Segment.lookup(segID);
 	}
 	
+	public ProgramAddress copy() {
+		return new ProgramAddress(segID, ofst);
+	}
+	
 //	public void store(Value value) {
 //		DataSegment dseg = (DataSegment) segment();
 //		dseg.store(ofst, value);
@@ -80,19 +85,33 @@ public class ProgramAddress extends Value {
 	
 	public void execute() {
 		ProgramSegment seg = (ProgramSegment) segment();
-		if(seg.instructions.size() == 0) {
+		int size = seg.instructions.size();
+		if(size == 0) {
 			System.out.println("ProgramAddress.execute: " + seg.ident + " IS EMPTY -- NOTHING TO EXECUTE");
 			System.exit(-1);
 		}
-		SVM_Instruction cur = seg.instructions.get(ofst);
+		
+//		System.out.println("ProgramAddress.execute: size=" + seg.instructions.size());
+//		System.out.println("ProgramAddress.execute: ofst=" + ofst);
+		if(ofst >= size) {
+			if(Global.verbose) System.out.println("ProgramAddress.execute: " + seg.ident + " IS FINALIZED -- NOTHING MORE TO EXECUTE");
+			System.exit(0);			
+		} else {
+			SVM_Instruction cur = seg.instructions.get(ofst);
 //		System.out.println("ProgramAddress.execute: " + cur);
-		if(Global.EXEC_TRACE > 0) {
-//			RTStack.listRTStack();
-			System.out.println("EXECUTE: "+Global.PSC+"  "+cur);
+			cur.execute();
+
+			if(Global.EXEC_TRACE > 0) {
+				String tail = (RTStack.curFrame == null)? RTStack.toLine() : RTStack.curFrame.toLine();
+				String line = "EXEC: "+Global.PSC+"  "+cur;
+				while(line.length()<70) line=line+' ';
+				System.out.println(line+"   "+tail);
+//				RTStack.dumpRTStack("ProgramAddress.execute:");
+//				Util.IERR("");
+			}
+//			cur.execute();
 //			Util.IERR("");
 		}
-		cur.execute();
-//		Util.IERR("");
 	}
 	
 	public String toString() {

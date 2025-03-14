@@ -29,7 +29,7 @@ public class SVM_JUMPIF extends SVM_JUMP {
 		boolean res = relation.eval(sos, tos);
 //		System.out.println("SVM_JUMPIF: " + tos + "  " + relation + "  " + sos + " = " + res);
 //		RTStack.push(type, res);
-		if(res) Global.PSC = destination;
+		if(res) Global.PSC = destination.copy();
 		else Global.PSC.ofst++;
 //		Util.IERR("");
 	}
@@ -52,7 +52,7 @@ public class SVM_JUMPIF extends SVM_JUMP {
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
-		oupt.writeKind(opcode);
+		oupt.writeOpcode(opcode);
 		destination.write(oupt);
 		relation.write(oupt);
 	}

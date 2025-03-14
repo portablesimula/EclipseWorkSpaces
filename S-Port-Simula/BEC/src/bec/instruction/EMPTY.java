@@ -1,6 +1,6 @@
 package bec.instruction;
 
-import bec.util.Util;
+import bec.compileTimeStack.CTStack;
 
 public abstract class EMPTY extends Instruction {
 	
@@ -8,7 +8,7 @@ public abstract class EMPTY extends Instruction {
 	 * stack_instruction ::= empty
 	 */
 	public static void ofScode() {
-		Util.IERR("NOT IMPL");
+		CTStack.checkStackEmpty();
 	}
 
 }

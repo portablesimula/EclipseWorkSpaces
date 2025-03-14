@@ -4,6 +4,7 @@ import bec.compileTimeStack.CTStack;
 import bec.util.Global;
 import bec.util.Relation;
 import bec.util.Scode;
+import bec.util.Util;
 import bec.virtualMachine.SVM_JUMPIF;
 
 public abstract class FJUMPIF extends Instruction {
@@ -26,6 +27,7 @@ public abstract class FJUMPIF extends Instruction {
 		CTStack.checkSosValue();
 		Relation relation = Relation.ofScode();
 		int destination = Scode.inByte();
+		if(Global.DESTAB[destination] != null) Util.IERR("Destination is already defined");
 		
 //		int cond = Util.GQrelation();
 		// Check Relation
@@ -33,7 +35,7 @@ public abstract class FJUMPIF extends Instruction {
 		CTStack.pop();
 		
 		Global.DESTAB[destination] = Global.PSEG.nextAddress();
-		Global.PSEG.emit(new SVM_JUMPIF(relation, null), "FJUMPIF: "+relation);
+		Global.PSEG.emit(new SVM_JUMPIF(relation, null), "FJUMPIF: "+relation+" "+destination);
 //		Global.PSEG.dump();
 //		CTStack.dumpStack();
 //		Util.IERR(""+this);

@@ -34,7 +34,7 @@ public class SVM_NOOP extends SVM_Instruction {
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
-		oupt.writeKind(opcode);
+		oupt.writeOpcode(opcode);
 	}
 
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {

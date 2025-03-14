@@ -15,7 +15,7 @@ public class Global {
 	public static boolean verbose = false;
 	public static int traceMode = 0;
 	public static boolean SCODE_INPUT_TRACE = false;
-	public static boolean PRINT_SVM_CODE = false;
+	public static boolean PRINT_GENERATED_SVM_CODE = false;
 	public static boolean ATTR_INPUT_TRACE = false;
 	public static boolean ATTR_OUTPUT_TRACE = false;
 	public static boolean ATTR_INPUT_DUMP = false;

@@ -24,7 +24,7 @@ public abstract class INITO extends Instruction {
 		Util.GQfetch("INITO: ");
 		CTStack.pop();
 //		%+S                      Qf5(qCALL,0,0,4,X_INITO);
-		Global.PSEG.emit(new SVM_NOT_IMPL(), "INITO: ");
+		Global.PSEG.emit(new SVM_NOT_IMPL("INITO: "), "INITO: ");
 //		Util.IERR("NOT IMPL");
 	}
 

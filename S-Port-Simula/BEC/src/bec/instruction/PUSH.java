@@ -11,19 +11,24 @@ import bec.util.Util;
 
 public abstract class PUSH extends Instruction {
 	
+	private static final boolean DEBUG = false;
+	
 	/**
 	 * stack_instruction ::= push obj:tag | pushv obj:tag
 	 * 
 	 * End-Condition: Scode'nextByte = First byte after the tag
 	 */
 	public static void ofScode(int instr) {
-//		System.out.println("PUSH.doCode: tag="+Scode.edTag(tag)+"  "+tag);
 		Tag tag = Tag.ofScode();
+		if(DEBUG) System.out.println("PUSH.doCode: tag="+Scode.edTag(tag.val)+"  "+tag);
 		Descriptor x = tag.getMeaning();
 		if(x instanceof Variable var) {
-//			System.out.println("PUSH.doCode: var="+var);
-//			CTStack.push(new AddressItem(var.tag.val,0,var.address));
-			CTStack.push(new AddressItem(var.type,0,var.address));
+			AddressItem addr = new AddressItem(var.type,0,var.address);
+			if(DEBUG) {
+				System.out.println("PUSH.doCode: var="+var);
+				System.out.println("PUSH.doCode: addr="+addr);				
+			}
+			CTStack.push(addr);
 		} else if(x instanceof ConstDescr cns) {
 //			CTStack.push(new AddressItem(cns.tag.val,0,cns.address));
 			CTStack.push(new AddressItem(cns.type,0,cns.address));

@@ -11,7 +11,10 @@ import bec.util.Type;
 import bec.util.Util;
 import bec.value.IntegerValue;
 import bec.virtualMachine.RTRegister;
+import bec.virtualMachine.SVM_ADD;
+import bec.virtualMachine.SVM_MULT;
 import bec.virtualMachine.SVM_NOT_IMPL;
+import bec.virtualMachine.SVM_PUSHC;
 
 public abstract class DSIZE extends Instruction {
 	
@@ -64,7 +67,18 @@ public abstract class DSIZE extends Instruction {
 //%+E                  endif;
 //%+E                  TSTOFL:=OldTSTOFL;
 //%+E                  Qf1(qPUSHR,qEAX,cVAL);
-				Global.PSEG.emit(new SVM_NOT_IMPL(), "DSIZE: ");
+				
+				
+//				Global.PSEG.emit(new SVM_NOT_IMPL("DSIZE: "), "DSIZE: ");
+				
+				
+				IntegerValue nbrepValue = new IntegerValue(Type.T_INT, n);
+				Global.PSEG.emit(new SVM_PUSHC(nbrepValue), "DSIZE'nbrep: ");
+				Global.PSEG.emit(new SVM_MULT(), "MULT: ");
+				IntegerValue fixValue = new IntegerValue(Type.T_INT, fixrec.size);
+				Global.PSEG.emit(new SVM_PUSHC(fixValue), "DSIZE'recSize: ");
+				Global.PSEG.emit(new SVM_ADD(), "ADD: ");
+				
 				CTStack.pushTemp(Type.T_SIZE, RTRegister.qEAX, 1, "DSIZE: ");
 			}
 		} else {

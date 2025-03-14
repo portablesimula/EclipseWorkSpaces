@@ -22,6 +22,8 @@ public class ConstDescr extends Descriptor {
 //	public QuantityDescriptor quant;
 	RepetitionValue value;
 	
+	private static final boolean DEBUG = false;
+	
 	private ConstDescr(int kind, Tag tag) {
 		super(kind, tag);
 //		this.tag = tag;
@@ -82,11 +84,12 @@ public class ConstDescr extends Descriptor {
 
 		int repCount = (Scode.accept(Scode.S_REP)) ? Scode.inNumber() : 1;
 
-		
-		System.out.println("CONST.inConstant: " + cnst);
-//		if(Global.traceMode > 3)
-			cnst.print("   ");
-//		Util.IERR("");
+		if(DEBUG) {
+			System.out.println("CONST.inConstant: " + cnst);
+//			if(Global.traceMode > 3)
+				cnst.print("   ");
+//			Util.IERR("");
+		}
 		return cnst;
 		
 	}
@@ -97,13 +100,13 @@ public class ConstDescr extends Descriptor {
 		if(cnst == null) {
 			cnst = new ConstDescr(Kind.K_Coonst, tag);
 		}
-		System.out.println("NEW ConstDescr.ofConstDef: "+cnst);
+		if(DEBUG) System.out.println("NEW ConstDescr.ofConstDef: "+cnst);
 //		cnst.quant = new QuantityDescriptor();
 		cnst.type = Type.ofScode();
 		
 		if(Scode.accept(Scode.S_FIXREP)) {
 			Scode.inNumber();
-//			Util.IERR("DETTE ER EN 'ResolvedType' - HVA NÅ ?");
+			Util.IERR("DETTE ER EN 'ResolvedType' - HVA NÅ ?");
 			System.out.println("DETTE ER EN 'ResolvedType' - HVA NÅ ?");
 		}
 
@@ -116,11 +119,13 @@ public class ConstDescr extends Descriptor {
 //			Global.CSEG.dump("CONST.inConstant: ");
 //			Util.IERR("");
 		
-		System.out.println("CONST.inConstant: " + cnst);
-//		if(Global.traceMode > 3) cnst.print("   ");
-		Global.CSEG.dump("ConstDescr.ofConstDef: ");
-		Global.DSEG.dump("ConstDescr.ofConstDef: ");
-//		Util.IERR("");
+		if(DEBUG) {
+			System.out.println("CONST.inConstant: " + cnst);
+//			if(Global.traceMode > 3) cnst.print("   ");
+			Global.CSEG.dump("ConstDescr.ofConstDef: ");
+			Global.DSEG.dump("ConstDescr.ofConstDef: ");
+//			Util.IERR("");
+		}
 		return cnst;
 	}
 	

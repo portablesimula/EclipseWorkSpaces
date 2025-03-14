@@ -25,7 +25,7 @@ public class SVM_Instruction {
 	public final static int iPUSHC = 13;
 	public final static int iRETURN = 14;
 	public final static int iPOP2REG = 15;
-	public final static int iPOP2MEM = 16;
+	public final static int iPEEK2MEM = 16;
 	public final static int iREM = 17;
 	public final static int iSUB = 18;
 	public final static int iSWITCH = 19;
@@ -40,6 +40,7 @@ public class SVM_Instruction {
 	public final static int iENTER = 28;
 	
 	public final static int iNOT_IMPL = 99;
+	public final static int iMax = 99;
 	
 
 	public void execute() {
@@ -82,7 +83,7 @@ public class SVM_Instruction {
 			case iPUSHC:	return SVM_PUSHC.read(inpt);
 			case iRETURN:	return SVM_RETURN.read(inpt);
 			case iPOP2REG:	return SVM_POP2REG.read(inpt);
-			case iPOP2MEM:	return SVM_POP2MEM.read(inpt);
+			case iPEEK2MEM:	return SVM_PEEK2MEM.read(inpt);
 			case iREM:		return SVM_REM.read(inpt);
 			case iSUB:		return SVM_SUB.read(inpt);
 			case iSWITCH:	return SVM_SWITCH.read(inpt);
@@ -119,7 +120,7 @@ public class SVM_Instruction {
 			case iPUSHC:	return "iPUSHC";
 			case iRETURN:	return "iRETURN";
 			case iPOP2REG:	return "iPOPtoREG";
-			case iPOP2MEM:	return "iPOPtoMEM";
+			case iPEEK2MEM:	return "iPOPtoMEM";
 			case iREM:	 	return "iSTOREC";
 			case iSUB:		return "iSUB";
 			case iSWITCH:	return "iSWITCH";

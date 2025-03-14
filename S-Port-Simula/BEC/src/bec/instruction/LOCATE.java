@@ -51,7 +51,7 @@ public abstract class LOCATE extends Instruction {
 //		%+E             Qf1(qPOPR,qEBX,cVAL); Qf2(qDYADR,qADDF,qEAX,cVAL,qEBX);
 //		           endif;
 //		%+E        Qf1(qPUSHR,qEAX,cVAL);
-		Global.PSEG.emit(new SVM_NOT_IMPL(), "LOCATE: ");
+		Global.PSEG.emit(new SVM_NOT_IMPL("LOCATE: "), "LOCATE: ");
 		CTStack.pop(); CTStack.pushTemp(Type.T_GADDR, RTRegister.qEAX, 1, "LOCATE: ");
 //		Util.IERR("NOT IMPL");
 	}

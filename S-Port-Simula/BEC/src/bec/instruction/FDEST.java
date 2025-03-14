@@ -3,6 +3,7 @@ package bec.instruction;
 import bec.compileTimeStack.CTStack;
 import bec.util.Global;
 import bec.util.Scode;
+import bec.util.Util;
 import bec.value.ObjectAddress;
 import bec.value.ProgramAddress;
 import bec.virtualMachine.SVM_JUMP;
@@ -10,6 +11,8 @@ import bec.virtualMachine.SVM_NOOP;
 
 public abstract class FDEST extends Instruction {
 	int destination;
+	
+	private static final boolean DEBUG = false;
 
 	/**
 	 * forward_destination ::= fdest destination:index
@@ -27,12 +30,16 @@ public abstract class FDEST extends Instruction {
 
 //		CTStack.dumpStack();
 		ProgramAddress addr = Global.DESTAB[destination];
+		if(addr == null) Util.IERR("Destination is undefined");
 		Global.DESTAB[destination] = null;
 		SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(addr.ofst);
 		instr.destination = Global.PSEG.nextAddress();
       	Global.PSEG.emit(new SVM_NOOP(), "FDEST " + destination);
-//		Global.PSEG.dump();
-//		Util.IERR(""+this);
+      	if(DEBUG) {
+      		System.out.println("FDEST.ofScode: FIXUP["+addr.ofst+"]: "+instr);
+			Global.PSEG.dump("FDEST.ofScode: FIXUP: ");
+//			Util.IERR(""+this);
+      	}
 	}
 
 }

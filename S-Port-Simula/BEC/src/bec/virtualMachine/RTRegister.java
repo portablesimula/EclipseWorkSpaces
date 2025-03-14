@@ -11,6 +11,7 @@ public abstract class RTRegister {
 	public static final int qEBX = 2;
 	public static final int qECX = 3;
 	public static final int qEDX = 4;
+	public static final int rMax = 4;
 	
 	public static void putValue(int reg, Value index) {
 		register[reg-1] = index;

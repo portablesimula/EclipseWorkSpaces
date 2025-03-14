@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
+import bec.util.Util;
 import bec.value.ProgramAddress;
 import bec.value.Value;
 import bec.virtualMachine.RTStack.RTStackItem;
@@ -18,7 +19,7 @@ import bec.virtualMachine.RTStack.RTStackItem;
 //			...
 //			LOCAL
 public class RTFrame {
-	public RTFrame enclFrame;		// Set at Runtime 
+	public RTFrame enclFrame;		// Set at Runtime: SVM_CALLSYS, SCM_PRECALL, SVM_RETIRN
 	public ProgramAddress rutAddr;	// Set at Runtime
 	public int rtStackIndex;		// Set at Runtime
 	int exportSize;
@@ -34,23 +35,43 @@ public class RTFrame {
 		return exportSize + importSize + 1 + localSize; 
 	}
 	
+	public String toLine() {
+		StringBuilder sb = new StringBuilder();
+		int idx = rtStackIndex;
+		int stx = idx + exportSize + importSize + 1 + localSize;
+		boolean first = true;
+		sb.append("Frame["+(stx-idx)+"]: ");
+		while(idx < stx) {
+			RTStackItem item = RTStack.load(idx++);
+			if(! first) sb.append(", "); first = false;
+			sb.append(item.value());
+		}
+		sb.append("  Stack["+(RTStack.size()-idx)+"]: ");
+		first = true;
+		while(idx < RTStack.size()) {
+			RTStackItem item = RTStack.load(idx++);
+			if(! first) sb.append(", "); first = false;
+			sb.append(item.value());
+		}
+		return sb.toString();
+	}
+	
 	public void dump(String title) {
 		System.out.println("==================== " + title + " RTFrame'DUMP ====================");
 		System.out.println("   ROUTINE: " + rutAddr + " curFrame.rtStackIndex=" + RTStack.curFrame.rtStackIndex);
 		String indent = "            ";
-		int idx = RTStack.curFrame.rtStackIndex;
-		if(exportSize > 0) {
-			for(int i=0;i<exportSize;i++) {
-//				RTStackItem item = RTStack.load(idx);
-				RTStackItem item = RTStack.load(idx);
-				System.out.println(indent+"EXPORT: " + idx + ": " + item.value()); idx++;
-			}
-		}
-		for(int i=0;i<importSize;i++) {
-			RTStackItem item = RTStack.load(idx);
-			System.out.println(indent+"IMPORT: " + idx + ": " + item.value()); idx++;
-		}
 		try {
+			int idx = RTStack.curFrame.rtStackIndex;
+			if(exportSize > 0) {
+				for(int i=0;i<exportSize;i++) {
+					RTStackItem item = RTStack.load(idx);
+					System.out.println(indent+"EXPORT: " + idx + ": " + item.value()); idx++;
+				}
+			}
+			for(int i=0;i<importSize;i++) {
+				RTStackItem item = RTStack.load(idx);
+				System.out.println(indent+"IMPORT: " + idx + ": " + item.value()); idx++;
+			}
 			System.out.println(indent+"RETURN: " + idx + ": " + RTStack.load(idx)); idx++;
 			for(int i=0;i<localSize;i++) {
 				RTStackItem item = RTStack.load(idx);
@@ -65,10 +86,28 @@ public class RTFrame {
 		if(rutAddr != null) rutAddr.segment().dump(title);
 	}
 	
-//	@Override	
-//	public String toString() {
-//		return "CALL     " + rutAddr + " Return=" + returSlot;
-//	}
+	public ProgramAddress returAddress() {
+//		RTStack.dumpRTStack("RTFrame.returAddress: STACK");
+//		this.dump("");
+//		System.out.println("RTFrame.returAddress: enclFrame="+enclFrame);
+//		System.out.println("RTFrame.returAddress: rutAddr="+rutAddr);
+//		System.out.println("RTFrame.returAddress: rtStackIndex="+rtStackIndex);
+//		System.out.println("RTFrame.returAddress: exportSize="+exportSize);
+//		System.out.println("RTFrame.returAddress: importSize="+importSize);
+//		int idx = RTStack.curFrame.rtStackIndex+exportSize + importSize;
+		int idx = rtStackIndex+exportSize + importSize;
+//		System.out.println("RTFrame.returAddress: idx="+idx);
+		RTStackItem ret = RTStack.load(idx);
+		ProgramAddress value = (ProgramAddress) ret.value();
+//		System.out.println("RTFrame.returAddress: value="+value.getClass().getSimpleName());
+//		Util.IERR(""+ret.getClass().getSimpleName()+"  "+ret);
+		return value;
+	}
+	
+	@Override	
+	public String toString() {
+		return "FRAME " + rutAddr;// + " Return=" + returSlot;
+	}
 
 	// ***********************************************************************************************
 	// *** Attribute File I/O

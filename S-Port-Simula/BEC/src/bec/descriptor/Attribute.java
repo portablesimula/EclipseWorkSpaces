@@ -40,6 +40,10 @@ public class Attribute extends Descriptor {
 		return new Attribute(Kind.K_LocalVar, tag, type);
 	}
 	
+	public int allocSize() {
+		return size * repCount;
+	}
+	
 	@Override
 	public void print(final String indent) {
 		System.out.println(indent + this);
@@ -47,7 +51,7 @@ public class Attribute extends Descriptor {
 	
 	@Override
 	public String toString() {
-		return "Attribute: " + tag + " rela=" + rela + ", size=" + size;
+		return "Attribute: " + tag + " rela=" + rela + ", size=" + size + ", repCount=" + repCount;
 	}
 
 	// ***********************************************************************************************

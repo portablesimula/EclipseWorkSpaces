@@ -25,7 +25,9 @@ public abstract class ZEROAREA extends Instruction {
 //		%+E        PreMindMask:=wOR(PreMindMask,uEDI); Qf1(qPUSHR,qEDI,cOBJ);
 //		%+E        Qf2(qLOADC,0,qEAX,cVAL,0); Qf2(qRSTRW,qZERO,qCLD,cVAL,qREP);
 		CTStack.checkTosType(Type.T_OADDR); CTStack.checkSosValue(); CTStack.checkSosType(Type.T_OADDR);
-		Global.PSEG.emit(new SVM_NOT_IMPL(), "ZEROAREA: ");
+		
+//		Global.PSEG.emit(new SVM_NOT_IMPL("ZEROAREA: "), "ZEROAREA: "); // TODO: TESTING - DENNE MÅ SKRIVES
+		
 		CTStack.pop();
 //		Util.IERR("NOT IMPL");
 	}

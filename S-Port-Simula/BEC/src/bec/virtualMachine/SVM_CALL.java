@@ -11,14 +11,14 @@ import bec.value.ProgramAddress;
 import bec.value.Value;
 
 public class SVM_CALL extends SVM_Instruction {
-	ProgramAddress rutAddr;
-	ObjectAddress returSlot;
+	private ProgramAddress rutAddr;
+	private ObjectAddress returSlot;
 
 	public SVM_CALL(ProgramAddress rutAddr, ObjectAddress returSlot) {
 		this.opcode = SVM_Instruction.iCALL;
 		this.rutAddr = rutAddr;
 		this.returSlot = returSlot;
-		System.out.println("NEW SVM_CALL: "+this);
+//		System.out.println("NEW SVM_CALL: "+this);
 	}
 	
 	public static SVM_CALL ofTOS(ObjectAddress returSlot) {
@@ -38,7 +38,8 @@ public class SVM_CALL extends SVM_Instruction {
 			// CALL-TOS
 			Global.PSC = (ProgramAddress) RTStack.pop().value();
 			Util.IERR("SJEKK DETTE");			
-		} else Global.PSC = rutAddr;
+//		} else Global.PSC = rutAddr;
+		} else Global.PSC = rutAddr.copy();
 //		Util.IERR("");
 	}
 	
@@ -61,7 +62,7 @@ public class SVM_CALL extends SVM_Instruction {
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
-		oupt.writeKind(opcode);
+		oupt.writeOpcode(opcode);
 		returSlot.write(oupt);
 		if(rutAddr != null) {
 			oupt.writeBoolean(true);

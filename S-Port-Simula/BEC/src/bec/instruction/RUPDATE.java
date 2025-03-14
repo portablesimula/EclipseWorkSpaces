@@ -6,9 +6,10 @@ import bec.compileTimeStack.StackItem;
 import bec.util.Global;
 import bec.util.Util;
 import bec.value.ObjectAddress;
-import bec.virtualMachine.SVM_POP2MEM;
+import bec.virtualMachine.SVM_PEEK2MEM;
 
 public abstract class RUPDATE extends Instruction {
+	private static final boolean DEBUG = false;
 	
 	/**
 	 * assign_instruction ::= assign | update | rupdate
@@ -22,18 +23,19 @@ public abstract class RUPDATE extends Instruction {
 	 * This instruction (“reverse update”) works almost like update with the sole exception that the
 	 * roles of TOS and SOS are interchanged, i.e. the value transfer is from SOS to TOS.	 */
 	public static void ofScode() {
-		CTStack.dumpStack("RUPDATE-1: ");
+//		if(DEBUG) CTStack.dumpStack("RUPDATE-1: ");
 		CTStack.checkTosRef(); CTStack.checkSosValue(); CTStack.checkTypesEqual();
 //		ObjectAddress adr = Util.getTosDstAdr();
-		AddressItem adr = (AddressItem) CTStack.TOS;
-		System.out.println("RUPDATE.ofScode: adr="+adr.objReg);
-//		Util.IERR("");
-		CTStack.dumpStack("RUPDATE-2: ");
-		StackItem tos = CTStack.pop();
+		AddressItem adr = (AddressItem) CTStack.pop();
+		if(DEBUG) {
+			System.out.println("RUPDATE.ofScode: adr="+adr);
+			System.out.println("RUPDATE.ofScode: sos="+CTStack.TOS);
+//			Util.IERR("");
+//			CTStack.dumpStack("RUPDATE-2: ");
+		}
 //		CTStack.dumpStack("RUPDATE: ");
-		Global.PSEG.emit(new SVM_POP2MEM(adr, tos.size), "RUPDATE: "); // Store into adr
-		Global.PSEG.dump("RUPDATE: ");
-//		Util.IERR("");
+		Global.PSEG.emit(new SVM_PEEK2MEM(adr, adr.size), "RUPDATE: "); // Store into adr
+//		if(DEBUG) Global.PSEG.dump("RUPDATE: ");
 	}
 
 }

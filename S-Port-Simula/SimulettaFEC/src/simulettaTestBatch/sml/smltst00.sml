@@ -52,4 +52,6 @@ begin
    IF nError = 0 then prt2("--- NO ERRORS FOUND IN ",PROGRAM_NAME) endif;
    if verbose then ed_str("--- END "); ed_str(PROGRAM_NAME); ed_str(" -- nError="); ed_int(nError); ed_out endif;
 
+%   TERMIN(0,"NORMAL END-OF-PROGRAM");
+
  end;

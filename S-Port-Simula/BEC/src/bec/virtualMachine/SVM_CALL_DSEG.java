@@ -37,7 +37,7 @@ public class SVM_CALL_DSEG extends SVM_Instruction {
 			// CALL-TOS
 			Global.PSC = (ProgramAddress) RTStack.pop().value();
 			Util.IERR("");			
-		} else Global.PSC = rutAddr;
+		} else Global.PSC = rutAddr.copy();
 //		Util.IERR("");
 	}
 	
@@ -60,7 +60,7 @@ public class SVM_CALL_DSEG extends SVM_Instruction {
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
-		oupt.writeKind(opcode);
+		oupt.writeOpcode(opcode);
 		prfAddr.write(oupt);
 		if(rutAddr != null) {
 			oupt.writeBoolean(true);

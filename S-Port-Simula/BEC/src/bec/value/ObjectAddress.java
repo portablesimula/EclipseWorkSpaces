@@ -18,8 +18,8 @@ import bec.virtualMachine.RTStack.RTStackItem;
 
 public class ObjectAddress extends Value {
 //	public DataSegment seg;
-	String segID;
-	public int ofst;
+	public String segID;
+	private int ofst;
 	
 	public ObjectAddress(String segID,	int ofst) {
 		this.segID = segID;
@@ -63,13 +63,21 @@ public class ObjectAddress extends Value {
 	}
 	
 	
-	public ObjectAddress ofset(int ofst) {
-		return new ObjectAddress(segID, this.ofst + ofst);
-	}
-	
 	public DataSegment segment() {
 		if(segID == null) return null;
 		return (DataSegment) Segment.lookup(segID);
+	}
+	
+	public Value copy() {
+		return new ObjectAddress(segID,	ofst);
+	}
+	
+	public int getOfst() { return ofst; }
+	public void incrOffset() { ofst++; }
+	public void decrOffset() { ofst--; }
+	
+	public ObjectAddress addOffset(int ofst) {
+		return new ObjectAddress(segID, this.ofst + ofst);
 	}
 	
 	public void store(Value value, String comment) {
@@ -91,7 +99,8 @@ public class ObjectAddress extends Value {
 		if(segID == null) {
 			// load from rel-addr  curFrame + ofst
 //			System.out.println("ObjectAddress.load: curFrame="+RTStack.curFrame.rtStackIndex);
-			RTStackItem item = RTStack.load(RTStack.curFrame.rtStackIndex + ofst);
+			int bias = (RTStack.curFrame == null)? 0 : RTStack.curFrame.rtStackIndex;
+			RTStackItem item = RTStack.load(bias + ofst);
 //			System.out.println("ObjectAddress.load: value="+value);
 //			Util.IERR("");
 			return item.value();
@@ -103,7 +112,25 @@ public class ObjectAddress extends Value {
 		return value;
 		}
 	}
-	
+
+
+	@Override
+	public Value add(Value other) {
+		if(other == null) return this;
+		if(other instanceof IntegerValue ival) {
+			return new ObjectAddress(this.segID, this.ofst + ival.value);
+		} else if(other instanceof ObjectAddress oaddr) {
+			System.out.println("ObjectAddress.add: this="+this);
+			System.out.println("ObjectAddress.add: other="+other);
+			if(!oaddr.segID.equals(segID))
+				Util.IERR("Illegal ObjectAddress'add operation: "+oaddr.segID+" != "+segID);
+			return new ObjectAddress(this.segID, this.ofst + oaddr.ofst);
+		} else {
+			Util.IERR(""+other.getClass().getSimpleName()+"  "+other);
+			return null;
+		}
+	}
+
 //	public void execute() {
 //		ProgramSegment seg = (ProgramSegment) segment();
 //		SVM_Instruction cur = seg.instructions.get(ofst);
@@ -113,8 +140,12 @@ public class ObjectAddress extends Value {
 //	}
 	
 	public String toString() {
-		String s = (segID == null) ? "RELADR" : segID;
-		return s + '[' + ofst + ']';
+		if(segID == null) {
+			return "RELADR[curFrame+" + ofst + ']';
+		} else {
+			return segID + '[' + ofst + ']';
+			
+		}
 	}
 
 	// ***********************************************************************************************

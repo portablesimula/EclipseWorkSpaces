@@ -6,6 +6,8 @@ import java.io.OutputStream;
 
 import bec.descriptor.Kind;
 import bec.util.Scode;
+import bec.virtualMachine.RTRegister;
+import bec.virtualMachine.SVM_Instruction;
 
 public class AttributeOutputStream {
 	DataOutputStream oupt;
@@ -28,10 +30,19 @@ public class AttributeOutputStream {
 
     public void writeInstr(int i) throws IOException {
 		if(TRACE) System.out.println("AttributeOutputStream.writeInstr: "+i+':'+Scode.edInstr(i));
-		
-//		new Exception("Stack trace").printStackTrace(System.out);
-		
 		if(i > Scode.S_max || i < 0) throw new IllegalArgumentException("Argument = "+i);
+		oupt.writeByte(i);
+	}
+
+    public void writeOpcode(int i) throws IOException {
+		if(TRACE) System.out.println("AttributeOutputStream.writeOpcode: "+i+':'+SVM_Instruction.edOpcode(i));
+		if(i > SVM_Instruction.iMax || i <= 0) throw new IllegalArgumentException("Argument = "+i);
+		oupt.writeByte(i);
+	}
+
+    public void writeReg(int i) throws IOException {
+		if(TRACE) System.out.println("AttributeOutputStream.writeOpcode: "+i+':'+SVM_Instruction.edOpcode(i));
+		if(i > RTRegister.rMax || i < 0) throw new IllegalArgumentException("Argument = "+i);
 		oupt.writeByte(i);
 	}
 

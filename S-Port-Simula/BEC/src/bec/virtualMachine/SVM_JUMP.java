@@ -20,7 +20,7 @@ public class SVM_JUMP extends SVM_Instruction {
 	@Override
 	public void execute() {
 //		RTStack.dumpRTStack("SVM_JUMPIF: ");
-		Global.PSC = destination;
+		Global.PSC = destination.copy();
 //		Util.IERR("");
 	}
 	
@@ -41,7 +41,7 @@ public class SVM_JUMP extends SVM_Instruction {
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
-		oupt.writeKind(opcode);
+		oupt.writeOpcode(opcode);
 		
 		if(this.destination == null) {
 			Global.PSEG.dump("SVM_JUMP NULL: ");

@@ -37,16 +37,43 @@ public class ProgramSegment extends Segment {
 	public void emit(SVM_Instruction value,String cmnt) {
 		instructions.add(value);
 		comment.add(cmnt);
+//		String s = value.toString();
+//		while(s.length() < 30) s += ' ';
+//		System.out.println("          " + s + " " + cmnt);
 	}
 	
+	private int lastListed;
+	public void listInstructions() {
+		while(lastListed < instructions.size()) {
+			listIntruction("                                            ==> ",lastListed++);
+		}
+	}
+	
+//	public void listIntruction(SVM_Instruction instr, String comment) {
+	public void listIntruction(String indent, int idx) {
+		String line = "" + idx + ": ";
+		while(line.length() < 8) line = " " +line;
+		String value = ""+instructions.get(idx);
+		while(value.length() < 50) value = value + ' ';
+		System.out.println(indent + line + value + "   " + comment.get(idx));
+		
+	}
+	
+	@Override
 	public void dump(String title) {
+		dump(title,0,instructions.size());
+	}
+	
+	@Override
+	public void dump(String title,int from,int to) {
 		System.out.println("========================== " + title + ident + " DUMP ==========================");
-		for(int i=0;i<instructions.size();i++) {
-			String line = "" + i + ": ";
-			while(line.length() < 8) line = " " +line;
-			String value = ""+instructions.get(i);
-			while(value.length() < 50) value = value + ' ';
-			System.out.println(line + value + "   " + comment.get(i));
+		for(int i=from;i<to;i++) {
+//			String line = "" + i + ": ";
+//			while(line.length() < 8) line = " " +line;
+//			String value = ""+instructions.get(i);
+//			while(value.length() < 50) value = value + ' ';
+//			System.out.println(line + value + "   " + comment.get(i));
+			listIntruction("",i);
 		}
 		System.out.println("========================== " + title + ident + " END  ==========================");
 	}

@@ -21,6 +21,11 @@ public class Value {
 		Thread.dumpStack();
 	}
 
+	public Value copy() {
+		Util.IERR("Method 'copy' need a redefinition in " + this.getClass().getSimpleName());
+		return null;
+	}
+
 	public Value neg() {
 		Util.IERR("Method 'neg' need a redefinition in " + this.getClass().getSimpleName());
 		return null;

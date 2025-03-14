@@ -25,6 +25,8 @@ public class ProfileDescr extends Descriptor {
 	public int exportSize; // Size of Export slot
 	public int frameSize; // Size of Frame
 	
+	private static final boolean DEBUG = false;
+	
 	//	NOT SAVED:
 	private Vector<Variable> imports;
 	public Variable export;
@@ -163,8 +165,10 @@ public class ProfileDescr extends Descriptor {
 //				Util.IERR("NOT IMPL");				
 			}
 			
-			prf.print("ProfileDescr.ofProfile: PROFILE: ");
-//			Util.IERR("NOT IMPL");
+			if(DEBUG) {
+				prf.print("ProfileDescr.ofProfile: PROFILE: ");
+//				Util.IERR("NOT IMPL");
+			}
 			prf.frameSize = rela;
 		}		
 		

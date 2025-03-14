@@ -34,6 +34,7 @@ public class ModuleIO {
 	public static void outputModule(int nXtag) throws IOException {
 		if(Global.ATTR_OUTPUT_TRACE)
 			System.out.println("**************   Begin  -  Output-module  " + Global.modident + "  " + Global.modcheck + "   **************");
+		if(Global.outputDIR==null || Global.outputDIR.isEmpty()) Util.IERR("No Output Directory Specified");
 //		AttributeOutputStream modoupt = new AttributeOutputStream(new FileOutputStream(Global.getAttrFileName(Global.modident, ".svm")));
 		AttributeOutputStream modoupt = new AttributeOutputStream(new FileOutputStream(Global.outputDIR+Global.modident+".svm"));
 		modoupt.writeKind(Kind.K_Module);

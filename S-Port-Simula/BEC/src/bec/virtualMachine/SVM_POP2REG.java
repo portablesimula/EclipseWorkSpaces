@@ -13,6 +13,8 @@ public class SVM_POP2REG extends SVM_Instruction {
 	int reg;
 	int count;
 	
+	private static final boolean DEBUG = false;
+	
 	public SVM_POP2REG(int reg, int count) {
 		this.opcode = SVM_Instruction.iPOP2REG;
 		this.reg = reg;
@@ -25,14 +27,18 @@ public class SVM_POP2REG extends SVM_Instruction {
 	
 	@Override
 	public void execute() {
-//		RTStack.dumpRTStack("POP2REG: "+RTRegister.edReg(reg)+" count="+count);
-		RTStack.curFrame.dump("POP2REG: "+RTRegister.edReg(reg)+" count="+count+"  ");
+		if(DEBUG) {
+//			RTStack.dumpRTStack("POP2REG: "+RTRegister.edReg(reg)+" count="+count);
+			RTStack.curFrame.dump("POP2REG: "+RTRegister.edReg(reg)+" count="+count+"  ");
+		}
 		for(int i=0;i<count;i++) {
 			RTRegister.putValue(reg+i, RTStack.pop().value());
 		}
 		Global.PSC.ofst++;
-//		target.segment().dump("POP2MEM.execute: ");
-//		Util.IERR("");
+		if(DEBUG) {
+//			target.segment().dump("PEEK2MEM.execute: ");
+//			Util.IERR("");
+		}
 	}
 	
 	public String toString() {
@@ -59,7 +65,7 @@ public class SVM_POP2REG extends SVM_Instruction {
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
-		oupt.writeKind(opcode);
+		oupt.writeOpcode(opcode);
 		oupt.writeShort(reg);
 		oupt.writeShort(count);
 	}

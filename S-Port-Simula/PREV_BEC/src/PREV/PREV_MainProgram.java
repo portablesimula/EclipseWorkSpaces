@@ -58,7 +58,7 @@ public class PREV_MainProgram extends PREV_S_Module {
 		if(Scode.curinstr != Scode.S_ENDPROGRAM)
 			Util.IERR("Improper termination of s-program");
  		
-  		if(Global.PRINT_SVM_CODE) printTree(0);
+  		if(Global.PRINT_GENERATED_SVM_CODE) printTree(0);
   		
 		Global.dumpDisplay("END MainProgram: ");
 		

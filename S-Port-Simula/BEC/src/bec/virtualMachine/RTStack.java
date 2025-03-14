@@ -2,13 +2,12 @@ package bec.virtualMachine;
 
 import java.util.Stack;
 
-import bec.util.Scode;
+import bec.util.Global;
 import bec.util.Type;
 import bec.util.Util;
-import bec.value.GeneralAddress;
 import bec.value.IntegerValue;
 import bec.value.ObjectAddress;
-import bec.value.TextValue;
+import bec.value.ProgramAddress;
 import bec.value.Value;
 
 public abstract class RTStack {
@@ -20,14 +19,36 @@ public abstract class RTStack {
 	public static SVM_PRECALL PRECALL;
 
 	public static void checkStackEmpty() {
-		int frameHeadSize = curFrame.headSize();
-		int idx = (curFrame == null)? 0 : curFrame.rtStackIndex;
-//		System.out.println("RTStack.checkStackEmpty: size="+size()+"  rtStackIndex=" + idx + "  frameHeadSize=" + frameHeadSize );
-		if((idx + frameHeadSize) != size()) {
+		if(curSize() != 0) {
+			int frameHeadSize = (curFrame == null)? 0 : curFrame.headSize();
+			int idx = (curFrame == null)? 0 : curFrame.rtStackIndex;
 			dumpRTStack("Check RTStack Empty - FAILED: ");
-			curFrame.dump("Check RTStack Empty - FAILED: ");
-			Util.IERR("Check RTStack Empty - FAILED: ");
+			if(curFrame != null) curFrame.dump("Check RTStack Empty - FAILED: ");
+//			printCallStack("Check RTStack Empty - FAILED: ");
+			Util.IERR("Check RTStack Empty - FAILED: size="+size()+"  rtStackIndex=" + idx + "  frameHeadSize=" + frameHeadSize );
 		}
+	}
+	
+	public static void printCallStack(String title) {
+		System.out.println("CallStack: " +title);
+		System.out.println("     at "+Global.PSC);
+		RTFrame frame = curFrame;
+		while(frame != null) {
+			ProgramAddress ret =  frame.returAddress();
+			System.out.println("     at "+ret);
+			frame = frame.enclFrame;
+		}
+	}
+	
+	/**
+	 * Return Stack size within the current Frame
+	 * @return Stack size within the current Frame
+	 */
+	public static int curSize() {
+		if(curFrame == null) return size();
+		int frameHeadSize = curFrame.headSize();
+		int idx = curFrame.rtStackIndex;
+		return size() - (idx + frameHeadSize);
 	}
 	
 	public static int size() {
@@ -96,21 +117,33 @@ public abstract class RTStack {
 //		Util.IERR("");
 	}
 	
+	public static RTStackItem peek() {
+		return stack.peek();
+//		Util.IERR("");
+	}
+	
 	public static int popInt() {
 		IntegerValue ival = (IntegerValue) pop().value();
 		return (ival==null)? 0 : ival.value;
 	}
 	
-	public static String popString() {
-		int nchr = RTStack.popInt();
+	public static ObjectAddress popGADDR() {
 		int ofst = RTStack.popInt();
 		ObjectAddress chradr = (ObjectAddress) RTStack.pop().value();
+		return chradr.addOffset(ofst);
+	}
+	
+	public static String popString() {
+		int nchr = RTStack.popInt();
+//		int ofst = RTStack.popInt();
+//		ObjectAddress chradr = (ObjectAddress) RTStack.pop().value();
+//		ObjectAddress x = chradr.ofset(ofst);
+		ObjectAddress x = RTStack.popGADDR();
 		
-		ObjectAddress x = chradr.ofset(ofst);
 		StringBuilder sb = new StringBuilder();
 		for(int i=0;i<nchr;i++) {
-			IntegerValue ival = (IntegerValue) x.load(); x.ofst++;
-			char c = (char) ival.value;
+			IntegerValue ival = (IntegerValue) x.load(); x.incrOffset();
+			char c = (ival==null)? '.' : (char) ival.value;
 //			System.out.println("SVM_SYSCALL.edString: c="+c);
 			sb.append(c);
 		}
@@ -124,6 +157,19 @@ public abstract class RTStack {
 			s += ("   " + item.value());
 		}
 		System.out.println(s);
+	}
+	
+	public static String toLine() {
+		StringBuilder sb = new StringBuilder();
+		int n = stack.size();
+		sb.append("Stack["+n+"]: ");
+		boolean first = true;
+		for(int i=0;i<n;i++) {
+			RTStackItem item = stack.get(i);
+			if(! first) sb.append(", "); first = false;
+			sb.append(item.value());
+		}
+		return sb.toString();
 	}
 	
 	public static void dumpRTStack(String title) {

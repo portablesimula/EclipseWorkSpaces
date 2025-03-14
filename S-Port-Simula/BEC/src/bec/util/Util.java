@@ -10,6 +10,7 @@ import bec.compileTimeStack.StackItem;
 import bec.compileTimeStack.Temp;
 import bec.virtualMachine.RTAddress;
 import bec.virtualMachine.RTRegister;
+import bec.virtualMachine.SVM_NOOP;
 import bec.virtualMachine.SVM_NOT_IMPL;
 import bec.virtualMachine.SVM_PUSH;
 
@@ -21,20 +22,20 @@ public class Util {
 
 	public static void ITRC(String id, String msg) {
 		if(Global.SCODE_INPUT_TRACE) {
-			Scode.traceBuff = new StringBuilder("Line " + Scode.curline + "  " + id + ": " + msg);
+			Scode.initTraceBuff("Line " + Scode.curline + "  " + id + ": " + msg);
 		}
 	}
 
 	public static void WARNING(String msg) {
 		if(Global.SCODE_INPUT_TRACE) {
-			System.out.println(Scode.traceBuff);
+			Scode.flushTraceBuff();
 		}
 		System.out.println("ERROR: " + msg);
 	}
 
 	public static void ERROR(String msg) {
 		if(Global.SCODE_INPUT_TRACE) {
-			System.out.println(Scode.traceBuff);
+			Scode.flushTraceBuff();
 		}
 		System.out.println("ERROR: " + msg);
 	}
@@ -134,8 +135,8 @@ public class Util {
 	// ***************************************************************
 	// *** GQ-Utilities
 	// ***************************************************************
-
-	public static void GQfetch(String comment) { //  ; --  M} ikke bruke qDI(se rupdate) --
+	private static final boolean DEBUG = false;
+	public static void GQfetch(String comment) {
 //	%-D Visible Routine GQfetchxx; --  M} ikke bruke qDI(se rupdate) --
 //	begin infix(MemAddr) opr; range(0:MaxType) type;
 //	      range(0:MaxWord) nbyte; range(0:MaxByte) cTYP;
@@ -143,15 +144,20 @@ public class Util {
 //	           opr:=GetTosSrcAdr;
 //			ObjectAddress addr = getTosSrcAdr();
 			AddressItem addr = (AddressItem) CTStack.TOS;
-			System.out.println("Util.GQfetch: addr="+addr);
+			if(DEBUG) System.out.println("Util.GQfetch: addr="+addr);
 			Type type = CTStack.TOS.type;
 //			int size = DataType.typeSize(type);
 			RTAddress rtAddr = new RTAddress(addr); 
+			if(DEBUG) System.out.println("Util.GQfetch: rtAddr="+rtAddr);
 			Global.PSEG.emit(new SVM_PUSH(rtAddr, type.size()), comment + " " +type);
 			CTStack.pop(); CTStack.pushTemp(type, RTRegister.qEAX, 1, "GQFetch: ");
-			CTStack.dumpStack("GQfetch: "+comment);
-			Global.PSEG.dump("GQfetch: "+comment);
-//			Util.IERR("NOT IMPL");
+			if(DEBUG) {
+				CTStack.dumpStack("GQfetch: "+comment);
+				Global.PSEG.dump("GQfetch: "+comment);
+//				Util.IERR("NOT IMPL");
+			}
+		} else {
+			Global.PSEG.emit(new SVM_NOOP(), "GQfetch: "+comment);
 		}
 	}
 
@@ -192,7 +198,7 @@ public class Util {
 //	      qi qua Qfrm2.aux.val:=aux; AppendQinstr(qi);
 
 //		Global.PSEG.emit(new SVM_POPK(aux), "qPOPKill: ");
-		Global.PSEG.emit(new SVM_NOT_IMPL(), "qPOPKill: qPOPKill: ");
+		Global.PSEG.emit(new SVM_NOT_IMPL("Util.qPOPKill: "+aux), "qPOPKill: qPOPKill: ");
 		Global.PSEG.dump("qPOPKill: ");
 		CTStack.dumpStack("qPOPKill: ");
 //		Util.IERR("qPOPKill:  ");

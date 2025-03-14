@@ -9,7 +9,7 @@ import bec.util.Scode;
 import bec.util.Type;
 
 public class BooleanValue extends Value {
-	boolean value;
+	public boolean value;
 	
 	/**
 	 * boolean_value ::= true | false

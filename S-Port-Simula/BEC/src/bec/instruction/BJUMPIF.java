@@ -36,7 +36,7 @@ public abstract class BJUMPIF extends Instruction {
 		CTStack.pop();
 		
 		ProgramAddress addr = Global.DESTAB[destination];
-		if(addr == null) Util.IERR("");
+		if(addr == null) Util.IERR("Destination is undefined");
 		Global.PSEG.emit(new SVM_JUMPIF(relation, addr), "BJUMPIF: "+destination+ " " + destination);
 		Global.DESTAB[destination] = null;
 		

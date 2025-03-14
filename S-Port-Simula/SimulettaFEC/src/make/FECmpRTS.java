@@ -26,21 +26,21 @@ public final class FECmpRTS {
 		names.add("RT");   // ==> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/RT.scd
 		names.add("SYSR"); // ==> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/SYSR.scd
 		names.add("KNWN"); // ==> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/KNWN.scd
-		names.add("UTIL"); // ==> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/UTIL.scd
-		
-		names.add("STRG"); // ==> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/STRG.scd
-		names.add("CENT"); // ==> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/CENT.scd
-		names.add("CINT"); // ==> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/CINT.scd
-		names.add("ARR");  // ==> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/ARR.scd
-		names.add("FORM"); // ==> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/FORM.scd
-		names.add("LIBR"); // ==> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/LIBR.scd
-		names.add("FIL");  // ==> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/FIL.scd
-		names.add("SMST"); // ==> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/SMST.scd
-		names.add("SML");  // ==> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/SML.scd
-		names.add("EDIT"); // ==> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/EDIT.scd
-		names.add("MNTR"); // ==> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/MNTR.scd
-
-		names.add("RTS$INTERFACE"); // Will call RTS_FEC_InterfaceGenerator  which creates the files:
+//		names.add("UTIL"); // ==> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/UTIL.scd
+//		
+//		names.add("STRG"); // ==> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/STRG.scd
+//		names.add("CENT"); // ==> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/CENT.scd
+//		names.add("CINT"); // ==> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/CINT.scd
+//		names.add("ARR");  // ==> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/ARR.scd
+//		names.add("FORM"); // ==> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/FORM.scd
+//		names.add("LIBR"); // ==> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/LIBR.scd
+//		names.add("FIL");  // ==> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/FIL.scd
+//		names.add("SMST"); // ==> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/SMST.scd
+//		names.add("SML");  // ==> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/SML.scd
+//		names.add("EDIT"); // ==> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/EDIT.scd
+//		names.add("MNTR"); // ==> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/MNTR.scd
+//
+//		names.add("RTS$INTERFACE"); // Will call RTS_FEC_InterfaceGenerator  which creates the files:
 									//
 		                // NEI      // - "C:/Simuletta/Attrs/BEC/simulaRTS/RTS$INTERFACE.dat"
 									// - "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulettaFEC/src/simulaRTS/sml/RTS$INTERFACE.sml"
@@ -95,7 +95,7 @@ public final class FECmpRTS {
 		
 		// Coder Trace Options
 //		Option.TRACE_FIND_MEANING=true;
-//		Option.TRACE_CODING=1;
+		Option.TRACE_CODING=1;
 		
 		//Option.TRACE_REPAIRING=true;
 

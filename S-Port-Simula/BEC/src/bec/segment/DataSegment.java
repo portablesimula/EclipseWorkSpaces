@@ -25,9 +25,11 @@ public class DataSegment extends Segment {
 	Vector<Value> values;
 	Vector<String> comment;
 	
+	private static final boolean DEBUG = false;
+
 	public DataSegment(String ident, int segmentKind) {
 		super(ident, segmentKind);
-		System.out.println("NEW DataSegment: " + this);
+//		System.out.println("NEW DataSegment: " + this);
 //		Thread.dumpStack();
 		this.ident = ident.toUpperCase();
 		this.segmentKind = segmentKind;
@@ -58,9 +60,12 @@ public class DataSegment extends Segment {
 		return addr;
 	}
 
-	public void emitDefaultValue(int size, String cmnt) {
+	public void emitDefaultValue(int size, int repCount, String cmnt) {
 //		System.out.println("DataSegment.emitDefaultValue: size="+size);
-		for(int i=0;i<size;i++) {
+		if(repCount < 1) Util.IERR("");
+		int n = size * repCount;
+//		for(int i=0;i<size;i++) {
+		for(int i=0;i<n;i++) {
 			emit(null, cmnt);
 		}
 	}
@@ -70,17 +75,39 @@ public class DataSegment extends Segment {
 		int n = chars.length();
 		for(int i=0;i<n;i++) {
 			emit(new IntegerValue(Type.T_CHAR, chars.charAt(i)), cmnt);
-			
 		}
-		comment.add(cmnt);
+		return addr;
+	}
+	
+	public ObjectAddress emitRepText(String cmnt) {
+		Vector<TextValue> texts = new Vector<TextValue>();
+		do { Scode.inputInstr(); texts.add(TextValue.ofScode());
+		} while(Scode.nextByte() == Scode.S_TEXT);
+		ObjectAddress addr = nextAddress();
+		int n = texts.size();
+		for(int i=0;i<n;i++) {
+			TextValue tval = texts.get(i);
+			if(DEBUG) System.out.println("DataSegment.emitRepText["+i+"]: "+tval);
+			emit(tval.addr,"CHRADR");
+			emit(new IntegerValue(Type.T_INT,0),"OFST");
+			emit(new IntegerValue(Type.T_INT,tval.length),"LNG");
+//			ELLER:
+//			emit(new IntegerValue(Type.T_INT,tval.length),"LNG");
+//			emit(new IntegerValue(Type.T_INT,0),"OFST");
+//			emit(tval.addr,"CHRADR");
+		}
 		return addr;
 	}
 
 	public ObjectAddress emitRepetitionValue(String comment) {
+		if(Scode.nextByte() == Scode.S_TEXT) return emitRepText(comment);
 //		MemAddr addr = Global.DSEG.nextAddress();
 		ObjectAddress addr = nextAddress();
+		if(DEBUG) {
+			System.out.println("DataSegment.emitRepetitionValue: "+Scode.edInstr(Scode.nextByte())+"  Comment="+comment);
+		}
 	LOOP:while(true) {
-//			if(Global.ATTR_OUTPUT_TRACE)
+			if(DEBUG)
 				System.out.println("DataSegment.emitRepetitionValue: "+Scode.edInstr(Scode.nextByte())+"  Comment="+comment);
 			switch(Scode.nextByte()) {
 				case Scode.S_TEXT:     Scode.inputInstr(); emit(TextValue.ofScode(), comment); break;
@@ -106,12 +133,14 @@ public class DataSegment extends Segment {
 			    case Scode.S_C_DOT:    Scode.inputInstr(); emit(DotAddress.ofScode(), comment); break;
 			    case Scode.S_C_RECORD: Scode.inputInstr(); emitRecordValue(comment); break;
 				default:
-					System.out.println("DataSegment.emitRepetitionValue: TERMINATED BY: "+Scode.edInstr(Scode.nextByte())+"  Comment="+comment);
+					if(DEBUG)
+						System.out.println("DataSegment.emitRepetitionValue: TERMINATED BY: "+Scode.edInstr(Scode.nextByte())+"  Comment="+comment);
 					break LOOP;
 			}
 		}
-	this.dump("emitRepetitionValue: ");
-	return addr;
+		if(Global.ATTR_OUTPUT_TRACE)
+			this.dump("emitRepetitionValue: ");
+		return addr;
 	}
 
 	/**
@@ -139,11 +168,16 @@ public class DataSegment extends Segment {
 	}
 
 
-	
+	@Override
 	public void dump(String title) {
+		dump(title,0,values.size());
+	}
+	
+	@Override
+	public void dump(String title,int from,int to) {
 		if(values.size() == 0) return;
 		System.out.println("==================== " + title + ident + " DUMP ====================" + this.hashCode());
-		for(int i=0;i<values.size();i++) {
+		for(int i=from;i<to;i++) {
 			String line = "" + i + ": ";
 			while(line.length() < 8) line = " " +line;
 			String value = ""+values.get(i);

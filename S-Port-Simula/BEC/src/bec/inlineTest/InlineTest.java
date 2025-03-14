@@ -6,13 +6,13 @@ import bec.BecCompiler;
 public class InlineTest {
 	
 	public static void main(String[] argv) {
-//		String scodeSource = Pick_RTS_Source();		
-		String scodeSource = Pick_FEC_Source();
+		String scodeSource = Pick_RTS_Source();		
+//		String scodeSource = Pick_FEC_Source();
 		
 		Global.verbose = true;
 		Global.traceMode = 4;
 		Global.SCODE_INPUT_TRACE = true;
-		Global.PRINT_SVM_CODE = true;
+		Global.PRINT_GENERATED_SVM_CODE = true;
 		Global.ATTR_INPUT_TRACE = true;
 		Global.ATTR_OUTPUT_TRACE = true;
 //		Global.ATTR_INPUT_DUMP = true;
@@ -24,226 +24,227 @@ public class InlineTest {
 	}
 
 	private static String Pick_RTS_Source() {
-//		return "C:/Simuletta/SCode/simulaRTS/RT.scd";
-//		return "C:/Simuletta/SCode/simulaRTS/SYSR.scd";
-//		return "C:/Simuletta/SCode/simulaRTS/KNWN.scd";
-//		return "C:/Simuletta/SCode/simulaRTS/UTIL.scd";		
-//		return "C:/Simuletta/SCode/simulaRTS/STRG.scd";	
-//		return "C:/Simuletta/SCode/simulaRTS/CENT.scd";
-//		return "C:/Simuletta/SCode/simulaRTS/CINT.scd";
-//		return "C:/Simuletta/SCode/simulaRTS/ARR.scd";	
-//		return "C:/Simuletta/SCode/simulaRTS/FORM.scd";
-//		return "C:/Simuletta/SCode/simulaRTS/LIBR.scd";
-		return "C:/Simuletta/SCode/simulaRTS/FIL.scd";
+		Global.outputDIR = "C:/SPORT/RTS/";
+		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/RT.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/SYSR.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/KNWN.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/UTIL.scd";		
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/STRG.scd";	
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/CENT.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/CINT.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/ARR.scd";	
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/FORM.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/LIBR.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/FIL.scd";
 		
-//		return "C:/Simuletta/SCode/simulaRTS/SMST.scd";
-//		return "C:/Simuletta/SCode/simulaRTS/SML.scd";
-//		return "C:/Simuletta/SCode/simulaRTS/EDIT.scd";
-//		return "C:/Simuletta/SCode/simulaRTS/MNTR.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/SMST.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/SML.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/EDIT.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/MNTR.scd";
 	}
 
 
 	private static String Pick_FEC_Source() {
-		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst00.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst01.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst02.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst03.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst04.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst05.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst06.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst07.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst08.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst09.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst10.sim.scd";
+		Global.outputDIR = "C:/SPORT/TEST_BATCH/";
+		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst01.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst02.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst03.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst04.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst05.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst06.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst07.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst08.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst09.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst10.scd";
 //
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst11.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst12.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst13.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst14.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst15.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst16.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst17.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst18.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst19.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst20.sim.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst11.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst12.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst13.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst14.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst15.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst16.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst17.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst18.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst19.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst20.scd";
 //
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst21.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst22.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst23.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst24.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst25.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst26.sim.scd";  // ERROR: SORRY, switch element requiring thunk IS NOT IMPLEMENTED
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst27.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst28.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst29.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst30a.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst30.sim.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst21.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst22.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst23.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst24.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst25.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst26.scd";  // ERROR: SORRY, switch element requiring thunk IS NOT IMPLEMENTED
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst27.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst28.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst29.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst30a.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst30.scd";
 //
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst31.sim.scd";  // ERROR: SORRY, complex switch element IS NOT IMPLEMENTED
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst32.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst33.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst34.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst35.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst36.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst37.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst38.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst39.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/p40b.sim.scd";     // Precompile this for Simtst 40.
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/p40a.sim.scd";     // Precompile this for Simtst 40.
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/p40c.sim.scd";     // Precompile this for Simtst 40.
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst40.sim.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst31.scd";  // ERROR: SORRY, complex switch element IS NOT IMPLEMENTED
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst32.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst33.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst34.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst35.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst36.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst37.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst38.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst39.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/p40b.scd";     // Precompile this for Simtst 40.
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/p40a.scd";     // Precompile this for Simtst 40.
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/p40c.scd";     // Precompile this for Simtst 40.
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst40.scd";
 //
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/p41.sim.scd";        // Precompile this for Simtst 41.
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst41.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/SimulaTest.sim.scd"; // Precompile this for Simtst 42 ...
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst42.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst43.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst44.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst45.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst46.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst47.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst48.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst49.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst50.sim.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/p41.scd";        // Precompile this for Simtst 41.
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst41.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/SimulaTest.scd"; // Precompile this for Simtst 42 ...
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst42.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst43.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst44.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst45.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst46.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst47.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst48.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst49.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst50.scd";
 //
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst51.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst52.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst53.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst54.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst55.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst56.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst57.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst58.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst59.sim.scd";  // ERROR: lowerbound, upperbound not implemented
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst60.sim.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst51.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst52.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst53.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst54.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst55.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst56.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst57.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst58.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst59.scd";  // ERROR: lowerbound, upperbound not implemented
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst60.scd";
 //
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst61.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst62.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst63.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst64.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst65.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst66.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst67.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst68.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst69.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst70.sim.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst61.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst62.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst63.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst64.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst65.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst66.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst67.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst68.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst69.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst70.scd";
 //
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst71.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst72.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst73.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst74.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst75.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst76.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst77.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst78.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst79.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst80.sim.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst71.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst72.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst73.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst74.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst75.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst76.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst77.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst78.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst79.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst80.scd";
 //
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst81.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst82.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst83.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst84.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst85.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/separat.sim.scd"; // Precompile this for Simtst 86.
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst86.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst87.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst88.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst89.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst90.sim.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst81.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst82.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst83.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst84.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst85.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/separat.scd"; // Precompile this for Simtst 86.
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst86.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst87.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst88.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst89.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst90.scd";
 //		
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst91.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst92.sim.scd";  // ERROR: lowerbound, upperbound not implemented
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst93.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst94.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst95.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst96.sim.scd";  // ERROR: Wrong WARNING: HIDDEN x ignored, not PROTECTED
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst97.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst98.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst99.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst100.sim.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst91.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst92.scd";  // ERROR: lowerbound, upperbound not implemented
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst93.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst94.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst95.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst96.scd";  // ERROR: Wrong WARNING: HIDDEN x ignored, not PROTECTED
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst97.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst98.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst99.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst100.scd";
 //
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst101.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst102.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst103.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst104.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst105.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst106.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst107.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst108.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst109.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst110.sim.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst101.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst102.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst103.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst104.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst105.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst106.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst107.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst108.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst109.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst110.scd";
 //
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst111.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst112.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst113.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst114.sim.scd";  //ERROR: SWITCH STATEMENT NOT IMPLEMENTED
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst115.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst116.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst117.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst118.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/ExternalClass1.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/ExternalClass2.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst119.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst120.sim.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst111.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst112.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst113.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst114.scd";  //ERROR: SWITCH STATEMENT NOT IMPLEMENTED
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst115.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst116.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst117.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst118.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/ExternalClass1.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/ExternalClass2.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst119.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst120.scd";
 //
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst121.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst122.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst123.sim.scd";  //SORRY, switch element requiring thunk IS NOT IMPLEMENTED
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst124.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst125.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst126.sim.scd";  //SORRY, switch element requiring thunk IS NOT IMPLEMENTED
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst127.sim.scd";  //ERROR: SWITCH STATEMENT NOT IMPLEMENTED
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst128.sim.scd";  //SORRY: The new standard procedures  edit and edfix IS NOT IMPLEMENTD
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/Precompiled129.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst129.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst130.sim.scd";  //SORRY: Class DEC_Lib  IS NOT IMPLEMENTED
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst121.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst122.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst123.scd";  //SORRY, switch element requiring thunk IS NOT IMPLEMENTED
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst124.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst125.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst126.scd";  //SORRY, switch element requiring thunk IS NOT IMPLEMENTED
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst127.scd";  //ERROR: SWITCH STATEMENT NOT IMPLEMENTED
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst128.scd";  //SORRY: The new standard procedures  edit and edfix IS NOT IMPLEMENTD
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/Precompiled129.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst129.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst130.scd";  //SORRY: Class DEC_Lib  IS NOT IMPLEMENTED
 //
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst131.sim.scd";  //SORRY: Class CatchingErrors  IS NOT IMPLEMENTED
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst132.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst133.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst134.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst135.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst136.sim.scd";  //SORRY: Class CatchingErrors  IS NOT IMPLEMENTED
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst137.sim.scd";  //SORRY: Class CatchingErrors  IS NOT IMPLEMENTED
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst138.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst139.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst140.sim.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst131.scd";  //SORRY: Class CatchingErrors  IS NOT IMPLEMENTED
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst132.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst133.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst134.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst135.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst136.scd";  //SORRY: Class CatchingErrors  IS NOT IMPLEMENTED
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst137.scd";  //SORRY: Class CatchingErrors  IS NOT IMPLEMENTED
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst138.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst139.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst140.scd";
 //
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst141.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst142.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst143.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/Precompiled144.sim.scd"; //ERROR: (l. 77) 151: THIS used in prefix of pref.block
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst144.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst145.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst146.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst147.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst148.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst149.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst150.sim.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst141.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst142.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst143.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/Precompiled144.scd"; //ERROR: (l. 77) 151: THIS used in prefix of pref.block
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst144.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst145.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst146.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst147.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst148.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst149.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst150.scd";
 //
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst151.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst152.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst153.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst154.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/Pre155.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst155.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst156.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst157.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst158.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst159.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst160.sim.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst151.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst152.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst153.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst154.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/Pre155.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst155.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst156.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst157.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst158.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst159.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst160.scd";
 //
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst161.sim.scd";  //ERROR: Virtual match has wrong type or qualification
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst162.sim.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst161.scd";  //ERROR: Virtual match has wrong type or qualification
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst162.scd";
 //		
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst163.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst164.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst165.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst166.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst167.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst168.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst169.sim.scd";
-//		return "C:/GitHub/SimulaCompiler2/simulaTestBatch2/src/simulaTestBatch/scode/simtst170.sim.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst163.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst164.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst165.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst166.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst167.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst168.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst169.scd";
+//		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst170.scd";
 
 	}
 

@@ -9,6 +9,7 @@ import bec.descriptor.Kind;
 import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Util;
+import bec.virtualMachine.RTRegister;
 
 public class AttributeInputStream {
 //	String modID;
@@ -46,6 +47,12 @@ public class AttributeInputStream {
     	curinstr = inpt.readByte() & 0xFF;
     	if(TRACE) System.out.println("AttributeInputStream.readInstr: "+curinstr+':'+Scode.edInstr(curinstr));
 //    	return curinstr;
+	}
+    
+    public int readReg() throws IOException {
+    	int reg = inpt.readByte() & 0xFF;
+    	if(TRACE) System.out.println("AttributeInputStream.readReg: "+reg+':'+RTRegister.edReg(reg));
+    	return reg;
 	}
 
     public int readTagID() throws IOException {

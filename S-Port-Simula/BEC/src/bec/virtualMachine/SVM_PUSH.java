@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
+import bec.compileTimeStack.AddressItem;
 import bec.descriptor.Variable;
 import bec.instruction.CALL;
 import bec.segment.DataSegment;
@@ -42,9 +43,9 @@ public class SVM_PUSH extends SVM_Instruction {
 	public void execute() {
 		if(CALL.USE_FRAME_ON_STACK) {
 			ObjectAddress target = addr.toObjectAddress();
-//			System.out.println("SVM_PUSH: target=" + target);
+//			System.out.println("SVM_PUSH: target=" + target+", count="+count);
 			for(int i=0;i<count;i++) {
-				Value value = target.load(); target.ofst++;
+				Value value = target.load(); target.incrOffset();
 //				System.out.println("SVM_PUSH: " + value);
 				RTStack.push(value, "SVM_PUSH");
 			}
@@ -53,7 +54,7 @@ public class SVM_PUSH extends SVM_Instruction {
 			ObjectAddress target = addr.toObjectAddress();
 			DataSegment dseg = (DataSegment) target.segment();
 //			dseg.dump("SVM_PUSH: " + addr + ", count=" + count);
-			int ofst = target.ofst;
+			int ofst = target.getOfst();
 			for(int i=0;i<count;i++) {
 				Value value = dseg.load(ofst++);
 //				System.out.println("SVM_PUSH: " + value);
@@ -83,7 +84,7 @@ public class SVM_PUSH extends SVM_Instruction {
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
-		oupt.writeKind(opcode);
+		oupt.writeOpcode(opcode);
 		addr.write(oupt);
 		oupt.writeShort(count);
 	}
