@@ -31,11 +31,15 @@ public abstract class INDEX extends Instruction {
 	 */
 	public static void ofScode(int instr) {
 		CTStack.checkTosInt(); CTStack.checkSosRef();
-		CTStack.getTosValueIn86(RTRegister.qEAX);
+		int xReg = RTRegister.getFreeReg();
+		CTStack.getTosValueIn86(xReg);
 		CTStack.pop();
 		AddressItem adr = (AddressItem) CTStack.TOS;
-		adr.objReg = RTRegister.qEAX;
-		adr.atrState = AddressItem.State.Calculated;
+//		adr.objReg = RTRegister.qEAX;
+//		adr.xReg = RTRegister.qEAX;
+		adr.xReg = xReg;
+//		adr.atrState = AddressItem.AtrState.Calculated;
+		adr.atrState = AddressItem.AtrState.Indexed;
 		
 		if(instr == Scode.S_INDEXV) Util.GQfetch("INDEXV");
 

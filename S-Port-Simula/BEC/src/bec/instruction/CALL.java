@@ -154,7 +154,8 @@ public abstract class CALL extends Instruction {
 			if(DEBUG) System.out.println("CallInstruction.callSYS: returnType="+returnType);
 			CTStack.pushTemp(returnType, RTRegister.qEAX, 1, "EXPORT: ");
 			if(! CALL.USE_FRAME_ON_STACK) {
-				Global.PSEG.emit(new SVM_PUSH(new RTAddress(export.address), returnType.size()), "CallInstruction: EXPORT " + spec);
+				Util.IERR("DETTE MÅ RETTES");
+//				Global.PSEG.emit(new SVM_PUSH(new RTAddress(export.address), returnType.size()), "CallInstruction: EXPORT " + spec);
 //				Global.PSEG.dump("END CallInstruction.doCode: ");
 			}
 //			CTStack.dumpStack("END CallInstruction.doCode: ");

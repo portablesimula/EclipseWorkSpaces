@@ -53,7 +53,9 @@ public abstract class REMOTE extends Instruction {
 		ObjectAddress memAddr = ObjectAddress.ofRelAddr(null); // a
 		
 		AddressItem adr = new AddressItem(attr.type, attr.rela, memAddr);
-        adr.objState = AddressItem.State.Calculated;
+//        adr.objState = AddressItem.ObjState.Calculated;
+//        adr.objState = AddressItem.ObjState.Remote;
+        adr.isRemoteBase = true;
 //        System.out.println("REMOTE.doCode: adr="+adr);
 		CTStack.push(adr);
         if(instr == Scode.S_REMOTEV)

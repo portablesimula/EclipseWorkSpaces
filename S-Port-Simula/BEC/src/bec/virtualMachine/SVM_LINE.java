@@ -21,6 +21,7 @@ public class SVM_LINE extends SVM_Instruction {
 
 	@Override
 	public void execute() {
+		if(RTStack.curSize() == 0) RTRegister.clearAllRegs();
 		Global.PSC.ofst++;
 	}
 	

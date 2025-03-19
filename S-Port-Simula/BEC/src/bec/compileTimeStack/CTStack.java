@@ -256,30 +256,30 @@ public class CTStack {
 	}
 
 	public static Type arithType(Type t1, Type t2) { // export range(0:MaxType) ct;
-	switch(t1.tag) {
-	      case Scode.TAG_LREAL:
-	    	  switch(t2.tag) {
-		    	  case Scode.TAG_LREAL: return Type.T_LREAL;
-		    	  case Scode.TAG_REAL:  return Type.T_LREAL;
-		    	  case Scode.TAG_INT:   return Type.T_LREAL;
-		    	  default: return t1;
-	    	  }
-	      case Scode.TAG_REAL:
-	    	  switch(t2.tag) {
-		    	  case Scode.TAG_LREAL: return Type.T_LREAL;
-		    	  case Scode.TAG_REAL:  return Type.T_REAL;
-		    	  case Scode.TAG_INT:   return Type.T_REAL;
-		    	  default: return t1;
-	    	  }
-	      case Scode.TAG_INT:
-	    	  switch(t2.tag) {
-		    	  case Scode.TAG_LREAL: return Type.T_LREAL;
-		    	  case Scode.TAG_REAL:  return Type.T_REAL;
-		    	  case Scode.TAG_INT:   return Type.T_INT;
-		    	  default: return t1;
-	    	  }
-	      default: return t1;
-	}
+		switch(t1.tag) {
+		      case Scode.TAG_LREAL:
+		    	  switch(t2.tag) {
+			    	  case Scode.TAG_LREAL: return Type.T_LREAL;
+			    	  case Scode.TAG_REAL:  return Type.T_LREAL;
+			    	  case Scode.TAG_INT:   return Type.T_LREAL;
+			    	  default: return t1;
+		    	  }
+		      case Scode.TAG_REAL:
+		    	  switch(t2.tag) {
+			    	  case Scode.TAG_LREAL: return Type.T_LREAL;
+			    	  case Scode.TAG_REAL:  return Type.T_REAL;
+			    	  case Scode.TAG_INT:   return Type.T_REAL;
+			    	  default: return t1;
+		    	  }
+		      case Scode.TAG_INT:
+		    	  switch(t2.tag) {
+			    	  case Scode.TAG_LREAL: return Type.T_LREAL;
+			    	  case Scode.TAG_REAL:  return Type.T_REAL;
+			    	  case Scode.TAG_INT:   return Type.T_INT;
+			    	  default: return t1;
+		    	  }
+		      default: return t1;
+		}
 	}
 
 }

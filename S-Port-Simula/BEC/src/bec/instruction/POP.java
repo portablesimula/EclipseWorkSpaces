@@ -4,6 +4,7 @@ import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.ProfileItem;
 import bec.util.Global;
 import bec.util.Util;
+import bec.virtualMachine.RTRegister;
 import bec.virtualMachine.SVM_POPK;
 
 public abstract class POP extends Instruction {
@@ -19,12 +20,13 @@ public abstract class POP extends Instruction {
 		if(CTStack.TOS instanceof ProfileItem) Util.IERR("Illegal pop of profileItem ");
 		
 //		System.out.println("POP.ofScode: TOS="+CTStack.TOS.getClass().getSimpleName()+"  "+CTStack.TOS);
-//		System.out.println("POP.ofScode: TOS.type="+CTStack.TOS.type);
+		System.out.println("POP.ofScode: TOS.type="+CTStack.TOS.type);
 		int size = CTStack.TOS.type.size();
 //		System.out.println("POP.ofScode: TOS.type.size="+size);
 		CTStack.pop();
 //		CTStack.dumpStack("POP: ");
 		Global.PSEG.emit(new SVM_POPK(size), "POPK: " + size);
+		if(CTStack.size() == 0) RTRegister.ckearFreeRegs();
 	}
 
 }

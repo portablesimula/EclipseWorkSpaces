@@ -94,11 +94,14 @@ public class ProgramAddress extends Value {
 //		System.out.println("ProgramAddress.execute: size=" + seg.instructions.size());
 //		System.out.println("ProgramAddress.execute: ofst=" + ofst);
 		if(ofst >= size) {
+//			Segment.lookup("DSEG_ADHOC02").dump("ProgramAddress.execute: ");
+			Global.DSEG.dump("ProgramAddress.execute: ");
+			Global.CSEG.dump("ProgramAddress.execute: ");
 			if(Global.verbose) System.out.println("ProgramAddress.execute: " + seg.ident + " IS FINALIZED -- NOTHING MORE TO EXECUTE");
 			System.exit(0);			
 		} else {
 			SVM_Instruction cur = seg.instructions.get(ofst);
-//		System.out.println("ProgramAddress.execute: " + cur);
+//			System.out.println("ProgramAddress.execute: " + cur);
 			cur.execute();
 
 			if(Global.EXEC_TRACE > 0) {

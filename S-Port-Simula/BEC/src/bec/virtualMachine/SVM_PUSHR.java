@@ -5,6 +5,7 @@ import java.io.IOException;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
+import bec.util.Scode;
 import bec.util.Type;
 import bec.value.Value;
 
@@ -27,7 +28,7 @@ public class SVM_PUSHR extends SVM_Instruction {
 	
 	@Override
 	public String toString() {
-		return "PUSHR    " + type + " " + RTRegister.edReg(reg);
+		return "PUSHR    " + Scode.edTag(type.tag) + " " + RTRegister.edReg(reg);
 	}
 
 	// ***********************************************************************************************

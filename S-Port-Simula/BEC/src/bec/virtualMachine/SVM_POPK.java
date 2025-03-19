@@ -20,7 +20,10 @@ public class SVM_POPK extends SVM_Instruction {
 
 	@Override
 	public void execute() {
-		for(int i=0;i<aux;i++) RTStack.pop();
+		for(int i=0;i<aux;i++) {
+			if(RTStack.curSize() <= 0) Util.IERR("RTStack underflow");
+			RTStack.pop();
+		}
 		Global.PSC.ofst++;
 //		Util.IERR("TEST DETTE");
 	}

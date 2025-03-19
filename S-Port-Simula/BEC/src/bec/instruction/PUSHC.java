@@ -111,10 +111,15 @@ public abstract class PUSHC extends Instruction {
 		} else if(type == Type.T_TEXT) {
 //			Global.CSEG.dump("PUSHC.ofScode: ");
 			TextValue txtval = (TextValue) value;
-			Global.PSEG.emit(new SVM_PUSHC(txtval.addr), "TEXT'CHRADR'oaddr: ");
 			IntegerValue lng = new IntegerValue(Type.T_INT, txtval.length);
+			
+			Global.PSEG.emit(new SVM_PUSHC(txtval.addr), "TEXT'CHRADR'oaddr: ");
 			Global.PSEG.emit(new SVM_PUSHC(null), "TEXT'CHRADR'ofst:  ");
 			Global.PSEG.emit(new SVM_PUSHC(lng), "TEXT'lng:   ");
+//			Global.PSEG.emit(new SVM_PUSHC(lng), "TEXT'lng:   ");
+//			Global.PSEG.emit(new SVM_PUSHC(null), "TEXT'CHRADR'ofst:  ");			
+//			Global.PSEG.emit(new SVM_PUSHC(txtval.addr), "TEXT'CHRADR'oaddr: ");
+
 			type = Type.T_STRING;				
 //			Global.PSEG.dump("PUSHC: "+value+": ");
 //			Util.IERR("");

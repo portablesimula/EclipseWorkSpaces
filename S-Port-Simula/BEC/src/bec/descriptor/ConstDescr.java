@@ -104,10 +104,19 @@ public class ConstDescr extends Descriptor {
 //		cnst.quant = new QuantityDescriptor();
 		cnst.type = Type.ofScode();
 		
+		int fixrepTail = 0;
 		if(Scode.accept(Scode.S_FIXREP)) {
-			Scode.inNumber();
-			Util.IERR("DETTE ER EN 'ResolvedType' - HVA NÅ ?");
-			System.out.println("DETTE ER EN 'ResolvedType' - HVA NÅ ?");
+			int fixrep = Scode.inNumber();
+			System.out.println("ConstDescr.ofConstDef: "+cnst);
+			System.out.println("ConstDescr.ofConstDef: "+cnst.type);
+			System.out.println("ConstDescr.ofConstDef: FIXREP "+fixrep);
+			RecordDescr rec = (RecordDescr) Global.getMeaning(cnst.type.tag);
+			System.out.println("ConstDescr.ofConstDef: descr="+rec);
+			int count = rec.size + rec.nbrep * fixrep;
+			fixrepTail = rec.nbrep * fixrep;
+			System.out.println("ConstDescr.ofConstDef: count="+count);
+//			Util.IERR("DETTE ER EN 'ResolvedType' - HVA NÅ ?");
+//			System.out.println("DETTE ER EN 'ResolvedType' - HVA NÅ ?");
 		}
 
 		int repCount = (Scode.accept(Scode.S_REP)) ? Scode.inNumber() : 1;
@@ -116,7 +125,7 @@ public class ConstDescr extends Descriptor {
 			String comment = tag + " type=" + cnst.type;
 //			System.out.println("NEW CONST: "+comment);
 			cnst.address = Global.CSEG.emitRepetitionValue(comment);
-//			Global.CSEG.dump("CONST.inConstant: ");
+			Global.CSEG.dump("CONST.inConstant: ");
 //			Util.IERR("");
 		
 		if(DEBUG) {
@@ -126,6 +135,7 @@ public class ConstDescr extends Descriptor {
 			Global.DSEG.dump("ConstDescr.ofConstDef: ");
 //			Util.IERR("");
 		}
+		if(fixrepTail > 0) Util.IERR("");
 		return cnst;
 	}
 	

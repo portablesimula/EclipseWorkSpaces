@@ -40,8 +40,8 @@ public abstract class SELECT extends Instruction {
 		if(DEBUG) System.out.println("SELECT.ofScode: ofst="+adr.offset + ", rela=" + attr.rela);
 		adr.type = attr.type;
 		adr.size = attr.size;
-		if(adr.atrState == AddressItem.State.FromConst) {
-			adr.atrState = AddressItem.State.NotStacked;
+		if(adr.atrState == AddressItem.AtrState.FromConst) {
+			adr.atrState = AddressItem.AtrState.NotStacked;
 			Global.PSEG.emit(new SVM_NOT_IMPL("SELECT: "+attr), "SELECT: ");
 //             qPOPKill(AllignFac);
 		}

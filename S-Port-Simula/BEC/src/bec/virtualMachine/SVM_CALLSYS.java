@@ -92,8 +92,8 @@ public class SVM_CALLSYS extends SVM_Instruction {
 	 */
 	private void verbose() {
 		if(CALL.USE_FRAME_ON_STACK) {
-//			RTStack.push(new BooleanValue(true), "EXPORT");
-			RTStack.push(null, "EXPORT");
+			RTStack.push(new BooleanValue(true), "EXPORT");
+//			RTStack.push(null, "EXPORT");
 			ENTER("VERBOSE: ", 1, 0); // exportSize, importSize
 //			System.out.println("SVM_SYSCALL.verbose: ");
 			EXIT("VERBOSE: ");
@@ -452,7 +452,7 @@ public class SVM_CALLSYS extends SVM_Instruction {
 //			Value x = from.load(); from.ofst++;
 			Value x = new IntegerValue(Type.T_CHAR, src.charAt(i));
 			System.out.println("SVM_SYSCALL.move: x="+x+" ==> "+into);
-			into.store(x, "MOVE DEST: "); into.incrOffset();
+			into.store(i, x, "MOVE DEST: "); //into.incrOffset();
 		}
 	}
 	
@@ -462,7 +462,7 @@ public class SVM_CALLSYS extends SVM_Instruction {
 		for(int i=0;i<count;i++) {
 			Value x = from.load(); from.incrOffset();
 //			System.out.println("SVM_SYSCALL.move: x="+x);
-			into.store(x, "MOVE DEST: "); into.incrOffset();
+			into.store(i, x, "MOVE DEST: "); //into.incrOffset();
 		}
 	}
 	

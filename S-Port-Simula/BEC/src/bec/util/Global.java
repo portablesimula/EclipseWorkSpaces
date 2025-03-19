@@ -43,6 +43,11 @@ public class Global {
 		if(x == null) Util.IERR("Missing meaning: " + tag);
 		return(x);
 	}
+	public static Descriptor getMeaning(int tag) {
+		Descriptor x = DISPL.get(tag);
+		if(x == null) Util.IERR("Missing meaning: " + tag);
+		return(x);
+	}
 	
 	public static void intoDisplay(Descriptor d, int tag) {
 		if(tag != 0) {

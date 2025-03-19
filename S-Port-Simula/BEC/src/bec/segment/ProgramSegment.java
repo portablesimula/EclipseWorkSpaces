@@ -45,13 +45,13 @@ public class ProgramSegment extends Segment {
 	private int lastListed;
 	public void listInstructions() {
 		while(lastListed < instructions.size()) {
-			listIntruction("                                            ==> ",lastListed++);
+			listIntruction("                                 ==> ",lastListed++);
 		}
 	}
 	
 //	public void listIntruction(SVM_Instruction instr, String comment) {
 	public void listIntruction(String indent, int idx) {
-		String line = "" + idx + ": ";
+		String line = ident + "[" + idx + "] ";
 		while(line.length() < 8) line = " " +line;
 		String value = ""+instructions.get(idx);
 		while(value.length() < 50) value = value + ' ';

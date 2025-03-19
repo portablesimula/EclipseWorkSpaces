@@ -4,13 +4,10 @@ import java.io.IOException;
 
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
-import bec.compileTimeStack.AddressItem;
 import bec.descriptor.Variable;
 import bec.instruction.CALL;
 import bec.segment.DataSegment;
 import bec.util.Global;
-import bec.util.Type;
-import bec.util.Util;
 import bec.value.ObjectAddress;
 import bec.value.Value;
 
@@ -35,31 +32,35 @@ public class SVM_PUSH extends SVM_Instruction {
 	
 	public SVM_PUSH(Variable var) {
 		this.opcode = SVM_Instruction.iPUSH;
-		this.addr = new RTAddress(var.address);
+		this.addr = new RTAddress(var.address, 0);
 		this.count = var.repCount;
 	}
 	
 	@Override
 	public void execute() {
 		if(CALL.USE_FRAME_ON_STACK) {
-			ObjectAddress target = addr.toObjectAddress();
-//			System.out.println("SVM_PUSH: target=" + target+", count="+count);
+//			ObjectAddress target = addr.toObjectAddress();
+//			RTStack.push(target, "SVM_PUSH");
+			
+//			RTStack.push(addr, "SVM_PUSH");
+			
+			System.out.println("SVM_PUSH: addr=" + addr+", count="+count);
 			for(int i=0;i<count;i++) {
-				Value value = target.load(); target.incrOffset();
-//				System.out.println("SVM_PUSH: " + value);
+				Value value = addr.load(i);
+				System.out.println("SVM_PUSH: " + value);
 				RTStack.push(value, "SVM_PUSH");
 			}
 //			Util.IERR("");
 		} else {
-			ObjectAddress target = addr.toObjectAddress();
-			DataSegment dseg = (DataSegment) target.segment();
-//			dseg.dump("SVM_PUSH: " + addr + ", count=" + count);
-			int ofst = target.getOfst();
-			for(int i=0;i<count;i++) {
-				Value value = dseg.load(ofst++);
-//				System.out.println("SVM_PUSH: " + value);
-				RTStack.push(value, "SVM_PUSH");
-			}
+//			ObjectAddress target = addr.toObjectAddress();
+//			DataSegment dseg = (DataSegment) target.segment();
+////			dseg.dump("SVM_PUSH: " + addr + ", count=" + count);
+//			int ofst = target.getOfst();
+//			for(int i=0;i<count;i++) {
+//				Value value = dseg.load(ofst++);
+////				System.out.println("SVM_PUSH: " + value);
+//				RTStack.push(value, "SVM_PUSH");
+//			}
 		}
 		Global.PSC.ofst++;
 	}

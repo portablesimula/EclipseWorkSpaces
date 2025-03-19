@@ -7,12 +7,14 @@ import java.util.Vector;
 
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
+import bec.descriptor.Descriptor;
 import bec.descriptor.Kind;
 import bec.descriptor.RecordDescr;
 
 public class Type {
 	public  int tag;
 	private int size;  // Size of type in basic cells
+	private int rep0size;  // Size of rep 0 attribute in basic cells
 	public  BitSet pntmap; // NULL:no pointers, else: Reladdr of pointers
 	String comment;
 
@@ -46,8 +48,14 @@ public class Type {
 			}
 		}
 //		if(Scode.accept(Scode.S_FIXREP)) {
-//			Scode.inNumber();
-////			Util.IERR("DETTE ER EN 'ResolvedType' - HVA NÅ ?");
+//			int fixrep = Scode.inNumber();
+//			System.out.println("Type.ofScode: "+Scode.edTag(tag)+" FIXREP "+fixrep);
+////			Descriptor descr = tag.getMeaning();
+//			dumpTypes("Type.ofScode: ");
+//			Type type = TMAP.get(tag);
+//			System.out.println("Type.ofScode: type="+type);
+//
+//			Util.IERR("DETTE ER EN 'ResolvedType' - HVA NÅ ?");
 //			System.out.println("DETTE ER EN 'ResolvedType' - HVA NÅ ?");
 //		}
 //		System.out.println("NEW Type.ofScode: " + Scode.edTag(tag));
@@ -79,6 +87,7 @@ public class Type {
 //		Type x = new Type(rec.size, null, rec.tag.toString());
 		Type type = new Type(rec.tag.val, rec.size, 0);
 		type.pntmap = rec.pntmap;
+		type.rep0size = rec.nbrep;
 		type.comment = "From " + rec;
 		if(TMAP.get(rec.tag.val) != null) {
 			if(rec.tag.val != Scode.TAG_STRING)	Util.IERR("Already defined: " + type);
@@ -156,7 +165,7 @@ public class Type {
 	}
 	
 	public String toString() {
-		return Scode.edTag(tag) + " size=" + size + " pntmap=" + pntmap + " " + comment;
+		return Scode.edTag(tag) + " size=" + size + " pntmap=" + pntmap + ", rep0size=" + rep0size + " " + comment;
 	}
 
 	// ***********************************************************************************************

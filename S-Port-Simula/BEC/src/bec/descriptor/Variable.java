@@ -35,6 +35,17 @@ public class Variable extends Descriptor {
 	 *	export parm:newtag resolved_type
 	 * 
 	 *	exit return:newtag
+	 *
+	 *  quantity_descriptor ::= resolved_type < Rep count:number >?
+	 *  
+	 *  	resolved_type
+	 *  		::= resolved_structure | simple_type
+	 *  		::= INT range lower:number upper:number
+	 *  		::= SINT
+	 *  
+	 *  		resolved_structure ::= structured_type < fixrep count:ordinal >?
+	 *  
+	 *  			structured_type ::= record_tag:tag
 	 */	
 	private Variable(int kind, Tag tag) {
 		super(kind, tag);
@@ -173,6 +184,17 @@ public class Variable extends Descriptor {
 //			System.out.println("Variable.ofGlobal: size="+var.type.size());
 //			System.out.println("Variable.ofGlobal: repCount="+var.repCount);
 			int count = var.type.size();
+			if(Scode.accept(Scode.S_FIXREP)) {
+				int fixrep = Scode.inNumber();
+				System.out.println("Variable.ofGlobal: "+var);
+				System.out.println("Variable.ofGlobal: "+var.type);
+				System.out.println("Variable.ofGlobal: FIXREP "+fixrep);
+				RecordDescr rec = (RecordDescr) Global.getMeaning(var.type.tag);
+				System.out.println("Variable.ofGlobal: descr="+rec);
+				count = count + rec.nbrep * fixrep;
+				System.out.println("Variable.ofGlobal: count="+count);
+//				Util.IERR("");
+			}
 			if(count == 0) Util.IERR("");
 			seg.emitDefaultValue(count, var.repCount, "GLOBAL " + var.type);
 		}

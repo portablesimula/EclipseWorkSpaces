@@ -137,20 +137,13 @@ public class Util {
 	// ***************************************************************
 	private static final boolean DEBUG = false;
 	public static void GQfetch(String comment) {
-//	%-D Visible Routine GQfetchxx; --  M} ikke bruke qDI(se rupdate) --
-//	begin infix(MemAddr) opr; range(0:MaxType) type;
-//	      range(0:MaxWord) nbyte; range(0:MaxByte) cTYP;
-		if(CTStack.TOS instanceof AddressItem) {
-//	           opr:=GetTosSrcAdr;
-//			ObjectAddress addr = getTosSrcAdr();
-			AddressItem addr = (AddressItem) CTStack.TOS;
+		if(CTStack.TOS instanceof AddressItem addr) {
 			if(DEBUG) System.out.println("Util.GQfetch: addr="+addr);
-			Type type = CTStack.TOS.type;
-//			int size = DataType.typeSize(type);
+			Type type = addr.type;
 			RTAddress rtAddr = new RTAddress(addr); 
 			if(DEBUG) System.out.println("Util.GQfetch: rtAddr="+rtAddr);
 			Global.PSEG.emit(new SVM_PUSH(rtAddr, type.size()), comment + " " +type);
-			CTStack.pop(); CTStack.pushTemp(type, RTRegister.qEAX, 1, "GQFetch: ");
+			CTStack.pop(); CTStack.pushTemp(type, addr.xReg, 1, "GQFetch: ");
 			if(DEBUG) {
 				CTStack.dumpStack("GQfetch: "+comment);
 				Global.PSEG.dump("GQfetch: "+comment);

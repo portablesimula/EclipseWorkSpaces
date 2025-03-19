@@ -44,7 +44,7 @@ public class RTFrame {
 		while(idx < stx) {
 			RTStackItem item = RTStack.load(idx++);
 			if(! first) sb.append(", "); first = false;
-			sb.append(item.value());
+			sb.append((item == null)? null : item.value());
 		}
 		sb.append("  Stack["+(RTStack.size()-idx)+"]: ");
 		first = true;
@@ -98,7 +98,7 @@ public class RTFrame {
 		int idx = rtStackIndex+exportSize + importSize;
 //		System.out.println("RTFrame.returAddress: idx="+idx);
 		RTStackItem ret = RTStack.load(idx);
-		ProgramAddress value = (ProgramAddress) ret.value();
+		ProgramAddress value = (ret == null)? null : (ProgramAddress) ret.value();
 //		System.out.println("RTFrame.returAddress: value="+value.getClass().getSimpleName());
 //		Util.IERR(""+ret.getClass().getSimpleName()+"  "+ret);
 		return value;

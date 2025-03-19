@@ -24,7 +24,7 @@ public abstract class RTStack {
 			int idx = (curFrame == null)? 0 : curFrame.rtStackIndex;
 			dumpRTStack("Check RTStack Empty - FAILED: ");
 			if(curFrame != null) curFrame.dump("Check RTStack Empty - FAILED: ");
-//			printCallStack("Check RTStack Empty - FAILED: ");
+			printCallStack("Check RTStack Empty - FAILED: ");
 			Util.IERR("Check RTStack Empty - FAILED: size="+size()+"  rtStackIndex=" + idx + "  frameHeadSize=" + frameHeadSize );
 		}
 	}
@@ -56,7 +56,7 @@ public abstract class RTStack {
 	}
 	
 	public static RTStackItem load(int index) {
-		return stack.get(index);
+		try { return stack.get(index); } catch(Exception e) { return null; }
 	}
 	
 	public static void store(int index, Value value, String comment) {
@@ -113,7 +113,9 @@ public abstract class RTStack {
 	}
 	
 	public static RTStackItem pop() {
-		return stack.pop();
+		RTStackItem itm = stack.pop();
+//		if(stack.size() == 0) RTRegister.clearAllRegs();
+		return itm;
 //		Util.IERR("");
 	}
 	
@@ -130,7 +132,14 @@ public abstract class RTStack {
 	public static ObjectAddress popGADDR() {
 		int ofst = RTStack.popInt();
 		ObjectAddress chradr = (ObjectAddress) RTStack.pop().value();
+//		System.out.println("RTStack.popGADDR: chradr="+chradr+", ofst="+ofst);
 		return chradr.addOffset(ofst);
+	}
+	
+	public static ObjectAddress popOADDR() {
+		ObjectAddress oadr = (ObjectAddress) RTStack.pop().value();
+		System.out.println("RTStack.popOADDR: "+oadr);
+		return oadr;
 	}
 	
 	public static String popString() {
@@ -169,7 +178,9 @@ public abstract class RTStack {
 			if(! first) sb.append(", "); first = false;
 			sb.append(item.value());
 		}
-		return sb.toString();
+		String s = sb.toString();
+		while(s.length() < 30) s = s + ' ';
+		return s + "      " + RTRegister.toLine();
 	}
 	
 	public static void dumpRTStack(String title) {

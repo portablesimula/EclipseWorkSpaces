@@ -24,7 +24,7 @@ public final class FECmpTBatch {
 		long startTimeMs = System.currentTimeMillis( );
 		Vector<String> names=new Vector<String>();
 		
-//		names.add("adHoc00");
+		names.add("adHoc00");
 //		names.add("adHoc01");
 //		names.add("adHoc02");
 //		names.add("adHoc03");
@@ -37,7 +37,7 @@ public final class FECmpTBatch {
 //		names.add("adHoc10");
 		
 //		names.add("smltst00"); // Standard layout of test programs
-		names.add("smltst01"); // Simple Assignments
+//		names.add("smltst01"); // Simple Assignments
 //		names.add("smltst02"); // Test Case Statement
 //		names.add("smltst03"); // Test Assert Statement
 //		names.add("smltst04"); // Test Parameter Transmission

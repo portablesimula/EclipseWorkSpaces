@@ -56,48 +56,6 @@ public abstract class DEREF extends Instruction {
 			return;
 		}
 
-//		CTStack.checkTosRef();
-//		assertAtrStacked();
-//		
-//		AddressItem TOS = (AddressItem) CTStack.TOS;
-//		if(DEBUG) {
-//			System.out.println("DEREF.ofScode: TOS="+TOS.getClass().getSimpleName());
-//			System.out.println("DEREF.ofScode: TOS.objadr="+TOS.objadr);
-//			System.out.println("DEREF.ofScode: TOS.objreg="+TOS.objReg);
-//		}
-//		
-//		boolean CASE2 = true;
-//		if(CASE2) {
-//			Global.PSEG.emit(new SVM_PUSHC(TOS.objadr), "DEREF'objadr: ");
-//			if(TOS.objReg > 0) {
-//				Global.PSEG.emit(new SVM_PUSHR(Type.T_INT, TOS.objReg), "DEREF'objReg: ");
-//				if(TOS.offset > 0) {
-//					Global.PSEG.emit(new SVM_PUSHC(new IntegerValue(Type.T_INT, TOS.offset)), "DEREF'offset:   ");
-//					Global.PSEG.emit(new SVM_ADD(), "DEREF'objadr+offset: ");	
-//				}
-//			} else if(TOS.atrReg > 0) {
-//				Util.IERR("NOT IMPL");
-//			} else {
-//				Global.PSEG.emit(new SVM_PUSHC(new IntegerValue(Type.T_INT, TOS.offset)), "DEREF'offset:   ");				
-//			}
-//		} else {
-//			Global.PSEG.emit(new SVM_PUSHC(TOS.objadr), "DEREF'objadr: ");
-//			if(TOS.offset > 0) {
-//				Global.PSEG.emit(new SVM_PUSHC(new IntegerValue(Type.T_INT, TOS.offset)), "DEREF'offset:   ");
-//				Global.PSEG.emit(new SVM_ADD(), "DEREF'objadr+offset: ");
-//			}
-//			Global.PSEG.emit(new SVM_POP2REG(RTRegister.qEBX, 1), "DEREF'objadr+offset: ");
-//		}
-//
-//		CTStack.pop();
-////		CTStack.pushTemp(Type.T_GADDR, "DEREF: ");
-//		CTStack.pushTemp(Type.T_GADDR, RTRegister.qEBX, 2, "DEREF: ");
-//
-//		if(DEBUG) {
-//			CTStack.dumpStack("DEREF: ");
-//			Global.PSEG.dump("DEREF: ");
-////			Util.IERR("");
-//		}
 	}
 
 	
@@ -127,20 +85,19 @@ public abstract class DEREF extends Instruction {
 		assertObjStacked();
 		AddressItem tos = (AddressItem) CTStack.TOS;
 		System.out.println("DEREF.assertAtrStacked: tos.atrState="+tos.atrState);
-		if(tos.atrState==AddressItem.State.NotStacked) {
-			tos.atrState=AddressItem.State.FromConst;
+		if(tos.atrState==AddressItem.AtrState.NotStacked) {
+			tos.atrState=AddressItem.AtrState.FromConst;
 			// Qf2(qPUSHC,0,FreePartReg,cVAL,TOS qua Address.Offset);
-			Global.PSEG.emit(new SVM_PUSHC(new IntegerValue(Type.T_INT,tos.offset)), "DEREF'offset: ");
+			Global.PSEG.emit(new SVM_PUSHC(new IntegerValue(Type.T_INT,tos.offset)), "DEREF'offset'1: ");
 //	      	Global.PSEG.emit(new SVM_NOOP(), "HVA HER ? " + tos);
 //			Util.IERR("");
-		} else if(tos.atrState==AddressItem.State.Calculated) {
+//		} else if(tos.atrState==AddressItem.AtrState.Calculated) {
+		} else if(tos.atrState==AddressItem.AtrState.Indexed) {
 			System.out.println("DEREF.assertAtrStacked: tos="+tos);
-			System.out.println("DEREF.assertAtrStacked: tos.objReg="+tos.objReg);
+			System.out.println("DEREF.assertAtrStacked: tos.objReg="+tos.xReg);
 			if(NYTEST) {
-				if(tos.objReg > 0) {
-//					Global.PSEG.emit(new SVM_PUSHR(Type.T_INT, tos.objReg), "DEREF'objReg: ");
-					Global.PSEG.emit(new SVM_PUSHR(Type.T_INT, tos.objReg), "DEREF'objReg: ");
-					Global.PSEG.emit(new SVM_ADD(), "DEREF'objadr+offset: ");	
+				if(tos.xReg > 0) {
+					Global.PSEG.emit(new SVM_PUSHR(Type.T_INT, tos.xReg), "DEREF'objReg: ");
 					if(tos.offset != 0) {
 						Global.PSEG.emit(new SVM_PUSHC(new IntegerValue(Type.T_INT,tos.offset)), "DEREF'offset: ");
 						Global.PSEG.emit(new SVM_ADD(), "DEREF'objadr+offset: ");	
@@ -163,19 +120,20 @@ public abstract class DEREF extends Instruction {
 
 	private static void assertObjStacked() {
 		AddressItem tos = (AddressItem) CTStack.TOS;
-		System.out.println("DEREF.assertObjStacked: tos.objState="+tos.objState);
-	    if(tos.objState==AddressItem.State.NotStacked) {
-	    	tos.objState=AddressItem.State.FromConst;
+		System.out.println("DEREF.assertObjStacked: tos.isRemoteBase="+tos.isRemoteBase);
+//	    if(tos.objState==AddressItem.ObjState.zzNotStacked) {
+	    if(! tos.isRemoteBase) {
+//	    	tos.objState=AddressItem.ObjState.objFromConst;
 	    	ObjectAddress objadr = tos.objadr;
 			System.out.println("DEREF.assertObjStacked: tos.objadr="+objadr);
 	    	if(objadr.segID == null) {
 	    		// when reladr,locadr: 
 	    		// Qf3(qPUSHA,0,qEBX,cOBJ,adr);
-//				Global.PSEG.emit(new SVM_PUSHC(null), "DEREF'objadr: ");
+//				Global.PSEG.emit(new SVM_PUSHC(null), "DEREF'objadr1: ");
 //				Global.PSEG.emit(new SVM_PUSHC(objadr), "DEREF'objadr: ");
-		      	Global.PSEG.emit(new SVM_NOOP(), "HVA HER-3 ? " + tos);
-		      	Global.PSEG.emit(new SVM_NOT_IMPL("HVA HER-4 ? "), "HVA HER ? " + tos);
-	    		Util.IERR("");
+//		      	Global.PSEG.emit(new SVM_NOOP(), "HVA HER-3 ? " + tos);
+//		      	Global.PSEG.emit(new SVM_NOT_IMPL("HVA HER-4 ? "), "HVA HER ? " + tos);
+//	    		Util.IERR("");
 	    	} else {
 	            // when segadr,fixadr,extadr:
 	            // Qf2b(qPUSHC,0,qEBX,cOBJ,0,adr);
@@ -183,11 +141,6 @@ public abstract class DEREF extends Instruction {
 				Global.PSEG.emit(new SVM_PUSHC(objadr), "DEREF'objadr: ");
 //		    	Util.IERR("");
 	    	}
-//	    } else if(tos.objState==AddressItem.State.Calculated) {
-//			if(tos.objReg > 0) {
-//				Global.PSEG.emit(new SVM_PUSHR(Type.T_INT, tos.objReg), "DEREF'objReg: ");
-//				Global.PSEG.emit(new SVM_ADD(), "DEREF'objadr+offset: ");	
-//			}
 	    }
 	}
 	

@@ -80,16 +80,16 @@ public class ObjectAddress extends Value {
 		return new ObjectAddress(segID, this.ofst + ofst);
 	}
 	
-	public void store(Value value, String comment) {
+	public void store(int idx, Value value, String comment) {
 		if(segID == null) {
 			// store rel-addr  curFrame + ofst
 //			System.out.println("ObjectAddress.store: curFrame="+RTStack.curFrame.rtStackIndex);
-			RTStack.store(RTStack.curFrame.rtStackIndex + ofst, value, comment);
+			RTStack.store(RTStack.curFrame.rtStackIndex + ofst + idx, value, comment);
 //			Util.IERR("");
 			
 		} else {
 		DataSegment dseg = segment();
-		dseg.store(ofst, value);
+		dseg.store(ofst + idx, value);
 //		dseg.dump("MemAddr.store: ");
 //		Util.IERR("");
 		}

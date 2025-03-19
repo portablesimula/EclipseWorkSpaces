@@ -25,9 +25,9 @@ public final class RunFull_SML_TestBatch {
 		Global.verbose = true;
 //		Global.verbose = false;
 		
-//		Global.SCODE_INPUT_TRACE = true;
-//		Global.PRINT_GENERATED_SVM_CODE = true;
-//		Global.EXEC_TRACE = 1;
+		Global.SCODE_INPUT_TRACE = true;
+		Global.PRINT_GENERATED_SVM_CODE = true;
+		Global.EXEC_TRACE = 1;
 		
 		// Set Compiler Options.
 //		Option.EXTENSIONS=false;
@@ -35,7 +35,7 @@ public final class RunFull_SML_TestBatch {
 
 		Vector<String> names = new Vector<String>();
 		
-//		names.add("adHoc00.scd");
+		names.add("adHoc00.scd");
 //		names.add("adHoc01.scd");
 //		names.add("adHoc02.scd");
 //		names.add("adHoc03.scd");
@@ -48,7 +48,7 @@ public final class RunFull_SML_TestBatch {
 //		names.add("adHoc10.scd");
 		
 //		names.add("smltst00.scd"); // Standard layout of test programs
-		names.add("smltst01.scd"); // Simple Assignments
+//		names.add("smltst01.scd"); // Simple Assignments
 //		names.add("smltst02.scd"); // Test Case Statement
 //		names.add("smltst03.scd"); // Test Assert Statement
 //		names.add("smltst04.scd"); // Test Parameter Transmission

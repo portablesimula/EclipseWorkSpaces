@@ -38,6 +38,7 @@ public class SVM_Instruction {
 	public final static int iPRECALL = 26;
 	public final static int iPOPK = 27;
 	public final static int iENTER = 28;
+	public final static int iREFER = 29;
 	
 	public final static int iNOT_IMPL = 99;
 	public final static int iMax = 99;
@@ -96,6 +97,7 @@ public class SVM_Instruction {
 			case iPRECALL:	return SVM_PRECALL.read(inpt);
 			case iPOPK:		return SVM_POPK.read(inpt);
 			case iENTER:	return SVM_ENTER.read(inpt);
+			case iREFER:	return SVM_REFER.read(inpt);
 			
 			case iNOT_IMPL:	return SVM_NOT_IMPL.read(inpt);
 			default: Util.IERR("MISSING: " + edOpcode(opcode));
@@ -133,6 +135,7 @@ public class SVM_Instruction {
 			case iPRECALL:	return "iPRECALL";
 			case iPOPK:		return "iPOPK";
 			case iENTER:	return "iENTER";
+			case iREFER:	return "iREFER";
 
 			case iNOT_IMPL:	return "iNOT_IMPL";
 			default:		return "UNKNOWN:" + opcode;
