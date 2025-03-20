@@ -54,7 +54,7 @@ import simula.compiler.utilities.Util;
 /// The SimulaEditor.
 /// 
 /// Link to GitHub: <a href=
-/// "https://github.com/portablesimula/EclipseWorkSpaces/SimulaCompiler2/blob/master/Simula/src/simula/editor/SimulaEditor.java"><b>Source File</b></a>.
+/// "https://github.com/portablesimula/EclipseWorkSpaces/blob/main/SimulaCompiler2/Simula/src/simula/editor/SimulaEditor.java"><b>Source File</b></a>.
 /// 
 /// @author Øystein Myhre Andersen
 @SuppressWarnings("serial")

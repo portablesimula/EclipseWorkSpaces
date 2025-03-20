@@ -104,7 +104,7 @@ import simula.compiler.utilities.Util;
 /// outside its associated bounds causes a run time error.
 /// 
 /// Link to GitHub: <a href=
-/// "https://github.com/portablesimula/EclipseWorkSpaces/SimulaCompiler2/blob/master/Simula/src/simula/compiler/syntaxClass/expression/Variable.java">
+/// "https://github.com/portablesimula/EclipseWorkSpaces/blob/main/SimulaCompiler2/Simula/src/simula/compiler/syntaxClass/expression/Variable.java">
 /// <b>Source File</b></a>.
 /// 
 /// @author SIMULA Standards Group
