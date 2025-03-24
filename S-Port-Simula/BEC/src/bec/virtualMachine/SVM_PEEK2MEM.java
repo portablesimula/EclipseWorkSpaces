@@ -6,6 +6,7 @@ import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.compileTimeStack.AddressItem;
 import bec.util.Global;
+import bec.util.Util;
 import bec.value.ObjectAddress;
 import bec.value.Value;
 import bec.virtualMachine.RTStack.RTStackItem;
@@ -17,7 +18,7 @@ public class SVM_PEEK2MEM extends SVM_Instruction {
 	RTAddress addr;
 	int count;
 	
-	private final boolean DEBUG = true;
+	private final boolean DEBUG = false;
 	
 	public SVM_PEEK2MEM(AddressItem itm, int count) {
 		this.opcode = SVM_Instruction.iPEEK2MEM;
@@ -37,18 +38,42 @@ public class SVM_PEEK2MEM extends SVM_Instruction {
 //			Global.PSC.segment().dump("PEEK2MEM.execute: ");
 			RTStack.dumpRTStack("PEEK2MEM.execute: ");
 		}
-		if(this.addr.segID == null) {
+
+		boolean TESTING = false;
+		
+		if(TESTING && this.addr.segID == null) {
 			// this.addr is Stack Relative Address
-			ObjectAddress objAddr = addr.reladdr2ObjAddr();
+			if(DEBUG) {
+				System.out.println("PEEK2MEM.execute: RTStack.curFrame="+RTStack.curFrame);
+				System.out.println("PEEK2MEM.execute: rtStackIndex="+RTStack.curFrame.rtStackIndex);
+				System.out.println("PEEK2MEM.execute: addr="+addr);
+			}
+			ObjectAddress objAddr = null;// addr.reladdr2ObjAddr_NEW();
 			int n = RTStack.size()-1;
 			int idx = count - 1;
 //			for(int i=count-1;i>=0;i--) {
-			for(int i=0;i<count;i++) {
-				RTStackItem item = RTStack.load(n-i);
-				if(DEBUG) System.out.println("PEEK2MEM: "+item.value()+" |==> "+objAddr + "["+idx+"]" + "      " + item.comment());
-				objAddr.store(idx--, item.value(), item.comment());
+			if(TESTING) {
+				for(int i=0;i<count;i++) {
+//					RTStackItem item = RTStack.pop();
+					RTStackItem item = RTStack.load(n-i);
+//					if(DEBUG)
+						System.out.println("PEEK2MEM: "+item.value()+" ==> "+addr + "["+idx+"]" + "      " + item.comment());
+					addr.store(i, item.value(), item.comment());
+				}
+				RTStack.dumpRTStack("PEEK2MEM.execute: ");
+				Util.IERR("");
+			} else {
+				for(int i=0;i<count;i++) {
+					RTStackItem item = RTStack.load(n-i);
+					if(DEBUG) System.out.println("PEEK2MEM: "+item.value()+" |==> "+objAddr + "["+idx+"]" + "      " + item.comment());
+					objAddr.store(idx--, item.value(), item.comment());
+				}
 			}
-//			Util.IERR("");
+			if(DEBUG) {
+//				Global.PSC.segment().dump("PEEK2MEM.execute: ");
+				RTStack.dumpRTStack("PEEK2MEM.execute: ");
+			}
+			Util.IERR("");
 		} else {
 			// this.addr is Segment Address
 			int n = RTStack.size()-1;

@@ -41,7 +41,7 @@ public abstract class XOR extends Instruction {
 		Global.PSEG.emit(new SVM_XOR(at), "XOR: ");
 		CTStack.pop();
 		CTStack.pop();
-	    CTStack.pushTemp(at, RTRegister.qEAX, 1, "XOR: ");
+	    CTStack.pushTemp(at, 1, "XOR: ");
 //		CTStack.dumpStack();
 //		Global.PSEG.dump();
 //		Util.IERR(""+this);

@@ -8,6 +8,7 @@ import bec.util.Util;
 import bec.value.IntegerValue;
 import bec.value.ObjectAddress;
 import bec.value.ProgramAddress;
+import bec.value.RealValue;
 import bec.value.Value;
 
 public abstract class RTStack {
@@ -105,9 +106,9 @@ public abstract class RTStack {
 //	}
 
 	public static void pushr(Type type, int reg, String comment) {
-		Value value = RTRegister.getValue(reg);
+		int value = RTRegister.getValue(reg);
 //		stack.push(type, value, comment);
-		stack.push(new RTStackItem(value, comment));
+		stack.push(new RTStackItem( new IntegerValue(Type.T_INT, value), comment));
 //		dumpRTStack("");
 //		Util.IERR("");
 	}
@@ -129,7 +130,15 @@ public abstract class RTStack {
 		return (ival==null)? 0 : ival.value;
 	}
 	
+	public static float popReal() {
+		RealValue rval = (RealValue) pop().value();
+		System.out.println("RTStack.popReal: rval="+rval);
+		return (rval==null)? 0 : rval.value;
+	}
+	
 	public static ObjectAddress popGADDR() {
+//		RTStack.dumpRTStack("RTStack.popGADDR:");
+//		RTStack.printCallStack("RTStack.popGADDR:");
 		int ofst = RTStack.popInt();
 		ObjectAddress chradr = (ObjectAddress) RTStack.pop().value();
 //		System.out.println("RTStack.popGADDR: chradr="+chradr+", ofst="+ofst);
@@ -138,7 +147,7 @@ public abstract class RTStack {
 	
 	public static ObjectAddress popOADDR() {
 		ObjectAddress oadr = (ObjectAddress) RTStack.pop().value();
-		System.out.println("RTStack.popOADDR: "+oadr);
+//		System.out.println("RTStack.popOADDR: "+oadr);
 		return oadr;
 	}
 	

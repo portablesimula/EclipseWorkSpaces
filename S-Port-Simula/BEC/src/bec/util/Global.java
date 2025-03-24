@@ -25,6 +25,7 @@ public class Global {
 	public static int EXEC_TRACE = 0;
 	
 	public static ProgramAddress PSC; // ProgramSequenceControl during execute
+	public static boolean duringEXEC() { return PSC != null; }
 //	public static HashMap<String, Segment> SEGMAP;
 	public static Map<String, Segment> SEGMAP;
 

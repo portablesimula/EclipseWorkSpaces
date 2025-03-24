@@ -29,6 +29,7 @@ public class SVM_ENTER extends SVM_Instruction {
 //		System.out.println("SVM_ENTER.execute: RTStack.curFrame="+RTStack.curFrame);
 		
 		if(Global.EXEC_TRACE > 2) {
+//			RTStack.dumpRTStack(": ENTER: ");
 			RTStack.curFrame.dump(""+RTStack.curFrame.rutAddr+": ENTER: ");
 //			Util.IERR("");
 		}

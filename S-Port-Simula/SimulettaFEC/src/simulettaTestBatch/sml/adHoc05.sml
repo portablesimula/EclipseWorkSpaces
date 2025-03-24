@@ -1,19 +1,22 @@
 begin
+--   SYSINSERT envir,modl1;
    SYSINSERT RT,SYSR,KNWN,UTIL;    
-
+   integer traceCase;
+   
    Visible routine trace; import infix(string) msg;
    begin
-       ed_str(msg);
+%      traceCase:=traceCase+1;
    end;
+   
+   Routine testCases; import
+      integer i;
+   begin
+      trace(get_ed);
+   end;   
 
-   infix(string) s,	q;
  
-      q:=s:="ABRA CA DAB";
-      
-      s.chradr:=name(var(s.chradr)(3)); s.nchr:=s.nchr-3;  -- Increment 3 char.
-%     STREQL(s,"ALLABABA");
-       trace(s);
-      
+      testCases(4513);
+
 
  end;
 	 

@@ -52,7 +52,7 @@ public abstract class DEREF extends Instruction {
 			assertAtrStacked();
 			CTStack.pop();
 //			CTStack.pushTemp(Type.T_GADDR, "DEREF: ");
-			CTStack.pushTemp(Type.T_GADDR, RTRegister.qEBX, 2, "DEREF: ");
+			CTStack.pushTemp(Type.T_GADDR, 2, "DEREF: ");
 			return;
 		}
 

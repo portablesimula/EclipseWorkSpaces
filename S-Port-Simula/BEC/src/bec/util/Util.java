@@ -143,7 +143,7 @@ public class Util {
 			RTAddress rtAddr = new RTAddress(addr); 
 			if(DEBUG) System.out.println("Util.GQfetch: rtAddr="+rtAddr);
 			Global.PSEG.emit(new SVM_PUSH(rtAddr, type.size()), comment + " " +type);
-			CTStack.pop(); CTStack.pushTemp(type, addr.xReg, 1, "GQFetch: ");
+			CTStack.pop(); CTStack.pushTemp(type, 1, "GQFetch: ");
 			if(DEBUG) {
 				CTStack.dumpStack("GQfetch: "+comment);
 				Global.PSEG.dump("GQfetch: "+comment);

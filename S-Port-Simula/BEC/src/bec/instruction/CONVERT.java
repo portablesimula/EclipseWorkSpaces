@@ -57,7 +57,7 @@ public abstract class CONVERT extends Instruction {
 //			}
 //			if(! OK) Util.IERR("Type conversion is undefined: " + fromtype + " ==> " + totype);
 			Global.PSEG.emit(new SVM_CONVERT(totype), "");
-			CTStack.pop(); CTStack.pushTemp(totype, RTRegister.qEAX, 1, "CONVERT: ");
+			CTStack.pop(); CTStack.pushTemp(totype, 1, "CONVERT: ");
 //			TOS.type = totype;
 		}
 	}

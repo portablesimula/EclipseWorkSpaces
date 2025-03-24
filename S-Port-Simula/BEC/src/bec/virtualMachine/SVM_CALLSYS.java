@@ -10,6 +10,7 @@ import bec.instruction.CALL;
 import bec.segment.DataSegment;
 import bec.segment.Segment;
 import bec.util.Global;
+import bec.util.SysEdit;
 import bec.util.Type;
 import bec.util.Util;
 import bec.value.BooleanValue;
@@ -45,6 +46,7 @@ public class SVM_CALLSYS extends SVM_Instruction {
 			case P_PUTSTR:  putstr(); break;
 			case P_PRINTO:  printo(); break;
 			case P_PUTINT2: putint2(); break;
+			case P_PTREAL2: putreal2(); break;
 			default: Util.IERR("SVM_SYSCALL: Unknown System Routine " + edKind(kind));
 		}
 		Global.PSC.ofst++;
@@ -198,6 +200,7 @@ public class SVM_CALLSYS extends SVM_Instruction {
 	private void stringEqual() {
 		if(CALL.USE_FRAME_ON_STACK) {
 			ENTER("STREQL: ", 1, 6); // exportSize, importSize
+//			RTStack.dumpRTStack("SVM_CALLSYS.stringEqual: ");
 			String str1 = RTStack.popString();
 //			System.out.println("SVM_SYSCALL.stringEqual: str1="+str1);
 //			RTStack.dumpRTStack(str1);
@@ -397,10 +400,6 @@ public class SVM_CALLSYS extends SVM_Instruction {
 	}
 	
 	/**
-	 * Visible sysroutine("PUTSTR") PUTSTR;
-	 *		import infix (string) item; infix(string) val;
-	 *		export integer lng;
-	 * end;
 	 *  Visible sysroutine("PUTINT2") PUTINT2;
 	 *      import infix (string) item; integer val
 	 *      export integer lng;
@@ -442,6 +441,57 @@ public class SVM_CALLSYS extends SVM_Instruction {
 
 		EXIT("PUTSTR: ");
 //		Util.IERR("NOT IMPL");
+	}
+	
+	/**
+	 *  Visible sysroutine("PTREAL2") PTREAL2;
+	 *      import infix (string) item; real val; integer frac; 
+	 *      export integer lng;
+	 *  end;
+
+	 *  Visible sysroutine("PTREAL2") PUTINT2;
+	 *      import infix (string) item; integer val
+	 *      export integer lng;
+	 *  end;
+	 * 
+	 * 
+	 *  FRAME:
+	 *      0: null              EXPORT T[3:INT'LNG]
+	 *      1: DSEG_RT[30]       IMPORT T[32:STRING'item'CHRADR]
+	 *      2: C-INT 32          IMPORT T[32:STRING'item'OFST]
+	 *      3: C-INT 200         IMPORT T[32:STRING'item'NCHR]
+	 *      4: C-REAL 3.14       IMPORT val
+	 *      5: C-INT 3           IMPORT frac
+	 */
+	private void putreal2() {
+		ENTER("PTREAL2: ", 1, 4); // exportSize, importSize
+		RTStack.dumpRTStack("PTREAL2: ");
+		int frac = RTStack.popInt();
+		float val = RTStack.popReal();
+		System.out.println("SVM_SYSCALL.putreal2: val="+val);
+
+		int itemNchr = RTStack.popInt();
+//		int itemOfst = RTStack.popInt();
+//		ObjectAddress itemAddr = (ObjectAddress) RTStack.pop().value();
+//		if(itemOfst != 0) itemAddr.ofst += itemOfst;
+		ObjectAddress itemAddr = RTStack.popGADDR();
+//		System.out.println("SVM_SYSCALL.putstr: itemAddr="+itemAddr);
+//		System.out.println("SVM_SYSCALL.putstr: itemOfst="+itemOfst); itemOfst=8;
+//		System.out.println("SVM_SYSCALL.putstr: itemNchr="+itemNchr);
+//		System.out.println("SVM_SYSCALL.putstr: itemAddr="+itemAddr);
+		itemAddr = itemAddr.addOffset(itemNchr);
+		
+//		itemAddr.segment().dump("SVM_SYSCALL.putstr: ");
+		
+		String sval = SysEdit.putreal(val,frac);
+		int nchr = sval.length();
+		move(sval, itemAddr, nchr);
+//		itemAddr.segment().dump("SVM_SYSCALL.putstr: ");
+
+		RTStack.push(new IntegerValue(Type.T_INT, nchr), "EXPORT");
+
+		EXIT("PTREAL2: ");
+//		Util.IERR("NOT IMPL: "+sval);
 	}
 	
 	

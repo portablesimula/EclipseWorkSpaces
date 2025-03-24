@@ -23,7 +23,7 @@ public abstract class NEG extends Instruction {
 		Type at = CTStack.TOS.type;
 		Global.PSEG.emit(new SVM_NEG(), "");
 		CTStack.pop();
-	    CTStack.pushTemp(at, RTRegister.qEAX, 1, "NEG: ");
+	    CTStack.pushTemp(at, 1, "NEG: ");
 	}
 
 }

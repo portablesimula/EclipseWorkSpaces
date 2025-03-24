@@ -1,22 +1,18 @@
 package bec.virtualMachine;
 
+import bec.util.Util;
 import bec.value.IntegerValue;
 import bec.value.Value;
 
 public final class RTRegister {
-	Value value;
+	int value;
 	
 	private static int nRegUsed;
 	
-	public static final int qEAX = 1; // TODO: SKAL FJERNES
-	public static final int qEBX = 2; // TODO: SKAL FJERNES
-//	public static final int qECX = 3;
-//	public static final int qEDX = 4;
 	public static final int rMax = 10;
-//	private static Value[] register = new Value[rMax+1];
 	private static RTRegister[] register = new RTRegister[rMax];
 	
-	private RTRegister(Value value) {
+	private RTRegister(int value) {
 		this.value = value;
 	}
 	
@@ -30,24 +26,16 @@ public final class RTRegister {
 		nRegUsed = 0;
 	}
 	
-	public static void putValue(int reg, Value index) {
+	public static void putValue(int reg, int index) {
 		register[reg-1] = new RTRegister(index);
-//		System.out.println("RTRegister.putValue: "+index+", reg="+reg);
+//		System.out.println("RTRegister.putValue: "+index+", reg="+reg+", value="+register[reg-1]);
 	}
 	
-	public static Value getValue(int reg) {
-		Value value = register[reg-1].value;
-		return value;
-	}
-	
-	public static int getIndex(int reg) {
-		System.out.println("RTRegister.getIndex: reg="+reg+"  "+register[reg-1]);
-//		Thread.dumpStack();
+	public static int getValue(int reg) {
 		try {
-			IntegerValue val = (IntegerValue) register[reg-1].value;
-			return IntegerValue.intValue(val);
+			int value = register[reg-1].value;
+			return value;
 		} catch(Exception e) {
-//			e.printStackTrace();
 			return -1;
 		}
 	}
@@ -75,7 +63,7 @@ public final class RTRegister {
 	}
 	
 	public String toString() {
-		return value.toString();
+		return ""+value;
 	}
 
 }

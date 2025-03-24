@@ -36,7 +36,7 @@ public abstract class REM extends Instruction {
 		Global.PSEG.emit(new SVM_REM(), "REM:  ");
 		CTStack.pop();
 		CTStack.pop();
-	    CTStack.pushTemp(at, RTRegister.qEAX, 1, "REM:  ");
+	    CTStack.pushTemp(at, 1, "REM:  ");
 //		CTStack.dumpStack("MULT.doCode: ");
 //		Global.PSEG.dump("MULT.doCode: ");
 //		Util.IERR(""+this);

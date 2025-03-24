@@ -152,7 +152,7 @@ public abstract class CALL extends Instruction {
 		if(export != null) {
 			Type returnType = export.type;
 			if(DEBUG) System.out.println("CallInstruction.callSYS: returnType="+returnType);
-			CTStack.pushTemp(returnType, RTRegister.qEAX, 1, "EXPORT: ");
+			CTStack.pushTemp(returnType, 1, "EXPORT: ");
 			if(! CALL.USE_FRAME_ON_STACK) {
 				Util.IERR("DETTE MÅ RETTES");
 //				Global.PSEG.emit(new SVM_PUSH(new RTAddress(export.address), returnType.size()), "CallInstruction: EXPORT " + spec);

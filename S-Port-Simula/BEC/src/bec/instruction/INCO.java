@@ -34,7 +34,7 @@ public abstract class INCO extends Instruction {
 		Global.PSEG.emit(new SVM_ADD(), "");
 		CTStack.pop();
 		CTStack.pop();
-	    CTStack.pushTemp(Type.T_OADDR, RTRegister.qEAX, 1, "INCO: ");
+	    CTStack.pushTemp(Type.T_OADDR, 1, "INCO: ");
 //		Util.IERR("NOT IMPL");
 	}
 

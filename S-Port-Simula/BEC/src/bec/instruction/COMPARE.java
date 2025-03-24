@@ -29,7 +29,7 @@ public abstract class COMPARE extends Instruction {
 		CTStack.checkTypesEqual(); CTStack.checkSosValue();	
 		CTStack.pop(); CTStack.pop();
 		Global.PSEG.emit(new SVM_COMPARE(relation), "");
-		CTStack.pushTemp(Type.T_BOOL, RTRegister.qEAX, 1, "COMPARE: ");
+		CTStack.pushTemp(Type.T_BOOL, 1, "COMPARE: ");
 
 //		CTStack.dumpStack();
 //		Global.PSEG.dump();

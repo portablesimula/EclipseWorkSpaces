@@ -41,7 +41,7 @@ public abstract class EQV extends Instruction {
 		Global.PSEG.emit(new SVM_EQV(at), "EQV: ");
 		CTStack.pop();
 		CTStack.pop();
-	    CTStack.pushTemp(at, RTRegister.qEAX, 1, "EQV: ");
+	    CTStack.pushTemp(at, 1, "EQV: ");
 //		CTStack.dumpStack();
 //		Global.PSEG.dump();
 //		Util.IERR(""+this);

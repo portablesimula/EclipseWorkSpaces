@@ -34,7 +34,7 @@ public abstract class MULT extends Instruction {
 		Global.PSEG.emit(new SVM_MULT(), "MULT: ");
 		CTStack.pop();
 		CTStack.pop();
-	    CTStack.pushTemp(at, RTRegister.qEAX, 1, "MULT: ");
+	    CTStack.pushTemp(at, 1, "MULT: ");
 //		CTStack.dumpStack("MULT.doCode: ");
 //		Global.PSEG.dump("MULT.doCode: ");
 //		Util.IERR(""+this);

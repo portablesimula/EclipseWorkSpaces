@@ -34,6 +34,11 @@ public class ObjectAddress extends Value {
 		if(ofst > 9000 || ofst < 0) Util.IERR("");
 	}
 	
+	private ObjectAddress(int ofst) {
+		this.ofst = ofst;
+		if(ofst > 9000 || ofst < 0) Util.IERR("");
+	}
+	
 	/**
 	 * attribute_address	::= c-aaddr attribute:tag
 	 * object_address		::= c-oaddr global_or_const:tag
@@ -60,6 +65,10 @@ public class ObjectAddress extends Value {
 	
 	public static ObjectAddress ofRelAddr(DataSegment seg) {
 		return new ObjectAddress(seg, 0);
+	}
+	
+	public static ObjectAddress ofRelFrameAddr(int ofst) {
+		return new ObjectAddress(ofst);
 	}
 	
 	

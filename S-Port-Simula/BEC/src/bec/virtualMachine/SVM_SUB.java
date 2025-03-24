@@ -26,6 +26,8 @@ public class SVM_SUB extends SVM_Instruction {
 	public void execute() {
 		Value tos = RTStack.pop().value();
 		Value sos = RTStack.pop().value();
+//		System.out.println("SVM_SUB: tos: " + tos.getClass().getSimpleName() + " - " + tos);
+//		System.out.println("SVM_SUB: sos: " + sos.getClass().getSimpleName() + " - " + sos);
 //		System.out.println("SVM_SUB: " + sos + " - " + tos);
 		Value res = (sos == null)? tos.neg() : sos.sub(tos);
 		if(DEBUG) System.out.println("SVM_SUB: " + sos + " - " + tos + " ==> " + res);

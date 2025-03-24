@@ -34,7 +34,7 @@ public abstract class DIV extends Instruction {
 		Global.PSEG.emit(new SVM_DIV(), "");
 		CTStack.pop();
 		CTStack.pop();
-	    CTStack.pushTemp(at, RTRegister.qEAX, 1,"DIV: ");
+	    CTStack.pushTemp(at, 1,"DIV: ");
 //		CTStack.dumpStack();
 //		Global.PSEG.dump();
 //		Util.IERR(""+this);

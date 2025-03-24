@@ -41,7 +41,7 @@ public abstract class OR extends Instruction {
 		Global.PSEG.emit(new SVM_OR(), "OR: ");
 		CTStack.pop();
 		CTStack.pop();
-	    CTStack.pushTemp(at, RTRegister.qEAX, 1, "OR: ");
+	    CTStack.pushTemp(at, 1, "OR: ");
 //		CTStack.dumpStack();
 //		Global.PSEG.dump();
 //		Util.IERR(""+this);

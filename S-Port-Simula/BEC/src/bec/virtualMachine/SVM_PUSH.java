@@ -11,52 +11,46 @@ import bec.util.Global;
 import bec.value.ObjectAddress;
 import bec.value.Value;
 
-// The count values at addr... is pushed onto the operand stack.
+// The size values at addr... is pushed onto the operand stack.
 public class SVM_PUSH extends SVM_Instruction {
 	RTAddress addr;
-	int count;
+	int size;
 	
-//	public SVM_PUSH(Type type, ObjectAddress addr, int indexReg, int count) {
+//	public SVM_PUSH(Type type, ObjectAddress addr, int indexReg, int size) {
 //		this.opcode = SVM_Instruction.iPUSH;
 //		this.type = type;
 //		this.addr = addr;
 //		this.indexReg = indexReg;
-//		this.count = count;
+//		this.size = size;
 //	}
 	
-	public SVM_PUSH(RTAddress addr, int count) {
+	public SVM_PUSH(RTAddress addr, int size) {
 		this.opcode = SVM_Instruction.iPUSH;
 		this.addr = addr;
-		this.count = count;
+		this.size = size;
 	}
 	
 	public SVM_PUSH(Variable var) {
 		this.opcode = SVM_Instruction.iPUSH;
 		this.addr = new RTAddress(var.address, 0);
-		this.count = var.repCount;
+		this.size = var.repCount;
 	}
 	
 	@Override
 	public void execute() {
 		if(CALL.USE_FRAME_ON_STACK) {
-//			ObjectAddress target = addr.toObjectAddress();
-//			RTStack.push(target, "SVM_PUSH");
-			
-//			RTStack.push(addr, "SVM_PUSH");
-			
-			System.out.println("SVM_PUSH: addr=" + addr+", count="+count);
-			for(int i=0;i<count;i++) {
-				Value value = addr.load(i);
-				System.out.println("SVM_PUSH: " + value);
+//			System.out.println("SVM_PUSH: addr=" + addr+", size="+size);
+			for(int i=0;i<size;i++) {
+				Value value = addr.load(i, size);
+//				System.out.println("SVM_PUSH: " + value);
 				RTStack.push(value, "SVM_PUSH");
 			}
-//			Util.IERR("");
 		} else {
 //			ObjectAddress target = addr.toObjectAddress();
 //			DataSegment dseg = (DataSegment) target.segment();
-////			dseg.dump("SVM_PUSH: " + addr + ", count=" + count);
+////			dseg.dump("SVM_PUSH: " + addr + ", size=" + size);
 //			int ofst = target.getOfst();
-//			for(int i=0;i<count;i++) {
+//			for(int i=0;i<size;i++) {
 //				Value value = dseg.load(ofst++);
 ////				System.out.println("SVM_PUSH: " + value);
 //				RTStack.push(value, "SVM_PUSH");
@@ -68,7 +62,7 @@ public class SVM_PUSH extends SVM_Instruction {
 	@Override
 	public String toString() {
 		String s = "PUSH     " + addr;
-		if(count > 1) s += ", " + count;
+		if(size > 1) s += ", " + size;
 		return s;
 	}
 
@@ -78,7 +72,7 @@ public class SVM_PUSH extends SVM_Instruction {
 	private SVM_PUSH(AttributeInputStream inpt) throws IOException {
 		this.opcode = SVM_Instruction.iPUSH;
 		this.addr = RTAddress.read(inpt);
-		this.count = inpt.readShort();
+		this.size = inpt.readShort();
 		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + this);
 	}
 
@@ -87,7 +81,7 @@ public class SVM_PUSH extends SVM_Instruction {
 		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		addr.write(oupt);
-		oupt.writeShort(count);
+		oupt.writeShort(size);
 	}
 
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {

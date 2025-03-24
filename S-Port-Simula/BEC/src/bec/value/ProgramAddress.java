@@ -95,8 +95,8 @@ public class ProgramAddress extends Value {
 //		System.out.println("ProgramAddress.execute: ofst=" + ofst);
 		if(ofst >= size) {
 //			Segment.lookup("DSEG_ADHOC02").dump("ProgramAddress.execute: ");
-			Global.DSEG.dump("ProgramAddress.execute: ");
-			Global.CSEG.dump("ProgramAddress.execute: ");
+			Global.DSEG.dump("ProgramAddress.execute: FINAL DATA SEGMENT ");
+			Global.CSEG.dump("ProgramAddress.execute: FINAL CONSTANT SEGMENT ");
 			if(Global.verbose) System.out.println("ProgramAddress.execute: " + seg.ident + " IS FINALIZED -- NOTHING MORE TO EXECUTE");
 			System.exit(0);			
 		} else {

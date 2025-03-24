@@ -79,7 +79,7 @@ public abstract class DSIZE extends Instruction {
 				Global.PSEG.emit(new SVM_PUSHC(fixValue), "DSIZE'recSize: ");
 				Global.PSEG.emit(new SVM_ADD(), "ADD: ");
 				
-				CTStack.pushTemp(Type.T_SIZE, RTRegister.qEAX, 1, "DSIZE: ");
+				CTStack.pushTemp(Type.T_SIZE, 1, "DSIZE: ");
 			}
 		} else {
 			Util.IERR("Illegal DSIZE on: " + fixrec);

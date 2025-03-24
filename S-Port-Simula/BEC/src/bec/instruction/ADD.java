@@ -36,7 +36,7 @@ public abstract class ADD extends Instruction {
 		Global.PSEG.emit(new SVM_ADD(), "");
 		CTStack.pop();
 		CTStack.pop();
-	    CTStack.pushTemp(at, RTRegister.qEAX, 1, "ADD: ");
+	    CTStack.pushTemp(at, 1, "ADD: ");
 	    
 //		CTStack.dumpStack("ADD: ");
 //		Global.PSEG.dump("ADD: ");

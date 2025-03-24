@@ -31,7 +31,7 @@ public abstract class NOT extends Instruction {
 	    }
 		Global.PSEG.emit(new SVM_NOT(at), "NOT: ");
 		CTStack.pop();
-	    CTStack.pushTemp(at, RTRegister.qEAX, 1, "NOT: ");
+	    CTStack.pushTemp(at, 1, "NOT: ");
 	    
 //		CTStack.dumpStack("NOT: ");
 //		Global.PSEG.dump("NOT: ");

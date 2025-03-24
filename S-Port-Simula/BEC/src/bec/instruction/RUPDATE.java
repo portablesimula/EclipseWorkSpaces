@@ -6,10 +6,11 @@ import bec.compileTimeStack.StackItem;
 import bec.util.Global;
 import bec.util.Util;
 import bec.value.ObjectAddress;
+import bec.virtualMachine.RTStack;
 import bec.virtualMachine.SVM_PEEK2MEM;
 
 public abstract class RUPDATE extends Instruction {
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 	
 	/**
 	 * assign_instruction ::= assign | update | rupdate

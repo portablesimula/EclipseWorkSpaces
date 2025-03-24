@@ -30,7 +30,7 @@ public abstract class DIST extends Instruction {
 		Global.PSEG.emit(new SVM_SUB(), "");
 		CTStack.pop();
 		CTStack.pop();
-	    CTStack.pushTemp(Type.T_SIZE, RTRegister.qEAX, 1, "DIST: ");
+	    CTStack.pushTemp(Type.T_SIZE, 1, "DIST: ");
 //		Util.IERR("NOT IMPL");
 	}
 

@@ -125,7 +125,7 @@ public class ConstDescr extends Descriptor {
 			String comment = tag + " type=" + cnst.type;
 //			System.out.println("NEW CONST: "+comment);
 			cnst.address = Global.CSEG.emitRepetitionValue(comment);
-			Global.CSEG.dump("CONST.inConstant: ");
+//			Global.CSEG.dump("CONST.inConstant: ");
 //			Util.IERR("");
 		
 		if(DEBUG) {

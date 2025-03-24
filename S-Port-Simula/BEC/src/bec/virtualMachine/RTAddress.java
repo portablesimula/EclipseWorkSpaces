@@ -14,78 +14,24 @@ import bec.value.Value;
 import bec.virtualMachine.RTStack.RTStackItem;
 
 public class RTAddress extends Value {
-//	public ObjectAddress objadr;
-	String segID;
+	String segID; // null: RelAddr
 	public int offset;
-//	public boolean isRemoteBase; // objaddr is base address before dot
-//	public boolean isRefered;
-//	private AddressItem.ObjState objState;
 	private int xReg; // 0: no index register
 	
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 
 	public RTAddress(AddressItem itm) {
 		if(itm.objadr != null) {
 			this.segID =  itm.objadr.segID;
-//			this.objadr = itm.objadr;
 			this.offset = itm.objadr.getOfst() + itm.offset;			
-		} else {
-			this.segID = "Frame";			
 		}
-//		this.isRemoteBase  = itm.isRemoteBase;
-//		this.isRefered = itm.isRefered;
-//		this.objState  = itm.objState;
-//		this.objState  = itm.atrState;
 		this.xReg = itm.xReg;
 	}
 
 	public RTAddress(ObjectAddress objadr, int gOfst) {
 		this.segID =  objadr.segID;
 		this.offset = objadr.getOfst() + gOfst;			
-//		this.xReg = itm.xReg;
 	}
-
-//	public RTAddress(ObjectAddress objadr) {
-//		this.objadr = objadr;
-//	}
-
-//	public ObjectAddress toObjectAddress() {
-//		Thread.dumpStack();
-//		if(DEBUG) System.out.println("RTAddress.toObjectAddress: "+objadr+", offset="+offset+", xReg="+xReg);
-//		ObjectAddress res =  this.objadr.addOffset(offset);
-//		if(xReg > 0) {
-//			if(DEBUG) System.out.println("RTAddress.toObjectAddress: xReg="+RTRegister.edReg(xReg)+"  "+RTRegister.getIndex(xReg));
-//			res = res.addOffset(RTRegister.getIndex(xReg));
-//		}
-//		if(DEBUG) System.out.println("RTAddress.toObjectAddress: "+res);
-//		return res;
-//	}
-
-//	public ObjectAddress OLD_toObjectAddress() {
-////		if(objState == AddressItem.ObjState.Calculated) {
-////		if(objState == AddressItem.ObjState.Remote) {
-//		if(isRemoteBase) {
-////			ObjectAddress temp = RTStack.popGADDR();
-//			ObjectAddress temp = RTStack.popOADDR();
-//			ObjectAddress res = temp.addOffset(offset);
-//			if(DEBUG) System.out.println("RTAddress.toObjectAddress: isRemoteBase: "+res);
-//			return res;
-//		} else if(isRefered) {
-////			ObjectAddress temp = RTStack.popGADDR();
-//			ObjectAddress temp = RTStack.popOADDR();
-//			ObjectAddress res = temp.addOffset(offset);
-//			if(DEBUG) System.out.println("RTAddress.toObjectAddress: isRefered: "+res);
-//			return res;
-//		} else {
-//			ObjectAddress res =  this.objadr.addOffset(offset);
-//			if(DEBUG) System.out.println("RTAddress.toObjectAddress: "+res);
-//			if(xReg > 0) {
-//				if(DEBUG) System.out.println("RTAddress.toObjectAddress: xReg="+RTRegister.edReg(xReg)+"  "+RTRegister.getIndex(xReg));
-//				res = res.addOffset(RTRegister.getIndex(xReg));
-//			}
-//			return res;
-//		}
-//	}
 	
 	public DataSegment segment() {
 		if(segID == null) return null;
@@ -94,45 +40,20 @@ public class RTAddress extends Value {
 	
 	private int xRegValue() {
 		if(xReg == 0) return 0;
-		return RTRegister.getIndex(xReg);
+		return RTRegister.getValue(xReg);
 	}
 	
-	private static final boolean TESTING = true;
-	public Value load(int idx) {
-//		return toObjectAddress().load();
+	public Value load(int idx,int incr) {
 		if(segID == null) {
 			// load rel-addr  curFrame + ofst
-			ObjectAddress objAddr = null;
-			if(TESTING) {
-				objAddr = reladdr2ObjAddr();
-			} else {
-				int frmx = (RTStack.curFrame == null)? 0 : RTStack.curFrame.rtStackIndex;
-				System.out.println("RTAddress.load: curFrame="+frmx);
-				
-				int reladdr = offset + idx;
-	
-				RTStackItem itm = RTStack.load(frmx + reladdr);
-				System.out.println("RTAddress.load: itm="+itm);
-				
-				objAddr = (ObjectAddress) itm.value();
-				System.out.println("RTAddress.load: objAddr="+objAddr);
-	
-				objAddr = objAddr.addOffset(xRegValue());
-				System.out.println("RTAddress.load: objAddr="+objAddr);
-			}
-			
-			Value val = objAddr.load();
-			System.out.println("RTAddress.load: val="+val);
-				
-//			Util.IERR("");
-//			return RTStack.load(frmx + reladdr).value();
-			return val;
+			int frmx = RTStack.curFrame.rtStackIndex;
+			RTStackItem val = RTStack.load(frmx + offset + idx);
+			if(DEBUG) System.out.println("RTAddress.load("+idx+") ===> "+val);
+			return val.value();
 		} else {
 			DataSegment dseg = segment();
-//			dseg.dump("RTAddress.load: ");
-			int reladdr = offset + xRegValue() + idx;
+			int reladdr = offset + (xRegValue() * incr) + idx;
 			return dseg.load(reladdr);
-//			Util.IERR("");
 		}
 	}
 	
@@ -151,15 +72,18 @@ public class RTAddress extends Value {
 	}
 	
 	public void store(int idx, Value value, String comment) {
-//		toObjectAddress().store(val, comment);
 		if(segID == null) {
-			Util.IERR("SKAL IKKE FOREKOMME !!!");
+			if(DEBUG) {
+				RTStack.dumpRTStack("RTAddress.store: ");
+				System.out.println("RTAddress.store: RTStack.curFrame="+RTStack.curFrame);
+				System.out.println("RTAddress.store: rtStackIndex="+RTStack.curFrame.rtStackIndex);
+			}
+			int frmx = RTStack.curFrame.rtStackIndex;
+			RTStack.store(frmx + offset + idx, value, comment);
 		} else {
 			DataSegment dseg = segment();
 			int reladdr = offset + xRegValue() + idx;
 			dseg.store(reladdr, value);
-//			dseg.dump("RTAddress.store: ");
-//			Util.IERR("");
 		}
 	}
 
@@ -167,23 +91,15 @@ public class RTAddress extends Value {
 		String s = (segID == null)? "RELADR[" : "SEGADR["+segID+':';
 		s = s + offset;
 		if(xReg > 0) {
-			s += "+" + RTRegister.edReg(xReg) + '(' + RTRegister.getIndex(xReg) + ')';
+			s = s + "+" + RTRegister.edReg(xReg);
+			int value = RTRegister.getValue(xReg);
+			System.out.println("RTAddress.toString: xReg="+xReg+", value="+value);
+			if(value >= 0) {
+				s = s + '(' + value + ')';
+			}
 		}
 		return s + "]";			
 	}
-
-//	public String toString() {
-//		if(objadr != null) {
-//			String s = "SEGADR["+objadr.segID+':' + objadr.getOfst() + "+" + offset;
-//			if(xReg > 0) {
-//				s += "+" + RTRegister.edReg(xReg) + '(' + RTRegister.getIndex(xReg) + ')';
-//			}
-//			return s + "]";			
-//		}
-//		int ofst = (objadr==null)? 0 : objadr.getOfst();
-//		String s = "RELADR[Frame:" + ofst + "+" + offset;
-//		return s + "]";
-//	}
 
 
 	// ***********************************************************************************************

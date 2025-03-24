@@ -41,7 +41,7 @@ public abstract class AND extends Instruction {
 		Global.PSEG.emit(new SVM_AND(at), "");
 		CTStack.pop();
 		CTStack.pop();
-	    CTStack.pushTemp(at, RTRegister.qEAX, 1, "AND: ");
+	    CTStack.pushTemp(at, 1, "AND: ");
 //		CTStack.dumpStack();
 //		Global.PSEG.dump();
 //		Util.IERR(""+this);

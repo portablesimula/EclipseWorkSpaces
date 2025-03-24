@@ -24,29 +24,29 @@ public final class FECmpTBatch {
 		long startTimeMs = System.currentTimeMillis( );
 		Vector<String> names=new Vector<String>();
 		
-		names.add("adHoc00");
+//		names.add("adHoc00");
 //		names.add("adHoc01");
 //		names.add("adHoc02");
 //		names.add("adHoc03");
 //		names.add("adHoc04");
-//		names.add("adHoc05");
+		names.add("adHoc05");
 //		names.add("adHoc06");
 //		names.add("adHoc07");
 //		names.add("adHoc08");
 //		names.add("adHoc09");
 //		names.add("adHoc10");
 		
-//		names.add("smltst00"); // Standard layout of test programs
-//		names.add("smltst01"); // Simple Assignments
-//		names.add("smltst02"); // Test Case Statement
-//		names.add("smltst03"); // Test Assert Statement
-//		names.add("smltst04"); // Test Parameter Transmission
-//		names.add("smltst05"); // Test CALL_TOS
-//		names.add("smltst06"); // Records with Variant(ALT)
-//		names.add("smltst07"); // Constant and initial values
-//		names.add("smltst08"); // Arithmetic Operators ( + - * / rem)
-//		names.add("smltst09"); // Boolean Operators ( and, or, xor, not )
-//		names.add("smltst10"); // Arithmetic Relations ( < , <= , = , >= , > , <> )
+		names.add("smltst00"); // Standard layout of test programs
+		names.add("smltst01"); // Simple Assignments
+		names.add("smltst02"); // Test Case Statement
+		names.add("smltst03"); // Test Assert Statement
+		names.add("smltst04"); // Test Parameter Transmission
+		names.add("smltst05"); // Test CALL_TOS
+		names.add("smltst06"); // Records with Variant(ALT)
+		names.add("smltst07"); // Constant and initial values
+		names.add("smltst08"); // Arithmetic Operators ( + - * / rem)
+		names.add("smltst09"); // Boolean Operators ( and, or, xor, not )
+		names.add("smltst10"); // Arithmetic Relations ( < , <= , = , >= , > , <> )
 //		names.add("smltst11"); // Boolean Relations ( = , <> )
 //		names.add("smltst12"); // Size Relations ( < , <= , = , >= , > , <> )
 //		names.add("smltst13"); // General Reference Expression

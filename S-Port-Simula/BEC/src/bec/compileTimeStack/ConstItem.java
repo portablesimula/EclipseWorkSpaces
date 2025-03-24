@@ -23,7 +23,8 @@ public class ConstItem extends Temp {
 	public Value value;
 
 	public ConstItem(Type type, Value value) {
-		super(type, 0, 0, "ConstItem: ");
+//		super(type, 0, 0, "ConstItem: ");
+		super(type, 0, "ConstItem: ");
 		this.value = value;
 		if(type.tag == 0) Util.IERR("NEW Coonst: NO TYPE: "+value);
 	}

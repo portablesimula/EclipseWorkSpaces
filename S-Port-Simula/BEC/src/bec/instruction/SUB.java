@@ -37,7 +37,7 @@ public abstract class SUB extends Instruction {
 		Global.PSEG.emit(new SVM_SUB(), "");
 		CTStack.pop();
 		CTStack.pop();
-	    CTStack.pushTemp(at, RTRegister.qEAX, 1, "SUB: ");
+	    CTStack.pushTemp(at, 1, "SUB: ");
 //		CTStack.dumpStack();
 //		Global.PSEG.dump();
 //		Util.IERR(""+this);

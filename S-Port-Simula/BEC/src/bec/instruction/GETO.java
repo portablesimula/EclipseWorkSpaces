@@ -26,7 +26,7 @@ public abstract class GETO extends Instruction {
 //		%+SE                     Qf2(qDYADC,qSUB,qESP,cSTP,4);
 //		%+S                      Qf5(qCALL,0,0,4,X_GETO);
 //		%+S                      Qf2(qADJST,0,0,0,4);
-		CTStack.pushTemp(Type.T_OADDR, RTRegister.qEAX, 1, "GETO: ");
+		CTStack.pushTemp(Type.T_OADDR, 1, "GETO: ");
 		Global.PSEG.emit(new SVM_NOT_IMPL("GETO: "), "GETO: ");
 //		Util.IERR("NOT IMPL");
 	}
