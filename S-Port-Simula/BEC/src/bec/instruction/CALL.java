@@ -12,16 +12,12 @@ import bec.util.Scode;
 import bec.util.Type;
 import bec.util.Util;
 import bec.value.ObjectAddress;
-import bec.virtualMachine.RTAddress;
-import bec.virtualMachine.RTFrame;
-import bec.virtualMachine.RTRegister;
 import bec.virtualMachine.SVM_CALL;
 import bec.virtualMachine.SVM_CALL_DSEG;
 import bec.virtualMachine.SVM_NOOP;
-import bec.virtualMachine.SVM_NOT_IMPL;
 import bec.virtualMachine.SVM_PEEK2MEM;
 import bec.virtualMachine.SVM_PRECALL;
-import bec.virtualMachine.SVM_PUSH;
+import bec.virtualMachine.SVM_PUSHC;
 import bec.virtualMachine.SVM_CALLSYS;
 
 public abstract class CALL extends Instruction {
@@ -63,11 +59,13 @@ public abstract class CALL extends Instruction {
 //	    Util.IERR("");
 	    
 		if(CALL.USE_FRAME_ON_STACK) {
+			System.out.println("CALL.ofScode: spec.pKind="+spec.pKind);
 			if(spec.pKind == 0) {
 				int exportSize = (spec.getExport() == null)? 0 : spec.getExport().type.size();
-				RTFrame frame = new RTFrame(exportSize, spec.frameSize-exportSize-1);
-//				Global.PSEG.emit(new SVM_PRECALL(exportSize), ""+Scode.edTag(profileTag));
-				Global.PSEG.emit(new SVM_PRECALL(frame), ""+Scode.edTag(profileTag));
+				int importSize = spec.frameSize-exportSize-1;
+//				RTFrame frame = new RTFrame(exportSize, spec.frameSize-exportSize-1);
+//				Global.PSEG.emit(new SVM_PRECALL(frame), ""+Scode.edTag(profileTag));
+				Global.PSEG.emit(new SVM_PRECALL(spec.getSimpleName(), exportSize, importSize), ""+Scode.edTag(profileTag));
 			}
     	}
 		
@@ -112,7 +110,7 @@ public abstract class CALL extends Instruction {
 //			Util.IERR("");
 		    if(CALL_TOS) {
 //		    	Util.IERR("NOT IMPL");
-		    	Global.PSEG.emit(new SVM_NOT_IMPL("CALL: CALL_TOS"), "");
+//		    	Global.PSEG.emit(new SVM_NOT_IMPL("CALL: CALL_TOS"), "");
 
 		    	Global.PSEG.emit(SVM_CALL.ofTOS(spec.returSlot), "");
 		    	CTStack.pop();
@@ -126,6 +124,7 @@ public abstract class CALL extends Instruction {
 		    		Global.PSEG.emit(new SVM_CALL(rut.getAddress(), spec.returSlot), ""+rut);
 		    	}
 		    }
+    		Global.PSEG.emit(new SVM_NOOP(), "Return Point");
 		} else {
 			ObjectAddress prfAddr = ObjectAddress.ofSegAddr(spec.DSEG, 0);
 		    if(CALL_TOS) {
@@ -166,7 +165,7 @@ public abstract class CALL extends Instruction {
 	}
 	
 	private static int putPar(ProfileItem pItm, int nrep) { // export range(0:255) npop;
-		int npop = 0;
+//		int npop = 0;
 		Variable param = (Variable) pItm.spc.params.get(pItm.nasspar).getMeaning();
 		Type parType = param.type;
 		int repCount = param.repCount;
@@ -214,8 +213,24 @@ public abstract class CALL extends Instruction {
 //			Global.PSEG.dump("putPar: ");
 //			Util.IERR("Parse.XXX: NOT IMPLEMENTED: nrep="+nrep);
 		}
-		npop = nrep;
-		return npop;
+		
+		
+//		System.out.println("CallInstruction.putPar: nrep="+nrep+", repCount="+repCount);
+		if(repCount > nrep) {
+			int parSize = parType.size();
+			int n = parSize * (repCount - nrep);
+			System.out.println("CallInstruction.putPar: nrep="+nrep+", repCount="+repCount+", n="+n+", parSize="+parSize);
+			for(int i=0;i<n;i++) {
+				Global.PSEG.emit(new SVM_PUSHC(null), "putPar: ASSREP'fill: ");
+				
+			}
+//			Util.IERR("");
+		}
+		
+		
+//		npop = nrep;
+//		return npop;
+		return nrep;
 	}
 
 }

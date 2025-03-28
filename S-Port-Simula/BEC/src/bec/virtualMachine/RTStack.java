@@ -8,36 +8,63 @@ import bec.util.Util;
 import bec.value.IntegerValue;
 import bec.value.ObjectAddress;
 import bec.value.ProgramAddress;
+import bec.value.LongRealValue;
 import bec.value.RealValue;
 import bec.value.Value;
 
 public abstract class RTStack {
 	public record RTStackItem (Value value, String comment) {}
 	
-//	private static Stack<Value> stack = new Stack<Value>();
 	private static Stack<RTStackItem> stack = new Stack<RTStackItem>();
-	public static RTFrame curFrame;
-	public static SVM_PRECALL PRECALL;
+	public static Stack<CallStackFrame> precallStack = new Stack<CallStackFrame>();
+	public static Stack<CallStackFrame> callStack = new Stack<CallStackFrame>();
 
 	public static void checkStackEmpty() {
 		if(curSize() != 0) {
-			int frameHeadSize = (curFrame == null)? 0 : curFrame.headSize();
-			int idx = (curFrame == null)? 0 : curFrame.rtStackIndex;
+			CallStackFrame callStackTop = callStack_TOP();
+			int frameHeadSize = (callStackTop == null)? 0 : callStackTop.headSize();
+			int idx = (callStackTop == null)? 0 : callStackTop.rtStackIndex;
 			dumpRTStack("Check RTStack Empty - FAILED: ");
-			if(curFrame != null) curFrame.dump("Check RTStack Empty - FAILED: ");
+			if(callStackTop != null) callStackTop.dump("Check RTStack Empty - FAILED: ");
 			printCallStack("Check RTStack Empty - FAILED: ");
 			Util.IERR("Check RTStack Empty - FAILED: size="+size()+"  rtStackIndex=" + idx + "  frameHeadSize=" + frameHeadSize );
 		}
 	}
 	
-	public static void printCallStack(String title) {
-		System.out.println("CallStack: " +title);
+	public static CallStackFrame callStack_TOP() {
+		if(RTStack.callStack.empty()) return null;
+		return RTStack.callStack.peek();
+	}
+	
+	private static void printCallStack(String title) {
+		System.out.println("CallStack["+callStack.size()+"]: " +title);
 		System.out.println("     at "+Global.PSC);
-		RTFrame frame = curFrame;
-		while(frame != null) {
-			ProgramAddress ret =  frame.returAddress();
-			System.out.println("     at "+ret);
-			frame = frame.enclFrame;
+		for(int i=callStack.size()-1;i>=0;i--) {
+			CallStackFrame frame = callStack.get(i);
+			ProgramAddress curAddr =  frame.curAddr;
+			System.out.println("     at "+curAddr);	
+			frame.print("");
+		}
+	}
+	
+	public static void printCallTrace(String title,String kind) {
+//		RTStack.dumpRTStack(title);
+		CallStackFrame callStackTop = callStack_TOP();
+		System.out.println("CallStack["+callStack.size()+"]: " +title + " " + callStackTop.ident);
+//		System.out.println("     at "+Global.PSC);
+		int n = callStack.size()-1;
+		for(int i=n;i>=0;i--) {
+			CallStackFrame frame = callStack.get(i);
+			String ident = (frame.curAddr == null)? "SYSRUT_" + frame.ident : ""+frame.curAddr;
+			if(i == n) {
+//				System.out.println("     " + kind + " "+ident + frame);
+				
+			} else {
+//				System.out.println("     called from "+ident + frame);
+				System.out.println("     called from " + frame.ident);
+			}
+			if(Global.CALL_TRACE_LEVEL > 1)
+				frame.print("");
 		}
 	}
 	
@@ -46,9 +73,10 @@ public abstract class RTStack {
 	 * @return Stack size within the current Frame
 	 */
 	public static int curSize() {
-		if(curFrame == null) return size();
-		int frameHeadSize = curFrame.headSize();
-		int idx = curFrame.rtStackIndex;
+		CallStackFrame callStackTop = callStack_TOP();
+		if(callStackTop == null) return size();
+		int frameHeadSize = callStackTop.headSize();
+		int idx = callStackTop.rtStackIndex;
 		return size() - (idx + frameHeadSize);
 	}
 	
@@ -136,12 +164,24 @@ public abstract class RTStack {
 		return (rval==null)? 0 : rval.value;
 	}
 	
+	public static double popLongReal() {
+		LongRealValue rval = (LongRealValue) pop().value();
+		System.out.println("RTStack.popReal: rval="+rval);
+		return (rval==null)? 0 : rval.value;
+	}
+	
 	public static ObjectAddress popGADDR() {
 //		RTStack.dumpRTStack("RTStack.popGADDR:");
 //		RTStack.printCallStack("RTStack.popGADDR:");
 		int ofst = RTStack.popInt();
 		ObjectAddress chradr = (ObjectAddress) RTStack.pop().value();
 //		System.out.println("RTStack.popGADDR: chradr="+chradr+", ofst="+ofst);
+		if(chradr == null) {
+//			Global.DSEG.dump("RTStack.popGADDR");
+//			Global.CSEG.dump("RTStack.popGADDR");
+			RTStack.dumpRTStack("RTStack.popGADDR");
+			Util.IERR("");
+		}
 		return chradr.addOffset(ofst);
 	}
 	

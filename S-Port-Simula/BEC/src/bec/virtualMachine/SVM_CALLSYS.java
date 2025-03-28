@@ -4,23 +4,18 @@ import java.io.IOException;
 
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
-import bec.compileTimeStack.CTStack;
-import bec.descriptor.Kind;
 import bec.instruction.CALL;
 import bec.segment.DataSegment;
 import bec.segment.Segment;
 import bec.util.Global;
-import bec.util.SysEdit;
 import bec.util.Type;
 import bec.util.Util;
 import bec.value.BooleanValue;
-import bec.value.GeneralAddress;
 import bec.value.IntegerValue;
 import bec.value.ObjectAddress;
 import bec.value.ProgramAddress;
-import bec.value.StringValue;
-import bec.value.TextValue;
 import bec.value.Value;
+import bec.virtualMachine.sysrut.SysEdit;
 
 public class SVM_CALLSYS extends SVM_Instruction {
 	int kind;
@@ -47,6 +42,7 @@ public class SVM_CALLSYS extends SVM_Instruction {
 			case P_PRINTO:  printo(); break;
 			case P_PUTINT2: putint2(); break;
 			case P_PTREAL2: putreal2(); break;
+			case P_PLREAL2: putlreal2(); break;
 			default: Util.IERR("SVM_SYSCALL: Unknown System Routine " + edKind(kind));
 		}
 		Global.PSC.ofst++;
@@ -54,26 +50,43 @@ public class SVM_CALLSYS extends SVM_Instruction {
 //		Global.PSC.segment().dump("SVM_SYSCALL: RETURN: PSC="+Global.PSC);
 	}
 	
+	/**
+	 *  Visible sysroutine("PRINTO") PRINTO;
+	 *  	 import range(1:MAX_KEY) key; infix(string) image; integer spc;
+	 *  end;
+	 *  
+	 *      0: C-INT 0                     IMPORT T[3:INT'KEY]
+	 *      1: C-INT 32                    IMPORT T[32:STRING'CHRADR] size=3 pntmap=null null
+	 *      2: DSEG_RT[30][32]             IMPORT T[32:STRING'OFST] size=3 pntmap=null null
+	 *      3: C-INT 7                     IMPORT T[32:STRING'NCHR] size=3 pntmap=null null
+	 *      4: C-INT 1                     IMPORT T[3:INT'SPC] size=1 pntmap=null null
+	 */
 	private void ENTER(String ident, int exportSize, int importSize) {
 		if(Global.EXEC_TRACE > 4)
 			RTStack.dumpRTStack(ident+"ENTER: ");
-		RTFrame frame = new RTFrame(exportSize, importSize); 
-//			RTStack.dumpRTStack(ident+"ENTER: ");
-		frame.enclFrame = RTStack.curFrame;
-		frame.rtStackIndex = RTStack.size() - (exportSize + importSize);
-		RTStack.curFrame = frame;
-		if(Global.EXEC_TRACE > 2) {
-			RTStack.curFrame.dump(ident+"ENTER: ");
+		int rtStackIndex = RTStack.size() - (exportSize + importSize);
+		CallStackFrame callStackFrame = new CallStackFrame(ident, rtStackIndex, exportSize, importSize);
+//		callStackFrame.curAddr = Global.PSC;
+		RTStack.callStack.push(callStackFrame);
+		
+		if(Global.EXEC_TRACE > 0) {
+			ProgramAddress.printInstr(this,false);
 		}
+
+		if(Global.EXEC_TRACE > 2) {
+			RTStack.callStack_TOP().dump(ident+"ENTER: ");
+		}
+		if(Global.CALL_TRACE_LEVEL > 0)
+			RTStack.printCallTrace("SVM_CALLSYS.ENTER: ", "CALLSYS");
 	}
 	
 	private void EXIT(String ident) {
-//		RTStack.dumpRTStack(ident+"RETURN: Continue with " + RTStack.curFrame.rutAddr);	
-//		RTStack.curFrame = RTStack.curFrame.enclFrame;
+		if(Global.CALL_TRACE_LEVEL > 0)
+			RTStack.printCallTrace("SVM_CALLSYS.EXIT: ", "EXIT");
+		CallStackFrame top = RTStack.callStack.pop();
 		if(Global.EXEC_TRACE > 2) {
-			RTStack.curFrame.dump(ident+"RETURN: Called from " + RTStack.curFrame.rutAddr);		
+			RTStack.callStack_TOP().dump(ident+"RETURN: Called from " + top.curAddr);		
 		}
-		RTStack.curFrame = RTStack.curFrame.enclFrame;
 	}
 	
 	@Override	
@@ -335,7 +348,7 @@ public class SVM_CALLSYS extends SVM_Instruction {
 			ENTER("PUTSTR: ", 1, 6); // exportSize, importSize
 			
 //			RTStack.dumpRTStack("SVM_SYSCALL.putstr:");
-//			RTStack.curFrame.dump("SVM_SYSCALL.putstr:");
+//			RTStack.callStackTop.dump("SVM_SYSCALL.putstr:");
 			
 			int valNchr = RTStack.popInt();
 			ObjectAddress valAddr = RTStack.popGADDR();
@@ -432,6 +445,7 @@ public class SVM_CALLSYS extends SVM_Instruction {
 		
 //		itemAddr.segment().dump("SVM_SYSCALL.putstr: ");
 		
+		itemAddr.addOffset(itemNchr);
 		String sval = ""+val;
 		int nchr = sval.length();
 		move(sval, itemAddr, nchr);
@@ -448,12 +462,6 @@ public class SVM_CALLSYS extends SVM_Instruction {
 	 *      import infix (string) item; real val; integer frac; 
 	 *      export integer lng;
 	 *  end;
-
-	 *  Visible sysroutine("PTREAL2") PUTINT2;
-	 *      import infix (string) item; integer val
-	 *      export integer lng;
-	 *  end;
-	 * 
 	 * 
 	 *  FRAME:
 	 *      0: null              EXPORT T[3:INT'LNG]
@@ -464,34 +472,53 @@ public class SVM_CALLSYS extends SVM_Instruction {
 	 *      5: C-INT 3           IMPORT frac
 	 */
 	private void putreal2() {
-		ENTER("PTREAL2: ", 1, 4); // exportSize, importSize
+		ENTER("PTREAL2: ", 1, 5); // exportSize, importSize
 		RTStack.dumpRTStack("PTREAL2: ");
 		int frac = RTStack.popInt();
 		float val = RTStack.popReal();
 		System.out.println("SVM_SYSCALL.putreal2: val="+val);
 
 		int itemNchr = RTStack.popInt();
-//		int itemOfst = RTStack.popInt();
-//		ObjectAddress itemAddr = (ObjectAddress) RTStack.pop().value();
-//		if(itemOfst != 0) itemAddr.ofst += itemOfst;
 		ObjectAddress itemAddr = RTStack.popGADDR();
-//		System.out.println("SVM_SYSCALL.putstr: itemAddr="+itemAddr);
-//		System.out.println("SVM_SYSCALL.putstr: itemOfst="+itemOfst); itemOfst=8;
-//		System.out.println("SVM_SYSCALL.putstr: itemNchr="+itemNchr);
-//		System.out.println("SVM_SYSCALL.putstr: itemAddr="+itemAddr);
 		itemAddr = itemAddr.addOffset(itemNchr);
-		
-//		itemAddr.segment().dump("SVM_SYSCALL.putstr: ");
 		
 		String sval = SysEdit.putreal(val,frac);
 		int nchr = sval.length();
 		move(sval, itemAddr, nchr);
-//		itemAddr.segment().dump("SVM_SYSCALL.putstr: ");
-
 		RTStack.push(new IntegerValue(Type.T_INT, nchr), "EXPORT");
-
 		EXIT("PTREAL2: ");
-//		Util.IERR("NOT IMPL: "+sval);
+	}
+	
+	/**
+	 *  Visible sysroutine("PLREAL2") PLREAL2;
+	 *      import infix (string) item; long real val; integer frac; 
+	 *      export integer lng;
+	 *  end;
+	 * 
+	 *  FRAME:
+	 *      0: null              EXPORT T[3:INT'LNG]
+	 *      1: DSEG_RT[30]       IMPORT T[32:STRING'item'CHRADR]
+	 *      2: C-INT 32          IMPORT T[32:STRING'item'OFST]
+	 *      3: C-INT 200         IMPORT T[32:STRING'item'NCHR]
+	 *      4: C-LREAL 3.14      IMPORT val
+	 *      5: C-INT 3           IMPORT frac
+	 */
+	private void putlreal2() {
+		ENTER("PLREAL2: ", 1, 5); // exportSize, importSize
+		RTStack.dumpRTStack("PLREAL2: ");
+		int frac = RTStack.popInt();
+		double val = RTStack.popLongReal();
+		System.out.println("SVM_SYSCALL.putlreal2: val="+val);
+
+		int itemNchr = RTStack.popInt();
+		ObjectAddress itemAddr = RTStack.popGADDR();
+		itemAddr = itemAddr.addOffset(itemNchr);
+		
+		String sval = SysEdit.putreal(val,frac);
+		int nchr = sval.length();
+		move(sval, itemAddr, nchr);
+		RTStack.push(new IntegerValue(Type.T_INT, nchr), "EXPORT");
+		EXIT("PLREAL2: ");
 	}
 	
 	
@@ -553,6 +580,13 @@ public class SVM_CALLSYS extends SVM_Instruction {
 		switch(kind) {
 		case P_TERMIN: return "TERMIN";
 		case P_INTRHA: return "INTRHA";
+		case P_PXCHDL: return "PXCHDL";
+		case P_PEXERR: return "PEXERR";
+		case P_PSIMOB: return "PSIMOB";
+		case P_PobSML: return "PobSML";
+		case P_Palloc: return "Palloc";
+		case P_Pfree:  return "Pfree";
+		case P_Pmovit: return "Pmovit";
 		case P_STREQL: return "STREQL";
 		case P_PRINTO: return "PRINTO";
 		case P_INITIA: return "INITIA";
@@ -684,6 +718,13 @@ public class SVM_CALLSYS extends SVM_Instruction {
 
 	public static final int P_TERMIN=1; // System profile
 	public static final int P_INTRHA=2; // System profile
+	public static final int P_PXCHDL=140; // System profile
+	public static final int P_PEXERR=141; // System profile
+	public static final int P_PSIMOB=142; // System profile
+	public static final int P_PobSML=143; // System profile
+	public static final int P_Palloc=144; // System profile
+	public static final int P_Pfree =145; // System profile
+	public static final int P_Pmovit=146; // System profile
 	public static final int P_STREQL=3; // System routine
 	public static final int P_PRINTO=4; // System routine
 	public static final int P_INITIA=5; // System routine

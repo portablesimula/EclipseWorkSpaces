@@ -28,6 +28,7 @@ public final class RunFull_SML_TestBatch {
 		Global.SCODE_INPUT_TRACE = true;
 		Global.PRINT_GENERATED_SVM_CODE = true;
 		Global.EXEC_TRACE = 1;
+		Global.CALL_TRACE_LEVEL = 2;
 		
 		// Set Compiler Options.
 //		Option.EXTENSIONS=false;
@@ -40,9 +41,9 @@ public final class RunFull_SML_TestBatch {
 //		names.add("adHoc02.scd");
 //		names.add("adHoc03.scd");
 //		names.add("adHoc04.scd");
-		names.add("adHoc05.scd");
-//		names.add("adHoc06.scd");
-//		names.add("adHoc07.scd");
+//		names.add("adHoc05.scd");
+//			names.add("adHoc06.scd"); 
+//			names.add("adHoc07.scd");
 //		names.add("adHoc08.scd");
 //		names.add("adHoc09.scd");
 //		names.add("adHoc10.scd");
@@ -51,10 +52,10 @@ public final class RunFull_SML_TestBatch {
 //		names.add("smltst01.scd"); // Simple Assignments
 //		names.add("smltst02.scd"); // Test Case Statement
 //		names.add("smltst03.scd"); // Test Assert Statement
-//			names.add("smltst04.scd"); // Test Parameter Transmission
+//		names.add("smltst04.scd"); // Test Parameter Transmission
 //		names.add("smltst05.scd"); // Test CALL_TOS
 //		names.add("smltst06.scd"); // Records with Variant(ALT)
-//		names.add("smltst07.scd"); // Constant and initial values
+			names.add("smltst07.scd"); // Constant and initial values
 //		names.add("smltst08.scd"); // Arithmetic Operators ( + - * / rem)
 //		names.add("smltst09.scd"); // Boolean Operators ( and, or, xor, not )
 //		names.add("smltst10.scd"); // Arithmetic Relations ( < , <= , = , >= , > , <> )

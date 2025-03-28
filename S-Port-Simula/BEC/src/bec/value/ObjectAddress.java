@@ -13,6 +13,7 @@ import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Tag;
 import bec.util.Util;
+import bec.virtualMachine.CallStackFrame;
 import bec.virtualMachine.RTStack;
 import bec.virtualMachine.RTStack.RTStackItem;
 
@@ -91,9 +92,9 @@ public class ObjectAddress extends Value {
 	
 	public void store(int idx, Value value, String comment) {
 		if(segID == null) {
-			// store rel-addr  curFrame + ofst
-//			System.out.println("ObjectAddress.store: curFrame="+RTStack.curFrame.rtStackIndex);
-			RTStack.store(RTStack.curFrame.rtStackIndex + ofst + idx, value, comment);
+			// store rel-addr  callStackTop + ofst
+//			System.out.println("ObjectAddress.store: callStackTop="+RTStack.callStackTop.rtStackIndex);
+			RTStack.store(RTStack.callStack_TOP().rtStackIndex + ofst + idx, value, comment);
 //			Util.IERR("");
 			
 		} else {
@@ -106,9 +107,10 @@ public class ObjectAddress extends Value {
 	
 	public Value load() {
 		if(segID == null) {
-			// load from rel-addr  curFrame + ofst
-//			System.out.println("ObjectAddress.load: curFrame="+RTStack.curFrame.rtStackIndex);
-			int bias = (RTStack.curFrame == null)? 0 : RTStack.curFrame.rtStackIndex;
+			// load from rel-addr  callStackTop + ofst
+//			System.out.println("ObjectAddress.load: callStackTop="+RTStack.callStackTop.rtStackIndex);
+			CallStackFrame callStackTop = RTStack.callStack_TOP();
+			int bias = (callStackTop == null)? 0 : callStackTop.rtStackIndex;
 			RTStackItem item = RTStack.load(bias + ofst);
 //			System.out.println("ObjectAddress.load: value="+value);
 //			Util.IERR("");
@@ -150,7 +152,7 @@ public class ObjectAddress extends Value {
 	
 	public String toString() {
 		if(segID == null) {
-			return "RELADR[curFrame+" + ofst + ']';
+			return "RELADR[callStackTop+" + ofst + ']';
 		} else {
 			return segID + '[' + ofst + ']';
 			

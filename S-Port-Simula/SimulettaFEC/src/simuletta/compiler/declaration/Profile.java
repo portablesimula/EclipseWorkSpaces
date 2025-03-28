@@ -130,7 +130,9 @@ public class Profile extends Declaration implements Externalizable {
 			sCode.outinst(S_PROFILE); sCode.outtagid(getTag());
 			sCode.outcode(+1);
 			if(interFace) {
-				sCode.outinst(S_INTERFACE); sCode.outstring("INTRHA");
+//				Util.IERR("SJEKK DETTE !!! "+this.identifier);
+//				sCode.outinst(S_INTERFACE); sCode.outstring("INTRHA");
+				sCode.outinst(S_INTERFACE); sCode.outstring(this.identifier);
 				sCode.outcode();
 			}
 			signatur.doSCoding();

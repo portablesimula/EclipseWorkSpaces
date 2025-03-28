@@ -29,7 +29,7 @@ public class SVM_CALL_DSEG extends SVM_Instruction {
 	
 	@Override	
 	public void execute() {
-		ProgramAddress retur = Global.PSC;
+		ProgramAddress retur = Global.PSC.copy();
 		retur.ofst++;
 		DataSegment DSEG = (DataSegment) prfAddr.segment();
 		DSEG.store(0, retur);

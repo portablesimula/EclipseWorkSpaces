@@ -30,32 +30,29 @@ public class SVM_RETURN extends SVM_Instruction {
 	public void execute() {
 //		System.out.println("SVM_RETURN.execute: returAddr=" + returAddr);
 		if(CALL.USE_FRAME_ON_STACK) {
-			
-//			RTStack.printCallStack("SVM_RETURN.execute: TESTING");
 
-//			RTStack.curFrame.dump("SVM_RETURN: ");
+			if(Global.CALL_TRACE_LEVEL > 0)
+				RTStack.printCallTrace("SVM_RETURN.execute: ", "RETURN");
+
+//			RTStack.callStackTop.dump("SVM_RETURN: ");
 			RTStack.checkStackEmpty();
 			ProgramAddress padr = (ProgramAddress) returAddr.load();
-//			System.out.println("SVM_RETURN.execute: padr=" + padr);
-//			RTStack.dumpRTStack("SVM_RETURN.execute: returAddr="+padr);
+			CallStackFrame callStackTop = RTStack.callStack_TOP();
 			if(Global.EXEC_TRACE > 0) {
-				String tail = (RTStack.curFrame == null)? RTStack.toLine() : RTStack.curFrame.toLine();
-				String line = "EXEC: "+Global.PSC+"  "+this;
-				while(line.length()<70) line=line+' ';
-				System.out.println(line+"   "+tail);
-//				RTStack.dumpRTStack("ProgramAddress.execute:");
-//				Util.IERR("");
+				ProgramAddress.printInstr(this,false);
 			}
 			
-			int n = RTStack.size() - RTStack.curFrame.rtStackIndex - RTStack.curFrame.exportSize;
-			for(int i=0;i<n;i++) RTStack.pop();				
-			RTStack.curFrame = RTStack.curFrame.enclFrame;
+			int n = RTStack.size() - callStackTop.rtStackIndex - callStackTop.exportSize;
+			for(int i=0;i<n;i++) RTStack.pop();	
+			
+			RTStack.callStack.pop();
 			
 			if(Global.EXEC_TRACE > 1) {
-				if(RTStack.curFrame == null) {
+				callStackTop = RTStack.callStack_TOP();
+				if(callStackTop == null) {
 					RTStack.dumpRTStack("SVM_RETURN: Continue at " + padr);
 				} else {
-					RTStack.curFrame.dump("SVM_RETURN: Continue at " + padr);
+					callStackTop.dump("SVM_RETURN: Continue at " + padr);
 				}
 			}
 			Global.PSC = padr.copy();

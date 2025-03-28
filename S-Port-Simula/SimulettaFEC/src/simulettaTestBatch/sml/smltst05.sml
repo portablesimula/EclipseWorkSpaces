@@ -38,7 +38,8 @@ begin
    
    Visible entry(routineProfile) routineRef;
 
-   Visible global profile routineProfile;
+%  Visible global profile routineProfile;
+   Visible profile routineProfile;
     import integer eno; ref(filent) fil;
            export infix(string) res;
    end;

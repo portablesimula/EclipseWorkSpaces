@@ -30,7 +30,7 @@ public class SVM_POP2REG extends SVM_Instruction {
 	public void execute() {
 		if(DEBUG) {
 //			RTStack.dumpRTStack("POP2REG: "+RTRegister.edReg(reg)+" count="+count);
-			RTStack.curFrame.dump("POP2REG: "+RTRegister.edReg(reg)+" count="+count+"  ");
+			RTStack.callStack_TOP().dump("POP2REG: "+RTRegister.edReg(reg)+" count="+count+"  ");
 		}
 		for(int i=0;i<count;i++) {
 			IntegerValue value = (IntegerValue) RTStack.pop().value();

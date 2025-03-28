@@ -9,7 +9,7 @@ import bec.util.Scode;
 import bec.util.Type;
 
 public class LongRealValue extends Value {
-	double value;
+	public double value;
 	
 	public LongRealValue(double value) {
 		this.type = Type.T_LREAL;

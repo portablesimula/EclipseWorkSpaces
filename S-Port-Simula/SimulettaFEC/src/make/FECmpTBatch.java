@@ -29,9 +29,9 @@ public final class FECmpTBatch {
 //		names.add("adHoc02");
 //		names.add("adHoc03");
 //		names.add("adHoc04");
-		names.add("adHoc05");
-//		names.add("adHoc06");
-//		names.add("adHoc07");
+//		names.add("adHoc05");
+//		names.add("adHoc06")
+		names.add("adHoc07");
 //		names.add("adHoc08");
 //		names.add("adHoc09");
 //		names.add("adHoc10");

@@ -45,8 +45,8 @@ public class RTAddress extends Value {
 	
 	public Value load(int idx,int incr) {
 		if(segID == null) {
-			// load rel-addr  curFrame + ofst
-			int frmx = RTStack.curFrame.rtStackIndex;
+			// load rel-addr  callStackTop + ofst
+			int frmx = RTStack.callStack_TOP().rtStackIndex;
 			RTStackItem val = RTStack.load(frmx + offset + idx);
 			if(DEBUG) System.out.println("RTAddress.load("+idx+") ===> "+val);
 			return val.value();
@@ -73,12 +73,13 @@ public class RTAddress extends Value {
 	
 	public void store(int idx, Value value, String comment) {
 		if(segID == null) {
+			CallStackFrame callStackTop = RTStack.callStack_TOP();
 			if(DEBUG) {
 				RTStack.dumpRTStack("RTAddress.store: ");
-				System.out.println("RTAddress.store: RTStack.curFrame="+RTStack.curFrame);
-				System.out.println("RTAddress.store: rtStackIndex="+RTStack.curFrame.rtStackIndex);
+				System.out.println("RTAddress.store: RTStack.callStackTop="+callStackTop);
+				System.out.println("RTAddress.store: rtStackIndex="+callStackTop.rtStackIndex);
 			}
-			int frmx = RTStack.curFrame.rtStackIndex;
+			int frmx = callStackTop.rtStackIndex;
 			RTStack.store(frmx + offset + idx, value, comment);
 		} else {
 			DataSegment dseg = segment();

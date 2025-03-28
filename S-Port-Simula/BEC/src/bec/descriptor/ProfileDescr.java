@@ -41,6 +41,10 @@ public class ProfileDescr extends Descriptor {
 //		System.out.println("NEW ProfileDescr: " + tag);
 	}
 	
+	public String getSimpleName() {
+		return tag.ident();
+	}
+	
 	public Variable getExport() {
 		if(exportTag == null) return null;
 		Variable export = (Variable) exportTag.getMeaning();
@@ -156,7 +160,7 @@ public class ProfileDescr extends Descriptor {
 			}
 			for(Variable par:prf.imports) {
 				par.address = new ObjectAddress(null, rela);
-				rela += par.type.size();
+				rela += par.type.size() * par.repCount;
 			}
 			// Allocate Return address
 			prf.returSlot = new ObjectAddress(null, rela++);
@@ -171,7 +175,7 @@ public class ProfileDescr extends Descriptor {
 			}
 			prf.frameSize = rela;
 		}		
-		
+//		prf.print("ProfileDescr.ofProfile: ");
 		return prf;
 	}
 
@@ -217,9 +221,20 @@ public class ProfileDescr extends Descriptor {
 	}
 
 	private static int getSysKind(String s) {
+//		System.out.println("ProfileDescr.getSysKind: "+s);
+//		Thread.dumpStack();
+		
 		//--- Search for inline index ---
 		if(s.equalsIgnoreCase("TERMIN")) return SVM_CALLSYS.P_TERMIN;
 		if(s.equalsIgnoreCase("INTRHA")) return SVM_CALLSYS.P_INTRHA;
+		if(s.equalsIgnoreCase("PXCHDL")) return SVM_CALLSYS.P_PXCHDL;
+		if(s.equalsIgnoreCase("PEXERR")) return SVM_CALLSYS.P_PEXERR;
+		if(s.equalsIgnoreCase("PSIMOB")) return SVM_CALLSYS.P_PSIMOB;
+		if(s.equalsIgnoreCase("PobSML")) return SVM_CALLSYS.P_PobSML;
+		if(s.equalsIgnoreCase("Palloc")) return SVM_CALLSYS.P_Palloc;
+		if(s.equalsIgnoreCase("Pfree"))  return SVM_CALLSYS.P_Pfree;
+		if(s.equalsIgnoreCase("Pmovit")) return SVM_CALLSYS.P_Pmovit;
+
 		if(s.equalsIgnoreCase("STREQL")) return SVM_CALLSYS.P_STREQL;
 		if(s.equalsIgnoreCase("PRINTO")) return SVM_CALLSYS.P_PRINTO;
 		if(s.equalsIgnoreCase("INITIA")) return SVM_CALLSYS.P_INITIA;

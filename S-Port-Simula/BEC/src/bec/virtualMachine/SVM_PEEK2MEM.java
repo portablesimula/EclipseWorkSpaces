@@ -44,8 +44,9 @@ public class SVM_PEEK2MEM extends SVM_Instruction {
 		if(TESTING && this.addr.segID == null) {
 			// this.addr is Stack Relative Address
 			if(DEBUG) {
-				System.out.println("PEEK2MEM.execute: RTStack.curFrame="+RTStack.curFrame);
-				System.out.println("PEEK2MEM.execute: rtStackIndex="+RTStack.curFrame.rtStackIndex);
+				CallStackFrame callStackTop = RTStack.callStack_TOP();
+				System.out.println("PEEK2MEM.execute: RTStack.callStackTop="+callStackTop);
+				System.out.println("PEEK2MEM.execute: rtStackIndex="+callStackTop.rtStackIndex);
 				System.out.println("PEEK2MEM.execute: addr="+addr);
 			}
 			ObjectAddress objAddr = null;// addr.reladdr2ObjAddr_NEW();

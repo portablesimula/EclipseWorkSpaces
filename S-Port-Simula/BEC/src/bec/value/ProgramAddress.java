@@ -14,9 +14,12 @@ import bec.util.Scode;
 import bec.util.Tag;
 import bec.util.Type;
 import bec.util.Util;
-import bec.virtualMachine.RTFrame;
+import bec.virtualMachine.CallStackFrame;
 import bec.virtualMachine.RTStack;
+import bec.virtualMachine.SVM_CALL;
+import bec.virtualMachine.SVM_CALLSYS;
 import bec.virtualMachine.SVM_Instruction;
+import bec.virtualMachine.SVM_RETURN;
 
 public class ProgramAddress extends Value {
 //	public Segment seg;
@@ -105,16 +108,26 @@ public class ProgramAddress extends Value {
 			cur.execute();
 
 			if(Global.EXEC_TRACE > 0) {
-				String tail = (RTStack.curFrame == null)? RTStack.toLine() : RTStack.curFrame.toLine();
-				String line = "EXEC: "+Global.PSC+"  "+cur;
-				while(line.length()<70) line=line+' ';
-				System.out.println(line+"   "+tail);
-//				RTStack.dumpRTStack("ProgramAddress.execute:");
-//				Util.IERR("");
+//				System.out.println("ProgramAddress.execute: "+cur.getClass().getSimpleName());
+				if(cur instanceof SVM_CALL)        ; // NOTHING
+				else if(cur instanceof SVM_RETURN) ; // NOTHING
+				else if(cur instanceof SVM_CALLSYS) ; // NOTHING
+				else printInstr(cur,true);
 			}
-//			cur.execute();
-//			Util.IERR("");
 		}
+	}
+	
+	public static void printInstr(SVM_Instruction cur,boolean decr) {
+		CallStackFrame callStackTop = RTStack.callStack_TOP();
+		String tail = (callStackTop == null)? RTStack.toLine() : callStackTop.toLine();
+		ProgramAddress paddr = Global.PSC.copy();
+		if(decr) paddr.ofst--;
+		String line = "EXEC: "+paddr+"  "+cur;
+		while(line.length()<70) line=line+' ';
+		System.out.println(line+"   "+tail);
+//		RTStack.dumpRTStack("ProgramAddress.execute:");
+//		Util.IERR("");
+		
 	}
 	
 	public String toString() {

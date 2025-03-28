@@ -1,22 +1,31 @@
 begin
 --   SYSINSERT envir,modl1;
    SYSINSERT RT,SYSR,KNWN,UTIL;    
-   integer traceCase;
    
-   Visible routine trace; import infix(string) msg;
-   begin
-%      traceCase:=traceCase+1;
+   Visible entry(routineProfile) routineRef;
+
+%  Visible global profile routineProfile;
+   Visible profile routineProfile;
+    import integer eno; ref(filent) fil;
+           export infix(string) res;
    end;
-   
-   Routine testCases; import
-      integer i;
-   begin
-      trace(get_ed);
-   end;   
-
  
-      testCases(4513);
+   Visible body(routineProfile) routineBody;
+    -- import integer eno; ref(filent) fil; export infix(string) res;
+   begin ed_str("ERROR: "); ed_int(eno);
+         res:=get_ed;
+   end;
 
+	integer i;
+	infix(string) s;
+	integer j;
+	
+	i:=4444; j:=8888;
 
+   routineRef:=entry(routineBody);
+
+   s := call routineProfile(routineRef)(34,none);
+   SYSPRI(s);
+             
  end;
 	 

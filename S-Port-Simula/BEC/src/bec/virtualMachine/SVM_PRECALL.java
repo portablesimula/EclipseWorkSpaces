@@ -6,29 +6,24 @@ import bec.AttributeOutputStream;
 import bec.util.Global;
 
 public class SVM_PRECALL extends SVM_Instruction {
-	RTFrame frame;
-	SVM_PRECALL prevPRECALL;
+	String rutIdent;
+	int exportSize;
+	int importSize;
 
-//	public SVM_PRECALL(int exportSize) {
-	public SVM_PRECALL(RTFrame frame) {
+	public SVM_PRECALL(String rutIdent, int exportSize, int importSize) {
 		this.opcode = SVM_Instruction.iPRECALL;
-//		this.exportSize = exportSize;
-		this.frame = frame;
+		this.rutIdent = rutIdent;
+		this.exportSize = exportSize;
+		this.importSize = importSize;
 	}
 
 	@Override
 	public void execute() {
-		prevPRECALL = RTStack.PRECALL;
-		RTStack.PRECALL = this;
-//		thisFrame = RTStack.nextFrame();
-		frame.enclFrame = RTStack.curFrame;
-		frame.rtStackIndex = RTStack.size();
-		for(int i=0;i<frame.exportSize;i++) {
+		RTStack.precallStack.push(new CallStackFrame(rutIdent, RTStack.size(), exportSize, importSize));
+		for(int i=0;i<exportSize;i++) {
 			RTStack.push(null, "EXPORT"); // Export slots		
 		}
-		
 		Global.PSC.ofst++;
-//		Util.IERR(""+res);
 	}
 	
 	@Override	
@@ -43,12 +38,16 @@ public class SVM_PRECALL extends SVM_Instruction {
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
-//		oupt.writeShort(exportSize);
-		frame.write(oupt);
+		oupt.writeString(rutIdent);
+		oupt.writeShort(exportSize);
+		oupt.writeShort(importSize);
 	}
 
 	public static SVM_PRECALL read(AttributeInputStream inpt) throws IOException {
-		SVM_PRECALL instr = new SVM_PRECALL(RTFrame.read(inpt));
+		String rutIdent = inpt.readString();
+		int exportSize = inpt.readShort();
+		int importSize = inpt.readShort();
+		SVM_PRECALL instr = new SVM_PRECALL(rutIdent, exportSize, importSize);
 		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + instr);
 		return instr;
 	}
