@@ -1,18 +1,16 @@
 package bec.virtualMachine;
 
-import bec.util.Util;
-import bec.value.IntegerValue;
 import bec.value.Value;
 
 public final class RTRegister {
-	int value;
+	Value value;
 	
 	private static int nRegUsed;
 	
 	public static final int rMax = 10;
 	private static RTRegister[] register = new RTRegister[rMax];
 	
-	private RTRegister(int value) {
+	private RTRegister(Value value) {
 		this.value = value;
 	}
 	
@@ -26,17 +24,18 @@ public final class RTRegister {
 		nRegUsed = 0;
 	}
 	
-	public static void putValue(int reg, int index) {
-		register[reg-1] = new RTRegister(index);
-//		System.out.println("RTRegister.putValue: "+index+", reg="+reg+", value="+register[reg-1]);
+	public static void putValue(int reg, Value value) {
+		register[reg-1] = new RTRegister(value);
+//		System.out.println("RTRegister.putValue: "+value+", reg="+reg+", value="+register[reg-1]);
 	}
 	
-	public static int getValue(int reg) {
+	public static Value getValue(int reg) {
 		try {
-			int value = register[reg-1].value;
+			Value value = register[reg-1].value;
 			return value;
 		} catch(Exception e) {
-			return -1;
+//			return -1;
+			return null;
 		}
 	}
 

@@ -7,6 +7,7 @@ import bec.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Util;
 import bec.value.IntegerValue;
+import bec.value.Value;
 
 // POP RT-Stack'TOS --> Register 
 // The value on the top of the operand stack is popped off and stored in reg.
@@ -33,9 +34,12 @@ public class SVM_POP2REG extends SVM_Instruction {
 			RTStack.callStack_TOP().dump("POP2REG: "+RTRegister.edReg(reg)+" count="+count+"  ");
 		}
 		for(int i=0;i<count;i++) {
-			IntegerValue value = (IntegerValue) RTStack.pop().value();
-			int ival = (value == null)? 0 : value.value;
-			RTRegister.putValue(reg+i, ival);
+//			IntegerValue value = (IntegerValue) RTStack.pop().value();
+			Value value = RTStack.pop().value();
+
+			//			int ival = (value == null)? 0 : value.value;
+//			RTRegister.putValue(reg+i, ival);
+			RTRegister.putValue(reg+i, value);
 		}
 		Global.PSC.ofst++;
 		if(DEBUG) {

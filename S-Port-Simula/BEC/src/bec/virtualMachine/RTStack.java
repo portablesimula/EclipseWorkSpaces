@@ -133,9 +133,10 @@ public abstract class RTStack {
 //	}
 
 	public static void pushr(Type type, int reg, String comment) {
-		int value = RTRegister.getValue(reg);
-//		stack.push(type, value, comment);
-		stack.push(new RTStackItem( IntegerValue.of(Type.T_INT, value), comment));
+//		int value = RTRegister.getValue(reg);
+//		stack.push(new RTStackItem( IntegerValue.of(Type.T_INT, value), comment));
+		Value value = RTRegister.getValue(reg);
+		stack.push(new RTStackItem(value, comment));
 //		dumpRTStack("");
 //		Util.IERR("");
 	}

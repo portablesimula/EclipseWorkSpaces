@@ -34,7 +34,7 @@ public final class FECmpTBatch {
 //		names.add("adHoc07");
 		names.add("adHoc08");
 //			names.add("adHoc09");
-		names.add("adHoc10");
+//		names.add("adHoc10");
 		
 //		names.add("smltst00"); // Standard layout of test programs
 //		names.add("smltst01"); // Simple Assignments
@@ -44,19 +44,19 @@ public final class FECmpTBatch {
 //		names.add("smltst05"); // Test CALL_TOS
 //		names.add("smltst06"); // Records with Variant(ALT)
 //		names.add("smltst07"); // Constant and initial values
-		names.add("smltst08"); // Arithmetic Operators ( + - * / rem)
-		names.add("smltst09"); // Boolean Operators ( and, or, xor, not )
-		names.add("smltst10"); // Arithmetic Relations ( < , <= , = , >= , > , <> )
-		names.add("smltst11"); // Boolean Relations ( = , <> )
-		names.add("smltst12"); // Size Relations ( < , <= , = , >= , > , <> )
-		names.add("smltst13"); // General Reference Expression
-		names.add("smltst14"); // Object Reference and Size Expression
-		names.add("smltst15"); // Type Conversion
-		names.add("smltst16"); // Type Conversion between name,ref and field
-		names.add("smltst17"); // If-Statements
-		names.add("smltst18"); // Goto-Statements
-		names.add("smltst19"); // Remote Access
-		names.add("smltst20"); // Repeat-Statements
+//		names.add("smltst08"); // Arithmetic Operators ( + - * / rem)
+//		names.add("smltst09"); // Boolean Operators ( and, or, xor, not )
+//		names.add("smltst10"); // Arithmetic Relations ( < , <= , = , >= , > , <> )
+//		names.add("smltst11"); // Boolean Relations ( = , <> )
+//		names.add("smltst12"); // Size Relations ( < , <= , = , >= , > , <> )
+//		names.add("smltst13"); // General Reference Expression
+//		names.add("smltst14"); // Object Reference and Size Expression
+//		names.add("smltst15"); // Type Conversion
+//		names.add("smltst16"); // Type Conversion between name,ref and field
+//		names.add("smltst17"); // If-Statements
+//		names.add("smltst18"); // Goto-Statements
+//		names.add("smltst19"); // Remote Access
+//		names.add("smltst20"); // Repeat-Statements
 //		names.add("smltst21"); // Call: Profile(Body)(a,b,c)
 //		names.add("smltst22"); // Exit and Non-Local Goto
 //		names.add("smltst23"); // Export treatment

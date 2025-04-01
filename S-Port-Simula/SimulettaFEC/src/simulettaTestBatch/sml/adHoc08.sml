@@ -1,5 +1,4 @@
 begin
---   SYSINSERT envir,modl1;
    SYSINSERT RT,SYSR,KNWN,UTIL;    
 
     Visible record R;
@@ -10,15 +9,23 @@ begin
     	  variant   infix(string) str;
 	end;
 
-    infix(R) IR;
-    ref(R) RR;
-     field(integer) fj;
+    Visible record Q:R;
+	begin integer   k;
+    	  integer   m(8);
+    	  variant   integer a,b,c;
+    	  variant   long real lrl;
+ 	end;
+
+    infix(Q) IQ;
+    name(infix(Q)) NQ;
+    field(integer) fm;
+    
     
       
-      RR:=ref(IR);
-      fj:=field(R.j);
+      NQ:=name(IQ);
+      fm:=field(Q.m);
       
-      var(RR+fj):=111;
+      var(NQ+fm)(2):=333;
 
  end;
 	 

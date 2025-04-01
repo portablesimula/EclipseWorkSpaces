@@ -9,6 +9,8 @@ import bec.segment.DataSegment;
 import bec.segment.Segment;
 import bec.util.Global;
 import bec.util.Util;
+import bec.value.GeneralAddress;
+import bec.value.IntegerValue;
 import bec.value.ObjectAddress;
 import bec.value.Value;
 import bec.virtualMachine.RTStack.RTStackItem;
@@ -38,22 +40,43 @@ public class RTAddress extends Value {
 		return (DataSegment) Segment.lookup(segID);
 	}
 	
-	private int xRegValue() {
-		if(xReg == 0) return 0;
+	private Value xRegValue() {
+//		if(xReg == 0) return 0;
+		if(xReg == 0) return null;
 		return RTRegister.getValue(xReg);
+	}
+	
+	private int xRegIntValue() {
+		if(xReg == 0) return 0;
+		IntegerValue ival = (IntegerValue) RTRegister.getValue(xReg);
+		return (ival == null)? 0 : ival.value;
 	}
 	
 	public Value load(int idx,int incr) {
 		if(segID == null) {
 			// load rel-addr  callStackTop + ofst
-			int frmx = RTStack.callStack_TOP().rtStackIndex;
-//			System.out.println("RTAddress.load: xRegValue="+xRegValue());
-			RTStackItem val = RTStack.load(frmx + offset+ (xRegValue() * incr) + idx);
-			if(DEBUG) System.out.println("RTAddress.load("+idx+") ===> "+val);
-			return val.value();
+			Value xRegValue = xRegValue();
+			if(xRegValue instanceof ObjectAddress oaddr) {
+				if(DEBUG) {
+					oaddr.segment().dump("RTAddress.load: ");
+					System.out.println("RTAddress.load: xRegValue="+xRegValue);
+				}
+				DataSegment dseg = oaddr.segment();
+				int reladdr = offset + oaddr.getOfst() + idx;
+				Value res = dseg.load(reladdr);
+				if(DEBUG) System.out.println("RTAddress.load("+idx+") ===> "+res);
+//				Util.IERR("");
+				return res;
+			} else {
+				int frmx = RTStack.callStack_TOP().rtStackIndex;
+				int iReg = xRegIntValue();
+				RTStackItem val = RTStack.load(frmx + offset + (iReg * incr) + idx);				
+				if(DEBUG) System.out.println("RTAddress.load("+idx+") ===> "+val);
+				return val.value();				
+			}
 		} else {
 			DataSegment dseg = segment();
-			int reladdr = offset + (xRegValue() * incr) + idx;
+			int reladdr = offset + (xRegIntValue() * incr) + idx;
 			return dseg.load(reladdr);
 		}
 	}
@@ -65,7 +88,7 @@ public class RTAddress extends Value {
 		ObjectAddress objAddr = (ObjectAddress) itm.value();
 		System.out.println("RTAddress.reladdr2ObjAddr: objAddr="+objAddr);
 
-		objAddr = objAddr.addOffset(xRegValue());
+		objAddr = objAddr.addOffset(xRegIntValue());
 		System.out.println("RTAddress.reladdr2ObjAddr: objAddr="+objAddr);
 
 //		Util.IERR("");
@@ -74,17 +97,32 @@ public class RTAddress extends Value {
 	
 	public void store(int idx, Value value, String comment) {
 		if(segID == null) {
-			CallStackFrame callStackTop = RTStack.callStack_TOP();
-			if(DEBUG) {
-				RTStack.dumpRTStack("RTAddress.store: ");
-				System.out.println("RTAddress.store: RTStack.callStackTop="+callStackTop);
-				System.out.println("RTAddress.store: rtStackIndex="+callStackTop.rtStackIndex);
+			Value xRegValue = xRegValue();
+			if(xRegValue instanceof ObjectAddress oaddr) {
+				if(DEBUG) {
+					oaddr.segment().dump("RTAddress.store: ");
+					System.out.println("RTAddress.store: xRegValue="+xRegValue);
+				}
+				DataSegment dseg = oaddr.segment();
+				int reladdr = offset + oaddr.getOfst() + idx;
+				dseg.store(reladdr, value);
+				if(DEBUG) oaddr.segment().dump("RTAddress.store: ");
+//				Util.IERR("");
+			} else if(xRegValue instanceof GeneralAddress gaddr) {
+				Util.IERR("");
+			} else {
+				CallStackFrame callStackTop = RTStack.callStack_TOP();
+				if(DEBUG) {
+					RTStack.dumpRTStack("RTAddress.store: ");
+					System.out.println("RTAddress.store: RTStack.callStackTop="+callStackTop);
+					System.out.println("RTAddress.store: rtStackIndex="+callStackTop.rtStackIndex);
+				}
+				int frmx = callStackTop.rtStackIndex;
+				RTStack.store(frmx + offset + idx, value, comment);
 			}
-			int frmx = callStackTop.rtStackIndex;
-			RTStack.store(frmx + offset + idx, value, comment);
 		} else {
 			DataSegment dseg = segment();
-			int reladdr = offset + xRegValue() + idx;
+			int reladdr = offset + xRegIntValue() + idx;
 			dseg.store(reladdr, value);
 		}
 	}
@@ -94,11 +132,11 @@ public class RTAddress extends Value {
 		s = s + offset;
 		if(xReg > 0) {
 			s = s + "+" + RTRegister.edReg(xReg);
-			int value = RTRegister.getValue(xReg);
+			Value value = RTRegister.getValue(xReg);
 //			System.out.println("RTAddress.toString: xReg="+xReg+", value="+value);
-			if(value >= 0) {
+//			if(value >= 0) {
 				s = s + '(' + value + ')';
-			}
+//			}
 		}
 		return s + "]";			
 	}
