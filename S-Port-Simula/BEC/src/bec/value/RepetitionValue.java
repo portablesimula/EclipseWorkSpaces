@@ -69,10 +69,10 @@ public class RepetitionValue extends Value {
 				case Scode.S_C_INT:    Scode.inputInstr(); values.add(IntegerValue.ofScode_INT()); break;
 				case Scode.S_C_CHAR:   Scode.inputInstr(); values.add(IntegerValue.ofScode_CHAR()); break;
 				case Scode.S_C_SIZE:   Scode.inputInstr(); values.add(IntegerValue.ofScode_SIZE()); break;
-				case Scode.S_C_REAL:   Scode.inputInstr(); values.add(new RealValue()); break;
-				case Scode.S_C_LREAL:  Scode.inputInstr(); values.add(new LongRealValue()); break;
-				case Scode.S_TRUE:     Scode.inputInstr(); values.add(new BooleanValue(true)); break;
-				case Scode.S_FALSE:    Scode.inputInstr(); values.add(new BooleanValue(false)); break;
+				case Scode.S_C_REAL:   Scode.inputInstr(); values.add(RealValue.ofScode()); break;
+				case Scode.S_C_LREAL:  Scode.inputInstr(); values.add(LongRealValue.ofScode()); break;
+				case Scode.S_TRUE:     Scode.inputInstr(); values.add(BooleanValue.of(true)); break;
+				case Scode.S_FALSE:    Scode.inputInstr(); values.add(BooleanValue.of(false)); break;
 				case Scode.S_NOSIZE:   Scode.inputInstr(); values.add(null); break;
 				case Scode.S_ANONE:    Scode.inputInstr(); values.add(null); break;
 				case Scode.S_NOWHERE:  Scode.inputInstr(); values.add(null); break;

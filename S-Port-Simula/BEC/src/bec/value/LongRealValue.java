@@ -11,17 +11,90 @@ import bec.util.Type;
 public class LongRealValue extends Value {
 	public double value;
 	
-	public LongRealValue(double value) {
+	private LongRealValue(double value) {
 		this.type = Type.T_LREAL;
 		this.value = value;
+	}
+	
+	public static LongRealValue of(double value) {
+		if(value != 0) return new LongRealValue(value);
+		return null;
 	}
 
 	/**
 	 * longreal_value ::= c-lreal real_literal:string
 	 */
-	public LongRealValue() {
-		this.type = Type.T_LREAL;
-		value = Double.valueOf(Scode.inString());
+	public static LongRealValue ofScode() {
+		return LongRealValue.of(Double.valueOf(Scode.inString()));
+	}
+//	public LongRealValue() {
+//		this.type = Type.T_LREAL;
+//		value = Double.valueOf(Scode.inString());
+//	}
+
+	@Override
+	public Value neg() {
+		return LongRealValue.of(- value);
+	}
+
+	@Override
+	public Value add(Value other) {
+		if(other == null) return this;
+		LongRealValue val2 = (LongRealValue) other;
+		double res = value + val2.value;
+		if(res == 0) return null;
+		return LongRealValue.of(res);
+	}
+
+	@Override
+	public Value sub(Value other) {
+		double res = 0;
+		if(other != null) {
+			LongRealValue val2 = (LongRealValue) other;
+			res = this.value - val2.value;
+		} else res = this.value;
+//		System.out.println("IntegerValue.sub: " + this.value + " - " + other + " = " + res);
+		if(res == 0) return null;
+		return LongRealValue.of(res);
+	}
+
+	@Override
+	public Value mult(Value other) {
+		if(other == null) return null;
+		LongRealValue val2 = (LongRealValue) other;
+		double res = value * val2.value;
+		if(res == 0) return null;
+		return LongRealValue.of(res);
+	}
+
+	@Override
+	public Value div(Value other) {
+//		System.out.println("RealValue.div: " + other + " / " + this.value);
+		double res = 0;
+		if(other != null) {
+			LongRealValue val2 = (LongRealValue) other;
+			res = val2.value / this.value;
+		} else res = 0;
+//		System.out.println("RealValue.div: " + other + " / " + this.value + " = " + res);
+		if(res == 0) return null;
+		return LongRealValue.of(res);
+	}
+
+	@Override
+	public boolean compare(int relation, Value other) {
+		double LHS = this.value;
+		double RHS = (other == null)? 0 : ((LongRealValue)other).value;
+		boolean res = false;
+		switch(relation) {
+			case Scode.S_LT: res = LHS <  RHS; break;
+			case Scode.S_LE: res = LHS <= RHS; break;
+			case Scode.S_EQ: res = LHS == RHS; break;
+			case Scode.S_GE: res = LHS >= RHS; break;
+			case Scode.S_GT: res = LHS >  RHS; break;
+			case Scode.S_NE: res = LHS != RHS; break;
+		}
+//		Util.IERR("");
+		return res;
 	}
 
 //	@Override

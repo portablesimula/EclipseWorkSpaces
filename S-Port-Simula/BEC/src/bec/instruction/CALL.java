@@ -59,7 +59,7 @@ public abstract class CALL extends Instruction {
 //	    Util.IERR("");
 	    
 		if(CALL.USE_FRAME_ON_STACK) {
-			System.out.println("CALL.ofScode: spec.pKind="+spec.pKind);
+//			System.out.println("CALL.ofScode: spec.pKind="+spec.pKind);
 			if(spec.pKind == 0) {
 				int exportSize = (spec.getExport() == null)? 0 : spec.getExport().type.size();
 				int importSize = spec.frameSize-exportSize-1;
@@ -196,10 +196,10 @@ public abstract class CALL extends Instruction {
 //		Util.IERR("");
 		
 		if(nrep > 1) { // Then: Treat rest of rep-par ---
-			CTStack.dumpStack("putPar: ");
+//			CTStack.dumpStack("putPar: ");
 			for(int i=nrep-1;i>0;i--) {
 				StackItem TOS = CTStack.takeTOS();
-				System.out.println("CALL.putPar: "+TOS);
+//				System.out.println("CALL.putPar: "+TOS);
 				if(TOS instanceof AddressItem) Util.IERR("MODE mismatch below TOS");
 				if(TOS.type != parType) Util.IERR("TYPE mismatch below TOS -- ASSREP");
 				if(! CALL.USE_FRAME_ON_STACK) {
@@ -219,7 +219,7 @@ public abstract class CALL extends Instruction {
 		if(repCount > nrep) {
 			int parSize = parType.size();
 			int n = parSize * (repCount - nrep);
-			System.out.println("CallInstruction.putPar: nrep="+nrep+", repCount="+repCount+", n="+n+", parSize="+parSize);
+//			System.out.println("CallInstruction.putPar: nrep="+nrep+", repCount="+repCount+", n="+n+", parSize="+parSize);
 			for(int i=0;i<n;i++) {
 				Global.PSEG.emit(new SVM_PUSHC(null), "putPar: ASSREP'fill: ");
 				

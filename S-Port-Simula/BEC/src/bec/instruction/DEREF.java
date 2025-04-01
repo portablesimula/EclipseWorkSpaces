@@ -84,22 +84,22 @@ public abstract class DEREF extends Instruction {
 		boolean NYTEST = true;
 		assertObjStacked();
 		AddressItem tos = (AddressItem) CTStack.TOS;
-		System.out.println("DEREF.assertAtrStacked: tos.atrState="+tos.atrState);
+//		System.out.println("DEREF.assertAtrStacked: tos.atrState="+tos.atrState);
 		if(tos.atrState==AddressItem.AtrState.NotStacked) {
 			tos.atrState=AddressItem.AtrState.FromConst;
 			// Qf2(qPUSHC,0,FreePartReg,cVAL,TOS qua Address.Offset);
-			Global.PSEG.emit(new SVM_PUSHC(new IntegerValue(Type.T_INT,tos.offset)), "DEREF'offset'1: ");
+			Global.PSEG.emit(new SVM_PUSHC(IntegerValue.of(Type.T_INT,tos.offset)), "DEREF'offset'1: ");
 //	      	Global.PSEG.emit(new SVM_NOOP(), "HVA HER ? " + tos);
 //			Util.IERR("");
 //		} else if(tos.atrState==AddressItem.AtrState.Calculated) {
 		} else if(tos.atrState==AddressItem.AtrState.Indexed) {
-			System.out.println("DEREF.assertAtrStacked: tos="+tos);
-			System.out.println("DEREF.assertAtrStacked: tos.objReg="+tos.xReg);
+//			System.out.println("DEREF.assertAtrStacked: tos="+tos);
+//			System.out.println("DEREF.assertAtrStacked: tos.objReg="+tos.xReg);
 			if(NYTEST) {
 				if(tos.xReg > 0) {
 					Global.PSEG.emit(new SVM_PUSHR(Type.T_INT, tos.xReg), "DEREF'objReg: ");
 					if(tos.offset != 0) {
-						Global.PSEG.emit(new SVM_PUSHC(new IntegerValue(Type.T_INT,tos.offset)), "DEREF'offset: ");
+						Global.PSEG.emit(new SVM_PUSHC(IntegerValue.of(Type.T_INT,tos.offset)), "DEREF'offset: ");
 						Global.PSEG.emit(new SVM_ADD(), "DEREF'objadr+offset: ");	
 //						Util.IERR("");
 					}
@@ -120,12 +120,12 @@ public abstract class DEREF extends Instruction {
 
 	private static void assertObjStacked() {
 		AddressItem tos = (AddressItem) CTStack.TOS;
-		System.out.println("DEREF.assertObjStacked: tos.isRemoteBase="+tos.isRemoteBase);
+//		System.out.println("DEREF.assertObjStacked: tos.isRemoteBase="+tos.isRemoteBase);
 //	    if(tos.objState==AddressItem.ObjState.zzNotStacked) {
 	    if(! tos.isRemoteBase) {
 //	    	tos.objState=AddressItem.ObjState.objFromConst;
 	    	ObjectAddress objadr = tos.objadr;
-			System.out.println("DEREF.assertObjStacked: tos.objadr="+objadr);
+//			System.out.println("DEREF.assertObjStacked: tos.objadr="+objadr);
 	    	if(objadr.segID == null) {
 	    		// when reladr,locadr: 
 	    		// Qf3(qPUSHA,0,qEBX,cOBJ,adr);
@@ -137,7 +137,7 @@ public abstract class DEREF extends Instruction {
 	    	} else {
 	            // when segadr,fixadr,extadr:
 	            // Qf2b(qPUSHC,0,qEBX,cOBJ,0,adr);
-				System.out.println("DEREF.assertObjStacked: tos="+tos);
+//				System.out.println("DEREF.assertObjStacked: tos="+tos);
 				Global.PSEG.emit(new SVM_PUSHC(objadr), "DEREF'objadr: ");
 //		    	Util.IERR("");
 	    	}

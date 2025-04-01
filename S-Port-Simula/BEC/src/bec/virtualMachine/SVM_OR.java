@@ -13,6 +13,10 @@ import bec.value.Value;
  * SOS op TOS. All arithmetic on subranges of INT should be performed in full integer arithmetic.
  * 
  * Remove to items from the Runtime-Stack and push the value SOS or TOS
+ * 
+ *  a  \  b  true   false
+ *  true     true   true
+ *  false    true   false
  */
 public class SVM_OR extends SVM_Instruction {
 
@@ -25,8 +29,8 @@ public class SVM_OR extends SVM_Instruction {
 		Value tos = RTStack.pop().value();
 		Value sos = RTStack.pop().value();
 		Value res = (tos == null)? sos : tos.or(sos);
-//		System.out.println("SVM_ADD: " + tos + " + " + sos + " = " + res);
-		RTStack.push(res, "SVM_ADD: " + tos + " + " + sos + " = " + res);
+//		System.out.println("SVM_OR: " + tos + " | " + sos + " = " + res);
+		RTStack.push(res, "SVM_OR: " + tos + " | " + sos + " = " + res);
 		Global.PSC.ofst++;
 //		Util.IERR(""+res);
 	}

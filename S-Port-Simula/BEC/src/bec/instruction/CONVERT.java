@@ -73,9 +73,9 @@ public abstract class CONVERT extends Instruction {
 			IntegerValue intval = (IntegerValue)TOS.value;
 			int val = intval.value;
 			switch(totype.tag) {
-				case Scode.TAG_INT:   toValue = new IntegerValue(Type.T_INT, val); break;
-				case Scode.TAG_REAL:  toValue = new RealValue(val); break;
-				case Scode.TAG_LREAL: toValue = new LongRealValue(val); break;
+				case Scode.TAG_INT:   toValue = IntegerValue.of(Type.T_INT, val); break;
+				case Scode.TAG_REAL:  toValue = RealValue.of(val); break;
+				case Scode.TAG_LREAL: toValue = LongRealValue.of(val); break;
 			}
 			break;
 		}
@@ -83,9 +83,9 @@ public abstract class CONVERT extends Instruction {
 			IntegerValue intval = (IntegerValue)TOS.value;
 			int val = intval.value;
 			switch(totype.tag) {
-				case Scode.TAG_CHAR:  toValue = new IntegerValue(Type.T_CHAR, val); break;
-				case Scode.TAG_REAL:  toValue = new RealValue(val); break;
-				case Scode.TAG_LREAL: toValue = new LongRealValue(val); break;
+				case Scode.TAG_CHAR:  toValue = IntegerValue.of(Type.T_CHAR, val); break;
+				case Scode.TAG_REAL:  toValue = RealValue.of(val); break;
+				case Scode.TAG_LREAL: toValue = LongRealValue.of(val); break;
 			}
 			break;
 		}
@@ -93,9 +93,9 @@ public abstract class CONVERT extends Instruction {
 			RealValue intval = (RealValue)TOS.value;
 			float val = intval.value;
 			switch(totype.tag) {
-				case Scode.TAG_CHAR:  toValue = new IntegerValue(Type.T_CHAR, (int)(val+0.5)); break;
-				case Scode.TAG_INT:   toValue = new IntegerValue(Type.T_INT, (int)(val+0.5)); break;
-				case Scode.TAG_LREAL: toValue = new LongRealValue(val); break;
+				case Scode.TAG_CHAR:  toValue = IntegerValue.of(Type.T_CHAR, (int)(val+0.5)); break;
+				case Scode.TAG_INT:   toValue = IntegerValue.of(Type.T_INT, (int)(val+0.5)); break;
+				case Scode.TAG_LREAL: toValue = LongRealValue.of(val); break;
 			}
 			break;
 		}
@@ -103,9 +103,9 @@ public abstract class CONVERT extends Instruction {
 			RealValue intval = (RealValue)TOS.value;
 			float val = intval.value;
 			switch(totype.tag) {
-				case Scode.TAG_CHAR: toValue = new IntegerValue(Type.T_CHAR, (int)(val+0.5)); break;
-				case Scode.TAG_INT:  toValue = new IntegerValue(Type.T_INT, (int)(val+0.5)); break;
-				case Scode.TAG_REAL: toValue = new RealValue(val); break;
+				case Scode.TAG_CHAR: toValue = IntegerValue.of(Type.T_CHAR, (int)(val+0.5)); break;
+				case Scode.TAG_INT:  toValue = IntegerValue.of(Type.T_INT, (int)(val+0.5)); break;
+				case Scode.TAG_REAL: toValue = RealValue.of(val); break;
 			}
 			break;
 		}

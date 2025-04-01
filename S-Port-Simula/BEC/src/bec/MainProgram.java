@@ -4,6 +4,7 @@ import bec.descriptor.Kind;
 import bec.segment.DataSegment;
 import bec.segment.ProgramSegment;
 import bec.segment.Segment;
+import bec.util.EndProgram;
 import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Util;
@@ -70,10 +71,21 @@ public class MainProgram extends S_Module {
 		if(Scode.curinstr != Scode.S_ENDPROGRAM)
 			Util.IERR("Illegal termination of program");
 		
+		try {
 		if(Global.verbose) System.out.println("\n\nNEW MainProgram: BEGIN EXECUTE: " + mainEntry);
 		Global.PSC = mainEntry;
-		while(true) {
-			Global.PSC.execute();
+			while(true) {
+				Global.PSC.execute();
+			}
+		} catch(EndProgram eprog) {
+			if(Global.verbose) System.out.println(""+eprog);
+			if(Global.INLINE_TESTING) {
+//				System.out.println("BecCompiler.UncaughtExceptionHandler: INLINE_TESTING: return");
+//				Thread.dumpStack();
+				return;
+			}
+			System.exit(eprog.exitCode);
+
 		}
 		
 	}

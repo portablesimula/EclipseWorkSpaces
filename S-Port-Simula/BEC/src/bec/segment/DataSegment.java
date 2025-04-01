@@ -50,6 +50,7 @@ public class DataSegment extends Segment {
 	}
 	
 	public Value load(int index) {
+//		System.out.println("DataSegment.load: "+this+", index="+index);
 		return values.get(index);
 	}
 	
@@ -74,7 +75,7 @@ public class DataSegment extends Segment {
 		ObjectAddress addr = nextAddress();
 		int n = chars.length();
 		for(int i=0;i<n;i++) {
-			emit(new IntegerValue(Type.T_CHAR, chars.charAt(i)), cmnt);
+			emit(IntegerValue.of(Type.T_CHAR, chars.charAt(i)), cmnt);
 		}
 		return addr;
 	}
@@ -89,11 +90,11 @@ public class DataSegment extends Segment {
 			TextValue tval = texts.get(i);
 			if(DEBUG) System.out.println("DataSegment.emitRepText["+i+"]: "+tval);
 			emit(tval.addr,"CHRADR");
-			emit(new IntegerValue(Type.T_INT,0),"OFST");
-			emit(new IntegerValue(Type.T_INT,tval.length),"LNG");
+			emit(IntegerValue.of(Type.T_INT,0),"OFST");
+			emit(IntegerValue.of(Type.T_INT,tval.length),"LNG");
 //			ELLER:
-//			emit(new IntegerValue(Type.T_INT,tval.length),"LNG");
-//			emit(new IntegerValue(Type.T_INT,0),"OFST");
+//			emit(IntegerValue.of(Type.T_INT,tval.length),"LNG");
+//			emit(IntegerValue.of(Type.T_INT,0),"OFST");
 //			emit(tval.addr,"CHRADR");
 		}
 		return addr;
@@ -114,10 +115,10 @@ public class DataSegment extends Segment {
 			    case Scode.S_C_INT:    Scode.inputInstr(); emit(IntegerValue.ofScode_INT(), comment); break;
 			    case Scode.S_C_CHAR:   Scode.inputInstr(); emit(IntegerValue.ofScode_CHAR(), comment); break;
 			    case Scode.S_C_SIZE:   Scode.inputInstr(); emit(IntegerValue.ofScode_SIZE(), comment); break;
-			    case Scode.S_C_REAL:   Scode.inputInstr(); emit(new RealValue(), comment); break;
-			    case Scode.S_C_LREAL:  Scode.inputInstr(); emit(new LongRealValue(), comment); break;
-			    case Scode.S_TRUE:     Scode.inputInstr(); emit(new BooleanValue(true), comment); break;
-			    case Scode.S_FALSE:    Scode.inputInstr(); emit(new BooleanValue(false), comment); break;
+			    case Scode.S_C_REAL:   Scode.inputInstr(); emit(RealValue.ofScode(), comment); break;
+			    case Scode.S_C_LREAL:  Scode.inputInstr(); emit(LongRealValue.ofScode(), comment); break;
+			    case Scode.S_TRUE:     Scode.inputInstr(); emit(BooleanValue.of(true), comment); break;
+			    case Scode.S_FALSE:    Scode.inputInstr(); emit(BooleanValue.of(false), comment); break;
 			    case Scode.S_NOSIZE:   Scode.inputInstr(); emit(null, comment); break;
 			    case Scode.S_ANONE:    Scode.inputInstr(); emit(null, comment); break;
 			    case Scode.S_NOWHERE:  Scode.inputInstr(); emit(null, comment); break;

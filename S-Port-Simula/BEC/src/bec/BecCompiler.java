@@ -4,6 +4,7 @@ import java.util.HashMap;
 import bec.descriptor.Descriptor;
 import bec.segment.Segment;
 import bec.util.Array;
+import bec.util.EndProgram;
 import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Type;
@@ -86,6 +87,22 @@ public class BecCompiler {
 		Scode.initScode();
 //		DataType.initDataTypes();
 		Type.init();
+
+//		Thread.currentThread().setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+//			public void uncaughtException(Thread thread, Throwable e) {
+//				System.out.println("BecCompiler.UncaughtExceptionHandler: GOT Exception: " + e.getClass().getSimpleName());
+//				if(e instanceof EndProgram eprog) {
+//					if(Global.verbose) System.out.println(""+eprog);
+//					if(Global.INLINE_TESTING) {
+//						System.out.println("BecCompiler.UncaughtExceptionHandler: INLINE_TESTING: return");
+//						Thread.dumpStack();
+//						return;
+//					}
+//					System.exit(eprog.exitCode);
+//				} else {
+//					Util.IERR("BecCompiler.UncaughtExceptionHandler: GOT Exception: " + e);
+//				}
+//		}});
 
 		Scode.inputInstr();
 		if(Scode.curinstr == Scode.S_PROGRAM) {

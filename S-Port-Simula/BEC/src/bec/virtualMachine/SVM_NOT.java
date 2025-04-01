@@ -6,7 +6,9 @@ import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Type;
+import bec.util.Util;
 import bec.value.BooleanValue;
+import bec.value.IntegerValue;
 import bec.value.Value;
 
 /**
@@ -24,10 +26,21 @@ public class SVM_NOT extends SVM_Instruction {
 	@Override
 	public void execute() {
 		Value tos = RTStack.pop().value();
-//		Value res = (tos == null)? null : tos.neg();
-		Value res = (tos == null)? new BooleanValue(true) : null;
-//		System.out.println("SVM_NOT:  -" + tos + " = " + res);
-		RTStack.push(res, "SVM_NOT:  -" + tos + " = " + res);
+//		Value res = (tos == null)? BooleanValue.of(true) : null;
+		Value res = null;
+		if(tos == null) res = BooleanValue.of(true);
+		else {
+			if(tos instanceof BooleanValue bval) {
+				res = BooleanValue.of(! bval.value);
+			}
+			else if(tos instanceof IntegerValue ival) {
+				res = IntegerValue.of(Type.T_INT, ~ ival.value);
+			} else Util.IERR("");
+//			boolean bval = ((BooleanValue)tos).value;
+//			if(! bval) res = BooleanValue.of(true);
+		}
+//		System.out.println("SVM_NOT:  not " + tos + " ==> " + res);
+		RTStack.push(res, "SVM_NOT:  not " + tos + " ==> " + res);
 		Global.PSC.ofst++;
 //		Util.IERR("");
 	}

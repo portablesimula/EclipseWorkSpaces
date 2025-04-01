@@ -10,7 +10,7 @@ import bec.virtualMachine.RTStack;
 import bec.virtualMachine.SVM_PEEK2MEM;
 
 public abstract class RUPDATE extends Instruction {
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 	
 	/**
 	 * assign_instruction ::= assign | update | rupdate

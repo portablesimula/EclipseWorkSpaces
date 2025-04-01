@@ -9,6 +9,7 @@ import bec.descriptor.LabelDescr;
 import bec.descriptor.RoutineDescr;
 import bec.segment.ProgramSegment;
 import bec.segment.Segment;
+import bec.util.EndProgram;
 import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Tag;
@@ -51,7 +52,7 @@ public class ProgramAddress extends Value {
 		Tag tag = Tag.ofScode();
 		Descriptor descr = tag.getMeaning();
 		if(descr == null) Util.IERR("IMPOSSIBLE: TESTING FAILED");
-		System.out.println("OADDR_Value.ofScode: descr="+descr.getClass().getSimpleName()+"  "+descr);
+//		System.out.println("OADDR_Value.ofScode: descr="+descr.getClass().getSimpleName()+"  "+descr);
 		if(type == Type.T_RADDR) return ((RoutineDescr)descr).getAddress();
 		if(type == Type.T_PADDR) return ((LabelDescr)descr).getAddress();
 		Util.IERR("NOT IMPL");
@@ -90,18 +91,19 @@ public class ProgramAddress extends Value {
 		ProgramSegment seg = (ProgramSegment) segment();
 		int size = seg.instructions.size();
 		if(size == 0) {
-			System.out.println("ProgramAddress.execute: " + seg.ident + " IS EMPTY -- NOTHING TO EXECUTE");
-			System.exit(-1);
+//			System.out.println("ProgramAddress.execute: " + seg.ident + " IS EMPTY -- NOTHING TO EXECUTE");
+//			System.exit(-1);
+			throw new EndProgram(-1,"ProgramAddress.execute: " + seg.ident + " IS EMPTY -- NOTHING TO EXECUTE");
 		}
 		
-//		System.out.println("ProgramAddress.execute: size=" + seg.instructions.size());
-//		System.out.println("ProgramAddress.execute: ofst=" + ofst);
 		if(ofst >= size) {
-//			Segment.lookup("DSEG_ADHOC02").dump("ProgramAddress.execute: ");
-			Global.DSEG.dump("ProgramAddress.execute: FINAL DATA SEGMENT ");
-			Global.CSEG.dump("ProgramAddress.execute: FINAL CONSTANT SEGMENT ");
-			if(Global.verbose) System.out.println("ProgramAddress.execute: " + seg.ident + " IS FINALIZED -- NOTHING MORE TO EXECUTE");
-			System.exit(0);			
+			if(Global.DUMPS_AT_EXIT) {
+//				Segment.lookup("DSEG_ADHOC02").dump("ProgramAddress.execute: ");
+				Global.DSEG.dump("ProgramAddress.execute: FINAL DATA SEGMENT ");
+				Global.CSEG.dump("ProgramAddress.execute: FINAL CONSTANT SEGMENT ");
+			}
+			RTStack.checkStackEmpty();
+			throw new EndProgram(0,"ProgramAddress.execute: " + seg.ident + " IS FINALIZED -- NOTHING MORE TO EXECUTE");
 		} else {
 			SVM_Instruction cur = seg.instructions.get(ofst);
 //			System.out.println("ProgramAddress.execute: " + cur);

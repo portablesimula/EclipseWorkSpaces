@@ -62,8 +62,8 @@ public class RepetitionValue extends PREV_Value {
 				case Scode.S_C_LREAL:  Scode.inputInstr(); values.add(new LongRealValue()); break;
 				case Scode.S_C_CHAR:   Scode.inputInstr(); values.add(new CharacterValue()); break;
 				case Scode.S_C_SIZE:   Scode.inputInstr(); values.add(new SizeValue(false)); break;
-				case Scode.S_TRUE:     Scode.inputInstr(); values.add(new BooleanValue(true)); break;
-				case Scode.S_FALSE:    Scode.inputInstr(); values.add(new BooleanValue(false)); break;
+				case Scode.S_TRUE:     Scode.inputInstr(); values.add(BooleanValue.of(true)); break;
+				case Scode.S_FALSE:    Scode.inputInstr(); values.add(BooleanValue.of(false)); break;
 				case Scode.S_C_AADDR:  Scode.inputInstr(); values.add(new AttributeAddress(false)); break;
 				case Scode.S_C_PADDR:  Scode.inputInstr(); values.add(new ProgramAddress(false)); break;
 				case Scode.S_C_RADDR:  Scode.inputInstr(); values.add(new RoutineAddress(false)); break;

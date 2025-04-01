@@ -15,10 +15,15 @@ import bec.util.Util;
 public class IntegerValue extends Value {
 	public int value;
 	
-	public IntegerValue(Type type, int value) {
+	private IntegerValue(Type type, int value) {
 //		this.type = Type.T_INT;
 		this.type = type;
 		this.value = value;
+	}
+	
+	public static IntegerValue of(Type type, int value) {
+		if(value != 0) return new IntegerValue(type, value);
+		return null;
 	}
 
 	/**
@@ -33,15 +38,15 @@ public class IntegerValue extends Value {
 	 * attribute_address	::= c-aaddr attribute:tag
 	 */
 	public static IntegerValue ofScode_INT() {
-		return new IntegerValue(Type.T_INT, Integer.valueOf(Scode.inString()));
+		return IntegerValue.of(Type.T_INT, Integer.valueOf(Scode.inString()));
 	}
 	public static IntegerValue ofScode_CHAR() {
-		return new IntegerValue(Type.T_CHAR, Scode.inByte());
+		return IntegerValue.of(Type.T_CHAR, Scode.inByte());
 	}
 	
 	public static IntegerValue ofScode_SIZE() {
 		Type type = Type.ofScode();
-		return new IntegerValue(Type.T_SIZE, type.size());
+		return IntegerValue.of(Type.T_SIZE, type.size());
 	}
 
 	public static IntegerValue ofScode_AADDR() {
@@ -51,8 +56,8 @@ public class IntegerValue extends Value {
 		if(var == null) Util.IERR("IMPOSSIBLE: TESTING FAILED");
 //		System.out.println("OADDR_Value.ofScode: descr="+descr.getClass().getSimpleName()+"  "+descr);
 //		Util.IERR("NOT IMPL");
-//		return new IntegerValue(Type.T_AADDR, var.address.ofst);
-		return new IntegerValue(Type.T_AADDR, var.rela);
+//		return IntegerValue.of(Type.T_AADDR, var.address.ofst);
+		return IntegerValue.of(Type.T_AADDR, var.rela);
 	}
 	
 	public static int intValue(IntegerValue val) {
@@ -62,7 +67,7 @@ public class IntegerValue extends Value {
 
 	@Override
 	public Value neg() {
-		return new IntegerValue(this.type,- value);
+		return IntegerValue.of(this.type,- value);
 	}
 
 	@Override
@@ -74,7 +79,7 @@ public class IntegerValue extends Value {
 			IntegerValue val2 = (IntegerValue) other;
 			int res = value + val2.value;
 			if(res == 0) return null;
-			return new IntegerValue(this.type, res);
+			return IntegerValue.of(this.type, res);
 		}
 	}
 
@@ -87,7 +92,7 @@ public class IntegerValue extends Value {
 		} else res = this.value;
 //		System.out.println("IntegerValue.sub: " + this.value + " - " + other + " = " + res);
 		if(res == 0) return null;
-		return new IntegerValue(this.type, res);
+		return IntegerValue.of(this.type, res);
 	}
 
 	@Override
@@ -96,23 +101,73 @@ public class IntegerValue extends Value {
 		IntegerValue val2 = (IntegerValue) other;
 		int res = value * val2.value;
 		if(res == 0) return null;
-		return new IntegerValue(this.type, res);
+		return IntegerValue.of(this.type, res);
 	}
 
 	@Override
 	public Value div(Value other) {
-		System.out.println("IntegerValue.div: " + other + " / " + this.value);
+//		System.out.println("IntegerValue.div: " + other + " / " + this.value);
 		int res = 0;
 		if(other != null) {
 			IntegerValue val2 = (IntegerValue) other;
 			res = val2.value / this.value;
 		} else res = 0;
-		System.out.println("IntegerValue.div: " + other + " / " + this.value + " = " + res);
+//		System.out.println("IntegerValue.div: " + other + " / " + this.value + " = " + res);
 		if(res == 0) return null;
-		return new IntegerValue(this.type, res);
+		return IntegerValue.of(this.type, res);
+	}
+
+	@Override
+	public Value rem(Value other) {
+//		System.out.println("IntegerValue.div: " + other + " / " + this.value);
+		int res = 0;
+		if(other != null) {
+			IntegerValue val2 = (IntegerValue) other;
+			res = val2.value % this.value;
+		} else res = 0;
+//		System.out.println("IntegerValue.div: " + other + " / " + this.value + " = " + res);
+		if(res == 0) return null;
+		return IntegerValue.of(this.type, res);
+	}
+
+	@Override
+	public Value and(Value other) {
+		int val2 = (other == null)? 0 : ((IntegerValue) other).value;
+		return IntegerValue.of(this.type, value & val2);
+	}
+
+	@Override
+	public Value or(Value other) {
+		int val2 = (other == null)? 0 : ((IntegerValue) other).value;
+		return IntegerValue.of(this.type, value | val2);
+	}
+
+	@Override
+	public Value xor(Value other) {
+		int val2 = (other == null)? 0 : ((IntegerValue) other).value;
+		return IntegerValue.of(this.type, value ^ val2);
+	}
+
+	@Override
+	public boolean compare(int relation, Value other) {
+		int LHS = this.value;
+		int RHS = (other == null)? 0 : ((IntegerValue)other).value;
+		boolean res = false;
+		switch(relation) {
+			case Scode.S_LT: res = LHS <  RHS; break;
+			case Scode.S_LE: res = LHS <= RHS; break;
+			case Scode.S_EQ: res = LHS == RHS; break;
+			case Scode.S_GE: res = LHS >= RHS; break;
+			case Scode.S_GT: res = LHS >  RHS; break;
+			case Scode.S_NE: res = LHS != RHS; break;
+		}
+//		System.out.println("IntegerValue.compare: " + LHS + " " + Scode.edInstr(relation) + " " + RHS + " ==> " + res);
+//		Util.IERR("");
+		return res;
 	}
 
 	public String toString() {
+		if(type == null) return ""+value;
 		switch(type.tag) {
 			case Scode.TAG_INT:   return "C-INT "   + value;
 			case Scode.TAG_CHAR:  return "C-CHAR "  + (char)value;
@@ -122,6 +177,42 @@ public class IntegerValue extends Value {
 		}
 	}
 	
+	
+	// ***********************************************************************************************
+	// *** TESTING
+	// ***********************************************************************************************
+//	public static void main(String[] args) {
+//		int nErr = 0;
+//		IntegerValue v44 = IntegerValue.of(Type.T_INT, 44);
+//		nErr += TEST(v44, Scode.S_LT, null, false);
+//		nErr += TEST(v44, Scode.S_LT, v44, false);	
+//		
+//		nErr += TEST(v44, Scode.S_LE, null, false);
+//		nErr += TEST(v44, Scode.S_LE, v44, true);
+//		
+//		nErr += TEST(v44, Scode.S_EQ, null, false);
+//		nErr += TEST(v44, Scode.S_EQ, v44, true);
+//		
+//		nErr += TEST(v44, Scode.S_GE, null, true);
+//		nErr += TEST(v44, Scode.S_GE, v44, true);	
+//		
+//		nErr += TEST(v44, Scode.S_GT, null, true);
+//		nErr += TEST(v44, Scode.S_GT, v44, false);	
+//		
+//		nErr += TEST(v44, Scode.S_NE, null, true);
+//		nErr += TEST(v44, Scode.S_NE, v44, false);
+//		
+//		System.out.println("Number of errors: " + nErr);
+//	}
+//	
+//	private static int TEST(IntegerValue lhs, int relation, IntegerValue rhs, boolean expected) {
+//		boolean b = lhs.compare(relation, rhs);
+//		if(b != expected) {
+//			System.out.println("ERROR: " + lhs + " " + Scode.edInstr(relation) + " " + rhs + " ==> " + b);
+//			return 1;
+//		}
+//		return 0;
+//	}
 
 	// ***********************************************************************************************
 	// *** Attribute File I/O

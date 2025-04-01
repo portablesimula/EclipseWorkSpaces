@@ -26,7 +26,7 @@ public final class FECmpRTS {
 		names.add("RT");   // ==> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/RT.scd
 		names.add("SYSR"); // ==> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/SYSR.scd
 		names.add("KNWN"); // ==> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/KNWN.scd
-//		names.add("UTIL"); // ==> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/UTIL.scd
+		names.add("UTIL"); // ==> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/UTIL.scd
 //		
 //		names.add("STRG"); // ==> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/STRG.scd
 //		names.add("CENT"); // ==> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/CENT.scd

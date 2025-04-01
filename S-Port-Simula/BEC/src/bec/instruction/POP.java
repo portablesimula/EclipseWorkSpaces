@@ -20,7 +20,7 @@ public abstract class POP extends Instruction {
 		if(CTStack.TOS instanceof ProfileItem) Util.IERR("Illegal pop of profileItem ");
 		
 //		System.out.println("POP.ofScode: TOS="+CTStack.TOS.getClass().getSimpleName()+"  "+CTStack.TOS);
-		System.out.println("POP.ofScode: TOS.type="+CTStack.TOS.type);
+//		System.out.println("POP.ofScode: TOS.type="+CTStack.TOS.type);
 		int size = CTStack.TOS.type.size();
 //		System.out.println("POP.ofScode: TOS.type.size="+size);
 		CTStack.pop();

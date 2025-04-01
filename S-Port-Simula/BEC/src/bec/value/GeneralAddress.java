@@ -15,7 +15,7 @@ public class GeneralAddress extends Value {
 	public ObjectAddress base;
 	public int ofst;
 	
-	public GeneralAddress(ObjectAddress base,	int ofst) {
+	public GeneralAddress(ObjectAddress base, int ofst) {
 		this.type = Type.T_GADDR;
 		this.base = base;
 		this.ofst = ofst;

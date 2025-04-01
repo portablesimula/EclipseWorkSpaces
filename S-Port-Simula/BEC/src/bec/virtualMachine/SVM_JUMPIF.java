@@ -12,8 +12,8 @@ import bec.value.Value;
 
 public class SVM_JUMPIF extends SVM_JUMP {
 	Relation relation;
-//	MemAddr destination;
-
+	private static final boolean DEBUG = false;
+	
 	public SVM_JUMPIF(Relation relation, ProgramAddress destination) {
 		super(destination);
 		this.opcode = SVM_Instruction.iJUMPIF;
@@ -26,8 +26,14 @@ public class SVM_JUMPIF extends SVM_JUMP {
 //		RTStack.dumpRTStack("SVM_JUMPIF: ");
 		Value tos = RTStack.pop().value();
 		Value sos = RTStack.pop().value();
-		boolean res = relation.eval(sos, tos);
-//		System.out.println("SVM_JUMPIF: " + tos + "  " + relation + "  " + sos + " = " + res);
+//		boolean res = relation.eval(sos, tos);
+		boolean res = relation.compare(sos, tos);
+		
+		if(DEBUG) {
+			String jmp = (res)? "DO JUMP" : "NOT JUMP";
+			System.out.println("SVM_JUMPIF: " + tos + "  " + relation + "  " + sos + " = " + res + "  " + jmp);
+		}
+		
 //		RTStack.push(type, res);
 		if(res) Global.PSC = destination.copy();
 		else Global.PSC.ofst++;

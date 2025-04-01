@@ -49,8 +49,7 @@ public abstract class RTStack {
 	
 	public static void printCallTrace(String title,String kind) {
 //		RTStack.dumpRTStack(title);
-		CallStackFrame callStackTop = callStack_TOP();
-		System.out.println("CallStack["+callStack.size()+"]: " +title + " " + callStackTop.ident);
+		System.out.println("CallStack["+callStack.size()+"]: " +title + " " + callStack_TOP().ident);
 //		System.out.println("     at "+Global.PSC);
 		int n = callStack.size()-1;
 		for(int i=n;i>=0;i--) {
@@ -107,7 +106,7 @@ public abstract class RTStack {
 //			TextValue text = (TextValue) value;
 //			push(Type.T_OADDR, text.addr, comment+"'CHRADR.OADDR");
 //			push(Type.T_INT, null,        comment+"'CHRADR.Offset");
-//			push(Type.T_INT, new IntegerValue(Type.T_INT, text.getString().length()), comment+"'NCHR");
+//			push(Type.T_INT, IntegerValue.of(Type.T_INT, text.getString().length()), comment+"'NCHR");
 ////			Util.IERR("");
 //			return;
 ////			break;
@@ -124,7 +123,7 @@ public abstract class RTStack {
 ////				}
 //				GeneralAddress gaddr = (GeneralAddress) value;
 //				push(Type.T_OADDR, gaddr.base, comment+"'GADDR'base");
-//				push(Type.T_INT, new IntegerValue(Type.T_INT, gaddr.ofst), comment+"'GADDR'ofst");
+//				push(Type.T_INT, IntegerValue.of(Type.T_INT, gaddr.ofst), comment+"'GADDR'ofst");
 ////				Util.IERR("");
 //			}
 //		}
@@ -136,7 +135,7 @@ public abstract class RTStack {
 	public static void pushr(Type type, int reg, String comment) {
 		int value = RTRegister.getValue(reg);
 //		stack.push(type, value, comment);
-		stack.push(new RTStackItem( new IntegerValue(Type.T_INT, value), comment));
+		stack.push(new RTStackItem( IntegerValue.of(Type.T_INT, value), comment));
 //		dumpRTStack("");
 //		Util.IERR("");
 	}
@@ -160,13 +159,13 @@ public abstract class RTStack {
 	
 	public static float popReal() {
 		RealValue rval = (RealValue) pop().value();
-		System.out.println("RTStack.popReal: rval="+rval);
+//		System.out.println("RTStack.popReal: rval="+rval);
 		return (rval==null)? 0 : rval.value;
 	}
 	
 	public static double popLongReal() {
 		LongRealValue rval = (LongRealValue) pop().value();
-		System.out.println("RTStack.popReal: rval="+rval);
+//		System.out.println("RTStack.popLongReal: rval="+rval);
 		return (rval==null)? 0 : rval.value;
 	}
 	
@@ -176,13 +175,8 @@ public abstract class RTStack {
 		int ofst = RTStack.popInt();
 		ObjectAddress chradr = (ObjectAddress) RTStack.pop().value();
 //		System.out.println("RTStack.popGADDR: chradr="+chradr+", ofst="+ofst);
-		if(chradr == null) {
-//			Global.DSEG.dump("RTStack.popGADDR");
-//			Global.CSEG.dump("RTStack.popGADDR");
-			RTStack.dumpRTStack("RTStack.popGADDR");
-			Util.IERR("");
-		}
-		return chradr.addOffset(ofst);
+		if(ofst != 0) chradr = chradr.addOffset(ofst);
+		return chradr;
 	}
 	
 	public static ObjectAddress popOADDR() {
@@ -196,7 +190,7 @@ public abstract class RTStack {
 //		int ofst = RTStack.popInt();
 //		ObjectAddress chradr = (ObjectAddress) RTStack.pop().value();
 //		ObjectAddress x = chradr.ofset(ofst);
-		ObjectAddress x = RTStack.popGADDR();
+		ObjectAddress x = (ObjectAddress) RTStack.popGADDR().copy();
 		
 		StringBuilder sb = new StringBuilder();
 		for(int i=0;i<nchr;i++) {

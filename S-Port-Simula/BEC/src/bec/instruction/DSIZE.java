@@ -1,19 +1,14 @@
 package bec.instruction;
 
 import bec.compileTimeStack.CTStack;
-import bec.compileTimeStack.ConstItem;
-import bec.compileTimeStack.StackItem;
 import bec.descriptor.RecordDescr;
 import bec.util.Global;
-import bec.util.Scode;
 import bec.util.Tag;
 import bec.util.Type;
 import bec.util.Util;
 import bec.value.IntegerValue;
-import bec.virtualMachine.RTRegister;
 import bec.virtualMachine.SVM_ADD;
 import bec.virtualMachine.SVM_MULT;
-import bec.virtualMachine.SVM_NOT_IMPL;
 import bec.virtualMachine.SVM_PUSHC;
 
 public abstract class DSIZE extends Instruction {
@@ -33,7 +28,6 @@ public abstract class DSIZE extends Instruction {
 	 * and it must contain an indefinite repetition, otherwise: error.
 	 */
 	public static void ofScode() {
-//      InTag(%tag%); fixrec:=DISPL(tag.HI).elt(tag.LO);
 		Tag tag = Tag.ofScode();
 		RecordDescr fixrec = (RecordDescr) tag.getMeaning();
 		System.out.println("DSIZE.ofScode: fixrec="+fixrec+"  nbrep="+fixrec.nbrep);
@@ -41,46 +35,15 @@ public abstract class DSIZE extends Instruction {
 			CTStack.dumpStack("DSIZE.ofScode: ");
 			int n = fixrec.nbrep;
 			CTStack.checkTosInt();
-			StackItem TOS = CTStack.TOS;
-//           if TOS.kind=K_Coonst
-			if(TOS instanceof ConstItem citm) {
-//				System.out.println("DSIZE.ofScode: n="+n);
-				IntegerValue cvalue = (IntegerValue) citm.value;
-				n = (n*(cvalue.value))+fixrec.size;
-//				System.out.println("DSIZE.ofScode: cvalue="+cvalue);
-//				System.out.println("DSIZE.ofScode: n="+n);
-//				System.out.println("DSIZE.ofScode: fixrec.size="+fixrec.size);
-				CTStack.pop();
-                CTStack.pushCoonst(Type.T_SIZE,new IntegerValue(Type.T_INT, n));
-//    			CTStack.dumpStack("DSIZE.ofScode: ");
-//				Util.IERR("NOT IMPL");
-			} else {
-//%+E                  GetTosAdjustedIn86(qEAX);
-				CTStack.pop();
-//%+E                  OldTSTOFL:=TSTOFL; TSTOFL:=true;
-//%+E                  if n > 3
-//%+E                  then GQeMultc(n); -- EAX:=EAX*n
-//%+E                       Qf2(qDYADC,qADDF,qEAX,cVAL,fixrec.nbyte);
-//%+E                  else if n>1 then GQeMultc(n) endif; -- EAX:=EAX*n
-//%+E                       Qf2(qDYADC,qADDF,qEAX,cVAL,fixrec.nbyte+3);
-//%+E                       Qf2(qDYADC,qAND,qEAX,cVAL,-4);
-//%+E                  endif;
-//%+E                  TSTOFL:=OldTSTOFL;
-//%+E                  Qf1(qPUSHR,qEAX,cVAL);
-				
-				
-//				Global.PSEG.emit(new SVM_NOT_IMPL("DSIZE: "), "DSIZE: ");
-				
-				
-				IntegerValue nbrepValue = new IntegerValue(Type.T_INT, n);
-				Global.PSEG.emit(new SVM_PUSHC(nbrepValue), "DSIZE'nbrep: ");
-				Global.PSEG.emit(new SVM_MULT(), "MULT: ");
-				IntegerValue fixValue = new IntegerValue(Type.T_INT, fixrec.size);
-				Global.PSEG.emit(new SVM_PUSHC(fixValue), "DSIZE'recSize: ");
-				Global.PSEG.emit(new SVM_ADD(), "ADD: ");
-				
-				CTStack.pushTemp(Type.T_SIZE, 1, "DSIZE: ");
-			}
+			CTStack.pop();
+			IntegerValue nbrepValue = IntegerValue.of(Type.T_INT, n);
+			Global.PSEG.emit(new SVM_PUSHC(nbrepValue), "DSIZE'nbrep: ");
+			Global.PSEG.emit(new SVM_MULT(), "MULT: ");
+			IntegerValue fixValue = IntegerValue.of(Type.T_INT, fixrec.size);
+			Global.PSEG.emit(new SVM_PUSHC(fixValue), "DSIZE'recSize: ");
+			Global.PSEG.emit(new SVM_ADD(), "ADD: ");
+			
+			CTStack.pushTemp(Type.T_SIZE, 1, "DSIZE: ");
 		} else {
 			Util.IERR("Illegal DSIZE on: " + fixrec);
 //           GQpop; itm.int:=0; pushCoonst(T_SIZE,itm);

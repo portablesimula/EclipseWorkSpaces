@@ -51,6 +51,11 @@ public class Value {
 		return null;
 	}
 
+	public Value rem(Value other) {
+		Util.IERR("Method 'rem' need a redefinition in " + this.getClass().getSimpleName());
+		return null;
+	}
+
 	public Value and(Value other) {
 		Util.IERR("Method 'and' need a redefinition in " + this.getClass().getSimpleName());
 		return null;
@@ -59,6 +64,16 @@ public class Value {
 	public Value or(Value other) {
 		Util.IERR("Method 'or' need a redefinition in " + this.getClass().getSimpleName());
 		return null;
+	}
+
+	public Value xor(Value other) {
+		Util.IERR("Method 'xor' need a redefinition in " + this.getClass().getSimpleName());
+		return null;
+	}
+
+	public boolean compare(int relation, Value other) {
+		Util.IERR("Method 'compare' need a redefinition in " + this.getClass().getSimpleName());
+		return false;
 	}
 
 	// ***********************************************************************************************
@@ -80,8 +95,8 @@ public class Value {
 //		System.out.println("Value.read: kind="+Scode.edInstr(kind));
 		switch(kind) {
 			case Scode.S_NULL:		return null;
-			case Scode.S_TRUE:		return new BooleanValue(true);
-			case Scode.S_FALSE:		return new BooleanValue(false);
+			case Scode.S_TRUE:		return BooleanValue.of(true);
+			case Scode.S_FALSE:		return BooleanValue.of(false);
 			case Scode.S_C_INT, Scode.S_C_CHAR, Scode.S_C_SIZE, Scode.S_C_AADDR: return IntegerValue.read(inpt);
 			case Scode.S_C_REAL:	return RealValue.read(inpt);
 			case Scode.S_C_LREAL:	return LongRealValue.read(inpt);

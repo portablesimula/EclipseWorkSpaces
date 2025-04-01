@@ -7,8 +7,52 @@ import bec.util.Util;
 
 public abstract class SysEdit {
 
-	private static final char UNICODE_MINUS_SIGN = 0;
+	/// See: https://en.wikipedia.org/wiki/Plus_and_minus_signs
+	private static final char UNICODE_MINUS_SIGN = 0x2212;
 
+
+	/// Procedure putfix.
+	/// 
+	/// The resulting numeric item is an INTEGER ITEM if n=0 or a DECIMAL ITEM with a
+	/// FRACTION of n digits if n>0. It designates a number equal to the value of r
+	/// or an approximation to the value of r, correctly rounded to n decimal places.
+	/// If n<0, a run-time error is caused.
+	/// 
+	/// @param T the text reference
+	/// @param r the long real value to be edited
+	/// @param n the number of digits after decimal sign
+	public static String putfix(double r, int n) {
+		if (n < 0)
+//			throw new RTS_SimulaRuntimeError("putfix(r,n) - n < 0");
+			Util.IERR("putfix(r,n) - n < 0");
+		if (n == 0) {
+//			putint(T, (int) (r + 0.5));
+//			return;
+			return "" + ((int) (r + 0.5));
+		}
+		StringBuilder pattern = new StringBuilder("##0.");
+		while ((n--) > 0)
+			pattern.append('0');
+		DecimalFormat myFormatter = new DecimalFormat(pattern.toString());
+		if (r == -0.0)
+			r = 0.0; // NOTE: Java har både +0.0 og -0.0
+		String output = myFormatter.format(r);
+		output = output.replace((char) UNICODE_MINUS_SIGN, '-');
+		return output;
+	}
+	
+	/// Procedure putfix.
+	/// 
+	/// See <b>{@link RTS_TXT#putfix(RTS_TXT,double,int)}</b>
+	/// 
+	/// @param T the text reference
+	/// @param r the real value to be edited
+	/// @param n the number of digits after decimal sign
+	public static String putfix(float r, int n) {
+//		putfix(T, (double) r, n);
+		return putfix((double) r, n);
+	}
+	
 	/// Procedure putreal.
 	/// 
 	/// The resulting numeric item is a REAL ITEM containing an EXPONENT with a fixed

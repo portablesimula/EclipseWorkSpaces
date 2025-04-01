@@ -27,7 +27,7 @@ public class SVM_REFER extends SVM_Instruction {
 	public void execute() {
 //		Value tos = RTStack.pop().value();
 ////		Value res = (tos == null)? null : tos.neg();
-//		Value res = (tos == null)? new BooleanValue(true) : null;
+//		Value res = (tos == null)? BooleanValue.of(true) : null;
 ////		System.out.println("SVM_NOT:  -" + tos + " = " + res);
 //		RTStack.push(res, "SVM_NOT:  -" + tos + " = " + res);
 		

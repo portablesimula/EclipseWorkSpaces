@@ -24,6 +24,7 @@ public class Global {
 	public static boolean SEGMENT_OUTPUT_DUMP = false;
 	public static int EXEC_TRACE = 0;
 	public static int CALL_TRACE_LEVEL = 0;
+	public static boolean DUMPS_AT_EXIT = false;
 	
 	public static ProgramAddress PSC; // ProgramSequenceControl during execute
 	public static boolean duringEXEC() { return PSC != null; }

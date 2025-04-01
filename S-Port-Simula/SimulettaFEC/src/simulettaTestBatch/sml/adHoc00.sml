@@ -30,8 +30,9 @@ end;
 	infix(string) s,	q;
    	q:=s:="ABRA CA DAB";
 %	prt(s);
-	xPRT2("--- ",PROGRAM_NAME);
-%	xED_STR(PROGRAM_NAME);
+%	xPRT2("--- ",PROGRAM_NAME);
+	xED_STR(PROGRAM_NAME);
+	xED_OUT;
 %	xREST;
 	
 %	xED_STR(q);

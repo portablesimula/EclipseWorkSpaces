@@ -53,7 +53,7 @@ public class PREV_Type {
 	
 	public PREV_Value defaultValue() {
 		switch(tag) {
-			case Scode.TAG_BOOL:  return new BooleanValue(true);
+			case Scode.TAG_BOOL:  return BooleanValue.of(true);
 			case Scode.TAG_CHAR:  return new CharacterValue(0);
 			case Scode.TAG_INT:   return new IntegerValue(0);
 			case Scode.TAG_SINT:  return new IntegerValue(0);

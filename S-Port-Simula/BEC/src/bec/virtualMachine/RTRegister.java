@@ -18,7 +18,7 @@ public final class RTRegister {
 	
 	public static int getFreeReg() {
 		nRegUsed++;
-		System.out.println("RTRegister.getFreeReg: "+nRegUsed);
+//		System.out.println("RTRegister.getFreeReg: "+nRegUsed);
 		return nRegUsed;
 	}
 	

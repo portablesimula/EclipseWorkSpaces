@@ -134,7 +134,7 @@ public class Instruction { // extends ProgramElement {
 			case Scode.S_NOT ->         NOT.ofScode();
 			case Scode.S_AND ->         AND.ofScode();
 			case Scode.S_OR ->          OR.ofScode();
-			case Scode.S_XOR ->         Util.IERR("NOT IMPLEMENTED: " + Scode.edInstr(Scode.curinstr));
+			case Scode.S_XOR ->         XOR.ofScode();
 			case Scode.S_EQV ->         Util.IERR("NOT IMPLEMENTED: " + Scode.edInstr(Scode.curinstr));
 			case Scode.S_IMP ->         IMP.ofScode();
 			case Scode.S_LSHIFTL ->     BITWISE_SHIFT.ofScode(Scode.S_LSHIFTL); // Extension to S-Code: Left shift logical

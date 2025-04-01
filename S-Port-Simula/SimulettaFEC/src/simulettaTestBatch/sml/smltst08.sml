@@ -54,8 +54,8 @@ begin
       if( not STREQL(msg,facit(traceCase))) then
          nError:=nError+1; prt(" ");
          ed_str("ERROR in Case "); ed_int(traceCase); ed_out;
-         ed_str("Trace: "); prt(msg);
-         ed_str("Facit: "); prt(facit(traceCase));
+         ed_str("Trace: "); ed_str("|"); ed_str(msg); prt("|");
+         ed_str("Facit: "); ed_str(facit(traceCase)); prt("|");
       endif;
       traceCase:=traceCase+1;
    end;

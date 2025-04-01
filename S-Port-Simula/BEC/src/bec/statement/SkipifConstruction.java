@@ -45,7 +45,7 @@ public abstract class SkipifConstruction {
 	 * stack.
 	 */
 	public static void ofScode() {
-		CTStack.dumpStack("SkipifConstruction.ofScode: ");
+//		CTStack.dumpStack("SkipifConstruction.ofScode: ");
 		
 		CTStack.checkTypesEqual();
 		CTStack.checkSosValue();
@@ -60,7 +60,7 @@ public abstract class SkipifConstruction {
 		StackItem old_SAV = CTStack.SAV;
 		CTStack.SAV = CTStack.TOS;
 
-		CTStack.dumpStack("SkipifConstruction.ofScode: ");
+//		CTStack.dumpStack("SkipifConstruction.ofScode: ");
 //		Util.IERR("");
 		
 		ProgramAddress IF_LABEL = Global.PSEG.nextAddress();
@@ -69,7 +69,7 @@ public abstract class SkipifConstruction {
 //		Global.PSEG.dump();
 
 //		Relation relation = Relation.ofScode();
-		System.out.println("SkipifConstruction.ofScode: CurInstr="+Scode.edInstr(Scode.curinstr));
+//		System.out.println("SkipifConstruction.ofScode: CurInstr="+Scode.edInstr(Scode.curinstr));
 		
 		Scode.inputInstr();
 		S_Module.programElements();
@@ -80,8 +80,8 @@ public abstract class SkipifConstruction {
 		instr.destination = Global.PSEG.nextAddress();
       	Global.PSEG.emit(new SVM_NOOP(), "ENDSKIP["+Global.ifDepth+"]:");			
 
-      	Global.PSEG.dump("SkipifConstruction.ofScode: ELSE: ");
-		CTStack.dumpStack("SkipifConstruction.ofScode: ");
+//      	Global.PSEG.dump("SkipifConstruction.ofScode: ELSE: ");
+//		CTStack.dumpStack("SkipifConstruction.ofScode: ");
 //		Util.IERR("");
 		
 //		Scode.inputInstr();  // ????

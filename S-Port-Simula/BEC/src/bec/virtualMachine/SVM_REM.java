@@ -20,9 +20,9 @@ public class SVM_REM extends SVM_Instruction {
 	public void execute() {
 		Value tos = RTStack.pop().value();
 		Value sos = RTStack.pop().value();
-		Value res = (tos == null)? null : tos.mult(sos);
-		System.out.println("SVM_MULT: " + tos + " + " + sos + " = " + res);
-		RTStack.push(res, "SVM_MULT: " + tos + " + " + sos + " = " + res);
+		Value res = (tos == null)? null : tos.rem(sos);
+//		System.out.println("SVM_REM: " + tos + " + " + sos + " = " + res);
+		RTStack.push(res, "SVM_REM: " + tos + " + " + sos + " = " + res);
 		Global.PSC.ofst++;
 //		Util.IERR("");
 	}

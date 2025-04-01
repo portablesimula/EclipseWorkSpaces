@@ -1,12 +1,3 @@
---%PASS 1 INPUT=5 -- Input Trace
---%PASS 1 OUTPUT=1 -- Output Trace
---%PASS 1 MODTRC=4 -- Module I/O Trace
---%PASS 1 TRACE=4 -- Trace level
---%PASS 2 INPUT=1 -- Input Trace
-%PASS 2 OUTPUT=1 -- S-Code Output Trace
---%PASS 2 MODTRC=1 -- Module I/O Trace
---%PASS 2 TRACE=1 -- Trace level
---%TRACE 2 -- Output Trace
 begin
 --   SYSINSERT envir,modl1;
    SYSINSERT RT,SYSR,KNWN,UTIL;    
@@ -21,7 +12,7 @@ begin
    integer traceCase;
    const infix(string) facit(9) = (
       "BEGIN TEST",
-      "size(R)==4, size(Q:6)==11",
+      "size(R)==5, size(Q:6)==12",
       "(a<b)==false, (b<c)==true, (c<d)==false",
       "(a<=b)==true, (b<=c)==true, (c<=d)==false",
       "(a=b)==true, (b=c)==false, (c=d)==false",

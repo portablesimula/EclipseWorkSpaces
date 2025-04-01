@@ -29,7 +29,7 @@ public class SVM_SUB extends SVM_Instruction {
 //		System.out.println("SVM_SUB: tos: " + tos.getClass().getSimpleName() + " - " + tos);
 //		System.out.println("SVM_SUB: sos: " + sos.getClass().getSimpleName() + " - " + sos);
 //		System.out.println("SVM_SUB: " + sos + " - " + tos);
-		Value res = (sos == null)? tos.neg() : sos.sub(tos);
+		Value res = (sos == null)? ( (tos == null)? null : tos.neg()) : sos.sub(tos);
 		if(DEBUG) System.out.println("SVM_SUB: " + sos + " - " + tos + " ==> " + res);
 		RTStack.push(res, "SVM_SUB: " + sos + " - " + tos + " = " + res);
 		Global.PSC.ofst++;

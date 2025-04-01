@@ -81,8 +81,8 @@ public class PUSHC extends PREV_Instruction {
 		    case Scode.S_C_CHAR:   value = new CharacterValue(); break;
 		    case Scode.S_NOSIZE:   value = new SizeValue(true); break;
 		    case Scode.S_C_SIZE:   value = new SizeValue(false); break;
-		    case Scode.S_TRUE:     value = new BooleanValue(true); break;
-		    case Scode.S_FALSE:    value = new BooleanValue(false); break;
+		    case Scode.S_TRUE:     value = BooleanValue.of(true); break;
+		    case Scode.S_FALSE:    value = BooleanValue.of(false); break;
 		    case Scode.S_ANONE:    value = new AttributeAddress(true); break;
 		    case Scode.S_C_AADDR:  value = new AttributeAddress(false); break;
 		    case Scode.S_NOWHERE:  value = new ProgramAddress(true); break;

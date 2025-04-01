@@ -39,7 +39,7 @@ public abstract class DotAddress {
 				Attribute attr = (Attribute) Global.getMeaning(globalOrConstTag);
 				System.out.println("DotAddress.ofScode: " + attr + "  offset="+offset+attr.rela);
 //				Util.IERR("SJEKK DETTE");
-				return new IntegerValue(Type.T_AADDR, offset + attr.rela);
+				return IntegerValue.of(Type.T_AADDR, offset + attr.rela);
 			}
 			case Scode.S_C_GADDR:{
 				Variable var = (Variable) Global.getMeaning(globalOrConstTag);

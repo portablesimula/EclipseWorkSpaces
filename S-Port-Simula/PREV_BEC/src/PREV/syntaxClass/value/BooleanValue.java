@@ -37,7 +37,7 @@ public class BooleanValue extends PREV_Value {
 
 	public static BooleanValue read(AttributeInputStream inpt) throws IOException {
 		inpt.readInstr();
-		return new BooleanValue(inpt.curinstr==Scode.S_TRUE);
+		return BooleanValue.of(inpt.curinstr==Scode.S_TRUE);
 	}
 
 

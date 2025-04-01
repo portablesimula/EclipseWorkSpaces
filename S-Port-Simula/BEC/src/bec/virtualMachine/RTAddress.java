@@ -47,7 +47,8 @@ public class RTAddress extends Value {
 		if(segID == null) {
 			// load rel-addr  callStackTop + ofst
 			int frmx = RTStack.callStack_TOP().rtStackIndex;
-			RTStackItem val = RTStack.load(frmx + offset + idx);
+//			System.out.println("RTAddress.load: xRegValue="+xRegValue());
+			RTStackItem val = RTStack.load(frmx + offset+ (xRegValue() * incr) + idx);
 			if(DEBUG) System.out.println("RTAddress.load("+idx+") ===> "+val);
 			return val.value();
 		} else {
@@ -94,7 +95,7 @@ public class RTAddress extends Value {
 		if(xReg > 0) {
 			s = s + "+" + RTRegister.edReg(xReg);
 			int value = RTRegister.getValue(xReg);
-			System.out.println("RTAddress.toString: xReg="+xReg+", value="+value);
+//			System.out.println("RTAddress.toString: xReg="+xReg+", value="+value);
 			if(value >= 0) {
 				s = s + '(' + value + ')';
 			}

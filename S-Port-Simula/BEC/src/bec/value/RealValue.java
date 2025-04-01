@@ -11,16 +11,89 @@ import bec.util.Type;
 public class RealValue extends Value {
 	public float value;
 	
-	public RealValue(float value) {
+	private RealValue(float value) {
 		this.type = Type.T_REAL;
 		this.value = value;
+	}
+	
+	public static RealValue of(float value) {
+		if(value != 0) return new RealValue(value);
+		return null;
 	}
 
 	/**
 	 * real_value ::= c-real real_literal:string
 	 */
-	public RealValue() {
-		value = Float.valueOf(Scode.inString());
+	public static RealValue ofScode() {
+		return RealValue.of(Float.valueOf(Scode.inString()));
+	}
+//	public RealValue() {
+//		value = Float.valueOf(Scode.inString());
+//	}
+
+	@Override
+	public Value neg() {
+		return RealValue.of(- value);
+	}
+
+	@Override
+	public Value add(Value other) {
+		if(other == null) return this;
+		RealValue val2 = (RealValue) other;
+		float res = value + val2.value;
+		if(res == 0) return null;
+		return RealValue.of(res);
+	}
+
+	@Override
+	public Value sub(Value other) {
+		float res = 0;
+		if(other != null) {
+			RealValue val2 = (RealValue) other;
+			res = this.value - val2.value;
+		} else res = this.value;
+//		System.out.println("IntegerValue.sub: " + this.value + " - " + other + " = " + res);
+		if(res == 0) return null;
+		return RealValue.of(res);
+	}
+
+	@Override
+	public Value mult(Value other) {
+		if(other == null) return null;
+		RealValue val2 = (RealValue) other;
+		float res = value * val2.value;
+		if(res == 0) return null;
+		return RealValue.of(res);
+	}
+
+	@Override
+	public Value div(Value other) {
+//		System.out.println("RealValue.div: " + other + " / " + this.value);
+		float res = 0;
+		if(other != null) {
+			RealValue val2 = (RealValue) other;
+			res = val2.value / this.value;
+		} else res = 0;
+//		System.out.println("RealValue.div: " + other + " / " + this.value + " = " + res);
+		if(res == 0) return null;
+		return RealValue.of(res);
+	}
+
+	@Override
+	public boolean compare(int relation, Value other) {
+		float LHS = this.value;
+		float RHS = (other == null)? 0 : ((RealValue)other).value;
+		boolean res = false;
+		switch(relation) {
+			case Scode.S_LT: res = LHS <  RHS; break;
+			case Scode.S_LE: res = LHS <= RHS; break;
+			case Scode.S_EQ: res = LHS == RHS; break;
+			case Scode.S_GE: res = LHS >= RHS; break;
+			case Scode.S_GT: res = LHS >  RHS; break;
+			case Scode.S_NE: res = LHS != RHS; break;
+		}
+//		Util.IERR("");
+		return res;
 	}
 
 //	@Override

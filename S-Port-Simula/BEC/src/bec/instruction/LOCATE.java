@@ -5,6 +5,7 @@ import bec.util.Global;
 import bec.util.Type;
 import bec.util.Util;
 import bec.virtualMachine.RTRegister;
+import bec.virtualMachine.SVM_ADD;
 import bec.virtualMachine.SVM_NOT_IMPL;
 
 public abstract class LOCATE extends Instruction {
@@ -51,7 +52,8 @@ public abstract class LOCATE extends Instruction {
 //		%+E             Qf1(qPOPR,qEBX,cVAL); Qf2(qDYADR,qADDF,qEAX,cVAL,qEBX);
 //		           endif;
 //		%+E        Qf1(qPUSHR,qEAX,cVAL);
-		Global.PSEG.emit(new SVM_NOT_IMPL("LOCATE: "), "LOCATE: ");
+//		Global.PSEG.emit(new SVM_NOT_IMPL("LOCATE: "), "LOCATE: ");
+		Global.PSEG.emit(new SVM_ADD(), "LOCATE: ");
 		CTStack.pop(); CTStack.pushTemp(Type.T_GADDR, 1, "LOCATE: ");
 //		Util.IERR("NOT IMPL");
 	}

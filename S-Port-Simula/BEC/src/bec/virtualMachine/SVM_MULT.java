@@ -5,7 +5,6 @@ import java.io.IOException;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
-import bec.util.Type;
 import bec.value.Value;
 
 /**
@@ -22,7 +21,7 @@ public class SVM_MULT extends SVM_Instruction {
 		Value tos = RTStack.pop().value();
 		Value sos = RTStack.pop().value();
 		Value res = (tos == null)? null : tos.mult(sos);
-		System.out.println("SVM_MULT: " + tos + " + " + sos + " = " + res);
+//		System.out.println("SVM_MULT: " + tos + " + " + sos + " = " + res);
 		RTStack.push(res, "SVM_MULT: " + tos + " + " + sos + " = " + res);
 		Global.PSC.ofst++;
 //		Util.IERR("");

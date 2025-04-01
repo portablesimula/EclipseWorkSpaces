@@ -24,8 +24,8 @@ public class PREV_Value extends PREV_Instruction {
 //		System.out.println("Value.read: kind="+Scode.edInstr(kind));
 		switch(kind) {
 			case Scode.S_NULL:		return null;
-			case Scode.S_TRUE:		return new BooleanValue(true);
-			case Scode.S_FALSE:		return new BooleanValue(false);
+			case Scode.S_TRUE:		return BooleanValue.of(true);
+			case Scode.S_FALSE:		return BooleanValue.of(false);
 			case Scode.S_C_INT:		return IntegerValue.read(inpt);
 			case Scode.S_C_REAL:	return RealValue.read(inpt);
 			case Scode.S_C_LREAL:	return LongRealValue.read(inpt);

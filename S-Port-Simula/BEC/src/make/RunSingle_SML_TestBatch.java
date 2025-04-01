@@ -14,7 +14,7 @@ import bec.util.Global;
 import bec.util.Util;
 import bec.virtualMachine.SVM_CALLSYS;
 
-public final class RunFull_SML_TestBatch {
+public final class RunSingle_SML_TestBatch {
 	private static long startTimeMs = System.currentTimeMillis();
 
 //	private static final String rtsSCodeDir = "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/";
@@ -25,13 +25,13 @@ public final class RunFull_SML_TestBatch {
 	public static void main(String[] args) {
 		Global.INLINE_TESTING = true;
 		
-//		SVM_CALLSYS.RUNTIME_VERBOSE = true;
-//		Global.verbose = true;
-//		Global.SCODE_INPUT_TRACE = true;
-//		Global.PRINT_GENERATED_SVM_CODE = true;
-//		Global.EXEC_TRACE = 1;
-//		Global.CALL_TRACE_LEVEL = 2;
-//		Global.DUMPS_AT_EXIT = true;
+		SVM_CALLSYS.RUNTIME_VERBOSE = true;
+		Global.verbose = true;
+		Global.SCODE_INPUT_TRACE = true;
+		Global.PRINT_GENERATED_SVM_CODE = true;
+		Global.EXEC_TRACE = 1;
+		Global.CALL_TRACE_LEVEL = 2;
+		Global.DUMPS_AT_EXIT = true;
 		
 		// Set Compiler Options.
 //		Option.EXTENSIONS=false;
@@ -47,31 +47,31 @@ public final class RunFull_SML_TestBatch {
 //		names.add("adHoc05.scd");
 //			names.add("adHoc06.scd"); 
 //			names.add("adHoc07.scd");
-//			names.add("adHoc08.scd");
-//		names.add("adHoc09.scd");
+			names.add("adHoc08.scd");
+//			names.add("adHoc09.scd");
 //		names.add("adHoc10.scd");
 		
-		names.add("smltst00.scd"); // Standard layout of test programs
-		names.add("smltst01.scd"); // Simple Assignments
-		names.add("smltst02.scd"); // Test Case Statement
-		names.add("smltst03.scd"); // Test Assert Statement
-		names.add("smltst04.scd"); // Test Parameter Transmission
-		names.add("smltst05.scd"); // Test CALL_TOS
-		names.add("smltst06.scd"); // Records with Variant(ALT)
-		names.add("smltst07.scd"); // Constant and initial values
-		names.add("smltst08.scd"); // Arithmetic Operators ( + - * / rem)
-		names.add("smltst09.scd"); // Boolean Operators ( and, or, xor, not )
-		names.add("smltst10.scd"); // Arithmetic Relations ( < , <= , = , >= , > , <> )
-		names.add("smltst11.scd"); // Boolean Relations ( = , <> )
-		names.add("smltst12.scd"); // Size Relations ( < , <= , = , >= , > , <> )
-		names.add("smltst13.scd"); // General Reference Expression
-		names.add("smltst14.scd"); // Object Reference and Size Expression
-		names.add("smltst15.scd"); // Type Conversion
-		names.add("smltst16.scd"); // Type Conversion between name,ref and field
-		names.add("smltst17.scd"); // If-Statements
-		names.add("smltst18.scd"); // Goto-Statements
-		names.add("smltst19.scd"); // Remote Access
-		names.add("smltst20.scd"); // Repeat-Statements
+//		names.add("smltst00.scd"); // Standard layout of test programs
+//		names.add("smltst01.scd"); // Simple Assignments
+//		names.add("smltst02.scd"); // Test Case Statement
+//		names.add("smltst03.scd"); // Test Assert Statement
+//		names.add("smltst04.scd"); // Test Parameter Transmission
+//		names.add("smltst05.scd"); // Test CALL_TOS
+//		names.add("smltst06.scd"); // Records with Variant(ALT)
+//		names.add("smltst07.scd"); // Constant and initial values
+//		names.add("smltst08.scd"); // Arithmetic Operators ( + - * / rem)
+//		names.add("smltst09.scd"); // Boolean Operators ( and, or, xor, not )
+//		names.add("smltst10.scd"); // Arithmetic Relations ( < , <= , = , >= , > , <> )
+//		names.add("smltst11.scd"); // Boolean Relations ( = , <> )
+//		names.add("smltst12.scd"); // Size Relations ( < , <= , = , >= , > , <> )
+//			names.add("smltst13.scd"); // General Reference Expression
+//		names.add("smltst14.scd"); // Object Reference and Size Expression
+//		names.add("smltst15.scd"); // Type Conversion
+//		names.add("smltst16.scd"); // Type Conversion between name,ref and field
+//		names.add("smltst17.scd"); // If-Statements
+//		names.add("smltst18.scd"); // Goto-Statements
+//		names.add("smltst19.scd"); // Remote Access
+//		names.add("smltst20.scd"); // Repeat-Statements
 //		names.add("smltst21.scd"); // Call: Profile(Body)(a,b,c)
 //		names.add("smltst22.scd"); // Exit and Non-Local Goto
 //		names.add("smltst23.scd"); // Export treatment

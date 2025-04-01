@@ -75,13 +75,13 @@ public abstract class PUSHC extends Instruction {
 		Scode.inputInstr();
 		switch(Scode.curinstr) {
 		    case Scode.S_C_INT:    type = Type.T_INT; value = IntegerValue.ofScode_INT(); break;
-		    case Scode.S_C_REAL:   type = Type.T_REAL; value = new RealValue(); break;
-		    case Scode.S_C_LREAL:  type = Type.T_LREAL; value = new LongRealValue(); break;
+		    case Scode.S_C_REAL:   type = Type.T_REAL; value = RealValue.ofScode(); break;
+		    case Scode.S_C_LREAL:  type = Type.T_LREAL; value = LongRealValue.ofScode(); break;
 		    case Scode.S_C_CHAR:   type = Type.T_CHAR; value = IntegerValue.ofScode_CHAR(); break;
 		    case Scode.S_NOSIZE:   type = Type.T_SIZE; value = null; break;
 		    case Scode.S_C_SIZE:   type = Type.T_SIZE; value = IntegerValue.ofScode_SIZE(); break;
-		    case Scode.S_TRUE:     type = Type.T_BOOL; value = new BooleanValue(true); break;
-		    case Scode.S_FALSE:    type = Type.T_BOOL; value = new BooleanValue(false); break;
+		    case Scode.S_TRUE:     type = Type.T_BOOL; value = BooleanValue.of(true); break;
+		    case Scode.S_FALSE:    type = Type.T_BOOL; value = BooleanValue.of(false); break;
 		    case Scode.S_ANONE:    type = Type.T_AADDR; value = null; break;
 		    case Scode.S_C_AADDR:  type = Type.T_AADDR; value = IntegerValue.ofScode_AADDR(); break;
 		    case Scode.S_NOWHERE:  type = Type.T_PADDR; value = null; break;
@@ -106,12 +106,12 @@ public abstract class PUSHC extends Instruction {
 			} else {
 				GeneralAddress gval = (GeneralAddress) value;
 				Global.PSEG.emit(new SVM_PUSHC(gval.base), "GADDR'OADDR: ");
-				Global.PSEG.emit(new SVM_PUSHC(new IntegerValue(Type.T_INT, gval.ofst)), "GADDR'OFST: ");
+				Global.PSEG.emit(new SVM_PUSHC(IntegerValue.of(Type.T_INT, gval.ofst)), "GADDR'OFST: ");
 			}
 		} else if(type == Type.T_TEXT) {
 //			Global.CSEG.dump("PUSHC.ofScode: ");
 			TextValue txtval = (TextValue) value;
-			IntegerValue lng = new IntegerValue(Type.T_INT, txtval.length);
+			IntegerValue lng = IntegerValue.of(Type.T_INT, txtval.length);
 			
 			Global.PSEG.emit(new SVM_PUSHC(txtval.addr), "TEXT'CHRADR'oaddr: ");
 			Global.PSEG.emit(new SVM_PUSHC(null), "TEXT'CHRADR'ofst:  ");
