@@ -12,6 +12,7 @@ import bec.segment.Segment;
 import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Tag;
+import bec.util.Type;
 import bec.util.Util;
 import bec.virtualMachine.CallStackFrame;
 import bec.virtualMachine.RTStack;
@@ -25,14 +26,14 @@ public class ObjectAddress extends Value {
 	public ObjectAddress(String segID,	int ofst) {
 		this.segID = segID;
 		this.ofst = ofst;
-		if(ofst > 9000 || ofst < 0) Util.IERR("");
+//		if(ofst > 9000 || ofst < 0) Util.IERR("");
 	}
 	
 	private ObjectAddress(DataSegment seg,	int ofst) {
 //		this.seg = seg;
 		if(seg != null)	this.segID = seg.ident;
 		this.ofst = ofst;
-		if(ofst > 9000 || ofst < 0) Util.IERR("");
+//		if(ofst > 9000 || ofst < 0) Util.IERR("");
 	}
 	
 	private ObjectAddress(int ofst) {
@@ -136,6 +137,23 @@ public class ObjectAddress extends Value {
 			if(!oaddr.segID.equals(segID))
 				Util.IERR("Illegal ObjectAddress'add operation: "+oaddr.segID+" != "+segID);
 			return new ObjectAddress(this.segID, this.ofst + oaddr.ofst);
+		} else {
+			Util.IERR(""+other.getClass().getSimpleName()+"  "+other);
+			return null;
+		}
+	}
+
+	@Override
+	public Value sub(Value other) {
+		if(other == null) return this;
+		if(other instanceof IntegerValue ival) {
+			return new ObjectAddress(this.segID, this.ofst - ival.value);
+		} else if(other instanceof ObjectAddress oaddr) {
+//			System.out.println("ObjectAddress.sub: this="+this);
+//			System.out.println("ObjectAddress.sub: other="+other);
+			if(!oaddr.segID.equals(segID))
+				Util.IERR("Illegal ObjectAddress'add operation: "+oaddr.segID+" != "+segID);
+			return IntegerValue.of(Type.T_SIZE, this.ofst - oaddr.ofst);
 		} else {
 			Util.IERR(""+other.getClass().getSimpleName()+"  "+other);
 			return null;

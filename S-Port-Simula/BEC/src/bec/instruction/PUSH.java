@@ -35,7 +35,7 @@ public abstract class PUSH extends Instruction {
 		} else Util.IERR("");
 //        if v.kind=K_Import
 //        then TOS.size:= - wAllign(%TOS.size%) endif;
-        if(instr == Scode.S_PUSHV) Util.GQfetch("PUSHV: ");
+        if(instr == Scode.S_PUSHV) FETCH.doFetch("PUSHV: ");
 //      CTStack.dumpStack("PUSH: "+Scode.edInstr(instr));
 	}
 

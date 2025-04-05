@@ -197,39 +197,39 @@ public class CTStack {
 		TOS = BOS = null;
 	}
 
-	public static void getTosValueIn86(int reg) { // import range(0:255) reg;
-//	--     /* M} ikke bruke qDI p.g.a. RUPDATE. */
-//	begin infix(MemAddr) opr; range(0:MaxType) type; range(0:MaxByte) cTYP;
-//	      type:=TOS.type;
-//	      if type<=T_MAX then cTYP:=cTYPE(type) else cTYP:=cANY endif;
-//	      case 0:K_Max (TOS.kind)
-//	      when K_Temp,K_Result,K_Coonst: Qf1(qPOPR,reg,cTYP)
-//	      when K_Address:
-//	           opr:=GetTosSrcAdr;
-//	           Qf4c(qLOAD,0,reg,cTYP,0,opr,0);
-//	           Pop; pushTemp(type);
-//	      endcase;
-		StackItem tos = CTStack.TOS;
-		if(DEBUG) System.out.println("CTStack.getTosValueIn86: reg="+reg+" TOS="+TOS);
-		if(tos instanceof AddressItem) {
-			Global.PSEG.emit(new SVM_POP2REG(reg), "getTosValueIn86'Address: ");
-			if(DEBUG) {
-				Global.PSEG.dump("getTosValueIn86'Address: ");
-				Util.IERR("NOT IMPL");
-			}
-		} else if(tos instanceof Temp) {
-			Global.PSEG.emit(new SVM_POP2REG(reg), "getTosValueIn86'Temp: ");
-			if(DEBUG) {
-				Global.PSEG.dump("getTosValueIn86'Temp: ");
-//				Util.IERR("NOT IMPL");		
-			}
-		} else if(tos instanceof ConstItem) {
-			if(DEBUG) {
-				Global.PSEG.dump("getTosValueIn86: ");
-				Util.IERR("NOT IMPL");	
-			}
-		}
-	}
+//	public static void getTosValueIn86(int reg) { // import range(0:255) reg;
+////	--     /* M} ikke bruke qDI p.g.a. RUPDATE. */
+////	begin infix(MemAddr) opr; range(0:MaxType) type; range(0:MaxByte) cTYP;
+////	      type:=TOS.type;
+////	      if type<=T_MAX then cTYP:=cTYPE(type) else cTYP:=cANY endif;
+////	      case 0:K_Max (TOS.kind)
+////	      when K_Temp,K_Result,K_Coonst: Qf1(qPOPR,reg,cTYP)
+////	      when K_Address:
+////	           opr:=GetTosSrcAdr;
+////	           Qf4c(qLOAD,0,reg,cTYP,0,opr,0);
+////	           Pop; pushTemp(type);
+////	      endcase;
+//		StackItem tos = CTStack.TOS;
+//		if(DEBUG) System.out.println("CTStack.getTosValueIn86: reg="+reg+" TOS="+TOS);
+//		if(tos instanceof AddressItem) {
+//			Global.PSEG.emit(new SVM_POP2REG(reg), "getTosValueIn86'Address: ");
+//			if(DEBUG) {
+//				Global.PSEG.dump("getTosValueIn86'Address: ");
+//				Util.IERR("NOT IMPL");
+//			}
+//		} else if(tos instanceof Temp) {
+//			Global.PSEG.emit(new SVM_POP2REG(reg), "getTosValueIn86'Temp: ");
+//			if(DEBUG) {
+//				Global.PSEG.dump("getTosValueIn86'Temp: ");
+////				Util.IERR("NOT IMPL");		
+//			}
+//		} else if(tos instanceof ConstItem) {
+//			if(DEBUG) {
+//				Global.PSEG.dump("getTosValueIn86: ");
+//				Util.IERR("NOT IMPL");	
+//			}
+//		}
+//	}
 
 	public static void dumpStack(String title) {
 		StackItem item;

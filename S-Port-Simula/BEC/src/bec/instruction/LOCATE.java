@@ -3,10 +3,7 @@ package bec.instruction;
 import bec.compileTimeStack.CTStack;
 import bec.util.Global;
 import bec.util.Type;
-import bec.util.Util;
-import bec.virtualMachine.RTRegister;
 import bec.virtualMachine.SVM_ADD;
-import bec.virtualMachine.SVM_NOT_IMPL;
 
 public abstract class LOCATE extends Instruction {
 	
@@ -45,17 +42,12 @@ public abstract class LOCATE extends Instruction {
 	public static void ofScode() {
 		CTStack.checkTosType(Type.T_AADDR); CTStack.checkSosValue();
 		CTStack.checkSosType2(Type.T_OADDR,Type.T_GADDR);
-//		%+E        GetTosValueIn86(qEAX); Pop; GQfetch;
 		CTStack.pop();
-//		           if TOS.type=T_GADDR
-//		           then
-//		%+E             Qf1(qPOPR,qEBX,cVAL); Qf2(qDYADR,qADDF,qEAX,cVAL,qEBX);
-//		           endif;
-//		%+E        Qf1(qPUSHR,qEAX,cVAL);
-//		Global.PSEG.emit(new SVM_NOT_IMPL("LOCATE: "), "LOCATE: ");
-		Global.PSEG.emit(new SVM_ADD(), "LOCATE: ");
+		
+		if(CTStack.TOS.type == Type.T_GADDR)
+			Global.PSEG.emit(new SVM_ADD(), "LOCATE: ");
+		
 		CTStack.pop(); CTStack.pushTemp(Type.T_GADDR, 1, "LOCATE: ");
-//		Util.IERR("NOT IMPL");
 	}
 
 }

@@ -28,7 +28,7 @@ public abstract class DotAddress {
 //			System.out.println("DotAddress.ofScode: descr=" + descr);
 			Attribute attr = (Attribute) Global.getMeaning(aTag);
 			offset += attr.rela;
-			System.out.println("DotAddress.ofScode: " + attr + "  offset="+offset);
+//			System.out.println("DotAddress.ofScode: " + attr + "  offset="+offset);
 			Scode.inputInstr();
 		} while (Scode.curinstr == Scode.S_C_DOT);
 
@@ -37,7 +37,7 @@ public abstract class DotAddress {
 		switch(terminator) {
 			case Scode.S_C_AADDR:{
 				Attribute attr = (Attribute) Global.getMeaning(globalOrConstTag);
-				System.out.println("DotAddress.ofScode: " + attr + "  offset="+offset+attr.rela);
+//				System.out.println("DotAddress.ofScode: " + attr + "  offset="+offset+attr.rela);
 //				Util.IERR("SJEKK DETTE");
 				return IntegerValue.of(Type.T_AADDR, offset + attr.rela);
 			}

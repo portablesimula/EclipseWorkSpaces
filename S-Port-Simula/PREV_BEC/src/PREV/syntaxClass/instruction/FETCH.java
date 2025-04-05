@@ -26,7 +26,7 @@ public class FETCH extends PREV_Instruction {
 	@Override
 	public void doCode() {
 //		CTStack.dumpStack();
-		Util.GQfetch("FETCH");
+		FETCH.doFetch("FETCH");
 //		Global.PSEG.dump();
 //		Util.IERR(""+this);
 	}

@@ -43,9 +43,26 @@ public class GeneralAddress extends Value {
 //		Util.IERR("NOT IMPL");
 //		return null;
 	}
+
+	@Override
+	public Value add(Value other) {
+		if(other == null) return this;
+		if(other instanceof IntegerValue ival) {
+			return new GeneralAddress(this.base, this.ofst + ival.value);
+//		} else if(other instanceof ObjectAddress oaddr) {
+//			System.out.println("ObjectAddress.add: this="+this);
+//			System.out.println("ObjectAddress.add: other="+other);
+//			if(!oaddr.segID.equals(segID))
+//				Util.IERR("Illegal ObjectAddress'add operation: "+oaddr.segID+" != "+segID);
+//			return new ObjectAddress(this.segID, this.ofst + oaddr.ofst);
+		} else {
+			Util.IERR(""+other.getClass().getSimpleName()+"  "+other);
+			return null;
+		}
+	}
 	
 	public String toString() {
-		return base.toString() + '[' + ofst + ']';
+		return (base == null)? "ONONE" : base.toString() + '[' + ofst + ']';
 	}
 
 	// ***********************************************************************************************

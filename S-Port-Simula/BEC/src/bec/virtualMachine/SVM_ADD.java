@@ -23,9 +23,11 @@ public class SVM_ADD extends SVM_Instruction {
 //		RTStack.callStackTop.dump("SVM_ADD-1: ");
 		Value tos = RTStack.pop().value();
 		Value sos = RTStack.pop().value();
-//		if(DEBUG) System.out.println("SVM_ADD: TOS: " + tos.getClass().getSimpleName() + "  " + tos);
-//		if(DEBUG) System.out.println("SVM_ADD: SOS: " + sos.getClass().getSimpleName() + "  " + sos);
-		if(DEBUG) System.out.println("SVM_ADD: " + sos + " + " + tos);
+		if(DEBUG) {
+			if(tos != null)	System.out.println("SVM_ADD: TOS: " + tos.getClass().getSimpleName() + "  " + tos);
+			if(sos != null)	System.out.println("SVM_ADD: SOS: " + sos.getClass().getSimpleName() + "  " + sos);
+			System.out.println("SVM_ADD: " + sos + " + " + tos);
+		}
 //		Value res = (tos == null)? sos : tos.add(sos);
 		Value res = (sos == null)? tos : sos.add(tos);
 		if(DEBUG) System.out.println("SVM_ADD: " + sos + " + " + tos + " ==> " + res);

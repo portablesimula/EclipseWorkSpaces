@@ -161,7 +161,7 @@ public class CallInstruction extends PREV_Instruction {
 		else if(s instanceof Address) s.type = st;
 		else Util.GQconvert(pt);
 		
-		if(CTStack.TOS instanceof Address) Util.GQfetch("putPar: ");
+		if(CTStack.TOS instanceof Address) FETCH.doFetch("putPar: ");
 		CTStack.pop();
 		Global.PSEG.emit(new SVM_POPtoMEM(param.address, 1), "putPar: ");
 		

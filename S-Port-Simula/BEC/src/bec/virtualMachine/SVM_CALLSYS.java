@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
+import bec.descriptor.Kind;
 import bec.instruction.CALL;
 import bec.segment.DataSegment;
 import bec.segment.Segment;
@@ -36,6 +37,7 @@ public class SVM_CALLSYS extends SVM_Instruction {
 		switch(kind) {
 			case P_VERBOSE: verbose(); break;
 			case P_INITIA:  initia(); break;
+			case P_DWAREA:  dwarea(); break;
 			case P_TERMIN:  terminate(); break;
 			case P_STREQL:  stringEqual(); break;
 			case P_GINTIN:  getIntinfo(); break;
@@ -48,6 +50,8 @@ public class SVM_CALLSYS extends SVM_Instruction {
 			case P_PTLFIX2: putlfix2(); break;
 			case P_PUTHEX:  puthex(); break;
 			case P_PUTSIZE: putsize(); break;
+			case P_SIZEIN:  sizein(); break;
+			case P_PTOADR2: ptoadr2(); break;
 			default: Util.IERR("SVM_SYSCALL: Unknown System Routine " + edKind(kind));
 		}
 		Global.PSC.ofst++;
@@ -266,14 +270,14 @@ public class SVM_CALLSYS extends SVM_Instruction {
 //			RTStack.callStackTop.dump("SVM_SYSCALL.putstr:");
 			
 			int valNchr = RTStack.popInt();
-			ObjectAddress valAddr = RTStack.popGADDR();
+			ObjectAddress valAddr = RTStack.popGADDRasOADDR();
 			if(DEBUG) {
 //				valAddr.segment().dump("SVM_SYSCALL.putstr:");
 				System.out.println("SVM_SYSCALL.putstr: valAddr="+valAddr);
 				System.out.println("SVM_SYSCALL.putstr: valNchr="+valNchr);
 			}
 			int itemNchr = RTStack.popInt();
-			ObjectAddress itemAddr = RTStack.popGADDR();
+			ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
 			if(DEBUG) {
 //				itemAddr.segment().dump("SVM_SYSCALL.putstr:");
 				System.out.println("SVM_SYSCALL.putstr: itemAddr="+itemAddr);
@@ -333,16 +337,6 @@ public class SVM_CALLSYS extends SVM_Instruction {
 	 *      import infix (string) item; integer val
 	 *      export integer lng;
 	 *  end;
-	 * 
-	 * 
-	 *  FRAME:
-	 *      0: null                        EXPORT T[3:INT'LNG]
-	 *      1: DSEG_RT[30]                 IMPORT T[32:STRING'item'CHRADR]
-	 *      2: C-INT 32                    IMPORT T[32:STRING'item'OFST]
-	 *      3: C-INT 200                   IMPORT T[32:STRING'item'NCHR]
-	 *      4: CSEG_TEST00[0]              IMPORT T[32:STRING'val'CHRADR]
-	 *      5: null                        IMPORT T[32:STRING'val'OFST]
-	 *      6: C-INT 7                     IMPORT T[32:STRING'val'NCHR]
 	 */
 	private void putint2() {
 		ENTER("PUTINT2: ", 1, 4); // exportSize, importSize
@@ -350,8 +344,7 @@ public class SVM_CALLSYS extends SVM_Instruction {
 //		System.out.println("SVM_SYSCALL.putint2: val="+val);
 
 		int itemNchr = RTStack.popInt();
-		ObjectAddress itemAddr = RTStack.popGADDR();
-//		itemAddr.addOffset(itemNchr);
+		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
 		String sval = ""+val;
 		int nchr = sval.length();
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
@@ -360,7 +353,7 @@ public class SVM_CALLSYS extends SVM_Instruction {
 
 		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
 
-		EXIT("PUTSTR: ");
+		EXIT("PUTINT2: ");
 //		Util.IERR("NOT IMPL");
 	}
 	
@@ -386,7 +379,7 @@ public class SVM_CALLSYS extends SVM_Instruction {
 //		System.out.println("SVM_SYSCALL.putreal2: val="+val);
 
 		int itemNchr = RTStack.popInt();
-		ObjectAddress itemAddr = RTStack.popGADDR();
+		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
 //		itemAddr = itemAddr.addOffset(itemNchr);
 //		System.out.println("SVM_SYSCALL.putreal2: itemAddr="+itemAddr);
 		
@@ -423,7 +416,7 @@ public class SVM_CALLSYS extends SVM_Instruction {
 //		System.out.println("SVM_SYSCALL.putlreal2: val="+val);
 
 		int itemNchr = RTStack.popInt();
-		ObjectAddress itemAddr = RTStack.popGADDR();
+		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
 //		itemAddr = itemAddr.addOffset(itemNchr);
 		
 		String sval = SysEdit.putreal(val,frac);
@@ -457,7 +450,7 @@ public class SVM_CALLSYS extends SVM_Instruction {
 //		System.out.println("SVM_SYSCALL.putfix2: val="+val);
 
 		int itemNchr = RTStack.popInt();
-		ObjectAddress itemAddr = RTStack.popGADDR();
+		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
 //		itemAddr = itemAddr.addOffset(itemNchr);
 		
 		String sval = SysEdit.putfix(val,frac);
@@ -491,7 +484,7 @@ public class SVM_CALLSYS extends SVM_Instruction {
 //		System.out.println("SVM_SYSCALL.putfix2: val="+val);
 
 		int itemNchr = RTStack.popInt();
-		ObjectAddress itemAddr = RTStack.popGADDR();
+		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
 //		itemAddr = itemAddr.addOffset(itemNchr);
 		
 		String sval = SysEdit.putfix(val,frac);
@@ -521,7 +514,7 @@ public class SVM_CALLSYS extends SVM_Instruction {
 		int val = RTStack.popInt();
 
 		int itemNchr = RTStack.popInt();
-		ObjectAddress itemAddr = RTStack.popGADDR();
+		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
 //		itemAddr.addOffset(itemNchr);
 		
 		String sval = "0x" + Integer.toHexString(val).toUpperCase();
@@ -552,7 +545,7 @@ public class SVM_CALLSYS extends SVM_Instruction {
 		int val = RTStack.popInt();
 
 		int itemNchr = RTStack.popInt();
-		ObjectAddress itemAddr = RTStack.popGADDR();
+		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
 //		itemAddr.addOffset(itemNchr);
 		
 		String sval = ""+val;
@@ -565,6 +558,91 @@ public class SVM_CALLSYS extends SVM_Instruction {
 		EXIT("PUTSIZE: ");
 	}
 	
+	/**
+	 *  Visible sysroutine("PTOADR2") PTOADR2;
+	 *      import infix (string) item; ref() val;
+	 *      export integer lng;
+	 *  end;
+	 */
+	private void ptoadr2() {
+		ENTER("PTOADR2: ", 1, 4); // exportSize, importSize
+//		int val = RTStack.popInt();
+		ObjectAddress val = RTStack.popOADDR();
+		System.out.println("SVM_SYSCALL.putint2: val="+val);
+
+		int itemNchr = RTStack.popInt();
+		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
+		String sval = ""+val;
+		int nchr = sval.length();
+		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
+		move(sval, itemAddr, nchr);
+//		itemAddr.segment().dump("SVM_SYSCALL.putstr: ");
+
+		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
+
+		EXIT("PTOADR2: ");
+//		Util.IERR("NOT IMPL");
+	}
+	
+	
+	/**
+	 *  Visible sysroutine ("SIZEIN") SIZEIN;
+	 *  	import range(0:127) index; range(0:255) ano;
+	 *  	export size result  end;
+	 * 
+	 *  FRAME:
+	 *      0: null              EXPORT SIZE RESULT
+	 *      2: C-INT 32          IMPORT T[32:STRING'item'OFST]
+	 *      3: C-INT 200         IMPORT T[32:STRING'item'NCHR]
+	 */
+	private void sizein() {
+		ENTER("SIZEIN: ", 1, 2); // exportSize, importSize
+
+		int warea = RTStack.popInt();
+		int index = RTStack.popInt();
+//		System.out.println("SVM_SYSCALL.sizein: index=" + index + ", warea=" + warea);
+		int result = 0;
+		
+		switch(index) {
+		case 1: // The minimum size of this work area.
+			result = 150000; break;
+		case 2: // The extension/contraction step size.
+			Util.IERR("The extension/contraction step size."); break;
+		case 3: // The minimum gap left in this work area after a garbage collection if the area is the current work area.
+			Util.IERR("The minimum gap left in this work area after a garbage collection if the area is the current work area."); break;
+			default: Util.IERR("");
+		}
+		
+		RTStack.push(IntegerValue.of(Type.T_SIZE, result), "EXPORT");
+
+//		Util.IERR("");
+		EXIT("SIZEIN: ");
+	}
+	
+	/**
+	 *  Visible sysroutine ("DWAREA")  DWAREA;
+	 * 		import size lng; range(0:255) ano;
+	 *  	export ref() pool  end;
+	 * 
+	 *  FRAME:
+	 *      0: null              EXPORT OADDR POOL
+	 *      2: C-INT 32          IMPORT T[32:STRING'item'OFST]
+	 *      3: C-INT 200         IMPORT T[32:STRING'item'NCHR]
+	 */
+	private void dwarea() {
+		ENTER("DWAREA: ", 1, 2); // exportSize, importSize
+
+		int warea = RTStack.popInt();
+		int lng = RTStack.popInt();
+//		System.out.println("SVM_SYSCALL.dwarea: lng=" + lng + ", warea=" + warea);
+		
+		DataSegment pool = new DataSegment("POOL_" + warea, Kind.K_SEG_DATA);
+		pool.emitDefaultValue(1, lng, pool.ident);
+		RTStack.push(ObjectAddress.ofSegAddr(pool, 0) , "EXPORT");
+
+//		Util.IERR("");
+		EXIT("DWAREA: ");
+	}
 	
 	private void move(String src, ObjectAddress dst, int count) {
 //		ObjectAddress from = src.ofset(0);

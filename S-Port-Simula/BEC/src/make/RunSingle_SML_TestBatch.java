@@ -25,13 +25,13 @@ public final class RunSingle_SML_TestBatch {
 	public static void main(String[] args) {
 		Global.INLINE_TESTING = true;
 		
-		SVM_CALLSYS.RUNTIME_VERBOSE = true;
-		Global.verbose = true;
-		Global.SCODE_INPUT_TRACE = true;
-		Global.PRINT_GENERATED_SVM_CODE = true;
-		Global.EXEC_TRACE = 1;
-		Global.CALL_TRACE_LEVEL = 2;
-		Global.DUMPS_AT_EXIT = true;
+//		SVM_CALLSYS.RUNTIME_VERBOSE = true;
+//		Global.verbose = true;
+//		Global.SCODE_INPUT_TRACE = true;
+//		Global.PRINT_GENERATED_SVM_CODE = true;
+//		Global.EXEC_TRACE = 1;
+////		Global.CALL_TRACE_LEVEL = 2;
+////		Global.DUMPS_AT_EXIT = true;
 		
 		// Set Compiler Options.
 //		Option.EXTENSIONS=false;
@@ -47,7 +47,7 @@ public final class RunSingle_SML_TestBatch {
 //		names.add("adHoc05.scd");
 //			names.add("adHoc06.scd"); 
 //			names.add("adHoc07.scd");
-			names.add("adHoc08.scd");
+//			names.add("adHoc08.scd");
 //			names.add("adHoc09.scd");
 //		names.add("adHoc10.scd");
 		
@@ -64,12 +64,12 @@ public final class RunSingle_SML_TestBatch {
 //		names.add("smltst10.scd"); // Arithmetic Relations ( < , <= , = , >= , > , <> )
 //		names.add("smltst11.scd"); // Boolean Relations ( = , <> )
 //		names.add("smltst12.scd"); // Size Relations ( < , <= , = , >= , > , <> )
-//			names.add("smltst13.scd"); // General Reference Expression
+//		names.add("smltst13.scd"); // General Reference Expression
 //		names.add("smltst14.scd"); // Object Reference and Size Expression
 //		names.add("smltst15.scd"); // Type Conversion
 //		names.add("smltst16.scd"); // Type Conversion between name,ref and field
 //		names.add("smltst17.scd"); // If-Statements
-//		names.add("smltst18.scd"); // Goto-Statements
+//			names.add("smltst18.scd"); // Goto-Statements
 //		names.add("smltst19.scd"); // Remote Access
 //		names.add("smltst20.scd"); // Repeat-Statements
 //		names.add("smltst21.scd"); // Call: Profile(Body)(a,b,c)
@@ -87,7 +87,7 @@ public final class RunSingle_SML_TestBatch {
 //		names.add("smltst33.scd"); // GOTO fixup'address
 //		names.add("smltst34.scd"); // Text quant relations ( =, <> )
 //		names.add("smltst35.scd"); // RT'sizes: string, ptp, ...
-//		names.add("smltst36.scd"); // RT'sizes: entity, ...
+		names.add("smltst36.scd"); // RT'sizes: entity, ...
 //		names.add("smltst37.scd"); // RT'sizes: quantities and simob
 
 		for (String name : names) {

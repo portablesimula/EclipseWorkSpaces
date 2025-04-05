@@ -5,7 +5,6 @@ import java.io.IOException;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
-import bec.util.Util;
 import bec.value.ProgramAddress;
 import bec.value.Value;
 
@@ -20,6 +19,7 @@ public class SVM_JUMP extends SVM_Instruction {
 	@Override
 	public void execute() {
 //		RTStack.dumpRTStack("SVM_JUMPIF: ");
+		RTStack.checkStackEmpty();
 		Global.PSC = destination.copy();
 //		Util.IERR("");
 	}

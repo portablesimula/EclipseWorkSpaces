@@ -1,35 +1,44 @@
 begin
-   SYSINSERT RT,SYSR,KNWN,UTIL;  
-   const infix(string) facit(2) = (
-      "BEGIN TEST",
-      "END TEST"
-   );
+--   SYSINSERT envir,modl1;
+   SYSINSERT RT,SYSR,KNWN,UTIL;    
 
-   integer nError ;
-   integer traceCase;
+	Visible record REC:inst;
+	begin integer   i;
+    	  integer   j;
+    	  variant   integer int;
+    	            real    rea;
+    	  variant   infix(string) str;
+	end;
 
-   Visible routine trace; import infix(string) msg;
-   begin
-%      if verbose then ed_str(msg); ed_str("  TEST AGAINST FACIT:  "); prt(facit(traceCase)); endif;
-      if( not STREQL(msg,facit(traceCase))) then
-%         nError:=nError+1; prt(" ");
-%         ed_str("ERROR in Case "); ed_int(traceCase); ed_out;
-%         ed_str("Trace: "); prt(msg);
-%         ed_str("Facit: "); prt(facit(traceCase));
-		SYSPRI("ERROR ######################################################");
-      endif;
-      traceCase:=traceCase+1;
-   end;
-   
-   boolean b;
-   integer x;
-   const infix(String) msg = "ABRA";
-   
-%   b := STREQL(msg,facit(1));
+	Visible routine ALLOC;
+	import size length;	export ref(inst) ins;
+	begin ins:=bio.nxtAdr; bio.nxtAdr:= bio.nxtAdr + length;
+		  ins.sort:= S_SUB;
+	end;
+       
+	ref() pool;
+	size poolsize;
+	integer sequ;
+	
+	ref(REC) r1,r5;
+	integer i;
+      
+		poolsize:=SIZEIN(1,sequ);
+		pool:=DWAREA(poolsize,sequ);
+		bio.nxtAdr:=pool;
+		bio.lstAdr:=pool+poolsize;
+	
+		r1:=ALLOC(size(REC));
+	
+		r5:=(r1+size(REC))+size(inst);
+		ED_OADDR(r5); ED_OUT;
+	
+		r5.i := 666;
+		ED_INT(r5.i); ED_OUT;
+%		i := r5.i;
+	
+		r1.rea:=3.14;
+	
 
-	trace("BEGIN TEST");
-	trace("ABRA");
-
-
-  end;
+ end;
 	 

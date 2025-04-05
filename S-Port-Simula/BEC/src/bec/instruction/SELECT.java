@@ -3,11 +3,8 @@ package bec.instruction;
 import bec.compileTimeStack.AddressItem;
 import bec.compileTimeStack.CTStack;
 import bec.descriptor.Attribute;
-import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Tag;
-import bec.util.Util;
-import bec.virtualMachine.SVM_NOT_IMPL;
 
 /**
  * select attr:tag
@@ -21,6 +18,25 @@ import bec.virtualMachine.SVM_NOT_IMPL;
  * the instruction argument attr is an attribute. TOS is modified to describe the designated
  * component of that record. Note that no qualification check is implied, i.e. TOS.TYPE may be
  * different from 'REC'.
+ * 
+ *       BASE ---------------------------> .============================.
+ *                                         |-----.                      |
+ *                                         |     |                      |
+ *                                         |     | TOS.OFFSET           |
+ *                                         |     |                      |
+ *                      REF                |     V                      |
+ *       (TOS) ----------------------------|---> .==================.   |
+ *                                         |     |----              |   |
+ *                                         |     |    |             |   |
+ *                                         |     |    | attr.OFFSET |   |
+ *    The resulting         REF            |     |    V             |   |
+ *          TOS ---------------------------|-----|--> .======.      |   |
+ *     after select                        |     |    | attr |      |   |
+ *                                         |     |    .======.      |   |
+ *                                         |     |                  |   |
+ *                                         |     .==================.   |
+ *                                         |                            |
+ *                                         .============================.
  */
 public abstract class SELECT extends Instruction {
 
@@ -40,12 +56,7 @@ public abstract class SELECT extends Instruction {
 		if(DEBUG) System.out.println("SELECT.ofScode: ofst="+adr.offset + ", rela=" + attr.rela);
 		adr.type = attr.type;
 		adr.size = attr.size;
-		if(adr.atrState == AddressItem.AtrState.FromConst) {
-			adr.atrState = AddressItem.AtrState.NotStacked;
-			Global.PSEG.emit(new SVM_NOT_IMPL("SELECT: "+attr), "SELECT: ");
-//             qPOPKill(AllignFac);
-		}
-		if(instr == Scode.S_SELECTV) Util.GQfetch("SELECTV " + tag + ": ");
+		if(instr == Scode.S_SELECTV) FETCH.doFetch("SELECTV " + tag + ": ");
 //		CTStack.dumpStack();
 //		Util.IERR("");
 	}

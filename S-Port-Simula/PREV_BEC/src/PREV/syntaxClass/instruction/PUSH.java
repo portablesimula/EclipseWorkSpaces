@@ -35,7 +35,7 @@ public class PUSH extends PREV_Instruction {
 		} else Util.IERR("");
 //        if v.kind=K_Import
 //        then TOS.repdist:= - wAllign(%TOS.repdist%) endif;
-        if(instr == Scode.S_PUSHV) Util.GQfetch("PUSHV: ");
+        if(instr == Scode.S_PUSHV) FETCH.doFetch("PUSHV: ");
 //      CTStack.dumpStack("PUSH: "+Scode.edInstr(instr));
 	}
 

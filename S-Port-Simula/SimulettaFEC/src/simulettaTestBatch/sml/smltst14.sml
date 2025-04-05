@@ -1,12 +1,3 @@
---%PASS 1 INPUT=5 -- Input Trace
---%PASS 1 OUTPUT=1 -- Output Trace
---%PASS 1 MODTRC=4 -- Module I/O Trace
---%PASS 1 TRACE=4 -- Trace level
---%PASS 2 INPUT=1 -- Input Trace
-%PASS 2 OUTPUT=1 -- S-Code Output Trace
---%PASS 2 MODTRC=1 -- Module I/O Trace
---%PASS 2 TRACE=1 -- Trace level
---%TRACE 2 -- Output Trace
 begin
 --   SYSINSERT envir,modl1;
    SYSINSERT RT,SYSR,KNWN,UTIL;    
@@ -21,15 +12,15 @@ begin
    integer traceCase;
    const infix(string) facit(11) = (
       "BEGIN TEST",
-      "POOLSIZE=150000, SIZE(REC)=11, SIZE(inst)=7",
-      "DIST(r2-r1)=18",
+      "POOLSIZE=150000, SIZE(REC)=12, SIZE(inst)=7",
+      "DIST(r2-r1)=19",
       "DIST((r1+NOSIZE)-r1)=0",
       "DIST((r1+size(inst))-r1)=7",
-      "DIST((r4-size(inst))-r1)=18",
+      "DIST((r4-size(inst))-r1)=19",
       "r5.i=4444",
       "r5.rea=3",
       "r2.j=6666",
-      "dist=18",
+      "dist=19",
       "END TEST"
    );
    

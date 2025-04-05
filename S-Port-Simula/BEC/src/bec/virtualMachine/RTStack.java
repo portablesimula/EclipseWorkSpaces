@@ -5,6 +5,7 @@ import java.util.Stack;
 import bec.util.Global;
 import bec.util.Type;
 import bec.util.Util;
+import bec.value.GeneralAddress;
 import bec.value.IntegerValue;
 import bec.value.ObjectAddress;
 import bec.value.ProgramAddress;
@@ -136,7 +137,16 @@ public abstract class RTStack {
 //		int value = RTRegister.getValue(reg);
 //		stack.push(new RTStackItem( IntegerValue.of(Type.T_INT, value), comment));
 		Value value = RTRegister.getValue(reg);
-		stack.push(new RTStackItem(value, comment));
+//		System.out.println("RTStack.pushr: " + value.getClass().getSimpleName()+"  "+value);
+		if(value instanceof GeneralAddress gaddr) {
+//			stack.push(new RTStackItem(IntegerValue.of(Type.T_INT, gaddr.ofst), comment));
+//			stack.push(new RTStackItem(gaddr.base, comment));
+			stack.push(new RTStackItem(gaddr.base, comment));
+			stack.push(new RTStackItem(IntegerValue.of(Type.T_INT, gaddr.ofst), comment));
+//			Util.IERR("");
+		} else{
+			stack.push(new RTStackItem(value, comment));
+		}
 //		dumpRTStack("");
 //		Util.IERR("");
 	}
@@ -170,12 +180,21 @@ public abstract class RTStack {
 		return (rval==null)? 0 : rval.value;
 	}
 	
-	public static ObjectAddress popGADDR() {
-//		RTStack.dumpRTStack("RTStack.popGADDR:");
-//		RTStack.printCallStack("RTStack.popGADDR:");
+	public static GeneralAddress popGADDR() {
+//		RTStack.dumpRTStack("RTStack.popGADDRasOADDR:");
+//		RTStack.printCallStack("RTStack.popGADDRasOADDR:");
+		int ofst = RTStack.popInt();
+		ObjectAddress base = (ObjectAddress) RTStack.pop().value();
+//		System.out.println("RTStack.popGADDRasOADDR: chradr="+chradr+", ofst="+ofst);
+		return new GeneralAddress(base,ofst);
+	}
+	
+	public static ObjectAddress popGADDRasOADDR() {
+//		RTStack.dumpRTStack("RTStack.popGADDRasOADDR:");
+//		RTStack.printCallStack("RTStack.popGADDRasOADDR:");
 		int ofst = RTStack.popInt();
 		ObjectAddress chradr = (ObjectAddress) RTStack.pop().value();
-//		System.out.println("RTStack.popGADDR: chradr="+chradr+", ofst="+ofst);
+//		System.out.println("RTStack.popGADDRasOADDR: chradr="+chradr+", ofst="+ofst);
 		if(ofst != 0) chradr = chradr.addOffset(ofst);
 		return chradr;
 	}
@@ -191,7 +210,7 @@ public abstract class RTStack {
 //		int ofst = RTStack.popInt();
 //		ObjectAddress chradr = (ObjectAddress) RTStack.pop().value();
 //		ObjectAddress x = chradr.ofset(ofst);
-		ObjectAddress x = (ObjectAddress) RTStack.popGADDR().copy();
+		ObjectAddress x = (ObjectAddress) RTStack.popGADDRasOADDR().copy();
 		
 		StringBuilder sb = new StringBuilder();
 		for(int i=0;i<nchr;i++) {

@@ -92,7 +92,7 @@ public class RecordDescr extends Descriptor {
 			Type.newRecType(rec);
 //		}
 //		if(Scode.inputTrace > 3)
-			rec.print("   ");
+//			rec.print("   ");
 		return rec;
 	}
 		

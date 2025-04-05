@@ -19,13 +19,15 @@ public class RTAddress extends Value {
 	String segID; // null: RelAddr
 	public int offset;
 	private int xReg; // 0: no index register
+	public boolean withRemoteBase;
 	
 	private static final boolean DEBUG = false;
 
 	public RTAddress(AddressItem itm) {
 		if(itm.objadr != null) {
 			this.segID =  itm.objadr.segID;
-			this.offset = itm.objadr.getOfst() + itm.offset;			
+			this.offset = itm.objadr.getOfst() + itm.offset;
+			this.withRemoteBase = itm.withRemoteBase;
 		}
 		this.xReg = itm.xReg;
 	}
@@ -56,7 +58,18 @@ public class RTAddress extends Value {
 		if(segID == null) {
 			// load rel-addr  callStackTop + ofst
 			Value xRegValue = xRegValue();
-			if(xRegValue instanceof ObjectAddress oaddr) {
+			if(xRegValue instanceof GeneralAddress gaddr) {
+				ObjectAddress oaddr = gaddr.base;
+				if(DEBUG) {
+					oaddr.segment().dump("RTAddress.load: ");
+					System.out.println("RTAddress.load: xRegValue="+xRegValue);
+				}
+				DataSegment dseg = oaddr.segment();
+				int reladdr = offset + oaddr.getOfst() + gaddr.ofst + idx;
+				Value res = dseg.load(reladdr);
+				if(DEBUG) System.out.println("RTAddress.load("+idx+") ===> "+res);
+				return res;
+			} else if(xRegValue instanceof ObjectAddress oaddr) {
 				if(DEBUG) {
 					oaddr.segment().dump("RTAddress.load: ");
 					System.out.println("RTAddress.load: xRegValue="+xRegValue);
@@ -65,13 +78,20 @@ public class RTAddress extends Value {
 				int reladdr = offset + oaddr.getOfst() + idx;
 				Value res = dseg.load(reladdr);
 				if(DEBUG) System.out.println("RTAddress.load("+idx+") ===> "+res);
-//				Util.IERR("");
 				return res;
 			} else {
-				int frmx = RTStack.callStack_TOP().rtStackIndex;
+				CallStackFrame top = RTStack.callStack_TOP();
+				int frmx = (top == null)? 0 : top.rtStackIndex;
 				int iReg = xRegIntValue();
 				RTStackItem val = RTStack.load(frmx + offset + (iReg * incr) + idx);				
-				if(DEBUG) System.out.println("RTAddress.load("+idx+") ===> "+val);
+				if(DEBUG)
+					System.out.println("RTAddress.load("+idx+") ===> "+val);
+				if(val == null) {
+					Global.DSEG.dump("RTAddress.load: ");
+					Segment.lookup("POOL_0").dump("RTAddress.load: ", 0, 25);
+					System.out.println("RTAddress.load: "+this+", idx="+idx);
+					System.out.println("RTAddress.load: withRemoteBase="+this.withRemoteBase);
+				}
 				return val.value();				
 			}
 		} else {
@@ -109,7 +129,16 @@ public class RTAddress extends Value {
 				if(DEBUG) oaddr.segment().dump("RTAddress.store: ");
 //				Util.IERR("");
 			} else if(xRegValue instanceof GeneralAddress gaddr) {
-				Util.IERR("");
+				ObjectAddress oaddr = gaddr.base;
+				if(DEBUG) {
+					oaddr.segment().dump("RTAddress.store: ");
+					System.out.println("RTAddress.store: xRegValue="+xRegValue);
+				}
+				DataSegment dseg = oaddr.segment();
+				int reladdr = offset + oaddr.getOfst() + gaddr.ofst + idx;
+				dseg.store(reladdr, value);
+				if(DEBUG) oaddr.segment().dump("RTAddress.store: ");
+//				Util.IERR("");
 			} else {
 				CallStackFrame callStackTop = RTStack.callStack_TOP();
 				if(DEBUG) {
@@ -117,7 +146,7 @@ public class RTAddress extends Value {
 					System.out.println("RTAddress.store: RTStack.callStackTop="+callStackTop);
 					System.out.println("RTAddress.store: rtStackIndex="+callStackTop.rtStackIndex);
 				}
-				int frmx = callStackTop.rtStackIndex;
+				int frmx = (callStackTop == null)? 0 : callStackTop.rtStackIndex;
 				RTStack.store(frmx + offset + idx, value, comment);
 			}
 		} else {
@@ -133,10 +162,7 @@ public class RTAddress extends Value {
 		if(xReg > 0) {
 			s = s + "+" + RTRegister.edReg(xReg);
 			Value value = RTRegister.getValue(xReg);
-//			System.out.println("RTAddress.toString: xReg="+xReg+", value="+value);
-//			if(value >= 0) {
 				s = s + '(' + value + ')';
-//			}
 		}
 		return s + "]";			
 	}
@@ -146,37 +172,17 @@ public class RTAddress extends Value {
 	// *** Attribute File I/O
 	// ***********************************************************************************************
 	private RTAddress(AttributeInputStream inpt) throws IOException {
-//		Util.IERR("ER DETTE MULIG ?");
-		
 		segID = inpt.readString();
 		offset = inpt.readShort();
 		xReg = inpt.readReg();
-		
-//		boolean present = inpt.readBoolean();
-//		if(present) this.objadr = (ObjectAddress) Value.read(inpt);
-//		this.offset = inpt.readShort();
-//		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + this);
 	}
-
-//	String segID;
-//	public int offset;
-//	private int xReg; // 0: no index register
 
 //	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
-//		Util.IERR("ER DETTE MULIG ?");
-		
 		oupt.writeString(segID);
 		oupt.writeShort(offset);
 		oupt.writeReg(xReg);
-		
-////		objadr.write(oupt);
-//		if(objadr != null) {
-//			oupt.writeBoolean(true);
-//			objadr.write(oupt);
-//		} else oupt.writeBoolean(false);
-//		oupt.writeShort(offset);
 	}
 
 	public static RTAddress read(AttributeInputStream inpt) throws IOException {

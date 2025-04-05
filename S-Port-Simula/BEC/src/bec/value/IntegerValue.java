@@ -73,8 +73,8 @@ public class IntegerValue extends Value {
 	@Override
 	public Value add(Value other) {
 		if(other == null) return this;
-		if(other instanceof ObjectAddress oaddr) {
-			return oaddr.add(other);
+		if(other instanceof GeneralAddress gaddr) {
+			return gaddr.add(this);
 		} else {
 			IntegerValue val2 = (IntegerValue) other;
 			int res = value + val2.value;

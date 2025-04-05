@@ -53,7 +53,7 @@ public class SELECT extends PREV_Instruction {
 			Global.PSEG.emit(new SVM_NOT_IMPL(), ""+this);
 //             qPOPKill(AllignFac);
 		}
-		if(instr == Scode.S_SELECTV) Util.GQfetch("SELECTV " + Scode.edTag(tag) + ": ");
+		if(instr == Scode.S_SELECTV) FETCH.doFetch("SELECTV " + Scode.edTag(tag) + ": ");
 //		CTStack.dumpStack();
 //		Util.IERR("");
 	}

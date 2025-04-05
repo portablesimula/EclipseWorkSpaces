@@ -5,6 +5,7 @@ import java.io.IOException;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
+import bec.value.ProgramAddress;
 
 /**
  * Remove top item on the Runtime-Stack and set PSC to that value
@@ -13,6 +14,14 @@ public class SVM_GOTO extends SVM_Instruction {
 
 	public SVM_GOTO() {
 		this.opcode = SVM_Instruction.iGOTO;
+	}
+
+	@Override
+	public void execute() {
+//		RTStack.dumpRTStack("SVM_JUMPIF: ");
+		Global.PSC = (ProgramAddress) RTStack.pop().value();
+		RTStack.checkStackEmpty();
+//		Util.IERR("");
 	}
 	
 	@Override	

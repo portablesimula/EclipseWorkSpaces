@@ -39,6 +39,8 @@ public class SVM_Instruction {
 	public final static int iPOPK = 27;
 	public final static int iENTER = 28;
 	public final static int iREFER = 29;
+	public final static int iADDREG = 30;
+//	public final static int iLOCATE = 31;
 	
 	public final static int iNOT_IMPL = 99;
 	public final static int iMax = 99;
@@ -98,6 +100,7 @@ public class SVM_Instruction {
 			case iPOPK:		return SVM_POPK.read(inpt);
 			case iENTER:	return SVM_ENTER.read(inpt);
 			case iREFER:	return SVM_REFER.read(inpt);
+			case iADDREG:		return SVM_ADDREG.read(inpt);
 			
 			case iNOT_IMPL:	return SVM_NOT_IMPL.read(inpt);
 			default: Util.IERR("MISSING: " + edOpcode(opcode));
@@ -136,6 +139,7 @@ public class SVM_Instruction {
 			case iPOPK:		return "iPOPK";
 			case iENTER:	return "iENTER";
 			case iREFER:	return "iREFER";
+			case iADDREG:		return "iADDREG";
 
 			case iNOT_IMPL:	return "iNOT_IMPL";
 			default:		return "UNKNOWN:" + opcode;

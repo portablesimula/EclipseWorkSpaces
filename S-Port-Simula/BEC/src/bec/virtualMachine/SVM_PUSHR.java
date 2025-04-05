@@ -7,6 +7,7 @@ import bec.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Type;
+import bec.util.Util;
 import bec.value.Value;
 
 //The value in register REG is pushed onto the operand stack.

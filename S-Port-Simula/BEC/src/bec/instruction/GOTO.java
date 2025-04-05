@@ -43,10 +43,11 @@ public abstract class GOTO extends Instruction {
 //				citm.value = Global.PSEG.nextAddress();
 //			}
 			
-			Global.PSEG.emit(new SVM_JUMP(padr), "GOTO: " + citm);
+//			Global.PSEG.emit(new SVM_JUMP(padr), "GOTO: " + citm);
+			Global.PSEG.emit(new SVM_GOTO(), "GOTO: " + citm);
 			CTStack.pop();
 		} else {
-			Util.GQfetch("GOTO: ");
+			FETCH.doFetch("GOTO: ");
 			Global.PSEG.emit(new SVM_GOTO(), "GOTO-TOS: ");
 			CTStack.pop();
 //	%+E                  Qf2(qRET,0,0,0,0);

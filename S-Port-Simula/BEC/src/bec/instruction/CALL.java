@@ -180,7 +180,7 @@ public abstract class CALL extends Instruction {
 		else if(tos instanceof AddressItem) tos.type = st;
 		else CONVERT.GQconvert(parType);
 		
-		if(CTStack.TOS instanceof AddressItem) Util.GQfetch("putPar: ");
+		if(CTStack.TOS instanceof AddressItem) FETCH.doFetch("putPar: ");
 		CTStack.pop();
 		
 		if(! CALL.USE_FRAME_ON_STACK) {

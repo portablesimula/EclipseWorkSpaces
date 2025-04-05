@@ -21,7 +21,7 @@ public abstract class SETO extends Instruction {
 	 */
 	public static void ofScode() {
 		CTStack.checkTosType(Type.T_OADDR);
-		Util.GQfetch("SETO: "); CTStack.pop();
+		FETCH.doFetch("SETO: "); CTStack.pop();
 //		%+S                      Qf5(qCALL,0,0,4,X_SETO);
 		Global.PSEG.emit(new SVM_NOT_IMPL("SETO: "), "SETO: ");
 //		Util.IERR("NOT IMPL");

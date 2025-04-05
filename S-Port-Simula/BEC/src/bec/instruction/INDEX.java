@@ -2,17 +2,19 @@ package bec.instruction;
 
 import bec.compileTimeStack.AddressItem;
 import bec.compileTimeStack.CTStack;
-import bec.compileTimeStack.ConstItem;
-import bec.compileTimeStack.StackItem;
+import bec.compileTimeStack.Temp;
 import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Util;
-import bec.value.IntegerValue;
 import bec.virtualMachine.RTRegister;
+import bec.virtualMachine.SVM_ADDREG;
+import bec.virtualMachine.SVM_POP2REG;
 
 public abstract class INDEX extends Instruction {
 	int instr; // INDEX | INDEXV
-	
+
+	private static final boolean DEBUG = false;
+
 	/**
 	 * addressing_instruction ::= ::= index | indexv
 	 * 
@@ -31,17 +33,21 @@ public abstract class INDEX extends Instruction {
 	 */
 	public static void ofScode(int instr) {
 		CTStack.checkTosInt(); CTStack.checkSosRef();
-		int xReg = RTRegister.getFreeReg();
-		CTStack.getTosValueIn86(xReg);
+		if(! (CTStack.TOS instanceof Temp)) Util.IERR("");
+		
 		CTStack.pop();
 		AddressItem adr = (AddressItem) CTStack.TOS;
-//		adr.objReg = RTRegister.qEAX;
-//		adr.xReg = RTRegister.qEAX;
-		adr.xReg = xReg;
-//		adr.atrState = AddressItem.AtrState.Calculated;
-		adr.atrState = AddressItem.AtrState.Indexed;
+//		System.out.println("INDEX.ofScode: adr="+adr+"                 R"+adr.xReg);
 		
-		if(instr == Scode.S_INDEXV) Util.GQfetch("INDEXV");
+		if(adr.xReg > 0) {
+			Global.PSEG.emit(new SVM_ADDREG(adr.xReg), "INDEX.ofScode: ");
+		} else {
+			adr.xReg = RTRegister.getFreeReg();
+			Global.PSEG.emit(new SVM_POP2REG(adr.xReg), "INDEX.ofScode: ");
+		}
+		if(DEBUG) Global.PSEG.dump("INDEX.ofScode: ");
+		
+		if(instr == Scode.S_INDEXV) FETCH.doFetch("INDEXV");
 
 //		Global.PSEG.dump("INDEX.ofScode: ");
 //		CTStack.dumpStack("INDEX.ofScode: ");
