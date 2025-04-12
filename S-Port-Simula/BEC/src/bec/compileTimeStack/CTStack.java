@@ -135,7 +135,7 @@ public class CTStack {
 	}
 
 	public static void checkTosType(Type t) {
-		if(TOS.type != t) STKERR("Illegal type of TOS");
+		if(TOS.type != t) STKERR("Illegal type of TOS: " + TOS.type + " expected: " + t);
 	}
 
 	public static void checkSosType(Type t) {

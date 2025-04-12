@@ -55,7 +55,7 @@ begin
       
 		ED_STR("TEST: curins="); ED_OADDR(curins); trace(get_ed);
 		ED_STR("TEST: status="); ED_INT(status); trace(get_ed);
-		ED_STR("TEST: itsize="); ED_SIZE(itsize); trace(get_ed);
+		ED_STR("TEST: itsize="); ED_INT(itsize); trace(get_ed);
 		ED_STR("TEST: maxlen="); ED_SIZE(maxlen); trace(get_ed);
 		ED_STR("TEST: inplth="); ED_INT(inplth); trace(get_ed);
 		ED_STR("TEST: outlth="); ED_INT(outlth); trace(get_ed);

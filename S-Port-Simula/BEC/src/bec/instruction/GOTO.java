@@ -28,7 +28,7 @@ public abstract class GOTO extends Instruction {
 		CTStack.checkTosType(Type.T_PADDR);
 		StackItem TOS = CTStack.TOS;
 		
-		System.out.println("GOTO.ofScode: TOS="+TOS.getClass().getSimpleName()+"  "+TOS);
+//		System.out.println("GOTO.ofScode: TOS="+TOS.getClass().getSimpleName()+"  "+TOS);
 		
 		if(TOS instanceof ConstItem citm) {
 			ProgramAddress padr = (ProgramAddress) citm.value;

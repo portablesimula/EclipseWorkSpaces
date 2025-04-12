@@ -29,7 +29,7 @@ begin
       "size(nonObj:6)=13",
       "size(filent)=28",
       "size(prtent)=32",
-      "size(bioIns)=847",
+      "size(bioIns)=848",
       "size(arbody)=5",
       "size(booArr:16)=21",
       "size(chaArr:16)=21",

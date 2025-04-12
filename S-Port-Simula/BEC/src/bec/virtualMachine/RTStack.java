@@ -50,7 +50,7 @@ public abstract class RTStack {
 	
 	public static void printCallTrace(String title,String kind) {
 //		RTStack.dumpRTStack(title);
-		System.out.println("CallStack["+callStack.size()+"]: " +title + " " + callStack_TOP().ident);
+		System.out.println("CallStack["+callStack.size()+"]: " +title);// + " " + callStack_TOP().ident);
 //		System.out.println("     at "+Global.PSC);
 		int n = callStack.size()-1;
 		for(int i=n;i>=0;i--) {

@@ -7,6 +7,7 @@ import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.descriptor.LabelDescr;
 import bec.descriptor.RecordDescr;
+import bec.segment.DataSegment;
 import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Tag;
@@ -51,6 +52,11 @@ public class RecordValue extends Value {
 		RecordDescr recordDescr = (RecordDescr) Global.DISPL.get(rec.tag.val);
 		rec.type = Type.lookupType(recordDescr);
 		return rec;
+	}
+	
+	@Override
+	public void emit(DataSegment dseg, String comment) {
+		for(Value value:attrValues) value.emit(dseg, comment);
 	}
 
 	@Override

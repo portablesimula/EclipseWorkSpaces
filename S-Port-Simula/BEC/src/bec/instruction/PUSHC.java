@@ -127,9 +127,9 @@ public abstract class PUSHC extends Instruction {
 			Global.PSEG.emit(new SVM_PUSHC(value), "");
 		}
 //		value.print("NEW ConstItem: ");
-//		System.out.println("NEW ConstItem: type="+type+", value="+value);
 		ConstItem cns = new ConstItem(type, value);
 		CTStack.push(cns);
+//		System.out.println("PUSHC.ofScode: "+cns);
 //		CTStack.dumpStack("PUSHC: "+value+": ");
 //		Util.IERR("DETTE MÅ RETTES");
 //		Global.PSEG.dump("PUSHC: "+value+": ");

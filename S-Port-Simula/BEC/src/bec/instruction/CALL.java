@@ -174,11 +174,15 @@ public abstract class CALL extends Instruction {
 		pItm.nasspar = pItm.nasspar+1;
 		StackItem tos = CTStack.TOS;
 		Type st = tos.type;
+		
 		//--- First: Treat TOS ---
-//		System.out.println("CallInstruction.putPar: "+st.tag + " ===> " + parType.tag);
-		if(st != parType) CONVERT.GQconvert(parType);
-		else if(tos instanceof AddressItem) tos.type = st;
-		else CONVERT.GQconvert(parType);
+		if(st != parType) {
+			CONVERT.GQconvert(parType);
+		} else if(tos instanceof AddressItem) {
+			tos.type = st;
+		} else {
+			CONVERT.GQconvert(parType);
+		}
 		
 		if(CTStack.TOS instanceof AddressItem) FETCH.doFetch("putPar: ");
 		CTStack.pop();

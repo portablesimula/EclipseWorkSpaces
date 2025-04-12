@@ -24,8 +24,8 @@ public final class FECmpTBatch {
 		long startTimeMs = System.currentTimeMillis( );
 		Vector<String> names=new Vector<String>();
 		
-		names.add("adHoc00");
-//		names.add("adHoc01");
+//		names.add("adHoc00");
+		names.add("adHoc01");
 //		names.add("adHoc02");
 //		names.add("adHoc03");
 //		names.add("adHoc04");
@@ -64,7 +64,7 @@ public final class FECmpTBatch {
 //		names.add("smltst25"); // Editing Utilities
 //		names.add("smltst26"); // Complex Variables
 //		names.add("smltst27"); // SYSTEM Const and Variables
-//		names.add("smltst28"); // Structured Constants
+//			names.add("smltst28"); // Structured Constants
 //		names.add("smltst29"); // Object Address Relations ( < , <= , = , >= , > , <> )
 //		names.add("smltst30"); // More Constants
 //		names.add("smltst31"); // CALL, EXIT, RETURN and GOTO

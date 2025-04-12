@@ -25,13 +25,14 @@ public final class RunSingle_SML_TestBatch {
 	public static void main(String[] args) {
 		Global.INLINE_TESTING = true;
 		
-//		SVM_CALLSYS.RUNTIME_VERBOSE = true;
-//		Global.verbose = true;
-//		Global.SCODE_INPUT_TRACE = true;
-//		Global.PRINT_GENERATED_SVM_CODE = true;
-//		Global.EXEC_TRACE = 1;
-////		Global.CALL_TRACE_LEVEL = 2;
-////		Global.DUMPS_AT_EXIT = true;
+		SVM_CALLSYS.RUNTIME_VERBOSE = true;
+		Global.verbose = true;
+		Global.SCODE_INPUT_TRACE = true;
+		Global.PRINT_GENERATED_SVM_CODE = true;
+		Global.EXEC_TRACE = 1;
+		Global.PRINT_GENERATED_SVM_DATA = true;
+//		Global.CALL_TRACE_LEVEL = 2;
+		Global.DUMPS_AT_EXIT = true;
 		
 		// Set Compiler Options.
 //		Option.EXTENSIONS=false;
@@ -40,7 +41,7 @@ public final class RunSingle_SML_TestBatch {
 		Vector<String> names = new Vector<String>();
 		
 //		names.add("adHoc00.scd");
-//		names.add("adHoc01.scd");
+		names.add("adHoc01.scd");
 //		names.add("adHoc02.scd");
 //		names.add("adHoc03.scd");
 //		names.add("adHoc04.scd");
@@ -69,7 +70,7 @@ public final class RunSingle_SML_TestBatch {
 //		names.add("smltst15.scd"); // Type Conversion
 //		names.add("smltst16.scd"); // Type Conversion between name,ref and field
 //		names.add("smltst17.scd"); // If-Statements
-//			names.add("smltst18.scd"); // Goto-Statements
+//		names.add("smltst18.scd"); // Goto-Statements
 //		names.add("smltst19.scd"); // Remote Access
 //		names.add("smltst20.scd"); // Repeat-Statements
 //		names.add("smltst21.scd"); // Call: Profile(Body)(a,b,c)
@@ -79,7 +80,7 @@ public final class RunSingle_SML_TestBatch {
 //		names.add("smltst25.scd"); // Editing Utilities
 //		names.add("smltst26.scd"); // Complex Variables
 //		names.add("smltst27.scd"); // SYSTEM Const and Variables
-//		names.add("smltst28.scd"); // Structured Constants
+//			names.add("smltst28.scd"); // Structured Constants
 //		names.add("smltst29.scd"); // Object Address Relations ( < , <= , = , >= , > , <> )
 //		names.add("smltst30.scd"); // More Constants
 //		names.add("smltst31.scd"); // CALL, EXIT, RETURN and GOTO
@@ -87,7 +88,7 @@ public final class RunSingle_SML_TestBatch {
 //		names.add("smltst33.scd"); // GOTO fixup'address
 //		names.add("smltst34.scd"); // Text quant relations ( =, <> )
 //		names.add("smltst35.scd"); // RT'sizes: string, ptp, ...
-		names.add("smltst36.scd"); // RT'sizes: entity, ...
+//		names.add("smltst36.scd"); // RT'sizes: entity, ...
 //		names.add("smltst37.scd"); // RT'sizes: quantities and simob
 
 		for (String name : names) {

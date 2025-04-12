@@ -114,7 +114,8 @@ public class Instruction { // extends ProgramElement {
 			case Scode.S_INFO ->        Util.IERR("NOT IMPLEMENTED: " + Scode.edInstr(Scode.curinstr)); //       Ed(errmsg,InString); WARNING("Unknown info: ");
 			case Scode.S_DELETE ->      DELETE.ofScode();
 			case Scode.S_ZEROAREA ->    ZEROAREA.ofScode();
-			case Scode.S_INITAREA ->    Util.IERR("NOT IMPLEMENTED: " + Scode.edInstr(Scode.curinstr)); //    intype;
+			case Scode.S_INITAREA ->    INITAREA.ofScode();
+			case Scode.S_DINITAREA ->   DINITAREA.ofScode();
 			case Scode.S_EVAL ->        EVAL.ofScode();
 			case Scode.S_FJUMPIF ->     FJUMPIF.ofScode();
 			case Scode.S_FJUMP ->       FJUMP.ofScode();

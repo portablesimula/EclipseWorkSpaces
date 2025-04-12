@@ -7,6 +7,7 @@ import bec.AttributeOutputStream;
 import bec.descriptor.Descriptor;
 import bec.descriptor.LabelDescr;
 import bec.descriptor.RoutineDescr;
+import bec.segment.DataSegment;
 import bec.segment.ProgramSegment;
 import bec.segment.Segment;
 import bec.util.EndProgram;
@@ -24,10 +25,10 @@ import bec.virtualMachine.SVM_RETURN;
 
 public class ProgramAddress extends Value {
 //	public Segment seg;
-	String segID;
+	public String segID;
 	public int ofst;
 	
-	private ProgramAddress(String segID,	int ofst) {
+	public ProgramAddress(String segID,	int ofst) {
 		this.segID = segID;
 		this.ofst = ofst;
 		if(ofst > 9000 || ofst < 0) Util.IERR("");
@@ -72,6 +73,11 @@ public class ProgramAddress extends Value {
 		return new ProgramAddress(segID, ofst);
 	}
 	
+	@Override
+	public void emit(DataSegment dseg, String comment) {
+		dseg.emit(this, comment);
+	}
+	
 //	public void store(Value value) {
 //		DataSegment dseg = (DataSegment) segment();
 //		dseg.store(ofst, value);
@@ -86,6 +92,14 @@ public class ProgramAddress extends Value {
 ////		Util.IERR("");	
 //		return value;
 //	}
+
+
+	@Override
+	public boolean compare(int relation, Value other) {
+		String RHSegID = (other == null)? null : ((ProgramAddress)other).segID;
+		int rhs = (other == null)? 0 : ((ProgramAddress)other).ofst;
+		return Segment.compare(segID, ofst, relation, RHSegID, rhs);
+	}
 	
 	public void execute() {
 		ProgramSegment seg = (ProgramSegment) segment();
@@ -101,6 +115,9 @@ public class ProgramAddress extends Value {
 //				Segment.lookup("DSEG_ADHOC02").dump("ProgramAddress.execute: ");
 				Global.DSEG.dump("ProgramAddress.execute: FINAL DATA SEGMENT ");
 				Global.CSEG.dump("ProgramAddress.execute: FINAL CONSTANT SEGMENT ");
+				Global.TSEG.dump("ProgramAddress.execute: FINAL CONSTANT TEXT SEGMENT ");
+//				Segment.lookup("DSEG_RT").dump("ProgramAddress.execute: BIOINS", 30, 82);
+//				Segment.lookup("POOL_0").dump("ProgramAddress.execute: FINAL POOL_0", 0, 20);
 			}
 			RTStack.checkStackEmpty();
 			throw new EndProgram(0,"ProgramAddress.execute: " + seg.ident + " IS FINALIZED -- NOTHING MORE TO EXECUTE");

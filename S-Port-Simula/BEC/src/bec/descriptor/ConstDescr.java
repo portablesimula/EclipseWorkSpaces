@@ -19,13 +19,13 @@ import bec.value.Value;
 public class ConstDescr extends Descriptor {
 	public Type type;
 	public ObjectAddress address;
-//	public QuantityDescriptor quant;
-	RepetitionValue value;
+	private Vector<RepetitionValue> values;
 	
 	private static final boolean DEBUG = false;
 	
 	private ConstDescr(int kind, Tag tag) {
 		super(kind, tag);
+		this.values = new Vector<RepetitionValue>();
 //		this.tag = tag;
 ////		Global.Display.set(tag, this);
 //		Global.intoDisplay(this, tag);
@@ -70,6 +70,7 @@ public class ConstDescr extends Descriptor {
 		Tag tag = Tag.ofScode();
 		ConstDescr cnst = (ConstDescr) Global.DISPL.get(tag.val);
 		if(cnst != null) Util.IERR("New CONSPEC but cnst="+cnst);
+		
 		cnst = new ConstDescr(Kind.K_Coonst, tag);
 //		System.out.println("NEW ConstDescr.ofConstSpec: "+cnst);
 		
@@ -93,6 +94,7 @@ public class ConstDescr extends Descriptor {
 		return cnst;
 		
 	}
+	
 	public static ConstDescr ofConstDef() {
 //		Tag tag = Tag.ofScode();
 		Tag tag = Tag.ofScode();
@@ -120,13 +122,28 @@ public class ConstDescr extends Descriptor {
 		}
 
 		int repCount = (Scode.accept(Scode.S_REP)) ? Scode.inNumber() : 1;
+		
+		boolean TESTING = true;
 
-//		if(constDef) cnst.value = new RepetitionValue();
+		if(TESTING) {
+			cnst.address = Global.CSEG.nextAddress();
+			for(int i=0;i<repCount;i++) {
+				RepetitionValue value = RepetitionValue.ofScode();
+				cnst.values.add(value);
+				if(DEBUG) {
+					System.out.println("NEW ConstDescr.ofConstDef: "+value.getClass().getSimpleName());
+					value.print("NEW ConstDescr.ofConstDef: ");
+//					Util.IERR("");
+				}
+				
+				String comment = tag + " type=" + cnst.type;
+				value.emit(Global.CSEG, comment);
+			}
+		} else {
 			String comment = tag + " type=" + cnst.type;
-//			System.out.println("NEW CONST: "+comment);
-			cnst.address = Global.CSEG.emitRepetitionValue(comment);
-//			Global.CSEG.dump("CONST.inConstant: ");
-//			Util.IERR("");
+//			cnst.address = Global.CSEG.emitRepetitionValue(comment);
+			Util.IERR("");
+		}
 		
 		if(DEBUG) {
 			System.out.println("CONST.inConstant: " + cnst);
@@ -135,13 +152,14 @@ public class ConstDescr extends Descriptor {
 			Global.DSEG.dump("ConstDescr.ofConstDef: ");
 //			Util.IERR("");
 		}
-		if(fixrepTail > 0) Util.IERR("");
+//		if(fixrepTail > 0) Util.IERR("");
 		return cnst;
 	}
 	
 	@Override
 	public void print(final String indent) {
-		if(value != null) {
+		for(RepetitionValue value:values) {
+//		if(value != null) {
 			boolean done = false;
 			if(value.values instanceof Vector<Value> vector) {
 				if(vector instanceof Vector<?> elts) {
@@ -154,14 +172,31 @@ public class ConstDescr extends Descriptor {
 				}
 			}
 			if(! done) System.out.println(indent + "   " + toString());
-		} else System.out.println(indent + "   " + toString());
+		}
+//		} else System.out.println(indent + "   " + toString());
 	}
+//	public void OLD_print(final String indent) {
+//		if(value != null) {
+//			boolean done = false;
+//			if(value.values instanceof Vector<Value> vector) {
+//				if(vector instanceof Vector<?> elts) {
+//					boolean first = true;
+//					for(Object rVal:elts) {
+//						if(first) System.out.println(indent + "CONST " + tag);
+//						first = false;
+//						((Value)rVal).print(indent + "   ");							
+//					} done = true;
+//				}
+//			}
+//			if(! done) System.out.println(indent + "   " + toString());
+//		} else System.out.println(indent + "   " + toString());
+//	}
 	
 	public String toString() {
 		if(address != null) {
 			 return "CONST " + tag + " " + address;
-		} else if(value != null) {
-			 return "CONST " + tag + " " + value;
+		} else if(values != null) {
+			 return "CONST " + tag + " " + values;
 		} else return "CONSTSPEC " + tag;
 	}
 

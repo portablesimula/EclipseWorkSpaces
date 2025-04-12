@@ -4,7 +4,11 @@ import java.io.IOException;
 
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
+import bec.descriptor.Attribute;
+import bec.descriptor.ConstDescr;
+import bec.descriptor.Descriptor;
 import bec.descriptor.Variable;
+import bec.segment.Segment;
 import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Tag;
@@ -36,12 +40,30 @@ public class GeneralAddress extends Value {
 	 */
 	public static GeneralAddress ofScode() {
 		Tag tag = Tag.ofScode();
-		Variable var = (Variable) tag.getMeaning();
-		if(var == null) Util.IERR("IMPOSSIBLE: TESTING FAILED");
-//		System.out.println("OADDR_Value.ofScode: descr="+descr.getClass().getSimpleName()+"  "+descr);
-		return new GeneralAddress(var.address, 0);
-//		Util.IERR("NOT IMPL");
-//		return null;
+//		Variable var = (Variable) tag.getMeaning();
+		Descriptor descr = tag.getMeaning();
+		if(descr == null) Util.IERR("IMPOSSIBLE: TESTING FAILED");
+		if(descr instanceof Variable var) {
+//			System.out.println("OADDR_Value.ofScode: descr="+descr.getClass().getSimpleName()+"  "+descr);
+			return new GeneralAddress(var.address, 0);
+		} else if(descr instanceof ConstDescr cns) {
+			return new GeneralAddress(cns.address, 0);
+		}
+		Util.IERR("NOT IMPL: " + descr.getClass().getSimpleName());
+		return null;
+	}
+
+	@Override
+	public boolean compare(int relation, Value other) {
+		String RHSegID = null; //(other == null)? null : ((GeneralAddress)other).segID;
+		int rhs = 0;           //(other == null)? 0 : ((GeneralAddress)other).ofst;
+		if(other != null) {
+			GeneralAddress gaddr = (GeneralAddress) other;
+			ObjectAddress base = gaddr.base;
+			RHSegID = base.segID;
+			rhs = base.getOfst() + gaddr.ofst;
+		}
+		return Segment.compare(this.base.segID, base.getOfst() + ofst, relation, RHSegID, rhs);
 	}
 
 	@Override
@@ -62,7 +84,7 @@ public class GeneralAddress extends Value {
 	}
 	
 	public String toString() {
-		return (base == null)? "ONONE" : base.toString() + '[' + ofst + ']';
+		return (base == null)? "GNONE" : base.toString() + '[' + ofst + ']';
 	}
 
 	// ***********************************************************************************************

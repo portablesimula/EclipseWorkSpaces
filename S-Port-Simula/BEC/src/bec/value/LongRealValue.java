@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
+import bec.segment.DataSegment;
 import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Type;
@@ -31,6 +32,11 @@ public class LongRealValue extends Value {
 //		this.type = Type.T_LREAL;
 //		value = Double.valueOf(Scode.inString());
 //	}
+	
+	@Override
+	public void emit(DataSegment dseg, String comment) {
+		dseg.emit(this, comment);
+	}
 
 	@Override
 	public Value neg() {

@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
+import bec.segment.DataSegment;
 import bec.util.Global;
 import bec.util.Relation;
 import bec.util.Scode;
@@ -24,6 +25,11 @@ public class BooleanValue extends Value {
 	public static BooleanValue of(boolean value) {
 		if(value) return new BooleanValue(true);
 		return null;
+	}
+	
+	@Override
+	public void emit(DataSegment dseg, String comment) {
+		dseg.emit(this, comment);
 	}
 	
 	@Override

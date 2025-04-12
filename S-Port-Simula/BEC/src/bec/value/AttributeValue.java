@@ -4,10 +4,12 @@ import java.io.IOException;
 
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
+import bec.segment.DataSegment;
 import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Tag;
 import bec.util.Type;
+import bec.util.Util;
 
 public class AttributeValue extends Value {
 	Tag tag;
@@ -38,6 +40,11 @@ public class AttributeValue extends Value {
 		aval.value = value;
 //		System.out.println("AttributeValue.parse: value=" + value);
 		return aval;
+	}
+	
+	@Override
+	public void emit(DataSegment dseg, String comment) {
+		value.emit(dseg, comment);
 	}
 
 //	@Override

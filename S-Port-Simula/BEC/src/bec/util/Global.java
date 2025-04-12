@@ -15,6 +15,7 @@ public class Global {
 	public static boolean verbose = false;
 	public static int traceMode = 0;
 	public static boolean SCODE_INPUT_TRACE = false;
+	public static boolean PRINT_GENERATED_SVM_DATA = false;
 	public static boolean PRINT_GENERATED_SVM_CODE = false;
 	public static boolean ATTR_INPUT_TRACE = false;
 	public static boolean ATTR_OUTPUT_TRACE = false;
@@ -110,6 +111,7 @@ public class Global {
 //	public static boolean insideRoutine;  // Inside Routine Body indicator
 
 	public static DataSegment CSEG; // Constant Segment
+	public static DataSegment TSEG; // Constant TextValue Segment
 	public static DataSegment DSEG; 
 	public static ProgramSegment PSEG; // Current PSEG
 

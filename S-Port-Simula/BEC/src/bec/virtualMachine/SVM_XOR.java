@@ -21,7 +21,7 @@ public class SVM_XOR extends SVM_Instruction {
 	Type type;
 
 	public SVM_XOR(Type type) {
-//		this.opcode = SVM_Instruction.iXOR;
+		this.opcode = SVM_Instruction.iXOR;
 	}
 
 	@Override

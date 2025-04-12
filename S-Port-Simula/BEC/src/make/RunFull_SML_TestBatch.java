@@ -70,25 +70,25 @@ public final class RunFull_SML_TestBatch {
 		names.add("smltst16.scd"); // Type Conversion between name,ref and field
 		names.add("smltst17.scd"); // If-Statements
 		names.add("smltst18.scd"); // Goto-Statements
-//		names.add("smltst19.scd"); // Remote Access
+		names.add("smltst19.scd"); // Remote Access
 		names.add("smltst20.scd"); // Repeat-Statements
-//		names.add("smltst21.scd"); // Call: Profile(Body)(a,b,c)
-//		names.add("smltst22.scd"); // Exit and Non-Local Goto
-//		names.add("smltst23.scd"); // Export treatment
-//		names.add("smltst24.scd"); // Zero_Area
-//		names.add("smltst25.scd"); // Editing Utilities
+		names.add("smltst21.scd"); // Call: Profile(Body)(a,b,c)
+		names.add("smltst22.scd"); // Exit and Non-Local Goto
+		names.add("smltst23.scd"); // Export treatment
+		names.add("smltst24.scd"); // Zero_Area
+		names.add("smltst25.scd"); // Editing Utilities
 		names.add("smltst26.scd"); // Complex Variables
-//		names.add("smltst27.scd"); // SYSTEM Const and Variables
-//		names.add("smltst28.scd"); // Structured Constants
-//		names.add("smltst29.scd"); // Object Address Relations ( < , <= , = , >= , > , <> )
-//		names.add("smltst30.scd"); // More Constants
+		names.add("smltst27.scd"); // SYSTEM Const and Variables
+		names.add("smltst28.scd"); // Structured Constants
+		names.add("smltst29.scd"); // Object Address Relations ( < , <= , = , >= , > , <> )
+		names.add("smltst30.scd"); // More Constants
 		names.add("smltst31.scd"); // CALL, EXIT, RETURN and GOTO
 //		names.add("smltst32.scd"); // More Structured Constants
-//		names.add("smltst33.scd"); // GOTO fixup'address
+		names.add("smltst33.scd"); // GOTO fixup'address
 //		names.add("smltst34.scd"); // Text quant relations ( =, <> )
-//		names.add("smltst35.scd"); // RT'sizes: string, ptp, ...
-//		names.add("smltst36.scd"); // RT'sizes: entity, ...
-//		names.add("smltst37.scd"); // RT'sizes: quantities and simob
+		names.add("smltst35.scd"); // RT'sizes: string, ptp, ...
+		names.add("smltst36.scd"); // RT'sizes: entity, ...
+		names.add("smltst37.scd"); // RT'sizes: quantities and simob
 
 		for (String name : names) {
 			String fileName = smlSCodeDir + name;

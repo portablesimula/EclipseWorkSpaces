@@ -12,7 +12,7 @@ begin
    integer traceCase;
    const infix(string) facit(18) = (
       "BEGIN TEST",
-      "size(string)=2",
+      "size(string)=3",
       "size(ptp)=4",
       "size(subptp)=5",
       "size(proptp)=6",

@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
+import bec.segment.DataSegment;
 import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Type;
@@ -60,12 +61,13 @@ public class RepetitionValue extends Value {
 	 * 		::= c-record structured_type
 	 * 			<attribute_value>+ endrecord
 	 */
+	
 	public static RepetitionValue ofScode() {
 		Vector<Value> values = new Vector<Value>();
 		LOOP:while(true) {
-//			System.out.println("RepetitionValue.treatValue: "+Scode.edInstr(Scode.nextByte()));
+//			System.out.println("RepetitionValue.ofScode: "+Scode.edInstr(Scode.nextByte()));
 			switch(Scode.nextByte()) {
-				case Scode.S_TEXT:     Scode.inputInstr(); values.add(TextValue.ofScode()); break LOOP;
+				case Scode.S_TEXT:     Scode.inputInstr(); values.add(TextValue.ofScode()); break; // LOOP;
 				case Scode.S_C_INT:    Scode.inputInstr(); values.add(IntegerValue.ofScode_INT()); break;
 				case Scode.S_C_CHAR:   Scode.inputInstr(); values.add(IntegerValue.ofScode_CHAR()); break;
 				case Scode.S_C_SIZE:   Scode.inputInstr(); values.add(IntegerValue.ofScode_SIZE()); break;
@@ -78,25 +80,119 @@ public class RepetitionValue extends Value {
 				case Scode.S_NOWHERE:  Scode.inputInstr(); values.add(null); break;
 				case Scode.S_NOBODY:   Scode.inputInstr(); values.add(null); break;
 				case Scode.S_ONONE:    Scode.inputInstr(); values.add(null); break;
-				case Scode.S_GNONE:    Scode.inputInstr(); values.add(null); break;
+				case Scode.S_GNONE:    Scode.inputInstr(); values.add(null); values.add(null); break;
 				case Scode.S_C_AADDR:  Scode.inputInstr(); values.add(IntegerValue.ofScode_AADDR()); break;
 				case Scode.S_C_PADDR:  Scode.inputInstr(); values.add(ProgramAddress.ofScode(Type.T_PADDR)); break;
 				case Scode.S_C_RADDR:  Scode.inputInstr(); values.add(ProgramAddress.ofScode(Type.T_RADDR)); break;
 				case Scode.S_C_OADDR:  Scode.inputInstr(); values.add(ObjectAddress.ofScode()); break;
-				case Scode.S_C_GADDR:  Scode.inputInstr(); values.add(GeneralAddress.ofScode()); break;
-				case Scode.S_C_DOT:    Scode.inputInstr(); values.add(DotAddress.ofScode()); break;
 				case Scode.S_C_RECORD: Scode.inputInstr(); values.add(RecordValue.ofScode()); break;
-				default: break LOOP;
+				case Scode.S_C_DOT:
+//					Scode.inputInstr(); values.add(DotAddress.ofScode()); break;
+					Scode.inputInstr();
+					Value dotAddr = DotAddress.ofScode();
+					if(dotAddr instanceof GeneralAddress gaddr) {
+						values.add(gaddr.base);
+						values.add(IntegerValue.of(Type.T_INT, gaddr.ofst));						
+					} else if(dotAddr instanceof GeneralAddress oaddr) {
+						values.add(oaddr);
+					} else if(dotAddr instanceof IntegerValue aaddr) {
+						values.add(aaddr);
+					} else Util.IERR(""+dotAddr.getClass().getSimpleName());
+					break;
+				case Scode.S_C_GADDR:
+					Scode.inputInstr();
+					GeneralAddress gaddr = GeneralAddress.ofScode();
+					values.add(gaddr.base);
+					values.add(IntegerValue.of(Type.T_INT, gaddr.ofst));
+					break;
+				default:
+//					System.out.println("RepetitionValue.ofScode: TERMINATED BY "+Scode.edInstr(Scode.nextByte()));
+					break LOOP;
 			}
 		}
 		return new RepetitionValue(values);
 	}
 	
-
-//	@Override
-//	public void print(final String indent) {
+	public static RepetitionValue NEW_ofScode() {
+		Vector<Value> values = new Vector<Value>();
+		while(addValue(values)) {
+			System.out.println("RepetitionValue.ofScode: NEXT INSTR-3: " + Scode.edInstr(Scode.nextByte()));
+		}
+		return new RepetitionValue(values);
+	}
+	
+	
+	private static boolean addValue(Vector<Value> values) {
+			System.out.println("RepetitionValue.ofScode: "+Scode.edInstr(Scode.nextByte()));
+			switch(Scode.nextByte()) {
+				case Scode.S_TEXT:     Scode.inputInstr(); values.add(TextValue.ofScode()); break; // LOOP;
+				case Scode.S_C_INT:    Scode.inputInstr(); values.add(IntegerValue.ofScode_INT()); break;
+				case Scode.S_C_CHAR:   Scode.inputInstr(); values.add(IntegerValue.ofScode_CHAR()); break;
+				case Scode.S_C_SIZE:   Scode.inputInstr(); values.add(IntegerValue.ofScode_SIZE()); break;
+				case Scode.S_C_REAL:   Scode.inputInstr(); values.add(RealValue.ofScode()); break;
+				case Scode.S_C_LREAL:  Scode.inputInstr(); values.add(LongRealValue.ofScode()); break;
+				case Scode.S_TRUE:     Scode.inputInstr(); values.add(BooleanValue.of(true)); break;
+				case Scode.S_FALSE:    Scode.inputInstr(); values.add(BooleanValue.of(false)); break;
+				case Scode.S_NOSIZE:   Scode.inputInstr(); values.add(null); break;
+				case Scode.S_ANONE:    Scode.inputInstr();
+									   System.out.println("RepetitionValue.ofScode: ANONE ==> null");
+									   values.add(null); break;
+				case Scode.S_NOWHERE:  Scode.inputInstr(); values.add(null); break;
+				case Scode.S_NOBODY:   Scode.inputInstr(); values.add(null); break;
+				case Scode.S_ONONE:    Scode.inputInstr(); values.add(null); break;
+				case Scode.S_GNONE:    Scode.inputInstr(); values.add(null); values.add(null); break;
+				case Scode.S_C_AADDR:  Scode.inputInstr(); values.add(IntegerValue.ofScode_AADDR()); break;
+				case Scode.S_C_PADDR:  Scode.inputInstr(); values.add(ProgramAddress.ofScode(Type.T_PADDR)); break;
+				case Scode.S_C_RADDR:  Scode.inputInstr(); values.add(ProgramAddress.ofScode(Type.T_RADDR)); break;
+				case Scode.S_C_OADDR:  Scode.inputInstr(); values.add(ObjectAddress.ofScode()); break;
+				case Scode.S_C_RECORD: Scode.inputInstr(); values.add(RecordValue.ofScode()); break;
+				case Scode.S_C_DOT:
+//					Scode.inputInstr(); values.add(DotAddress.ofScode()); break;
+					Scode.inputInstr();
+					Value dotAddr = DotAddress.ofScode();
+					if(dotAddr instanceof GeneralAddress gaddr) {
+						values.add(gaddr.base);
+						values.add(IntegerValue.of(Type.T_INT, gaddr.ofst));						
+					} else if(dotAddr instanceof GeneralAddress oaddr) {
+						values.add(oaddr);
+					} else if(dotAddr instanceof IntegerValue aaddr) {
+						values.add(aaddr);
+					} else Util.IERR(""+dotAddr.getClass().getSimpleName());
+					
+//					Scode.inputInstr();
+//					Util.IERR("DETTE MÅ TESTES: "+Scode.edInstr(Scode.curinstr));
+					System.out.println("RepetitionValue.ofScode: NEXT INSTR-2: " + Scode.edInstr(Scode.nextByte()));
+					return true;
+				case Scode.S_C_GADDR:
+					Scode.inputInstr();
+					GeneralAddress gaddr = GeneralAddress.ofScode();
+					values.add(gaddr.base);
+					values.add(IntegerValue.of(Type.T_INT, gaddr.ofst));
+					break;
+				default:
+					System.out.println("RepetitionValue.ofScode: TERMINATED BY "+Scode.edInstr(Scode.nextByte()));
+					return false;
+			}
+			System.out.println("RepetitionValue.ofScode: NEXT INSTR-3: " + Scode.edInstr(Scode.nextByte()));
+			return true;
+	}
+	
+	
+	@Override
+	public void emit(DataSegment dseg, String comment) {
+		for(Value value:values) {
+			if(value == null)
+				 dseg.emit(null, comment);
+			else value.emit(dseg, comment);
+		}
+	}
+	
+	@Override
+	public void print(final String indent) {
 //		System.out.println(indent + toString());
-//	}
+		for(Value value:values) value.print(indent);
+//		Util.IERR("");
+	}
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();

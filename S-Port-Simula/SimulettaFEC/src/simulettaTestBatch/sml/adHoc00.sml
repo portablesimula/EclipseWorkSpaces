@@ -1,25 +1,19 @@
 begin
---   SYSINSERT envir,modl1;
-   SYSINSERT RT,SYSR,KNWN,UTIL;    
+   SYSINSERT RT,SYSR,KNWN,UTIL;--,STRG,CENT;
 
-		integer i,j;
- 
- 		j:=44;
-	BB:
-	    -- Forward Jumps
-%		ED_STR("BB: Forward Jump: j="); ED_INT(j); trace(get_ed);
- 		if j=44 then goto FF endif;
-	    i:=88;
-	    goto EE;
+   const infix(string) PROGRAM_NAME ="SIMULETTA TEST NO 30";
+       
+   const infix(txtent: 10 ) ent1 = record:txtent
+       (sl=none, sort=S_TXTENT, misc=1, ncha = 10 , cha = ('A','B','C') )
+   
+   infix(string) src;
+   infix(txtqnt) txt;
+   integer tpos;
 
-	    -- Backward Jumps
-	FF:
-%		ED_STR("FF: Backward Jump: j="); ED_INT(j); trace(get_ed);
-	    j:=0;
-%		ED_STR("Backward Jump: j="); ED_INT(j); trace(get_ed);
-	    goto BB;
-	    i:=88;
-    EE: 
-		
+		PRINTO(0,PROGRAM_NAME,1); -- SKAL VÆRE: "ABC"
+        
+        txt.ent:=ref(ent1);
+        src.chradr:=name(txt.ent.cha(tpos));   src.nchr:=3;
+		PRINTO(0,src,1); -- SKAL VÆRE: "ABC"
 
  end;

@@ -67,7 +67,6 @@ public class Scode {
 	
 	public static void flushTraceBuff() {
 		if(Global.SCODE_INPUT_TRACE) System.out.println(traceBuff);	
-		traceBuff = null;
 		if(Global.PRINT_GENERATED_SVM_CODE) {
 			if(Global.PSEG != null) Global.PSEG.listInstructions();
 		}
@@ -76,6 +75,7 @@ public class Scode {
 	public static void close() {
 //		if(Global.SCODE_INPUT_TRACE) System.out.println(traceBuff);	
 		flushTraceBuff();
+		traceBuff = null;
 	}
 	
 	public static int nextByte() {

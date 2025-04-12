@@ -82,6 +82,21 @@ public class Relation {
 		return res;
 	}
 	
+	public static boolean compare(int LHS, int relation, int RHS) {
+		boolean res = false;
+		switch(relation) {
+			case Scode.S_LT: res = LHS <  RHS; break;
+			case Scode.S_LE: res = LHS <= RHS; break;
+			case Scode.S_EQ: res = LHS == RHS; break;
+			case Scode.S_GE: res = LHS >= RHS; break;
+			case Scode.S_GT: res = LHS >  RHS; break;
+			case Scode.S_NE: res = LHS != RHS; break;
+		}
+//		System.out.println("Segment.compare: " + LHS + " " + Scode.edInstr(relation) + " " + RHS + " ==> " + res);
+//		Util.IERR("");
+		return res;		
+	}
+	
 	public String toString() {
 		return Scode.edInstr(relation);
 	}

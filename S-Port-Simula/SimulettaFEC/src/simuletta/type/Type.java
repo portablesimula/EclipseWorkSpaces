@@ -585,7 +585,8 @@ public class Type implements Externalizable {
 		if(this.equals(Type.Real))     { sCode.outinst(S_C_REAL); sCode.outstring("0"); }
 		if(this.equals(Type.Integer))  { sCode.outinst(S_C_INT); sCode.outstring("0"); }
 		if(this.equals(Type.Boolean)) { sCode.outinst(S_FALSE); }
-		if(this.equals(Type.Character)) { sCode.outinst(S_C_CHAR); sCode.outbyt((int)(' ')); }
+//		if(this.equals(Type.Character)) { sCode.outinst(S_C_CHAR); sCode.outbyt((int)(' ')); }
+		if(this.equals(Type.Character)) { sCode.outinst(S_C_CHAR); sCode.outbyt(0); }
 		if(this.equals(Type.Size)) { sCode.outinst(S_NOSIZE); }
 		if(this.equals(Type.Label)) { sCode.outinst(S_NOWHERE); }
 		if(this.getKeyWord()==KeyWord.ENTRY) { sCode.outinst(S_NOBODY); }
@@ -597,7 +598,7 @@ public class Type implements Externalizable {
 //			Record rec=getRecord(qual);
 			Record rec=(Record) Declaration.findMeaning(qual);
 
-			System.out.println("Type.toDefaultSCode: code="+rec.getTag().getCode());
+//			System.out.println("Type.toDefaultSCode: code="+rec.getTag().getCode());
 //			if(rec.getTag().getCode()==94) {
 //				Util.STOP();
 //			}

@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
+import bec.segment.DataSegment;
 import bec.util.Scode;
 import bec.util.Type;
 import bec.util.Util;
@@ -18,7 +19,13 @@ public class Value {
 	 */
 	public void print(final String indent) {
 		System.out.println(this.getClass().getSimpleName() + ".print: " +  toString());
-		Thread.dumpStack();
+//		Util.IERR("Method 'print' need a redefinition in " + this.getClass().getSimpleName());
+//		Thread.dumpStack();
+	}
+
+	public void emit(DataSegment dseg, String comment) {
+		Util.IERR("Method 'emit' need a redefinition in " + this.getClass().getSimpleName());
+//		return null;
 	}
 
 	public Value copy() {

@@ -4,10 +4,13 @@ import java.io.IOException;
 
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
+import bec.descriptor.Kind;
+import bec.segment.DataSegment;
 import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Type;
 import bec.util.Util;
+import bec.virtualMachine.SVM_PUSHC;
 
 public class TextValue extends Value {
 	public ObjectAddress addr; // Pointer to a sequence of Characters.
@@ -27,7 +30,11 @@ public class TextValue extends Value {
 		String str = Scode.inLongString();
 
 		TextValue txtval = new TextValue();
-		txtval.addr = Global.CSEG.emitChars(str, "Part of: "+str);			
+//		TSEG = new DataSegment("TSEG_" + sourceID, Kind.K_SEG_CONST);
+		if(Global.TSEG == null) Global.TSEG = new DataSegment("TSEG", Kind.K_SEG_CONST);
+
+//		txtval.addr = Global.CSEG.emitChars(str, "Part of: "+str);			
+		txtval.addr = Global.TSEG.emitChars(str, "Part of: "+str);			
 		txtval.length = str.length();
 		if(DEBUG) {
 			System.out.println("TextValue.ofScode: str="+str+"  ==> "+txtval);
@@ -49,6 +56,13 @@ public class TextValue extends Value {
 		}
 		Util.IERR(""+sb);
 		return sb.toString();
+	}
+	
+	@Override
+	public void emit(DataSegment dseg, String comment) {
+		dseg.emit(this.addr, "TEXT'CHRADR'oaddr: " + comment);
+		dseg.emit(null, "TEXT'CHRADR'ofst:  " + comment);
+		dseg.emit(IntegerValue.of(Type.T_INT, length), "TEXT'lng:   " + comment);
 	}
 	
 	public String toString() {

@@ -91,6 +91,11 @@ public class ObjectAddress extends Value {
 		return new ObjectAddress(segID, this.ofst + ofst);
 	}
 	
+	@Override
+	public void emit(DataSegment dseg, String comment) {
+		dseg.emit(this, comment);
+	}
+	
 	public void store(int idx, Value value, String comment) {
 		if(segID == null) {
 			// store rel-addr  callStackTop + ofst
@@ -160,12 +165,29 @@ public class ObjectAddress extends Value {
 		}
 	}
 
-//	public void execute() {
-//		ProgramSegment seg = (ProgramSegment) segment();
-//		SVM_Instruction cur = seg.instructions.get(ofst);
-////		System.out.println("MemAddr.execute: " + cur);
-//		cur.execute();
+	@Override
+	public boolean compare(int relation, Value other) {
+		String RHSegID = (other == null)? null : ((ObjectAddress)other).segID;
+		int rhs = (other == null)? 0 : ((ObjectAddress)other).ofst;
+		return Segment.compare(segID, ofst, relation, RHSegID, rhs);
+	}
+
+//	@Override
+//	public boolean compare(int relation, Value other) {
+//		int LHS = this.getOfst();
+//		int RHS = (other == null)? 0 : ((ObjectAddress)other).getOfst();
+//		boolean res = false;
+//		switch(relation) {
+//			case Scode.S_LT: res = LHS <  RHS; break;
+//			case Scode.S_LE: res = LHS <= RHS; break;
+//			case Scode.S_EQ: res = LHS == RHS; break;
+//			case Scode.S_GE: res = LHS >= RHS; break;
+//			case Scode.S_GT: res = LHS >  RHS; break;
+//			case Scode.S_NE: res = LHS != RHS; break;
+//		}
+////		System.out.println("IntegerValue.compare: " + LHS + " " + Scode.edInstr(relation) + " " + RHS + " ==> " + res);
 ////		Util.IERR("");
+//		return res;
 //	}
 	
 	public String toString() {

@@ -34,6 +34,7 @@ public class SVM_PUSH extends SVM_Instruction {
 			// this.addr is Stack Relative Address
 			ObjectAddress oaddr = RTStack.popOADDR();
 			addr = new RTAddress(oaddr, addr.offset);
+			addr.xReg = this.addr.xReg;
 		}
 			
 //		System.out.println("SVM_PUSH: addr=" + addr+", size="+size);

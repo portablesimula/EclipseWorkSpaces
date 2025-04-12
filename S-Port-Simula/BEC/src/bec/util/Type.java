@@ -77,8 +77,8 @@ public class Type {
 		Type type = TMAP.get(rec.tag.val);
 		if(type == null) Util.IERR("Type.recType: UNKNOWN: " + rec);
 		
-		rec.print("Type.lookupType: ");
-		System.out.println("Type.lookupType: type=" + type);
+//		rec.print("Type.lookupType: ");
+//		System.out.println("Type.lookupType: type=" + type);
 		
 		return type;
 	}

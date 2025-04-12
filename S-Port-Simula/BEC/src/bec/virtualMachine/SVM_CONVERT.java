@@ -44,12 +44,9 @@ public class SVM_CONVERT extends SVM_Instruction {
 			System.out.println("SVM_CONVERT.execute: fromValue="+fromValue+"  ==> " + toType);
 		}
 
-//		RTStackItem item = RTStack.pop();
-//		Value fromValue = item.value();
 		Value toValue = CONVERT.convValue(fromValue, fromType, toType);
 		RTStack.push(toValue, "CONVERT: ");
 		Global.PSC.ofst++;
-//		Util.IERR("");
 	}
 	
 	public String toString() {

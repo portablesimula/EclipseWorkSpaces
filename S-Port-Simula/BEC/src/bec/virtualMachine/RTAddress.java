@@ -18,7 +18,7 @@ import bec.virtualMachine.RTStack.RTStackItem;
 public class RTAddress extends Value {
 	String segID; // null: RelAddr
 	public int offset;
-	private int xReg; // 0: no index register
+	public int xReg; // 0: no index register
 	public boolean withRemoteBase;
 	
 	private static final boolean DEBUG = false;
@@ -116,8 +116,14 @@ public class RTAddress extends Value {
 	}
 	
 	public void store(int idx, Value value, String comment) {
+		if(DEBUG) System.out.println("RTAddress.store: " + value + " ==> " + this + ", idx=" + idx);
 		if(segID == null) {
 			Value xRegValue = xRegValue();
+			if(DEBUG) {
+				if(xRegValue == null)
+					 System.out.println("RTAddress.store: xRegValue=null");
+				else System.out.println("RTAddress.store: xRegValue=" + xRegValue.getClass().getSimpleName() + " " + xRegValue);
+			}
 			if(xRegValue instanceof ObjectAddress oaddr) {
 				if(DEBUG) {
 					oaddr.segment().dump("RTAddress.store: ");

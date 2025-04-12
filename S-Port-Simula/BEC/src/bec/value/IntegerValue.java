@@ -6,7 +6,9 @@ import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.descriptor.Attribute;
 import bec.descriptor.Variable;
+import bec.segment.DataSegment;
 import bec.util.Global;
+import bec.util.Relation;
 import bec.util.Scode;
 import bec.util.Tag;
 import bec.util.Type;
@@ -63,6 +65,11 @@ public class IntegerValue extends Value {
 	public static int intValue(IntegerValue val) {
 		if(val == null) return 0;
 		return val.value;
+	}
+	
+	@Override
+	public void emit(DataSegment dseg, String comment) {
+		dseg.emit(this, comment);
 	}
 
 	@Override
@@ -152,27 +159,28 @@ public class IntegerValue extends Value {
 	public boolean compare(int relation, Value other) {
 		int LHS = this.value;
 		int RHS = (other == null)? 0 : ((IntegerValue)other).value;
-		boolean res = false;
-		switch(relation) {
-			case Scode.S_LT: res = LHS <  RHS; break;
-			case Scode.S_LE: res = LHS <= RHS; break;
-			case Scode.S_EQ: res = LHS == RHS; break;
-			case Scode.S_GE: res = LHS >= RHS; break;
-			case Scode.S_GT: res = LHS >  RHS; break;
-			case Scode.S_NE: res = LHS != RHS; break;
-		}
-//		System.out.println("IntegerValue.compare: " + LHS + " " + Scode.edInstr(relation) + " " + RHS + " ==> " + res);
-//		Util.IERR("");
-		return res;
+		return Relation.compare(LHS, relation, RHS);
+//		boolean res = false;
+//		switch(relation) {
+//			case Scode.S_LT: res = LHS <  RHS; break;
+//			case Scode.S_LE: res = LHS <= RHS; break;
+//			case Scode.S_EQ: res = LHS == RHS; break;
+//			case Scode.S_GE: res = LHS >= RHS; break;
+//			case Scode.S_GT: res = LHS >  RHS; break;
+//			case Scode.S_NE: res = LHS != RHS; break;
+//		}
+////		System.out.println("IntegerValue.compare: " + LHS + " " + Scode.edInstr(relation) + " " + RHS + " ==> " + res);
+////		Util.IERR("");
+//		return res;
 	}
 
 	public String toString() {
 		if(type == null) return ""+value;
 		switch(type.tag) {
-			case Scode.TAG_INT:   return "C-INT "   + value;
-			case Scode.TAG_CHAR:  return "C-CHAR "  + (char)value;
-			case Scode.TAG_SIZE:  return "C-SIZE "  + value;
-			case Scode.TAG_AADDR: return "C-AADDR " + value;
+			case Scode.TAG_INT:   return "INT:"   + value;
+			case Scode.TAG_CHAR:  return "CHAR:"  + (char)value;
+			case Scode.TAG_SIZE:  return "SIZE:"  + value;
+			case Scode.TAG_AADDR: return "FIELD:" + value;
 			default: return "C-" +type + " " + value; 
 		}
 	}

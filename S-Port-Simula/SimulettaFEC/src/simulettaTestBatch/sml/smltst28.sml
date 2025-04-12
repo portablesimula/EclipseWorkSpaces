@@ -1,5 +1,4 @@
 begin
---   SYSINSERT envir,modl1;
    SYSINSERT RT,SYSR,KNWN,UTIL;    
 -- ===============================================   Main   program =============
 --
@@ -16,24 +15,24 @@ begin
       "TEST: z1.rr=(0.00,0.00) AND: z2.rr=(0.00,3.14)",
       "TEST: z1.ii=(55,0) AND: z2.ii=(0,888)",
       "TEST: z1.cc=(0,0) AND: z2.cc=(A,B)",
-      "TEST: z1.zz=(0,0) AND: z2.zz=(8,0)",
+      "TEST: z1.zz=(0,0) AND: z2.zz=(9,0)",
       "TEST: z1.bb=(false,false) AND: z2.bb=(false,true)",
       "TEST: z3.ff=0.0,TEST: z3.lv2=( (A,B), lv3=(X,Y) )",
-      "TEST: z4.ff=(FIELD:2,NOFIELD)",
-      "TEST: z5.ff=(FIELD:4,NOFIELD)",
-      "TEST: z6.nn=(smltst28_CONST[102+0],GNONE,GNONE)",
-      "TEST: z7.nn=(GADDR[smltst28_CONST[102+0]+rela=2],GNONE,GNONE)",
-      "TEST: z8.nn=(GADDR[smltst28_CONST[102+0]+rela=2],GNONE,GNONE)",
-      "TEST: z9.nn=(GADDR[smltst28_CONST[102+0]+rela=4],GNONE,GNONE)",
-      "TEST: w1.lab=(smltst28[15],smltst28[25],NOWHERE)",
+      "TEST: z4.ff=(FIELD:3,NOFIELD)",
+      "TEST: z5.ff=(FIELD:5,NOFIELD)",
+      "TEST: z6.nn=(CSEG_SMLTST28[141][0],GNONE,GNONE)",
+      "TEST: z7.nn=(CSEG_SMLTST28[141][3],GNONE,GNONE)",
+      "TEST: z8.nn=(CSEG_SMLTST28[141][3],GNONE,GNONE)",
+      "TEST: z9.nn=(CSEG_SMLTST28[141][5],GNONE,GNONE)",
+      "TEST: w1.lab=(PSEG_SMLTST28[15],PSEG_SMLTST28[23],NOWHERE)",
       "TEST: w1.entr=(NOBODY,NOBODY,NOBODY)",
       "TEST: w1.pnt=(NONE,NONE,NONE)",
       "TEST: w2.lab=(NOWHERE,NOWHERE,NOWHERE)",
-      "TEST: w2.entr=(smltst28$ROUTINEBODY[0],NOBODY,NOBODY)",
+      "TEST: w2.entr=(PSEG_ROUTINEBODY[0],NOBODY,NOBODY)",
       "TEST: w2.pnt=(NONE,NONE,NONE)",
       "TEST: w3.lab=(NOWHERE,NOWHERE,NOWHERE)",
       "TEST: w3.entr=(NOBODY,NOBODY,NOBODY)",
-      "TEST: w3.pnt=(smltst28_DATA[14+0],NONE,NONE)",
+      "TEST: w3.pnt=(DSEG_SMLTST28[7],NONE,NONE)",
       "END TEST"
    );
    
@@ -87,7 +86,8 @@ begin
 	entry(routineProfile) routineRef;
 	infix(string) res;
 
-   Visible global profile routineProfile;
+%   Visible global profile routineProfile;
+   Visible profile routineProfile;
     import integer eno; ref() fil;
            export infix(string) res;
    end;
@@ -135,14 +135,19 @@ LL2:
       
         ED_STR("TEST: z1.ss=("); ED_STR(z1.ss); ED_CHA(','); ED_STR(z1.ss(1)); ED_CHA(','); ED_STR(z1.ss(2)); ED_CHA(')');
         ED_STR(" AND: z2.ss=("); ED_STR(z2.ss); ED_CHA(','); ED_STR(z2.ss(1)); ED_CHA(','); ED_STR(z2.ss(2)); ED_CHA(')'); trace(get_ed);
+        
         ED_STR("TEST: z1.rr=("); ED_FIX(z1.rr,2); ED_CHA(','); ED_FIX(z1.rr(1),2); ED_CHA(')');
         ED_STR(" AND: z2.rr=("); ED_FIX(z2.rr,2); ED_CHA(','); ED_FIX(z2.rr(1),2); ED_CHA(')'); trace(get_ed);
+        
         ED_STR("TEST: z1.ii=("); ED_INT(z1.ii); ED_CHA(','); ED_INT(z1.ii(1)); ED_CHA(')');
         ED_STR(" AND: z2.ii=("); ED_INT(z2.ii); ED_CHA(','); ED_INT(z2.ii(1)); ED_CHA(')'); trace(get_ed);
+        
         ED_STR("TEST: z1.cc=("); ED_INT(z1.cc qua integer); ED_CHA(','); ED_INT(z1.cc(1) qua integer); ED_CHA(')');
         ED_STR(" AND: z2.cc=("); ED_CHA(z2.cc); ED_CHA(','); ED_CHA(z2.cc(1)); ED_CHA(')'); trace(get_ed);
+        
         ED_STR("TEST: z1.zz=("); ED_SIZE(z1.zz); ED_CHA(','); ED_SIZE(z1.zz(1)); ED_CHA(')');
         ED_STR(" AND: z2.zz=("); ED_SIZE(z2.zz); ED_CHA(','); ED_SIZE(z2.zz(1)); ED_CHA(')'); trace(get_ed);
+        
         ED_STR("TEST: z1.bb=("); ED_BOOL(z1.bb); ED_CHA(','); ED_BOOL(z1.bb(1)); ED_CHA(')');
         ED_STR(" AND: z2.bb=("); ED_BOOL(z2.bb); ED_CHA(','); ED_BOOL(z2.bb(1)); ED_CHA(')'); trace(get_ed);
         

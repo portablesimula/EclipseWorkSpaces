@@ -83,7 +83,9 @@ public class RoutineDescr extends Descriptor {
 		
 		RoutineDescr rut = (RoutineDescr) Global.DISPL.get(tag.val);
 		if(rut == null) rut = new RoutineDescr(Kind.K_IntRoutine, tag, prftag);
-		String id = Global.moduleID + '_' + prftag.ident();
+//		String id = Global.moduleID + '_' + prftag.ident();
+		String modID = (Global.moduleID == null)? "" : (Global.moduleID + '_');
+		String id = modID + tag.ident();
 		
 		DataSegment prevDSEG = null;
 		if(! CALL.USE_FRAME_ON_STACK) {

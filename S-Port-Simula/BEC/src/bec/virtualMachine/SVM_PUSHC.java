@@ -6,11 +6,12 @@ import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Util;
+import bec.value.ProgramAddress;
 import bec.value.Value;
 
 //The value is pushed onto the operand stack.
 public class SVM_PUSHC extends SVM_Instruction {
-	Value value;
+	private Value value;
 	
 	public SVM_PUSHC(Value value) {
 		this.opcode = SVM_Instruction.iPUSHC;

@@ -38,7 +38,7 @@ public class SVM_CALL extends SVM_Instruction {
 
 		if(rutAddr == null) {
 			// CALL-TOS
-			Global.PSC = (ProgramAddress) RTStack.pop().value();
+			Global.PSC = (ProgramAddress) RTStack.pop().value().copy();
 //			System.out.println("SVM_CALL.execute: PSC="+Global.PSC);
 		} else Global.PSC = rutAddr.copy();
 		RTStack.push(retur, "RETUR");
@@ -46,6 +46,8 @@ public class SVM_CALL extends SVM_Instruction {
 	
 	@Override	
 	public String toString() {
+		if(rutAddr == null)
+		return "CALL     TOS Return=" + returSlot;
 		return "CALL     " + rutAddr + " Return=" + returSlot;
 	}
 

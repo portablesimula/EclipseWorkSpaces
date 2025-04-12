@@ -107,42 +107,20 @@ public class ProfileDescr extends Descriptor {
 		}
 		prf.imports = new Vector<Variable>();
 		prf.params = new Vector<Tag>();
-		
-		if(! CALL.USE_FRAME_ON_STACK) {
-			if(prf.DSEG == null) {
-//				prf.DSEG = new DataSegment("DSEG_" + Global.moduleID + '_' + ptag.ident(), Kind.K_SEG_DATA);
-				prf.DSEG = new DataSegment(prf.dsegIdent(), Kind.K_SEG_DATA);
-//				System.out.println("ProfileDescr.ofProfile: SET-DSEG: DSEG="+prf.DSEG.ident + " PTAG="+ptag);
-			}
-			prf.returSlot = prf.DSEG.nextAddress();
-			prf.DSEG.emit(null, "RETUR");
-		}
 
 		Scode.inputInstr();
 		while(Scode.curinstr == Scode.S_IMPORT) {
 			Variable par = null;
-			if(CALL.USE_FRAME_ON_STACK) {
-				par = Variable.ofIMPORT();				
-			} else {
-				par = Variable.ofIMPORT(prf.DSEG);
-			}
+			par = Variable.ofIMPORT();				
 			prf.imports.add(par);
 			prf.params.add(par.tag);
 			Scode.inputInstr();
 		}
 		if(Scode.curinstr == Scode.S_EXIT) {
-			if(CALL.USE_FRAME_ON_STACK) {
-				prf.exit = Variable.ofEXIT();
-			} else {
-				prf.exit = Variable.ofEXIT(prf.returSlot);
-			}
+			prf.exit = Variable.ofEXIT();
 			Scode.inputInstr();
 		} else if(Scode.curinstr == Scode.S_EXPORT) {
-			if(CALL.USE_FRAME_ON_STACK) {
-				prf.export = Variable.ofEXPORT();				
-			} else {
-				prf.export = Variable.ofEXPORT(prf.DSEG);
-			}
+			prf.export = Variable.ofEXPORT();				
 			prf.exportTag = prf.export.tag;
 			Scode.inputInstr();
 		}
@@ -150,31 +128,28 @@ public class ProfileDescr extends Descriptor {
 		if(Scode.curinstr != Scode.S_ENDPROFILE)
 			Util.IERR("Missing ENDPROFILE. Got " + Scode.edInstr(Scode.curinstr));
 		
-		if(CALL.USE_FRAME_ON_STACK) {
-			// Allocate StackFrame
-			int rela = 0;
-			if(prf.export != null) {
-				prf.export.address = new ObjectAddress(null, rela);
-				prf.exportSize = prf.export.type.size();
-				rela += prf.exportSize;
-			}
-			for(Variable par:prf.imports) {
-				par.address = new ObjectAddress(null, rela);
-				rela += par.type.size() * par.repCount;
-			}
-			// Allocate Return address
-			prf.returSlot = new ObjectAddress(null, rela++);
-			
-			if(prf.exit != null) {
-//				Util.IERR("NOT IMPL");				
-			}
-			
-			if(DEBUG) {
-				prf.print("ProfileDescr.ofProfile: PROFILE: ");
-//				Util.IERR("NOT IMPL");
-			}
-			prf.frameSize = rela;
-		}		
+		// Allocate StackFrame
+		int rela = 0;
+		if(prf.export != null) {
+			prf.export.address = new ObjectAddress(null, rela);
+			prf.exportSize = prf.export.type.size();
+			rela += prf.exportSize;
+		}
+		for(Variable par:prf.imports) {
+			par.address = new ObjectAddress(null, rela);
+			rela += par.type.size() * par.repCount;
+		}
+		// Allocate Return address
+		prf.returSlot = new ObjectAddress(null, rela++);
+		
+		if(prf.exit != null) {
+			prf.exit.address = prf.returSlot;
+		}
+		
+		if(DEBUG) {
+			prf.print("ProfileDescr.ofProfile: PROFILE: ");
+		}
+		prf.frameSize = rela;
 //		prf.print("ProfileDescr.ofProfile: ");
 		return prf;
 	}

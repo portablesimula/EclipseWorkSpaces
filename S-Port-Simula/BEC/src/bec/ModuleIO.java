@@ -50,6 +50,7 @@ public class ModuleIO {
 		
 //		Segment.writeSegments(modoupt);
 		Global.CSEG.write(modoupt);
+		Global.TSEG.write(modoupt);
 		Global.DSEG.write(modoupt);
 		Global.PSEG.write(modoupt);
 

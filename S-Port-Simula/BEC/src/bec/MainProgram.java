@@ -43,6 +43,7 @@ public class MainProgram extends S_Module {
 
 		String sourceID = Global.getSourceID();
 		Global.CSEG = new DataSegment("CSEG_" + sourceID, Kind.K_SEG_CONST);
+		Global.TSEG = new DataSegment("TSEG_" + sourceID, Kind.K_SEG_CONST);
 		Global.DSEG = new DataSegment("DSEG_" + sourceID, Kind.K_SEG_DATA);
 		Global.PSEG = new ProgramSegment("PSEG_" + sourceID, Kind.K_SEG_CODE);
 		ProgramAddress mainEntry = Global.PSEG.nextAddress();
@@ -62,6 +63,7 @@ public class MainProgram extends S_Module {
 		
 		if(Global.PRINT_GENERATED_SVM_CODE) {
 			Global.CSEG.dump("END MainProgram: ");
+			Global.TSEG.dump("END MainProgram: ");
 			Global.DSEG.dump("END MainProgram: ");
 			Global.PSEG.dump("END MainProgram: ");
 		}

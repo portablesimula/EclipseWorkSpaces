@@ -1,6 +1,8 @@
 package bec.value;
 
 import bec.descriptor.Attribute;
+import bec.descriptor.ConstDescr;
+import bec.descriptor.Descriptor;
 import bec.descriptor.Variable;
 import bec.util.Global;
 import bec.util.Scode;
@@ -37,13 +39,25 @@ public abstract class DotAddress {
 		switch(terminator) {
 			case Scode.S_C_AADDR:{
 				Attribute attr = (Attribute) Global.getMeaning(globalOrConstTag);
-//				System.out.println("DotAddress.ofScode: " + attr + "  offset="+offset+attr.rela);
+//				System.out.println("DotAddress.ofScode: AADDR: " + attr + "  offset="+(offset+attr.rela) + " = " + offset + " + " + attr.rela);
+//				System.out.println("DotAddress.ofScode: NEXT INSTR: " + Scode.edInstr(Scode.nextByte()));
 //				Util.IERR("SJEKK DETTE");
 				return IntegerValue.of(Type.T_AADDR, offset + attr.rela);
 			}
 			case Scode.S_C_GADDR:{
-				Variable var = (Variable) Global.getMeaning(globalOrConstTag);
-				return new GeneralAddress(var.address, offset);
+//				Variable var = (Variable) Global.getMeaning(globalOrConstTag);
+//				return new GeneralAddress(var.address, offset);
+				Descriptor descr = Global.getMeaning(globalOrConstTag);
+				if(descr == null) Util.IERR("IMPOSSIBLE: TESTING FAILED");
+				if(descr instanceof Variable var) {
+//					System.out.println("DotAddress.ofScode: var.address="+var.address);
+					return new GeneralAddress(var.address, offset);
+				} else if(descr instanceof ConstDescr cns) {
+//					System.out.println("DotAddress.ofScode: cns.address="+cns.address);
+					return new GeneralAddress(cns.address, offset);
+				}
+				Util.IERR("NOT IMPL: " + descr.getClass().getSimpleName());
+				return null;
 			}
 		}
 		Util.IERR("Illegal termination of C-DOT value");

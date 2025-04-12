@@ -17106,3 +17106,547 @@ java.lang.IllegalArgumentException: negative length=-43 startPosition= 473
 	at org.eclipse.jdt.internal.ui.text.JavaCompositeReconcilingStrategy.reconcile(JavaCompositeReconcilingStrategy.java:107)
 	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:78)
 	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:207)
+
+!ENTRY org.eclipse.jdt.ui 4 0 2025-04-07 08:32:03.087
+!MESSAGE ArrayIndexOutOfBoundsException computing hover information in CONVERT.java at offset 5288
+!STACK 0
+java.lang.ArrayIndexOutOfBoundsException: arraycopy: last source index 3 out of bounds for object array[2]
+	at java.base/java.lang.System.arraycopy(Native Method)
+	at org.eclipse.jdt.internal.ui.text.java.hover.JavaSourceHover.getBracketHoverInfo(JavaSourceHover.java:608)
+	at org.eclipse.jdt.internal.ui.text.java.hover.JavaSourceHover.getHoverInfo(JavaSourceHover.java:437)
+	at org.eclipse.jdt.internal.ui.text.java.hover.JavaSourceHover.getHoverInfo2(JavaSourceHover.java:399)
+	at org.eclipse.jdt.internal.ui.text.java.hover.BestMatchHover.getHoverInfo2(BestMatchHover.java:165)
+	at org.eclipse.jdt.internal.ui.text.java.hover.BestMatchHover.getHoverInfo2(BestMatchHover.java:131)
+	at org.eclipse.jdt.internal.ui.text.java.hover.JavaEditorTextHoverProxy.getHoverInfo2(JavaEditorTextHoverProxy.java:89)
+	at org.eclipse.jface.text.TextViewerHoverManager$1.run(TextViewerHoverManager.java:155)
+	Suppressed: java.lang.Throwable: Source line 144 :
+-----
+			case Scode.TAG_OADDR:  toValue = gaddr.base; break;
+			case Scode.TAG_AADDR:  toValue = IntegerValue.of(Type.T_AADDR, gaddr.ofst); break;
+			}			
+//			Util.IERR("NOT IMPL");
+		} break;
+		default: toValue = null;
+		}
+		if(DEBUG) System.out.println("CONVERT.convValue: " + fromValue + " ==> " + toValue + ", type=" + totype);
+		if(toValue == null) Util.ERROR("convValue: conversion is undefined: " + fromtype + " ==> " + totype);
+		return toValue;
+	|}
+-----
+		at org.eclipse.jdt.internal.ui.util.SelectionUtil.logException(SelectionUtil.java:157)
+		at org.eclipse.jdt.internal.ui.text.java.hover.BestMatchHover.getHoverInfo2(BestMatchHover.java:178)
+		... 3 more
+!SESSION 2025-04-09 07:53:58.342 -----------------------------------------------
+eclipse.buildId=4.35.0.20250306-0811
+java.version=24
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=no_NO
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY ch.qos.logback.classic 1 0 2025-04-09 07:54:01.227
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY org.eclipse.core.resources 2 10035 2025-04-09 07:54:05.512
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY ch.qos.logback.classic 1 0 2025-04-09 07:54:06.277
+!MESSAGE Logback config file: C:\GitHub\EclipseWorkSpaces\S-Port-Simula\.metadata\.plugins\org.eclipse.m2e.logback\logback.2.7.0.20241001-1350.xml
+
+!ENTRY org.eclipse.egit.ui 2 0 2025-04-09 07:54:11.373
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\omyhr'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.ui.workbench 4 0 2025-04-09 07:54:12.649
+!MESSAGE Failed to obtain 'WinDefend' service state
+!STACK 0
+java.io.IOException: Process timed-out and it was attempted to forcefully termiante it
+	at org.eclipse.ui.internal.WindowsDefenderConfigurator.runProcess(WindowsDefenderConfigurator.java:405)
+	at org.eclipse.ui.internal.WindowsDefenderConfigurator.runPowershell(WindowsDefenderConfigurator.java:379)
+	at org.eclipse.ui.internal.WindowsDefenderConfigurator.isWindowsDefenderServiceRunning(WindowsDefenderConfigurator.java:302)
+	at org.eclipse.ui.internal.WindowsDefenderConfigurator.runExclusionCheck(WindowsDefenderConfigurator.java:159)
+	at org.eclipse.ui.internal.WindowsDefenderConfigurator.lambda$0(WindowsDefenderConfigurator.java:106)
+	at org.eclipse.core.runtime.jobs.Job$2.run(Job.java:187)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2025-04-09 07:54:20.546
+!MESSAGE Cannot run program "\usr\bin\git" (in directory "\usr\bin"): CreateProcess error=2, Systemet finner ikke angitt fil
+
+!ENTRY org.eclipse.jdt.core 4 4 2025-04-09 10:21:31.194
+!MESSAGE Exception occurred during compilation unit conversion:
+----------------------------------- SOURCE BEGIN -------------------------------------
+package bec.value;
+
+import java.io.IOException;
+import java.util.Vector;
+
+import bec.AttributeInputStream;
+import bec.AttributeOutputStream;
+import bec.util.Global;
+import bec.util.Scode;
+import bec.util.Type;
+import bec.util.Util;
+
+public class RepetitionValue extends Value {
+	public Vector<Value> values;
+	
+	private RepetitionValue(Vector<Value> values) {
+		this.values = values;
+	}
+
+	public static RepetitionValue ofValue(Value value) {
+		Vector<Value> values = new Vector<Value>();
+		values.add(value);
+		return new RepetitionValue(values);
+	}
+	
+	/**
+	 * repetition_value
+	 * 		::= <boolean_value>+
+	 * 		::= <character_value>+ | text_value
+	 * 		::= <integer_value>+ | <size_value>+
+	 * 		::= <real_value>+ | <longreal_value>+
+	 * 		::= <attribute_address>+ | <object_address>+
+	 * 		::= <general_address>+ | <program_address>+
+	 * 		::= <routine_address>+ | <record_value>+
+	 * 
+	 * text_value      ::= text long_string
+	 * boolean_value   ::= true | false 
+	 * character_value ::= c-char byte
+	 * integer_value   ::= c-int integer_literal:string
+	 * real_value      ::= c-real real_literal:string 
+	 * longreal_value  ::= c-lreal real_literal:string
+	 * size_value      ::= c-size type | nosize
+	 * 
+	 * attribute_address
+	 * 		::= < c-dot attribute:tag >* c-aaddr attribute:tag
+	 * 		::= anone
+	 * 
+	 * object_address
+	 * 		::= c-oaddr global_or_const:tag
+	 * 		::= onone
+	 * 
+	 * general_address
+	 * 		::= < c-dot attr:tag >* c-gaddr global_or_const:tag
+	 * 		::= gnone
+	 * 
+	 * program_address ::= c-paddr label:tag | nowhere
+	 * routine_address ::= c-raddr body:tag | nobody
+	 * 
+	 * record_value
+	 * 		::= c-record structured_type
+	 * 			<attribute_value>+ endrecord
+	 */
+	
+	private static final boolean TESTING =
+	public static RepetitionValue ofScode() {
+		Vector<Value> values = new Vector<Value>();
+		LOOP:while(true) {
+//			System.out.println("RepetitionValue.treatValue: "+Scode.edInstr(Scode.nextByte()));
+			switch(Scode.nextByte()) {
+				case Scode.S_TEXT:     Scode.inputInstr(); values.add(TextValue.ofScode()); break LOOP;
+				case Scode.S_C_INT:    Scode.inputInstr(); values.add(IntegerValue.ofScode_INT()); break;
+				case Scode.S_C_CHAR:   Scode.inputInstr(); values.add(IntegerValue.ofScode_CHAR()); break;
+				case Scode.S_C_SIZE:   Scode.inputInstr(); values.add(IntegerValue.ofScode_SIZE()); break;
+				case Scode.S_C_REAL:   Scode.inputInstr(); values.add(RealValue.ofScode()); break;
+				case Scode.S_C_LREAL:  Scode.inputInstr(); values.add(LongRealValue.ofScode()); break;
+				case Scode.S_TRUE:     Scode.inputInstr(); values.add(BooleanValue.of(true)); break;
+				case Scode.S_FALSE:    Scode.inputInstr(); values.add(BooleanValue.of(false)); break;
+				case Scode.S_NOSIZE:   Scode.inputInstr(); values.add(null); break;
+				case Scode.S_ANONE:    Scode.inputInstr(); values.add(null); break;
+				case Scode.S_NOWHERE:  Scode.inputInstr(); values.add(null); break;
+				case Scode.S_NOBODY:   Scode.inputInstr(); values.add(null); break;
+				case Scode.S_ONONE:    Scode.inputInstr(); values.add(null); break;
+				case Scode.S_GNONE:    Scode.inputInstr(); values.add(null); values.add(null); break;
+				case Scode.S_C_AADDR:  Scode.inputInstr(); values.add(IntegerValue.ofScode_AADDR()); break;
+				case Scode.S_C_PADDR:  Scode.inputInstr(); values.add(ProgramAddress.ofScode(Type.T_PADDR)); break;
+				case Scode.S_C_RADDR:  Scode.inputInstr(); values.add(ProgramAddress.ofScode(Type.T_RADDR)); break;
+				case Scode.S_C_OADDR:  Scode.inputInstr(); values.add(ObjectAddress.ofScode()); break;
+				case Scode.S_C_DOT:    Scode.inputInstr(); values.add(DotAddress.ofScode()); break;
+				case Scode.S_C_RECORD: Scode.inputInstr(); values.add(RecordValue.ofScode()); break;
+				case Scode.S_C_GADDR:
+					Scode.inputInstr();
+					GeneralAddress gaddr = GeneralAddress.ofScode();
+					values.add(gaddr.base);
+					values.add(IntegerValue.of(Type.T_INT, gaddr.ofst));
+					break;
+				default: break LOOP;
+			}
+		}
+		return new RepetitionValue(values);
+	}
+	
+
+//	@Override
+//	public void print(final String indent) {
+//		System.out.println(indent + toString());
+//	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for(Value value:values) {
+			sb.append(value).append(" ");
+		}
+		return sb.toString();
+	}
+
+	// ***********************************************************************************************
+	// *** Attribute File I/O
+	// ***********************************************************************************************
+	private RepetitionValue(AttributeInputStream inpt) throws IOException {
+//		tag = inpt.readTag();
+//		type = ResolvedType.read(inpt);
+//		System.out.println("NEW IMPORT: " + this);
+		values = new Vector<Value>();
+		int n = inpt.readShort();
+		for(int i=0;i<n;i++) {
+			Value value = Value.read(inpt);
+			values.add(value);
+		}
+	}
+
+	public void write(AttributeOutputStream oupt) throws IOException {
+		if(Global.ATTR_OUTPUT_TRACE) System.out.println("Value.write: " + this);
+//		oupt.writeKind(Scode.S_C_???);
+		Util.IERR("TEST DETTE");
+		oupt.writeShort(values.size());
+		for(Value value:values) {
+			value.write(oupt);
+		}
+	}
+
+	public static RepetitionValue read(AttributeInputStream inpt) throws IOException {
+		return new RepetitionValue(inpt);
+	}
+
+}
+
+----------------------------------- SOURCE END -------------------------------------
+!STACK 0
+java.lang.IllegalArgumentException: negative length=-1 startPosition= 577
+	at org.eclipse.jdt.core.dom.ASTNode.setSourceRange(ASTNode.java:3446)
+	at org.eclipse.jdt.core.dom.ASTConverter.convertToFieldDeclaration(ASTConverter.java:3859)
+	at org.eclipse.jdt.core.dom.ASTConverter.checkAndAddMultipleFieldDeclaration(ASTConverter.java:575)
+	at org.eclipse.jdt.core.dom.ASTConverter.buildBodyDeclarations(ASTConverter.java:172)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:3489)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1566)
+	at org.eclipse.jdt.core.dom.AST.convertCompilationUnit(AST.java:690)
+	at org.eclipse.jdt.internal.core.CompilationUnit.buildStructure(CompilationUnit.java:283)
+	at org.eclipse.jdt.internal.core.Openable.generateInfos(Openable.java:250)
+	at org.eclipse.jdt.internal.core.JavaElement.openWhenClosed(JavaElement.java:569)
+	at org.eclipse.jdt.internal.core.CompilationUnit.makeConsistent(CompilationUnit.java:1256)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.makeConsistent(ReconcileWorkingCopyOperation.java:182)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.executeOperation(ReconcileWorkingCopyOperation.java:108)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.run(JavaModelOperation.java:751)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.runOperation(JavaModelOperation.java:816)
+	at org.eclipse.jdt.internal.core.CompilationUnit.reconcile(CompilationUnit.java:1430)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:132)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy$1.run(JavaReconcilingStrategy.java:94)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:91)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:158)
+	at org.eclipse.jdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:94)
+	at org.eclipse.jdt.internal.ui.text.JavaCompositeReconcilingStrategy.reconcile(JavaCompositeReconcilingStrategy.java:107)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:78)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:207)
+
+!ENTRY org.eclipse.jdt.ui 4 2 2025-04-09 10:21:31.195
+!MESSAGE Problems occurred when invoking code from plug-in: "org.eclipse.jdt.ui".
+!STACK 0
+java.lang.IllegalArgumentException: negative length=-1 startPosition= 577
+	at org.eclipse.jdt.core.dom.ASTNode.setSourceRange(ASTNode.java:3446)
+	at org.eclipse.jdt.core.dom.ASTConverter.convertToFieldDeclaration(ASTConverter.java:3859)
+	at org.eclipse.jdt.core.dom.ASTConverter.checkAndAddMultipleFieldDeclaration(ASTConverter.java:575)
+	at org.eclipse.jdt.core.dom.ASTConverter.buildBodyDeclarations(ASTConverter.java:172)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:3489)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1566)
+	at org.eclipse.jdt.core.dom.AST.convertCompilationUnit(AST.java:690)
+	at org.eclipse.jdt.internal.core.CompilationUnit.buildStructure(CompilationUnit.java:283)
+	at org.eclipse.jdt.internal.core.Openable.generateInfos(Openable.java:250)
+	at org.eclipse.jdt.internal.core.JavaElement.openWhenClosed(JavaElement.java:569)
+	at org.eclipse.jdt.internal.core.CompilationUnit.makeConsistent(CompilationUnit.java:1256)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.makeConsistent(ReconcileWorkingCopyOperation.java:182)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.executeOperation(ReconcileWorkingCopyOperation.java:108)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.run(JavaModelOperation.java:751)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.runOperation(JavaModelOperation.java:816)
+	at org.eclipse.jdt.internal.core.CompilationUnit.reconcile(CompilationUnit.java:1430)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:132)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy$1.run(JavaReconcilingStrategy.java:94)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:91)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:158)
+	at org.eclipse.jdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:94)
+	at org.eclipse.jdt.internal.ui.text.JavaCompositeReconcilingStrategy.reconcile(JavaCompositeReconcilingStrategy.java:107)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:78)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:207)
+
+!ENTRY org.eclipse.jdt.ui 4 0 2025-04-09 10:21:31.196
+!MESSAGE Error in JDT Core during reconcile
+!STACK 0
+java.lang.IllegalArgumentException: negative length=-1 startPosition= 577
+	at org.eclipse.jdt.core.dom.ASTNode.setSourceRange(ASTNode.java:3446)
+	at org.eclipse.jdt.core.dom.ASTConverter.convertToFieldDeclaration(ASTConverter.java:3859)
+	at org.eclipse.jdt.core.dom.ASTConverter.checkAndAddMultipleFieldDeclaration(ASTConverter.java:575)
+	at org.eclipse.jdt.core.dom.ASTConverter.buildBodyDeclarations(ASTConverter.java:172)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:3489)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1566)
+	at org.eclipse.jdt.core.dom.AST.convertCompilationUnit(AST.java:690)
+	at org.eclipse.jdt.internal.core.CompilationUnit.buildStructure(CompilationUnit.java:283)
+	at org.eclipse.jdt.internal.core.Openable.generateInfos(Openable.java:250)
+	at org.eclipse.jdt.internal.core.JavaElement.openWhenClosed(JavaElement.java:569)
+	at org.eclipse.jdt.internal.core.CompilationUnit.makeConsistent(CompilationUnit.java:1256)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.makeConsistent(ReconcileWorkingCopyOperation.java:182)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.executeOperation(ReconcileWorkingCopyOperation.java:108)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.run(JavaModelOperation.java:751)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.runOperation(JavaModelOperation.java:816)
+	at org.eclipse.jdt.internal.core.CompilationUnit.reconcile(CompilationUnit.java:1430)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:132)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy$1.run(JavaReconcilingStrategy.java:94)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:91)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:158)
+	at org.eclipse.jdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:94)
+	at org.eclipse.jdt.internal.ui.text.JavaCompositeReconcilingStrategy.reconcile(JavaCompositeReconcilingStrategy.java:107)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:78)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:207)
+
+!ENTRY org.eclipse.jdt.core 4 4 2025-04-09 10:21:31.703
+!MESSAGE Exception occurred during compilation unit conversion:
+----------------------------------- SOURCE BEGIN -------------------------------------
+package bec.value;
+
+import java.io.IOException;
+import java.util.Vector;
+
+import bec.AttributeInputStream;
+import bec.AttributeOutputStream;
+import bec.util.Global;
+import bec.util.Scode;
+import bec.util.Type;
+import bec.util.Util;
+
+public class RepetitionValue extends Value {
+	public Vector<Value> values;
+	
+	private RepetitionValue(Vector<Value> values) {
+		this.values = values;
+	}
+
+	public static RepetitionValue ofValue(Value value) {
+		Vector<Value> values = new Vector<Value>();
+		values.add(value);
+		return new RepetitionValue(values);
+	}
+	
+	/**
+	 * repetition_value
+	 * 		::= <boolean_value>+
+	 * 		::= <character_value>+ | text_value
+	 * 		::= <integer_value>+ | <size_value>+
+	 * 		::= <real_value>+ | <longreal_value>+
+	 * 		::= <attribute_address>+ | <object_address>+
+	 * 		::= <general_address>+ | <program_address>+
+	 * 		::= <routine_address>+ | <record_value>+
+	 * 
+	 * text_value      ::= text long_string
+	 * boolean_value   ::= true | false 
+	 * character_value ::= c-char byte
+	 * integer_value   ::= c-int integer_literal:string
+	 * real_value      ::= c-real real_literal:string 
+	 * longreal_value  ::= c-lreal real_literal:string
+	 * size_value      ::= c-size type | nosize
+	 * 
+	 * attribute_address
+	 * 		::= < c-dot attribute:tag >* c-aaddr attribute:tag
+	 * 		::= anone
+	 * 
+	 * object_address
+	 * 		::= c-oaddr global_or_const:tag
+	 * 		::= onone
+	 * 
+	 * general_address
+	 * 		::= < c-dot attr:tag >* c-gaddr global_or_const:tag
+	 * 		::= gnone
+	 * 
+	 * program_address ::= c-paddr label:tag | nowhere
+	 * routine_address ::= c-raddr body:tag | nobody
+	 * 
+	 * record_value
+	 * 		::= c-record structured_type
+	 * 			<attribute_value>+ endrecord
+	 */
+	
+	private static final boolean TESTING = 
+	public static RepetitionValue ofScode() {
+		Vector<Value> values = new Vector<Value>();
+		LOOP:while(true) {
+//			System.out.println("RepetitionValue.treatValue: "+Scode.edInstr(Scode.nextByte()));
+			switch(Scode.nextByte()) {
+				case Scode.S_TEXT:     Scode.inputInstr(); values.add(TextValue.ofScode()); break LOOP;
+				case Scode.S_C_INT:    Scode.inputInstr(); values.add(IntegerValue.ofScode_INT()); break;
+				case Scode.S_C_CHAR:   Scode.inputInstr(); values.add(IntegerValue.ofScode_CHAR()); break;
+				case Scode.S_C_SIZE:   Scode.inputInstr(); values.add(IntegerValue.ofScode_SIZE()); break;
+				case Scode.S_C_REAL:   Scode.inputInstr(); values.add(RealValue.ofScode()); break;
+				case Scode.S_C_LREAL:  Scode.inputInstr(); values.add(LongRealValue.ofScode()); break;
+				case Scode.S_TRUE:     Scode.inputInstr(); values.add(BooleanValue.of(true)); break;
+				case Scode.S_FALSE:    Scode.inputInstr(); values.add(BooleanValue.of(false)); break;
+				case Scode.S_NOSIZE:   Scode.inputInstr(); values.add(null); break;
+				case Scode.S_ANONE:    Scode.inputInstr(); values.add(null); break;
+				case Scode.S_NOWHERE:  Scode.inputInstr(); values.add(null); break;
+				case Scode.S_NOBODY:   Scode.inputInstr(); values.add(null); break;
+				case Scode.S_ONONE:    Scode.inputInstr(); values.add(null); break;
+				case Scode.S_GNONE:    Scode.inputInstr(); values.add(null); values.add(null); break;
+				case Scode.S_C_AADDR:  Scode.inputInstr(); values.add(IntegerValue.ofScode_AADDR()); break;
+				case Scode.S_C_PADDR:  Scode.inputInstr(); values.add(ProgramAddress.ofScode(Type.T_PADDR)); break;
+				case Scode.S_C_RADDR:  Scode.inputInstr(); values.add(ProgramAddress.ofScode(Type.T_RADDR)); break;
+				case Scode.S_C_OADDR:  Scode.inputInstr(); values.add(ObjectAddress.ofScode()); break;
+				case Scode.S_C_DOT:    Scode.inputInstr(); values.add(DotAddress.ofScode()); break;
+				case Scode.S_C_RECORD: Scode.inputInstr(); values.add(RecordValue.ofScode()); break;
+				case Scode.S_C_GADDR:
+					Scode.inputInstr();
+					GeneralAddress gaddr = GeneralAddress.ofScode();
+					values.add(gaddr.base);
+					values.add(IntegerValue.of(Type.T_INT, gaddr.ofst));
+					break;
+				default: break LOOP;
+			}
+		}
+		return new RepetitionValue(values);
+	}
+	
+
+//	@Override
+//	public void print(final String indent) {
+//		System.out.println(indent + toString());
+//	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for(Value value:values) {
+			sb.append(value).append(" ");
+		}
+		return sb.toString();
+	}
+
+	// ***********************************************************************************************
+	// *** Attribute File I/O
+	// ***********************************************************************************************
+	private RepetitionValue(AttributeInputStream inpt) throws IOException {
+//		tag = inpt.readTag();
+//		type = ResolvedType.read(inpt);
+//		System.out.println("NEW IMPORT: " + this);
+		values = new Vector<Value>();
+		int n = inpt.readShort();
+		for(int i=0;i<n;i++) {
+			Value value = Value.read(inpt);
+			values.add(value);
+		}
+	}
+
+	public void write(AttributeOutputStream oupt) throws IOException {
+		if(Global.ATTR_OUTPUT_TRACE) System.out.println("Value.write: " + this);
+//		oupt.writeKind(Scode.S_C_???);
+		Util.IERR("TEST DETTE");
+		oupt.writeShort(values.size());
+		for(Value value:values) {
+			value.write(oupt);
+		}
+	}
+
+	public static RepetitionValue read(AttributeInputStream inpt) throws IOException {
+		return new RepetitionValue(inpt);
+	}
+
+}
+
+----------------------------------- SOURCE END -------------------------------------
+!STACK 0
+java.lang.IllegalArgumentException: negative length=-1 startPosition= 577
+	at org.eclipse.jdt.core.dom.ASTNode.setSourceRange(ASTNode.java:3446)
+	at org.eclipse.jdt.core.dom.ASTConverter.convertToFieldDeclaration(ASTConverter.java:3859)
+	at org.eclipse.jdt.core.dom.ASTConverter.checkAndAddMultipleFieldDeclaration(ASTConverter.java:575)
+	at org.eclipse.jdt.core.dom.ASTConverter.buildBodyDeclarations(ASTConverter.java:172)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:3489)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1566)
+	at org.eclipse.jdt.core.dom.AST.convertCompilationUnit(AST.java:690)
+	at org.eclipse.jdt.internal.core.CompilationUnit.buildStructure(CompilationUnit.java:283)
+	at org.eclipse.jdt.internal.core.Openable.generateInfos(Openable.java:250)
+	at org.eclipse.jdt.internal.core.JavaElement.openWhenClosed(JavaElement.java:569)
+	at org.eclipse.jdt.internal.core.CompilationUnit.makeConsistent(CompilationUnit.java:1256)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.makeConsistent(ReconcileWorkingCopyOperation.java:182)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.executeOperation(ReconcileWorkingCopyOperation.java:108)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.run(JavaModelOperation.java:751)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.runOperation(JavaModelOperation.java:816)
+	at org.eclipse.jdt.internal.core.CompilationUnit.reconcile(CompilationUnit.java:1430)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:132)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy$1.run(JavaReconcilingStrategy.java:94)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:91)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:158)
+	at org.eclipse.jdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:94)
+	at org.eclipse.jdt.internal.ui.text.JavaCompositeReconcilingStrategy.reconcile(JavaCompositeReconcilingStrategy.java:107)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:78)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:207)
+
+!ENTRY org.eclipse.jdt.ui 4 2 2025-04-09 10:21:31.703
+!MESSAGE Problems occurred when invoking code from plug-in: "org.eclipse.jdt.ui".
+!STACK 0
+java.lang.IllegalArgumentException: negative length=-1 startPosition= 577
+	at org.eclipse.jdt.core.dom.ASTNode.setSourceRange(ASTNode.java:3446)
+	at org.eclipse.jdt.core.dom.ASTConverter.convertToFieldDeclaration(ASTConverter.java:3859)
+	at org.eclipse.jdt.core.dom.ASTConverter.checkAndAddMultipleFieldDeclaration(ASTConverter.java:575)
+	at org.eclipse.jdt.core.dom.ASTConverter.buildBodyDeclarations(ASTConverter.java:172)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:3489)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1566)
+	at org.eclipse.jdt.core.dom.AST.convertCompilationUnit(AST.java:690)
+	at org.eclipse.jdt.internal.core.CompilationUnit.buildStructure(CompilationUnit.java:283)
+	at org.eclipse.jdt.internal.core.Openable.generateInfos(Openable.java:250)
+	at org.eclipse.jdt.internal.core.JavaElement.openWhenClosed(JavaElement.java:569)
+	at org.eclipse.jdt.internal.core.CompilationUnit.makeConsistent(CompilationUnit.java:1256)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.makeConsistent(ReconcileWorkingCopyOperation.java:182)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.executeOperation(ReconcileWorkingCopyOperation.java:108)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.run(JavaModelOperation.java:751)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.runOperation(JavaModelOperation.java:816)
+	at org.eclipse.jdt.internal.core.CompilationUnit.reconcile(CompilationUnit.java:1430)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:132)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy$1.run(JavaReconcilingStrategy.java:94)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:91)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:158)
+	at org.eclipse.jdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:94)
+	at org.eclipse.jdt.internal.ui.text.JavaCompositeReconcilingStrategy.reconcile(JavaCompositeReconcilingStrategy.java:107)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:78)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:207)
+
+!ENTRY org.eclipse.jdt.ui 4 0 2025-04-09 10:21:31.704
+!MESSAGE Error in JDT Core during reconcile
+!STACK 0
+java.lang.IllegalArgumentException: negative length=-1 startPosition= 577
+	at org.eclipse.jdt.core.dom.ASTNode.setSourceRange(ASTNode.java:3446)
+	at org.eclipse.jdt.core.dom.ASTConverter.convertToFieldDeclaration(ASTConverter.java:3859)
+	at org.eclipse.jdt.core.dom.ASTConverter.checkAndAddMultipleFieldDeclaration(ASTConverter.java:575)
+	at org.eclipse.jdt.core.dom.ASTConverter.buildBodyDeclarations(ASTConverter.java:172)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:3489)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1566)
+	at org.eclipse.jdt.core.dom.AST.convertCompilationUnit(AST.java:690)
+	at org.eclipse.jdt.internal.core.CompilationUnit.buildStructure(CompilationUnit.java:283)
+	at org.eclipse.jdt.internal.core.Openable.generateInfos(Openable.java:250)
+	at org.eclipse.jdt.internal.core.JavaElement.openWhenClosed(JavaElement.java:569)
+	at org.eclipse.jdt.internal.core.CompilationUnit.makeConsistent(CompilationUnit.java:1256)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.makeConsistent(ReconcileWorkingCopyOperation.java:182)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.executeOperation(ReconcileWorkingCopyOperation.java:108)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.run(JavaModelOperation.java:751)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.runOperation(JavaModelOperation.java:816)
+	at org.eclipse.jdt.internal.core.CompilationUnit.reconcile(CompilationUnit.java:1430)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:132)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy$1.run(JavaReconcilingStrategy.java:94)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:91)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:158)
+	at org.eclipse.jdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:94)
+	at org.eclipse.jdt.internal.ui.text.JavaCompositeReconcilingStrategy.reconcile(JavaCompositeReconcilingStrategy.java:107)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:78)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:207)

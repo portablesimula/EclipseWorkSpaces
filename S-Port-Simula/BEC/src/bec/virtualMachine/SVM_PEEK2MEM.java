@@ -44,97 +44,25 @@ public class SVM_PEEK2MEM extends SVM_Instruction {
 			// this.addr is Stack Relative Address
 			ObjectAddress oaddr = RTStack.popOADDR();
 			addr = new RTAddress(oaddr, addr.offset);
+			addr.xReg = this.addr.xReg;
 		}
-			
-//		if(this.addr.withRemoteBase) {
-//			// this.addr is Stack Relative Address
-//			ObjectAddress oaddr = RTStack.popOADDR();
-//			int n = RTStack.size()-1;
-//			RTStackItem item = RTStack.load(n);
-//			RTStackItem value = RTStack.pop();
-//			if(DEBUG) {
-//				RTStack.dumpRTStack("RTAddress.store: ");
-//				System.out.println("RTAddress.store: oaddr="+oaddr);
-//				System.out.println("RTAddress.store: offset="+addr.offset);
-//				System.out.println("RTAddress.store: item="+item);
-//				System.out.println("RTAddress.store: value="+value.value());
-//			}
-//			oaddr.segment().dump("PEEK2MEM: ", 0, 10);
-//			oaddr.store(addr.offset, value.value(), "PEEK2MEM: ");
-//			oaddr.segment().dump("PEEK2MEM: ", 0, 10);
-//			RTStack.push(value.value(), "PEEK2MEM: ");
-//			Util.IERR("");
-//
-//		} else {
 		
-		
-			// this.addr is Segment Address
-//			RTStack.dumpRTStack("PEEK2MEM.execute: ");
-			int n = RTStack.size()-1;
-//			System.out.println("PEEK2MEM.execute: STACK["+n+"]="+RTStack.load(n));
-//			System.out.println("PEEK2MEM.execute: count="+count);
-//			for(int i=count-1;i>=0;i--) {
-			int idx = count - 1;
-			for(int i=0;i<count;i++) {
-//				RTStackItem item = RTStack.pop();
-				RTStackItem item = RTStack.load(n-i);
-				if(DEBUG)
-					System.out.println("PEEK2MEM: "+item.value()+" ==> "+addr + "["+idx+"]" + "      " + item.comment());
-				addr.store(idx--, item.value(), item.comment());
-			}
-//		}
+		// this.addr is Segment Address
+//		RTStack.dumpRTStack("PEEK2MEM.execute: ");
+		int n = RTStack.size()-1;
+//		System.out.println("PEEK2MEM.execute: STACK["+n+"]="+RTStack.load(n));
+//		System.out.println("PEEK2MEM.execute: count="+count);
+//		for(int i=count-1;i>=0;i--) {
+		int idx = count - 1;
+		for(int i=0;i<count;i++) {
+//			RTStackItem item = RTStack.pop();
+			RTStackItem item = RTStack.load(n-i);
+			if(DEBUG)
+				System.out.println("PEEK2MEM: "+item.value()+" ==> "+addr + "["+idx+"]" + "      " + item.comment());
+			addr.store(idx--, item.value(), item.comment());
+		}
 		Global.PSC.ofst++;		
 	}
-	
-//	public void OLD_execute() {
-//		if(DEBUG) {
-////			Global.PSC.segment().dump("PEEK2MEM.execute: ");
-//			RTStack.dumpRTStack("PEEK2MEM.execute: ");
-//		}
-//		ObjectAddress target = addr.toObjectAddress();
-////		target.ofst = target.ofst + count;
-//		target = target.addOffset(count);
-////		for(int i=0;i<count;i++) {
-//		int n = RTStack.size()-1;
-////		System.out.println("PEEK2MEM.execute: STACK["+n+"]="+RTStack.load(n));
-////		System.out.println("PEEK2MEM.execute: count="+count);
-////		for(int i=count-1;i>=0;i--) {
-//		for(int i=0;i<count;i++) {
-////			RTStackItem item = RTStack.pop();
-//			RTStackItem item = RTStack.load(n-i);
-//			target.decrOffset();
-//			if(DEBUG) {
-//				System.out.println("PEEK2MEM: "+item.value()+" ==> "+target + "      " + item.comment());
-//			}
-//			target.store(item.value(), item.comment());
-//		}
-//		if(DEBUG) {
-//			if(CALL.USE_FRAME_ON_STACK) {
-////				DataSegment seg = target.segment();
-////				if(seg != null) {
-////					seg.dump("PEEK2MEM.execute: ");
-////				} else {
-////					RTStack.dumpRTStack("PEEK2MEM.execute: ");
-////				}
-////				dumpString(target);
-////				Util.IERR("");
-//			} else {
-//				target.segment().dump("PEEK2MEM.execute: ");
-////				dumpString(target);
-////				Util.IERR("");
-//			}
-//		}
-//		Global.PSC.ofst++;
-//	}
-//	
-//	private void dumpString(ObjectAddress addr) {
-//		ObjectAddress x = addr.addOffset(0);
-//		Value val = x.load();
-//		System.out.println("PEEK2MEM.dumpString: val-1  "+val.getClass().getSimpleName()+"  "+val);
-//		x.incrOffset();
-//		val = x.load();
-//		System.out.println("PEEK2MEM.dumpString: val-2  "+val.getClass().getSimpleName()+"  "+val);
-//	}
 	
 	public String toString() {
 		String cnt = "";
