@@ -41,7 +41,7 @@ public class SVM_PUSH extends SVM_Instruction {
 		for(int i=0;i<size;i++) {
 			Value value = addr.load(i, size);
 //			System.out.println("SVM_PUSH: " + value);
-			RTStack.push(value, "SVM_PUSH");
+			RTStack.push(value, "SVM_PUSH: "+addr+":"+size);
 		}
 		Global.PSC.ofst++;
 	}

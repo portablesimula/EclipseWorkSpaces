@@ -1,24 +1,13 @@
 begin
---   SYSINSERT envir,modl1;
    SYSINSERT RT,SYSR,KNWN,UTIL;    
+       
+ const infix(txtent:10) defident2 = record:txtent(sl=none, sort=S_TXTENT, misc=1, ncha=10, cha="ABCDEFGHIJ" );
 
-%   routine testCase; import
-    integer code;
-%   begin
-    infix(string) v;
-    
-    code := 3;
-    
-      case 0:7 (code)
-      when 1:     v:="10"
-      when 2,3,4: v:="30"
-      when 5,6:   v:="60"
-      otherwise   v:="99";
-      endcase;
-%      trace(v);       
-%   end;
+ const infix(txtqnt) acmdir2=record:txtqnt(ent=ref(defident2), cp=0, sp=0, lp = 10);
 
-%     testCase(3);
+		 ED_TXT(acmdir2);
+		 ed_out;
+	
 
  end;
 	 

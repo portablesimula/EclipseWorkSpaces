@@ -6,38 +6,55 @@ import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Relation;
+import bec.util.Scode;
 import bec.util.Util;
 import bec.value.ProgramAddress;
 import bec.value.Value;
 
 public class SVM_JUMPIF extends SVM_JUMP {
 	Relation relation;
+	int typeSize;
 	private static final boolean DEBUG = false;
 	
-	public SVM_JUMPIF(Relation relation, ProgramAddress destination) {
+	public SVM_JUMPIF(Relation relation, int typeSize, ProgramAddress destination) {
 		super(destination);
 		this.opcode = SVM_Instruction.iJUMPIF;
 		this.relation = relation;
-//		this.destination = destination;
+		this.typeSize =  typeSize;
 	}
 
 	@Override
 	public void execute() {
-//		RTStack.dumpRTStack("SVM_JUMPIF: ");
-		Value tos = RTStack.pop().value();
-		Value sos = RTStack.pop().value();
-//		boolean res = relation.eval(sos, tos);
-		boolean res = relation.compare(sos, tos);
-		
-		if(DEBUG) {
-			String jmp = (res)? "DO JUMP" : "NOT JUMP";
-			System.out.println("SVM_JUMPIF: " + tos + "  " + relation + "  " + sos + " = " + res + "  " + jmp);
+		boolean doJump = false;
+		if(typeSize == 1) {
+			Value tos = RTStack.pop().value();
+			Value sos = RTStack.pop().value();
+			doJump = relation.compare(sos, tos);
+			if(DEBUG) {
+				String jmp = (doJump)? "DO JUMP" : "NOT JUMP";
+				System.out.println("SVM_JUMPIF: " + tos + "  " + relation + "  " + sos + " = " + doJump + "  " + jmp);
+			}
+		} else {
+			Value[] TOS = new Value[typeSize];
+			Value[] SOS = new Value[typeSize];
+			for(int i=0;i<typeSize;i++) TOS[i] = RTStack.pop().value();
+			for(int i=0;i<typeSize;i++) SOS[i] = RTStack.pop().value();
+			boolean equals = true;
+			Relation eqRel = new Relation(Scode.S_EQ);
+			LOOP:for(int i=0;i<typeSize;i++) {
+				if(! eqRel.compare(SOS[i], TOS[i])) {
+					equals = false; break LOOP;
+				}
+			}
+			switch(relation.relation) {
+				case Scode.S_EQ: doJump = equals; break;
+				case Scode.S_NE: doJump = ! equals; break;
+				default: Util.IERR("");
+			}
 		}
 		
-//		RTStack.push(type, res);
-		if(res) Global.PSC = destination.copy();
+		if(doJump) Global.PSC = destination.copy();
 		else Global.PSC.ofst++;
-//		Util.IERR("");
 	}
 	
 	@Override	
@@ -52,6 +69,7 @@ public class SVM_JUMPIF extends SVM_JUMP {
 		super(inpt);
 		this.opcode = SVM_Instruction.iJUMPIF;
 		this.relation = Relation.read(inpt);
+		this.typeSize = inpt.readKind();
 		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + this);
 	}
 
@@ -61,6 +79,7 @@ public class SVM_JUMPIF extends SVM_JUMP {
 		oupt.writeOpcode(opcode);
 		destination.write(oupt);
 		relation.write(oupt);
+		oupt.writeKind(typeSize);
 	}
 
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {

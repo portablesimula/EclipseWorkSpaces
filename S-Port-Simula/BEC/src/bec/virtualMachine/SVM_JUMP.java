@@ -19,7 +19,7 @@ public class SVM_JUMP extends SVM_Instruction {
 	@Override
 	public void execute() {
 //		RTStack.dumpRTStack("SVM_JUMPIF: ");
-		RTStack.checkStackEmpty();
+//		RTStack.checkStackEmpty();
 		Global.PSC = destination.copy();
 //		Util.IERR("");
 	}

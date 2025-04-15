@@ -54,7 +54,7 @@ public abstract class SkipifConstruction {
 		
 //		int cond = Util.GQrelation();
 		// Check Relation
-		CTStack.pop();
+		StackItem tos = CTStack.pop();
 		CTStack.pop();
 //	      old_SAV:=SAV; SAV:=TOS;
 		StackItem old_SAV = CTStack.SAV;
@@ -65,7 +65,7 @@ public abstract class SkipifConstruction {
 		
 		ProgramAddress IF_LABEL = Global.PSEG.nextAddress();
 		ProgramAddress END_LABEL = null;
-		Global.PSEG.emit(new SVM_JUMPIF(relation, null), "JUMPIF["+Global.ifDepth+"] " + relation + ':');
+		Global.PSEG.emit(new SVM_JUMPIF(relation, tos.type.size(), null), "JUMPIF["+Global.ifDepth+"] " + relation + ':');
 //		Global.PSEG.dump();
 
 //		Relation relation = Relation.ofScode();

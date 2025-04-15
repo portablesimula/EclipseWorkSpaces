@@ -14,7 +14,7 @@ public class Relation {
 	
 	private static final boolean DEBUG = false;
 
-	private Relation(int relation) {
+	public Relation(int relation) {
 		this.relation = relation;
 	}
 

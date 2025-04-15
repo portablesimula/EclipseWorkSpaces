@@ -14,7 +14,7 @@ public class Attribute extends Descriptor {
 	public Type type;
 	public int rela;
 	public int size;
-	int repCount;
+	public int repCount;
 	
 	private Attribute(int kind, Tag tag, Type type) {
 		super(kind, tag);

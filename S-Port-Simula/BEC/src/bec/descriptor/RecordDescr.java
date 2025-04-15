@@ -95,7 +95,7 @@ public class RecordDescr extends Descriptor {
 //			rec.print("   ");
 		return rec;
 	}
-		
+
 	private void buildPointerMap() {
 		System.out.println("RecordDescr.buildPointerMap: DENNE METODEN MÅ SKRIVES");
 	}

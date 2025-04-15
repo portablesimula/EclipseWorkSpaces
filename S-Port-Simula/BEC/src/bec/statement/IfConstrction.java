@@ -56,7 +56,7 @@ public abstract class IfConstrction {
 		
 //		int cond = Util.GQrelation();
 		// Check Relation
-		CTStack.pop();
+		StackItem tos = CTStack.pop();
 		CTStack.pop();
 //	      old_SAV:=SAV; SAV:=TOS;
 		StackItem old_SAV = CTStack.SAV;
@@ -67,7 +67,7 @@ public abstract class IfConstrction {
 		
 		ProgramAddress IF_LABEL = Global.PSEG.nextAddress();
 		ProgramAddress ELSE_LABEL = null;
-		Global.PSEG.emit(new SVM_JUMPIF(relation.not(), null), "GOTOIF["+Global.ifDepth+"] NOT_" + relation + ':');
+		Global.PSEG.emit(new SVM_JUMPIF(relation.not(), tos.type.size(), null), "GOTOIF["+Global.ifDepth+"] NOT_" + relation + ':');
 //		Global.PSEG.dump();
 
 //		Relation relation = Relation.ofScode();

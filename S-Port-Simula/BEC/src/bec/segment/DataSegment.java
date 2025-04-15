@@ -107,103 +107,15 @@ public class DataSegment extends Segment {
 		for(int i=0;i<n;i++) {
 			TextValue tval = texts.get(i);
 			if(DEBUG) System.out.println("DataSegment.emitRepText["+i+"]: "+tval);
-			emit(tval.addr,"CHRADR");
-			emit(IntegerValue.of(Type.T_INT,0),"OFST");
-			emit(IntegerValue.of(Type.T_INT,tval.length),"LNG");
-//			ELLER:
-//			emit(IntegerValue.of(Type.T_INT,tval.length),"LNG");
-//			emit(IntegerValue.of(Type.T_INT,0),"OFST");
+			
 //			emit(tval.addr,"CHRADR");
+//			emit(IntegerValue.of(Type.T_INT,0),"OFST");
+//			emit(IntegerValue.of(Type.T_INT,tval.length),"LNG");
+			tval.emit(this, cmnt);
 		}
 		return addr;
 	}
 
-//	public ObjectAddress emitRepetitionValue(String comment) {
-//		if(Scode.nextByte() == Scode.S_TEXT) return emitRepText(comment);
-////		MemAddr addr = Global.DSEG.nextAddress();
-//		ObjectAddress addr = nextAddress();
-//		if(DEBUG) {
-//			System.out.println("DataSegment.emitRepetitionValue: "+Scode.edInstr(Scode.nextByte())+"  Comment="+comment);
-//		}
-//	LOOP:while(true) {
-//			if(DEBUG)
-//				System.out.println("DataSegment.emitRepetitionValue: "+Scode.edInstr(Scode.nextByte())+"  Comment="+comment);
-//			switch(Scode.nextByte()) {
-//				case Scode.S_TEXT:     Scode.inputInstr(); emit(TextValue.ofScode(), comment); break;
-//			    case Scode.S_C_INT:    Scode.inputInstr(); emit(IntegerValue.ofScode_INT(), comment); break;
-//			    case Scode.S_C_CHAR:   Scode.inputInstr(); emit(IntegerValue.ofScode_CHAR(), comment); break;
-//			    case Scode.S_C_SIZE:   Scode.inputInstr(); emit(IntegerValue.ofScode_SIZE(), comment); break;
-//			    case Scode.S_C_REAL:   Scode.inputInstr(); emit(RealValue.ofScode(), comment); break;
-//			    case Scode.S_C_LREAL:  Scode.inputInstr(); emit(LongRealValue.ofScode(), comment); break;
-//			    case Scode.S_TRUE:     Scode.inputInstr(); emit(BooleanValue.of(true), comment); break;
-//			    case Scode.S_FALSE:    Scode.inputInstr(); emit(BooleanValue.of(false), comment); break;
-//			    case Scode.S_NOSIZE:   Scode.inputInstr(); emit(null, comment); break;
-//			    case Scode.S_ANONE:    Scode.inputInstr(); emit(null, comment); break;
-//			    case Scode.S_NOWHERE:  Scode.inputInstr(); emit(null, comment); break;
-//			    case Scode.S_NOBODY:   Scode.inputInstr(); emit(null, comment); break;
-//			    case Scode.S_ONONE:    Scode.inputInstr(); emit(null, comment); break;
-//			    case Scode.S_GNONE:    Scode.inputInstr(); emit(null, comment); emit(null, comment); break;
-//			    case Scode.S_C_AADDR:  Scode.inputInstr(); emit(IntegerValue.ofScode_AADDR(), comment); break;
-//			    case Scode.S_C_PADDR:  Scode.inputInstr(); emit(ProgramAddress.ofScode(Type.T_PADDR), comment); break;
-//			    case Scode.S_C_RADDR:  Scode.inputInstr(); emit(ProgramAddress.ofScode(Type.T_RADDR), comment); break;
-//			    case Scode.S_C_OADDR:  Scode.inputInstr(); emit(ObjectAddress.ofScode(), comment); break;
-//			    case Scode.S_C_RECORD: Scode.inputInstr(); emitRecordValue(comment); break;
-//			    case Scode.S_C_DOT:
-//			    	Scode.inputInstr();
-//					Value dotAddr = DotAddress.ofScode();
-////					System.out.println("DataSegment.emitRepetitionValue: "+dotAddr.getClass().getSimpleName()+"  "+dotAddr);
-//					if(dotAddr instanceof GeneralAddress gaddr) {
-//						emit(gaddr.base, comment);
-//						emit(IntegerValue.of(Type.T_INT, gaddr.ofst), comment);						
-//					} else if(dotAddr instanceof GeneralAddress oaddr) {
-//						emit(oaddr, comment);
-//					} else {
-//						emit(dotAddr, comment);
-//					}
-//			    	break;
-//			    case Scode.S_C_GADDR:
-//			    	Scode.inputInstr();
-////			    	emit(GeneralAddress.ofScode(), comment);
-//					GeneralAddress gaddr = GeneralAddress.ofScode();
-//					emit(gaddr.base, comment);
-//					emit(IntegerValue.of(Type.T_INT, gaddr.ofst), comment);
-//					break;
-//				default:
-//					if(DEBUG)
-//						System.out.println("DataSegment.emitRepetitionValue: TERMINATED BY: "+Scode.edInstr(Scode.nextByte())+"  Comment="+comment);
-//					break LOOP;
-//			}
-//		}
-//		if(Global.ATTR_OUTPUT_TRACE)
-//			this.dump("emitRepetitionValue: ");
-////		System.out.println("DataSegment.emitRepetitionValue: " + addr);
-//		return addr;
-//	}
-
-	
-//	/**
-//	 *	record_value
-//	 *		::= c-record structured_type
-//	 *				 <attribute_value>+
-//	 *			endrecord
-//	 *
-//	 * 			attribute_value
-//	 * 				::= attr attribute:tag type repetition_value
-//	 */
-//	private void emitRecordValue(String comment) {
-//		Scode.ofScode(); 
-//		Scode.inputInstr();
-//		while(Scode.curinstr == Scode.S_ATTR) {
-//			int atag = Scode.ofScode();
-//			Type type = Type.ofScode();
-////			System.out.println("DataSegment.emitRecordValue'S_ATTR: "+Scode.edTag(atag)+"  "+type);
-//
-//			emitRepetitionValue(comment + "  " + Scode.edTag(atag) + "  " + Scode.edTag(type.tag));
-//			Scode.inputInstr();
-////			System.out.println("DataSegment.emitRecordValue: Curinstr="+Scode.edInstr(Scode.curinstr));
-//		}
-//		if(Scode.curinstr != Scode.S_ENDRECORD) Util.IERR("Syntax error in record-constant");
-//	}
 
 
 	@Override

@@ -83,9 +83,9 @@ public final class RunFull_SML_TestBatch {
 		names.add("smltst29.scd"); // Object Address Relations ( < , <= , = , >= , > , <> )
 		names.add("smltst30.scd"); // More Constants
 		names.add("smltst31.scd"); // CALL, EXIT, RETURN and GOTO
-//		names.add("smltst32.scd"); // More Structured Constants
+		names.add("smltst32.scd"); // More Structured Constants
 		names.add("smltst33.scd"); // GOTO fixup'address
-//		names.add("smltst34.scd"); // Text quant relations ( =, <> )
+		names.add("smltst34.scd"); // Text quant relations ( =, <> )
 		names.add("smltst35.scd"); // RT'sizes: string, ptp, ...
 		names.add("smltst36.scd"); // RT'sizes: entity, ...
 		names.add("smltst37.scd"); // RT'sizes: quantities and simob

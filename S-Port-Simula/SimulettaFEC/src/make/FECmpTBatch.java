@@ -25,55 +25,55 @@ public final class FECmpTBatch {
 		Vector<String> names=new Vector<String>();
 		
 //		names.add("adHoc00");
-		names.add("adHoc01");
+//		names.add("adHoc01");
 //		names.add("adHoc02");
 //		names.add("adHoc03");
 //		names.add("adHoc04");
-//		names.add("adHoc05");
-//		names.add("adHoc06")
+		names.add("adHoc05");
+//		names.add("adHoc06");
 //		names.add("adHoc07");
 //		names.add("adHoc08");
 //			names.add("adHoc09");
 //		names.add("adHoc10");
 		
-//		names.add("smltst00"); // Standard layout of test programs
-//		names.add("smltst01"); // Simple Assignments
-//		names.add("smltst02"); // Test Case Statement
-//		names.add("smltst03"); // Test Assert Statement
-//		names.add("smltst04"); // Test Parameter Transmission
-//		names.add("smltst05"); // Test CALL_TOS
-//		names.add("smltst06"); // Records with Variant(ALT)
-//		names.add("smltst07"); // Constant and initial values
-//		names.add("smltst08"); // Arithmetic Operators ( + - * / rem)
-//		names.add("smltst09"); // Boolean Operators ( and, or, xor, not )
-//		names.add("smltst10"); // Arithmetic Relations ( < , <= , = , >= , > , <> )
-//		names.add("smltst11"); // Boolean Relations ( = , <> )
-//		names.add("smltst12"); // Size Relations ( < , <= , = , >= , > , <> )
-//		names.add("smltst13"); // General Reference Expression
-//		names.add("smltst14"); // Object Reference and Size Expression
-//		names.add("smltst15"); // Type Conversion
-//		names.add("smltst16"); // Type Conversion between name,ref and field
-//		names.add("smltst17"); // If-Statements
-//		names.add("smltst18"); // Goto-Statements
-//		names.add("smltst19"); // Remote Access
-//		names.add("smltst20"); // Repeat-Statements
-//		names.add("smltst21"); // Call: Profile(Body)(a,b,c)
-//		names.add("smltst22"); // Exit and Non-Local Goto
-//		names.add("smltst23"); // Export treatment
-//		names.add("smltst24"); // Zero_Area
-//		names.add("smltst25"); // Editing Utilities
-//		names.add("smltst26"); // Complex Variables
-//		names.add("smltst27"); // SYSTEM Const and Variables
-//			names.add("smltst28"); // Structured Constants
-//		names.add("smltst29"); // Object Address Relations ( < , <= , = , >= , > , <> )
-//		names.add("smltst30"); // More Constants
-//		names.add("smltst31"); // CALL, EXIT, RETURN and GOTO
-//		names.add("smltst32"); // More Structured Constants
-//		names.add("smltst33"); // GOTO fixup'address
-//		names.add("smltst34"); // Text quant relations ( =, <> )
-//		names.add("smltst35"); // RT'sizes: string, ptp, ...
-//		names.add("smltst36"); // RT'sizes: entity, ...
-//		names.add("smltst37"); // RT'sizes: quantities and simob
+		names.add("smltst00"); // Standard layout of test programs
+		names.add("smltst01"); // Simple Assignments
+		names.add("smltst02"); // Test Case Statement
+		names.add("smltst03"); // Test Assert Statement
+		names.add("smltst04"); // Test Parameter Transmission
+		names.add("smltst05"); // Test CALL_TOS
+		names.add("smltst06"); // Records with Variant(ALT)
+		names.add("smltst07"); // Constant and initial values
+		names.add("smltst08"); // Arithmetic Operators ( + - * / rem)
+		names.add("smltst09"); // Boolean Operators ( and, or, xor, not )
+		names.add("smltst10"); // Arithmetic Relations ( < , <= , = , >= , > , <> )
+		names.add("smltst11"); // Boolean Relations ( = , <> )
+		names.add("smltst12"); // Size Relations ( < , <= , = , >= , > , <> )
+		names.add("smltst13"); // General Reference Expression
+		names.add("smltst14"); // Object Reference and Size Expression
+		names.add("smltst15"); // Type Conversion
+		names.add("smltst16"); // Type Conversion between name,ref and field
+		names.add("smltst17"); // If-Statements
+		names.add("smltst18"); // Goto-Statements
+		names.add("smltst19"); // Remote Access
+		names.add("smltst20"); // Repeat-Statements
+		names.add("smltst21"); // Call: Profile(Body)(a,b,c)
+		names.add("smltst22"); // Exit and Non-Local Goto
+		names.add("smltst23"); // Export treatment
+		names.add("smltst24"); // Zero_Area
+		names.add("smltst25"); // Editing Utilities
+		names.add("smltst26"); // Complex Variables
+		names.add("smltst27"); // SYSTEM Const and Variables
+			names.add("smltst28"); // Structured Constants
+		names.add("smltst29"); // Object Address Relations ( < , <= , = , >= , > , <> )
+		names.add("smltst30"); // More Constants
+		names.add("smltst31"); // CALL, EXIT, RETURN and GOTO
+		names.add("smltst32"); // More Structured Constants
+		names.add("smltst33"); // GOTO fixup'address
+		names.add("smltst34"); // Text quant relations ( =, <> )
+		names.add("smltst35"); // RT'sizes: string, ptp, ...
+		names.add("smltst36"); // RT'sizes: entity, ...
+		names.add("smltst37"); // RT'sizes: quantities and simob
 
 		// Set Compile Time Options and tracing
 //		Option.INLINE_TESTING=true;

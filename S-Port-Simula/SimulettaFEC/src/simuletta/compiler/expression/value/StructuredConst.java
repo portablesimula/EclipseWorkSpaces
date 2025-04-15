@@ -137,35 +137,32 @@ public class StructuredConst extends Value {
 	// ***********************************************************************************************
 	// *** Coding: outstruct  also used by Type.outdefault
 	// ***********************************************************************************************
+
 	public static int outstruct(Record rec,Vector<AttributeValue> set) {
 //		System.out.println("StructuredConst.outstruct: QUAL="+rec.getClass().getSimpleName()+", set.size="+set.size()+", rec="+rec);
 //		for(AttributeValue atr:set) System.out.println("StructuredConst.outstruct: atr="+atr);
-//		rec.print("StructuredConst.outstruct: REC: ", 2);
-		
 		int result=0;
 		if(rec.prefixIdentifier != null && rec.prefixIdentifier.length()>0) {
 			Record prefix=(Record) Declaration.findMeaning(rec.prefixIdentifier);
 			result=outstruct(prefix,set);
 		}
-		AttributeValue last=outAtrset(rec.declarationList,set);
-//		for(Variant v:rec.variantset) {
-//			outVariantAtrset(rec,v.atrset,set);
-//		}
-		if(rec.variantset != null) last = outVariantAtrset(rec.variantset,set);
-		
+		AttributeValue n=outAtrset(rec,rec.declarationList,set);
+		for(Variant v:rec.variantset) {
+			outAtrset(rec,v.atrset,set);
+		}
 		if(rec.indefinite) {
 			result=1;
-			if(last != null)
+			if(n != null)
 				//inspect n.elt when repeated_const do
-				if(last.value instanceof RepeatedConst) {
-					RepeatedConst rc=(RepeatedConst)last.value;
+				if(n.value instanceof RepeatedConst) {
+					RepeatedConst rc=(RepeatedConst)n.value;
 					result=rc.values.size()+1;
 				} else result=2;
 		}
 		return(result);
 	}
 
-	private static AttributeValue outAtrset(Vector<Declaration> atrset,Vector<AttributeValue> set) {
+	private static AttributeValue outAtrset(Record rec,Vector<Declaration> atrset,Vector<AttributeValue> set) {
 //		for(AttributeValue val:set) val.matched=false;
 //		printAttrValueSet("StructuredConst.outAtrset: BEFORE OUTPUT",set);
 
@@ -174,39 +171,26 @@ public class StructuredConst extends Value {
 		for(Declaration d:atrset) {
 			VariableDeclaration q=(VariableDeclaration)d;
 			attrValue=getAttributeValue(q.identifier,set);
-//			if(attrValue!=null) {
+			if(attrValue!=null) {
 				sCode.outinst(S_ATTR); sCode.outtag(q.getTag());
 				q.type.toSCode(); //OldType.outtype(q.type);
 //				attrValue=getAttributeValue(q.identifier,set);
 //				System.out.println("StructuredConst.outAtrset: symbol="+q.identifier+"  ==>  "+attrValue+" =============================================================");
 //				if(attrValue==null) q.type.toDefaultSCode();
 //				else
-				if(attrValue==null) {
-					if(q.count < 1) Util.IERR();
-					for(int i=0;i<q.count;i++)
-						q.type.toDefaultSCode();
-//				} else if(attrValue.value==null) {
-//					q.type.toDefaultSCode(); attrValue.matched=true;
-//					Util.IERR();
+				if(attrValue.value==null) {
+					q.type.toDefaultSCode(); attrValue.matched=true;
 				} else {
-					Value value = (Value)attrValue.value;
-//					System.out.println("StructuredConst.outAtrset: value = " + value.getClass().getSimpleName()+ "  " + value);
-					t2= value.doOutConst();
+					t2= ((Value)attrValue.value).doOutConst();
 					if(t2 != q.type) {
 						Type res=Type.checkCompatible(t2,q.type);
 						if(res==null) ERROR("Missing type conversion: "+t2+" --> "+q.type);
-					}
-					int n = (value instanceof RepeatedConst rep)? rep.values.size() : 1;
-					if(q.count > 0 && n > q.count) ERROR("Too meny values in RepeatedConst");
-					if(q.count > n) {
-					for(int i=n;i<q.count;i++)
-						q.type.toDefaultSCode();
 					}
 //					set.remove(attrValue); //n.out; ala'Simset !!!
 					attrValue.matched=true;
 				}
 				sCode.outcode();
-//			}
+			}
 //			System.out.println("StructuredConst.outAtrset: AFTER symbol="+q.identifier+"  ==>  "+attrValue+" =============================================================");
 		}
 //		printAttrValueSet("StructuredConst.outAtrset: AFTER OUTPUT",set);
@@ -214,49 +198,6 @@ public class StructuredConst extends Value {
 		return(attrValue);
 	}
 
-	private static AttributeValue outVariantAtrset(Vector<Variant> variantset,Vector<AttributeValue> set) {
-//		for(AttributeValue val:set) val.matched=false;
-		printAttrValueSet("StructuredConst.outVariantAtrset: BEFORE OUTPUT",set);
-		System.out.println("StructuredConst.outVariantAtrset: variantset: " + variantset.size());
-		for(Variant d:variantset) {
-			System.out.println("StructuredConst.outVariantAtrset: " + d);
-			
-		}
-		AttributeValue last=null;
-		for(Variant variant:variantset) {
-			if(checkVariant(variant, set)) {
-				// Output this Variant
-				last = outAtrset(variant.atrset,set);
-				return(last);
-			}
-		}
-//		Util.IERR("TESTING: NO VARIANT FOUND WITH A ATTRIBUTE VALUE - OUTPUT DEFAULT VALUE OF LAGEST VARIANT");
-		// Search for largest Variant
-		
-		
-
-		return(last);
-	}
-	
-	private static boolean checkVariant(Variant variant, Vector<AttributeValue> set) {
-		for(Declaration d:variant.atrset) {
-			AttributeValue aval = checkAttributeValue(d.identifier, set);
-			if(aval != null) {
-				System.out.println("StructuredConst.checkVariant: " + d.identifier + " FOUND AMONG THE ATTRIBUTE VALUES");
-//				Util.IERR();
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	private static AttributeValue checkAttributeValue(String ident, Vector<AttributeValue> set) {
-		for(AttributeValue aval:set) {
-			if(aval.ident.equalsIgnoreCase(ident)) return aval;
-		}
-		return null;
-	}
-	
 	private static void checkAndClearMatched(Record rec,Vector<AttributeValue> set) {
 //		printAttrValueSet("StructuredConst.checkAndClearMatched: ",set);
 		for(AttributeValue val:set) {

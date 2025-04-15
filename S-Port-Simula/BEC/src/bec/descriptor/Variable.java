@@ -186,13 +186,13 @@ public class Variable extends Descriptor {
 			int count = var.type.size();
 			if(Scode.accept(Scode.S_FIXREP)) {
 				int fixrep = Scode.inNumber();
-				System.out.println("Variable.ofGlobal: "+var);
-				System.out.println("Variable.ofGlobal: "+var.type);
-				System.out.println("Variable.ofGlobal: FIXREP "+fixrep);
+//				System.out.println("Variable.ofGlobal: "+var);
+//				System.out.println("Variable.ofGlobal: "+var.type);
+//				System.out.println("Variable.ofGlobal: FIXREP "+fixrep);
 				RecordDescr rec = (RecordDescr) Global.getMeaning(var.type.tag);
-				System.out.println("Variable.ofGlobal: descr="+rec);
+//				System.out.println("Variable.ofGlobal: descr="+rec);
 				count = count + rec.nbrep * fixrep;
-				System.out.println("Variable.ofGlobal: count="+count);
+//				System.out.println("Variable.ofGlobal: count="+count);
 //				Util.IERR("");
 			}
 			if(count == 0) Util.IERR("");

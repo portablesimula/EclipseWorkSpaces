@@ -1,6 +1,7 @@
 package bec.instruction;
 
 import bec.compileTimeStack.CTStack;
+import bec.compileTimeStack.StackItem;
 import bec.util.Global;
 import bec.util.Relation;
 import bec.util.Scode;
@@ -32,12 +33,12 @@ public abstract class BJUMPIF extends Instruction {
 		
 //		int cond = Util.GQrelation();
 		// Check Relation
-		CTStack.pop();
+		StackItem tos = CTStack.pop();
 		CTStack.pop();
 		
 		ProgramAddress addr = Global.DESTAB[destination];
 		if(addr == null) Util.IERR("Destination is undefined");
-		Global.PSEG.emit(new SVM_JUMPIF(relation, addr), "BJUMPIF: "+destination+ " " + destination);
+		Global.PSEG.emit(new SVM_JUMPIF(relation, tos.type.size(), addr), "BJUMPIF: "+destination+ " " + destination);
 		Global.DESTAB[destination] = null;
 		
 //		Global.PSEG.dump("BJUMPIF: ");

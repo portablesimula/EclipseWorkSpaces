@@ -1,29 +1,22 @@
 begin
    SYSINSERT RT,SYSR,KNWN,UTIL;    
+
+	record REC1; begin
+		infix(string) ss(3);
+		real rr(2);
+		integer ii(2);
+		character cc(2);
+		size zz(2);
+		boolean bb(2);
+	  end
 	  
 	record REC2; begin
 		infix(string) ff;
-		infix(LEVEL2) lv2;
-	  end
-	
-	record LEVEL2; begin
-		character cc2(2);
-		infix(LEVEL3) lv3;
-	  end
-	
-	record LEVEL3; begin
-		character cc3(4);
+%		infix(LEVEL2) lv2;
 	  end
 	  
-	record REC3; begin
-		field() ff(2);
-		name() nn(3);
-	  end
-	  
-	  
-	infix(REC3) z5=record:REC3(ff=field(REC2.lv2.lv3.cc3))
-	
-       
+%	infix(REC1) z1=record:REC1(ii=55)
+	infix(REC1) z2=record:REC1(rr=(0.0,3.14),ss=("1.0","222","333"),ii=(0,888),cc=('A','B'),zz=size(REC2),bb=(false,true))
 
  end;
 	 
