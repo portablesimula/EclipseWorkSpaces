@@ -1,5 +1,4 @@
 begin
---   SYSINSERT envir,modl1;
    SYSINSERT RT,SYSR,KNWN,UTIL;    
 -- ===============================================   Main   program =============
 --

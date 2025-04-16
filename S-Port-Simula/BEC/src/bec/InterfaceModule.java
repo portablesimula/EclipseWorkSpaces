@@ -3,7 +3,6 @@ package bec;
 import java.io.IOException;
 
 import bec.compileTimeStack.CTStack;
-import bec.compileTimeStack.DataType;
 import bec.descriptor.ConstDescr;
 import bec.descriptor.Kind;
 import bec.descriptor.ProfileDescr;
@@ -15,8 +14,6 @@ import bec.segment.ProgramSegment;
 import bec.util.Array;
 import bec.util.Global;
 import bec.util.Scode;
-import bec.util.Tag;
-import bec.util.Type;
 import bec.util.Util;
 
 public class InterfaceModule extends S_Module {
@@ -60,7 +57,7 @@ public class InterfaceModule extends S_Module {
 				case Scode.S_GLOBAL:	Variable.ofGlobal(Global.DSEG); break;
 				case Scode.S_CONSTSPEC: ConstDescr.ofConstSpec(); break;
 				case Scode.S_CONST:		ConstDescr.ofConstDef(); break;
-				case Scode.S_RECORD:	RecordDescr.of(); break;
+				case Scode.S_RECORD:	RecordDescr.ofScode(); break;
 				case Scode.S_PROFILE:   ProfileDescr.ofProfile(); break;
 				case Scode.S_ROUTINE:	RoutineDescr.ofRoutineDef();	break;
 				case Scode.S_LINE:		setLine(0); break;

@@ -3,8 +3,7 @@ package bec.instruction;
 import bec.compileTimeStack.CTStack;
 import bec.util.Global;
 import bec.util.Type;
-import bec.util.Util;
-import bec.virtualMachine.SVM_NOT_IMPL;
+import bec.virtualMachine.SVM_SETO;
 
 public abstract class SETO extends Instruction {
 	
@@ -22,8 +21,7 @@ public abstract class SETO extends Instruction {
 	public static void ofScode() {
 		CTStack.checkTosType(Type.T_OADDR);
 		FETCH.doFetch("SETO: "); CTStack.pop();
-//		%+S                      Qf5(qCALL,0,0,4,X_SETO);
-		Global.PSEG.emit(new SVM_NOT_IMPL("SETO: "), "SETO: ");
+		Global.PSEG.emit(new SVM_SETO(), "SGETO: ");
 //		Util.IERR("NOT IMPL");
 	}
 

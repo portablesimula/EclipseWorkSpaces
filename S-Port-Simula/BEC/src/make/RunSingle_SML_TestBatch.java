@@ -32,7 +32,7 @@ public final class RunSingle_SML_TestBatch {
 //		Global.EXEC_TRACE = 1;
 //		Global.PRINT_GENERATED_SVM_DATA = true;
 ////		Global.CALL_TRACE_LEVEL = 2;
-//		Global.DUMPS_AT_EXIT = true;
+////		Global.DUMPS_AT_EXIT = true;
 		
 		// Set Compiler Options.
 //		Option.EXTENSIONS=false;
@@ -45,7 +45,7 @@ public final class RunSingle_SML_TestBatch {
 //		names.add("adHoc02.scd");
 //		names.add("adHoc03.scd");
 //		names.add("adHoc04.scd");
-		names.add("adHoc05.scd");
+//		names.add("adHoc05.scd");
 //			names.add("adHoc06.scd"); 
 //			names.add("adHoc07.scd");
 //			names.add("adHoc08.scd");
@@ -90,6 +90,7 @@ public final class RunSingle_SML_TestBatch {
 //		names.add("smltst35.scd"); // RT'sizes: string, ptp, ...
 //		names.add("smltst36.scd"); // RT'sizes: entity, ...
 //		names.add("smltst37.scd"); // RT'sizes: quantities and simob
+		names.add("smltst38.scd"); // INITO, GETO, SETO
 
 		for (String name : names) {
 			String fileName = smlSCodeDir + name;

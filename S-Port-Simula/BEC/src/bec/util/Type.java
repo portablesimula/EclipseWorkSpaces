@@ -1,13 +1,11 @@
 package bec.util;
 
 import java.io.IOException;
-import java.util.BitSet;
 import java.util.HashMap;
 import java.util.Vector;
 
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
-import bec.descriptor.Descriptor;
 import bec.descriptor.Kind;
 import bec.descriptor.RecordDescr;
 
@@ -15,7 +13,6 @@ public class Type {
 	public  int tag;
 	private int size;  // Size of type in basic cells
 	private int rep0size;  // Size of rep 0 attribute in basic cells
-	public  BitSet pntmap; // NULL:no pointers, else: Reladdr of pointers
 	String comment;
 
 	private static HashMap<Integer, Type> TMAP;
@@ -67,10 +64,9 @@ public class Type {
 		return type;
 	}
 	
-	private Type(int tag, int size, int rela) {
+	private Type(int tag, int size) {
 		this.tag = tag;
 		this.size = size;
-		
 	}
 
 	public static Type lookupType(RecordDescr rec) {
@@ -85,8 +81,7 @@ public class Type {
 
 	public static void newRecType(RecordDescr rec) {
 //		Type x = new Type(rec.size, null, rec.tag.toString());
-		Type type = new Type(rec.tag.val, rec.size, 0);
-		type.pntmap = rec.pntmap;
+		Type type = new Type(rec.tag.val, rec.size);
 		type.rep0size = rec.nbrep;
 		type.comment = "From " + rec;
 		if(TMAP.get(rec.tag.val) != null) {
@@ -119,38 +114,29 @@ public class Type {
 		TMAP = new HashMap<Integer, Type>();
 		RECTYPES = new Vector<Type>();		
 
-		//    -----------        type                      tag         size    pnt )
-		T_VOID   = newBasType(Scode.TAG_VOID,   0         );
-		T_TEXT   = newBasType(Scode.TAG_TEXT,   3         );
-		T_STRING = newBasType(Scode.TAG_STRING, 3         );
-		T_BOOL   = newBasType(Scode.TAG_BOOL,   1         );
-		T_CHAR   = newBasType(Scode.TAG_CHAR,   1         );
-		T_INT    = newBasType(Scode.TAG_INT,    1         );
-		T_SINT   = newBasType(Scode.TAG_SINT,   1         );
-		T_REAL   = newBasType(Scode.TAG_REAL,   1         );
-		T_LREAL  = newBasType(Scode.TAG_LREAL,  1         );
-		T_SIZE   = newBasType(Scode.TAG_SIZE,   1         );
-		T_OADDR  = newPntType(Scode.TAG_OADDR,  1,     0  );
-		T_AADDR  = newBasType(Scode.TAG_AADDR,  1         );
-		T_GADDR  = newPntType(Scode.TAG_GADDR,  2,     1  );
-		T_PADDR  = newBasType(Scode.TAG_PADDR,  1         );
-		T_RADDR  = newBasType(Scode.TAG_RADDR,  1         );
+		// type                    tag         size )
+		T_VOID   = newBasType(Scode.TAG_VOID,   0   );
+		T_TEXT   = newBasType(Scode.TAG_TEXT,   3   );
+		T_STRING = newBasType(Scode.TAG_STRING, 3   );
+		T_BOOL   = newBasType(Scode.TAG_BOOL,   1   );
+		T_CHAR   = newBasType(Scode.TAG_CHAR,   1   );
+		T_INT    = newBasType(Scode.TAG_INT,    1   );
+		T_SINT   = newBasType(Scode.TAG_SINT,   1   );
+		T_REAL   = newBasType(Scode.TAG_REAL,   1   );
+		T_LREAL  = newBasType(Scode.TAG_LREAL,  1   );
+		T_SIZE   = newBasType(Scode.TAG_SIZE,   1   );
+		T_OADDR  = newBasType(Scode.TAG_OADDR,  1   );
+		T_AADDR  = newBasType(Scode.TAG_AADDR,  1   );
+		T_GADDR  = newBasType(Scode.TAG_GADDR,  2   );
+		T_PADDR  = newBasType(Scode.TAG_PADDR,  1   );
+		T_RADDR  = newBasType(Scode.TAG_RADDR,  1   );
 	}
 
 	private static Type newBasType(int tag, int size) {
-		Type type = new Type(tag, size, 0);
+		Type type = new Type(tag, size);
 		TMAP.put(tag, type);
 		return type;
 	}
-
-	private static Type newPntType(int tag, int size, int rela) {
-		Type type = new Type(tag, size, 0);
-		type.pntmap = new BitSet(32);
-		type.pntmap.set(rela);
-		TMAP.put(tag, type);
-		return type;
-	}
-
 
 	public static void dumpTypes(String title) {
 		System.out.println("============ "+title+" BEGIN Dump Types ================");
@@ -165,7 +151,7 @@ public class Type {
 	}
 	
 	public String toString() {
-		return Scode.edTag(tag) + " size=" + size + " pntmap=" + pntmap + ", rep0size=" + rep0size + " " + comment;
+		return Scode.edTag(tag) + " size=" + size + ", rep0size=" + rep0size + " " + comment;
 	}
 
 	// ***********************************************************************************************
@@ -180,13 +166,6 @@ public class Type {
 //			System.out.println("Type.writeRECTYPES: " + type.tag );
 			oupt.writeTagID(type.tag);
 			oupt.writeShort(type.size);
-			if(type.pntmap != null) {
-				oupt.writeBoolean(true);
-				byte[] pnts = type.pntmap.toByteArray();
-				int n = pnts.length;
-				oupt.writeShort(n);
-				for(int i=0;i<n;i++) oupt.writeShort(pnts[i]);
-			} else oupt.writeBoolean(false);
 			type.comment = "From " + Global.currentModule;
 		}
 //		Util.IERR("");
@@ -197,21 +176,7 @@ public class Type {
 		for(int i=0;i<n;i++) {
 			int tag = inpt.readTagID();
 			int size = inpt.readShort();
-			Type type = new Type(tag, size, 0);
-			boolean present = inpt.readBoolean();
-			if(present) {
-				int npt = inpt.readShort();
-				byte[] pnts = new byte[npt];
-				for(int j=0;j<npt;j++) pnts[j] = (byte) inpt.readShort();
-				type.pntmap = BitSet.valueOf(pnts);
-			}
-//			if(tag == Scode.TAG_STRING) ; // OK Predefinert
-//			else if(TMAP.get(tag) !=null) {
-//				Type.dumpTypes("Type.readRECTYPES: ");
-//				Util.IERR("Alredy defined: " + TMAP.get(tag) + " NEW in " + Global.currentModule);
-//			}
-//			TMAP.put(tag, type);
-//			RECTYPES.add(type);
+			Type type = new Type(tag, size);
 			
 			if(tag == Scode.TAG_STRING) ; // OK Predefinert
 			else if(TMAP.get(tag) ==null) {
@@ -219,19 +184,10 @@ public class Type {
 				RECTYPES.add(type);
 //				Type.dumpTypes("Type.readRECTYPES: ");
 			}
-			
-			
 //			System.out.println("Type.readRECTYPES: NEW Type: " + type);
 //			Util.IERR("");
 		}
 	}
-	
-//	protected Type(AttributeInputStream inpt) throws IOException {
-//		int tag = inpt.readTag();
-//		System.out.println("NEW Type(inpt): " + Scode.edInstr(tag));
-//		Type type = TMAP.get(tag);
-//		Util.IERR("SJEKK DETTE");
-//	}
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		oupt.writeTag(tag);

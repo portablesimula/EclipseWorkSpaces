@@ -73,7 +73,7 @@ public class Instruction { // extends ProgramElement {
 			case Scode.S_CONSTSPEC ->   ConstDescr.ofConstSpec();
 			case Scode.S_CONST ->	    ConstDescr.ofConstDef();
 			case Scode.S_ROUTINESPEC -> RoutineDescr.ofRoutineSpec();
-			case Scode.S_RECORD ->      RecordDescr.of();
+			case Scode.S_RECORD ->      RecordDescr.ofScode();
 			case Scode.S_SETOBJ ->      Util.IERR("SSTMT.SETOBJ is not implemented");
 			case Scode.S_GETOBJ ->      Util.IERR("SSTMT.GETOBJ is not implemented");
 			case Scode.S_ACCESS, Scode.S_ACCESSV -> Util.IERR("SSTMT.ACCESS is not implemented");

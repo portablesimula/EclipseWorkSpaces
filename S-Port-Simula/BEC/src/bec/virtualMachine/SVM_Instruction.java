@@ -41,6 +41,9 @@ public class SVM_Instruction {
 	public final static int iREFER = 29;
 	public final static int iADDREG = 30;
 	public final static int iXOR = 31;
+	public final static int iINITO = 32;
+	public final static int iGETO = 33;
+	public final static int iSETO = 34;
 	
 	public final static int iNOT_IMPL = 99;
 	public final static int iMax = 99;
@@ -102,6 +105,9 @@ public class SVM_Instruction {
 			case iENTER:	return SVM_ENTER.read(inpt);
 			case iREFER:	return SVM_REFER.read(inpt);
 			case iADDREG:	return SVM_ADDREG.read(inpt);
+			case iINITO:	return SVM_INITO.read(inpt);
+			case iGETO:		return SVM_GETO.read(inpt);
+			case iSETO:		return SVM_SETO.read(inpt);
 			
 			case iNOT_IMPL:	return SVM_NOT_IMPL.read(inpt);
 			default: Util.IERR("MISSING: " + edOpcode(opcode));
@@ -142,6 +148,9 @@ public class SVM_Instruction {
 			case iENTER:	return "iENTER";
 			case iREFER:	return "iREFER";
 			case iADDREG:	return "iADDREG";
+			case iINITO:	return "iINITO";
+			case iGETO:		return "iGETO";
+			case iSETO:		return "iSETO";
 
 			case iNOT_IMPL:	return "iNOT_IMPL";
 			default:		return "UNKNOWN:" + opcode;

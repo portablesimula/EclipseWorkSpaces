@@ -2,24 +2,20 @@ begin
    SYSINSERT RT,SYSR,KNWN,UTIL;    
 -- ===============================================   Main   program =============
 --
-   const infix(string) PROGRAM_NAME ="SIMULETTA TEST NO 14";
-   const infix(string) PURPOSE      ="Object Reference and Size Expression";
+   const infix(string) PROGRAM_NAME ="SIMULETTA TEST NO 38";
+   const infix(string) PURPOSE      ="INITO, GETO, SETO";
 --
 -- ==============================================================================
    
    integer nError ;
    integer traceCase;
-   const infix(string) facit(11) = (
+   const infix(string) facit(7) = (
       "BEGIN TEST",
-      "POOLSIZE=150000, SIZE(REC)=12, SIZE(inst)=7",
-      "DIST(r2-r1)=19",
-      "DIST((r1+NOSIZE)-r1)=0",
-      "DIST((r1+size(inst))-r1)=7",
-      "DIST((r4-size(inst))-r1)=19",
-      "r5.i=4444",
-      "r5.rea=3",
-      "r2.j=6666",
-      "dist=19",
+      "r1.p1=POOL_0[19]",
+      "r1.i=4444",
+      "r1.p2=POOL_0[19]",
+      "r1.j=8888",
+      "r1.p3=POOL_0[19]",
       "END TEST"
    );
    
@@ -35,12 +31,12 @@ begin
       traceCase:=traceCase+1;
    end;
 
-	Visible record REC:inst;
-	begin integer   i;
-    	  integer   j;
-    	  variant   integer int;
-    	            real    rea;
-    	  variant   infix(string) str;
+	Visible record REC:inst; begin
+		ref(REC) p1;
+		integer   i;
+		ref(REC) p2;
+    	integer   j;
+		ref(REC) p3;
 	end;
 
 	Visible routine ALLOC;
@@ -55,17 +51,15 @@ begin
 	
 	ref(REC) r1;
 	ref(inst) space;
-	ref(REC) r2,r3,r4,r5;
-	size dist;
-	size spsize;
-	integer i;
+	ref(REC) r2,y;
 
    if verbose then prt2("--- ",PROGRAM_NAME); prt2("--- ",PURPOSE) endif;
 -- ==============================================================================
  
       trace("BEGIN TEST");
       
-		poolsize:=SIZEIN(1,sequ);
+%		poolsize:=SIZEIN(1,sequ);
+		poolsize := none + size(REC) + size(REC) + size(REC) + size(REC) - none;
 		pool:=DWAREA(poolsize,sequ);
 		bio.nxtAdr:=pool;
 		bio.lstAdr:=pool+poolsize;
@@ -74,26 +68,24 @@ begin
 		space:=ALLOC(size(inst));
 		r2:=ALLOC(size(REC));
 	
-		ED_STR("POOLSIZE="); ED_SIZE(poolsize); ED_STR(", SIZE(REC)="); ED_SIZE(size(REC)); ED_STR(", SIZE(inst)="); ED_SIZE(size(inst)); trace(get_ed);
-		dist:=r2 - r1; ED_STR("DIST(r2-r1)="); ED_SIZE(dist); trace(get_ed);
-	
-		r3:=r1+spsize; dist:=r3 - r1; ED_STR("DIST((r1+NOSIZE)-r1)="); ED_SIZE(dist); trace(get_ed);
-		r3:=r1+size(inst); dist:=r3 - r1; ED_STR("DIST((r1+size(inst))-r1)="); ED_SIZE(dist); trace(get_ed);
-		r4:=r2-spsize; dist:=r4 - r1; ED_STR("DIST((r4-size(inst))-r1)="); ED_SIZE(dist); trace(get_ed);
-	
-		r2.i:=4444;
-		r2.rea:=3.14;
-		r5:=(r1+size(REC))+size(inst);
-	
-		ED_STR("r5.i="); ED_INT(r5.i); trace(get_ed);
-		ED_STR("r5.rea="); ED_INT(r5.rea); trace(get_ed);
+		r1.p1 := r1;
+		r1.i  := 4444;
+		r1.p2 := r1;
+		r1.j  := 8888
+		r1.p3 := r1;
+		r1.lng := size(REC);
 		
-		r5.j:=6666;
-		ED_STR("r2.j="); ED_INT(r2.j); trace(get_ed);
+		init_pointer(r1);
+		repeat y:= get_pointer while y <> none
+			do set_pointer(r2);
+		endrepeat
 		
-		dist:=none + size(REC) + size(inst) - none;
-		ED_STR("dist="); ED_SIZE(dist); trace(get_ed);
-	
+		ED_STR("r1.p1="); ED_OADDR(r1.p1); trace(get_ed);
+		ED_STR("r1.i=");  ED_INT(r1.i);    trace(get_ed);
+		ED_STR("r1.p2="); ED_OADDR(r1.p2); trace(get_ed);
+		ED_STR("r1.j=");  ED_INT(r1.j);    trace(get_ed);
+		ED_STR("r1.p3="); ED_OADDR(r1.p3); trace(get_ed);
+			
       trace("END TEST");
 
 -- ==============================================================================

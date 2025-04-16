@@ -5,6 +5,8 @@ import bec.util.Global;
 import bec.util.Type;
 import bec.util.Util;
 import bec.virtualMachine.RTRegister;
+import bec.virtualMachine.SVM_GETO;
+import bec.virtualMachine.SVM_INITO;
 import bec.virtualMachine.SVM_NOT_IMPL;
 
 public abstract class GETO extends Instruction {
@@ -23,11 +25,8 @@ public abstract class GETO extends Instruction {
 	 * returned.
 	 */
 	public static void ofScode() {
-//		%+SE                     Qf2(qDYADC,qSUB,qESP,cSTP,4);
-//		%+S                      Qf5(qCALL,0,0,4,X_GETO);
-//		%+S                      Qf2(qADJST,0,0,0,4);
 		CTStack.pushTemp(Type.T_OADDR, 1, "GETO: ");
-		Global.PSEG.emit(new SVM_NOT_IMPL("GETO: "), "GETO: ");
+		Global.PSEG.emit(new SVM_GETO(), "GETO: ");
 //		Util.IERR("NOT IMPL");
 	}
 

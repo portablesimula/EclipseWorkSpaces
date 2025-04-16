@@ -4,6 +4,7 @@ import bec.compileTimeStack.CTStack;
 import bec.util.Global;
 import bec.util.Type;
 import bec.util.Util;
+import bec.virtualMachine.SVM_INITO;
 import bec.virtualMachine.SVM_NOT_IMPL;
 
 public abstract class INITO extends Instruction {
@@ -23,9 +24,7 @@ public abstract class INITO extends Instruction {
 		CTStack.checkTosType(Type.T_OADDR);
 		FETCH.doFetch("INITO: ");
 		CTStack.pop();
-//		%+S                      Qf5(qCALL,0,0,4,X_INITO);
-		Global.PSEG.emit(new SVM_NOT_IMPL("INITO: "), "INITO: ");
-//		Util.IERR("NOT IMPL");
+		Global.PSEG.emit(new SVM_INITO(), "INITO: ");
 	}
 
 }

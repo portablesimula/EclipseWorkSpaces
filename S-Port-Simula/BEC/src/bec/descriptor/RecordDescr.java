@@ -1,12 +1,10 @@
 package bec.descriptor;
 
 import java.io.IOException;
-import java.util.BitSet;
 import java.util.Vector;
 
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
-import bec.InterfaceModule;
 import bec.segment.DataSegment;
 import bec.util.Global;
 import bec.util.Scode;
@@ -16,7 +14,6 @@ import bec.util.Type;
 public class RecordDescr extends Descriptor {
 	public int size;      // Record size information
 	public int nbrep;     // Size of rep(0) attribute
-	public BitSet pntmap; // Only used by TypeRecord
 	boolean infoType;
 
 	// NOT SAVED
@@ -29,7 +26,6 @@ public class RecordDescr extends Descriptor {
 		super(kind, tag);
 	}
 	
-//	%title ***   I n p u t   R e c o r d   ***
 /**
  *	record_descriptor
  *		::= record record_tag:newtag <record_info>?
@@ -48,13 +44,13 @@ public class RecordDescr extends Descriptor {
  *		quantity_descriptor ::= resolved_type < Rep count:number >?
  * 
  */
-	public static RecordDescr of() {
+	public static RecordDescr ofScode() {
 		RecordDescr rec = new RecordDescr(Kind.K_RecordDescr,Tag.ofScode());
 		int comnSize = 0;
 			
 		if(Scode.accept(Scode.S_INFO)) {
+			@SuppressWarnings("unused")
 			String info = Scode.inString();
-//			if("TYPE".equalsIgnoreCase(info)) rec.infoType = true;
 			rec.infoType = true;
 		}
 		if(Scode.accept(Scode.S_PREFIX)) {
@@ -65,7 +61,6 @@ public class RecordDescr extends Descriptor {
 		rec.attributes = new Vector<Attribute>();
 		while(Scode.accept(Scode.S_ATTR)) {
 			Attribute attr = new Attribute(comnSize);
-//			comnSize = comnSize + attr.size;
 			comnSize = comnSize + attr.allocSize();
 			if(attr.repCount == 0) rec.nbrep = attr.size;
 			rec.attributes.add(attr);
@@ -78,26 +73,14 @@ public class RecordDescr extends Descriptor {
 			int altSize = comnSize;
 			while(Scode.accept(Scode.S_ATTR)) {
 				Attribute attr = new Attribute(altSize);
-//				altSize = altSize + attr.size;
 				altSize = altSize + attr.allocSize();
 				alt.attributes.add(attr);
 			}
 			rec.size = Math.max(rec.size, altSize);
 		}
 		Scode.expect(Scode.S_ENDRECORD);
-			
-//		if(Global.currentModule instanceof InterfaceModule) {
-//		if(rec.infoType) {
-			rec.buildPointerMap();
-			Type.newRecType(rec);
-//		}
-//		if(Scode.inputTrace > 3)
-//			rec.print("   ");
+		Type.newRecType(rec);
 		return rec;
-	}
-
-	private void buildPointerMap() {
-		System.out.println("RecordDescr.buildPointerMap: DENNE METODEN MÅ SKRIVES");
 	}
 	
 	private RecordDescr getPrefix(int prefixTag) {
@@ -106,16 +89,11 @@ public class RecordDescr extends Descriptor {
 	}
 
 	public void emitDefaultValues(DataSegment dseg, int repCount, String comment) {
-//		System.out.println("RECORD.emitDefaultValue: " + dseg + "  " + this);
-//		print(2);
-			
 		int rep = (repCount > 0) ? repCount : 1;
 		for(int i=0;i<rep;i++) {
 			for(int j=0;j<size;j++)
 				dseg.emit(null, comment);
 		}
-//		Global.DSEG.dump();
-//		Util.IERR("");
 	}
 		
 	@Override
@@ -123,11 +101,8 @@ public class RecordDescr extends Descriptor {
 		String head = "RECORD " + tag + " Size=" + size;
 		if(infoType)  head = head + " INFO TYPE";
 		if(prefixTag > 0) head = head + " PREFIX " + Scode.edTag(prefixTag);
-//		System.out.println(indent + head);
 		System.out.println(indent + head);
-//		for(AttributeDefinition attr:attributes) {
 		if(attributes != null) for(Attribute attr:attributes) {
-//			sLIST(indent + 1, attr.toString());
 			System.out.println(indent + "   " + attr.toString());
 		}
 		if(alternateParts != null) {
@@ -135,10 +110,10 @@ public class RecordDescr extends Descriptor {
 				alt.print(indent + "   ");
 			}
 		}
-//		System.out.println(indent + "ENDRECORD");
 		System.out.println("   " + "ENDRECORD");
 	}
 		
+	@Override
 	public String toString() {
 		String head = "RECORD " + tag + " Size=" + size;
 		if(infoType)  head = head + " INFO TYPE";
@@ -203,10 +178,6 @@ public class RecordDescr extends Descriptor {
 		rec.nbrep = inpt.readShort();
 		rec.infoType = inpt.readBoolean();
 		if(Global.ATTR_INPUT_TRACE) System.out.println("RecordDescr.Read: " + rec);
-//		if(rec.infoType) {
-//			rec.buildPointerMap();
-//			Type.newRecType(rec);
-//		}
 		return rec;
 	}
 
