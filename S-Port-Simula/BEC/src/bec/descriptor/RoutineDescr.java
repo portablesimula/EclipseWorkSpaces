@@ -149,7 +149,8 @@ public class RoutineDescr extends Descriptor {
 		if(Scode.curinstr != Scode.S_ENDROUTINE) Util.IERR("Missing - endroutine");
 		CTStack.checkStackEmpty();
 		if(DEBUG) prf.print("RoutineDescr.ofRoutineDef: ");
-		Global.PSEG.emit(new SVM_RETURN(prf.returSlot), "");
+//		Global.PSEG.emit(new SVM_RETURN(prf.ident, prf.returSlot), "");
+		Global.PSEG.emit(new SVM_RETURN(prftag.ident(), prf.returSlot), "");
 		CTStack.checkStackEmpty();
 
 		if(! CALL.USE_FRAME_ON_STACK) {
@@ -158,7 +159,14 @@ public class RoutineDescr extends Descriptor {
 		if(Global.PRINT_GENERATED_SVM_CODE) {
 			Global.PSEG.dump("END RoutineDescr.ofRoutineDef:: ");
 		}
+		
+		if(rut.PSEG != null && rut.PSEG.ident.equalsIgnoreCase("PSEG_SYSR_SYSPRI:BODY")) {
+			System.out.println("RoutineDescr.ofRoutineDef: ADD PSEG_SYSR_SYSPRI:BODY ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+		}
 
+		if(rut.DSEG != null) Global.routineSegments.add(rut.DSEG);
+		if(rut.PSEG != null) Global.routineSegments.add(rut.PSEG);
+		
 		Global.PSEG = prevPSEG;
 //		Util.IERR("");
 	}
@@ -169,8 +177,8 @@ public class RoutineDescr extends Descriptor {
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Global.ATTR_OUTPUT_TRACE) System.out.println("RoutineDescr.Write: " + this);
-		if(DSEG != null) DSEG.write(oupt);
-		if(PSEG != null) PSEG.write(oupt);
+//		if(DSEG != null) DSEG.write(oupt);
+//		if(PSEG != null) PSEG.write(oupt);
 		oupt.writeKind(kind);
 		if(prftag != null) {
 			oupt.writeBoolean(true);

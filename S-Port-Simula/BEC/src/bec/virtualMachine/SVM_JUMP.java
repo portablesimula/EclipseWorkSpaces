@@ -21,7 +21,6 @@ public class SVM_JUMP extends SVM_Instruction {
 //		RTStack.dumpRTStack("SVM_JUMPIF: ");
 //		RTStack.checkStackEmpty();
 		Global.PSC = destination.copy();
-//		Util.IERR("");
 	}
 	
 	@Override	
@@ -42,11 +41,6 @@ public class SVM_JUMP extends SVM_Instruction {
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
-		
-		if(this.destination == null) {
-			Global.PSEG.dump("SVM_JUMP NULL: ");
-		}
-		
 		destination.write(oupt);
 	}
 

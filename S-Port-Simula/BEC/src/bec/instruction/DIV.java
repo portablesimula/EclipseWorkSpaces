@@ -4,7 +4,6 @@ import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.StackItem;
 import bec.util.Global;
 import bec.util.Type;
-import bec.virtualMachine.RTRegister;
 import bec.virtualMachine.SVM_DIV;
 
 public abstract class DIV extends Instruction {
@@ -26,8 +25,6 @@ public abstract class DIV extends Instruction {
 	 * SOS op TOS. All arithmetic on subranges of INT should be performed in full integer arithmetic. 
 	 */
 	public static void ofScode() {
-//		CTStack.dumpStack();
-//		Global.PSEG.dump();
 		CTStack.checkTosArith(); CTStack.checkSosArith(); CTStack.checkSosValue(); CTStack.checkTypesEqual();
 		StackItem tos = CTStack.TOS;
 	    Type at = CTStack.arithType(tos.type, tos.suc.type);
@@ -35,9 +32,6 @@ public abstract class DIV extends Instruction {
 		CTStack.pop();
 		CTStack.pop();
 	    CTStack.pushTemp(at, 1,"DIV: ");
-//		CTStack.dumpStack();
-//		Global.PSEG.dump();
-//		Util.IERR(""+this);
 	}
 
 }

@@ -190,7 +190,7 @@ Module strg("RTS");
        else PRT(" (No Garbage Collection)") endif;
  end;
 %title ***   GetNewPool  /  SetBioPointers   ***
-
+ 
  Routine GetNewPool;
  import size request; export ref(area) result;
  begin ref(area) p; size poolsize; short integer sequ;
@@ -225,6 +225,11 @@ Module strg("RTS");
 %-X            if bio.trc then bio.obsEvt:=EVT_gcNP; observ endif;
             endif;
             result:=last_alloc:=last_pool:=p;
+% +M    	ED_STR("STRG.GETNEWPOOL: result="); ED_OADDR(result); ED_OUT;   
+% +M    	ED_STR("STRG.GETNEWPOOL: p.lim=");  ED_OADDR(p.lim); ED_OUT;   
+% +M  	    ED_STR("STRG.GETNEWPOOL: maxlen="); ED_SIZE(maxlen); ED_OUT;   
+% +M    	ED_STR("STRG.GETNEWPOOL: p.nxt=");  ED_OADDR(p.nxt); ED_OUT;   
+% +M  	    ED_STR("STRG.GETNEWPOOL: request="); ED_SIZE(request); ED_OUT;   
             if (p.lim-maxlen) < (p.nxt+request)
             then if NoExtendPool(request) then result:=none endif endif;
        endif;

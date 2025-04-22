@@ -5,7 +5,6 @@ import bec.compileTimeStack.StackItem;
 import bec.util.Global;
 import bec.util.Type;
 import bec.util.Util;
-import bec.virtualMachine.RTRegister;
 import bec.virtualMachine.SVM_EQV;
 
 public abstract class EQV extends Instruction {
@@ -24,8 +23,6 @@ public abstract class EQV extends Instruction {
 	 * Note that SOS is the left operand.
 	 */
 	public static void ofScode() {
-//		CTStack.dumpStack();
-//		Global.PSEG.dump();
 		StackItem tos = CTStack.TOS;
 	    
 	    Type at = tos.type;
@@ -33,18 +30,15 @@ public abstract class EQV extends Instruction {
 		    at = CTStack.arithType(at, tos.suc.type);
 		    CTStack.checkTosArith(); CTStack.checkSosArith();
 		    CTStack.checkSosValue(); CTStack.checkTypesEqual();
-		    if( at == Type.T_REAL || at == Type.T_LREAL) Util.IERR("CODER.GQandxor-1");
+		    if( at == Type.T_REAL || at == Type.T_LREAL) Util.IERR("");
 	    } else {
 	    	CTStack.checkSosValue(); CTStack.checkSosType(Type.T_BOOL);
 	    }
 	    
-		Global.PSEG.emit(new SVM_EQV(at), "EQV: ");
+		Global.PSEG.emit(new SVM_EQV(), "EQV: ");
 		CTStack.pop();
 		CTStack.pop();
 	    CTStack.pushTemp(at, 1, "EQV: ");
-//		CTStack.dumpStack();
-//		Global.PSEG.dump();
-//		Util.IERR(""+this);
 	}	
 
 }

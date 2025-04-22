@@ -3,7 +3,7 @@ package bec.instruction;
 import bec.compileTimeStack.CTStack;
 import bec.util.Global;
 import bec.util.Type;
-import bec.virtualMachine.SVM_SUB;
+import bec.virtualMachine.SVM_DECO;
 
 public abstract class DECO extends Instruction {
 	
@@ -23,7 +23,7 @@ public abstract class DECO extends Instruction {
 	 */
 	public static void ofScode() {
 		CTStack.checkTosType(Type.T_SIZE); CTStack.checkSosValue(); CTStack.checkSosType(Type.T_OADDR);
-		Global.PSEG.emit(new SVM_SUB(), "");
+		Global.PSEG.emit(new SVM_DECO(), "");
 		CTStack.pop();
 		CTStack.pop();
 	    CTStack.pushTemp(Type.T_OADDR, 1, "DECO: ");

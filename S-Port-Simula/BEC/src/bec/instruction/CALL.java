@@ -13,7 +13,6 @@ import bec.util.Type;
 import bec.util.Util;
 import bec.value.ObjectAddress;
 import bec.virtualMachine.SVM_CALL;
-import bec.virtualMachine.SVM_CALL_DSEG;
 import bec.virtualMachine.SVM_NOOP;
 import bec.virtualMachine.SVM_PEEK2MEM;
 import bec.virtualMachine.SVM_PRECALL;
@@ -40,7 +39,7 @@ public abstract class CALL extends Instruction {
 	 * 			::= <instruction>+ asspar
 	 * 			::= <instruction>+ assrep n:byte
 	 */
-	public static void ofScode(int nParStaced) {
+	public static void ofScode(int nParStacked) {
 		int profileTag = Scode.ofScode();
 		Scode.inputInstr();
 		
@@ -50,24 +49,26 @@ public abstract class CALL extends Instruction {
 //		System.out.println("Call.ofScode-1: BEGIN CALL "+Scode.edTag(profileTag)+" ================================================================================");
 //		spec.print("Call.ofScode-1: ");
 		ProfileItem pitem = new ProfileItem(Type.T_VOID,spec);
-		pitem.nasspar = nParStaced;
+		pitem.nasspar = nParStacked;
 		
-		for(int i=0;i<nParStaced;i++) CTStack.pop();
+//		System.out.println("CALL.ofScode: nParStacked="+nParStacked);
+		int nParSlots = 0;
+		for(int i=0;i<nParStacked;i++) {
+			StackItem par = CTStack.pop();
+			nParSlots = nParSlots + par.type.size();
+//			System.out.println("CALL.ofScode: par="+par+", nParSlots="+nParSlots);
+		}
 		
 		CTStack.push(pitem);
-//	    CTStack.dumpStack("Call.ofScode-1: ");
-//	    Util.IERR("");
 	    
-		if(CALL.USE_FRAME_ON_STACK) {
-//			System.out.println("CALL.ofScode: spec.pKind="+spec.pKind);
-			if(spec.pKind == 0) {
-				int exportSize = (spec.getExport() == null)? 0 : spec.getExport().type.size();
-				int importSize = spec.frameSize-exportSize-1;
-//				RTFrame frame = new RTFrame(exportSize, spec.frameSize-exportSize-1);
-//				Global.PSEG.emit(new SVM_PRECALL(frame), ""+Scode.edTag(profileTag));
-				Global.PSEG.emit(new SVM_PRECALL(spec.getSimpleName(), exportSize, importSize), ""+Scode.edTag(profileTag));
-			}
-    	}
+//		System.out.println("CALL.ofScode: spec.pKind="+spec.pKind);
+		if(spec.pKind == 0) {
+			int exportSize = (spec.getExport() == null)? 0 : spec.getExport().type.size();
+			int importSize = spec.frameSize-exportSize-1;
+//			RTFrame frame = new RTFrame(exportSize, spec.frameSize-exportSize-1);
+//			Global.PSEG.emit(new SVM_PRECALL(frame), ""+Scode.edTag(profileTag));
+			Global.PSEG.emit(new SVM_PRECALL(spec.getSimpleName(), nParSlots, exportSize, importSize), ""+Scode.edTag(profileTag));
+		}
 		
 //		Vector<Instruction> CALL_TOS_Instructions = null;
 		boolean CALL_TOS = false;
@@ -105,44 +106,21 @@ public abstract class CALL extends Instruction {
 	    if(pitem.nasspar != pitem.spc.params.size())
 	    	Util.IERR("Wrong number of Parameters: got " + pitem.nasspar + ", required" + +pitem.spc.params.size());
 //	    ---------  Call Routine  ---------
-		if(CALL.USE_FRAME_ON_STACK) {
-//			System.out.println("CALL.ofScode: export="+spec.export);
-//			Util.IERR("");
-		    if(CALL_TOS) {
-//		    	Util.IERR("NOT IMPL");
-//		    	Global.PSEG.emit(new SVM_NOT_IMPL("CALL: CALL_TOS"), "");
-
-		    	Global.PSEG.emit(SVM_CALL.ofTOS(spec.returSlot), "");
-		    	CTStack.pop();
-		    } else {
-				int bodyTag = Scode.ofScode();
-		    	if(spec.pKind > 0) {
-		    		Global.PSEG.emit(new SVM_CALLSYS(spec.pKind), "");
-		    	} else {
-		    		RoutineDescr rut = (RoutineDescr) Global.DISPL.get(bodyTag);
-		    		if(rut == null) Util.IERR("Unknown Routine: " + Scode.edTag(bodyTag));
-		    		Global.PSEG.emit(new SVM_CALL(rut.getAddress(), spec.returSlot), ""+rut);
-		    	}
-		    }
-    		Global.PSEG.emit(new SVM_NOOP(), "Return Point");
-		} else {
-			ObjectAddress prfAddr = ObjectAddress.ofSegAddr(spec.DSEG, 0);
-		    if(CALL_TOS) {
-		    	Global.PSEG.emit(SVM_CALL_DSEG.ofTOS(prfAddr), "");
-		    	CTStack.pop();
-		    } else {
-				int bodyTag = Scode.ofScode();
-		    	if(spec.pKind > 0) {
-		    		Global.PSEG.emit(new SVM_CALLSYS(spec.pKind), "");
-		    	} else {
-		    		RoutineDescr rut = (RoutineDescr) Global.DISPL.get(bodyTag);
-		    		if(rut == null) Util.IERR("Unknown Routine: " + Scode.edTag(bodyTag));
-		    		Global.PSEG.emit(new SVM_CALL_DSEG(rut.getAddress(), prfAddr), ""+rut);
-		    	}
-		    }
-		}
-//	    repeat while npop<>0 do Pop; npop:=npop-1 endrepeat;
-//	    CTStack.dumpStack("PARSE.CallSYS-3");
+//		System.out.println("CALL.ofScode: export="+spec.export);
+	    if(CALL_TOS) {
+	    	Global.PSEG.emit(SVM_CALL.ofTOS(spec.returSlot), "");
+	    	CTStack.pop();
+	    } else {
+			int bodyTag = Scode.ofScode();
+	    	if(spec.pKind > 0) {
+	    		Global.PSEG.emit(new SVM_CALLSYS(spec.pKind), "");
+	    	} else {
+	    		RoutineDescr rut = (RoutineDescr) Global.DISPL.get(bodyTag);
+	    		if(rut == null) Util.IERR("Unknown Routine: " + Scode.edTag(bodyTag));
+	    		Global.PSEG.emit(new SVM_CALL(rut.getAddress(), spec.returSlot), ""+rut);
+	    	}
+	    }
+		Global.PSEG.emit(new SVM_NOOP(), "Return Point");
 	    if(CTStack.TOS != pitem) Util.IERR("PARSE.CallSYS-3");
 	    CTStack.pop();
 		

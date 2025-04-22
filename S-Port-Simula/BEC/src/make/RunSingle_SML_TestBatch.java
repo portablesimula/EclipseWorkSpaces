@@ -29,9 +29,9 @@ public final class RunSingle_SML_TestBatch {
 //		Global.verbose = true;
 //		Global.SCODE_INPUT_TRACE = true;
 //		Global.PRINT_GENERATED_SVM_CODE = true;
-//		Global.EXEC_TRACE = 1;
+		Global.EXEC_TRACE = 1;
 //		Global.PRINT_GENERATED_SVM_DATA = true;
-////		Global.CALL_TRACE_LEVEL = 2;
+		Global.CALL_TRACE_LEVEL = 2;
 ////		Global.DUMPS_AT_EXIT = true;
 		
 		// Set Compiler Options.
@@ -44,13 +44,14 @@ public final class RunSingle_SML_TestBatch {
 //		names.add("adHoc01.scd");
 //		names.add("adHoc02.scd");
 //		names.add("adHoc03.scd");
-//		names.add("adHoc04.scd");
+		names.add("adHoc04.scd");
 //		names.add("adHoc05.scd");
-//			names.add("adHoc06.scd"); 
-//			names.add("adHoc07.scd");
-//			names.add("adHoc08.scd");
+//		names.add("adHoc06.scd"); 
+//		names.add("adHoc07.scd");
+//		names.add("adHoc08.scd");
 //			names.add("adHoc09.scd");
 //		names.add("adHoc10.scd");
+//			names.add("adHoc11.scd");
 		
 //		names.add("smltst00.scd"); // Standard layout of test programs
 //		names.add("smltst01.scd"); // Simple Assignments
@@ -90,7 +91,9 @@ public final class RunSingle_SML_TestBatch {
 //		names.add("smltst35.scd"); // RT'sizes: string, ptp, ...
 //		names.add("smltst36.scd"); // RT'sizes: entity, ...
 //		names.add("smltst37.scd"); // RT'sizes: quantities and simob
-		names.add("smltst38.scd"); // INITO, GETO, SETO
+//		names.add("smltst38.scd"); // INITO, GETO, SETO
+//		names.add("smltst39.scd"); // Boolean Operators IMP and EQV
+//		names.add("smltst40.scd"); // Fixup Object Address
 
 		for (String name : names) {
 			String fileName = smlSCodeDir + name;

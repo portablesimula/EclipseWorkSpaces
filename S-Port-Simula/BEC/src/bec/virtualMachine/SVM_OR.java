@@ -29,10 +29,8 @@ public class SVM_OR extends SVM_Instruction {
 		Value tos = RTStack.pop().value();
 		Value sos = RTStack.pop().value();
 		Value res = (tos == null)? sos : tos.or(sos);
-//		System.out.println("SVM_OR: " + tos + " | " + sos + " = " + res);
 		RTStack.push(res, "SVM_OR: " + tos + " | " + sos + " = " + res);
 		Global.PSC.ofst++;
-//		Util.IERR(""+res);
 	}
 	
 	@Override	

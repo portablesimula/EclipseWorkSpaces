@@ -5,7 +5,6 @@ import bec.compileTimeStack.StackItem;
 import bec.util.Global;
 import bec.util.Type;
 import bec.util.Util;
-import bec.virtualMachine.RTRegister;
 import bec.virtualMachine.SVM_NOT;
 
 public abstract class NOT extends Instruction {
@@ -29,7 +28,7 @@ public abstract class NOT extends Instruction {
 		    CTStack.checkTosArith();
 		    if( at == Type.T_REAL || at == Type.T_LREAL) Util.IERR("CODER.GQnot-1");
 	    }
-		Global.PSEG.emit(new SVM_NOT(at), "NOT: ");
+		Global.PSEG.emit(new SVM_NOT(), "NOT: ");
 		CTStack.pop();
 	    CTStack.pushTemp(at, 1, "NOT: ");
 	    

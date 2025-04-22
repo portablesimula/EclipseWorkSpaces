@@ -60,13 +60,26 @@ public class RTAddress extends Value {
 			Value xRegValue = xRegValue();
 			if(xRegValue instanceof GeneralAddress gaddr) {
 				ObjectAddress oaddr = gaddr.base;
-				if(DEBUG) {
-					oaddr.segment().dump("RTAddress.load: ");
-					System.out.println("RTAddress.load: xRegValue="+xRegValue);
-				}
 				DataSegment dseg = oaddr.segment();
 				int reladdr = offset + oaddr.getOfst() + gaddr.ofst + idx;
-				Value res = dseg.load(reladdr);
+				if(DEBUG) {
+					if(dseg != null) dseg.dump("RTAddress.load: ");
+					System.out.println("RTAddress.load: xRegValue="+xRegValue+", reladdr="+reladdr);
+				}
+				Value res = null;
+				if(dseg != null) {
+					res = dseg.load(reladdr);
+				} else {
+//					CallStackFrame top = RTStack.callStack_TOP();
+//					int frmx = (top == null)? 0 : top.rtStackIndex;
+					int frmx = RTStack.frameIndex();
+					if(DEBUG) {
+						System.out.println("RTAddress.load: frmx="+frmx);
+						RTStack.dumpRTStack("RTAddress.load: ");
+					}
+					res = RTStack.load(frmx + reladdr).value();
+//					Util.IERR("");
+				}
 				if(DEBUG) System.out.println("RTAddress.load("+idx+") ===> "+res);
 				return res;
 			} else if(xRegValue instanceof ObjectAddress oaddr) {
@@ -80,17 +93,21 @@ public class RTAddress extends Value {
 				if(DEBUG) System.out.println("RTAddress.load("+idx+") ===> "+res);
 				return res;
 			} else {
-				CallStackFrame top = RTStack.callStack_TOP();
-				int frmx = (top == null)? 0 : top.rtStackIndex;
+//				CallStackFrame top = RTStack.callStack_TOP();
+//				int frmx = (top == null)? 0 : top.rtStackIndex;
+				int frmx = RTStack.frameIndex();
 				int iReg = xRegIntValue();
 				RTStackItem val = RTStack.load(frmx + offset + (iReg * incr) + idx);				
 				if(DEBUG)
 					System.out.println("RTAddress.load("+idx+") ===> "+val);
 				if(val == null) {
-					Global.DSEG.dump("RTAddress.load: ");
-					Segment.lookup("POOL_0").dump("RTAddress.load: ", 0, 25);
+//					Global.DSEG.dump("RTAddress.load: ");
+					Segment.lookup("POOL_1").dump("RTAddress.load: ", 0, 25);
 					System.out.println("RTAddress.load: "+this+", idx="+idx);
 					System.out.println("RTAddress.load: withRemoteBase="+this.withRemoteBase);
+//					Segment.lookup("PSEG_FIL_FOPEN:BODY").dump("RTAddress.load: ");
+					Util.IERR("SJEKK DETTE");
+					return null;
 				}
 				return val.value();				
 			}
@@ -136,23 +153,35 @@ public class RTAddress extends Value {
 //				Util.IERR("");
 			} else if(xRegValue instanceof GeneralAddress gaddr) {
 				ObjectAddress oaddr = gaddr.base;
-				if(DEBUG) {
-					oaddr.segment().dump("RTAddress.store: ");
-					System.out.println("RTAddress.store: xRegValue="+xRegValue);
-				}
 				DataSegment dseg = oaddr.segment();
 				int reladdr = offset + oaddr.getOfst() + gaddr.ofst + idx;
-				dseg.store(reladdr, value);
+				if(DEBUG) {
+					if(dseg != null) dseg.dump("RTAddress.store: ");
+					System.out.println("RTAddress.store: xRegValue="+xRegValue+", reladdr="+reladdr);
+				}
+				if(dseg != null) {
+					dseg.store(reladdr, value);
+				} else {
+//					CallStackFrame top = RTStack.callStack_TOP();
+//					int frmx = (top == null)? 0 : top.rtStackIndex;
+					int frmx = RTStack.frameIndex();
+					System.out.println("RTAddress.store: frmx="+frmx);
+					RTStack.dumpRTStack("RTAddress.store: ");
+//					res = RTStack.load(frmx + reladdr).value();
+					RTStack.store(frmx + reladdr, value, comment);
+					Util.IERR("SJEKK DETTE");
+				}
 				if(DEBUG) oaddr.segment().dump("RTAddress.store: ");
 //				Util.IERR("");
 			} else {
-				CallStackFrame callStackTop = RTStack.callStack_TOP();
+//				CallStackFrame callStackTop = RTStack.callStack_TOP();
 				if(DEBUG) {
 					RTStack.dumpRTStack("RTAddress.store: ");
-					System.out.println("RTAddress.store: RTStack.callStackTop="+callStackTop);
-					System.out.println("RTAddress.store: rtStackIndex="+callStackTop.rtStackIndex);
+					System.out.println("RTAddress.store: RTStack.callStackTop="+RTStack.callStack_TOP());
+					System.out.println("RTAddress.store: rtStackIndex="+RTStack.callStack_TOP().rtStackIndex);
 				}
-				int frmx = (callStackTop == null)? 0 : callStackTop.rtStackIndex;
+//				int frmx = (callStackTop == null)? 0 : callStackTop.rtStackIndex;
+				int frmx = RTStack.frameIndex();
 				RTStack.store(frmx + offset + idx, value, comment);
 			}
 		} else {
@@ -181,6 +210,7 @@ public class RTAddress extends Value {
 		segID = inpt.readString();
 		offset = inpt.readShort();
 		xReg = inpt.readReg();
+		withRemoteBase = inpt.readBoolean();
 	}
 
 //	@Override
@@ -189,6 +219,7 @@ public class RTAddress extends Value {
 		oupt.writeString(segID);
 		oupt.writeShort(offset);
 		oupt.writeReg(xReg);
+		oupt.writeBoolean(withRemoteBase);
 	}
 
 	public static RTAddress read(AttributeInputStream inpt) throws IOException {

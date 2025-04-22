@@ -21,15 +21,13 @@ public class SVM_REM extends SVM_Instruction {
 		Value tos = RTStack.pop().value();
 		Value sos = RTStack.pop().value();
 		Value res = (tos == null)? null : tos.rem(sos);
-//		System.out.println("SVM_REM: " + tos + " + " + sos + " = " + res);
 		RTStack.push(res, "SVM_REM: " + tos + " + " + sos + " = " + res);
 		Global.PSC.ofst++;
-//		Util.IERR("");
 	}
 	
 	@Override	
 	public String toString() {
-		return "MULT     ";
+		return "REM      ";
 	}
 
 	// ***********************************************************************************************

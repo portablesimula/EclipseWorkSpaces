@@ -5,7 +5,6 @@ import java.io.IOException;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
-import bec.util.Util;
 import bec.value.Value;
 
 /**
@@ -23,7 +22,6 @@ public class SVM_ADDREG extends SVM_Instruction {
 
 	@Override
 	public void execute() {
-//		RTStack.callStackTop.dump("SVM_ADDREG-1: ");
 		Value tos = RTStack.pop().value();
 		Value rval = RTRegister.getValue(xReg);
 		
@@ -36,7 +34,6 @@ public class SVM_ADDREG extends SVM_Instruction {
 		if(DEBUG) System.out.println("SVM_ADD: " + rval + " + " + tos + " ==> " + res);
 		RTRegister.putValue(xReg, res);
 		Global.PSC.ofst++;
-//		RTStack.callStackTop.dump("SVM_ADDREG-2: ");
 	}
 
 	@Override	

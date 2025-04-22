@@ -26,6 +26,9 @@ public class MakeSIM {
 	static int fecTraceLevel;
 	static boolean becSCodeTrace;
 	static boolean becListing;
+	static int execTrace;
+	static int callTrace;
+	static boolean dumpsAtExit = true;
 	static String sourceFileName;
 	static String sCodeFileName;
 
@@ -118,6 +121,9 @@ public class MakeSIM {
 
 		becListing = true;
 		becSCodeTrace = true;
+//		execTrace = 1;
+//		callTrace = 2;
+//		dumpsAtExit = true;
 		
 		int execCode = callSimulaFEC();
 		verbose = true;
@@ -160,6 +166,10 @@ public class MakeSIM {
 		cmds.add("-verbose");
 		if(becSCodeTrace) cmds.add("-inputTrace");
 		if(becListing) cmds.add("-listing");
+		if(execTrace > 0) cmds.add("-execTrace");
+		if(callTrace > 0) cmds.add("-callTrace");
+		if(dumpsAtExit) cmds.add("-dumpsAtExit");
+
 		cmds.add(sCodeFileName);
 
 		if(verbose) System.out.println("BEGIN BEC " + sCodeFileName + " ==> .svm");

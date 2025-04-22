@@ -25,7 +25,7 @@ To 'Bootstrap' the old SPORT Simula System, perform following steps:
 		- Output: C:/SPORT/SimulaFEC.jar
 		
 4) Compile Simula TestBatch to SCode:
-	- In Project SimulaTestBatch run: Full_TestBatch2Scode.java
+	- In Project SimulaTestBatch run: Full_TestBatch2Scode.java   -- GIR MASSE FEIL-MELDINGER !!!
 		- Output in: C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch_FEC/src/simulaTestBatch/scode
 	
 5) Make and Test Common BackEnd Compiler:
@@ -35,8 +35,7 @@ To 'Bootstrap' the old SPORT Simula System, perform following steps:
 		- Open bec.inlineTest in Project BEC
 			- Run: MiniInlineTest.java
 			- Run: RunMake_RTS.java
-		- Run: RunFull_RTS_Tests.java
-			- Output: 
+		- Run: RunFull_SML_TestBatch.java
 			
 6) Make S-PORT SIM Compiler
 	- In Project SIM

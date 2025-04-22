@@ -7,12 +7,10 @@ import bec.util.Global;
 import bec.util.Relation;
 import bec.util.Scode;
 import bec.util.Util;
-import bec.value.ObjectAddress;
 import bec.value.ProgramAddress;
 import bec.virtualMachine.SVM_JUMP;
 import bec.virtualMachine.SVM_JUMPIF;
 import bec.virtualMachine.SVM_NOOP;
-import bec.virtualMachine.SVM_NOT_IMPL;
 
 public abstract class IfConstrction {
 
@@ -47,7 +45,7 @@ public abstract class IfConstrction {
 		// The generated code will compute the value of the relation, and transfer control to an "else-label" (to be
 		// defined later) if the relation is false. A copy of the complete state of the S-compiler's stack is saved as
 		// the "if-stack".
-		CTStack.dumpStack("IfConstruction.ofScode: ");
+//		CTStack.dumpStack("IfConstruction.ofScode: ");
 		
 		CTStack.checkTypesEqual();
 		CTStack.checkSosValue();
@@ -62,7 +60,7 @@ public abstract class IfConstrction {
 		StackItem old_SAV = CTStack.SAV;
 		CTStack.SAV = CTStack.TOS;
 
-		CTStack.dumpStack("IfConstruction.ofScode: ");
+//		CTStack.dumpStack("IfConstruction.ofScode: ");
 //		Util.IERR("");
 		
 		ProgramAddress IF_LABEL = Global.PSEG.nextAddress();
@@ -71,7 +69,7 @@ public abstract class IfConstrction {
 //		Global.PSEG.dump();
 
 //		Relation relation = Relation.ofScode();
-		System.out.println("IfConstruction.ofScode: CurInstr="+Scode.edInstr(Scode.curinstr));
+//		System.out.println("IfConstruction.ofScode: CurInstr="+Scode.edInstr(Scode.curinstr));
 		
 		Scode.inputInstr();
 		S_Module.programElements();
@@ -86,7 +84,7 @@ public abstract class IfConstrction {
 			// 	saved as the "if-stack". Finally the "else-label" (used by if) is located at the current program point.
 			CTStack.TOS = CTStack.SAV;
 			CTStack.SAV = old_SAV;
-			CTStack.dumpStack("IfConstruction.ofScode: ");
+//			CTStack.dumpStack("IfConstruction.ofScode: ");
 //			Util.IERR("");
 			
 			ELSE_LABEL = Global.PSEG.nextAddress();
@@ -128,16 +126,13 @@ public abstract class IfConstrction {
 	      	Global.PSEG.emit(new SVM_NOOP(), "ENDIF["+Global.ifDepth+"]:");			
 		}
 		
-      	Global.PSEG.dump("IfConstruction.ofScode: ELSE: ");
-		CTStack.dumpStack("IfConstruction.ofScode: ");
+//     	Global.PSEG.dump("IfConstruction.ofScode: ELSE: ");
+//		CTStack.dumpStack("IfConstruction.ofScode: ");
 //		Util.IERR("");
 		
 //		Scode.inputInstr();  // ????
 		Global.ifDepth--;
 	
-//		if(Scode.inputTrace > 3) printTree(0);
-//		Global.PSEG.emit(new SVM_NOT_IMPL(), "IF Statement");
-//		Util.IERR("SJEKK DETTE");
 	}
 
 }

@@ -27,7 +27,7 @@ import simuletta.utilities.Util;
  * 
  *	binary_operator
  *		::= + | - | * | / | rem
- *		::= and | or | xor
+ *		::= and | or | xor | imp | eqv
  *		::= <> | < | <= | = | >= | > * 
  *
  * </pre>
@@ -52,7 +52,7 @@ public class BinaryOperation extends Expression {
 		enterLine();
         switch(opr) {
 
-        case S_AND: case S_OR: case S_XOR:
+        case S_AND, S_OR, S_XOR, S_IMP, S_EQV:
         	Type xtype=x.doSCodingDirect();
         	Type t2=   y.doSCodingDirect();
         	if(!Option.sportOk || xtype!=t2) {

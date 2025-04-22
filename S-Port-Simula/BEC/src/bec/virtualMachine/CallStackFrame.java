@@ -28,6 +28,8 @@ public class CallStackFrame {
 		this.rtStackIndex = rtStackIndex;
 		this.exportSize = exportSize;
 		this.importSize = importSize;
+//		System.out.println("NEW CallStackFrame: " + toLine());
+//		System.out.println("NEW CallStackFrame: " + ident + " rtStackIndex="+rtStackIndex + ", exportSize="+exportSize + ", importSize="+importSize);
 	}
 
 	public int headSize() {
@@ -66,14 +68,14 @@ public class CallStackFrame {
 		return sb.toString();
 	}
 
-	public void print(String title) {
+	public void print(int dum,String title) {
 		CallStackFrame callStackTop = RTStack.callStack_TOP();
 //		System.out.println("==================== " + title + " RTFrame'DUMP ====================");
-//		System.out.println("   ROUTINE: " + rutAddr + " callStackTop.rtStackIndex=" + callStackTop.rtStackIndex);
 		String indent = "            ";
 		try {
 //			int idx = callStackTop.rtStackIndex;
 			int idx = rtStackIndex;
+			System.out.println("    "+ident + ": callStackTop.rtStackIndex=" + idx);
 			if(exportSize > 0) {
 				for(int i=0;i<exportSize;i++) {
 					RTStackItem item = RTStack.load(idx);
@@ -126,7 +128,7 @@ public class CallStackFrame {
 //			}
 //		} catch(Exception e) {}
 		
-		print(title);
+		print(44, title);
 		
 		System.out.println("==================== " + title + " RTFrame' END  ====================");
 		if(curAddr != null) curAddr.segment().dump(title);

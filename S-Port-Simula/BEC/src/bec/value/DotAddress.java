@@ -54,7 +54,7 @@ public abstract class DotAddress {
 					return new GeneralAddress(var.address, offset);
 				} else if(descr instanceof ConstDescr cns) {
 //					System.out.println("DotAddress.ofScode: cns.address="+cns.address);
-					return new GeneralAddress(cns.address, offset);
+					return new GeneralAddress(cns.getAddress(), offset);
 				}
 				Util.IERR("NOT IMPL: " + descr.getClass().getSimpleName());
 				return null;

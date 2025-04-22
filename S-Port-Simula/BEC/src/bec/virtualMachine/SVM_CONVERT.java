@@ -7,19 +7,16 @@ import bec.AttributeOutputStream;
 import bec.instruction.CONVERT;
 import bec.util.Global;
 import bec.util.Scode;
-import bec.util.Type;
-import bec.util.Util;
-import bec.value.IntegerValue;
 import bec.value.Value;
 import bec.virtualMachine.RTStack.RTStackItem;
 
 public class SVM_CONVERT extends SVM_Instruction {
-	Type fromType;
-	Type toType;
+	int fromType;
+	int toType;
 	
 	private final boolean DEBUG = false;
 		
-	public SVM_CONVERT(Type fromType, Type toType) {
+	public SVM_CONVERT(int fromType, int toType) {
 		this.opcode = SVM_Instruction.iCONVERT;
 		this.fromType = fromType;
 		this.toType = toType;
@@ -34,7 +31,7 @@ public class SVM_CONVERT extends SVM_Instruction {
 		}
 		
 		Value fromValue = null;
-		switch(fromType.tag) {
+		switch(fromType) {
 		case Scode.TAG_OADDR: fromValue = RTStack.popOADDR(); break;
 		case Scode.TAG_GADDR: fromValue = RTStack.popGADDR(); break;
 		default:			  fromValue = RTStack.pop().value();
@@ -61,12 +58,12 @@ public class SVM_CONVERT extends SVM_Instruction {
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
-		fromType.write(oupt);;
-		toType.write(oupt);;
+		oupt.writeShort(fromType);
+		oupt.writeShort(toType);
 	}
 
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {
-		SVM_CONVERT instr = new SVM_CONVERT(Type.read(inpt), Type.read(inpt));
+		SVM_CONVERT instr = new SVM_CONVERT(inpt.readShort(), inpt.readShort());
 		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + instr);
 		return instr;
 	}

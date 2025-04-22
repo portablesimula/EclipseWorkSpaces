@@ -102,6 +102,9 @@ public class KeyWord {
 	public static final int	DOT=96;
 	public static final int NEWLINE=97;
 
+	public static final int	IMP=98;
+	public static final int	EQV=99;
+
 	public static String ed(int key) {
 		switch(key) {
 		case AND: return("AND");
@@ -181,6 +184,8 @@ public class KeyWord {
 		case WHEN: return("WHEN");
 		case WHILE: return("WHILE");
 		case XOR: return("XOR");
+		case IMP: return("IMP");
+		case EQV: return("EQV");
 		
 		case EXPAND: return("EXPAND");  // Expand Macro
 		case PERCENT: return("PERCENT");

@@ -3,7 +3,7 @@ package bec.instruction;
 import bec.compileTimeStack.CTStack;
 import bec.util.Global;
 import bec.util.Type;
-import bec.virtualMachine.SVM_SUB;
+import bec.virtualMachine.SVM_DIST;
 
 public abstract class DIST extends Instruction {
 	
@@ -20,7 +20,7 @@ public abstract class DIST extends Instruction {
 	 */
 	public static void ofScode() {
 		CTStack.checkTosType(Type.T_OADDR); CTStack.checkSosValue(); CTStack.checkSosType(Type.T_OADDR);
-		Global.PSEG.emit(new SVM_SUB(), "");
+		Global.PSEG.emit(new SVM_DIST(), "");
 		CTStack.pop();
 		CTStack.pop();
 	    CTStack.pushTemp(Type.T_SIZE, 1, "DIST: ");

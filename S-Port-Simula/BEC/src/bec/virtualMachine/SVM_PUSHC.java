@@ -5,8 +5,6 @@ import java.io.IOException;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
-import bec.util.Util;
-import bec.value.ProgramAddress;
 import bec.value.Value;
 
 //The value is pushed onto the operand stack.

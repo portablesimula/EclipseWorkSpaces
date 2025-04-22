@@ -21,7 +21,7 @@ import bec.virtualMachine.RTStack.RTStackItem;
 public class ObjectAddress extends Value {
 //	public DataSegment seg;
 	public String segID;
-	private int ofst;
+	protected int ofst;
 	
 	public ObjectAddress(String segID,	int ofst) {
 		this.segID = segID;
@@ -52,11 +52,12 @@ public class ObjectAddress extends Value {
 		Tag tag = Tag.ofScode();
 		Descriptor descr = tag.getMeaning();
 		if(descr == null) Util.IERR("IMPOSSIBLE: TESTING FAILED");
-//		System.out.println("OADDR_Value.ofScode: descr="+descr.getClass().getSimpleName()+"  "+descr);
+		System.out.println("OADDR_Value.ofScode: descr="+descr.getClass().getSimpleName()+"  "+descr);
 //		Util.IERR("NOT IMPL");
 //		return null;
 		if(descr instanceof Variable var) return var.address;
-		if(descr instanceof ConstDescr cns) return cns.address;
+//		if(descr instanceof ConstDescr cns) return cns.address;
+		if(descr instanceof ConstDescr cns) return cns.getAddress();
 		Util.IERR("MISSING: " + descr);
 		return null;
 	}
@@ -190,6 +191,7 @@ public class ObjectAddress extends Value {
 //		return res;
 //	}
 	
+	@Override
 	public String toString() {
 		if(segID == null) {
 			return "RELADR[callStackTop+" + ofst + ']';

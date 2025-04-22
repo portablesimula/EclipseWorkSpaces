@@ -3,7 +3,7 @@ package bec.instruction;
 import bec.compileTimeStack.CTStack;
 import bec.util.Global;
 import bec.util.Type;
-import bec.virtualMachine.SVM_ADD;
+import bec.virtualMachine.SVM_INCO;
 
 public abstract class INCO extends Instruction {
 	
@@ -23,7 +23,7 @@ public abstract class INCO extends Instruction {
 	 */
 	public static void ofScode() {
 		CTStack.checkTosType(Type.T_SIZE); CTStack.checkSosValue(); CTStack.checkSosType(Type.T_OADDR);
-		Global.PSEG.emit(new SVM_ADD(), "");
+		Global.PSEG.emit(new SVM_INCO(), "");
 		CTStack.pop();
 		CTStack.pop();
 	    CTStack.pushTemp(Type.T_OADDR, 1, "INCO: ");

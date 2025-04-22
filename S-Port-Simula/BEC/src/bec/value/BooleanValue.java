@@ -61,6 +61,27 @@ public class BooleanValue extends Value {
 	}
 
 	@Override
+	public BooleanValue imp(Value other) {
+		// true imp false  ==> false  otherwise  true
+		boolean res = true;
+		if(this.value) {
+			if(other == null || !((BooleanValue)other).value) res = false;
+		}
+//		System.out.println("BooleanValue.imp: " + this.value + " imp " + other + " ==> " + res);
+		if(!res) return null;
+		return BooleanValue.of(res);
+	}
+
+	@Override
+	public BooleanValue eqv(Value other) {
+		if(other == null) return this;
+		BooleanValue val2 = (BooleanValue) other;
+		boolean res = value == val2.value;
+		if(!res) return null;
+		return BooleanValue.of(res);
+	}
+
+	@Override
 	public boolean compare(int relation, Value other) {
 		boolean LHS = this.value;
 		boolean RHS = (other == null)? false : ((BooleanValue)other).value;

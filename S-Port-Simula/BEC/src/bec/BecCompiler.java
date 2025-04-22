@@ -29,7 +29,10 @@ public class BecCompiler {
 				if (arg.equalsIgnoreCase("-help")) help();
 				else if (arg.equalsIgnoreCase("-inputTrace")) Global.SCODE_INPUT_TRACE = true;
 				else if (arg.equalsIgnoreCase("-listing")) Global.PRINT_GENERATED_SVM_CODE = true;
-				else if (arg.equalsIgnoreCase("-verbose")) Global.verbose=true;
+				else if (arg.equalsIgnoreCase("-verbose")) Global.verbose = true;
+				else if (arg.equalsIgnoreCase("-execTrace")) Global.EXEC_TRACE = 1;
+				else if (arg.equalsIgnoreCase("-callTrace")) Global.CALL_TRACE_LEVEL = 2;
+				else if (arg.equalsIgnoreCase("-dumpsAtExit")) Global.DUMPS_AT_EXIT = true;
 				else {
 					Util.ERROR("Unknown option " + arg);
 					help();
@@ -57,10 +60,13 @@ public class BecCompiler {
 		System.out.println("Usage: java -jar SportFEC.jar  [options]  ScodeFile ");
 		System.out.println("");
 		System.out.println("possible options include:");
+		System.out.println("  -verbose     Output messages about what the compiler is doing");
 		System.out.println("  -help        Print this synopsis of standard options");
 		System.out.println("  -inputTrace  Produce input Scode trace");
 		System.out.println("  -listing     Produce pretty Scode listing");
-		System.out.println("  -verbose     Output messages about what the compiler is doing");
+		System.out.println("  -execTrace   Produce instruction trace during execution");
+		System.out.println("  -callTrace   Produce routine call trace during execution");
+		System.out.println("  -dumpsAtExit Produce certain dumps at en of execution");
 		System.out.println("");
 		System.out.println("sourceFile ::= S-Code Source File");
 

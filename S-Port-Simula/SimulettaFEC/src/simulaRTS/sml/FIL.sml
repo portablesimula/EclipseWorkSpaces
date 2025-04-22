@@ -358,21 +358,25 @@ DEFINE ENO_FST_1 =113, -- Invalid filekey
 %title ******   O P E N   ******
 
  routine fOPEN;
- import name(ref(filent)) filnam; infix(txtqnt) img;
+ import ref(filent) fil; infix(txtqnt) img;
  export boolean success;
- begin range(0:MAX_KEY) key; ref(filent) fil;
+ begin range(0:MAX_KEY) key; -- ref(filent) fil; -- MYH
        infix(string) nam,action; integer img_lng;
-       fil:=var(filnam);
+       
+%      fil:=var(filnam); -- MYH
+%+M    ED_STR("FIL.fOPEN: fil="); ED_OADDR(fil); ED_OUT;   
        if fil.key <> 0 then goto FEX endif;  --- file already open
 
        nam:=TX2STR(fil.nam); action:=TX2STR(fil.action);
        img_lng:=img.lp - img.sp;
+%+M    ED_STR("FIL.OPEN: nam="); ED_STR(nam); ED_OUT;   
 
        --- save references (possible GC)
        bio.opfil:=fil; bio.opimg:=img.ent;
            key:=OPFILE(nam,fil.type,action,img_lng);
        --- restore reference (maybe changed by GC)
-       var(filnam):=fil:=bio.opfil; img.ent:=bio.opimg;
+%       var(filnam):=fil:=bio.opfil; img.ent:=bio.opimg; -- MYH
+       fil:=bio.opfil; img.ent:=bio.opimg;               -- MYH
 %-X    if fil=none then IERR_R("fOPEN-1") endif
        bio.smbP1:=none; bio.smbP2:=none;
 
@@ -386,7 +390,10 @@ DEFINE ENO_FST_1 =113, -- Invalid filekey
 
  Visible routine BOPN;
  import ref(filent) fil; export boolean success;
- begin success:=fOPEN(name(fil),notext);
+ begin
+% 	   success:=fOPEN(name(fil),notext); -- MYH
+ 	   success:=fOPEN(fil,notext);       -- MYH
+ 	   
 %-X    if bio.trc then if success
 %-X    then bio.obsEvt:=EVT_open; bio.smbP1:=fil; observ endif endif;
  end;
@@ -406,7 +413,13 @@ DEFINE ENO_FST_1 =113, -- Invalid filekey
 
  Visible routine OPEN; -- corrected jan 87 pje
  import ref(filent) fil; infix(txtqnt) img; export boolean success;
- begin success:=fOPEN(name(fil),img);
+ begin
+%+M    ED_STR("FIL.OPEN: fil="); ED_OADDR(fil); ED_OUT;   
+%+M    ED_STR("FIL.OPEN: nam="); ED_TXT(fil.nam); ED_OUT;  
+ 
+% 	   success:=fOPEN(name(fil),img); -- MYH
+ 	   success:=fOPEN(fil,img);       -- MYH
+ 	   
        if success then
        		img:=fil.img; --- may have been changed
             case 0:MAX_FIL (fil.type)

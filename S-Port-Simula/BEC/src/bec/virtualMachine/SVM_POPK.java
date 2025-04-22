@@ -6,7 +6,6 @@ import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Util;
-import bec.value.IntegerValue;
 
 // POP RT-Stack'TOS 
 // The aux values on the top of the operand stack is popped off and forgotten.
@@ -25,7 +24,6 @@ public class SVM_POPK extends SVM_Instruction {
 			RTStack.pop();
 		}
 		Global.PSC.ofst++;
-//		Util.IERR("TEST DETTE");
 	}
 
 	public String toString() {

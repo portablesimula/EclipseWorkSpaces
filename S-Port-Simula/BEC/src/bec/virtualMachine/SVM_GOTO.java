@@ -18,10 +18,8 @@ public class SVM_GOTO extends SVM_Instruction {
 
 	@Override
 	public void execute() {
-//		RTStack.dumpRTStack("SVM_JUMPIF: ");
 		Global.PSC = (ProgramAddress) RTStack.pop().value();
 		RTStack.checkStackEmpty();
-//		Util.IERR("");
 	}
 	
 	@Override	

@@ -5,7 +5,6 @@ import java.io.IOException;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
-import bec.util.Util;
 import bec.value.ProgramAddress;
 import bec.value.Value;
 
@@ -24,11 +23,8 @@ public class SVM_SWITCH extends SVM_Instruction {
 
 	@Override
 	public void execute() {
-//		RTStack.dumpRTStack("SVM_SWITCH: ");
 		int idx = RTStack.popInt();
-//		System.out.println("SVM_SWITCH.execute: idx="+idx+", DESTAB.length="+DESTAB.length);
 		Global.PSC = DESTAB[idx].copy();
-//		Util.IERR(""+idx);
 	}
 	
 	@Override	

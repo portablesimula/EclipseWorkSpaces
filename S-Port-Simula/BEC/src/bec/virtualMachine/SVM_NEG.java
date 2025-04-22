@@ -21,10 +21,8 @@ public class SVM_NEG extends SVM_Instruction {
 	public void execute() {
 		Value tos = RTStack.pop().value();
 		Value res = (tos == null)? null : tos.neg();
-//		System.out.println("SVM_NEG:  -" + tos + " = " + res);
 		RTStack.push(res, "SVM_NEG:  -" + tos + " = " + res);
 		Global.PSC.ofst++;
-//		Util.IERR("");
 	}
 	
 	@Override	

@@ -12,13 +12,16 @@ import bec.util.Type;
 import bec.util.Scode;
 import bec.util.Tag;
 import bec.util.Util;
+import bec.value.FixupAddress;
+import bec.value.FixupOADDR;
 import bec.value.ObjectAddress;
+import bec.value.ProgramAddress;
 import bec.value.RepetitionValue;
 import bec.value.Value;
 
 public class ConstDescr extends Descriptor {
 	public Type type;
-	public ObjectAddress address;
+	private ObjectAddress address;
 	private Vector<RepetitionValue> values;
 	public static int fixrepTail;
 	
@@ -124,6 +127,10 @@ public class ConstDescr extends Descriptor {
 
 		int repCount = (Scode.accept(Scode.S_REP)) ? Scode.inNumber() : 1;
 		
+		if(cnst.address instanceof FixupOADDR fix) {
+			fix.setAddress(Global.CSEG.nextAddress());
+//			Util.IERR("");
+		}
 		cnst.address = Global.CSEG.nextAddress();
 		for(int i=0;i<repCount;i++) {
 			RepetitionValue value = RepetitionValue.ofScode();
@@ -146,6 +153,11 @@ public class ConstDescr extends Descriptor {
 		}
 //		if(fixrepTail > 0) Util.IERR("");
 		return cnst;
+	}
+	
+	public ObjectAddress getAddress() {
+		if(address == null)	address = new FixupOADDR(Type.T_PADDR, this);
+		return address;
 	}
 	
 	@Override

@@ -11,13 +11,14 @@ import bec.descriptor.LabelDescr;
 import bec.descriptor.RecordDescr;
 import bec.segment.DataSegment;
 import bec.util.Global;
+import bec.util.Relation;
 import bec.util.Scode;
 import bec.util.Tag;
 import bec.util.Type;
 import bec.util.Util;
 
 public class RecordValue extends Value {
-	Tag tag;
+	public Tag tag;
 	public Vector<Value> attrValues;
 	
 	private static final boolean DEBUG = false;
@@ -87,6 +88,17 @@ public class RecordValue extends Value {
 		RecordDescr recordDescr = (RecordDescr) Global.DISPL.get(recValue.tag.val);
 		recValue.type = Type.lookupType(recordDescr);
 		return recValue;
+	}
+
+	public boolean compare(int relation, Value other) {
+//		int LHS = this.value;
+//		int RHS = (other == null)? 0 : ((IntegerValue)other).value;
+//		return Relation.compare(LHS, relation, RHS);
+		System.out.println("RecordValue.compare: " + this + " " + Scode.edInstr(relation) + " " + other);
+////		Util.IERR("");
+//		return res;
+		Util.IERR("Method 'compare' need a redefinition in " + this.getClass().getSimpleName());
+		return false;
 	}
 	
 	private void dump(String title) {

@@ -5,9 +5,7 @@ import java.io.IOException;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
-import bec.util.Util;
 import bec.value.ObjectAddress;
-import bec.value.Value;
 
 /**
  * 
@@ -29,7 +27,6 @@ public class SVM_GETO extends SVM_Instruction {
 		ObjectAddress next = SVM_INITO.get();
 		RTStack.push(next, "GETO: ");
 		Global.PSC.ofst++;
-//		Util.IERR("");
 	}
 	
 	@Override	

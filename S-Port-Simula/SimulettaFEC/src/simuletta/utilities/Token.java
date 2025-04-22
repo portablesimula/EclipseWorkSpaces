@@ -98,6 +98,8 @@ public final class Token {
 	public final static Token WHEN      =new Token(KeyWord.WHEN);
 	public final static Token WHILE     =new Token(KeyWord.WHILE);
 	public final static Token XOR       =new Token(KeyWord.XOR);
+	public final static Token IMP       =new Token(KeyWord.IMP);
+	public final static Token EQV       =new Token(KeyWord.EQV);
 		
 	
 	public enum StyleCode {regular,keyword,comment,constant,lineNumber};

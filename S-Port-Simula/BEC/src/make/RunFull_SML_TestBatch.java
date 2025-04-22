@@ -90,6 +90,8 @@ public final class RunFull_SML_TestBatch {
 		names.add("smltst36.scd"); // RT'sizes: entity, ...
 		names.add("smltst37.scd"); // RT'sizes: quantities and simob
 		names.add("smltst38.scd"); // INITO, GETO, SETO
+		names.add("smltst39.scd"); // Boolean Operators IMP and EQV
+		names.add("smltst40.scd"); // Fixup Object Address
 
 		for (String name : names) {
 			String fileName = smlSCodeDir + name;

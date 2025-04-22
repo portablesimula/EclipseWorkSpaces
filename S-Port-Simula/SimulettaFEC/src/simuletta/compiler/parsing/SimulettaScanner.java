@@ -294,6 +294,7 @@ public final class SimulettaScanner {
 	        	if(name.equalsIgnoreCase("ENTRY")) 	    return(Token.ENTRY);
 	        	if(name.equalsIgnoreCase("ENUM"))		return(javaKeyword(name)); // Java KeyWord
 	        	if(name.equalsIgnoreCase("EQ"))	        return(Token.EQ);
+	        	if(name.equalsIgnoreCase("EQV"))        return(Token.EQV);
 	        	if(name.equalsIgnoreCase("EXIT"))	    return(Token.EXIT);
 	        	if(name.equalsIgnoreCase("EXPORT"))	    return(Token.EXPORT);
 	        	if(name.equalsIgnoreCase("EXTENDS"))	return(javaKeyword(name)); // Java KeyWord
@@ -315,6 +316,7 @@ public final class SimulettaScanner {
 	        case 'I':
 	        	if(name.equalsIgnoreCase("IF"))	        return(Token.IF);
 	        	if(name.equalsIgnoreCase("IMPLEMENTS")) return(javaKeyword(name)); // Java KeyWord
+	        	if(name.equalsIgnoreCase("IMP"))	    return(Token.IMP);
 	        	if(name.equalsIgnoreCase("IMPORT"))	    return(Token.IMPORT);
 	        	if(name.equalsIgnoreCase("INFIX"))   	return(Token.INFIX);
 	        	if(name.equalsIgnoreCase("INFO"))   	return(Token.INFO);

@@ -21,10 +21,8 @@ public class SVM_MULT extends SVM_Instruction {
 		Value tos = RTStack.pop().value();
 		Value sos = RTStack.pop().value();
 		Value res = (tos == null)? null : tos.mult(sos);
-//		System.out.println("SVM_MULT: " + tos + " + " + sos + " = " + res);
 		RTStack.push(res, "SVM_MULT: " + tos + " + " + sos + " = " + res);
 		Global.PSC.ofst++;
-//		Util.IERR("");
 	}
 	
 	@Override	

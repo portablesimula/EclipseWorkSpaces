@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
-import bec.segment.Segment;
 import bec.util.Global;
 import bec.util.Util;
 import bec.value.IntegerValue;
@@ -66,7 +65,6 @@ public class SVM_INITO extends SVM_Instruction {
 	static void set(ObjectAddress oaddr) {
 		if(DEBUG) System.out.println("SVM_INITO.set: SAVE_OBJECT["+(SAVE_INDEX-1)+"] = "+oaddr);
 		SAVE_OBJECT.store(SAVE_INDEX - 1, oaddr, "SETO");
-//		Util.IERR("");		
 	}
 
 	@Override
@@ -81,7 +79,6 @@ public class SVM_INITO extends SVM_Instruction {
 		if(sort.value != 1) Util.IERR("NOT A SAVE OBJECT");
 		SAVE_LENGTH = lng.value;
 		Global.PSC.ofst++;
-//		Util.IERR("");
 	}
 	
 	@Override	

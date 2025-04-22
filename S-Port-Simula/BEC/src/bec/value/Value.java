@@ -78,6 +78,16 @@ public class Value {
 		return null;
 	}
 
+	public Value imp(Value other) {
+		Util.IERR("Method 'imp' need a redefinition in " + this.getClass().getSimpleName());
+		return null;
+	}
+
+	public Value eqv(Value other) {
+		Util.IERR("Method 'eqv' need a redefinition in " + this.getClass().getSimpleName());
+		return null;
+	}
+
 	public boolean compare(int relation, Value other) {
 		Util.IERR("Method 'compare' need a redefinition in " + this.getClass().getSimpleName());
 		return false;

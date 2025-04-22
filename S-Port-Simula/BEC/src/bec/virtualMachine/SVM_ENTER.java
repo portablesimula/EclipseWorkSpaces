@@ -22,38 +22,20 @@ public class SVM_ENTER extends SVM_Instruction {
 
 	@Override
 	public void execute() {
-//		RTStack.dumpRTStack("SVM_ENTER.execute: ");
-//		RTStack.callStackTop = RTStack.PRECALL.frame;
-
 		CallStackFrame callStackItem = RTStack.precallStack.pop();
-//		System.out.println("SVM_ENTER.execute: returnAddr="+callStackItem.returnAddr);
-		
 		ProgramAddress curAddr = Global.PSC.copy();
 		callStackItem.curAddr = curAddr;
 		callStackItem.localSize = localSize;
 		RTStack.callStack.push(callStackItem);
-//		System.out.println("SVM_ENTER.execute: returnAddr="+returnAddr);
-//		System.out.println("SVM_ENTER.execute: returnAddr="+callStackItem.returnAddr);
-//		callStackItem.dump("SVM_ENTER.execute: ");
-		
-//		RTStack.printCallStack("SVM_ENTER.execute: TESTING");
-
 		for(int i=0;i<localSize;i++) {
 			RTStack.push(null, "LOCAL");
 		}
-//		System.out.println("SVM_ENTER.execute: RTStack.callStackTop="+RTStack.callStackTop);
-		
-		if(Global.EXEC_TRACE > 2) {
-//			RTStack.dumpRTStack(": ENTER: ");
-//			RTStack.callStackTop.dump(""+RTStack.callStackTop.rutAddr+": ENTER: ");
-			callStackItem.dump(""+curAddr+": ENTER: ");
-//			Util.IERR("");
-		}
-		
+		if(Global.EXEC_TRACE > 2)
+			callStackItem.dump(""+curAddr+": ENTER: " + rutIdent);
 		if(Global.CALL_TRACE_LEVEL > 0)
-			RTStack.printCallTrace("SVM_ENTER.execute: ", "CALL");
-
+			RTStack.printCallTrace("SVM_ENTER.execute: ENTER " + rutIdent);
 		Global.PSC.ofst++;
+//		RTStack.dumpRTStack("SVM_ENTER.execute: ");
 	}
 
 	@Override	

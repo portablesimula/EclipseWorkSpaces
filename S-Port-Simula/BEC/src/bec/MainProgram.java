@@ -1,5 +1,7 @@
 package bec;
 
+import java.util.Vector;
+
 import bec.descriptor.Kind;
 import bec.segment.DataSegment;
 import bec.segment.ProgramSegment;
@@ -48,6 +50,7 @@ public class MainProgram extends S_Module {
 		Global.PSEG = new ProgramSegment("PSEG_" + sourceID, Kind.K_SEG_CODE);
 		ProgramAddress mainEntry = Global.PSEG.nextAddress();
 		if(Global.PROGID == null) Global.PROGID = Global.modident;
+		Global.routineSegments = new Vector<Segment>();
 
 		while(Scode.nextByte() == Scode.S_LOCAL) {
 			Scode.inputInstr(); 

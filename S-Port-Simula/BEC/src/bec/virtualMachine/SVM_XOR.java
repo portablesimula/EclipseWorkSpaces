@@ -1,7 +1,10 @@
 package bec.virtualMachine;
 
+import java.io.IOException;
+
+import bec.AttributeInputStream;
+import bec.AttributeOutputStream;
 import bec.util.Global;
-import bec.util.Type;
 import bec.value.Value;
 
 /**
@@ -15,12 +18,10 @@ import bec.value.Value;
  * 	a  \  b  true   false
  *  true     false  true
  *  false    true   false
-
  */
 public class SVM_XOR extends SVM_Instruction {
-	Type type;
 
-	public SVM_XOR(Type type) {
+	public SVM_XOR() {
 		this.opcode = SVM_Instruction.iXOR;
 	}
 
@@ -29,15 +30,28 @@ public class SVM_XOR extends SVM_Instruction {
 		Value tos = RTStack.pop().value();
 		Value sos = RTStack.pop().value();
 		Value res = (tos == null)? sos : tos.xor(sos);
-//		System.out.println("SVM_XOR: " + tos + " ^ " + sos + " = " + res);
 		RTStack.push(res, "SVM_XOR: " + tos + " ^ " + sos + " = " + res);
 		Global.PSC.ofst++;
-//		Util.IERR(""+res);
 	}
 	
 	@Override	
 	public String toString() {
 		return "XOR      ";
+	}
+
+	// ***********************************************************************************************
+	// *** Attribute File I/O
+	// ***********************************************************************************************
+
+	public void write(AttributeOutputStream oupt) throws IOException {
+		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		oupt.writeOpcode(opcode);
+	}
+
+	public static SVM_XOR read(AttributeInputStream inpt) throws IOException {
+		SVM_XOR instr = new SVM_XOR();
+		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + instr);
+		return instr;
 	}
 
 }

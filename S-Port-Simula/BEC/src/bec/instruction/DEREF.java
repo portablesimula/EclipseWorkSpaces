@@ -45,7 +45,7 @@ public abstract class DEREF extends Instruction {
 	    }
 
 		if(tos.xReg > 0) {
-			Global.PSEG.emit(new SVM_PUSHR(Type.T_INT, tos.xReg), "DEREF'objReg: ");
+			Global.PSEG.emit(new SVM_PUSHR(tos.xReg), "DEREF'objReg: ");
 			if(tos.offset != 0) {
 				Global.PSEG.emit(new SVM_PUSHC(IntegerValue.of(Type.T_INT,tos.offset)), "DEREF'offset: ");
 				Global.PSEG.emit(new SVM_ADD(), "DEREF'objadr+offset: ");	

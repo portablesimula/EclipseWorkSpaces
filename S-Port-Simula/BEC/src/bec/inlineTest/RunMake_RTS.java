@@ -41,7 +41,7 @@ public class RunMake_RTS {
 //		Global.ATTR_INPUT_DUMP = true;
 //		Global.ATTR_OUTPUT_DUMP = true;
 //		Global.SEGMENT_INPUT_DUMP = true;
-		Global.SEGMENT_OUTPUT_DUMP = true;
+//		Global.SEGMENT_OUTPUT_DUMP = true;
 
 		for(String name:names) {
 			String fileName = "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/"+name+".scd";

@@ -5,7 +5,6 @@ import bec.compileTimeStack.StackItem;
 import bec.util.Global;
 import bec.util.Type;
 import bec.util.Util;
-import bec.virtualMachine.RTRegister;
 import bec.virtualMachine.SVM_AND;
 
 public abstract class AND extends Instruction {
@@ -24,8 +23,6 @@ public abstract class AND extends Instruction {
 	 * Note that SOS is the left operand.
 	 */
 	public static void ofScode() {
-//		CTStack.dumpStack();
-//		Global.PSEG.dump();
 		StackItem tos = CTStack.TOS;
 	    
 	    Type at = tos.type;
@@ -38,13 +35,10 @@ public abstract class AND extends Instruction {
 	    	CTStack.checkSosValue(); CTStack.checkSosType(Type.T_BOOL);
 	    }
 	    
-		Global.PSEG.emit(new SVM_AND(at), "");
+		Global.PSEG.emit(new SVM_AND(), "");
 		CTStack.pop();
 		CTStack.pop();
 	    CTStack.pushTemp(at, 1, "AND: ");
-//		CTStack.dumpStack();
-//		Global.PSEG.dump();
-//		Util.IERR(""+this);
 	}
 
 }

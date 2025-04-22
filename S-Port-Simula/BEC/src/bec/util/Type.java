@@ -96,6 +96,10 @@ public class Type {
 	public boolean isSimple() {
 		return tag <= Scode.TAG_SIZE;
 	}
+
+	public boolean isRecordType() {
+		return tag > Scode.T_max;
+	}
 	
 	public boolean isArithmetic() {
 		switch(tag) {

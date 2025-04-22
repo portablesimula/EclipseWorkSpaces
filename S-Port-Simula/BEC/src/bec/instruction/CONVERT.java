@@ -43,7 +43,7 @@ public abstract class CONVERT extends Instruction {
 		Type fromtype = TOS.type;
 		if(totype != fromtype) {
 			if(DEBUG) System.out.println("CONVERT.doConvert: " + TOS + " ==> " + totype);
-			Global.PSEG.emit(new SVM_CONVERT(fromtype, totype), "");
+			Global.PSEG.emit(new SVM_CONVERT(fromtype.tag, totype.tag), "");
 			CTStack.pop(); CTStack.pushTemp(totype, 1, "CONVERT: ");
 			TOS.type = totype;
 			if(DEBUG) System.out.println("CONVERT.doConvert: " + totype + " ==> " + TOS);
@@ -57,7 +57,7 @@ public abstract class CONVERT extends Instruction {
 		if(DEBUG) System.out.println("CONVERT.doConvert: " + TOS + " ==> " + totype);
 		if( TOS instanceof ConstItem cnst) {
 			Value fromValue = cnst.value;
-			Value toValue = convValue(fromValue, fromtype, totype);
+			Value toValue = convValue(fromValue, fromtype.tag, totype.tag);
 			cnst.value = toValue; cnst.type = totype;
 			if(DEBUG) System.out.println("CONVERT.doConvert: " + totype + " ==> " + cnst);
 		}
@@ -69,7 +69,7 @@ public abstract class CONVERT extends Instruction {
 //				case Scode.TAG_GADDR: OK = totype == Type.T_AADDR || totype == Type.T_OADDR; break;
 //			}
 //			if(! OK) Util.IERR("Type conversion is undefined: " + fromtype + " ==> " + totype);
-			Global.PSEG.emit(new SVM_CONVERT(fromtype, totype), "");
+			Global.PSEG.emit(new SVM_CONVERT(fromtype.tag, totype.tag), "");
 			CTStack.pop(); CTStack.pushTemp(totype, 1, "CONVERT: ");
 //			TOS.type = totype;
 		}
@@ -77,14 +77,14 @@ public abstract class CONVERT extends Instruction {
 
 	
 //	%title ***    C o n v e r t   C o n s t a n t   V a l u e    ***
-	public static Value convValue(Value fromValue, Type fromtype, Type totype) {
+	public static Value convValue(Value fromValue, int fromtype, int totype) {
 		Value toValue = null;
 		boolean ILL = false;
-		switch(fromtype.tag) {
+		switch(fromtype) {
 		case Scode.TAG_CHAR: {
 			IntegerValue fromval = (IntegerValue)fromValue;
 			int val = (fromval == null)? 0 : fromval.value;
-			switch(totype.tag) {
+			switch(totype) {
 				case Scode.TAG_INT:   toValue = IntegerValue.of(Type.T_INT, val); break;
 				case Scode.TAG_REAL:  toValue = RealValue.of(val); break;
 				case Scode.TAG_LREAL: toValue = LongRealValue.of(val); break;
@@ -95,8 +95,9 @@ public abstract class CONVERT extends Instruction {
 		case Scode.TAG_INT: {
 			IntegerValue fromval = (IntegerValue)fromValue;
 			int val = (fromval == null)? 0 : fromval.value;
-			switch(totype.tag) {
+			switch(totype) {
 				case Scode.TAG_CHAR:  toValue = IntegerValue.of(Type.T_CHAR, val); break;
+				case Scode.TAG_SIZE:  toValue = IntegerValue.of(Type.T_SIZE, val); break;
 				case Scode.TAG_REAL:  toValue = RealValue.of(val); break;
 				case Scode.TAG_LREAL: toValue = LongRealValue.of(val); break;
 				default: ILL = true;
@@ -106,7 +107,7 @@ public abstract class CONVERT extends Instruction {
 		case Scode.TAG_REAL: {
 			RealValue fromval = (RealValue)fromValue;
 			float val = (fromval == null)? 0 : fromval.value;
-			switch(totype.tag) {
+			switch(totype) {
 				case Scode.TAG_CHAR:  toValue = IntegerValue.of(Type.T_CHAR, (int)(val+0.5)); break;
 				case Scode.TAG_INT:   toValue = IntegerValue.of(Type.T_INT, (int)(val+0.5)); break;
 				case Scode.TAG_LREAL: toValue = LongRealValue.of(val); break;
@@ -117,7 +118,7 @@ public abstract class CONVERT extends Instruction {
 		case Scode.TAG_LREAL: {
 			LongRealValue fromval = (LongRealValue)fromValue;
 			double val = (fromval == null)? 0 : fromval.value;
-			switch(totype.tag) {
+			switch(totype) {
 				case Scode.TAG_CHAR: toValue = IntegerValue.of(Type.T_CHAR, (int)(val+0.5)); break;
 				case Scode.TAG_INT:  toValue = IntegerValue.of(Type.T_INT, (int)(val+0.5)); break;
 				case Scode.TAG_REAL: toValue = RealValue.of((float)val); break;
@@ -129,9 +130,9 @@ public abstract class CONVERT extends Instruction {
 			// An object address OADDR may be converted to a general address GADDR.
 			// In that case the object address is extended with an empty attribute address
 			// and the pair comprises the result.
-			if(totype.tag == Scode.TAG_GADDR) {
+			if(totype == Scode.TAG_GADDR) {
 				toValue = new GeneralAddress((ObjectAddress) fromValue, 0);
-				Util.IERR("NOT IMPL");
+//				Util.IERR("NOT IMPL");
 			} else ILL = true;
 
 		} break;
@@ -139,7 +140,7 @@ public abstract class CONVERT extends Instruction {
 			// Conversion from a GADDR to OADDR (AADDR) means: take the object address (attribute address)
 			// part of the general address and return as result.			
 			GeneralAddress gaddr = (GeneralAddress) fromValue;
-			switch(totype.tag) {
+			switch(totype) {
 				case Scode.TAG_OADDR:  toValue = gaddr.base; break;
 				case Scode.TAG_AADDR:  toValue = IntegerValue.of(Type.T_AADDR, gaddr.ofst); break;
 				default: ILL = true;
@@ -149,7 +150,7 @@ public abstract class CONVERT extends Instruction {
 		}
 		if(DEBUG) System.out.println("CONVERT.convValue: " + fromValue + " ==> " + toValue + ", type=" + totype);
 		if(ILL) {
-			Util.ERROR("convValue: conversion is undefined: " + fromtype + " ==> " + totype);
+			Util.ERROR("convValue: conversion is undefined: " + Scode.edTag(fromtype) + " ==> " + Scode.edTag(totype));
 			Util.IERR("");
 		}
 		return toValue;

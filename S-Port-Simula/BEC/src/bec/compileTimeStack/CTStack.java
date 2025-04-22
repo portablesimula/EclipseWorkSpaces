@@ -4,13 +4,7 @@ import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Type;
 import bec.util.Util;
-import bec.value.ObjectAddress;
 import bec.value.Value;
-import bec.virtualMachine.RTAddress;
-import bec.virtualMachine.SVM_NOT_IMPL;
-import bec.virtualMachine.SVM_POP2REG;
-import bec.virtualMachine.SVM_PUSH;
-import bec.virtualMachine.SVM_PUSHC;
 
 public class CTStack {
 	

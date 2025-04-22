@@ -15,12 +15,8 @@ import bec.value.ObjectAddress;
 import bec.value.ProgramAddress;
 import bec.value.RealValue;
 import bec.value.RecordValue;
-import bec.value.RepetitionValue;
 import bec.value.TextValue;
 import bec.value.Value;
-import bec.virtualMachine.RTAddress;
-import bec.virtualMachine.SVM_NOT_IMPL;
-import bec.virtualMachine.SVM_PUSH;
 import bec.virtualMachine.SVM_PUSHC;
 
 public abstract class PUSHC extends Instruction {
@@ -120,6 +116,15 @@ public abstract class PUSHC extends Instruction {
 
 			type = Type.T_STRING;				
 //			Global.PSEG.dump("PUSHC: "+value+": ");
+//			Util.IERR("");
+		} else if(type.isRecordType()) {
+			RecordValue rval = (RecordValue)value;
+//			for(Value val:rval.attrValues)
+			for(int i=0;i<rval.attrValues.size();i++) {
+//			for(int i=rval.attrValues.size()-1;i>=0;i--) {
+				Value val = rval.attrValues.get(i);
+				Global.PSEG.emit(new SVM_PUSHC(val), "Record: " + rval.tag);				
+			}
 //			Util.IERR("");
 		} else {
 			Global.PSEG.emit(new SVM_PUSHC(value), "");

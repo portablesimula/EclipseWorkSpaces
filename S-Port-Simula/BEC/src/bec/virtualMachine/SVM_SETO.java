@@ -5,9 +5,7 @@ import java.io.IOException;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
-import bec.util.Util;
 import bec.value.ObjectAddress;
-import bec.value.Value;
 
 /**
  * Code is generated that inserts the value described by TOS into the pointer variable refered by
@@ -25,7 +23,6 @@ public class SVM_SETO extends SVM_Instruction {
 		ObjectAddress oaddr = RTStack.popOADDR();
 		SVM_INITO.set(oaddr);
 		Global.PSC.ofst++;
-//		Util.IERR("");
 	}
 	
 	@Override	

@@ -2,6 +2,7 @@ package bec.util;
 
 import java.io.File;
 import java.util.Map;
+import java.util.Vector;
 
 import bec.S_Module;
 import bec.descriptor.Descriptor;
@@ -26,6 +27,8 @@ public class Global {
 	public static int EXEC_TRACE = 0;
 	public static int CALL_TRACE_LEVEL = 0;
 	public static boolean DUMPS_AT_EXIT = false;
+	
+	public static Vector<Segment> routineSegments;
 	
 	public static ProgramAddress PSC; // ProgramSequenceControl during execute
 	public static boolean duringEXEC() { return PSC != null; }

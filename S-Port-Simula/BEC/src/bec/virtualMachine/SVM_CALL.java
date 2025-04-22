@@ -4,9 +4,7 @@ import java.io.IOException;
 
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
-import bec.segment.Segment;
 import bec.util.Global;
-import bec.util.Util;
 import bec.value.ObjectAddress;
 import bec.value.ProgramAddress;
 import bec.value.Value;
@@ -30,12 +28,9 @@ public class SVM_CALL extends SVM_Instruction {
 	public void execute() {
 		ProgramAddress retur = Global.PSC.copy();
 		retur.ofst++;
-
-//		RTStack.push(retur, "RETUR");
 		if(Global.EXEC_TRACE > 0) {
 			ProgramAddress.printInstr(this,false);
 		}
-
 		if(rutAddr == null) {
 			// CALL-TOS
 			Global.PSC = (ProgramAddress) RTStack.pop().value().copy();

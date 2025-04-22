@@ -12,7 +12,7 @@ import java.util.Vector;
 import bec.BecCompiler;
 import bec.util.Global;
 
-public final class RunFull_RTS_Tests {
+public final class REMOVED_RunFull_RTS_Tests {
 	private static long startTimeMs = System.currentTimeMillis();
 
 	private static final String rtsSCodeDir = "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/";

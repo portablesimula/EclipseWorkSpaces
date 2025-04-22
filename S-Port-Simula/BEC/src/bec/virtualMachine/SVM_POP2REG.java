@@ -5,8 +5,6 @@ import java.io.IOException;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
-import bec.util.Util;
-import bec.value.IntegerValue;
 import bec.value.Value;
 
 // POP RT-Stack'TOS --> Register 
@@ -34,18 +32,14 @@ public class SVM_POP2REG extends SVM_Instruction {
 			RTStack.callStack_TOP().dump("POP2REG: "+RTRegister.edReg(reg)+" count="+count+"  ");
 		}
 		for(int i=0;i<count;i++) {
-//			IntegerValue value = (IntegerValue) RTStack.pop().value();
 			Value value = RTStack.pop().value();
-
-			//			int ival = (value == null)? 0 : value.value;
-//			RTRegister.putValue(reg+i, ival);
 			RTRegister.putValue(reg+i, value);
 		}
 		Global.PSC.ofst++;
-		if(DEBUG) {
+//		if(DEBUG) {
 //			target.segment().dump("PEEK2MEM.execute: ");
 //			Util.IERR("");
-		}
+//		}
 	}
 	
 	public String toString() {
@@ -55,7 +49,6 @@ public class SVM_POP2REG extends SVM_Instruction {
 			s += (sep + RTRegister.edReg(reg+i));
 			sep = "+";
 		}
-//		return "POP2REG  " + RTRegister.edReg(reg);
 		return "POP2REG  " + s;
 	}
 	

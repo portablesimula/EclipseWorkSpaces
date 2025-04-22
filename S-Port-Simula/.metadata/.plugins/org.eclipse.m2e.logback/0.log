@@ -16,3 +16,5 @@
 2025-03-26 08:08:02,200 [Worker-8: Decoration Calculation] WARN  org.eclipse.jgit.util.FS - Cannot run program "\usr\bin\git" (in directory "\usr\bin"): CreateProcess error=2, Systemet finner ikke angitt fil
 2025-04-09 07:54:11,043 [Worker-6: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
 2025-04-09 07:54:20,546 [Worker-8: Decoration Calculation] WARN  org.eclipse.jgit.util.FS - Cannot run program "\usr\bin\git" (in directory "\usr\bin"): CreateProcess error=2, Systemet finner ikke angitt fil
+2025-04-16 09:15:09,617 [Worker-5: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2025-04-16 09:15:14,398 [Worker-9: Decoration Calculation] WARN  org.eclipse.jgit.util.FS - Cannot run program "\usr\bin\git" (in directory "\usr\bin"): CreateProcess error=2, Systemet finner ikke angitt fil

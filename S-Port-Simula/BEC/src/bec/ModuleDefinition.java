@@ -1,6 +1,7 @@
 package bec;
 
 import java.io.IOException;
+import java.util.Vector;
 
 import bec.compileTimeStack.CTStack;
 import bec.descriptor.ConstDescr;
@@ -12,6 +13,7 @@ import bec.descriptor.RoutineDescr;
 import bec.descriptor.Variable;
 import bec.segment.DataSegment;
 import bec.segment.ProgramSegment;
+import bec.segment.Segment;
 import bec.statement.InsertStatement;
 import bec.util.Array;
 import bec.util.Global;
@@ -54,6 +56,7 @@ public class ModuleDefinition extends S_Module {
 		Global.DSEG = new DataSegment("DSEG_" + sourceID, Kind.K_SEG_DATA);
 		Global.PSEG = new ProgramSegment("PSEG_" + sourceID, Kind.K_SEG_CODE);
 		if(Global.PROGID == null) Global.PROGID = Global.modident;
+		Global.routineSegments = new Vector<Segment>();
 
 		Scode.inputInstr();
 		while(viisible()) { Scode.inputInstr(); }

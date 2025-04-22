@@ -47,7 +47,7 @@ public class GeneralAddress extends Value {
 //			System.out.println("OADDR_Value.ofScode: descr="+descr.getClass().getSimpleName()+"  "+descr);
 			return new GeneralAddress(var.address, 0);
 		} else if(descr instanceof ConstDescr cns) {
-			return new GeneralAddress(cns.address, 0);
+			return new GeneralAddress(cns.getAddress(), 0);
 		}
 		Util.IERR("NOT IMPL: " + descr.getClass().getSimpleName());
 		return null;

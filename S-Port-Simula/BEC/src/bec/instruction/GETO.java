@@ -3,11 +3,7 @@ package bec.instruction;
 import bec.compileTimeStack.CTStack;
 import bec.util.Global;
 import bec.util.Type;
-import bec.util.Util;
-import bec.virtualMachine.RTRegister;
 import bec.virtualMachine.SVM_GETO;
-import bec.virtualMachine.SVM_INITO;
-import bec.virtualMachine.SVM_NOT_IMPL;
 
 public abstract class GETO extends Instruction {
 	

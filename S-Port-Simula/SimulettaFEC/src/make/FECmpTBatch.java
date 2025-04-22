@@ -28,13 +28,14 @@ public final class FECmpTBatch {
 //		names.add("adHoc01");
 //		names.add("adHoc02");
 //		names.add("adHoc03");
-//		names.add("adHoc04");
+		names.add("adHoc04");
 //		names.add("adHoc05");
 //		names.add("adHoc06");
 //		names.add("adHoc07");
-//		names.add("adHoc08");
-//			names.add("adHoc09");
+//			names.add("adHoc08");
+//		names.add("adHoc09");
 //		names.add("adHoc10");
+//			names.add("adHoc11");
 		
 //		names.add("smltst00"); // Standard layout of test programs
 //		names.add("smltst01"); // Simple Assignments
@@ -74,7 +75,9 @@ public final class FECmpTBatch {
 //		names.add("smltst35"); // RT'sizes: string, ptp, ...
 //		names.add("smltst36"); // RT'sizes: entity, ...
 //		names.add("smltst37"); // RT'sizes: quantities and simob
-		names.add("smltst38"); // INITO, GETO, SETO
+//		names.add("smltst38"); // INITO, GETO, SETO
+//		names.add("smltst39"); // Boolean Operators IMP and EQV
+//		names.add("smltst40"); // Fixup Object Address
 
 		// Set Compile Time Options and tracing
 //		Option.INLINE_TESTING=true;

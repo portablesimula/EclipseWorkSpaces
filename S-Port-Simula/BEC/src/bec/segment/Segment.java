@@ -38,7 +38,9 @@ public class Segment { // extends Descriptor {
 	public static Segment lookup(String ident) {
 		Segment seg = Global.SEGMAP.get(ident);
 		if(seg == null) {
-			Segment.listAll();
+//			find("PSEG_FIL_FOPEN:BODY").dump("Segment.lookup: ");
+//			Global.PSEG.dump("Segment.lookup: ");
+//			Segment.listAll();
 			Util.IERR("Can't find Segment \"" + ident + '"');
 		}
 		return seg;

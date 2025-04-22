@@ -7,6 +7,7 @@ import bec.AttributeOutputStream;
 import bec.instruction.CALL;
 import bec.util.Util;
 
+@SuppressWarnings("unused")
 public class SVM_Instruction {
 	public int opcode;
 
@@ -44,8 +45,12 @@ public class SVM_Instruction {
 	public final static int iINITO = 32;
 	public final static int iGETO = 33;
 	public final static int iSETO = 34;
+	public final static int iINCO = 35;
+	public final static int iDECO = 36;
+	public final static int iDIST = 37;
+	public final static int iEQV = 38;
+	public final static int iIMP = 39;
 	
-	public final static int iNOT_IMPL = 99;
 	public final static int iMax = 99;
 	
 
@@ -74,11 +79,9 @@ public class SVM_Instruction {
 			case iAND:		return SVM_AND.read(inpt);
 			case iOR:		return SVM_OR.read(inpt);
 			case iXOR:		return SVM_XOR.read(inpt);
-			case iCALL:
-				if(CALL.USE_FRAME_ON_STACK)
-					 return SVM_CALL.read(inpt);
-				else return SVM_CALL_DSEG.read(inpt);
-				
+			case iEQV:		return SVM_EQV.read(inpt);
+			case iIMP:		return SVM_IMP.read(inpt);
+			case iCALL:		return SVM_CALL.read(inpt);
 			case iCOMPARE:	return SVM_COMPARE.read(inpt);
 			case iCONVERT:	return SVM_CONVERT.read(inpt);
 			case iDIV:		return SVM_DIV.read(inpt);
@@ -108,8 +111,10 @@ public class SVM_Instruction {
 			case iINITO:	return SVM_INITO.read(inpt);
 			case iGETO:		return SVM_GETO.read(inpt);
 			case iSETO:		return SVM_SETO.read(inpt);
+			case iINCO:		return SVM_INCO.read(inpt);
+			case iDECO:		return SVM_DECO.read(inpt);
+			case iDIST:		return SVM_DIST.read(inpt);
 			
-			case iNOT_IMPL:	return SVM_NOT_IMPL.read(inpt);
 			default: Util.IERR("MISSING: " + edOpcode(opcode));
 		}
 		return null;
@@ -121,6 +126,8 @@ public class SVM_Instruction {
 			case iAND:		return "iAND";
 			case iOR:		return "iOR";
 			case iXOR:		return "iXOR";
+			case iEQV:		return "iEQV";
+			case iIMP:		return "iIMP";
 			case iCALL:		return "iCALL";
 			case iCOMPARE:	return "iCOMPARE";
 			case iCONVERT:	return "iCONVERT";
@@ -132,8 +139,8 @@ public class SVM_Instruction {
 			case iPUSH:		return "iPUSH";
 			case iPUSHC:	return "iPUSHC";
 			case iRETURN:	return "iRETURN";
-			case iPOP2REG:	return "iPOPtoREG";
-			case iPEEK2MEM:	return "iPOPtoMEM";
+			case iPOP2REG:	return "iPOP2REG";
+			case iPEEK2MEM:	return "iPEEK2MEM";
 			case iREM:	 	return "iSTOREC";
 			case iSUB:		return "iSUB";
 			case iSWITCH:	return "iSWITCH";
@@ -151,8 +158,10 @@ public class SVM_Instruction {
 			case iINITO:	return "iINITO";
 			case iGETO:		return "iGETO";
 			case iSETO:		return "iSETO";
+			case iINCO:		return "iINCO";
+			case iDECO:		return "iDECO";
+			case iDIST:		return "iDIST";
 
-			case iNOT_IMPL:	return "iNOT_IMPL";
 			default:		return "UNKNOWN:" + opcode;
 		}
 	}

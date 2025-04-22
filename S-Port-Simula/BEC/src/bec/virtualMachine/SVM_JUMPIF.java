@@ -14,6 +14,7 @@ import bec.value.Value;
 public class SVM_JUMPIF extends SVM_JUMP {
 	Relation relation;
 	int typeSize;
+
 	private static final boolean DEBUG = false;
 	
 	public SVM_JUMPIF(Relation relation, int typeSize, ProgramAddress destination) {

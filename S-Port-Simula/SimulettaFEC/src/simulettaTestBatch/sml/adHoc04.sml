@@ -1,13 +1,30 @@
 begin
+%   SYSINSERT RT,SYSR,KNWN,UTIL,STRG,CENT,CINT,ARR,FORM,LIBR,FIL,SMST,SML,EDIT,MNTR;    
    SYSINSERT RT,SYSR,KNWN,UTIL;    
-       
- const infix(txtent:10) defident2 = record:txtent(sl=none, sort=S_TXTENT, misc=1, ncha=10, cha="ABCDEFGHIJ" );
 
- const infix(txtqnt) acmdir2=record:txtqnt(ent=ref(defident2), cp=0, sp=0, lp = 10);
-
-		 ED_TXT(acmdir2);
-		 ed_out;
+	routine COPY;
+	import infix(txtqnt) src; export infix(txtqnt) res;
+	begin
+		range(0:MAX_TXT) ncha; infix(string) res_str,src_str; size lng;
+        if src.ent = none
+        then res:=notext;
+             ---  Check that the save entity allocation invariant holds!!
+%            if bio.nxtAdr > bio.lstAdr then GARB2 endif;
+%       else ---  Create Text Object. If necessary call GC
+%            ncha:=src.lp - src.sp;
+%            NEW_TXT(src.ent);
+% 
+%            ---  Move character values into the allocated text entity.
+%            src_str.nchr:=res_str.nchr:=ncha;
+%            src_str.chradr:=name(src.ent.cha(src.sp));
+%            res_str.chradr:=name(res.ent.cha);               --  cha(0)
+%            C_MOVE(src_str,res_str);
+        endif; 
+	end;
 	
+	infix(txtqnt) src;
+	infix(txtqnt) dst;
 
+	dst := COPY(src);
  end;
 	 

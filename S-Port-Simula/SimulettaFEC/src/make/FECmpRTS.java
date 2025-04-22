@@ -40,7 +40,7 @@ public final class FECmpRTS {
 		names.add("EDIT"); // ==> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/EDIT.scd
 		names.add("MNTR"); // ==> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode/MNTR.scd
 
-//		names.add("RTS$INTERFACE"); // Will call RTS_FEC_InterfaceGenerator  which creates the files:
+		names.add("RTS$INTERFACE"); // Will call RTS_FEC_InterfaceGenerator  which creates the files:
 									//
 		                // NEI      // - "C:/Simuletta/Attrs/BEC/simulaRTS/RTS$INTERFACE.dat"
 									// - "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulettaFEC/src/simulaRTS/sml/RTS$INTERFACE.sml"

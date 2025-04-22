@@ -20,7 +20,6 @@ public class SVM_ADD extends SVM_Instruction {
 
 	@Override
 	public void execute() {
-//		RTStack.callStackTop.dump("SVM_ADD-1: ");
 		Value tos = RTStack.pop().value();
 		Value sos = RTStack.pop().value();
 		if(DEBUG) {
@@ -28,13 +27,10 @@ public class SVM_ADD extends SVM_Instruction {
 			if(sos != null)	System.out.println("SVM_ADD: SOS: " + sos.getClass().getSimpleName() + "  " + sos);
 			System.out.println("SVM_ADD: " + sos + " + " + tos);
 		}
-//		Value res = (tos == null)? sos : tos.add(sos);
 		Value res = (sos == null)? tos : sos.add(tos);
 		if(DEBUG) System.out.println("SVM_ADD: " + sos + " + " + tos + " ==> " + res);
 		RTStack.push(res, "SVM_ADD: " + tos + " + " + sos + " = " + res);
 		Global.PSC.ofst++;
-//		RTStack.callStackTop.dump("SVM_ADD-2: ");
-//		Util.IERR(""+res);
 	}
 
 	@Override	

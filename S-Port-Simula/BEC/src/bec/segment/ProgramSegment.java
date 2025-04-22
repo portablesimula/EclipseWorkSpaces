@@ -98,8 +98,8 @@ public class ProgramSegment extends Segment {
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("ProgramSegment.Write: " + this + ", Size=" + instructions.size());
-//		this.dump("ProgramSegment.Write: ");
+		if(Global.ATTR_OUTPUT_TRACE)
+			System.out.println("ProgramSegment.Write: " + this + ", Size=" + instructions.size());
 //		oupt.writeInstr(Scode.S_BSEG);
 		oupt.writeKind(segmentKind);
 		oupt.writeString(ident);

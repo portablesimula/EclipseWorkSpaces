@@ -50,7 +50,7 @@ public abstract class REFER extends Instruction {
 		if(DEBUG) System.out.println("REFER.ofScode: TOS="+CTStack.TOS.getClass().getSimpleName()+"  "+CTStack.TOS);
 
 		int reg = RTRegister.getFreeReg();
-		Global.PSEG.emit(new SVM_REFER(type,reg), "REFER: " + Scode.edTag(type.tag));
+		Global.PSEG.emit(new SVM_REFER(reg), "REFER: " + Scode.edTag(type.tag));
 		
 		// LOAD GADDR FROM TOS
 		ObjectAddress a = ObjectAddress.ofRelAddr(null);

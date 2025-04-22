@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import bec.descriptor.Descriptor;
 import bec.descriptor.Kind;
+import bec.segment.Segment;
 import bec.util.Global;
 import bec.util.Type;
 import bec.util.Util;
@@ -20,6 +21,8 @@ public class ModuleIO {
 //			System.out.println("XTAGIDENT: " + i + ": " + Scode.TAGIDENT.get(d.tag.val));
 //		}
 //		Util.IERR("");
+		
+		for(Segment seg:Global.routineSegments) seg.write(modoupt);
 
 		for(int i=0;i<=nXtag;i++) {
 			int tx = Global.iTAGTAB.get(i);

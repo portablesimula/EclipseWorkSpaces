@@ -7,7 +7,6 @@ import bec.AttributeOutputStream;
 import bec.value.BooleanValue;
 import bec.value.IntegerValue;
 import bec.value.Value;
-import bec.virtualMachine.SVM_COMPARE;
 
 public class Relation {
 	public int relation;

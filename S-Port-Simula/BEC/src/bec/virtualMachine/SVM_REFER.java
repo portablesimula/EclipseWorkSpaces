@@ -5,13 +5,8 @@ import java.io.IOException;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
-import bec.util.Scode;
-import bec.util.Type;
-import bec.util.Util;
-import bec.value.BooleanValue;
 import bec.value.GeneralAddress;
 import bec.value.ObjectAddress;
-import bec.value.Value;
 
 /**
  * 
@@ -41,12 +36,10 @@ import bec.value.Value;
  *                                                        '=========='
  */
 public class SVM_REFER extends SVM_Instruction {
-	Type type;
 	int xReg;
 
-	public SVM_REFER(Type type, int xReg) {
+	public SVM_REFER(int xReg) {
 		this.opcode = SVM_Instruction.iREFER;
-		this.type = type;
 		this.xReg=xReg;
 	}
 
@@ -61,7 +54,7 @@ public class SVM_REFER extends SVM_Instruction {
 	
 	@Override	
 	public String toString() {
-		return "REFER    " + Scode.edTag(type.tag) + " R" + xReg;
+		return "REFER    " + " R" + xReg;
 	}
 	
 	// ***********************************************************************************************
@@ -69,7 +62,6 @@ public class SVM_REFER extends SVM_Instruction {
 	// ***********************************************************************************************
 	private SVM_REFER(AttributeInputStream inpt) throws IOException {
 		this.opcode = SVM_Instruction.iREFER;
-		this.type = Type.read(inpt);
 		this.xReg = inpt.readReg();
 		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + this);
 	}
@@ -78,7 +70,6 @@ public class SVM_REFER extends SVM_Instruction {
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
-		type.write(oupt);
 		oupt.writeReg(xReg);
 	}
 

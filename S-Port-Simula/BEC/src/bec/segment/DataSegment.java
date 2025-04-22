@@ -82,11 +82,17 @@ public class DataSegment extends Segment {
 	public void emitDefaultValue(int size, int repCount, String cmnt) {
 //		System.out.println("DataSegment.emitDefaultValue: size="+size);
 		if(repCount < 1) Util.IERR("");
+		boolean option = Global.PRINT_GENERATED_SVM_DATA;
+		int LIMIT = 30;
 		int n = size * repCount;
-//		for(int i=0;i<size;i++) {
 		for(int i=0;i<n;i++) {
+			if(Global.PRINT_GENERATED_SVM_DATA && i == LIMIT) {
+				System.out.println("                                 ==> ... " + (n-LIMIT) + " more truncated");
+				Global.PRINT_GENERATED_SVM_DATA = false;
+			}
 			emit(null, cmnt);
 		}
+		Global.PRINT_GENERATED_SVM_DATA = option;
 	}
 	
 	public ObjectAddress emitChars(final String chars, final String cmnt) {
