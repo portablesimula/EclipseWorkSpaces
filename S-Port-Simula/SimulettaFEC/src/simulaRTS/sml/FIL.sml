@@ -364,12 +364,12 @@ DEFINE ENO_FST_1 =113, -- Invalid filekey
        infix(string) nam,action; integer img_lng;
        
 %      fil:=var(filnam); -- MYH
-%+M    ED_STR("FIL.fOPEN: fil="); ED_OADDR(fil); ED_OUT;   
+% +M    ED_STR("FIL.fOPEN: fil="); ED_OADDR(fil); ED_OUT;   
        if fil.key <> 0 then goto FEX endif;  --- file already open
 
        nam:=TX2STR(fil.nam); action:=TX2STR(fil.action);
        img_lng:=img.lp - img.sp;
-%+M    ED_STR("FIL.OPEN: nam="); ED_STR(nam); ED_OUT;   
+% +M    ED_STR("FIL.fOPEN: nam="); ED_STR(nam); ED_OUT;   
 
        --- save references (possible GC)
        bio.opfil:=fil; bio.opimg:=img.ent;
@@ -414,8 +414,8 @@ DEFINE ENO_FST_1 =113, -- Invalid filekey
  Visible routine OPEN; -- corrected jan 87 pje
  import ref(filent) fil; infix(txtqnt) img; export boolean success;
  begin
-%+M    ED_STR("FIL.OPEN: fil="); ED_OADDR(fil); ED_OUT;   
-%+M    ED_STR("FIL.OPEN: nam="); ED_TXT(fil.nam); ED_OUT;  
+% +M    ED_STR("FIL.OPEN: fil="); ED_OADDR(fil); ED_OUT;   
+% +M    ED_STR("FIL.OPEN: nam="); ED_TXT(fil.nam); ED_OUT;  
  
 % 	   success:=fOPEN(name(fil),img); -- MYH
  	   success:=fOPEN(fil,img);       -- MYH

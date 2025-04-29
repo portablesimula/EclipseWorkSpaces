@@ -9,6 +9,8 @@ import bec.util.Tag;
 import bec.util.Type;
 import bec.util.Util;
 import bec.value.ObjectAddress;
+import bec.virtualMachine.RTAddress;
+import bec.virtualMachine.SVM_PUSH;
 
 /**
  * 
@@ -42,6 +44,15 @@ public abstract class REMOTE extends Instruction {
 	 *                                                 |                     |
 	 *                                                 '====================='
 	 */
+//    when S_REMOTE,S_REMOTEV:
+//         CheckTosType(T_OADDR);
+//         GQfetch; InTag(%tag%);
+//         attr:=DISPL(tag.HI).elt(tag.LO); Pop;
+//         a.kind:=reladr; a.rela.val:=0; a.segmid.val:=0;
+//%+E      a.sibreg:=NoIBREG;
+//         adr:=NewAddress(attr.type,attr.rela,a);
+//         adr.ObjState:=Calculated; Push(adr);
+//         if CurInstr=S_REMOTEV then GQfetch endif;
 	private REMOTE() {}
 	public static void ofScode(int instr) {
 		if(DEBUG) CTStack.dumpStack("REMOTE-1: ");
@@ -57,8 +68,14 @@ public abstract class REMOTE extends Instruction {
         adr.withRemoteBase = true;
 		CTStack.push(adr);
 		
-        if(instr == Scode.S_REMOTEV)
+        if(instr == Scode.S_REMOTEV) {
         	FETCH.doFetch("REMOTE-2 " + tag + ": ");
+//        } else {
+//			Type type = adr.type;
+//			RTAddress rtAddr = new RTAddress(adr); 
+//			if(DEBUG) System.out.println("FETCH.doFetch: rtAddr="+rtAddr);
+//			Global.PSEG.emit(new SVM_PUSH(rtAddr, type.size()), "REMOTE " +type);
+        }
         if(DEBUG) {
         	CTStack.dumpStack("REMOTE-2: ");
     		Global.PSEG.dump("REMOTE-2: ");

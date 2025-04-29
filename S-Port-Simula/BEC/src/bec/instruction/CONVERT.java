@@ -2,7 +2,7 @@ package bec.instruction;
 
 import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.ConstItem;
-import bec.compileTimeStack.StackItem;
+import bec.compileTimeStack.CTStackItem;
 import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Type;
@@ -31,7 +31,7 @@ public abstract class CONVERT extends Instruction {
 		Type toType = Type.ofScode();
 //		System.out.println("CONVERT: "+tos.getClass().getSimpleName());
 
-		if(CTStack.TOS.type != toType) doConvert(toType);
+		if(CTStack.TOS().type != toType) doConvert(toType);
 		
 //		CTStack.dumpStack("END CONVERT.ofScode: ");
 //		Global.PSEG.dump("END CONVERT.ofScode: ");
@@ -39,12 +39,12 @@ public abstract class CONVERT extends Instruction {
 	}
 	
 	public static void GQconvert(Type totype) {
-		StackItem TOS = CTStack.TOS;
+		CTStackItem TOS = CTStack.TOS();
 		Type fromtype = TOS.type;
 		if(totype != fromtype) {
 			if(DEBUG) System.out.println("CONVERT.doConvert: " + TOS + " ==> " + totype);
 			Global.PSEG.emit(new SVM_CONVERT(fromtype.tag, totype.tag), "");
-			CTStack.pop(); CTStack.pushTemp(totype, 1, "CONVERT: ");
+			CTStack.pop(); CTStack.pushTempVAL(totype, 1, "CONVERT: ");
 			TOS.type = totype;
 			if(DEBUG) System.out.println("CONVERT.doConvert: " + totype + " ==> " + TOS);
 		}
@@ -52,7 +52,7 @@ public abstract class CONVERT extends Instruction {
 
 	private static void doConvert(Type totype) {
 		FETCH.doFetch("CONVERT: ");
-		StackItem TOS = CTStack.TOS;
+		CTStackItem TOS = CTStack.TOS();
 		Type fromtype = TOS.type;
 		if(DEBUG) System.out.println("CONVERT.doConvert: " + TOS + " ==> " + totype);
 		if( TOS instanceof ConstItem cnst) {
@@ -70,7 +70,7 @@ public abstract class CONVERT extends Instruction {
 //			}
 //			if(! OK) Util.IERR("Type conversion is undefined: " + fromtype + " ==> " + totype);
 			Global.PSEG.emit(new SVM_CONVERT(fromtype.tag, totype.tag), "");
-			CTStack.pop(); CTStack.pushTemp(totype, 1, "CONVERT: ");
+			CTStack.pop(); CTStack.pushTempVAL(totype, 1, "CONVERT: ");
 //			TOS.type = totype;
 		}
 	}

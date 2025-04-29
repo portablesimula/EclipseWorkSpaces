@@ -32,12 +32,12 @@ public class MULT extends PREV_Instruction {
 //		CTStack.dumpStack();
 //		Global.PSEG.dump();
 		CTStack.checkTosArith(); CTStack.checkSosArith(); CTStack.checkSosValue(); CTStack.checkTypesEqual();
-		StackItem tos = CTStack.TOS;
+		StackItem tos = CTStack.TOS();
 	    int at = CTStack.arithType(tos.type, tos.suc.type);
 		Global.PSEG.emit(new SVM_MULT(at), "");
 		CTStack.pop();
 		CTStack.pop();
-	    CTStack.pushTemp(at);
+	    CTStack.pushTempVAL(at);
 //		CTStack.dumpStack("MULT.doCode: ");
 //		Global.PSEG.dump("MULT.doCode: ");
 //		Util.IERR(""+this);

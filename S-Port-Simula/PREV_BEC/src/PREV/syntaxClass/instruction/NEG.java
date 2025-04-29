@@ -22,10 +22,10 @@ public class NEG extends PREV_Instruction {
 //		CTStack.dumpStack();
 //		Global.PSEG.dump();
 		CTStack.checkTosArith();
-		int at = CTStack.TOS.type;
+		int at = CTStack.TOS().type;
 		Global.PSEG.emit(new SVM_NEG(at), "");
 		CTStack.pop();
-	    CTStack.pushTemp(at);
+	    CTStack.pushTempVAL(at);
 	}
 
 	@Override

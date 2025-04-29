@@ -30,7 +30,7 @@ public class XOR extends PREV_Instruction {
 	public void doCode() {
 //		CTStack.dumpStack();
 //		Global.PSEG.dump();
-		StackItem tos = CTStack.TOS;
+		StackItem tos = CTStack.TOS();
 	    
 	    int at = tos.type;
 	    if(at != Scode.TAG_BOOL) {
@@ -45,7 +45,7 @@ public class XOR extends PREV_Instruction {
 		Global.PSEG.emit(new SVM_XOR(at), "");
 		CTStack.pop();
 		CTStack.pop();
-	    CTStack.pushTemp(at);
+	    CTStack.pushTempVAL(at);
 //		CTStack.dumpStack();
 //		Global.PSEG.dump();
 //		Util.IERR(""+this);

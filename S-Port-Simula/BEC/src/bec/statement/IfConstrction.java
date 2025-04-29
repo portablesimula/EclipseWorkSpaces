@@ -2,7 +2,7 @@ package bec.statement;
 
 import bec.S_Module;
 import bec.compileTimeStack.CTStack;
-import bec.compileTimeStack.StackItem;
+import bec.compileTimeStack.CTStackItem;
 import bec.util.Global;
 import bec.util.Relation;
 import bec.util.Scode;
@@ -54,11 +54,12 @@ public abstract class IfConstrction {
 		
 //		int cond = Util.GQrelation();
 		// Check Relation
-		StackItem tos = CTStack.pop();
+		CTStackItem tos = CTStack.pop();
 		CTStack.pop();
-//	      old_SAV:=SAV; SAV:=TOS;
-		StackItem old_SAV = CTStack.SAV;
-		CTStack.SAV = CTStack.TOS;
+		
+//		CTStackItem old_SAV = CTStack.SAV;
+//		CTStack.SAV = CTStack.TOS();
+		CTStack.saveState();
 
 //		CTStack.dumpStack("IfConstruction.ofScode: ");
 //		Util.IERR("");
@@ -82,8 +83,10 @@ public abstract class IfConstrction {
 			// 	An unconditional forward branch is generated to an "end-label" (to be defined later). A copy is made of
 			// 	the complete state of the stack and this is saved as the "else-stack", then the stack is restored to the state
 			// 	saved as the "if-stack". Finally the "else-label" (used by if) is located at the current program point.
-			CTStack.TOS = CTStack.SAV;
-			CTStack.SAV = old_SAV;
+			
+//			CTStack.TOS = CTStack.SAV;
+//			CTStack.SAV = old_SAV;
+			CTStack.restoreState();
 //			CTStack.dumpStack("IfConstruction.ofScode: ");
 //			Util.IERR("");
 			

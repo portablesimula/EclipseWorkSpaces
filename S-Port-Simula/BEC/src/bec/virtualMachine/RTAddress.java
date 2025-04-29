@@ -106,7 +106,8 @@ public class RTAddress extends Value {
 					System.out.println("RTAddress.load: "+this+", idx="+idx);
 					System.out.println("RTAddress.load: withRemoteBase="+this.withRemoteBase);
 //					Segment.lookup("PSEG_FIL_FOPEN:BODY").dump("RTAddress.load: ");
-					Util.IERR("SJEKK DETTE");
+//					Util.IERR("SJEKK DETTE");
+					System.out.println("RTAddress.load: SJEKK DETTE !!!");
 					return null;
 				}
 				return val.value();				
@@ -192,14 +193,27 @@ public class RTAddress extends Value {
 	}
 
 	public String toString() {
-		String s = (segID == null)? "RELADR[" : "SEGADR["+segID+':';
+		String s = "";
+		
+//		s = (segID == null)? "xRELADR[" : "xSEGADR["+segID+':';
+		if(segID == null) {
+			s = (withRemoteBase)? "REMOTE[" : "RELADR[";
+		} else {
+			if(segID.equals("DSEG_RT") && offset == 0) {
+				s = "CURINS=";
+			}
+			s = s + "SEGADR["+segID+':';
+		}
+		
 		s = s + offset;
 		if(xReg > 0) {
 			s = s + "+" + RTRegister.edReg(xReg);
 			Value value = RTRegister.getValue(xReg);
 				s = s + '(' + value + ')';
 		}
-		return s + "]";			
+		s = s + "]";		
+//		if(withRemoteBase) s = s + "WithRemoteBase";
+		return s;
 	}
 
 

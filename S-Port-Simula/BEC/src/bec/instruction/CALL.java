@@ -3,7 +3,7 @@ package bec.instruction;
 import bec.compileTimeStack.ProfileItem;
 import bec.compileTimeStack.AddressItem;
 import bec.compileTimeStack.CTStack;
-import bec.compileTimeStack.StackItem;
+import bec.compileTimeStack.CTStackItem;
 import bec.descriptor.ProfileDescr;
 import bec.descriptor.RoutineDescr;
 import bec.descriptor.Variable;
@@ -54,7 +54,7 @@ public abstract class CALL extends Instruction {
 //		System.out.println("CALL.ofScode: nParStacked="+nParStacked);
 		int nParSlots = 0;
 		for(int i=0;i<nParStacked;i++) {
-			StackItem par = CTStack.pop();
+			CTStackItem par = CTStack.pop();
 			nParSlots = nParSlots + par.type.size();
 //			System.out.println("CALL.ofScode: par="+par+", nParSlots="+nParSlots);
 		}
@@ -106,7 +106,7 @@ public abstract class CALL extends Instruction {
 	    if(pitem.nasspar != pitem.spc.params.size())
 	    	Util.IERR("Wrong number of Parameters: got " + pitem.nasspar + ", required" + +pitem.spc.params.size());
 //	    ---------  Call Routine  ---------
-//		System.out.println("CALL.ofScode: export="+spec.export);
+//		System.out.println("CALL.ofScode: export="+spec.exportSize);
 	    if(CALL_TOS) {
 	    	Global.PSEG.emit(SVM_CALL.ofTOS(spec.returSlot), "");
 	    	CTStack.pop();
@@ -121,7 +121,7 @@ public abstract class CALL extends Instruction {
 	    	}
 	    }
 		Global.PSEG.emit(new SVM_NOOP(), "Return Point");
-	    if(CTStack.TOS != pitem) Util.IERR("PARSE.CallSYS-3");
+	    if(CTStack.TOS() != pitem) Util.IERR("PARSE.CallSYS-3");
 	    CTStack.pop();
 		
 		// Routines return values on the RT-Stack
@@ -129,7 +129,7 @@ public abstract class CALL extends Instruction {
 		if(export != null) {
 			Type returnType = export.type;
 			if(DEBUG) System.out.println("CallInstruction.callSYS: returnType="+returnType);
-			CTStack.pushTemp(returnType, 1, "EXPORT: ");
+			CTStack.pushTempVAL(returnType, 1, "EXPORT: ");
 			if(! CALL.USE_FRAME_ON_STACK) {
 				Util.IERR("DETTE MÅ RETTES");
 //				Global.PSEG.emit(new SVM_PUSH(new RTAddress(export.address), returnType.size()), "CallInstruction: EXPORT " + spec);
@@ -150,7 +150,7 @@ public abstract class CALL extends Instruction {
 //	      n:=TTAB(parType).nbyte; i:=nrep;
 		if(nrep>repCount) Util.IERR("Too many values in repeated param: Got "+nrep+", expect "+repCount);
 		pItm.nasspar = pItm.nasspar+1;
-		StackItem tos = CTStack.TOS;
+		CTStackItem tos = CTStack.TOS();
 		Type st = tos.type;
 		
 		//--- First: Treat TOS ---
@@ -162,7 +162,7 @@ public abstract class CALL extends Instruction {
 			CONVERT.GQconvert(parType);
 		}
 		
-		if(CTStack.TOS instanceof AddressItem) FETCH.doFetch("putPar: ");
+		if(CTStack.TOS() instanceof AddressItem) FETCH.doFetch("putPar: ");
 		CTStack.pop();
 		
 		if(! CALL.USE_FRAME_ON_STACK) {
@@ -180,7 +180,8 @@ public abstract class CALL extends Instruction {
 		if(nrep > 1) { // Then: Treat rest of rep-par ---
 //			CTStack.dumpStack("putPar: ");
 			for(int i=nrep-1;i>0;i--) {
-				StackItem TOS = CTStack.takeTOS();
+//				CTStackItem TOS = CTStack.takeTOS();
+				CTStackItem TOS = CTStack.pop();
 //				System.out.println("CALL.putPar: "+TOS);
 				if(TOS instanceof AddressItem) Util.IERR("MODE mismatch below TOS");
 				if(TOS.type != parType) Util.IERR("TYPE mismatch below TOS -- ASSREP");

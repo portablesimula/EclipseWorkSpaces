@@ -13,7 +13,7 @@ public class POP extends PREV_Instruction {
 	 * This instruction is illegal if TOS is a profile description.
 	 */
 	public POP() {
-		if(CTStack.TOS instanceof ProfileItem) Util.IERR("Illegal pop of profileItem ");
+		if(CTStack.TOS() instanceof ProfileItem) Util.IERR("Illegal pop of profileItem ");
 	}
 
 	@Override

@@ -44,10 +44,10 @@ public abstract class LOCATE extends Instruction {
 		CTStack.checkSosType2(Type.T_OADDR,Type.T_GADDR);
 		CTStack.pop();
 		
-		if(CTStack.TOS.type == Type.T_GADDR)
+		if(CTStack.TOS().type == Type.T_GADDR)
 			Global.PSEG.emit(new SVM_ADD(), "LOCATE: ");
 		
-		CTStack.pop(); CTStack.pushTemp(Type.T_GADDR, 1, "LOCATE: ");
+		CTStack.pop(); CTStack.pushTempVAL(Type.T_GADDR, 1, "LOCATE: ");
 	}
 
 }

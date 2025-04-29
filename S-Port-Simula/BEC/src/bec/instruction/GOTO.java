@@ -2,7 +2,7 @@ package bec.instruction;
 
 import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.ConstItem;
-import bec.compileTimeStack.StackItem;
+import bec.compileTimeStack.CTStackItem;
 import bec.segment.ProgramSegment;
 import bec.util.Global;
 import bec.util.Type;
@@ -26,7 +26,7 @@ public abstract class GOTO extends Instruction {
 	 */
 	public static void ofScode() {
 		CTStack.checkTosType(Type.T_PADDR);
-		StackItem TOS = CTStack.TOS;
+		CTStackItem TOS = CTStack.TOS();
 		
 //		System.out.println("GOTO.ofScode: TOS="+TOS.getClass().getSimpleName()+"  "+TOS);
 		

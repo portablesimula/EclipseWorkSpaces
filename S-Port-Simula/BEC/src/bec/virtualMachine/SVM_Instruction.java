@@ -50,6 +50,8 @@ public class SVM_Instruction {
 	public final static int iDIST = 37;
 	public final static int iEQV = 38;
 	public final static int iIMP = 39;
+	public final static int iDUP = 40;
+	public final static int iASSIGN = 41;
 	
 	public final static int iMax = 99;
 	
@@ -114,6 +116,8 @@ public class SVM_Instruction {
 			case iINCO:		return SVM_INCO.read(inpt);
 			case iDECO:		return SVM_DECO.read(inpt);
 			case iDIST:		return SVM_DIST.read(inpt);
+			case iDUP:		return SVM_DUP.read(inpt);
+			case iASSIGN:	return SVM_ASSIGN.read(inpt);
 			
 			default: Util.IERR("MISSING: " + edOpcode(opcode));
 		}
@@ -161,6 +165,8 @@ public class SVM_Instruction {
 			case iINCO:		return "iINCO";
 			case iDECO:		return "iDECO";
 			case iDIST:		return "iDIST";
+			case iDUP:		return "iDUP";
+			case iASSIGN:	return "iASSIGN";
 
 			default:		return "UNKNOWN:" + opcode;
 		}

@@ -36,7 +36,7 @@ public abstract class DEREF extends Instruction {
 		if(DEBUG) CTStack.dumpStack("DEREF: ");
 		CTStack.checkTosRef();
 		
-		AddressItem tos = (AddressItem) CTStack.TOS;
+		AddressItem tos = (AddressItem) CTStack.TOS();
 	    if(! tos.withRemoteBase) {
 	    	ObjectAddress objadr = tos.objadr;
 	    	if(objadr.segID != null) {
@@ -55,7 +55,7 @@ public abstract class DEREF extends Instruction {
 		}
 		
 		CTStack.pop();
-		CTStack.pushTemp(Type.T_GADDR, 2, "DEREF: ");
+		CTStack.pushTempVAL(Type.T_GADDR, 2, "DEREF: ");
 		return;
 	}
 

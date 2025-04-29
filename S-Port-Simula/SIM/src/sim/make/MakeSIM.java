@@ -110,17 +110,26 @@ public class MakeSIM {
 
 	
 	private static void INLINE_TEST() {
-		String name ="adHoc00";
+//		String name ="adHoc00";
+//		String name ="adHoc01";
+//		String name ="adHoc02";
+//		String name ="adHoc03";
+//		String name ="simtst00";
+//		String name ="simtst01";
+//		String name ="simtst02";
+//		String name ="simtst03";
+		String name ="simtst04";
+		
 		sourceFileName = "C:\\GitHub\\EclipseWorkSpaces/S-Port-Simula\\SIM\\src\\sim\\testPrograms\\"+name+".sim";
 		sCodeFileName  = "C:\\GitHub\\EclipseWorkSpaces/S-Port-Simula\\SIM\\src\\sim\\testPrograms\\scode\\"+name+".scd";
 		
 //		verbose = true;
 		fecListing = true;
 		fecSCodeTrace = true;
-		fecTraceLevel = 4;
+//		fecTraceLevel = 4;
 
-		becListing = true;
-		becSCodeTrace = true;
+//		becListing = true;
+//		becSCodeTrace = true;
 //		execTrace = 1;
 //		callTrace = 2;
 //		dumpsAtExit = true;

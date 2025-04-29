@@ -1,10 +1,9 @@
 package bec.instruction;
 
 import bec.compileTimeStack.CTStack;
-import bec.compileTimeStack.StackItem;
+import bec.compileTimeStack.CTStackItem;
 import bec.util.Global;
 import bec.util.Type;
-import bec.virtualMachine.RTRegister;
 import bec.virtualMachine.SVM_SUB;
 
 /**
@@ -32,12 +31,13 @@ public abstract class SUB extends Instruction {
 //		CTStack.dumpStack();
 //		Global.PSEG.dump();
 		CTStack.checkTosArith(); CTStack.checkSosArith(); CTStack.checkSosValue(); CTStack.checkTypesEqual();
-		StackItem tos = CTStack.TOS;
-	    Type at = CTStack.arithType(tos.type, tos.suc.type);
+		CTStackItem tos = CTStack.TOS();
+		CTStackItem sos = CTStack.SOS();
+	    Type at = CTStack.arithType(tos.type, sos.type);
 		Global.PSEG.emit(new SVM_SUB(), "");
 		CTStack.pop();
 		CTStack.pop();
-	    CTStack.pushTemp(at, 1, "SUB: ");
+	    CTStack.pushTempVAL(at, 1, "SUB: ");
 //		CTStack.dumpStack();
 //		Global.PSEG.dump();
 //		Util.IERR(""+this);

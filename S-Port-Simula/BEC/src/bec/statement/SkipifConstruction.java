@@ -2,7 +2,7 @@ package bec.statement;
 
 import bec.S_Module;
 import bec.compileTimeStack.CTStack;
-import bec.compileTimeStack.StackItem;
+import bec.compileTimeStack.CTStackItem;
 import bec.util.Global;
 import bec.util.Relation;
 import bec.util.Scode;
@@ -54,11 +54,12 @@ public abstract class SkipifConstruction {
 		
 //		int cond = Util.GQrelation();
 		// Check Relation
-		StackItem tos = CTStack.pop();
+		CTStackItem tos = CTStack.pop();
 		CTStack.pop();
-//	      old_SAV:=SAV; SAV:=TOS;
-		StackItem old_SAV = CTStack.SAV;
-		CTStack.SAV = CTStack.TOS;
+
+//		CTStackItem old_SAV = CTStack.SAV;
+//		CTStack.SAV = CTStack.TOS();
+//		CTStack.saveState();                 // TODO ????????????????
 
 //		CTStack.dumpStack("SkipifConstruction.ofScode: ");
 //		Util.IERR("");

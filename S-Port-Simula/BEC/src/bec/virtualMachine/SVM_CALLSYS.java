@@ -46,6 +46,7 @@ public class SVM_CALLSYS extends SVM_Instruction {
 			
 			case P_PUTSTR:   putstr(); break;
 			case P_PRINTO:   printo(); break;
+			case P_PUTINT:   putint(); break;
 			case P_PUTINT2:  putint2(); break;
 			case P_PTREAL2:  putreal2(); break;
 			case P_PLREAL2:  putlreal2(); break;
@@ -224,13 +225,24 @@ public class SVM_CALLSYS extends SVM_Instruction {
 	}
 	
 	/**
-	 *  Visible sysroutine("PUTINT2") PUTINT2;
+	 *  Visible sysroutine("PUTINT") PUTINT;
 	 *      import infix (string) item; integer val
-	 *      export integer lng;
 	 *  end;
 	 */
-	private void putint2() {
-		ENTER("PUTINT2: ", 1, 4); // exportSize, importSize
+	private void putint() {
+		ENTER("PUTINT: ", 0, 4); // exportSize, importSize
+//		int val = RTStack.popInt();
+//		int itemNchr = RTStack.popInt();
+//		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
+//		String sval = ""+val;
+//		int nchr = sval.length();
+//		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
+//		move(sval, itemAddr, nchr);
+////		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
+		PUTINT();
+		EXIT("PUTINT: ");
+	}
+	private int PUTINT() {
 		int val = RTStack.popInt();
 		int itemNchr = RTStack.popInt();
 		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
@@ -238,6 +250,26 @@ public class SVM_CALLSYS extends SVM_Instruction {
 		int nchr = sval.length();
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
 		move(sval, itemAddr, nchr);
+//		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
+		return nchr;
+	}
+	
+	/**
+	 *  Visible sysroutine("PUTINT2") PUTINT2;
+	 *      import infix (string) item; integer val
+	 *      export integer lng;
+	 *  end;
+	 */
+	private void putint2() {
+		ENTER("PUTINT2: ", 1, 4); // exportSize, importSize
+//		int val = RTStack.popInt();
+//		int itemNchr = RTStack.popInt();
+//		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
+//		String sval = ""+val;
+//		int nchr = sval.length();
+//		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
+//		move(sval, itemAddr, nchr);
+		int nchr = PUTINT();
 		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
 
 		EXIT("PUTINT2: ");
@@ -504,8 +536,8 @@ public class SVM_CALLSYS extends SVM_Instruction {
 		int result = 0;
 		switch(index) {
 			case 1: // The minimum size of this work area.
-//				result = 150000; break;
-				result = 1500; break;
+				result = 150000; break;
+//				result = 1500; break;
 			case 2: // The extension/contraction step size.
 //				Util.IERR("The extension/contraction step size.");
 				break;
@@ -602,16 +634,16 @@ public class SVM_CALLSYS extends SVM_Instruction {
 	/// end;
 	private void opfile() {
 		ENTER("OPFILE: ", 1, 8); // exportSize, importSize
-		RTStack.dumpRTStack("SVM_SYSCALL.opfile: ");
+//		RTStack.dumpRTStack("SVM_SYSCALL.opfile: ");
 		int imglng = RTStack.popInt();
 //		System.out.println("SVM_SYSCALL.opfile: imglng="+imglng);
 		String action = RTStack.popString();
 		int type = RTStack.popInt();
 		String spec = RTStack.popString();
-		System.out.println("SVM_SYSCALL.opfile: spec="+spec);
-		System.out.println("SVM_SYSCALL.opfile: type="+type);
-		System.out.println("SVM_SYSCALL.opfile: action="+action);
-		System.out.println("SVM_SYSCALL.opfile: imglng="+imglng);
+//		System.out.println("SVM_SYSCALL.opfile: spec="+spec);
+//		System.out.println("SVM_SYSCALL.opfile: type="+type);
+//		System.out.println("SVM_SYSCALL.opfile: action="+action);
+//		System.out.println("SVM_SYSCALL.opfile: imglng="+imglng);
 		int key = 0;
 		if(spec.equalsIgnoreCase("SYSIN")) key = 1;
 		else if(spec.equalsIgnoreCase("SYSOUT")) key = 2;
@@ -631,11 +663,11 @@ public class SVM_CALLSYS extends SVM_Instruction {
 	/// -- see OPFILE for encoding of action string --
 	private void clfile() {
 		ENTER("CLFILE: ", 0, 4); // exportSize, importSize
-		RTStack.dumpRTStack("SVM_SYSCALL.clfile: ");
+//		RTStack.dumpRTStack("SVM_SYSCALL.clfile: ");
 		String action = RTStack.popString();
 		int key = RTStack.popInt();
-		System.out.println("SVM_SYSCALL.clfile: action="+action);
-		System.out.println("SVM_SYSCALL.clfile: key="+key);
+//		System.out.println("SVM_SYSCALL.clfile: action="+action);
+//		System.out.println("SVM_SYSCALL.clfile: key="+key);
 		if(key > 3) {
 			Util.IERR("NOT IMPL");
 		}

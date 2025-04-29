@@ -52,7 +52,7 @@ public class ObjectAddress extends Value {
 		Tag tag = Tag.ofScode();
 		Descriptor descr = tag.getMeaning();
 		if(descr == null) Util.IERR("IMPOSSIBLE: TESTING FAILED");
-		System.out.println("OADDR_Value.ofScode: descr="+descr.getClass().getSimpleName()+"  "+descr);
+//		System.out.println("OADDR_Value.ofScode: descr="+descr.getClass().getSimpleName()+"  "+descr);
 //		Util.IERR("NOT IMPL");
 //		return null;
 		if(descr instanceof Variable var) return var.address;

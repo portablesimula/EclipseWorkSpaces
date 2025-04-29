@@ -20,10 +20,10 @@ public abstract class NEG extends Instruction {
 //		CTStack.dumpStack();
 //		Global.PSEG.dump();
 		CTStack.checkTosArith();
-		Type at = CTStack.TOS.type;
+		Type at = CTStack.TOS().type;
 		Global.PSEG.emit(new SVM_NEG(), "");
 		CTStack.pop();
-	    CTStack.pushTemp(at, 1, "NEG: ");
+	    CTStack.pushTempVAL(at, 1, "NEG: ");
 	}
 
 }

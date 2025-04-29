@@ -80,6 +80,7 @@ public class RecordDescr extends Descriptor {
 		}
 		Scode.expect(Scode.S_ENDRECORD);
 		Type.newRecType(rec);
+//		rec.print("    ");
 		return rec;
 	}
 	

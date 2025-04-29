@@ -44,7 +44,7 @@ public class SELECT extends PREV_Instruction {
 //		CTStack.dumpStack();
 		CTStack.checkTosRef();
 		AttributeDefinition attr = (AttributeDefinition) Global.getMeaning(tag);
-		Address adr = (Address) CTStack.TOS;
+		Address adr = (Address) CTStack.TOS();
 		adr.offset = adr.offset + attr.rela;
 		adr.type = attr.quant.type.tag;
 		adr.repdist = DataType.typeSize(adr.type);

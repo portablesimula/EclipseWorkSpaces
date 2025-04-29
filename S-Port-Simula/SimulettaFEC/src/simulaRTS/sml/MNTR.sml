@@ -2633,14 +2633,14 @@ begin E_PROG(TRM_REQ,nostring) end;
     B_CLA(bioref,ref(pflPtp)); bio.sysout:=tmp.pnt;
     bio.sysout.nam:=SYS_FIL_SPC(2);
     if status <> 0 then TERMIN(3,"Cannot open SYSOUT") endif
-%+M ED_STR("MNTR.BIODCL: sysout="); ED_TXT(bio.sysout.nam); ED_OUT;   
+% +M ED_STR("MNTR.BIODCL: sysout="); ED_TXT(bio.sysout.nam); ED_OUT;   
     OPEN(bio.sysout,BLANKS(outlth));
 
     ---  Create and open sysin.
     B_CLA(bioref,ref(iflPtp)); bio.sysin:=tmp.pnt;
     bio.sysin.nam:=SYS_FIL_SPC(1);
     if status <> 0 then TERMIN(3,"Cannot open SYSIN") endif
-%+M ED_STR("MNTR.BIODCL: sysin="); ED_TXT(bio.sysin.nam); ED_OUT;   
+% +M ED_STR("MNTR.BIODCL: sysin="); ED_TXT(bio.sysin.nam); ED_OUT;   
     OPEN(bio.sysin,BLANKS(inplth));
 
     ---  Now when the system files are open,we can output error messages

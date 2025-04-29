@@ -126,6 +126,7 @@ public class Scode {
 				System.out.println("Byte["+x+"] = " + val + ':' + edInstr(val));
 			}
 		} catch(Throwable t) {}
+		Thread.dumpStack();
 	}
 	
 	public static void expect(int instr) {

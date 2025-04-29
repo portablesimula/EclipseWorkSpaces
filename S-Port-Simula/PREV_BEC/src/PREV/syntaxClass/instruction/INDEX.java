@@ -41,11 +41,11 @@ public class INDEX extends PREV_Instruction {
 		CTStack.checkTosInt();
 		CTStack.checkSosRef();
 //        adr:=TOS.suc; repdist:=adr.repdist;
-		Address adr = (Address) CTStack.TOS.suc;
+		Address adr = (Address) CTStack.TOS().suc;
 		int repdist = adr.repdist;
 		if(repdist == 0) Util.IERR("PARSE.INDEX: Not info type");
 //        if TOS.kind=K_Coonst
-		StackItem tos = CTStack.TOS;
+		StackItem tos = CTStack.TOS();
 		if(tos instanceof Coonst itm) {
 //        then itm:=TOS qua Coonst.itm;
 			IntegerValue ival = (IntegerValue) itm.value;

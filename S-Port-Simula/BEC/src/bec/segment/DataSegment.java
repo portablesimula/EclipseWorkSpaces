@@ -45,6 +45,10 @@ public class DataSegment extends Segment {
 		return ObjectAddress.ofSegAddr(this,values.size());
 	}
 	
+	public int size() {
+		return values.size();
+	}
+	
 	public void store(int index, Value value) {
 		values.set(index, value);
 	}
@@ -55,8 +59,8 @@ public class DataSegment extends Segment {
 			return values.get(index);
 		} catch(Exception e) {
 //			e.printStackTrace();
-			this.dump("DataSegment.load: ");
-			Util.IERR("");
+			this.dump("DataSegment.load: FAILED");
+			Util.IERR("DataSegment.load: FAILED");
 			return null;
 		}
 	}

@@ -77,8 +77,18 @@ public class Global {
 	}
 
 	public static void dumpDISPL(String title) {
+//		System.out.println("============ "+title+" BEGIN Dump DISPL ================");
+//		for(int i=32;i<DISPL.size();i++) {
+//			Descriptor elt =DISPL.get(i);
+//			System.out.println("  " + i + ": " + elt);
+//		}
+//		System.out.println("============ "+title+"ENDOF Dump DISPL ================");
+		dumpDISPL(title, 32);
+	}
+
+	public static void dumpDISPL(String title, int startTag) {
 		System.out.println("============ "+title+" BEGIN Dump DISPL ================");
-		for(int i=32;i<DISPL.size();i++) {
+		for(int i=startTag;i<DISPL.size();i++) {
 			Descriptor elt =DISPL.get(i);
 			System.out.println("  " + i + ": " + elt);
 		}

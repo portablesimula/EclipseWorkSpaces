@@ -39,14 +39,10 @@ public class LabelDescr extends Descriptor {
 		if(lab == null) {
 			lab = new LabelDescr(Kind.K_IntLabel,tag);
 		} else if(lab.adr instanceof FixupAddress fix) {
-//			System.out.println("LabelDescr.ofLabelDef: "+lab);
-//			System.out.println("LabelDescr.ofLabelDef: "+fix);
 			fix.setAddress(Global.PSEG.nextAddress());
-	      	Global.PSEG.emit(new SVM_NOOP(), "LABEL " + tag);
-//			Global.PSEG.dump("LabelDescr.ofLabelDef: ");
-//			Util.IERR("SJEKK DETTE");
 		}
 		lab.adr = Global.PSEG.nextAddress();
+      	Global.PSEG.emit(new SVM_NOOP(), "LABEL " + tag);
 		CTStack.checkStackEmpty();
 		return lab;
 	}

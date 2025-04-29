@@ -21,7 +21,7 @@ public abstract class GETO extends Instruction {
 	 * returned.
 	 */
 	public static void ofScode() {
-		CTStack.pushTemp(Type.T_OADDR, 1, "GETO: ");
+		CTStack.pushTempVAL(Type.T_OADDR, 1, "GETO: ");
 		Global.PSEG.emit(new SVM_GETO(), "GETO: ");
 //		Util.IERR("NOT IMPL");
 	}

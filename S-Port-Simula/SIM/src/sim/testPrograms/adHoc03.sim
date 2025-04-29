@@ -1,0 +1,8 @@
+begin
+
+text    t1;      -- Texts to take on the
+text    t2;      -- various values for the test.
+if t1 =  t2 then
+;
+
+end of program;

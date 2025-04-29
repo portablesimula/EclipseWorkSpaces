@@ -8,7 +8,8 @@ public abstract class EVAL extends Instruction {
 	 * eval_instruction ::= eval
 	 */
 	public static void ofScode() {
-		Util.IERR("NOT IMPL");
+//		Util.IERR("NOT IMPL");
+		System.out.println("EVAL.ofScode: SJEKK DETTE SEINERE EN GANG");
 	}
 
 }

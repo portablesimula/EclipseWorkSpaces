@@ -1,7 +1,7 @@
 package bec.instruction;
 
 import bec.compileTimeStack.CTStack;
-import bec.compileTimeStack.StackItem;
+import bec.compileTimeStack.CTStackItem;
 import bec.util.Global;
 import bec.util.Type;
 import bec.util.Util;
@@ -23,11 +23,12 @@ public abstract class AND extends Instruction {
 	 * Note that SOS is the left operand.
 	 */
 	public static void ofScode() {
-		StackItem tos = CTStack.TOS;
+		CTStackItem tos = CTStack.TOS();
 	    
 	    Type at = tos.type;
 	    if(at != Type.T_BOOL) {
-		    at = CTStack.arithType(at, tos.suc.type);
+			CTStackItem sos = CTStack.SOS();
+		    at = CTStack.arithType(at, sos.type);
 		    CTStack.checkTosArith(); CTStack.checkSosArith();
 		    CTStack.checkSosValue(); CTStack.checkTypesEqual();
 		    if( at == Type.T_REAL || at == Type.T_LREAL) Util.IERR("CODER.GQandxor-1");
@@ -38,7 +39,7 @@ public abstract class AND extends Instruction {
 		Global.PSEG.emit(new SVM_AND(), "");
 		CTStack.pop();
 		CTStack.pop();
-	    CTStack.pushTemp(at, 1, "AND: ");
+	    CTStack.pushTempVAL(at, 1, "AND: ");
 	}
 
 }

@@ -31,7 +31,7 @@ public class CONVERT extends PREV_Instruction {
 			Global.PSEG.emit(new SVM_CONVERT(toType), "");
 //		}
 
-		CTStack.pushTemp(toType);
+		CTStack.pushTempVAL(toType);
 
 //		CTStack.dumpStack();
 //		Global.PSEG.dump();

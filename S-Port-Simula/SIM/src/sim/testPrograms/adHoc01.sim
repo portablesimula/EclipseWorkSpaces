@@ -1,0 +1,12 @@
+begin
+	character c;
+	integer nFailed;
+	real r;
+
+	c := 'Z';
+	nFailed := 444;
+	r := 3.14;
+
+	nFailed:=nFailed + 222;
+
+end;

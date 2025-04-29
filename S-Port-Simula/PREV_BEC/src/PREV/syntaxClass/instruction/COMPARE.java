@@ -40,7 +40,7 @@ public class COMPARE extends PREV_Instruction {
 		CTStack.checkTypesEqual(); CTStack.checkSosValue();	
 		CTStack.pop(); CTStack.pop();
 		Global.PSEG.emit(new SVM_COMPARE(relation), "");
-		CTStack.pushTemp(Scode.TAG_BOOL);
+		CTStack.pushTempVAL(Scode.TAG_BOOL);
 
 //		CTStack.dumpStack();
 //		Global.PSEG.dump();

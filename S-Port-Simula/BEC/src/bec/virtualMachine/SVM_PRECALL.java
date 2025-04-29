@@ -4,6 +4,7 @@ import java.io.IOException;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
+import bec.util.Util;
 
 public class SVM_PRECALL extends SVM_Instruction {
 	String rutIdent;
@@ -21,17 +22,25 @@ public class SVM_PRECALL extends SVM_Instruction {
 
 	@Override
 	public void execute() {
-		
 		RTStack.precallStack.push(new CallStackFrame(rutIdent, RTStack.size() - nParSlots, exportSize, importSize));
-		for(int i=0;i<exportSize;i++) {
-			RTStack.push(null, "EXPORT"); // Export slots		
+		if(exportSize > 0) {
+			if(nParSlots > 0) {
+//				RTStack.dumpRTStack("SVM_PRECALL.execute-1");
+				RTStack.addExport(nParSlots, exportSize);
+//				RTStack.dumpRTStack("SVM_PRECALL.execute-2");
+//				Util.IERR("");
+			} else {
+				for(int i=0;i<exportSize;i++) {
+					RTStack.push(null, "EXPORT"); // Export slots		
+				}
+			}
 		}
 		Global.PSC.ofst++;
 	}
 	
 	@Override	
 	public String toString() {
-		return "PRECALL   " + nParSlots;
+		return "PRECALL   " + rutIdent + ", nParSlots=" + nParSlots + ", exportSize=" + exportSize + ", importSize=" + importSize;
 	}
 
 	// ***********************************************************************************************

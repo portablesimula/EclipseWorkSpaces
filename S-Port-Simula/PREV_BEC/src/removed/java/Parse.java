@@ -424,7 +424,7 @@ public class Parse {
 //	%+S        then if adr.repdist <> (TTAB(adr.type).nbyte)
 //	%+S             then WARNING("DEREF on parameter") endif;
 //	%+S        endif;
-//	           AssertAtrStacked; Pop; pushTemp(T_GADDR);
+//	           AssertAtrStacked; Pop; pushTempVAL(T_GADDR);
 //	      when S_REFER:
 //	           type:=intype;
 //	%+C        CheckTosType(T_GADDR);
@@ -459,7 +459,7 @@ public class Parse {
 //	%-E                       PreReadMask:=uAX;
 //	%-E                       PreMindMask:=wOR(PreMindMask,uAX);
 //	%-E                       DefFDEST(LL); Qf1(qPUSHR,qAX,cVAL);
-//	%-E                       Pop; pushTemp(T_BYT2);
+//	%-E                       Pop; pushTempVAL(T_BYT2);
 //	%-E                  elsif TOS.type <> T_BYT2
 //	%-E                  then GQconvert(T_BYT2) endif;
 //	%-E                  GetTosAdjustedIn86(qAX); Pop;
@@ -484,7 +484,7 @@ public class Parse {
 //	%+E                  endif;
 //	%+E                  TSTOFL:=OldTSTOFL;
 //	%+E                  Qf1(qPUSHR,qEAX,cVAL);
-//	                     pushTemp(T_SIZE);
+//	                     pushTempVAL(T_SIZE);
 //	                endif;
 //	           else
 //	%+D             edit(errmsg,fixrec);
@@ -592,7 +592,7 @@ public class Parse {
 //	%+SE                     Qf2(qDYADC,qSUB,qESP,cSTP,4);
 //	%+S                      Qf5(qCALL,0,0,4,X_GETO);
 //	%+S                      Qf2(qADJST,0,0,0,4);
-//	%+S                      pushTemp(T_OADDR);
+//	%+S                      pushTempVAL(T_OADDR);
 //	%+S   when S_T_SETO:
 //	%+SC                     CheckTosType(T_OADDR);
 //	%+S                      GQfetch; Pop;
@@ -777,7 +777,7 @@ public class Parse {
 //	           endif;
 //	%-E        Qf1(qPUSHR,qAX,cVAL);
 //	%+E        Qf1(qPUSHR,qEAX,cVAL);
-//	           Pop; pushTemp(T_GADDR);
+//	           Pop; pushTempVAL(T_GADDR);
 //	      when S_INCO: GQinco_deco(true)
 //	      when S_DECO: GQinco_deco(false)
 //	      when S_DIST:
@@ -788,12 +788,12 @@ public class Parse {
 //	%+E        GQfetch; Qf1(qPOPR,qEDX,cOBJ); Pop;
 //	%+E        GQfetch; Qf1(qPOPR,qEAX,cOBJ); Pop;
 //	%+E        Qf2(qDYADR,qSUBF,qEAX,cVAL,qEDX); Qf1(qPUSHR,qEAX,cVAL);
-//	           pushTemp(T_SIZE);
+//	           pushTempVAL(T_SIZE);
 //	      when S_COMPARE:
 //	%-E        cond:=GQrelation(false);
 //	%+E        cond:=GQrelation;
 //	           Qf2(qLOADC,0,qAL,cVAL,0); Qf2(qCONDEC,cond,qAL,cVAL,0);
-//	           Qf1(qPUSHR,qAL,cVAL);     pushTemp(T_BOOL);
+//	           Qf1(qPUSHR,qAL,cVAL);     pushTempVAL(T_BOOL);
 //	      otherwise result:=false;
 //		default: result = false;
 //		}
@@ -904,7 +904,7 @@ public class Parse {
 //	      pitem.nasspar:=0; rut:=none; npop:=0; xt:=0; xlng:=0;
 //	      if nstckval=0
 //	      then if pitem.spc.type <> 0
-//	           then xt:=pitem.spc.type; pushTemp(xt); result:=takeTOS;
+//	           then xt:=pitem.spc.type; pushTempVAL(xt); result:=takeTOS;
 //	                xlng:=TTAB(xt).nbyte;
 //	%-E             Qf2(qDYADC,qSUB,qSP,cSTP,wAllign(%xlng%));
 //	%+E             Qf2(qDYADC,qSUB,qESP,cSTP,wAllign(%xlng%));
@@ -914,7 +914,7 @@ public class Parse {
 //	      else z:=TOS; nwm:=0; nbi:=0;
 //	           if nstckval > 1 then IERR("PARSE.REPCALL") endif;
 //	           if pitem.spc.type = 0 then Precede(pitem,z);
-//	           else xt:=pitem.spc.type; pushTemp(xt); result:=takeTOS;
+//	           else xt:=pitem.spc.type; pushTempVAL(xt); result:=takeTOS;
 //	                xlng:=TTAB(xt).nbyte; nbi:=wAllign(%xlng%);
 //	                Precede(result,z); Precede(pitem,z); result.kind:=K_Result;
 //	           endif;
@@ -1070,7 +1070,7 @@ public class Parse {
 //	%-E       endrepeat;
 //	%-E       Qf4(qPUSHM,0,0,cVAL,2*nrep,TMPAREA);
 //	%-E       repeat while nrep<>0
-//	%-E       do pushTemp(T_WRD2); nrep:=nrep-1 endrepeat;
+//	%-E       do pushTempVAL(T_WRD2); nrep:=nrep-1 endrepeat;
 //	%-E end;
 //
 //	Routine ConvRepWRD4; import range(0:255) nrep;
@@ -1106,7 +1106,7 @@ public class Parse {
 //	         i:=i-1; Pop; tmp.rela.val:=tmp.rela.val+4;
 //	      endrepeat;
 //	      Qf4(qPUSHM,0,0,cVAL,4*nrep,TMPAREA);
-//	      repeat while nrep<>0 do pushTemp(T_WRD4); nrep:=nrep-1 endrepeat;
+//	      repeat while nrep<>0 do pushTempVAL(T_WRD4); nrep:=nrep-1 endrepeat;
 //	end;
 //
 //	%+S %-E Routine GetTosPntr; import range(0:nregs) sr,br,xr;
@@ -1219,7 +1219,7 @@ public class Parse {
 //	%+E             if xlng > 2 then Qf1(qPUSHR,qEAX,cANY)
 //	%+E             else Qf1(qPUSHR,qAX,cANY) endif;
 //	%+E        endif;
-//	           pushTemp(xt);
+//	           pushTempVAL(xt);
 //	      endif;
 //	end;
 //	%page
@@ -1351,7 +1351,7 @@ public class Parse {
 //	%+S %-E       Pop; -- Profile Item
 //	%+S %-E       Qf2(qLOADC,0,qAH,cVAL,60);
 //	%+S %-E       DosRegUse(wOR(wOR(uDS,uDX),uCX),uAX,uAX);
-//	%+S %-E       Qf1(qDOS2,0,cANY); Qf1(qPUSHR,qAX,cVAL); pushTemp(T_WRD2);
+//	%+S %-E       Qf1(qDOS2,0,cANY); Qf1(qPUSHR,qAX,cVAL); pushTempVAL(T_WRD2);
 //	%+S %-E  when P_DOS_OPEN:
 //	%+S %-E       GetTosPntr(qDS,qDX,qAX); Pop;
 //	%+S %-E       GetTosAdjustedIn86(qAL); Pop;
@@ -1359,7 +1359,7 @@ public class Parse {
 //	%+S %-E       Pop; -- Profile Item
 //	%+S %-E       Qf2(qLOADC,0,qAH,cVAL,61);
 //	%+S %-E       DosRegUse(wOR(wOR(uDS,uDX),uAL),uAX,uAX);
-//	%+S %-E       Qf1(qDOS2,0,cANY); Qf1(qPUSHR,qAX,cVAL); pushTemp(T_WRD2);
+//	%+S %-E       Qf1(qDOS2,0,cANY); Qf1(qPUSHR,qAX,cVAL); pushTempVAL(T_WRD2);
 //	%+S %-E  when P_DOS_CLOSE:
 //	%+S %-E       GetTosAdjustedIn86(qBX); Pop; Qf2(qLOADC,0,qAH,cVAL,62);
 //	%+S %-E       DosRegUse(uBX,0,0); Qf1(qDOS2,0,cANY);
@@ -1373,7 +1373,7 @@ public class Parse {
 //	%+S %-E       Pop; -- Profile Item
 //	%+S %-E       Qf2(qLOADC,0,qAH,cVAL,63);
 //	%+S %-E       DosRegUse(wOR(wOR(uDS,uDX),wOR(uBX,uCX)),uAX,uAX);
-//	%+S %-E       Qf1(qDOS2,0,cANY); Qf1(qPUSHR,qAX,cVAL); pushTemp(T_WRD2);
+//	%+S %-E       Qf1(qDOS2,0,cANY); Qf1(qPUSHR,qAX,cVAL); pushTempVAL(T_WRD2);
 //	%+S %-E  when P_DOS_WRITE:
 //	%+S %-E       GetTosPntr(qDS,qDX,qAX); Pop;
 //	%+S %-E       GetTosAdjustedIn86(qCX); Pop;
@@ -1382,7 +1382,7 @@ public class Parse {
 //	%+S %-E       Pop; -- Profile Item
 //	%+S %-E       Qf2(qLOADC,0,qAH,cVAL,64);
 //	%+S %-E       DosRegUse(wOR(wOR(uDS,uDX),wOR(uBX,uCX)),uAX,uAX);
-//	%+S %-E       Qf1(qDOS2,0,cANY); Qf1(qPUSHR,qAX,cVAL); pushTemp(T_WRD2);
+//	%+S %-E       Qf1(qDOS2,0,cANY); Qf1(qPUSHR,qAX,cVAL); pushTempVAL(T_WRD2);
 //	%+S %-E  when P_DOS_DELF:
 //	%+S %-E       GetTosPntr(qDS,qDX,qAX); Pop; Qf2(qLOADC,0,qAH,cVAL,65);
 //	%+S %-E       DosRegUse(wOR(uDS,uDX),0,0); Qf1(qDOS2,0,cANY);
@@ -1398,7 +1398,7 @@ public class Parse {
 //	%+S %-E       DosRegUse(wOR(wOR(uAL,uBX),wOR(uCX,uDX)),
 //	%+S %-E                                  wOR(uDX,uAX),wOR(uDX,uAX));
 //	%+S %-E       Qf1(qDOS2,0,cANY); Qf1(qPUSHR,qDX,cVAL); Qf1(qPUSHR,qAX,cVAL);
-//	%+S %-E       pushTemp(spec.type);
+//	%+S %-E       pushTempVAL(spec.type);
 //	%+S %-E  when P_DOS_CDIR:
 //	%+S %-E       GetTosPntr(qDS,qDX,qAX); Pop; Qf2(qLOADC,0,qAH,cVAL,59);
 //	%+S %-E       DosRegUse(wOR(uDS,uDX),0,0); Qf1(qDOS2,0,cANY);
@@ -1411,7 +1411,7 @@ public class Parse {
 //	%+S %-E       Qf2(qLOADC,0,qAX,cVAL,0); Qf1(qPUSHR,qAX,cVAL);
 //	%+SC %-E      if TOS <> pitem then IERR("SSTMT.Call") endif;
 //	%+S %-E       Pop; -- Profile Item
-//	%+S %-E       pushTemp(spec.type);
+//	%+S %-E       pushTempVAL(spec.type);
 //	%+S %-E  when P_DOS_TERM:
 //	%+S %-E       GetTosAdjustedIn86(qAL); Pop; Qf2(qLOADC,0,qAH,cVAL,76);
 //	%+S %-E       DosRegUse(uAL,0,0); Qf2(qINT,0,0,0,33);
@@ -1423,7 +1423,7 @@ public class Parse {
 //	%+S %-E       Qf2(qINT,0,0,0,33); Qf1(qPUSHR,qCX,cVAL); Qf1(qPUSHR,qDX,cVAL);
 //	%+SC %-E      if TOS <> pitem then IERR("SSTMT.Call") endif;
 //	%+S %-E       Pop; -- Profile Item
-//	%+S %-E       pushTemp(spec.type);
+//	%+S %-E       pushTempVAL(spec.type);
 //	%+S %-E  when P_DOS_DATE:
 //	%+S %-E       Qf2(qLOADC,0,qAH,cVAL,42);
 //	%+S %-E       DosRegUse(0,wOR(wOR(uCX,uDX),uAL),wOR(wOR(uCX,uDX),uAL));
@@ -1431,7 +1431,7 @@ public class Parse {
 //	%+S %-E       Qf2(qLOADC,0,qAH,cVAL,0); Qf1(qPUSHR,qAX,cVAL);
 //	%+SC %-E      if TOS <> pitem then IERR("SSTMT.Call") endif;
 //	%+S %-E       Pop; -- Profile Item
-//	%+S %-E       pushTemp(spec.type);
+//	%+S %-E       pushTempVAL(spec.type);
 //	%+S %-E  when P_DOS_VERS:
 //	%+S %-E       Qf2(qLOADC,0,qAH,cVAL,48);
 //	%+S %-E       DosRegUse(0,wOR(wOR(uAX,uBX),uCX),wOR(wOR(uAX,uBX),uCX));
@@ -1442,7 +1442,7 @@ public class Parse {
 //	%+S %-E       Qf1(qPUSHR,qDX,cVAL); Qf1(qPUSHR,qAX,cVAL);
 //	%+SC %-E      if TOS <> pitem then IERR("SSTMT.Call") endif;
 //	%+S %-E       Pop; -- Profile Item
-//	%+S %-E       pushTemp(spec.type);
+//	%+S %-E       pushTempVAL(spec.type);
 //	%+S %-E  when P_DOS_EXEC:
 //	%+S %-E       GetTosPntr(qES,qBX,qAX); Pop;
 //	%+S %-E       GetTosPntr(qDS,qDX,qAX); Pop;
@@ -1463,7 +1463,7 @@ public class Parse {
 //	%+S %-E                                 wOR(uAX,uDX),wOR(uAX,uDX));
 //	%+S %-E       Qf1(qDOS2,0,cANY);
 //	%+S %-E       Qf1(qPUSHR,qDX,cVAL); Qf1(qPUSHR,qAX,cVAL);
-//	%+S %-E       pushTemp(spec.type);
+//	%+S %-E       pushTempVAL(spec.type);
 //	%+S %-E  when P_DOS_LOCK:
 //	%+S %-E       GetTosAdjustedIn86(qDI); Pop;
 //	%+S %-E       GetTosAdjustedIn86(qSI); Pop;
@@ -1484,7 +1484,7 @@ public class Parse {
 //	%+S %-E       Qf2(qLOADC,0,qAH,cVAL,25);
 //	%+S %-E       DosRegUse(0,uAX,uAL);
 //	%+S %-E       Qf1(qDOS2,0,cANY);
-//	%+S %-E       Qf1(qPUSHR,qAL,cVAL); pushTemp(T_BYT1);
+//	%+S %-E       Qf1(qPUSHR,qAL,cVAL); pushTempVAL(T_BYT1);
 //	%+S %-E  when P_DOS_GDIR:
 //	%+S %-E       GetTosPntr(qDS,qSI,qAX); Pop;
 //	%+S %-E       GetTosAdjustedIn86(qDL); Pop;
@@ -1504,7 +1504,7 @@ public class Parse {
 //	%+S        Qf2(qRSTRB,qRCMPS,qCLD,cVAL,qREPEQ);
 //	%+SW     outstring("- APX_SCMPEQ RSTRW RMOV CLD ANY REP l. "); -- trcpje
 //	%+SW     outword(curline); outimage; -- trcpje
-//	%+S        Qf1(qPUSHR,qAL,cVAL); pushTemp(T_BOOL);
+//	%+S        Qf1(qPUSHR,qAL,cVAL); pushTempVAL(T_BOOL);
 //	%+S   when P_APX_SMOVEI:
 //	%+S %-E    GetTosPntr(qDS,qSI,qAX); Pop;
 //	%+S %-E    GetTosPntr(qES,qDI,qAX); Pop;
@@ -1540,7 +1540,7 @@ public class Parse {
 //	%+S        Qf2(qRSTRB,qRSCAS,qCLD,cVAL,qREPEQ);
 //	%+SW     outstring("- APX_SSKIP RSTRB RSCAS CLD VAL REPEQ l. "); -- trcpje
 //	%+SW     outword(curline); outimage; -- trcpje
-//	%+S        Qf1(qPUSHR,qCX,cVAL); pushTemp(T_WRD2);
+//	%+S        Qf1(qPUSHR,qCX,cVAL); pushTempVAL(T_WRD2);
 //	%+S   when P_APX_STRIP:
 //	%+S %-E    GetTosPntr(qES,qDI,qAX); Pop;
 //	%+S %-E    GetTosAdjustedIn86(qCX); Pop;
@@ -1552,7 +1552,7 @@ public class Parse {
 //	%+S        Qf2(qRSTRB,qRSCAS,qSTD,cVAL,qREPEQ);
 //	%+SW     outstring("- APX_STRIP RSTRB RSCAS STD VAL REPEQ l. "); -- trcpje
 //	%+SW     outword(curline); outimage; -- trcpje
-//	%+S        Qf1(qPUSHR,qCX,cVAL); pushTemp(T_WRD2);
+//	%+S        Qf1(qPUSHR,qCX,cVAL); pushTempVAL(T_WRD2);
 //	%+S   when P_APX_SFINDI:
 //	%+S %-E    GetTosPntr(qES,qDI,qAX); Pop;
 //	%+S %-E    GetTosAdjustedIn86(qCX); Pop;
@@ -1564,7 +1564,7 @@ public class Parse {
 //	%+S        Qf2(qRSTRB,qRSCAS,qCLD,cVAL,qREPNE);
 //	%+SW     outstring("- APX_SFINDI RSTRB RSCAS CLD VAL REPNE l. "); -- trcpje
 //	%+SW     outword(curline); outimage; -- trcpje
-//	%+S        Qf1(qPUSHR,qCX,cVAL); pushTemp(T_WRD2);
+//	%+S        Qf1(qPUSHR,qCX,cVAL); pushTempVAL(T_WRD2);
 //	%+S   when P_APX_SFINDD:
 //	%+S %-E    GetTosPntr(qES,qDI,qAX); Pop;
 //	%+S %-E    GetTosAdjustedIn86(qCX); Pop;
@@ -1576,7 +1576,7 @@ public class Parse {
 //	%+S        Qf2(qRSTRB,qRSCAS,qSTD,cVAL,qREPNE);
 //	%+SW     outstring("- APX_SFINDD RSTRB RSCAS STD VAL REPNE l. "); -- trcpje
 //	%+SW     outword(curline); outimage; -- trcpje
-//	%+S        Qf1(qPUSHR,qCX,cVAL); pushTemp(T_WRD2);
+//	%+S        Qf1(qPUSHR,qCX,cVAL); pushTempVAL(T_WRD2);
 //	%+S   when P_APX_SFILL:
 //	%+S %-E    GetTosPntr(qES,qDI,qAX); Pop;
 //	%+S %-E    GetTosAdjustedIn86(qCX); Pop;
@@ -1588,89 +1588,89 @@ public class Parse {
 //	%+S        Qf2(qRSTRB,qRSTOS,qCLD,cVAL,qREP);
 //	%+SW     outstring("- APX_SFILL RSTRB RSTOS CLD VAL REP l. "); -- trcpje
 //	%+SW     outword(curline); outimage; -- trcpje
-//	%+S   when P_APX_BOBY: Pop; Pop; pushTemp(T_BYT1);
-//	%+S   when P_APX_BYBO: Pop; Pop; pushTemp(T_BOOL);
-//	%+S   when P_APX_SZ2W: Pop; Pop; pushTemp(T_WRD2);
-//	%+S   when P_APX_W2SZ: Pop; Pop; pushTemp(T_SIZE);
+//	%+S   when P_APX_BOBY: Pop; Pop; pushTempVAL(T_BYT1);
+//	%+S   when P_APX_BYBO: Pop; Pop; pushTempVAL(T_BOOL);
+//	%+S   when P_APX_SZ2W: Pop; Pop; pushTempVAL(T_WRD2);
+//	%+S   when P_APX_W2SZ: Pop; Pop; pushTempVAL(T_SIZE);
 //	%+S   when P_APX_RF2N:
 //	%+S %-E    Qf2(qPUSHC,0,qAX,cVAL,0);
 //	%+SE       Qf2(qPUSHC,0,qEAX,cVAL,0);
-//	%+S        Pop; Pop; pushTemp(T_GADDR);
+//	%+S        Pop; Pop; pushTempVAL(T_GADDR);
 //	%+S   when P_APX_N2RF:
 //	%+S %-E    GetTosValueIn86R3(qAX,qDX,qCX);
 //	%+S %-E    Qf2(qDYADR,qADD,qAX,cADR,qDX);
 //	%+S %-E    Qf1(qPUSHR,qCX,cADR); Qf1(qPUSHR,qAX,cADR);
 //	%+SE       GetTosValueIn86R3(qEAX,qEDX,0);
 //	%+SE       Qf2(qDYADR,qADD,qEAX,cADR,qEDX); Qf1(qPUSHR,qEAX,cADR);
-//	%+S        Pop; Pop; pushTemp(T_OADDR);
+//	%+S        Pop; Pop; pushTempVAL(T_OADDR);
 //	%+S   when P_APX_BNOT:
 //	%+S %-E    GetTosAdjustedIn86(qAL); Pop; Qf2(qMONADR,qNOT,qAL,cVAL,0);
 //	%+S %+E    GetTosAdjustedIn86(qEAX); Pop; Qf2(qMONADR,qNOT,qEAX,cVAL,0);
 //	%+SC       if TOS <> pitem then IERR("SSTMT.Call") endif;
 //	%+S        Pop; -- Profile Item
-//	%+S %-E    Qf1(qPUSHR,qAL,cVAL); pushTemp(T_BYT1);
-//	%+S %+E    Qf1(qPUSHR,qEAX,cVAL); pushTemp(T_WRD4);
+//	%+S %-E    Qf1(qPUSHR,qAL,cVAL); pushTempVAL(T_BYT1);
+//	%+S %+E    Qf1(qPUSHR,qEAX,cVAL); pushTempVAL(T_WRD4);
 //	%+S   when P_APX_WNOT:
 //	%+S %-E    GetTosAdjustedIn86(qAX); Pop; Qf2(qMONADR,qNOT,qAX,cVAL,0);
 //	%+S %+E    GetTosAdjustedIn86(qEAX); Pop; Qf2(qMONADR,qNOT,qEAX,cVAL,0);
 //	%+SC       if TOS <> pitem then IERR("SSTMT.Call") endif;
 //	%+S        Pop; -- Profile Item
-//	%+S %-E    Qf1(qPUSHR,qAX,cVAL); pushTemp(T_BYT2);
-//	%+S %+E    Qf1(qPUSHR,qEAX,cVAL); pushTemp(T_WRD4);
+//	%+S %-E    Qf1(qPUSHR,qAX,cVAL); pushTempVAL(T_BYT2);
+//	%+S %+E    Qf1(qPUSHR,qEAX,cVAL); pushTempVAL(T_WRD4);
 //	%+S   when P_APX_BAND:
 //	%+S %-E    GetTosAdjustedIn86(qCL); Pop; GetTosAdjustedIn86(qAL); Pop;
 //	%+S %+E    GetTosAdjustedIn86(qECX); Pop; GetTosAdjustedIn86(qEAX); Pop;
 //	%+SC       if TOS <> pitem then IERR("SSTMT.Call") endif;
 //	%+S        Pop; -- Profile Item
 //	%+S %-E    Qf2(qDYADR,qAND,qAL,cVAL,qCL);
-//	%+S %-E    Qf1(qPUSHR,qAL,cVAL); pushTemp(T_BYT1);
+//	%+S %-E    Qf1(qPUSHR,qAL,cVAL); pushTempVAL(T_BYT1);
 //	%+S %+E    Qf2(qDYADR,qAND,qEAX,cVAL,qECX);
-//	%+S %+E    Qf1(qPUSHR,qEAX,cVAL); pushTemp(T_WRD4);
+//	%+S %+E    Qf1(qPUSHR,qEAX,cVAL); pushTempVAL(T_WRD4);
 //	%+S   when P_APX_WAND:
 //	%+S %-E    GetTosAdjustedIn86(qCX); Pop; GetTosAdjustedIn86(qAX); Pop;
 //	%+S %+E    GetTosAdjustedIn86(qECX); Pop; GetTosAdjustedIn86(qEAX); Pop;
 //	%+SC       if TOS <> pitem then IERR("SSTMT.Call") endif;
 //	%+S        Pop; -- Profile Item
 //	%+S %-E    Qf2(qDYADR,qAND,qAX,cVAL,qCX);
-//	%+S %-E    Qf1(qPUSHR,qAX,cVAL); pushTemp(T_BYT2);
+//	%+S %-E    Qf1(qPUSHR,qAX,cVAL); pushTempVAL(T_BYT2);
 //	%+S %+E    Qf2(qDYADR,qAND,qEAX,cVAL,qECX);
-//	%+S %+E    Qf1(qPUSHR,qEAX,cVAL); pushTemp(T_WRD4);
+//	%+S %+E    Qf1(qPUSHR,qEAX,cVAL); pushTempVAL(T_WRD4);
 //	%+S   when P_APX_BOR:
 //	%+S %-E    GetTosAdjustedIn86(qCL); Pop; GetTosAdjustedIn86(qAL); Pop;
 //	%+S %+E    GetTosAdjustedIn86(qECX); Pop; GetTosAdjustedIn86(qEAX); Pop;
 //	%+SC       if TOS <> pitem then IERR("SSTMT.Call") endif;
 //	%+S        Pop; -- Profile Item
 //	%+S %-E    Qf2(qDYADR,qOR,qAL,cVAL,qCL);
-//	%+S %-E    Qf1(qPUSHR,qAL,cVAL); pushTemp(T_BYT1);
+//	%+S %-E    Qf1(qPUSHR,qAL,cVAL); pushTempVAL(T_BYT1);
 //	%+S %+E    Qf2(qDYADR,qOR,qEAX,cVAL,qECX);
-//	%+S %+E    Qf1(qPUSHR,qEAX,cVAL); pushTemp(T_WRD4);
+//	%+S %+E    Qf1(qPUSHR,qEAX,cVAL); pushTempVAL(T_WRD4);
 //	%+S   when P_APX_WOR:
 //	%+S %-E    GetTosAdjustedIn86(qCX); Pop; GetTosAdjustedIn86(qAX); Pop;
 //	%+S %+E    GetTosAdjustedIn86(qECX); Pop; GetTosAdjustedIn86(qEAX); Pop;
 //	%+SC       if TOS <> pitem then IERR("SSTMT.Call") endif;
 //	%+S        Pop; -- Profile Item
 //	%+S %-E    Qf2(qDYADR,qOR,qAX,cVAL,qCX);
-//	%+S %-E    Qf1(qPUSHR,qAX,cVAL); pushTemp(T_BYT2);
+//	%+S %-E    Qf1(qPUSHR,qAX,cVAL); pushTempVAL(T_BYT2);
 //	%+S %+E    Qf2(qDYADR,qOR,qEAX,cVAL,qECX);
-//	%+S %+E    Qf1(qPUSHR,qEAX,cVAL); pushTemp(T_WRD4);
+//	%+S %+E    Qf1(qPUSHR,qEAX,cVAL); pushTempVAL(T_WRD4);
 //	%+S   when P_APX_BXOR:
 //	%+S %-E    GetTosAdjustedIn86(qCL); Pop; GetTosAdjustedIn86(qAL); Pop;
 //	%+S %+E    GetTosAdjustedIn86(qECX); Pop; GetTosAdjustedIn86(qEAX); Pop;
 //	%+SC       if TOS <> pitem then IERR("SSTMT.Call") endif;
 //	%+S        Pop; -- Profile Item
 //	%+S %-E    Qf2(qDYADR,qXOR,qAL,cVAL,qCL);
-//	%+S %-E    Qf1(qPUSHR,qAL,cVAL); pushTemp(T_BYT1);
+//	%+S %-E    Qf1(qPUSHR,qAL,cVAL); pushTempVAL(T_BYT1);
 //	%+S %+E    Qf2(qDYADR,qXOR,qEAX,cVAL,qECX);
-//	%+S %+E    Qf1(qPUSHR,qEAX,cVAL); pushTemp(T_WRD4);
+//	%+S %+E    Qf1(qPUSHR,qEAX,cVAL); pushTempVAL(T_WRD4);
 //	%+S   when P_APX_WXOR:
 //	%+S %-E    GetTosAdjustedIn86(qCX); Pop; GetTosAdjustedIn86(qAX); Pop;
 //	%+S %+E    GetTosAdjustedIn86(qECX); Pop; GetTosAdjustedIn86(qEAX); Pop;
 //	%+SC       if TOS <> pitem then IERR("SSTMT.Call") endif;
 //	%+S        Pop; -- Profile Item
 //	%+S %-E    Qf2(qDYADR,qXOR,qAX,cVAL,qCX);
-//	%+S %-E    Qf1(qPUSHR,qAX,cVAL); pushTemp(T_BYT2);
+//	%+S %-E    Qf1(qPUSHR,qAX,cVAL); pushTempVAL(T_BYT2);
 //	%+S %+E    Qf2(qDYADR,qXOR,qEAX,cVAL,qECX);
-//	%+S %+E    Qf1(qPUSHR,qEAX,cVAL); pushTemp(T_WRD4);
+//	%+S %+E    Qf1(qPUSHR,qEAX,cVAL); pushTempVAL(T_WRD4);
 //	%+S   when P_APX_BSHL:
 //	%+S %-E    GetTosAdjustedIn86(qCL); Pop; GetTosAdjustedIn86(qAL); Pop;
 //	%+S %+E    GetTosAdjustedIn86(qECX); Pop; MindMask:=wAND(MindMask,wNOT(uCH));
@@ -1678,9 +1678,9 @@ public class Parse {
 //	%+SC       if TOS <> pitem then IERR("SSTMT.Call") endif;
 //	%+S        Pop; -- Profile Item
 //	%+S %-E    Qf2(qSHIFT,qSHL,qAL,cVAL,qCL);
-//	%+S %-E    Qf1(qPUSHR,qAL,cVAL); pushTemp(T_BYT1);
+//	%+S %-E    Qf1(qPUSHR,qAL,cVAL); pushTempVAL(T_BYT1);
 //	%+S %+E    Qf2(qSHIFT,qSHL,qEAX,cVAL,qECX);
-//	%+S %+E    Qf1(qPUSHR,qEAX,cVAL); pushTemp(T_WRD4);
+//	%+S %+E    Qf1(qPUSHR,qEAX,cVAL); pushTempVAL(T_WRD4);
 //	%+S   when P_APX_WSHL:
 //	%+S %-E    GQconvert(T_BYT1); --- pje ??? else gettos..(qCL) => POP CX
 //	%+S %-E    GetTosAdjustedIn86(qCL); Pop; GetTosAdjustedIn86(qAX); Pop;
@@ -1689,9 +1689,9 @@ public class Parse {
 //	%+SC       if TOS <> pitem then IERR("SSTMT.Call") endif;
 //	%+S        Pop; -- Profile Item
 //	%+S %-E    Qf2(qSHIFT,qSHL,qAX,cVAL,qCL);
-//	%+S %-E    Qf1(qPUSHR,qAX,cVAL); pushTemp(T_BYT2);
+//	%+S %-E    Qf1(qPUSHR,qAX,cVAL); pushTempVAL(T_BYT2);
 //	%+S %+E    Qf2(qSHIFT,qSHL,qEAX,cVAL,qECX);
-//	%+S %+E    Qf1(qPUSHR,qEAX,cVAL); pushTemp(T_WRD4);
+//	%+S %+E    Qf1(qPUSHR,qEAX,cVAL); pushTempVAL(T_WRD4);
 //	%+S   when P_APX_BSHR:
 //	%+S %-E    GetTosAdjustedIn86(qCL); Pop; GetTosAdjustedIn86(qAL); Pop;
 //	%+S %+E    GetTosAdjustedIn86(qECX); Pop; MindMask:=wAND(MindMask,wNOT(uCH));
@@ -1699,9 +1699,9 @@ public class Parse {
 //	%+SC       if TOS <> pitem then IERR("SSTMT.Call") endif;
 //	%+S        Pop; -- Profile Item
 //	%+S %-E    Qf2(qSHIFT,qSHR,qAL,cVAL,qCL);
-//	%+S %-E    Qf1(qPUSHR,qAL,cVAL); pushTemp(T_BYT1);
+//	%+S %-E    Qf1(qPUSHR,qAL,cVAL); pushTempVAL(T_BYT1);
 //	%+S %+E    Qf2(qSHIFT,qSHR,qEAX,cVAL,qECX);
-//	%+S %+E    Qf1(qPUSHR,qEAX,cVAL); pushTemp(T_WRD4);
+//	%+S %+E    Qf1(qPUSHR,qEAX,cVAL); pushTempVAL(T_WRD4);
 //	%+S   when P_APX_WSHR:
 //	%+S %-E    GQconvert(T_BYT1); --- pje ??? else gettos..(qCL) => POP CX
 //	%+S %-E    GetTosAdjustedIn86(qCL); Pop; GetTosAdjustedIn86(qAX); Pop;
@@ -1710,9 +1710,9 @@ public class Parse {
 //	%+SC       if TOS <> pitem then IERR("SSTMT.Call") endif;
 //	%+S        Pop; -- Profile Item
 //	%+S %-E    Qf2(qSHIFT,qSHR,qAX,cVAL,qCL);
-//	%+S %-E    Qf1(qPUSHR,qAX,cVAL); pushTemp(T_BYT2);
+//	%+S %-E    Qf1(qPUSHR,qAX,cVAL); pushTempVAL(T_BYT2);
 //	%+S %+E    Qf2(qSHIFT,qSHR,qEAX,cVAL,qECX);
-//	%+S %+E    Qf1(qPUSHR,qEAX,cVAL); pushTemp(T_WRD4);
+//	%+S %+E    Qf1(qPUSHR,qEAX,cVAL); pushTempVAL(T_WRD4);
 //	%+S %-E  when P_DOS_SDMODE:
 //	%+S %-E       GetTosValueIn86(qAL); Pop; Qf2(qLOADC,0,qAH,cVAL,0);
 //	%+S %-E       DosRegUse(uAX,0,0); Qf2(qINT,0,0,0,16);
@@ -1729,7 +1729,7 @@ public class Parse {
 //	%+S %-E       DosRegUse(wOR(uAH,uBH),uDX,uDX); Qf2(qINT,0,0,0,16);
 //	%+SC %-E      if TOS <> pitem then IERR("SSTMT.Call") endif;
 //	%+S %-E       Pop; -- Profile Item
-//	%+S %-E       Qf1(qPUSHR,qDX,cVAL); pushTemp(T_BYT2);
+//	%+S %-E       Qf1(qPUSHR,qDX,cVAL); pushTempVAL(T_BYT2);
 //	%+S %-E  when P_DOS_SDPAGE:
 //	%+S %-E       GetTosValueIn86(qAL); Pop; Qf2(qLOADC,0,qAH,cVAL,5);
 //	%+S %-E       DosRegUse(uAX,0,0); Qf2(qINT,0,0,0,16);
@@ -1756,7 +1756,7 @@ public class Parse {
 //	%+S %-E       DosRegUse(wOR(uAH,uBH),uAX,uAX); Qf2(qINT,0,0,0,16);
 //	%+SC %-E      if TOS <> pitem then IERR("SSTMT.Call") endif;
 //	%+S %-E       Pop; -- Profile Item
-//	%+S %-E       Qf1(qPUSHR,qAX,cVAL); pushTemp(T_BYT2);
+//	%+S %-E       Qf1(qPUSHR,qAX,cVAL); pushTempVAL(T_BYT2);
 //	%+S %-E  when P_DOS_PUTCHR:
 //	%+S %-E       GetTosValueIn86(qCX); Pop; GetTosValueIn86(qBL); Pop;
 //	%+S %-E       GetTosValueIn86(qAL); Pop; GetTosValueIn86(qBH); Pop;
@@ -1771,7 +1771,7 @@ public class Parse {
 //	%+SC %-E      if TOS <> pitem then IERR("SSTMT.Call") endif;
 //	%+S %-E       Pop; -- Profile Item
 //	%+S %-E       Qf1(qPUSHR,qBX,cVAL); Qf1(qPUSHR,qAX,cVAL);
-//	%+S %-E       pushTemp(spec.type);
+//	%+S %-E       pushTempVAL(spec.type);
 //	%+S %-E  when P_DOS_SETPAL:
 //	%+S %-E       GetTosPntr(qES,qDX,qAX); Pop; GetTosValueIn86(qBX); Pop;
 //	%+S %-E       GetTosValueIn86(qAL); Pop; Qf2(qLOADC,0,qAH,cVAL,16);
@@ -1784,13 +1784,13 @@ public class Parse {
 //	%+S %-E       Qf2(qINT,0,0,0,33); Qf1(qPUSHR,qAL,cVAL);
 //	%+SC %-E      if TOS <> pitem then IERR("SSTMT.Call") endif;
 //	%+S %-E       Pop; -- Profile Item
-//	%+S %-E       pushTemp(T_BOOL);
+//	%+S %-E       pushTempVAL(T_BOOL);
 //	%+S %-E  when P_DOS_KEYIN:
 //	%+S %-E       Qf2(qLOADC,0,qAH,cVAL,7); DosRegUse(0,uAL,uAL);
 //	%+S %-E       Qf2(qINT,0,0,0,33); Qf1(qPUSHR,qAL,cVAL);
 //	%+SC %-E      if TOS <> pitem then IERR("SSTMT.Call") endif;
 //	%+S %-E       Pop; -- Profile Item
-//	%+S %-E       pushTemp(T_CHAR);
+//	%+S %-E       pushTempVAL(T_CHAR);
 //	      otherwise IERR("PARSE.CallInline-1") endcase;
 //	end;
 //	%title ***  IF/ELSE/ENDIF and SKIPIF/ENDSKIP  Construction  ***
@@ -1820,7 +1820,7 @@ public class Parse {
 //	      endif;
 //	%+C   if TOS <> none then
 //	           GQfetch; thntype:=TOS.type;
-//	           Pop; pushTemp(thntype);
+//	           Pop; pushTempVAL(thntype);
 //	           thnNb:=if thntype >= T_REAL then 0
 //	           else TTAB(thntype).nbyte;
 //	%+C   else IERR("IF-Stack empty at end-of-then-branch") endif;
@@ -1836,7 +1836,7 @@ public class Parse {
 //	      else NoElse:=true endif;
 //	%+C   if TOS <> none then
 //	           GQfetch; elstype:=TOS.type;
-//	           Pop; pushTemp(elstype);
+//	           Pop; pushTempVAL(elstype);
 //	           elsNb:=if elstype >= T_REAL then 0
 //	           else TTAB(elstype).nbyte;
 //	%+C   else IERR("IF-Stack empty at ENDIF") endif;
@@ -1970,7 +1970,7 @@ public class Parse {
 //	              pushCoonst(s.type,s qua Coonst.itm);
 //	              TOS.repdist:=s.repdist;
 //	         when K_Temp,K_Result:
-//	              pushTemp(s.type);
+//	              pushTempVAL(s.type);
 //	              TOS.kind:=s.kind; TOS.repdist:=s.repdist;
 //	%+C      otherwise IERR("Illegal use of Copy(StackItem)");
 //	         endcase;

@@ -33,10 +33,10 @@ public abstract class INDEX extends Instruction {
 	 */
 	public static void ofScode(int instr) {
 		CTStack.checkTosInt(); CTStack.checkSosRef();
-		if(! (CTStack.TOS instanceof Temp)) Util.IERR("");
+		if(! (CTStack.TOS() instanceof Temp)) Util.IERR("");
 		
 		CTStack.pop();
-		AddressItem adr = (AddressItem) CTStack.TOS;
+		AddressItem adr = (AddressItem) CTStack.TOS();
 //		System.out.println("INDEX.ofScode: adr="+adr+"                 R"+adr.xReg);
 		
 		if(adr.xReg > 0) {

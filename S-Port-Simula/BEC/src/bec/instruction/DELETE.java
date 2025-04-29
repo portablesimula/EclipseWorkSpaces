@@ -1,8 +1,7 @@
 package bec.instruction;
 
-import bec.util.Scode;
+import bec.util.Global;
 import bec.util.Tag;
-import bec.util.Util;
 
 public abstract class DELETE extends Instruction {
 
@@ -10,10 +9,27 @@ public abstract class DELETE extends Instruction {
 	 * delete_statement ::= delete from:tag
 	 * 
      * check stacks empty;
+     * 
+     * All tags defined with values greater than or equal to from:tag are made undefined, i.e. the
+     * corresponding descriptors may be released. The tags become available for reuse. The stack and all
+     * saved stacks must be empty, otherwise: error.
 	 */
 	public static void ofScode() {
-		Scode.dumpBytes(10);
+//		Scode.dumpBytes(10);
 		Tag tag = Tag.ofScode();
+//		System.out.println("DELETE.ofScode: " + tag);
+		
+		// check stacks empty;
+		System.out.println("DELETE.ofScode: SJEKK DETTE SEINERE EN GANG: check stacks empty;");
+
+		int startTag = tag.val;
+//		Global.dumpDISPL("DELETE.ofScode: ", startTag -2);
+
+		for(int i=startTag;i<Global.DISPL.size();i++) {
+//			System.out.println("DELETE.ofScode: DELETE: " + i + ": " + Global.DISPL.get(i));
+			Global.DISPL.set(i, null);
+		}
+
 //		Util.IERR("NOT IMPL");
 	}
 

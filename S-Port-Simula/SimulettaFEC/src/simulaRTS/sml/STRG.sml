@@ -198,16 +198,16 @@ Module strg("RTS");
        if last_alloc<>none
        then sequ:=last_alloc.sequ+1 else sequ:=1 endif;
        poolsize:=SIZEIN(1,sequ);
-%+M    ED_STR("STRG.GETNEWPOOL: poolsize="); ED_SIZE(poolsize); ED_OUT;   
-%+M    ED_STR("STRG.GETNEWPOOL: minsize="); ED_SIZE(minsize); ED_OUT;   
-%+M    ED_STR("STRG.GETNEWPOOL: request="); ED_SIZE(request); ED_OUT;   
-%+M    ED_STR("STRG.GETNEWPOOL: (none+poolsize)="); ED_OADDR(none+poolsize); ED_OUT;   
-%+M    ED_STR("STRG.GETNEWPOOL: (none+minsize+request)="); ED_OADDR(none+minsize+request); ED_OUT;   
+% +M    ED_STR("STRG.GETNEWPOOL: poolsize="); ED_SIZE(poolsize); ED_OUT;   
+% +M    ED_STR("STRG.GETNEWPOOL: minsize="); ED_SIZE(minsize); ED_OUT;   
+% +M    ED_STR("STRG.GETNEWPOOL: request="); ED_SIZE(request); ED_OUT;   
+% +M    ED_STR("STRG.GETNEWPOOL: (none+poolsize)="); ED_OADDR(none+poolsize); ED_OUT;   
+% +M    ED_STR("STRG.GETNEWPOOL: (none+minsize+request)="); ED_OADDR(none+minsize+request); ED_OUT;   
        if (status<>0) or ((none+poolsize)<=(none+minsize+request))
        then goto E1 endif;
        p:=DWAREA(poolsize,sequ);
-%+M    ED_STR("STRG.GETNEWPOOL: status="); ED_INT(status); ED_OUT;   
-%+M    ED_STR("STRG.GETNEWPOOL: p="); ED_OADDR(p); ED_OUT; 
+% +M    ED_STR("STRG.GETNEWPOOL: status="); ED_INT(status); ED_OUT;   
+% +M    ED_STR("STRG.GETNEWPOOL: p="); ED_OADDR(p); ED_OUT; 
 --	   SETOPT(2,1);  
        if (status=0) and (p<>none)
        then ZEROAREA(p,p+poolsize);

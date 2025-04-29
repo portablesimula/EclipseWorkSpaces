@@ -96,7 +96,7 @@ public class CallInstruction extends PREV_Instruction {
 		if(spec.export != null) {
 			int returnType = spec.export.quant.type.tag;
 			System.out.println("CallInstructil.callSYS: returnType="+returnType);
-			CTStack.pushTemp(returnType);
+			CTStack.pushTempVAL(returnType);
 		}
 //		CTStack.dumpStack();
 //		Global.PSEG.dump();
@@ -113,7 +113,7 @@ public class CallInstruction extends PREV_Instruction {
 		if(nstckval == 0) CTStack.push(pitem);
 		else {
 			if(nstckval > 1) Util.IERR("PARSE.CallSYS-2");
-			CTStack.precede(pitem,CTStack.TOS);
+			CTStack.precede(pitem,CTStack.TOS());
 //			npop:=npop+PutPar(pitem,1)
 			Util.IERR("NOT IMPL");
 		}
@@ -133,7 +133,7 @@ public class CallInstruction extends PREV_Instruction {
 	      Global.PSEG.emit(new SVM_SYSCALL(spec.ident), "");
 	      
 //	      repeat while npop<>0 do Pop; npop:=npop-1 endrepeat;
-	      if(CTStack.TOS != pitem) Util.IERR("PARSE.CallSYS-3");
+	      if(CTStack.TOS() != pitem) Util.IERR("PARSE.CallSYS-3");
 	      CTStack.pop();
 	}
 	
@@ -153,7 +153,7 @@ public class CallInstruction extends PREV_Instruction {
 //	      n:=TTAB(pt).nbyte; i:=nrep;
 		if(nrep>c) Util.IERR("Too many values in repeated param: Got "+nrep+", expect "+c);
 		pItm.nasspar = pItm.nasspar+1;
-		StackItem s = CTStack.TOS;
+		StackItem s = CTStack.TOS();
 		int st = s.type;
 		//--- First: Treat TOS ---
 //		System.out.println("CallInstruction.putPar: "+Scode.edTag(st) + " ===> " + Scode.edTag(pt));
@@ -161,7 +161,7 @@ public class CallInstruction extends PREV_Instruction {
 		else if(s instanceof Address) s.type = st;
 		else Util.GQconvert(pt);
 		
-		if(CTStack.TOS instanceof Address) FETCH.doFetch("putPar: ");
+		if(CTStack.TOS() instanceof Address) FETCH.doFetch("putPar: ");
 		CTStack.pop();
 		Global.PSEG.emit(new SVM_POPtoMEM(param.address, 1), "putPar: ");
 		
@@ -213,7 +213,7 @@ public class CallInstruction extends PREV_Instruction {
 //	      rut:=none; npop:=0; xt:=0; xlng:=0;
 	      if(nstckval == 0) {
 	    	  if(pitem.spc.type != 0) {
-//	    		  xt:=pitem.spc.type; pushTemp(xt); result:=takeTOS;
+//	    		  xt:=pitem.spc.type; pushTempVAL(xt); result:=takeTOS;
 //	                xlng:=TTAB(xt).nbyte;
 //	%-E             Qf2(qDYADC,qSUB,qSP,cSTP,wAllign(%xlng%));
 //	%+E             Qf2(qDYADC,qSUB,qESP,cSTP,wAllign(%xlng%));
@@ -223,12 +223,12 @@ public class CallInstruction extends PREV_Instruction {
 //    		  Util.IERR("NOT IMPLEMENTED");
     		  CTStack.push(pitem);
 	      } else {
-	    	  StackItem z = CTStack.TOS;
+	    	  StackItem z = CTStack.TOS();
 //	    	  nwm:=0; nbi:=0;
 	    	  if(nstckval > 1) Util.IERR("PARSE.REPCALL");
 	    	  if(pitem.spc.type == 0) CTStack.precede(pitem,z);
 	    	  else {
-	    		  int xt = pitem.spc.type; CTStack.pushTemp(xt); StackItem result = CTStack.takeTOS();
+	    		  int xt = pitem.spc.type; CTStack.pushTempVAL(xt); StackItem result = CTStack.takeTOS();
 //	                xlng:=TTAB(xt).nbyte; nbi:=wAllign(%xlng%);
 	    		  CTStack.precede(result,z); CTStack.precede(pitem,z);
 //	    		  result.kind:=K_Result;
@@ -317,7 +317,7 @@ public class CallInstruction extends PREV_Instruction {
 	      
 //	      repeat while npop<>0 do Pop; npop:=npop-1 endrepeat;
 //	      CTStack.dumpStack("CallInstruction.callDefault: ");
-	      if(CTStack.TOS != pitem) Util.IERR("SSTMT.Call");
+	      if(CTStack.TOS() != pitem) Util.IERR("SSTMT.Call");
 	      CTStack.pop();
 //	      Pop;
 //	      if xlng <> 0 then Qf2(qADJST,0,0,0,xlng) endif;

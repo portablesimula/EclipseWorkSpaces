@@ -84,6 +84,7 @@ Module cent("RTS");
        curins:=ins;
 %-X    if bio.trc then curins.lsc:=GTOUTM; bio.obsEvt:=EVT_BEG;
 %-X       call PSIMOB(smb) endif;
+% +M    DMPENT(curins);
  end;
 
 
@@ -248,6 +249,9 @@ Module cent("RTS");
        ALLOC2(S_PRO,ins,pp.lng);
        ---  Fill in class attributes.
        ins.sl:=curins; ins.pp:=pp;
+% +M	   ED_STR("CENT.A_LOCL: EXPORT ins=");      ED_OADDR(ins); ED_OUT;
+% +M	   ED_STR("CENT.A_LOCL: EXPORT ins.sort="); ED_INT(ins.sort); ED_OUT;
+% +M	   ED_STR("CENT.A_LOCL: EXPORT ins.sl=");   ED_OADDR(ins.sl); ED_OUT;
  end;
 
  Visible routine B_REC; -- class with no code (with/without param)

@@ -99,41 +99,6 @@ public abstract class RTStack {
 //		Util.IERR("");
 	}
 
-//	private static void push(Type type, Value value, String comment) {
-//		
-//		switch(type.tag) {
-//		case Scode.TAG_TEXT:
-//			Util.IERR("FJERN DETTE !!!");
-////			System.out.println("RTStack.push: " + value.getClass().getSimpleName());
-//			TextValue text = (TextValue) value;
-//			push(Type.T_OADDR, text.addr, comment+"'CHRADR.OADDR");
-//			push(Type.T_INT, null,        comment+"'CHRADR.Offset");
-//			push(Type.T_INT, IntegerValue.of(Type.T_INT, text.getString().length()), comment+"'NCHR");
-////			Util.IERR("");
-//			return;
-////			break;
-//		case Scode.TAG_GADDR:
-//			Util.IERR("FJERN DETTE !!!");
-//			if(value == null) {
-//				stack.push(null);
-//				stack.push(null);
-//			} else {
-////				System.out.println("RTStack.push: " + value.getClass().getSimpleName());
-////				RepetitionValue repval = (RepetitionValue) value;
-////				for(Value val:repval.values) {
-////					push(type, value);
-////				}
-//				GeneralAddress gaddr = (GeneralAddress) value;
-//				push(Type.T_OADDR, gaddr.base, comment+"'GADDR'base");
-//				push(Type.T_INT, IntegerValue.of(Type.T_INT, gaddr.ofst), comment+"'GADDR'ofst");
-////				Util.IERR("");
-//			}
-//		}
-////		System.out.println("RTStack.push: " + value);
-//		stack.push(new RTStackItem(value, comment));
-////		Util.IERR("");
-//	}
-
 	public static void pushr(int reg, String comment) {
 		Value value = RTRegister.getValue(reg);
 		if(value instanceof GeneralAddress gaddr) {
@@ -142,6 +107,28 @@ public abstract class RTStack {
 		} else{
 			stack.push(new RTStackItem(value, comment));
 		}
+	}
+
+	// Current Stack;
+	//
+	// 		IMPORT					idx = last - (nSlotStacked - 1)
+	// 		...		nSlotStacked
+	// TOP:	IMPORT					idx = last
+	//
+	// ===>
+	//
+	// 		EXPORT
+	//		...		nExportSlots
+	// 		EXPORT
+	// 		IMPORT
+	// 		...		nSlotStacked
+	// TOP:	IMPORT
+	//
+	public static void addExport(int nSlotStacked, int nExportSlots) {
+		int idx = RTStack.size() - nSlotStacked;
+//		System.out.println("RTStack.addExport: " + idx + ", nExportSlots="+nExportSlots);
+		for(int i=0; i<nExportSlots;i++)
+			stack.add(idx, new RTStackItem(null, "EXPORT"));
 	}
 	
 	public static RTStackItem pop() {

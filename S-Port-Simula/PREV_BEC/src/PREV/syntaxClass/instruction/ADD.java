@@ -39,12 +39,12 @@ public class ADD extends PREV_Instruction {
 //		CTStack.dumpStack();
 //		Global.PSEG.dump();
 		CTStack.checkTosArith(); CTStack.checkSosArith(); CTStack.checkSosValue(); CTStack.checkTypesEqual();
-		StackItem tos = CTStack.TOS;
+		StackItem tos = CTStack.TOS();
 	    int at = CTStack.arithType(tos.type, tos.suc.type);
 		Global.PSEG.emit(new SVM_ADD(at), "");
 		CTStack.pop();
 		CTStack.pop();
-	    CTStack.pushTemp(at);
+	    CTStack.pushTempVAL(at);
 //		CTStack.dumpStack();
 //		Global.PSEG.dump();
 //		Util.IERR(""+this);

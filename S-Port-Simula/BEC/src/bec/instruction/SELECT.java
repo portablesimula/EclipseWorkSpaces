@@ -50,8 +50,8 @@ public abstract class SELECT extends Instruction {
 		Tag tag = Tag.ofScode();
 		CTStack.checkTosRef();
 		Attribute attr = (Attribute) tag.getMeaning();
-		CTStack.TOS.type = attr.type;
-		AddressItem adr = (AddressItem) CTStack.TOS;
+		CTStack.TOS().type = attr.type;
+		AddressItem adr = (AddressItem) CTStack.TOS();
 		adr.offset = adr.offset + attr.rela;
 		if(DEBUG) System.out.println("SELECT.ofScode: ofst="+adr.offset + ", rela=" + attr.rela);
 		adr.type = attr.type;

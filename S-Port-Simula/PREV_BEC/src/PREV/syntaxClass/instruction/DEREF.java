@@ -39,7 +39,7 @@ public class DEREF extends PREV_Instruction {
 
 		CTStack.assertAtrStacked();
 		CTStack.pop();
-		CTStack.pushTemp(Scode.TAG_GADDR);
+		CTStack.pushTempVAL(Scode.TAG_GADDR);
 
 //		Global.PSEG.dump();
 //		Util.IERR(""+this);

@@ -1,7 +1,7 @@
 package bec.instruction;
 
 import bec.compileTimeStack.CTStack;
-import bec.compileTimeStack.StackItem;
+import bec.compileTimeStack.CTStackItem;
 import bec.util.Global;
 import bec.util.Type;
 import bec.util.Util;
@@ -20,7 +20,7 @@ public abstract class NOT extends Instruction {
 	public static void ofScode() {
 //		CTStack.dumpStack();
 //		Global.PSEG.dump();
-		StackItem tos = CTStack.TOS;
+		CTStackItem tos = CTStack.TOS();
 	    
 	    Type at = tos.type;
 	    if(at != Type.T_BOOL) {
@@ -30,7 +30,7 @@ public abstract class NOT extends Instruction {
 	    }
 		Global.PSEG.emit(new SVM_NOT(), "NOT: ");
 		CTStack.pop();
-	    CTStack.pushTemp(at, 1, "NOT: ");
+	    CTStack.pushTempVAL(at, 1, "NOT: ");
 	    
 //		CTStack.dumpStack("NOT: ");
 //		Global.PSEG.dump("NOT: ");

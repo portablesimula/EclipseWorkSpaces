@@ -43,7 +43,7 @@ public class REMOTE extends PREV_Instruction {
 //		CTStack.dumpStack();
 		CTStack.checkTosRef();
 		CTStack.checkTosType(Scode.TAG_OADDR); // CheckTosType(T_OADDR);
-		Address adr = (Address) CTStack.TOS;
+		Address adr = (Address) CTStack.TOS();
 		FETCH.doFetch("REMOTE-1 " + Scode.edTag(tag) + ": ");
 		AttributeDefinition attr = (AttributeDefinition) Global.getMeaning(tag);
 		CTStack.pop();

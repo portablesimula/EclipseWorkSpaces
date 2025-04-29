@@ -24,9 +24,9 @@ public class ConstItem extends Temp {
 
 	public ConstItem(Type type, Value value) {
 //		super(type, 0, 0, "ConstItem: ");
-		super(type, 0, "ConstItem: ");
+		super(CTStackItem.Mode.VAL, type, 0, "ConstItem: ");
 		this.value = value;
-		if(type.tag == 0) Util.IERR("NEW Coonst: NO TYPE: "+value);
+//		if(type.tag == 0) Util.IERR("NEW Coonst: NO TYPE: "+value);
 	}
 
 	public void convert(Type totype) { // ConvConst(totype)
@@ -139,7 +139,7 @@ public class ConstItem extends Temp {
 //		      otherwise ILL:=true endcase;
 		if(ILL) Util.ERROR("Constant conversion is undefined");
 //		      TOS qua Coonst.itm:=itm;
-		CTStack.TOS.type = totype;
+		CTStack.TOS().type = totype;
 	}
 	
 	public String toString() {

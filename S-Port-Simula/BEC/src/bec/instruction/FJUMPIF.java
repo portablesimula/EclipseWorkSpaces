@@ -1,7 +1,7 @@
 package bec.instruction;
 
 import bec.compileTimeStack.CTStack;
-import bec.compileTimeStack.StackItem;
+import bec.compileTimeStack.CTStackItem;
 import bec.util.Global;
 import bec.util.Relation;
 import bec.util.Scode;
@@ -32,7 +32,7 @@ public abstract class FJUMPIF extends Instruction {
 		
 //		int cond = Util.GQrelation();
 		// Check Relation
-		StackItem tos = CTStack.pop();
+		CTStackItem tos = CTStack.pop();
 		CTStack.pop();
 		
 		Global.DESTAB[destination] = Global.PSEG.nextAddress();

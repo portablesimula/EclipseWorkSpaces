@@ -23,7 +23,7 @@ public abstract class DIST extends Instruction {
 		Global.PSEG.emit(new SVM_DIST(), "");
 		CTStack.pop();
 		CTStack.pop();
-	    CTStack.pushTemp(Type.T_SIZE, 1, "DIST: ");
+	    CTStack.pushTempVAL(Type.T_SIZE, 1, "DIST: ");
 	}
 
 }

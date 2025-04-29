@@ -459,7 +459,7 @@ public class Coder {
 //	                   opr.rela.val:=opr.rela.val+AllignFac;
 //	                   Qf4c(qLOAD,0,reg3,cTYP,0,opr,0);
 //	           endcase;
-//	           Pop; pushTemp(type);
+//	           Pop; pushTempVAL(type);
 //	      endcase;
 //	end;
 //
@@ -482,7 +482,7 @@ public class Coder {
 //	%-E            PresaveOprRegs(opr); Qf4c(qLOAD,0,reg3,cTYP,0,opr,0)
 //	%-E            opr.rela.val:=opr.rela.val+AllignFac;
 //	%-E            Qf4c(qLOAD,0,reg4,cTYP,0,opr,0);
-//	%-E            Pop; pushTemp(type);
+//	%-E            Pop; pushTempVAL(type);
 //	%-E       endcase;
 //	%-E end;
 //
@@ -498,7 +498,7 @@ public class Coder {
 //	      when K_Address:
 //	           opr:=GetTosSrcAdr;
 //	           Qf4c(qLOAD,0,reg,cTYP,0,opr,0);
-//	           Pop; pushTemp(type);
+//	           Pop; pushTempVAL(type);
 //	      endcase;
 //	end;
 //
@@ -666,7 +666,7 @@ public class Coder {
 //	      adr qua Address.ObjState:=0; adr qua Address.AtrState:=0;
 //	end;
 //
-//	Visible Routine pushTemp;
+//	Visible Routine pushTempVAL;
 //	import range(0:MaxType) type;
 //	begin ref(Object) tmp;
 //	      tmp:=FreeObj(K_Temp);
@@ -752,7 +752,7 @@ public class Coder {
 //	                while nbyte <> 0
 //	                do opr.rela.val:=opr.rela.val-AllignFac endrepeat;
 //	           else Qf4(qPUSHM,0,0,cTYP,nbyte,opr) endif;
-//	           Pop; pushTemp(type);
+//	           Pop; pushTempVAL(type);
 //	%+D   endif;
 //	end;
 //	%page
@@ -790,8 +790,8 @@ public class Coder {
 //	                while nbyte <> 0
 //	                do opr.rela.val:=opr.rela.val-AllignFac endrepeat;
 //	           else Qf4(qPUSHM,0,0,cTYP,nbyte,opr) endif;
-//	           pushTemp(type);
-//	      when K_Temp,K_Result: pushTemp(type); goto L;
+//	           pushTempVAL(type);
+//	      when K_Temp,K_Result: pushTempVAL(type); goto L;
 //	      when K_Coonst: pushCoonst(type,TOS qua Coonst.itm); L:
 //	%+C        if nbyte=0 then IERR("CODER.GQdup-1") endif;
 //	           if nbyte = 1
@@ -1010,7 +1010,7 @@ public class Coder {
 //	           adr:=EmitStructConst(type,nbyte);
 //	%-E        if DSEGID=DGROUP then adr.sbireg:=oSS
 //	%-E        else Qf2b(qLOADSC,qDS,qAX,cOBJ,0,adr); adr.sbireg:=oDS endif;
-//	           Qf4(qPUSHM,0,0,cANY,nbyte,adr); pushTemp(type);
+//	           Qf4(qPUSHM,0,0,cANY,nbyte,adr); pushTempVAL(type);
     	System.out.println("Coder.pushConst'S_C_RECORD: ");
 	    while(Scode.accept(Scode.S_ATTR)) {
 	    	Scode.inTag();
@@ -1081,7 +1081,7 @@ public class Coder {
 //	      if inco then y:=qINCO else y:=qDECO endif;
 //	%-E   Qf2(qDYADR,y,qAX,cOBJ,qDX); Qf1(qPUSHR,qAX,cOBJ);
 //	%+E   Qf2(qDYADR,y,qEAX,cOBJ,qEDX); Qf1(qPUSHR,qEAX,cOBJ);
-//	      pushTemp(T_OADDR);
+//	      pushTempVAL(T_OADDR);
 //	end;
 //
 //	%title ***  FLOATING-POINT EMULATOR INTERFACE  ***
@@ -1180,7 +1180,7 @@ public class Coder {
 //	                GQconvert(at); GetTosAdjustedIn86(a); Pop;
 //	                Qf2(qDYADR,qADDF,a,cVAL,c); Qf1(qPUSHR,a,cVAL);
 //	%-E        endif;
-//	      endif; pushTemp(tr);
+//	      endif; pushTempVAL(tr);
 //	end;
 //	%page
 //
@@ -1227,7 +1227,7 @@ public class Coder {
 //	                GQconvert(at); GetTosAdjustedIn86(a); Pop;
 //	                Qf2(qDYADR,qSUBF,a,cVAL,c) Qf1(qPUSHR,a,cVAL);
 //	%-E        endif;
-//	      endif; pushTemp(tr);
+//	      endif; pushTempVAL(tr);
 //	end;
 //	%page
 //
@@ -1331,7 +1331,7 @@ public class Coder {
 //	                GQconvert(at); GetTosAdjustedIn86(qAL); Pop;
 //	                Qf2(qTRIADR,qIMULF,qCL,cVAL,0); Qf1(qPUSHR,qAX,cVAL);
 //	           endif;
-//	      endif; pushTemp(tr);
+//	      endif; pushTempVAL(tr);
 //	end;
 //	%page
 //
@@ -1461,7 +1461,7 @@ public class Coder {
 //	                Qf2(qLOADC,0,qAH,cVAL,0); Qf2(qTRIADR,qWDIV,qCL,cVAL,0);
 //	                Qf1(qPUSHR,qAL,cVAL);
 //	           endif;
-//	      endif; pushTemp(tr);
+//	      endif; pushTempVAL(tr);
 //	end;
 //	%page
 //
@@ -1556,7 +1556,7 @@ public class Coder {
 //	                Qf2(qMOV,0,qAL,cVAL,qAH); Qf1(qPUSHR,qAL,cVAL);
 //	           endif;
 //	%+C   endif;
-//	      pushTemp(tr);
+//	      pushTempVAL(tr);
 //	end;
 //	%page
 //
@@ -1613,7 +1613,7 @@ public class Coder {
 //	           else GetTosAdjustedIn86(qAX); Pop;
 //	                Qf2(qMONADR,qNEGF,qAX,cVAL,0); Qf1(qPUSHR,qAX,cVAL);
 //	           endif;
-//	      endif; pushTemp(at);
+//	      endif; pushTempVAL(at);
 //	end;
 //
 //
@@ -1633,7 +1633,7 @@ public class Coder {
 //	                  PushFromNPX(at,at);
 //	-- ??? %-E   endif;
 //	      Pop; --- Profile Item
-//	      pushTemp(at);
+//	      pushTempVAL(at);
 //	end;
 //	%title ***  LOGICAL INSTRUCTIONS  ***
 //	Visible Routine GQnot;
@@ -1657,7 +1657,7 @@ public class Coder {
 //	                Qf2(qMONADR,qNOT,a,cVAL,0); Qf1(qPUSHR,a,cVAL);
 //	%-E        endif;
 //	%+C   endif;
-//	      pushTemp(at);
+//	      pushTempVAL(at);
 //	end;
 //
 //	Visible Routine GQandxor; import range(0:maxbyte) bop;
@@ -1684,7 +1684,7 @@ public class Coder {
 //	                Qf2(qDYADR,bop,a,cVAL,c); Qf1(qPUSHR,a,cVAL);
 //	%-E        endif;
 //	%+C   endif;
-//	      pushTemp(at);
+//	      pushTempVAL(at);
 //	end;
 //
 //	--Visible Routine GQor;
@@ -1711,7 +1711,7 @@ public class Coder {
 //	--                Qf2(qDYADR,qOR,a,cVAL,c); Qf1(qPUSHR,a,cVAL);
 //	--%-E        endif;
 //	--%+C   endif;
-//	--      pushTemp(at);
+//	--      pushTempVAL(at);
 //	--end;
 //
 //	--Visible Routine GQxor;
@@ -1738,7 +1738,7 @@ public class Coder {
 //	--                Qf2(qDYADR,qXOR,a,cVAL,c); Qf1(qPUSHR,a,cVAL);
 //	--%-E        endif;
 //	--%+C   endif;
-//	--      pushTemp(at);
+//	--      pushTempVAL(at);
 //	--end;
 //
 //	Visible Routine GQeqv;
@@ -1767,7 +1767,7 @@ public class Coder {
 //	                Qf2(qDYADR,qXOR,a,cVAL,c); Qf1(qPUSHR,a,cVAL);
 //	%-E        endif;
 //	%+C   endif;
-//	      pushTemp(at);
+//	      pushTempVAL(at);
 //	end;
 //
 //	Visible Routine GQimp;
@@ -1796,7 +1796,7 @@ public class Coder {
 //	                Qf2(qDYADR,qOR,a,cVAL,c); Qf1(qPUSHR,a,cVAL);
 //	%-E        endif;
 //	%+C   endif;
-//	      pushTemp(at);
+//	      pushTempVAL(at);
 //	end;
 //
 //	%+S Visible Routine GQshift; import range(0:maxbyte) code;
@@ -1816,7 +1816,7 @@ public class Coder {
 //	%+S                 Qf2(qSHIFT,code,a,cVAL,qCX); Qf1(qPUSHR,a,cVAL);
 //	%+S %-E        endif;
 //	%+S %+C   endif;
-//	%+S       pushTemp(at);
+//	%+S       pushTempVAL(at);
 //	%+S end;
 //
 //	-- Visible Routine GQshr;
@@ -1836,7 +1836,7 @@ public class Coder {
 //	--                 Qf2(qSHIFT,qSHR,a,cVAL,qCX); Qf1(qPUSHR,a,cVAL);
 //	-- %-E        endif;
 //	-- %+C   endif;
-//	--       pushTemp(at);
+//	--       pushTempVAL(at);
 //	-- end;
 //
 //	-- Visible Routine GQsar;
@@ -1856,7 +1856,7 @@ public class Coder {
 //	--                 Qf2(qSHIFT,qSAR,a,cVAL,qCX); Qf1(qPUSHR,a,cVAL);
 //	-- %-E        endif;
 //	-- %+C   endif;
-//	--       pushTemp(at);
+//	--       pushTempVAL(at);
 //	-- end;
 //
 //	%title ***  A s s i g n m e n t  ***
@@ -2042,7 +2042,7 @@ public class Coder {
 //	%-E             PreMindMask:=wOR(PreMindMask,uDI); Qf1(qPUSHR,qDI,cADR);
 //	%+E             Qf3(qLOADA,0,qEDI,cADR,opr);
 //	%+E             PreMindMask:=wOR(PreMindMask,uEDI); Qf1(qPUSHR,qEDI,cADR);
-//	                pushTemp(st); x:=takeTOS;
+//	                pushTempVAL(st); x:=takeTOS;
 //	%-E             Qf2(qLOADC,0,qCX,cVAL,nbyte/2);
 //	%+E             Qf2(qLOADC,0,qECX,cVAL,nbyte/4);
 //	                Qf2(qRSTRW,qRMOV,qCLD,cTYP,qREP);
@@ -2068,7 +2068,7 @@ public class Coder {
 //	%-E                  Qf2(qLOADC,0,qCX,cVAL,nbyte/2);
 //	%+E                  Qf2(qLOADC,0,qECX,cVAL,nbyte/4);
 //	                     Qf2(qRSTRW,qRMOV,qCLD,cTYP,qREP);
-//	                     pop; pushTemp(st);
+//	                     pop; pushTempVAL(st);
 //	                else -- Biregs below record value --
 //	%-E                  opr:=GetSosAddr(qES,qBX,qDI);
 //	%+E                  opr:=GetSosAddr(qEBX,qEDI);
@@ -2560,77 +2560,77 @@ public class Coder {
 //	                     T_REAL,  -- temp real --> real
 //	                     T_WRD4:  -- temp real --> 32bit integer
 //	                     PopTosToNPX; PushFromNPX(fromtype,totype);
-//	                     pushTemp(totype);
+//	                     pushTempVAL(totype);
 //	                when T_WRD2,T_BYT2,T_BYT1,T_CHAR:
 //	                     PopTosToNPX; PushFromNPX(fromtype,T_WRD4);
-//	                     pushTemp(T_WRD4); goto LL1;
+//	                     pushTempVAL(T_WRD4); goto LL1;
 //	                otherwise ILL:=true endcase;
 //	           when T_LREAL:       -- long real
 //	                case 0:T_max (totype)
 //	                when T_TREAL: -- long real --> temp real
 //	                     PopTosToNPX; PushFromNPX(fromtype,totype);
-//	                     pushTemp(totype);
+//	                     pushTempVAL(totype);
 //	                when T_REAL: -- long real --> real
 //	%-E                  if NUMID=NoNPX then EM8CNV4(X_LR2RE)
 //	%-E                  else
 //	                          PopTosToNPX; PushFromNPX(fromtype,totype);
 //	%-E                  endif;
-//	                     pushTemp(T_REAL);
+//	                     pushTempVAL(T_REAL);
 //	                when T_WRD4: -- long real --> 32bit integer
 //	%-E                  if NUMID=NoNPX then EM8CNV4(X_LR2IN)
 //	%-E                  else
 //	                          PopTosToNPX; PushFromNPX(fromtype,totype);
 //	%-E                  endif;
-//	                     pushTemp(T_WRD4);
+//	                     pushTempVAL(T_WRD4);
 //	                when T_WRD2,T_BYT2,T_BYT1,T_CHAR:
 //	%-E                  if NUMID=NoNPX then EM8CNV4(X_LR2IN)
 //	%-E                  else
 //	                          PopTosToNPX; PushFromNPX(fromtype,T_WRD4);
 //	%-E                  endif;
-//	                     pushTemp(T_WRD4); goto LL2;
+//	                     pushTempVAL(T_WRD4); goto LL2;
 //	                otherwise ILL:=true endcase;
 //	           when T_REAL:       -- real
 //	                case 0:T_max (totype)
 //	                when T_TREAL: -- real --> temp real
 //	                     PopTosToNPX; PushFromNPX(fromtype,totype);
-//	                     pushTemp(T_TREAL);
+//	                     pushTempVAL(T_TREAL);
 //	                when T_LREAL: -- real --> long real
 //	%-E                  if NUMID=NoNPX then EM4CNV8(X_RE2LR)
 //	%-E                  else
 //	                          PopTosToNPX; PushFromNPX(fromtype,totype);
 //	%-E                  endif;
-//	                     pushTemp(T_LREAL);
+//	                     pushTempVAL(T_LREAL);
 //	                when T_WRD4: -- real --> 32bit integer
 //	%-E                  if NUMID=NoNPX then EM4MONAD(X_RE2IN);
 //	%-E                  else
 //	                          PopTosToNPX; PushFromNPX(fromtype,totype);
 //	%-E                  endif;
-//	                     pushTemp(T_WRD4);
+//	                     pushTempVAL(T_WRD4);
 //	                when T_WRD2,T_BYT2,T_BYT1,T_CHAR:
 //	%-E                  if NUMID=NoNPX then EM4MONAD(X_RE2IN);
 //	%-E                  else
 //	                          PopTosToNPX; PushFromNPX(fromtype,T_WRD4);
 //	%-E                  endif;
-//	                     pushTemp(T_WRD4); goto LL3;
+//	                     pushTempVAL(T_WRD4); goto LL3;
 //	                otherwise ILL:=true endcase;
 //	           when T_WRD4:       -- 4-byte signed integer in 86
 //	LL1:LL2:LL3:LL4:LL5:LL6:
 //	                case 0:T_max (totype)
 //	                when T_TREAL: -- 32bit integer --> temp real
 //	                     PopTosToNPX; PushFromNPX(fromtype,totype);
-//	                     pushTemp(T_TREAL);
+//	                     pushTempVAL(T_TREAL);
 //	                when T_LREAL: -- 32bit integer --> long real
 //	%-E                  if NUMID=NoNPX then EM4CNV8(X_IN2LR);
 //	%-E                  else
 //	                          PopTosToNPX; PushFromNPX(fromtype,totype);
 //	%-E                  endif;
-//	                     pushTemp(T_LREAL);
+//	                     pushTempVAL(T_LREAL);
 //	                when T_REAL: -- 32bit integer --> real
 //	%-E                  if NUMID=NoNPX then EM4MONAD(X_IN2RE);
 //	%-E                  else
 //	                          PopTosToNPX; PushFromNPX(fromtype,totype);
 //	%-E                  endif;
-//	                     pushTemp(T_REAL);
+//	                     pushTempVAL(T_REAL);
 //	                when T_WRD2: -- 32bit integer --> 16bit signed integer
 //	                     -- CHECK_RANGE(-32768:32767)
 //	                     a:=FreePartReg; Qf1(qPOPR,a,cVAL);
@@ -2657,7 +2657,7 @@ public class Coder {
 //	%-E                  Qf1(qCWD,qAX,cVAL);
 //	%-E                  Qf1(qPUSHR,qDX,cVAL); Qf1(qPUSHR,qAX,cVAL);
 //	%+E                  Qf2(qMOV,qSEXT,qAX,cVAL,qAX); Qf1(qPUSHR,qEAX,cVAL);
-//	                     Pop; pushTemp(T_WRD4); goto LL4;
+//	                     Pop; pushTempVAL(T_WRD4); goto LL4;
 //	                when T_WRD4:   --> 4-byte signed integer in 86
 //	                     Qf1(qPOPR,qAX,cVAL);
 //	%-E                  Qf1(qCWD,qAX,cVAL);
@@ -2679,7 +2679,7 @@ public class Coder {
 //	%-E                  d:=FreePartReg; Qf2(qPUSHC,0,d,cVAL,0); Qf1(qPUSHR,a,cVAL);
 //	%+E                  a:=FreePartReg; GetTosAdjustedIn86(a);
 //	%+E                  Qf1(qPUSHR,a,cVAL);
-//	                     Pop; pushTemp(T_WRD4); goto LL5;
+//	                     Pop; pushTempVAL(T_WRD4); goto LL5;
 //	                when T_WRD4:   --> 4-byte signed integer in 86
 //	%-E                  a:=FreePartReg; Qf1(qPOPR,a,cVAL);
 //	%-E                  d:=FreePartReg; Qf2(qPUSHC,0,d,cVAL,0); Qf1(qPUSHR,a,cVAL);
@@ -2700,7 +2700,7 @@ public class Coder {
 //	                     a:=FreePartReg; GetTosAdjustedIn86(a);
 //	%-E                  d:=FreePartReg; Qf2(qPUSHC,0,d,cVAL,0);
 //	                     Qf1(qPUSHR,a,cVAL);
-//	                     Pop; pushTemp(T_WRD4); goto LL6;
+//	                     Pop; pushTempVAL(T_WRD4); goto LL6;
 //	                when T_WRD4:  --> 4-byte signed integer in 86
 //	                     a:=FreePartReg; GetTosAdjustedIn86(a);
 //	%-E                  d:=FreePartReg; Qf2(qPUSHC,0,d,cVAL,0);
@@ -2724,7 +2724,7 @@ public class Coder {
 //	                then qPOPKill(AllignFac) else ILL:=true endif;
 //	           otherwise ILL:=true endcase;
 //	           if ILL then ERROR("Type conversion is undefined") endif;
-//	           Pop; pushTemp(totype);
+//	           Pop; pushTempVAL(totype);
 //	      endif;
 //	%+D   endif;
 //	end;

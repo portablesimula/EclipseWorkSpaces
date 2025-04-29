@@ -1,11 +1,10 @@
 package bec.instruction;
 
 import bec.compileTimeStack.CTStack;
-import bec.compileTimeStack.StackItem;
+import bec.compileTimeStack.CTStackItem;
 import bec.util.Global;
 import bec.util.Type;
 import bec.util.Util;
-import bec.virtualMachine.RTRegister;
 import bec.virtualMachine.SVM_OR;
 
 public abstract class OR extends Instruction {
@@ -26,11 +25,12 @@ public abstract class OR extends Instruction {
 	public static void ofScode() {
 //		CTStack.dumpStack();
 //		Global.PSEG.dump();
-		StackItem tos = CTStack.TOS;
+		CTStackItem tos = CTStack.TOS();
+		CTStackItem sos = CTStack.SOS();
 	    
 	    Type at = tos.type;
 	    if(at != Type.T_BOOL) {
-		    at = CTStack.arithType(at, tos.suc.type);
+		    at = CTStack.arithType(at, sos.type);
 		    CTStack.checkTosArith(); CTStack.checkSosArith();
 		    CTStack.checkSosValue(); CTStack.checkTypesEqual();
 		    if( at == Type.T_REAL || at == Type.T_LREAL) Util.IERR("CODER.GQandxor-1");
@@ -41,7 +41,7 @@ public abstract class OR extends Instruction {
 		Global.PSEG.emit(new SVM_OR(), "OR: ");
 		CTStack.pop();
 		CTStack.pop();
-	    CTStack.pushTemp(at, 1, "OR: ");
+	    CTStack.pushTempVAL(at, 1, "OR: ");
 //		CTStack.dumpStack();
 //		Global.PSEG.dump();
 //		Util.IERR(""+this);

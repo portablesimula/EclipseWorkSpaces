@@ -30,13 +30,11 @@ public abstract class PUSH extends Instruction {
 			}
 			CTStack.push(addr);
 		} else if(x instanceof ConstDescr cns) {
-//			CTStack.push(new AddressItem(cns.tag.val,0,cns.address));
 			CTStack.push(new AddressItem(cns.type,0,cns.getAddress()));
 		} else Util.IERR("");
-//        if v.kind=K_Import
-//        then TOS.size:= - wAllign(%TOS.size%) endif;
         if(instr == Scode.S_PUSHV) FETCH.doFetch("PUSHV: ");
-//      CTStack.dumpStack("PUSH: "+Scode.edInstr(instr));
+        
+//		CTStack.dumpStack("PUSH: "+Scode.edInstr(instr));
 	}
 
 }

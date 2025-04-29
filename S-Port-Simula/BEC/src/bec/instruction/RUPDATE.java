@@ -2,7 +2,7 @@ package bec.instruction;
 
 import bec.compileTimeStack.AddressItem;
 import bec.compileTimeStack.CTStack;
-import bec.compileTimeStack.StackItem;
+import bec.compileTimeStack.CTStackItem;
 import bec.util.Global;
 import bec.util.Util;
 import bec.value.ObjectAddress;
@@ -30,7 +30,7 @@ public abstract class RUPDATE extends Instruction {
 		AddressItem adr = (AddressItem) CTStack.pop();
 		if(DEBUG) {
 			System.out.println("RUPDATE.ofScode: adr="+adr);
-			System.out.println("RUPDATE.ofScode: sos="+CTStack.TOS);
+			System.out.println("RUPDATE.ofScode: sos="+CTStack.TOS());
 //			Util.IERR("");
 //			CTStack.dumpStack("RUPDATE-2: ");
 		}
