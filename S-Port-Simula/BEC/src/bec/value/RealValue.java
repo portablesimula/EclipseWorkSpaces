@@ -27,7 +27,10 @@ public class RealValue extends Value {
 	 * real_value ::= c-real real_literal:string
 	 */
 	public static RealValue ofScode() {
-		return RealValue.of(Float.valueOf(Scode.inString()));
+		String r = Scode.inString();
+		if(r.startsWith("&")) r = "0" + r;
+		else if(r.startsWith("-&")) r = "-0" + r.substring(1);
+		return RealValue.of(Float.valueOf(r.replace('&', 'E')));
 	}
 //	public RealValue() {
 //		value = Float.valueOf(Scode.inString());

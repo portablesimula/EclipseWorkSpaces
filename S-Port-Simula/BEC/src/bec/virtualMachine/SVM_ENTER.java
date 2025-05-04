@@ -5,6 +5,7 @@ import java.io.IOException;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
+import bec.util.Util;
 import bec.value.ProgramAddress;
 
 /**
@@ -35,6 +36,11 @@ public class SVM_ENTER extends SVM_Instruction {
 		if(Global.CALL_TRACE_LEVEL > 0)
 			RTStack.printCallTrace("SVM_ENTER.execute: ENTER " + rutIdent);
 		Global.PSC.ofst++;
+//		if(rutIdent.equalsIgnoreCase("OUTTXT")) {
+//			RTUtil.printCurins();
+//			RTUtil.printPool("POOL_1");
+//			Util.IERR("");
+//		}
 //		RTStack.dumpRTStack("SVM_ENTER.execute: ");
 	}
 

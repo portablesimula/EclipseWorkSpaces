@@ -19,7 +19,7 @@ public class SVM_ASSIGN extends SVM_Instruction {
 	private int size; // Value's type.size()
 	private int offset;
 
-	private final boolean DEBUG = true;
+	private final boolean DEBUG = false;
 
 	/**
 	 * assign_instruction ::= assign | update | rupdate
@@ -46,25 +46,32 @@ public class SVM_ASSIGN extends SVM_Instruction {
 		if(this.size > 1) {
 			if(DEBUG) {
 				RTUtil.printCurins();
-				RTUtil.printEntity(new ObjectAddress("POOL_1", 718));
+//				RTUtil.printEntity(new ObjectAddress("POOL_1", 718));
 //				RTUtil.printPool("POOL_1");
 //				((DataSegment) Segment.lookup("POOL_1")).dump("POOL_1: " , 718, 718+11);
 //				Util.IERR("");
+				RTStack.dumpRTStack("SVM_ASSIGN: ");
 			}
 			Vector<Value> values = new Vector<Value>();
 			for(int i=0;i<size;i++) {
-				values.add(RTStack.pop().value());
+				Value value = RTStack.pop().value();
+				System.out.println("SVM_ASSIGN: pop: " + value);
+				values.add(value);
 			}
 			ObjectAddress sos = (ObjectAddress) RTStack.pop().value();
-			System.out.println("SVM_ASSIGN: sos="+sos);
-			for(int i=0;i<size;i++) {
+			System.out.println("SVM_ASSIGN: sos="+sos+", size="+size);
+//			for(int i=0;i<size;i++) {
+//			for(int i=size-1;i<=0;i--) {
+			for(int i=size-1;i>=0;i--) {
+				System.out.println("SVM_ASSIGN: sos.store: " + (offset+i) + " " + values.get(i));
 				sos.store(offset + i, values.get(i), "");
 			}
 			if(DEBUG) {
 				RTUtil.printCurins();
 //				RTUtil.printEntity(new ObjectAddress("POOL_1", 718));
 //				RTUtil.printPool("POOL_1");
-				((DataSegment) Segment.lookup("POOL_1")).dump("POOL_1: " , 718, 718+11);
+				((DataSegment) Segment.lookup("POOL_1")).dump("SVM_ASSIGN: " , 714, 714+11);
+				((DataSegment) Segment.lookup("CSEG_ADHOC02")).dump("SVM_ASSIGN: ");
 				Util.IERR("");
 			}
 		} else {
@@ -85,7 +92,7 @@ public class SVM_ASSIGN extends SVM_Instruction {
 				RTUtil.printCurins();
 				RTUtil.printEntity(new ObjectAddress("POOL_1", 715));
 			}
-			Util.IERR("");
+//			Util.IERR("");
 		}
 		Global.PSC.ofst++;
 	}

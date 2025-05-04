@@ -130,11 +130,6 @@ public abstract class CALL extends Instruction {
 			Type returnType = export.type;
 			if(DEBUG) System.out.println("CallInstruction.callSYS: returnType="+returnType);
 			CTStack.pushTempVAL(returnType, 1, "EXPORT: ");
-			if(! CALL.USE_FRAME_ON_STACK) {
-				Util.IERR("DETTE MÅ RETTES");
-//				Global.PSEG.emit(new SVM_PUSH(new RTAddress(export.address), returnType.size()), "CallInstruction: EXPORT " + spec);
-//				Global.PSEG.dump("END CallInstruction.doCode: ");
-			}
 //			CTStack.dumpStack("END CallInstruction.doCode: ");
 //			Util.IERR("");
 		}
@@ -165,12 +160,6 @@ public abstract class CALL extends Instruction {
 		if(CTStack.TOS() instanceof AddressItem) FETCH.doFetch("putPar: ");
 		CTStack.pop();
 		
-		if(! CALL.USE_FRAME_ON_STACK) {
-			int parSize = parType.size();
-			ObjectAddress parAddr = param.address;
-			Global.PSEG.emit(new SVM_PEEK2MEM(parAddr, parSize), "putPar: ");
-		}
-		
 //		pItm.spc.printTree(2);
 //		Global.PSEG.dump("putPar: ");
 //		pItm.spc.DSEG.dump("putPar: ");
@@ -185,12 +174,6 @@ public abstract class CALL extends Instruction {
 //				System.out.println("CALL.putPar: "+TOS);
 				if(TOS instanceof AddressItem) Util.IERR("MODE mismatch below TOS");
 				if(TOS.type != parType) Util.IERR("TYPE mismatch below TOS -- ASSREP");
-				if(! CALL.USE_FRAME_ON_STACK) {
-					int parSize = parType.size();
-					ObjectAddress parAddr = param.address;
-					parAddr = parAddr.addOffset(parSize);
-					Global.PSEG.emit(new SVM_PEEK2MEM(parAddr, parSize), "putPar: ASSREP: ");
-				}
 			}
 //			CTStack.dumpStack("putPar: ");
 //			Global.PSEG.dump("putPar: ");

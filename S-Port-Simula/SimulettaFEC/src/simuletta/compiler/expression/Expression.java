@@ -89,10 +89,10 @@ public class Expression extends SyntaxClass {
 		case KeyWord.AND:   return(newBinopr(S_AND,x));
 		case KeyWord.IMP:   return(newBinopr(S_IMP,x));
 		case KeyWord.EQV:   return(newBinopr(S_EQV,x));
-//		case KeyWord.LSHIFTL: return(newBinopr(S_LSHIFTL,x));
-//		case KeyWord.LSHIFTA: return(newBinopr(S_LSHIFTA,x));
-//		case KeyWord.RSHIFTL: return(newBinopr(S_RSHIFTL,x));
-//		case KeyWord.RSHIFTA: return(newBinopr(S_RSHIFTA,x));
+		case KeyWord.LSHIFTL: return(newBinopr(S_LSHIFTL,x));
+		case KeyWord.LSHIFTA: return(newBinopr(S_LSHIFTA,x));
+		case KeyWord.RSHIFTL: return(newBinopr(S_RSHIFTL,x));
+		case KeyWord.RSHIFTA: return(newBinopr(S_RSHIFTA,x));
 		case KeyWord.QUA:
 			Parser.nextSymb();
 			Parser.TRACE("Expression.scan_expr: QUA ");

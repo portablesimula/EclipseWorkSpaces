@@ -1,13 +1,23 @@
 begin
    SYSINSERT RT,SYSR,KNWN,UTIL;    
-	integer code, res;
-		
-	case 1:3 (code)
-		when 1: res := 444
-		when 2: res := 666
-		when 3: res := 888
-		otherwise res := 222;
-	endcase;
 
+	Routine TEST; import infix(txtqnt) left,right; begin
+		integer i;            --  Loop index.
+		integer dif;          --  Difference between lengths.
+		integer lng;          --  Length of common parts.
+		lng:=right.lp-right.sp;
+		dif:=lng-(left.lp-left.sp);
+	end;
+	
+	infix(txtent) ent = record:txtent(cha=('a','b','c','c','c','c','c','c','c','c','c','c','c','c','c','c','c','c','c','c','c','c','c','c','c','c','c','c','c','c'));
+	infix(txtqnt) txt1, txt2;
+
+	txt1.ent := ref(ent);
+	txt1.lp  := 10;
+
+	txt2.ent := ref(ent);
+	txt2.lp  := 15;
+	
+	TEST(txt1, txt2);
  end;
 	 

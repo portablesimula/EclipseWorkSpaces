@@ -12,7 +12,7 @@ public class FixupOADDR extends ObjectAddress {
 	}
 
 	public void setAddress(ObjectAddress oaddr) {
-		System.out.println("FixupAddress.setAddress: "+oaddr+"  "+oaddr.segID);
+//		System.out.println("FixupAddress.setAddress: "+oaddr+"  "+oaddr.segID);
 		this.segID = oaddr.segID;
 		this.ofst = oaddr.ofst;
 	}

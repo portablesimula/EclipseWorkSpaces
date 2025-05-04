@@ -174,6 +174,27 @@ public class IntegerValue extends Value {
 //		return res;
 	}
 
+
+//	 * Signed Left Shift	<<	The left shift operator moves all bits by a given number of bits to the left.
+//	 * Signed Right Shift	>>	The right shift operator moves all bits by a given number of bits to the right.
+//	 * Unsigned Right Shift	>>>	It is the same as the signed right shift, but the vacant leftmost position is filled with 0 instead of the sign bit.
+	public Value shift(int instr, Value other) {
+		int LHS = this.value;
+		int RHS = (other == null)? 0 : ((IntegerValue)other).value;
+//		System.out.println("IntegerValue.shift: " + LHS + " " + Scode.edInstr(instr) + " " + RHS);
+		int res = 0;
+		switch(instr) {
+		case Scode.S_LSHIFTA,
+			 Scode.S_LSHIFTL: res = LHS << RHS; break;
+		case Scode.S_RSHIFTA: res = LHS >> RHS; break;
+		case Scode.S_RSHIFTL: res = LHS >>> RHS; break;
+		default: Util.IERR("");
+		}
+//		System.out.println("IntegerValue.shift: " + LHS + " " + Scode.edInstr(instr) + " " + RHS + " ==> " + res);
+//		Util.IERR("");
+		return IntegerValue.of(type.T_INT, res);
+	}
+
 	public String toString() {
 		if(type == null) return ""+value;
 		switch(type.tag) {

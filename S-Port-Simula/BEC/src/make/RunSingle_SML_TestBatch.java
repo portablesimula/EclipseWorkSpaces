@@ -11,8 +11,6 @@ import java.util.Vector;
 
 import bec.BecCompiler;
 import bec.util.Global;
-import bec.util.Util;
-import bec.virtualMachine.SVM_CALLSYS;
 
 public final class RunSingle_SML_TestBatch {
 	private static long startTimeMs = System.currentTimeMillis();
@@ -31,8 +29,8 @@ public final class RunSingle_SML_TestBatch {
 		Global.PRINT_GENERATED_SVM_CODE = true;
 		Global.EXEC_TRACE = 1;
 		Global.PRINT_GENERATED_SVM_DATA = true;
-//		Global.CALL_TRACE_LEVEL = 2;
-		Global.DUMPS_AT_EXIT = true;
+		Global.CALL_TRACE_LEVEL = 2;
+//		Global.DUMPS_AT_EXIT = true;
 		
 		// Set Compiler Options.
 //		Option.EXTENSIONS=false;
@@ -42,7 +40,7 @@ public final class RunSingle_SML_TestBatch {
 		
 //		names.add("adHoc00.scd");
 //		names.add("adHoc01.scd");
-		names.add("adHoc02.scd");
+			names.add("adHoc02.scd");
 //		names.add("adHoc03.scd");
 //		names.add("adHoc04.scd");
 //		names.add("adHoc05.scd");
@@ -94,6 +92,8 @@ public final class RunSingle_SML_TestBatch {
 //		names.add("smltst38.scd"); // INITO, GETO, SETO
 //		names.add("smltst39.scd"); // Boolean Operators IMP and EQV
 //		names.add("smltst40.scd"); // Fixup Object Address
+//		names.add("smltst41.scd"); // Shift opr: LSHIFTL, RSHIFTL, LSHIFTA, RSHIFTA
+//		names.add("smltst42.scd"); // Test C_MOVE and C_BLNK
 
 		for (String name : names) {
 			String fileName = smlSCodeDir + name;

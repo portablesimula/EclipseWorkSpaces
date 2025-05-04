@@ -143,7 +143,14 @@ public class RTS_SPORT_Option {
 	/** Used by getIntInfo. */ static int GiveNotes = 1;
 //	/** Used by getIntInfo. */ static int TraceLevel = 0;
 	/** Used by getIntInfo. */ static int Recompilation = 0;
-	/** Used by getIntInfo. */ static int SimobLevel = 0;
+	
+	/**
+	 *  Used by getIntInfo.
+	 *  Result: 0 - minimal information for error reporting.
+	 *  		1 - information at the module and block level, but no information about the attributes.
+	 *  		2 - complete information generated, including information about all attributes.	 */
+	static int SimobLevel = 2;
+	
 	/** Used by getIntInfo. */ static int FEC_Verbose = 0;
 	/** Used by getIntInfo. */ static int FEC_TraceScode = 0;
 	/** Used by getIntInfo. */ static int FEC_TraceLevel = 0;

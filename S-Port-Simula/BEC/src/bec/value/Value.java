@@ -93,6 +93,11 @@ public class Value {
 		return false;
 	}
 
+	public Value shift(int instr, Value other) {
+		Util.IERR("Method 'shift' need a redefinition in " + this.getClass().getSimpleName());
+		return null;
+	}
+
 	// ***********************************************************************************************
 	// *** Attribute File I/O
 	// ***********************************************************************************************

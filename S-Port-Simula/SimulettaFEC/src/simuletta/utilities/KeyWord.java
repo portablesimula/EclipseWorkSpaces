@@ -105,6 +105,11 @@ public class KeyWord {
 	public static final int	IMP=98;
 	public static final int	EQV=99;
 
+	public static final int	LSHIFTA=100;
+	public static final int	LSHIFTL=101;
+	public static final int	RSHIFTA=102;
+	public static final int	RSHIFTL=103;
+
 	public static String ed(int key) {
 		switch(key) {
 		case AND: return("AND");
@@ -214,6 +219,11 @@ public class KeyWord {
 		case SIMPLEVALUE: return("SIMPLEVALUE");
 		case DOT: return("DOT");
 		case NEWLINE: return("NEWLINE");
+
+		case LSHIFTA: return("LSHIFTA");
+		case LSHIFTL: return("LSHIFTL");
+		case RSHIFTA: return("RSHIFTA");
+		case RSHIFTL: return("RSHIFTL");
 
 		}
 		return("KeyWord_"+key);

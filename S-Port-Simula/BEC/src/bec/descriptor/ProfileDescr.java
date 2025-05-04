@@ -89,21 +89,21 @@ public class ProfileDescr extends Descriptor {
 			 // peculiar ::= interface pid:string
 			Scode.inputInstr();
 			String xid = Scode.inString();
-			prf.pKind = getSysKind(xid);
+			prf.pKind = SVM_CALLSYS.getSysKind(xid);
 		} else if(Scode.nextByte() == Scode.S_KNOWN) {
 			// peculiar	::= known body:newtag kid:string
 			Scode.inputInstr();
 			Tag rtag = Tag.ofScode();
 			String xid = Scode.inString();
 			RoutineDescr rut = new RoutineDescr(Kind.K_IntRoutine, rtag, null);
-//			prf.pKind = getKnownKind(xid);
+			prf.pKind = SVM_CALLSYS.getKnownKind(xid);
 		} else if(Scode.nextByte() == Scode.S_SYSTEM) {
 			 //	peculiar ::= system body:newtag sid:string
 			Scode.inputInstr();
 			Tag rtag = Tag.ofScode();
 			String xid = Scode.inString();
 			RoutineDescr rut = new RoutineDescr(Kind.K_IntRoutine, rtag, null);
-			prf.pKind = getSysKind(xid);
+			prf.pKind = SVM_CALLSYS.getSysKind(xid);
 		}
 		prf.imports = new Vector<Variable>();
 		prf.params = new Vector<Tag>();
@@ -193,148 +193,6 @@ public class ProfileDescr extends Descriptor {
 		if(exportTag != null) profile += " ==> exportTag=" + exportTag;
 		profile += " returSlot=" + returSlot;
 		return profile;
-	}
-
-	private static int getSysKind(String s) {
-//		System.out.println("ProfileDescr.getSysKind: "+s);
-//		Thread.dumpStack();
-		
-		//--- Search for inline index ---
-		if(s.equalsIgnoreCase("TERMIN")) return SVM_CALLSYS.P_TERMIN;
-		if(s.equalsIgnoreCase("INTRHA")) return SVM_CALLSYS.P_INTRHA;
-		if(s.equalsIgnoreCase("PXCHDL")) return SVM_CALLSYS.P_PXCHDL;
-		if(s.equalsIgnoreCase("PEXERR")) return SVM_CALLSYS.P_PEXERR;
-		if(s.equalsIgnoreCase("PSIMOB")) return SVM_CALLSYS.P_PSIMOB;
-		if(s.equalsIgnoreCase("PobSML")) return SVM_CALLSYS.P_PobSML;
-		if(s.equalsIgnoreCase("Palloc")) return SVM_CALLSYS.P_Palloc;
-		if(s.equalsIgnoreCase("Pfree"))  return SVM_CALLSYS.P_Pfree;
-		if(s.equalsIgnoreCase("Pmovit")) return SVM_CALLSYS.P_Pmovit;
-
-		if(s.equalsIgnoreCase("STREQL")) return SVM_CALLSYS.P_STREQL;
-		if(s.equalsIgnoreCase("PRINTO")) return SVM_CALLSYS.P_PRINTO;
-		if(s.equalsIgnoreCase("INITIA")) return SVM_CALLSYS.P_INITIA;
-		if(s.equalsIgnoreCase("SETOPT")) return SVM_CALLSYS.P_SETOPT;
-		if(s.equalsIgnoreCase("DMPSEG")) return SVM_CALLSYS.P_DMPSEG;
-		if(s.equalsIgnoreCase("DMPENT")) return SVM_CALLSYS.P_DMPENT;
-		if(s.equalsIgnoreCase("DMPOOL")) return SVM_CALLSYS.P_DMPOOL;
-		if(s.equalsIgnoreCase("VERBOSE")) return SVM_CALLSYS.P_VERBOSE;
-		if(s.equalsIgnoreCase("GINTIN")) return SVM_CALLSYS.P_GINTIN;
-		if(s.equalsIgnoreCase("GTEXIN")) return SVM_CALLSYS.P_GTEXIN;
-		if(s.equalsIgnoreCase("SIZEIN")) return SVM_CALLSYS.P_SIZEIN;
-		if(s.equalsIgnoreCase("GVIINF")) return SVM_CALLSYS.P_GVIINF;
-		if(s.equalsIgnoreCase("GIVINF")) return SVM_CALLSYS.P_GIVINF;
-		if(s.equalsIgnoreCase("CPUTIM")) return SVM_CALLSYS.P_CPUTIM;
-		if(s.equalsIgnoreCase("DWAREA")) return SVM_CALLSYS.P_DWAREA;
-		if(s.equalsIgnoreCase("MOVEIN")) return SVM_CALLSYS.P_MOVEIN;
-		if(s.equalsIgnoreCase("OPFILE")) return SVM_CALLSYS.P_OPFILE;
-		if(s.equalsIgnoreCase("CLFILE")) return SVM_CALLSYS.P_CLFILE;
-		if(s.equalsIgnoreCase("LSTLOC")) return SVM_CALLSYS.P_LSTLOC;
-		if(s.equalsIgnoreCase("MAXLOC")) return SVM_CALLSYS.P_MAXLOC;
-		if(s.equalsIgnoreCase("CHKPNT")) return SVM_CALLSYS.P_CHKPNT;
-		if(s.equalsIgnoreCase("LOCKFI")) return SVM_CALLSYS.P_LOCKFI;
-		if(s.equalsIgnoreCase("UNLOCK")) return SVM_CALLSYS.P_UNLOCK;
-		if(s.equalsIgnoreCase("INIMAG")) return SVM_CALLSYS.P_INIMAG;
-		if(s.equalsIgnoreCase("OUTIMA")) return SVM_CALLSYS.P_OUTIMA;
-		if(s.equalsIgnoreCase("BREAKO")) return SVM_CALLSYS.P_BREAKO;
-		if(s.equalsIgnoreCase("LOCATE")) return SVM_CALLSYS.P_LOCATE;
-		if(s.equalsIgnoreCase("DELETE")) return SVM_CALLSYS.P_DELETE;
-		if(s.equalsIgnoreCase("GDSNAM")) return SVM_CALLSYS.P_GDSNAM;
-		if(s.equalsIgnoreCase("GDSPEC")) return SVM_CALLSYS.P_GDSPEC;
-		if(s.equalsIgnoreCase("GETLPP")) return SVM_CALLSYS.P_GETLPP;
-		if(s.equalsIgnoreCase("NEWPAG")) return SVM_CALLSYS.P_NEWPAG;
-		if(s.equalsIgnoreCase("PRINTO")) return SVM_CALLSYS.P_PRINTO;
-		if(s.equalsIgnoreCase("STREQL")) return SVM_CALLSYS.P_STREQL;
-		if(s.equalsIgnoreCase("INBYTE")) return SVM_CALLSYS.P_INBYTE;
-		if(s.equalsIgnoreCase("OUTBYT")) return SVM_CALLSYS.P_OUTBYT;
-		if(s.equalsIgnoreCase("GETINT")) return SVM_CALLSYS.P_GETINT;
-		if(s.equalsIgnoreCase("GTREAL")) return SVM_CALLSYS.P_GTREAL;
-		if(s.equalsIgnoreCase("GTFRAC")) return SVM_CALLSYS.P_GTFRAC;
-		if(s.equalsIgnoreCase("PUTSTR")) return SVM_CALLSYS.P_PUTSTR;
-		if(s.equalsIgnoreCase("PUTINT")) return SVM_CALLSYS.P_PUTINT;
-		if(s.equalsIgnoreCase("PUTINT2")) return SVM_CALLSYS.P_PUTINT2;
-		if(s.equalsIgnoreCase("PUTSIZE")) return SVM_CALLSYS.P_PUTSIZE;
-		if(s.equalsIgnoreCase("PUTHEX")) return SVM_CALLSYS.P_PUTHEX;
-		if(s.equalsIgnoreCase("PUTFIX")) return SVM_CALLSYS.P_PUTFIX;
-		if(s.equalsIgnoreCase("PUTFIX2")) return SVM_CALLSYS.P_PUTFIX2;
-		if(s.equalsIgnoreCase("PTLFIX")) return SVM_CALLSYS.P_PTLFIX;
-		if(s.equalsIgnoreCase("PTLFIX2")) return SVM_CALLSYS.P_PTLFIX2;
-		if(s.equalsIgnoreCase("PTREAL")) return SVM_CALLSYS.P_PTREAL;
-		if(s.equalsIgnoreCase("PTREAL2")) return SVM_CALLSYS.P_PTREAL2;
-		if(s.equalsIgnoreCase("PLREAL")) return SVM_CALLSYS.P_PLREAL;
-		if(s.equalsIgnoreCase("PLREAL2")) return SVM_CALLSYS.P_PLREAL2;
-		if(s.equalsIgnoreCase("PTFRAC")) return SVM_CALLSYS.P_PTFRAC;
-		if(s.equalsIgnoreCase("PTSIZE")) return SVM_CALLSYS.P_PTSIZE;
-		if(s.equalsIgnoreCase("PTOADR")) return SVM_CALLSYS.P_PTOADR;
-		if(s.equalsIgnoreCase("PTOADR2")) return SVM_CALLSYS.P_PTOADR2;
-		if(s.equalsIgnoreCase("PTAADR")) return SVM_CALLSYS.P_PTAADR;
-		if(s.equalsIgnoreCase("PTAADR2")) return SVM_CALLSYS.P_PTAADR2;
-		if(s.equalsIgnoreCase("PTGADR")) return SVM_CALLSYS.P_PTGADR;
-		if(s.equalsIgnoreCase("PTGADR2")) return SVM_CALLSYS.P_PTGADR2;
-		if(s.equalsIgnoreCase("PTPADR")) return SVM_CALLSYS.P_PTPADR;
-		if(s.equalsIgnoreCase("PTPADR2")) return SVM_CALLSYS.P_PTPADR2;
-		if(s.equalsIgnoreCase("PTRADR")) return SVM_CALLSYS.P_PTRADR;
-		if(s.equalsIgnoreCase("PTRADR2")) return SVM_CALLSYS.P_PTRADR2;
-		if(s.equalsIgnoreCase("DRAWRP")) return SVM_CALLSYS.P_DRAWRP;
-		if(s.equalsIgnoreCase("DATTIM")) return SVM_CALLSYS.P_DATTIM;
-		if(s.equalsIgnoreCase("LOWTEN")) return SVM_CALLSYS.P_LOWTEN;
-		if(s.equalsIgnoreCase("DCMARK")) return SVM_CALLSYS.P_DCMARK;
-		if(s.equalsIgnoreCase("RSQROO")) return SVM_CALLSYS.P_RSQROO;
-		if(s.equalsIgnoreCase("SQROOT")) return SVM_CALLSYS.P_SQROOT;
-		if(s.equalsIgnoreCase("RLOGAR")) return SVM_CALLSYS.P_RLOGAR;
-		if(s.equalsIgnoreCase("LOGARI")) return SVM_CALLSYS.P_LOGARI;
-		if(s.equalsIgnoreCase("RLOG10")) return SVM_CALLSYS.P_RLOG10;
-		if(s.equalsIgnoreCase("DLOG10")) return SVM_CALLSYS.P_DLOG10;
-		if(s.equalsIgnoreCase("REXPON")) return SVM_CALLSYS.P_REXPON;
-		if(s.equalsIgnoreCase("EXPONE")) return SVM_CALLSYS.P_EXPONE;
-		if(s.equalsIgnoreCase("RSINUS")) return SVM_CALLSYS.P_RSINUS;
-		if(s.equalsIgnoreCase("SINUSR")) return SVM_CALLSYS.P_SINUSR;
-		if(s.equalsIgnoreCase("RCOSIN")) return SVM_CALLSYS.P_RCOSIN;
-		if(s.equalsIgnoreCase("COSINU")) return SVM_CALLSYS.P_COSINU;
-		if(s.equalsIgnoreCase("RTANGN")) return SVM_CALLSYS.P_RTANGN;
-		if(s.equalsIgnoreCase("TANGEN")) return SVM_CALLSYS.P_TANGEN;
-		if(s.equalsIgnoreCase("RCOTAN")) return SVM_CALLSYS.P_RCOTAN;
-		if(s.equalsIgnoreCase("COTANG")) return SVM_CALLSYS.P_COTANG;
-		if(s.equalsIgnoreCase("RARTAN")) return SVM_CALLSYS.P_RARTAN;
-		if(s.equalsIgnoreCase("ARCTAN")) return SVM_CALLSYS.P_ARCTAN;
-		if(s.equalsIgnoreCase("RARCOS")) return SVM_CALLSYS.P_RARCOS;
-		if(s.equalsIgnoreCase("ARCCOS")) return SVM_CALLSYS.P_ARCCOS;
-		if(s.equalsIgnoreCase("RARSIN")) return SVM_CALLSYS.P_RARSIN;
-		if(s.equalsIgnoreCase("ARCSIN")) return SVM_CALLSYS.P_ARCSIN;
-		if(s.equalsIgnoreCase("RATAN2")) return SVM_CALLSYS.P_RATAN2;
-		if(s.equalsIgnoreCase("ATAN2")) return SVM_CALLSYS.P_ATAN2;
-		if(s.equalsIgnoreCase("RSINH")) return SVM_CALLSYS.P_RSINH;
-		if(s.equalsIgnoreCase("SINH")) return SVM_CALLSYS.P_SINH;
-		if(s.equalsIgnoreCase("RCOSH")) return SVM_CALLSYS.P_RCOSH;
-		if(s.equalsIgnoreCase("COSH")) return SVM_CALLSYS.P_COSH;
-		if(s.equalsIgnoreCase("RTANH")) return SVM_CALLSYS.P_RTANH;
-		if(s.equalsIgnoreCase("TANH")) return SVM_CALLSYS.P_TANH;
-		if(s.equalsIgnoreCase("BEGDEB")) return SVM_CALLSYS.P_BEGDEB;
-		if(s.equalsIgnoreCase("ENDDEB")) return SVM_CALLSYS.P_ENDDEB;
-		if(s.equalsIgnoreCase("BEGTRP")) return SVM_CALLSYS.P_BEGTRP;
-		if(s.equalsIgnoreCase("ENDTRP")) return SVM_CALLSYS.P_ENDTRP;
-		if(s.equalsIgnoreCase("GTPADR")) return SVM_CALLSYS.P_GTPADR;
-		if(s.equalsIgnoreCase("GTOUTM")) return SVM_CALLSYS.P_GTOUTM;
-		if(s.equalsIgnoreCase("GTLNID")) return SVM_CALLSYS.P_GTLNID;
-		if(s.equalsIgnoreCase("GTLNO")) return SVM_CALLSYS.P_GTLNO;
-		if(s.equalsIgnoreCase("BRKPNT")) return SVM_CALLSYS.P_BRKPNT;
-		if(s.equalsIgnoreCase("STMNOT")) return SVM_CALLSYS.P_STMNOT;
-		if(s.equalsIgnoreCase("DMPOBJ")) return SVM_CALLSYS.P_DMPOBJ;
-
-		// KNOWN 
-		if(s.equalsIgnoreCase("MODULO")) return SVM_CALLSYS.P_MODULO;
-		if(s.equalsIgnoreCase("RADDEP")) return SVM_CALLSYS.P_RADDEP;
-		if(s.equalsIgnoreCase("DADDEP")) return SVM_CALLSYS.P_DADDEP;
-		if(s.equalsIgnoreCase("RSUBEP")) return SVM_CALLSYS.P_RSUBEP;
-		if(s.equalsIgnoreCase("DSUBEP")) return SVM_CALLSYS.P_DSUBEP;
-		if(s.equalsIgnoreCase("IIPOWR")) return SVM_CALLSYS.P_IIPOWR;
-		if(s.equalsIgnoreCase("RIPOWR")) return SVM_CALLSYS.P_RIPOWR;
-		if(s.equalsIgnoreCase("RRPOWR")) return SVM_CALLSYS.P_RRPOWR;
-		if(s.equalsIgnoreCase("RDPOWR")) return SVM_CALLSYS.P_RDPOWR;
-		if(s.equalsIgnoreCase("DIPOWR")) return SVM_CALLSYS.P_DIPOWR;
-		if(s.equalsIgnoreCase("DRPOWR")) return SVM_CALLSYS.P_DRPOWR;
-		if(s.equalsIgnoreCase("DDPOWR")) return SVM_CALLSYS.P_DDPOWR;
-		Util.IERR(""+s);
-		return 0;
 	}
 
 	// ***********************************************************************************************

@@ -92,6 +92,7 @@ public final class RunFull_SML_TestBatch {
 		names.add("smltst38.scd"); // INITO, GETO, SETO
 		names.add("smltst39.scd"); // Boolean Operators IMP and EQV
 		names.add("smltst40.scd"); // Fixup Object Address
+		names.add("smltst41.scd"); // Shift opr: LSHIFTL, RSHIFTL, LSHIFTA, RSHIFTA
 
 		for (String name : names) {
 			String fileName = smlSCodeDir + name;

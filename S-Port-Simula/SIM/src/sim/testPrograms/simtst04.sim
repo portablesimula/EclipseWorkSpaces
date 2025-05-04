@@ -25,9 +25,23 @@
 %    CORR. BY:  PJE  3/6 86 to conformance with SIMULA Standard.
 %    CORR. BY:  MYH  25/3 2018 improved reports.
 %  ====================================================================
-external class SimulaTest;
+% external class SimulaTest;
 
-SimulaTest(4,"--- Test reading numbers from source text") begin
+% SimulaTest(4,"--- Test reading numbers from source text")
+begin
+	integer n = 4;
+	text title = "--- Test reading numbers from source text";
+
+	boolean found_error;
+	integer nFailed;
+	boolean verbose=false;
+	boolean noMessage;
+
+	procedure err(t); text t;
+	begin sysout.setpos(1);
+	      outtext("*** error: in test "); outtext(t); outimage;
+	      found_error:=true; nFailed:=nFailed+1;
+	end;
 
 text               txt;             ! text to use the editing and;
                                     ! de-editing procedures on.  ;
@@ -54,6 +68,11 @@ if result <> expected then  !*** NOTE 5 ***;
    end;
 end;
 
+	if verbose then begin
+		outtext ("--- START Simula a.s. TEST"); outint(n,4); outimage;
+		outtext (title);
+		outimage; outimage;
+	end;
 
 txt :- blanks (30);
 
@@ -381,5 +400,18 @@ lon := -1.797693134862315&&+308;       ! "longprecision".;
 txt.putreal (lon, longprecision);
 test("long real operation (16).",txt,"       -1.797693134862315&+308");
 
+	if noMessage then else begin
+		if found_error then begin
+			outtext("--- "); outint(nFailed,3); outtext(" ERROR(S) FOUND IN TEST"); outint(n,4); outtext("  "); outtext(title);
+			outtext("Test sample has "); outint(nFailed,3);
+			error(" error(s)");
+		end else begin
+			outtext ("--- NO ERRORS FOUND IN TEST"); outint(n,4); outtext("  "); outtext(title);
+		end;
+
+		if verbose then begin
+			outtext ("--- END Simula a.s. TEST"); outint(n,4); outimage;
+		end;
+	end;
 
 end of program;

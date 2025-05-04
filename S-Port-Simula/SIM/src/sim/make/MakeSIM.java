@@ -112,13 +112,14 @@ public class MakeSIM {
 	private static void INLINE_TEST() {
 //		String name ="adHoc00";
 //		String name ="adHoc01";
-//		String name ="adHoc02";
+//			String name ="adHoc02";
 //		String name ="adHoc03";
 //		String name ="simtst00";
 //		String name ="simtst01";
 //		String name ="simtst02";
 //		String name ="simtst03";
 		String name ="simtst04";
+//		String name ="simtst05";
 		
 		sourceFileName = "C:\\GitHub\\EclipseWorkSpaces/S-Port-Simula\\SIM\\src\\sim\\testPrograms\\"+name+".sim";
 		sCodeFileName  = "C:\\GitHub\\EclipseWorkSpaces/S-Port-Simula\\SIM\\src\\sim\\testPrograms\\scode\\"+name+".scd";
@@ -131,7 +132,7 @@ public class MakeSIM {
 //		becListing = true;
 //		becSCodeTrace = true;
 //		execTrace = 1;
-//		callTrace = 2;
+//		callTrace = 1;//2;
 //		dumpsAtExit = true;
 		
 		int execCode = callSimulaFEC();

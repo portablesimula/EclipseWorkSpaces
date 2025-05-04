@@ -43,9 +43,15 @@ public class Scode {
 //		System.out.println("Open SCode file: " + fileName);
 		try (FileInputStream scode = new FileInputStream(fileName)) {
 			SBUF = scode.readAllBytes();
+//			
+//			for(int i=670;i<680;i++) {
+//				System.out.println("Scode.initScode: SBUF["+i+"] = " + SBUF[i]);
+//			}
+//			Util.IERR("");
+//			
 			SBUF_nxt = 0;
 			if(Global.verbose) {
-				System.out.println("Open SCode file: " + fileName + "   size = " + SBUF.length);
+				System.out.println("\nOpen SCode file: " + fileName + "   size = " + SBUF.length);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -98,6 +104,7 @@ public class Scode {
 
 	public static void inputInstr() {
 		Scode.curinstr = getByte();
+//		System.out.println("Scode.inputInstr: " + (SBUF_nxt-1) + ": " + Scode.curinstr + " " + Scode.edInstr(Scode.curinstr));
 //		%+D       if SBUF.nxt >= sBufLen then InSbuffer endif;
 		if(Scode.curinstr < 1 || Scode.curinstr > S_max) {
 			if(traceBuff != null) System.out.println(traceBuff);
@@ -216,6 +223,7 @@ public class Scode {
 	
 	public static int ofScode() {
 		int t = get2Bytes();
+//		System.out.println("Scode'INTAG: "+t);
 		if(t == 0) {
 			t = get2Bytes();
 			String id = getString();

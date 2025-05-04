@@ -20,6 +20,19 @@ public abstract class RTStack {
 	private static Stack<RTStackItem> stack = new Stack<RTStackItem>();
 	public static Stack<CallStackFrame> precallStack = new Stack<CallStackFrame>();
 	public static Stack<CallStackFrame> callStack = new Stack<CallStackFrame>();
+	
+	private static Stack<Stack<RTStackItem>> saveStack = new Stack<Stack<RTStackItem>>();
+	
+	public static void saveStack() {
+		System.out.println("RTStack.saveStack:    SAVE-RESTORE " + stack.hashCode() + " " + stack);
+		saveStack.push(stack);
+		stack = new Stack<RTStackItem>();
+	}
+	
+	public static void restoreStack() {
+		stack = saveStack.pop();
+		System.out.println("RTStack.restoreStack: SAVE-RESTORE " + stack.hashCode() + " " + stack);
+	}
 
 	public static void checkStackEmpty() {
 		if(curSize() != 0) {

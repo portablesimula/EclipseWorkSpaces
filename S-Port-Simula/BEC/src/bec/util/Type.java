@@ -92,6 +92,10 @@ public class Type {
 		}
 //		System.out.println("DataType.newRecType: " + Scode.edTag(tag) + ", size="+size);
 	}
+	
+	public static void removeFromTMAP(int tag) {
+		TMAP.remove(tag);
+	}
 
 	public boolean isSimple() {
 		return tag <= Scode.TAG_SIZE;

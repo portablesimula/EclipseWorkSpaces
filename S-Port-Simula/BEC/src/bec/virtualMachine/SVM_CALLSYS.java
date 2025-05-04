@@ -18,6 +18,10 @@ import bec.value.ObjectAddress;
 import bec.value.ProgramAddress;
 import bec.value.Value;
 import bec.virtualMachine.sysrut.SysEdit;
+import bec.virtualMachine.sysrut.SysFile;
+import bec.virtualMachine.sysrut.SysInfo;
+import bec.virtualMachine.sysrut.SysKnown;
+import bec.virtualMachine.sysrut.SysMath;
 
 public class SVM_CALLSYS extends SVM_Instruction {
 	int kind;
@@ -36,36 +40,48 @@ public class SVM_CALLSYS extends SVM_Instruction {
 			case P_DWAREA:   dwarea(); break;
 			case P_ZEROAREA: zeroarea(); break;
 			case P_CPUTIM:   cputime(); break;
-			case P_GETLPP:   getlpp(); break;
-			case P_OPFILE:   opfile(); break;
-			case P_CLFILE:   clfile(); break;
-			case P_GDSPEC:   gdspec(); break;
 			case P_TERMIN:   terminate(); break;
 			case P_STREQL:   stringEqual(); break;
-			case P_GINTIN:   getIntinfo(); break;
-			
-			case P_PUTSTR:   putstr(); break;
 			case P_PRINTO:   printo(); break;
-			case P_PUTINT:   putint(); break;
-			case P_PUTINT2:  putint2(); break;
-			case P_PTREAL2:  putreal2(); break;
-			case P_PLREAL2:  putlreal2(); break;
-			case P_PUTFIX2:  putfix2(); break;
-			case P_PTLFIX2:  putlfix2(); break;
-			case P_PUTHEX:   puthex(); break;
-			case P_PUTSIZE:  putsize(); break;
-			case P_SIZEIN:   sizein(); break;
-			case P_PTOADR2:  ptoadr2(); break;
-			case P_PTPADR2:  ptpadr2(); break;
-			case P_PTRADR2:  ptradr2(); break;
-			case P_PTAADR2:  ptaadr2(); break;
-			case P_PTGADR2:  ptgadr2(); break;
+
+			case P_GINTIN:   SysInfo.getIntinfo(); break;
+			case P_SIZEIN:   SysInfo.sizein(); break;
+
+			case P_GDSPEC:   SysFile.gdspec(); break;
+			case P_GETLPP:   SysFile.getlpp(); break;
+			case P_OPFILE:   SysFile.opfile(); break;
+			case P_CLFILE:   SysFile.clfile(); break;
+
+			case P_PUTSTR:   SysEdit.putstr(); break;
+			case P_PUTINT:   SysEdit.putint(); break;
+			case P_PUTINT2:  SysEdit.putint2(); break;
+			case P_PTREAL:   SysEdit.putreal(); break;
+			case P_PTREAL2:  SysEdit.putreal2(); break;
+			case P_PLREAL:   SysEdit.putlreal(); break;
+			case P_PLREAL2:  SysEdit.putlreal2(); break;
+			case P_PUTFIX2:  SysEdit.putfix2(); break;
+			case P_PTLFIX2:  SysEdit.putlfix2(); break;
+			case P_PUTHEX:   SysEdit.puthex(); break;
+			case P_PUTSIZE:  SysEdit.putsize(); break;
+			case P_PTOADR2:  SysEdit.ptoadr2(); break;
+			case P_PTPADR2:  SysEdit.ptpadr2(); break;
+			case P_PTRADR2:  SysEdit.ptradr2(); break;
+			case P_PTAADR2:  SysEdit.ptaadr2(); break;
+			case P_PTGADR2:  SysEdit.ptgadr2(); break;
+			
+			case P_RADDEP:   SysMath.raddep(); break;
+			case P_RSUBEP:   SysMath.rsubep(); break;
+			case P_DADDEP:   SysMath.daddep(); break;
+			case P_DSUBEP:   SysMath.dsubep(); break;
+
+			case P_CMOVE:    SysKnown.cmove(); break;
+			case P_CBLNK:    SysKnown.cblnk(); break;
 			default: Util.IERR("SVM_SYSCALL: Unknown System Routine " + edKind(kind));
 		}
 		Global.PSC.ofst++;
 	}
 	
-	public void ENTER(String ident, int exportSize, int importSize) {
+	public static void ENTER(String ident, int exportSize, int importSize) {
 		if(Global.EXEC_TRACE > 4)
 			RTStack.dumpRTStack(ident+"ENTER: ");
 		int rtStackIndex = RTStack.size() - (exportSize + importSize);
@@ -73,7 +89,7 @@ public class SVM_CALLSYS extends SVM_Instruction {
 		RTStack.callStack.push(callStackFrame);
 		
 		if(Global.EXEC_TRACE > 0) {
-			ProgramAddress.printInstr(this,false);
+			ProgramAddress.printInstr("CALLSYS  " + ident,false);
 			if(Global.EXEC_TRACE > 2)
 				RTStack.callStack_TOP().dump(ident+"ENTER: ");
 		}
@@ -82,7 +98,7 @@ public class SVM_CALLSYS extends SVM_Instruction {
 			RTStack.printCallTrace("SVM_CALLSYS.ENTER: ");
 	}
 	
-	public void EXIT(String ident) {
+	public static void EXIT(String ident) {
 		if(Global.CALL_TRACE_LEVEL > 0)
 			RTStack.printCallTrace("SVM_CALLSYS.EXIT: ");
 		CallStackFrame top = RTStack.callStack.pop();
@@ -129,6 +145,16 @@ public class SVM_CALLSYS extends SVM_Instruction {
 		int code = RTStack.popInt();
 //		System.out.println("SVM_SYSCALL.terminate: "+str+" with exit code " + code);
 //		System.exit(code);
+		if(Global.DUMPS_AT_EXIT) {
+//			Segment.lookup("DSEG_ADHOC02").dump("SVM_SYSCALL.terminate: ");
+			Global.DSEG.dump("SVM_SYSCALL.terminate: FINAL DATA SEGMENT ");
+			Global.CSEG.dump("SVM_SYSCALL.terminate: FINAL CONSTANT SEGMENT ");
+			Global.TSEG.dump("SVM_SYSCALL.terminate: FINAL CONSTANT TEXT SEGMENT ");
+//			Segment.lookup("DSEG_RT").dump("SVM_SYSCALL.terminate: BIOINS", 30, 82);
+//			Segment.lookup("POOL_1").dump("SVM_SYSCALL.terminate: FINAL POOL_1", 0, 20);
+			RTUtil.printPool("POOL_1");
+		}
+
 		throw new EndProgram(code,"SVM_SYSCALL.terminate: "+str+" with exit code " + code);
 	}
 	
@@ -146,28 +172,6 @@ public class SVM_CALLSYS extends SVM_Instruction {
 		RTStack.push(BooleanValue.of(result), "EXPORT");
 		EXIT("STREQL: " + result);
 	}
-		
-		/**
-		 * Visible sysroutine("GINTIN") GINTIN;
-		 *  import range(0:127) index; export integer result  end;
-		 */
-		private void getIntinfo() {
-			ENTER("GINTIN: ", 1, 1); // exportSize, importSize
-			int index = RTStack.popInt();
-			System.out.println("SVM_SYSCALL.getIntinfo: "+index);
-			int result=0;
-			switch(index) {
-				case 19: result = 0; break; // 19 Should the symbolic debugger SIMOB be entered prior to the execution of the
-				                            //    program, and at program termination? An answer greater than zero will give this effect.
-				case 24: result = 1; break; // 24 How many work areas may be requested (see chapter 5)?
-				case 33: result = 0; break; // 33 Result: 0 - no, this is not an interactive execution
-				                            //            1 - yes, this is an interactive execution
-				case 99: Segment.lookup("DSEG_RT").dump("",0,100); break; // AD'HOC DUMP UTILITY
-				default: Util.IERR("");
-			}
-			RTStack.push(IntegerValue.of(Type.T_INT, result), "EXPORT");
-			EXIT("GINTIN: ");
-		}
 
 
 	/**
@@ -195,362 +199,7 @@ public class SVM_CALLSYS extends SVM_Instruction {
 		EXIT("PRINTO: ");
 	}
 	
-	/**
-	 * Visible sysroutine("PUTSTR") PUTSTR;
-	 *		import infix (string) item; infix(string) val;
-	 *		export integer lng;
-	 * end;
-	 */
-	private void putstr() {
-		boolean DEBUG = false;
-		ENTER("PUTSTR: ", 1, 6); // exportSize, importSize
-		int valNchr = RTStack.popInt();
-		ObjectAddress valAddr = RTStack.popGADDRasOADDR();
-		if(DEBUG) {
-			// valAddr.segment().dump("SVM_SYSCALL.putstr:");
-			System.out.println("SVM_SYSCALL.putstr: valAddr="+valAddr);
-			System.out.println("SVM_SYSCALL.putstr: valNchr="+valNchr);
-		}
-		int itemNchr = RTStack.popInt();
-		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
-		if(DEBUG) {
-			// itemAddr.segment().dump("SVM_SYSCALL.putstr:");
-			System.out.println("SVM_SYSCALL.putstr: itemAddr="+itemAddr);
-			System.out.println("SVM_SYSCALL.putstr: itemNchr="+itemNchr);
-		}
-		if(valNchr > 0) move(valAddr, itemAddr, valNchr);
-
-		RTStack.push(IntegerValue.of(Type.T_INT, valNchr), "EXPORT");
-		EXIT("PUTSTR: ");
-	}
-	
-	/**
-	 *  Visible sysroutine("PUTINT") PUTINT;
-	 *      import infix (string) item; integer val
-	 *  end;
-	 */
-	private void putint() {
-		ENTER("PUTINT: ", 0, 4); // exportSize, importSize
-//		int val = RTStack.popInt();
-//		int itemNchr = RTStack.popInt();
-//		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
-//		String sval = ""+val;
-//		int nchr = sval.length();
-//		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
-//		move(sval, itemAddr, nchr);
-////		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
-		PUTINT();
-		EXIT("PUTINT: ");
-	}
-	private int PUTINT() {
-		int val = RTStack.popInt();
-		int itemNchr = RTStack.popInt();
-		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
-		String sval = ""+val;
-		int nchr = sval.length();
-		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
-		move(sval, itemAddr, nchr);
-//		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
-		return nchr;
-	}
-	
-	/**
-	 *  Visible sysroutine("PUTINT2") PUTINT2;
-	 *      import infix (string) item; integer val
-	 *      export integer lng;
-	 *  end;
-	 */
-	private void putint2() {
-		ENTER("PUTINT2: ", 1, 4); // exportSize, importSize
-//		int val = RTStack.popInt();
-//		int itemNchr = RTStack.popInt();
-//		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
-//		String sval = ""+val;
-//		int nchr = sval.length();
-//		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
-//		move(sval, itemAddr, nchr);
-		int nchr = PUTINT();
-		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
-
-		EXIT("PUTINT2: ");
-	}
-	
-	/**
-	 *  Visible sysroutine("PTREAL2") PTREAL2;
-	 *      import infix (string) item; real val; integer frac; 
-	 *      export integer lng;
-	 *  end;
-	 */
-	private void putreal2() {
-		ENTER("PTREAL2: ", 1, 5); // exportSize, importSize
-		int frac = RTStack.popInt();
-		float val = RTStack.popReal();
-		int itemNchr = RTStack.popInt();
-		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
 		
-		String sval = SysEdit.putreal(val,frac);
-		sval = sval.replace(',', '.').replace('E', '&');
-		int nchr = sval.length();
-		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
-		move(sval, itemAddr, nchr);
-		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
-		EXIT("PTREAL2: ");
-	}
-	
-	/**
-	 *  Visible sysroutine("PLREAL2") PLREAL2;
-	 *      import infix (string) item; long real val; integer frac; 
-	 *      export integer lng;
-	 *  end;
-	 */
-	private void putlreal2() {
-		ENTER("PLREAL2: ", 1, 5); // exportSize, importSize
-		int frac = RTStack.popInt();
-		double val = RTStack.popLongReal();
-		int itemNchr = RTStack.popInt();
-		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
-		
-		String sval = SysEdit.putreal(val,frac);
-		sval = sval.replace(',', '.').replace('E', '&');
-		int nchr = sval.length();
-		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
-		move(sval, itemAddr, nchr);
-		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
-		EXIT("PLREAL2: ");
-	}
-	
-	/**
-	 *  Visible sysroutine("PUTFIX2") PUTFIX2;
-	 *      import infix (string) item; real val; integer frac; 
-	 *      export integer lng;
-	 *  end;
-	 */
-	private void putfix2() {
-		ENTER("PUTFIX2: ", 1, 5); // exportSize, importSize
-		int frac = RTStack.popInt();
-		float val = RTStack.popReal();
-		int itemNchr = RTStack.popInt();
-		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
-		
-		String sval = SysEdit.putfix(val,frac);
-		sval = sval.replace(',', '.');
-		int nchr = sval.length();
-		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
-		move(sval, itemAddr, nchr);
-		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
-		EXIT("PUTFIX2: ");
-	}
-	
-	/**
-	 *  Visible sysroutine("PTLFIX2") PTLFIX2;
-	 *      import infix (string) item; long real val; integer frac; 
-	 *      export integer lng;
-	 *  end;
-	 */
-	private void putlfix2() {
-		ENTER("PUTFIX2: ", 1, 5); // exportSize, importSize
-		int frac = RTStack.popInt();
-		double val = RTStack.popLongReal();
-		int itemNchr = RTStack.popInt();
-		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
-		
-		String sval = SysEdit.putfix(val,frac);
-		sval = sval.replace(',', '.');
-		int nchr = sval.length();
-		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
-		move(sval, itemAddr, nchr);
-		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
-		EXIT("PUTFIX2: ");
-	}
-	
-	/**
-	 *  Visible sysroutine("PUTHEX") PUTHEX;
-	 *      import infix (string) item; integer val
-	 *      export integer lng;
-	 *  end;
-	 */
-	private void puthex() {
-		ENTER("PUTHEX: ", 1, 4); // exportSize, importSize
-		int val = RTStack.popInt();
-		int itemNchr = RTStack.popInt();
-		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
-		
-		String sval = "0x" + Integer.toHexString(val).toUpperCase();
-		int nchr = sval.length();
-		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
-		move(sval, itemAddr, nchr);
-		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
-		EXIT("PUTHEX: ");
-	}
-	
-	/**
-	 *  Visible sysroutine("PUTSIZE") PUTSIZE;
-	 *      import infix (string) item; size val
-	 *      export integer lng;
-	 *  end;
-	 */
-	private void putsize() {
-		ENTER("PUTSIZE: ", 1, 4); // exportSize, importSize
-		int val = RTStack.popInt();
-		int itemNchr = RTStack.popInt();
-		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
-		
-		String sval = ""+val;
-		int nchr = sval.length();
-		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
-		move(sval, itemAddr, nchr);
-		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
-		EXIT("PUTSIZE: ");
-	}
-	
-	/**
-	 *  Visible sysroutine("PTOADR2") PTOADR2;
-	 *      import infix (string) item; ref() val;
-	 *      export integer lng;
-	 *  end;
-	 */
-	private void ptoadr2() {
-		ENTER("PTOADR2: ", 1, 4); // exportSize, importSize
-		ObjectAddress val = RTStack.popOADDR();
-		int itemNchr = RTStack.popInt();
-		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
-		String sval = (val == null)? "NONE" : ""+val;
-		int nchr = sval.length();
-		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
-		move(sval, itemAddr, nchr);
-		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
-		EXIT("PTOADR2: ");
-	}
-	
-	/**
-	 *  Visible sysroutine("PTPADR2") PTPADR2;
-	 *      import infix (string) item; label val;
-	 *      export integer lng;
-	 *  end;
-	 */
-	private void ptpadr2() {
-		ENTER("PTPADR2: ", 1, 4); // exportSize, importSize
-		ProgramAddress val = (ProgramAddress) RTStack.pop().value();
-		int itemNchr = RTStack.popInt();
-		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
-		String sval = (val == null)? "NOWHERE" : ""+val;
-		int nchr = sval.length();
-		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
-		move(sval, itemAddr, nchr);
-		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
-		EXIT("PTPADR2: ");
-	}
-	
-	/**
-	 *  Visible sysroutine("PTAADR2") PTAADR2	;
-	 *      import infix (string) item; entry() val;
-	 *      export integer lng;
-	 *  end;
-	 */
-	private void ptradr2() {
-		ENTER("PTAADR2	: ", 1, 4); // exportSize, importSize
-		ProgramAddress val = (ProgramAddress) RTStack.pop().value();
-		int itemNchr = RTStack.popInt();
-		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
-		String sval = (val == null)? "NOBODY" : ""+val;
-		int nchr = sval.length();
-		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
-		move(sval, itemAddr, nchr);
-		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
-		EXIT("PTRADR2	: ");
-	}
-	
-	/**
-	 *  Visible sysroutine("PTRADR2	") PTRADR2	;
-	 *      import infix (string) item; entry() val;
-	 *      export integer lng;
-	 *  end;
-	 */
-	private void ptaadr2() {
-		ENTER("PTRADR2	: ", 1, 4); // exportSize, importSize
-		IntegerValue val = (IntegerValue) RTStack.pop().value();
-		int itemNchr = RTStack.popInt();
-		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
-		String sval = (val == null)? "NOFIELD" : ""+val;
-		int nchr = sval.length();
-		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
-		move(sval, itemAddr, nchr);
-		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
-		EXIT("PTAADR2	: ");
-	}
-	
-	/**
-	 *  Visible sysroutine("PTGADR2	") PTGADR2	;
-	 *      import infix (string) item; name() val;
-	 *      export integer lng;
-	 *  end;
-	 */
-	private void ptgadr2() {
-		ENTER("PTGADR2	: ", 1, 4); // exportSize, importSize
-		GeneralAddress val = RTStack.popGADDR();
-		int itemNchr = RTStack.popInt();
-		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
-		String sval = (val == null)? "GNONE" : ""+val;
-		int nchr = sval.length();
-		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
-		move(sval, itemAddr, nchr);
-		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
-		EXIT("PTGADR2	: ");
-	}
-	
-	/// Visible sysroutine("GDSPEC") GDSPEC;
-	/// import range(1:3) code; infix(string) spec;
-	/// export integer filled  end;
-	private void gdspec() {
-		ENTER("GDSPEC: ", 1, 4); // exportSize, importSize
-		@SuppressWarnings("unused")
-		int itemNchr = RTStack.popInt();
-		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
-		int index = RTStack.popInt();
-		String result = null;
-		switch(index) {
-			case 1: // What is the data set specification for SYSIN.
-				result = "SYSIN"; break;
-			case 2: // What is the data set specification for SYSOUT.
-				result = "SYSOUT"; break;
-			case 3: // What is the data set specification for SYSTRACE.
-				result = "SYSTRACE"; break;
-			default: Util.IERR("");
-		}
-		System.out.println("SVM_SYSCALL.gdspec: index=" + index + ", result=" +result);
-		move(result, itemAddr, result.length());
-
-		RTStack.push(IntegerValue.of(Type.T_INT, result.length()), "EXPORT");
-		EXIT("GDSPEC: ");
-	}
-	
-	/**
-	 *  Visible sysroutine ("SIZEIN") SIZEIN;
-	 *  	import range(0:127) index; range(0:255) ano;
-	 *  	export size result  end;
-	 */
-	private void sizein() {
-		ENTER("SIZEIN: ", 1, 2); // exportSize, importSize
-		int warea = RTStack.popInt();
-		int index = RTStack.popInt();
-		int result = 0;
-		switch(index) {
-			case 1: // The minimum size of this work area.
-				result = 150000; break;
-//				result = 1500; break;
-			case 2: // The extension/contraction step size.
-//				Util.IERR("The extension/contraction step size.");
-				break;
-			case 3: // The minimum gap left in this work area after a garbage collection if the area is the current work area.
-//				Util.IERR("The minimum gap left in this work area after a garbage collection if the area is the current work area.");
-				break;
-			default: Util.IERR("");
-		}
-		System.out.println("SVM_SYSCALL.sizein: index=" + index + ", warea=" + warea + ", result=" +result);
-		RTStack.push(IntegerValue.of(Type.T_SIZE, result), "EXPORT");
-		EXIT("SIZEIN: ");
-	}
-	
 	/**
 	 *  Visible inline'routine ("ZEROAREA")  ZEROAREA;
 	 * 		import ref() fromAddr, toAddr;
@@ -573,107 +222,10 @@ public class SVM_CALLSYS extends SVM_Instruction {
 		}
 //		dseg.dump("SVM_SYSCALL.zeroarea: ", idxFrom, idxTo);
 //		Util.IERR("");
-		RTStack.push(null, null);
+		RTStack.push(null, null); // ?????
 		EXIT("ZEROAREA: ");
 	}
 	
-	/// Visible sysroutine("CPUTIM") CPUTIM;
-	/// export long real sec  end;
-	private void cputime() {
-		ENTER("CPUTIM: ", 0, 1); // exportSize, importSize
-		RTStack.push(null, "CPUTIM: ");
-		EXIT("CPUTIM: ");
-	}
-	
-	/// Visible sysroutine("GETLPP") GETLPP;
-	/// import range(1:MAX_KEY) key; export integer lpp end;
-	private void getlpp() {
-		ENTER("GETLPP: ", 1, 1); // exportSize, importSize
-		@SuppressWarnings("unused")
-		int key = RTStack.popInt();
-		RTStack.push(IntegerValue.of(Type.T_INT, 66), "GETLPP");
-		EXIT("GETLPP: ");
-	}
-	
-	/// Visible sysroutine("OPFILE") OPFILE;
-	/// import  infix(string)      spec;   -- dsetspec;
-	///         range(0:MAX_FIL)   type;   -- dsettype;
-	///         infix(string)      action;
-	///         integer            imglmg; -- img_lng;
-	/// export  range(0:MAX_KEY)   key;    -- filekey;
-	/// -- action encoding: (a digit gives the rank of the character, e.g. 0 is NUL)
-	/// --      action == <0 ! 1 >          -- shared/noshared
-	/// --                <0 ! 1 >          -- append/noappend
-	/// --                <0 ! 1 ! 2 >      -- create/nocreate/anycreate
-	/// --                <0 ! 1 ! 2 >      -- readonly/writeonly/readwrite
-	/// --                <0 ! 1 >          -- purge/nopurge
-	/// --                <0 ! 1 ! 2 ! 3 ! 4 ! 5 >
-	/// --                -- rewind/norewind/next/previous/repeat/release
-	/// --                <<char>>          -- bytesize: rank(char) (!0! default)
-	/// --                <<c1><c2>>        -- move:<rank(c1)*256+rank(c2)>
-	/// --                ( <l><string> )*  -- unknown access modes
-	/// --                0                 -- terminating NUL character
-	/// --
-	/// -- The action string will always be at least 10 chars long, encoded
-	/// -- with the predefined modes in the above given sequence (e.g. char
-	/// -- number 3 will always specify the CREATE mode). If no value is given 
-	/// -- for some mode, RTS will insert the appropriate default character
-	/// -- at the relevant position. These defaults are:
-	/// --
-	/// --      in(byte)file:     "!0!!1!!1!!0!!1!!2!!0!!0!!0!!0!!0!"
-	/// --      out(byte)file:    "!1!!1!!2!!1!!1!!2!!0!!0!!0!!0!!0!"
-	/// --      direct(byte)file: "!1!!1!!1!!2!!1!!5!!0!!0!!0!!0!!0!"
-	/// --
-	/// -- If an unknown (i.e. non-Sport-defined) value are given as parameter
-	/// -- to procedure "setaccess", the first character must be '%' (percent),
-	/// -- otherwise "setaccess" returns FALSE (in all other cases it is TRUE).
-	/// -- Accepted values will be concatenated with the standard string, with 
-	/// -- '%' replaced by a character (l) whose rank gives the length of the
-	/// -- string, excluding the overwritten '%'.
-	/// -- The action string is always terminated by the NUL character ('!0!').
-	/// end;
-	private void opfile() {
-		ENTER("OPFILE: ", 1, 8); // exportSize, importSize
-//		RTStack.dumpRTStack("SVM_SYSCALL.opfile: ");
-		int imglng = RTStack.popInt();
-//		System.out.println("SVM_SYSCALL.opfile: imglng="+imglng);
-		String action = RTStack.popString();
-		int type = RTStack.popInt();
-		String spec = RTStack.popString();
-//		System.out.println("SVM_SYSCALL.opfile: spec="+spec);
-//		System.out.println("SVM_SYSCALL.opfile: type="+type);
-//		System.out.println("SVM_SYSCALL.opfile: action="+action);
-//		System.out.println("SVM_SYSCALL.opfile: imglng="+imglng);
-		int key = 0;
-		if(spec.equalsIgnoreCase("SYSIN")) key = 1;
-		else if(spec.equalsIgnoreCase("SYSOUT")) key = 2;
-		else if(spec.equalsIgnoreCase("SYSTRACE")) key = 3;
-		else {
-			Util.IERR("NOT IMPL");
-		}
-		RTStack.push(IntegerValue.of(Type.T_INT, key), "OPFILE");
-//		Util.IERR("");
-		EXIT("OPFILE: ");
-	}
-
-	/// Visible sysroutine("CLFILE") OPFILE;
-	/// import  range(0:MAX_KEY)   key;    -- filekey;
-	///         infix(string)      action;
-	/// end;
-	/// -- see OPFILE for encoding of action string --
-	private void clfile() {
-		ENTER("CLFILE: ", 0, 4); // exportSize, importSize
-//		RTStack.dumpRTStack("SVM_SYSCALL.clfile: ");
-		String action = RTStack.popString();
-		int key = RTStack.popInt();
-//		System.out.println("SVM_SYSCALL.clfile: action="+action);
-//		System.out.println("SVM_SYSCALL.clfile: key="+key);
-		if(key > 3) {
-			Util.IERR("NOT IMPL");
-		}
-		EXIT("CLFILE: ");
-	}
-
 	/**
 	 *  Visible sysroutine ("DWAREA")  DWAREA;
 	 * 		import size lng; range(0:255) ano;
@@ -692,22 +244,170 @@ public class SVM_CALLSYS extends SVM_Instruction {
 //		Util.IERR("");
 		EXIT("DWAREA: ");
 	}
-	
-	private static void move(String src, ObjectAddress dst, int count) {
-		ObjectAddress into = dst.addOffset(0);
-		for(int i=0;i<count;i++) {
-			Value x = IntegerValue.of(Type.T_CHAR, src.charAt(i));
-			into.store(i, x, "MOVE DEST: "); //into.incrOffset();
-		}
+
+	/// Visible sysroutine("CPUTIM") CPUTIM;
+	/// export long real sec  end;
+	private void cputime() {
+		ENTER("CPUTIM: ", 0, 1); // exportSize, importSize
+		RTStack.push(null, "CPUTIM: ");
+		EXIT("CPUTIM: ");
 	}
-	
-	private static void move(ObjectAddress src, ObjectAddress dst, int count) {
-		ObjectAddress from = src.addOffset(0);
-		ObjectAddress into = dst.addOffset(0);
-		for(int i=0;i<count;i++) {
-			Value x = from.load(); from.incrOffset();
-			into.store(i, x, "MOVE DEST: "); //into.incrOffset();
-		}
+
+
+	public static int getSysKind(String s) {
+//		System.out.println("ProfileDescr.getSysKind: "+s);
+//		Thread.dumpStack();
+		
+		//--- Search for inline index ---
+		if(s.equalsIgnoreCase("TERMIN")) return SVM_CALLSYS.P_TERMIN;
+		if(s.equalsIgnoreCase("INTRHA")) return SVM_CALLSYS.P_INTRHA;
+		if(s.equalsIgnoreCase("PXCHDL")) return SVM_CALLSYS.P_PXCHDL;
+		if(s.equalsIgnoreCase("PEXERR")) return SVM_CALLSYS.P_PEXERR;
+		if(s.equalsIgnoreCase("PSIMOB")) return SVM_CALLSYS.P_PSIMOB;
+		if(s.equalsIgnoreCase("PobSML")) return SVM_CALLSYS.P_PobSML;
+		if(s.equalsIgnoreCase("Palloc")) return SVM_CALLSYS.P_Palloc;
+		if(s.equalsIgnoreCase("Pfree"))  return SVM_CALLSYS.P_Pfree;
+		if(s.equalsIgnoreCase("Pmovit")) return SVM_CALLSYS.P_Pmovit;
+
+		if(s.equalsIgnoreCase("STREQL")) return SVM_CALLSYS.P_STREQL;
+		if(s.equalsIgnoreCase("PRINTO")) return SVM_CALLSYS.P_PRINTO;
+		if(s.equalsIgnoreCase("INITIA")) return SVM_CALLSYS.P_INITIA;
+		if(s.equalsIgnoreCase("SETOPT")) return SVM_CALLSYS.P_SETOPT;
+		if(s.equalsIgnoreCase("DMPSEG")) return SVM_CALLSYS.P_DMPSEG;
+		if(s.equalsIgnoreCase("DMPENT")) return SVM_CALLSYS.P_DMPENT;
+		if(s.equalsIgnoreCase("DMPOOL")) return SVM_CALLSYS.P_DMPOOL;
+		if(s.equalsIgnoreCase("VERBOSE")) return SVM_CALLSYS.P_VERBOSE;
+		if(s.equalsIgnoreCase("GINTIN")) return SVM_CALLSYS.P_GINTIN;
+		if(s.equalsIgnoreCase("GTEXIN")) return SVM_CALLSYS.P_GTEXIN;
+		if(s.equalsIgnoreCase("SIZEIN")) return SVM_CALLSYS.P_SIZEIN;
+		if(s.equalsIgnoreCase("GVIINF")) return SVM_CALLSYS.P_GVIINF;
+		if(s.equalsIgnoreCase("GIVINF")) return SVM_CALLSYS.P_GIVINF;
+		if(s.equalsIgnoreCase("CPUTIM")) return SVM_CALLSYS.P_CPUTIM;
+		if(s.equalsIgnoreCase("DWAREA")) return SVM_CALLSYS.P_DWAREA;
+		if(s.equalsIgnoreCase("MOVEIN")) return SVM_CALLSYS.P_MOVEIN;
+		if(s.equalsIgnoreCase("OPFILE")) return SVM_CALLSYS.P_OPFILE;
+		if(s.equalsIgnoreCase("CLFILE")) return SVM_CALLSYS.P_CLFILE;
+		if(s.equalsIgnoreCase("LSTLOC")) return SVM_CALLSYS.P_LSTLOC;
+		if(s.equalsIgnoreCase("MAXLOC")) return SVM_CALLSYS.P_MAXLOC;
+		if(s.equalsIgnoreCase("CHKPNT")) return SVM_CALLSYS.P_CHKPNT;
+		if(s.equalsIgnoreCase("LOCKFI")) return SVM_CALLSYS.P_LOCKFI;
+		if(s.equalsIgnoreCase("UNLOCK")) return SVM_CALLSYS.P_UNLOCK;
+		if(s.equalsIgnoreCase("INIMAG")) return SVM_CALLSYS.P_INIMAG;
+		if(s.equalsIgnoreCase("OUTIMA")) return SVM_CALLSYS.P_OUTIMA;
+		if(s.equalsIgnoreCase("BREAKO")) return SVM_CALLSYS.P_BREAKO;
+		if(s.equalsIgnoreCase("LOCATE")) return SVM_CALLSYS.P_LOCATE;
+		if(s.equalsIgnoreCase("DELETE")) return SVM_CALLSYS.P_DELETE;
+		if(s.equalsIgnoreCase("GDSNAM")) return SVM_CALLSYS.P_GDSNAM;
+		if(s.equalsIgnoreCase("GDSPEC")) return SVM_CALLSYS.P_GDSPEC;
+		if(s.equalsIgnoreCase("GETLPP")) return SVM_CALLSYS.P_GETLPP;
+		if(s.equalsIgnoreCase("NEWPAG")) return SVM_CALLSYS.P_NEWPAG;
+		if(s.equalsIgnoreCase("PRINTO")) return SVM_CALLSYS.P_PRINTO;
+		if(s.equalsIgnoreCase("STREQL")) return SVM_CALLSYS.P_STREQL;
+		if(s.equalsIgnoreCase("INBYTE")) return SVM_CALLSYS.P_INBYTE;
+		if(s.equalsIgnoreCase("OUTBYT")) return SVM_CALLSYS.P_OUTBYT;
+		if(s.equalsIgnoreCase("GETINT")) return SVM_CALLSYS.P_GETINT;
+		if(s.equalsIgnoreCase("GTREAL")) return SVM_CALLSYS.P_GTREAL;
+		if(s.equalsIgnoreCase("GTFRAC")) return SVM_CALLSYS.P_GTFRAC;
+		if(s.equalsIgnoreCase("PUTSTR")) return SVM_CALLSYS.P_PUTSTR;
+		if(s.equalsIgnoreCase("PUTINT")) return SVM_CALLSYS.P_PUTINT;
+		if(s.equalsIgnoreCase("PUTINT2")) return SVM_CALLSYS.P_PUTINT2;
+		if(s.equalsIgnoreCase("PUTSIZE")) return SVM_CALLSYS.P_PUTSIZE;
+		if(s.equalsIgnoreCase("PUTHEX")) return SVM_CALLSYS.P_PUTHEX;
+		if(s.equalsIgnoreCase("PUTFIX")) return SVM_CALLSYS.P_PUTFIX;
+		if(s.equalsIgnoreCase("PUTFIX2")) return SVM_CALLSYS.P_PUTFIX2;
+		if(s.equalsIgnoreCase("PTLFIX")) return SVM_CALLSYS.P_PTLFIX;
+		if(s.equalsIgnoreCase("PTLFIX2")) return SVM_CALLSYS.P_PTLFIX2;
+		if(s.equalsIgnoreCase("PTREAL")) return SVM_CALLSYS.P_PTREAL;
+		if(s.equalsIgnoreCase("PTREAL2")) return SVM_CALLSYS.P_PTREAL2;
+		if(s.equalsIgnoreCase("PLREAL")) return SVM_CALLSYS.P_PLREAL;
+		if(s.equalsIgnoreCase("PLREAL2")) return SVM_CALLSYS.P_PLREAL2;
+		if(s.equalsIgnoreCase("PTFRAC")) return SVM_CALLSYS.P_PTFRAC;
+		if(s.equalsIgnoreCase("PTSIZE")) return SVM_CALLSYS.P_PTSIZE;
+		if(s.equalsIgnoreCase("PTOADR")) return SVM_CALLSYS.P_PTOADR;
+		if(s.equalsIgnoreCase("PTOADR2")) return SVM_CALLSYS.P_PTOADR2;
+		if(s.equalsIgnoreCase("PTAADR")) return SVM_CALLSYS.P_PTAADR;
+		if(s.equalsIgnoreCase("PTAADR2")) return SVM_CALLSYS.P_PTAADR2;
+		if(s.equalsIgnoreCase("PTGADR")) return SVM_CALLSYS.P_PTGADR;
+		if(s.equalsIgnoreCase("PTGADR2")) return SVM_CALLSYS.P_PTGADR2;
+		if(s.equalsIgnoreCase("PTPADR")) return SVM_CALLSYS.P_PTPADR;
+		if(s.equalsIgnoreCase("PTPADR2")) return SVM_CALLSYS.P_PTPADR2;
+		if(s.equalsIgnoreCase("PTRADR")) return SVM_CALLSYS.P_PTRADR;
+		if(s.equalsIgnoreCase("PTRADR2")) return SVM_CALLSYS.P_PTRADR2;
+		if(s.equalsIgnoreCase("DRAWRP")) return SVM_CALLSYS.P_DRAWRP;
+		if(s.equalsIgnoreCase("DATTIM")) return SVM_CALLSYS.P_DATTIM;
+		if(s.equalsIgnoreCase("LOWTEN")) return SVM_CALLSYS.P_LOWTEN;
+		if(s.equalsIgnoreCase("DCMARK")) return SVM_CALLSYS.P_DCMARK;
+		if(s.equalsIgnoreCase("RSQROO")) return SVM_CALLSYS.P_RSQROO;
+		if(s.equalsIgnoreCase("SQROOT")) return SVM_CALLSYS.P_SQROOT;
+		if(s.equalsIgnoreCase("RLOGAR")) return SVM_CALLSYS.P_RLOGAR;
+		if(s.equalsIgnoreCase("LOGARI")) return SVM_CALLSYS.P_LOGARI;
+		if(s.equalsIgnoreCase("RLOG10")) return SVM_CALLSYS.P_RLOG10;
+		if(s.equalsIgnoreCase("DLOG10")) return SVM_CALLSYS.P_DLOG10;
+		if(s.equalsIgnoreCase("REXPON")) return SVM_CALLSYS.P_REXPON;
+		if(s.equalsIgnoreCase("EXPONE")) return SVM_CALLSYS.P_EXPONE;
+		if(s.equalsIgnoreCase("RSINUS")) return SVM_CALLSYS.P_RSINUS;
+		if(s.equalsIgnoreCase("SINUSR")) return SVM_CALLSYS.P_SINUSR;
+		if(s.equalsIgnoreCase("RCOSIN")) return SVM_CALLSYS.P_RCOSIN;
+		if(s.equalsIgnoreCase("COSINU")) return SVM_CALLSYS.P_COSINU;
+		if(s.equalsIgnoreCase("RTANGN")) return SVM_CALLSYS.P_RTANGN;
+		if(s.equalsIgnoreCase("TANGEN")) return SVM_CALLSYS.P_TANGEN;
+		if(s.equalsIgnoreCase("RCOTAN")) return SVM_CALLSYS.P_RCOTAN;
+		if(s.equalsIgnoreCase("COTANG")) return SVM_CALLSYS.P_COTANG;
+		if(s.equalsIgnoreCase("RARTAN")) return SVM_CALLSYS.P_RARTAN;
+		if(s.equalsIgnoreCase("ARCTAN")) return SVM_CALLSYS.P_ARCTAN;
+		if(s.equalsIgnoreCase("RARCOS")) return SVM_CALLSYS.P_RARCOS;
+		if(s.equalsIgnoreCase("ARCCOS")) return SVM_CALLSYS.P_ARCCOS;
+		if(s.equalsIgnoreCase("RARSIN")) return SVM_CALLSYS.P_RARSIN;
+		if(s.equalsIgnoreCase("ARCSIN")) return SVM_CALLSYS.P_ARCSIN;
+		if(s.equalsIgnoreCase("RATAN2")) return SVM_CALLSYS.P_RATAN2;
+		if(s.equalsIgnoreCase("ATAN2")) return SVM_CALLSYS.P_ATAN2;
+		if(s.equalsIgnoreCase("RSINH")) return SVM_CALLSYS.P_RSINH;
+		if(s.equalsIgnoreCase("SINH")) return SVM_CALLSYS.P_SINH;
+		if(s.equalsIgnoreCase("RCOSH")) return SVM_CALLSYS.P_RCOSH;
+		if(s.equalsIgnoreCase("COSH")) return SVM_CALLSYS.P_COSH;
+		if(s.equalsIgnoreCase("RTANH")) return SVM_CALLSYS.P_RTANH;
+		if(s.equalsIgnoreCase("TANH")) return SVM_CALLSYS.P_TANH;
+		if(s.equalsIgnoreCase("BEGDEB")) return SVM_CALLSYS.P_BEGDEB;
+		if(s.equalsIgnoreCase("ENDDEB")) return SVM_CALLSYS.P_ENDDEB;
+		if(s.equalsIgnoreCase("BEGTRP")) return SVM_CALLSYS.P_BEGTRP;
+		if(s.equalsIgnoreCase("ENDTRP")) return SVM_CALLSYS.P_ENDTRP;
+		if(s.equalsIgnoreCase("GTPADR")) return SVM_CALLSYS.P_GTPADR;
+		if(s.equalsIgnoreCase("GTOUTM")) return SVM_CALLSYS.P_GTOUTM;
+		if(s.equalsIgnoreCase("GTLNID")) return SVM_CALLSYS.P_GTLNID;
+		if(s.equalsIgnoreCase("GTLNO")) return SVM_CALLSYS.P_GTLNO;
+		if(s.equalsIgnoreCase("BRKPNT")) return SVM_CALLSYS.P_BRKPNT;
+		if(s.equalsIgnoreCase("STMNOT")) return SVM_CALLSYS.P_STMNOT;
+		if(s.equalsIgnoreCase("DMPOBJ")) return SVM_CALLSYS.P_DMPOBJ;
+
+		// KNOWN 
+		if(s.equalsIgnoreCase("MODULO")) return SVM_CALLSYS.P_MODULO;
+		if(s.equalsIgnoreCase("RADDEP")) return SVM_CALLSYS.P_RADDEP;
+		if(s.equalsIgnoreCase("DADDEP")) return SVM_CALLSYS.P_DADDEP;
+		if(s.equalsIgnoreCase("RSUBEP")) return SVM_CALLSYS.P_RSUBEP;
+		if(s.equalsIgnoreCase("DSUBEP")) return SVM_CALLSYS.P_DSUBEP;
+		if(s.equalsIgnoreCase("IIPOWR")) return SVM_CALLSYS.P_IIPOWR;
+		if(s.equalsIgnoreCase("RIPOWR")) return SVM_CALLSYS.P_RIPOWR;
+		if(s.equalsIgnoreCase("RRPOWR")) return SVM_CALLSYS.P_RRPOWR;
+		if(s.equalsIgnoreCase("RDPOWR")) return SVM_CALLSYS.P_RDPOWR;
+		if(s.equalsIgnoreCase("DIPOWR")) return SVM_CALLSYS.P_DIPOWR;
+		if(s.equalsIgnoreCase("DRPOWR")) return SVM_CALLSYS.P_DRPOWR;
+		if(s.equalsIgnoreCase("DDPOWR")) return SVM_CALLSYS.P_DDPOWR;
+
+		Util.IERR(""+s);
+		return 0;
+	}
+
+
+	public static int getKnownKind(String s) {
+//		System.out.println("ProfileDescr.getKnownKind: "+s);
+//		Thread.dumpStack();
+		
+		//--- Search for inline index ---
+		if(s.equalsIgnoreCase("CBLNK")) return SVM_CALLSYS.P_CBLNK;
+		if(s.equalsIgnoreCase("CMOVE")) return SVM_CALLSYS.P_CMOVE;
+
+//		Util.IERR(""+s);
+		return 0;
 	}
 
 //	---------     S y s t e m    K i n d    C o d e s      ---------
@@ -849,7 +549,10 @@ public class SVM_CALLSYS extends SVM_Instruction {
 		case P_DIPOWR: return "DIPOWR";
 		case P_DRPOWR: return "DRPOWR";
 		case P_DDPOWR: return "DDPOWR";
-		}
+
+		case P_CBLNK: return "CBLNK";
+		case P_CMOVE: return "CMOVE";
+}
 		return "UNKNOWN:" + kind;
 	}
 
@@ -1004,8 +707,8 @@ public class SVM_CALLSYS extends SVM_Instruction {
 //	 Define P_ERRSWT=44      -- Known("ERRSWT")
 //	 Define P_ERROR=45       -- Known("ERROR")
 //
-//	 Define P_CBLNK=46       -- Known("CBLNK")
-//	 Define P_CMOVE=47       -- Known("CMOVE")
+	public static final int P_CBLNK=125; // Known("CBLNK")
+	public static final int P_CMOVE=126; // Known("CMOVE")
 //	 Define P_TXTREL=49      -- Known("TXTREL")
 //
 //	 Define P_AR1IND=51      -- Known("AR1IND")

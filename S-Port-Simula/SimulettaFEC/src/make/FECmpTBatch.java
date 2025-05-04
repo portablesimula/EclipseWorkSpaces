@@ -25,8 +25,8 @@ public final class FECmpTBatch {
 		Vector<String> names=new Vector<String>();
 		
 //		names.add("adHoc00");
-		names.add("adHoc01");
-//		names.add("adHoc02");
+//		names.add("adHoc01");
+			names.add("adHoc02");
 //		names.add("adHoc03");
 //		names.add("adHoc04");
 //		names.add("adHoc05");
@@ -78,6 +78,8 @@ public final class FECmpTBatch {
 //		names.add("smltst38"); // INITO, GETO, SETO
 //		names.add("smltst39"); // Boolean Operators IMP and EQV
 //		names.add("smltst40"); // Fixup Object Address
+//		names.add("smltst41"); // Shift opr: LSHIFTL, RSHIFTL, LSHIFTA, RSHIFTA
+//		names.add("smltst42"); // Test C_MOVE and C_BLNK
 
 		// Set Compile Time Options and tracing
 //		Option.INLINE_TESTING=true;

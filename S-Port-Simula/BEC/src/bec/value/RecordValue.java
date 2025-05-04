@@ -63,7 +63,7 @@ public class RecordValue extends Value {
 						n += recValue.addChars((TextValue) val);
 					} else n += recValue.addValue(val);
 				}
-				if(ConstDescr.fixrepTail < n) Util.IERR("Too many elements in repetition: " + n + " > " + ConstDescr.fixrepTail);
+				if(ConstDescr.fixrepTail > 0 && ConstDescr.fixrepTail < n) Util.IERR("Too many elements in repetition: " + n + " > " + ConstDescr.fixrepTail);
 				for(int i=n;i<ConstDescr.fixrepTail;i++)
 					recValue.addValue(null);
 			} else {

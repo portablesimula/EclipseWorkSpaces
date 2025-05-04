@@ -7,6 +7,7 @@ import bec.descriptor.RecordDescr;
 import bec.descriptor.RoutineDescr;
 import bec.descriptor.SwitchDescr;
 import bec.statement.IfConstrction;
+import bec.statement.ProtectConstruction;
 import bec.statement.SkipifConstruction;
 import bec.util.Scode;
 import bec.util.Util;
@@ -102,7 +103,7 @@ public class Instruction { // extends ProgramElement {
 			case Scode.S_REPCALL ->     CALL.ofScode(Scode.inByte());
 			case Scode.S_GOTO ->        GOTO.ofScode();
 			case Scode.S_PUSHLEN ->     PUSHLEN.ofScode();
-			case Scode.S_SAVE ->        SAVE.ofScode(); //   ProtectConstruction(false)
+			case Scode.S_SAVE ->        ProtectConstruction.ofInstruction(); // ProtectConstruction(false)
 			case Scode.S_T_INITO ->     INITO.ofScode();
 			case Scode.S_T_GETO ->      GETO.ofScode();
 			case Scode.S_T_SETO ->      SETO.ofScode();
@@ -138,10 +139,10 @@ public class Instruction { // extends ProgramElement {
 			case Scode.S_XOR ->         XOR.ofScode();
 			case Scode.S_EQV ->         EQV.ofScode();
 			case Scode.S_IMP ->         IMP.ofScode();
-			case Scode.S_LSHIFTL ->     BITWISE_SHIFT.ofScode(Scode.S_LSHIFTL); // Extension to S-Code: Left shift logical
-			case Scode.S_LSHIFTA ->     BITWISE_SHIFT.ofScode(Scode.S_LSHIFTA); // Extension to S-Code: Left shift arithm.
-			case Scode.S_RSHIFTL ->     BITWISE_SHIFT.ofScode(Scode.S_RSHIFTL); // Extension to S-Code: Right shift logical
-			case Scode.S_RSHIFTA ->     BITWISE_SHIFT.ofScode(Scode.S_RSHIFTA); // Extension to S-Code: Right shift arithm.
+			case Scode.S_LSHIFTL ->     SHIFT.ofScode(Scode.S_LSHIFTL); // Extension to S-Code: Left shift logical
+			case Scode.S_LSHIFTA ->     SHIFT.ofScode(Scode.S_LSHIFTA); // Extension to S-Code: Left shift arithm.
+			case Scode.S_RSHIFTL ->     SHIFT.ofScode(Scode.S_RSHIFTL); // Extension to S-Code: Right shift logical
+			case Scode.S_RSHIFTA ->     SHIFT.ofScode(Scode.S_RSHIFTA); // Extension to S-Code: Right shift arithm.
 			case Scode.S_LOCATE ->      LOCATE.ofScode();
 			case Scode.S_INCO ->        INCO.ofScode();
 			case Scode.S_DECO ->        DECO.ofScode();

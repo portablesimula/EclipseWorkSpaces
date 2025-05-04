@@ -19,9 +19,23 @@
 %
 %  WRITTEN BY:  THE  14/10-83
 % ==============================================================================
-external class SimulaTest;
+% external class SimulaTest;
 
-SimulaTest(5,"--- Test arithm. relations") begin
+% SimulaTest(5,"--- Test arithm. relations") begin
+begin
+	integer n = 5;
+	text title = "--- Test arithm. relations";
+
+	boolean found_error;
+	integer nFailed;
+	boolean verbose=false;
+	boolean noMessage;
+
+	procedure err(t); text t;
+	begin sysout.setpos(1);
+	      outtext("*** error: in test "); outtext(t); outimage;
+	      found_error:=true; nFailed:=nFailed+1;
+	end;
 
 integer            i1;                ! To be compared by the relops;
 integer            i2;                ! To be compared by the relops;
@@ -44,6 +58,13 @@ long real          maxplreal;         ! To contain max pos long real ;
 long real          minplreal;         ! To contain min pos long real ;
 long real          maxnlreal;         ! To contain max neg long real ;
 long real          minnlreal;         ! To contain min neg long real ;
+
+	if verbose then begin
+		outtext ("--- START Simula a.s. TEST"); outint(n,4); outimage;
+		outtext (title);
+		outimage; outimage;
+	end;
+
 
                                       !********* NOTE 1 ************;
 maxpint :=  maxint;                   ! Fill in max positiv and    ;
@@ -366,5 +387,20 @@ if     not l1 =  l2   and     -2222 <  l2
    and not l2 <= l1 and     l2 <> l1  then
            begin inspect sysout do begin image:=notext; setpos(1) end end
 else  err("MAX.3 (comparing long REALs)");
+
+	
+	if noMessage then else begin
+		if found_error then begin
+			outtext("--- "); outint(nFailed,3); outtext(" ERROR(S) FOUND IN TEST"); outint(n,4); outtext("  "); outtext(title);
+			outtext("Test sample has "); outint(nFailed,3);
+			error(" error(s)");
+		end else begin
+			outtext ("--- NO ERRORS FOUND IN TEST"); outint(n,4); outtext("  "); outtext(title);
+		end;
+
+		if verbose then begin
+			outtext ("--- END Simula a.s. TEST"); outint(n,4); outimage;
+		end;
+	end;
 
 end of program;

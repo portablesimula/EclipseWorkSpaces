@@ -61,6 +61,8 @@ public final class Token {
 	public final static Token LABEL     =new Token(KeyWord.LABEL);
 	public final static Token LE        =new Token(KeyWord.LE);
 	public final static Token LONG      =new Token(KeyWord.LONG);
+	public final static Token LSHIFTA   =new Token(KeyWord.LSHIFTA);
+	public final static Token LSHIFTL   =new Token(KeyWord.LSHIFTL);
 	public final static Token LT        =new Token(KeyWord.LT);
 	public final static Token MACRO     =new Token(KeyWord.MACRO);
 	public final static Token MODULE    =new Token(KeyWord.MODULE);
@@ -84,6 +86,8 @@ public final class Token {
 	public final static Token REM       =new Token(KeyWord.REM);
 	public final static Token REPEAT    =new Token(KeyWord.REPEAT);
 	public final static Token ROUTINE   =new Token(KeyWord.ROUTINE);
+	public final static Token RSHIFTA   =new Token(KeyWord.RSHIFTA);
+	public final static Token RSHIFTL   =new Token(KeyWord.RSHIFTL);
 	public final static Token SHORT  	=new Token(KeyWord.SHORT);
 	public final static Token SIZE  	=new Token(KeyWord.SIZE);
 	public final static Token SKIP  	=new Token(KeyWord.SKIP);

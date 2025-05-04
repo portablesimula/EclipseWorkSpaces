@@ -18,7 +18,12 @@ public class CTStack {
 	public static void saveState() {
 		saveStack.push((Stack<CTStackItem>) stack.clone());
 	}
-	
+
+	public static void saveAndPurge() {
+		saveStack.push(stack);
+		stack = new Stack<CTStackItem>();
+	}
+
 	public static void restoreState() {
 		stack = saveStack.pop();
 	}
@@ -162,6 +167,7 @@ public class CTStack {
 //		if(t2 > Scode.TAG_SIZE) STKERR("CODER.CheckTypesEqual-2: " + Scode.edTag(t2));
 		t1 = arithType(t1,t1); t2 = arithType(t2,t2);
 		if(t1 == t2) return;
+		if(arithType(t1,t2).tag == Type.T_INT.tag) return;
 //	%+C       if (t1>T_BYT1) or (t2>T_BYT1)
 		Type.dumpTypes("checkTypesEqual: ");
 		STKERR("Different types of TOS=" + t1 + " and SOS=" + t2);
@@ -198,6 +204,7 @@ public class CTStack {
 			    	  case Scode.TAG_LREAL: return Type.T_LREAL;
 			    	  case Scode.TAG_REAL:  return Type.T_LREAL;
 			    	  case Scode.TAG_INT:   return Type.T_LREAL;
+			    	  case Scode.TAG_SINT:  return Type.T_LREAL;
 			    	  default: return t1;
 		    	  }
 		      case Scode.TAG_REAL:
@@ -205,6 +212,7 @@ public class CTStack {
 			    	  case Scode.TAG_LREAL: return Type.T_LREAL;
 			    	  case Scode.TAG_REAL:  return Type.T_REAL;
 			    	  case Scode.TAG_INT:   return Type.T_REAL;
+			    	  case Scode.TAG_SINT:  return Type.T_REAL;
 			    	  default: return t1;
 		    	  }
 		      case Scode.TAG_INT:
@@ -212,6 +220,15 @@ public class CTStack {
 			    	  case Scode.TAG_LREAL: return Type.T_LREAL;
 			    	  case Scode.TAG_REAL:  return Type.T_REAL;
 			    	  case Scode.TAG_INT:   return Type.T_INT;
+			    	  case Scode.TAG_SINT:  return Type.T_INT;
+			    	  default: return t1;
+		    	  }
+		      case Scode.TAG_SINT:
+		    	  switch(t2.tag) {
+			    	  case Scode.TAG_LREAL: return Type.T_LREAL;
+			    	  case Scode.TAG_REAL:  return Type.T_REAL;
+			    	  case Scode.TAG_INT:   return Type.T_INT;
+			    	  case Scode.TAG_SINT:  return Type.T_SINT;
 			    	  default: return t1;
 		    	  }
 		      default: return t1;

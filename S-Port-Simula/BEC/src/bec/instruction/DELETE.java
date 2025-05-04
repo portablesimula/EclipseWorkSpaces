@@ -2,6 +2,7 @@ package bec.instruction;
 
 import bec.util.Global;
 import bec.util.Tag;
+import bec.util.Type;
 
 public abstract class DELETE extends Instruction {
 
@@ -25,12 +26,11 @@ public abstract class DELETE extends Instruction {
 		int startTag = tag.val;
 //		Global.dumpDISPL("DELETE.ofScode: ", startTag -2);
 
-		for(int i=startTag;i<Global.DISPL.size();i++) {
-//			System.out.println("DELETE.ofScode: DELETE: " + i + ": " + Global.DISPL.get(i));
-			Global.DISPL.set(i, null);
+		for(int t=startTag;t<Global.DISPL.size();t++) {
+			System.out.println("DELETE.ofScode: DELETE: " + t + ": " + Global.DISPL.get(t));
+			Global.DISPL.set(t, null);
+			Type.removeFromTMAP(t);
 		}
-
-//		Util.IERR("NOT IMPL");
 	}
 
 }

@@ -83,13 +83,13 @@ public class ModuleDefinition extends S_Module {
 			Util.IERR("InterfaceModule: Init values is not supported");
 		}
 
-		System.out.println("ModuleDefinition: curinstr="+Scode.edInstr(Scode.curinstr));
+//		System.out.println("ModuleDefinition: curinstr="+Scode.edInstr(Scode.curinstr));
 		LOOP: while(true) {
 			switch(Scode.curinstr) {
 				case Scode.S_CONST: ConstDescr.ofConstDef(); break;
 				case Scode.S_LOCAL:
 					Variable.ofGlobal(Global.DSEG);
-					Global.DSEG.dump("ModuleDefinition: ");
+//					Global.DSEG.dump("ModuleDefinition: ");
 //					Util.IERR("SJEKK DETTE");
 					break;
 				default:
@@ -141,7 +141,7 @@ public class ModuleDefinition extends S_Module {
 			case Scode.S_SETSWITCH:		setSwitch(); break;
 			case Scode.S_INFO:			Util.WARNING("Unknown info: " + Scode.inString());
 			default:
-				System.out.println("MONITOR.viisible: CurInstr="+Scode.edInstr(Scode.curinstr) + " TERMINATES VIISIBLE");
+//				System.out.println("MONITOR.viisible: CurInstr="+Scode.edInstr(Scode.curinstr) + " TERMINATES VIISIBLE");
 				return false;
 		}
 		return true;

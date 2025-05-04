@@ -333,6 +333,8 @@ public final class SimulettaScanner {
 	        	if(name.equalsIgnoreCase("LABEL")) return(Token.LABEL);
 	        	if(name.equalsIgnoreCase("LE"))    return(Token.LE);
 	        	if(name.equalsIgnoreCase("LONG"))  return(Token.LONG);
+	        	if(name.equalsIgnoreCase("LSHIFTA"))  return(Token.LSHIFTA);
+	        	if(name.equalsIgnoreCase("LSHIFTL"))  return(Token.LSHIFTL);
 	        	if(name.equalsIgnoreCase("LT"))    return(Token.LT);
 	        	break;
 	        case 'M':
@@ -375,6 +377,8 @@ public final class SimulettaScanner {
 	        	if(name.equalsIgnoreCase("REPEAT"))     return(Token.REPEAT);
 	        	if(name.equalsIgnoreCase("RETURN"))	    return(javaKeyword(name)); // Java KeyWord
 	        	if(name.equalsIgnoreCase("ROUTINE"))    return(Token.ROUTINE);
+	        	if(name.equalsIgnoreCase("RSHIFTA"))    return(Token.RSHIFTA);
+	        	if(name.equalsIgnoreCase("RSHIFTL"))    return(Token.RSHIFTL);
 	        	break;
 	        case 'S':
 	        	if(name.equalsIgnoreCase("SHORT"))  		return(Token.SHORT);

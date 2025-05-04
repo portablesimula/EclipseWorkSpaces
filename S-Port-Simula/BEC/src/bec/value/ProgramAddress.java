@@ -18,6 +18,7 @@ import bec.util.Type;
 import bec.util.Util;
 import bec.virtualMachine.CallStackFrame;
 import bec.virtualMachine.RTStack;
+import bec.virtualMachine.RTUtil;
 import bec.virtualMachine.SVM_CALL;
 import bec.virtualMachine.SVM_CALLSYS;
 import bec.virtualMachine.SVM_Instruction;
@@ -117,7 +118,9 @@ public class ProgramAddress extends Value {
 				Global.CSEG.dump("ProgramAddress.execute: FINAL CONSTANT SEGMENT ");
 				Global.TSEG.dump("ProgramAddress.execute: FINAL CONSTANT TEXT SEGMENT ");
 //				Segment.lookup("DSEG_RT").dump("ProgramAddress.execute: BIOINS", 30, 82);
-				Segment.lookup("POOL_1").dump("ProgramAddress.execute: FINAL POOL_1", 0, 20);
+//				Segment.lookup("POOL_1").dump("ProgramAddress.execute: FINAL POOL_1", 0, 20);
+				RTUtil.printPool("POOL_1");
+
 			}
 			RTStack.checkStackEmpty();
 			throw new EndProgram(0,"ProgramAddress.execute: " + seg.ident + " IS FINALIZED -- NOTHING MORE TO EXECUTE");
@@ -137,6 +140,10 @@ public class ProgramAddress extends Value {
 	}
 	
 	public static void printInstr(SVM_Instruction cur,boolean decr) {
+		printInstr(cur.toString(), decr);
+	}
+	
+	public static void printInstr(String cur,boolean decr) {
 		CallStackFrame callStackTop = RTStack.callStack_TOP();
 		String tail = (callStackTop == null)? RTStack.toLine() : callStackTop.toLine();
 		ProgramAddress paddr = Global.PSC.copy();

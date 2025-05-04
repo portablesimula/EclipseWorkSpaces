@@ -157,8 +157,12 @@ public class ObjectAddress extends Value {
 		} else if(other instanceof ObjectAddress oaddr) {
 //			System.out.println("ObjectAddress.sub: this="+this);
 //			System.out.println("ObjectAddress.sub: other="+other);
-			if(!oaddr.segID.equals(segID))
-				Util.IERR("Illegal ObjectAddress'add operation: "+oaddr.segID+" != "+segID);
+			if(!oaddr.segID.equals(segID)) {
+				RTStack.dumpRTStack("ObjectAddress.sub: ");
+//				Segment.lookup("CSEG_ADHOC02").dump("ProgramAddress.execute: FINAL ", 0, 20);
+				Segment.lookup("CSEG_ADHOC02").dump("ProgramAddress.execute: FINAL ");
+				Util.IERR("Illegal ObjectAddress'sub operation: "+oaddr.segID+" != "+segID);
+			}
 			return IntegerValue.of(Type.T_SIZE, this.ofst - oaddr.ofst);
 		} else {
 			Util.IERR(""+other.getClass().getSimpleName()+"  "+other);

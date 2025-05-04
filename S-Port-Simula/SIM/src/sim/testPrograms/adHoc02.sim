@@ -1,19 +1,12 @@
 begin
 
-	class Test; begin
-		character c;
-		integer nFailed;
-		real r;
+	procedure err(t); text t; begin
+%		sysout.setpos(1);
+%		outtext("ABRA ");
+		outtext(t);
+		outimage;
 	end;
 
-	ref(Test) x;
-	
-	x :- new Test;
-	
-	x.c := 'Z';
-	x.nFailed := 444;
-	x.r := 3.14;
+  err("CADAB");
 
-	x.nFailed := x.nFailed + 222;
-
-end;
+end of program;

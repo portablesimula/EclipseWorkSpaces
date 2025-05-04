@@ -5,7 +5,7 @@ import bec.util.Util;
 
 public abstract class CTStackItem {
 	
-	enum Mode { VAL, REF, PROFILE }
+	public enum Mode { VAL, REF, PROFILE }
 	public Mode mode;
 	public Type type;
 	public int size;

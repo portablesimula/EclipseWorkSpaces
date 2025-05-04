@@ -52,6 +52,10 @@ public class SVM_Instruction {
 	public final static int iIMP = 39;
 	public final static int iDUP = 40;
 	public final static int iASSIGN = 41;
+	public final static int iPUSHLEN = 42;
+	public final static int iSAVE = 43;
+	public final static int iRESTORE = 44;
+	public final static int iSHIFT = 45;
 	
 	public final static int iMax = 99;
 	
@@ -93,6 +97,10 @@ public class SVM_Instruction {
 			case iNEG:		return SVM_NEG.read(inpt);
 			case iPUSH:		return SVM_PUSH.read(inpt);
 			case iPUSHC:	return SVM_PUSHC.read(inpt);
+			case iPUSHR:	return SVM_PUSHR.read(inpt);
+			case iPUSHLEN:	return SVM_PUSHLEN.read(inpt);
+			case iSAVE:		return SVM_SAVE.read(inpt);
+			case iRESTORE:	return SVM_RESTORE.read(inpt);
 			case iRETURN:	return SVM_RETURN.read(inpt);
 			case iPOP2REG:	return SVM_POP2REG.read(inpt);
 			case iPEEK2MEM:	return SVM_PEEK2MEM.read(inpt);
@@ -104,7 +112,6 @@ public class SVM_Instruction {
 			case iNOOP:		return SVM_NOOP.read(inpt);
 			case iNOT:		return SVM_NOT.read(inpt);
 			case iGOTO:		return SVM_GOTO.read(inpt);
-			case iPUSHR:	return SVM_PUSHR.read(inpt);
 			case iPRECALL:	return SVM_PRECALL.read(inpt);
 			case iPOPK:		return SVM_POPK.read(inpt);
 			case iENTER:	return SVM_ENTER.read(inpt);
@@ -118,6 +125,7 @@ public class SVM_Instruction {
 			case iDIST:		return SVM_DIST.read(inpt);
 			case iDUP:		return SVM_DUP.read(inpt);
 			case iASSIGN:	return SVM_ASSIGN.read(inpt);
+			case iSHIFT:	return SVM_SHIFT.read(inpt);
 			
 			default: Util.IERR("MISSING: " + edOpcode(opcode));
 		}
@@ -142,6 +150,10 @@ public class SVM_Instruction {
 			case iNEG:		return "iNEG";
 			case iPUSH:		return "iPUSH";
 			case iPUSHC:	return "iPUSHC";
+			case iPUSHR:	return "iPUSHR";
+			case iPUSHLEN:	return "iPUSHLEN";
+			case iSAVE:		return "iSAVE";
+			case iRESTORE:	return "iRESTORE";
 			case iRETURN:	return "iRETURN";
 			case iPOP2REG:	return "iPOP2REG";
 			case iPEEK2MEM:	return "iPEEK2MEM";
@@ -153,7 +165,6 @@ public class SVM_Instruction {
 			case iNOOP:		return "iNOOP";
 			case iNOT:		return "iNOT";
 			case iGOTO:		return "iGOTO";
-			case iPUSHR:	return "iPUSHR";
 			case iPRECALL:	return "iPRECALL";
 			case iPOPK:		return "iPOPK";
 			case iENTER:	return "iENTER";
@@ -167,6 +178,7 @@ public class SVM_Instruction {
 			case iDIST:		return "iDIST";
 			case iDUP:		return "iDUP";
 			case iASSIGN:	return "iASSIGN";
+			case iSHIFT:	return "iSHIFT";
 
 			default:		return "UNKNOWN:" + opcode;
 		}

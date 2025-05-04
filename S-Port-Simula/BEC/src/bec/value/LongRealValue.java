@@ -26,7 +26,11 @@ public class LongRealValue extends Value {
 	 * longreal_value ::= c-lreal real_literal:string
 	 */
 	public static LongRealValue ofScode() {
-		return LongRealValue.of(Double.valueOf(Scode.inString()));
+		String r = Scode.inString();
+		if(r.startsWith("&")) r = "0" + r;
+		else if(r.startsWith("-&")) r = "-0" + r.substring(1);
+		return LongRealValue.of(Double.valueOf(r.replace('&', 'E')));
+//		return LongRealValue.of(Double.valueOf(Scode.inString()));
 	}
 //	public LongRealValue() {
 //		this.type = Type.T_LREAL;

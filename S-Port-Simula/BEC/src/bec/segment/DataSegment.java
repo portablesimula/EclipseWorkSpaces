@@ -10,20 +10,15 @@ import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Type;
 import bec.util.Util;
-import bec.value.BooleanValue;
-import bec.value.DotAddress;
-import bec.value.GeneralAddress;
 import bec.value.IntegerValue;
-import bec.value.LongRealValue;
 import bec.value.ObjectAddress;
-import bec.value.ProgramAddress;
-import bec.value.RealValue;
 import bec.value.TextValue;
 import bec.value.Value;
 
 public class DataSegment extends Segment {
 	Vector<Value> values;
 	Vector<String> comment;
+	private int guard = -1;
 	
 	private static final boolean DEBUG = false;
 
@@ -35,6 +30,10 @@ public class DataSegment extends Segment {
 		this.segmentKind = segmentKind;
 		values = new Vector<Value>();
 		comment = new Vector<String>();
+	}
+	
+	public void addGuard(int ofst) {
+		guard = ofst;
 	}
 	
 	public ObjectAddress ofOffset(int ofst) {
@@ -50,6 +49,7 @@ public class DataSegment extends Segment {
 	}
 	
 	public void store(int index, Value value) {
+		if(index == guard) Util.IERR("");
 		values.set(index, value);
 	}
 	
