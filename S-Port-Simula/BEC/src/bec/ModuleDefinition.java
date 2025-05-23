@@ -131,7 +131,7 @@ public class ModuleDefinition extends S_Module {
 			case Scode.S_CONST:			ConstDescr.ofConstDef(); break;
 			case Scode.S_LABELSPEC:		LabelDescr.ofLabelSpec(); break;
 			case Scode.S_RECORD:		RecordDescr.ofScode(); break;
-			case Scode.S_PROFILE:		ProfileDescr.ofProfile(); break;
+			case Scode.S_PROFILE:		ProfileDescr.ofScode(); break;
 			case Scode.S_ROUTINESPEC:	RoutineDescr.ofRoutineSpec(); break;
 			case Scode.S_INSERT:		new InsertStatement(false); break;
 			case Scode.S_SYSINSERT:		new InsertStatement(true); break;

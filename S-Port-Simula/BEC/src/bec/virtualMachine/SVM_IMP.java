@@ -24,8 +24,8 @@ public class SVM_IMP extends SVM_Instruction {
 	}
 	@Override
 	public void execute() {
-		Value tos = RTStack.pop().value();
-		Value sos = RTStack.pop().value();
+		Value tos = RTStack.pop();
+		Value sos = RTStack.pop();
 //		System.out.println("SVM_IMP.execute: " + sos + " imp " + tos);
 		Value res = (sos == null)? BooleanValue.of(true) : sos.imp(tos);
 //		System.out.println("SVM_IMP.execute: " + sos + " imp " + tos + " ==> " + res);

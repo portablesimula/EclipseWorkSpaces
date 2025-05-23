@@ -794,7 +794,7 @@ public class Coasm {
 //	       iMOVMI  = 198, -- 306oct=11 000 110B
 //	%-E    iMOVSM  = 142, -- 216oct=10 001 110B
 //	%-E    iMOVMS  = 140, -- 214oct=10 001 100B
-//	       iPUSH   =  80, -- 120oct=01 010 000B
+//	       iLOAD   =  80, -- 120oct=01 010 000B
 //	%-E    iPUSHS  =   6, -- 006oct=00 000 110B
 //	       iPUSHC  = 104, -- 150oct=01 101 000B  -- iAPX186 or later
 //	       iPUSHF  = 156, -- 234oct=10 011 100B
@@ -1617,7 +1617,7 @@ public class Coasm {
 //	%-E        Emit2Code(%cnst%);
 //	%+E        Emit2Code(%cnst.LowWord%);
 //	           Emit1Code(%0%);
-//	%-E   else Emit1Code(%bOR(iPUSH,iBP)%)              -- PUSH BP
+//	%-E   else Emit1Code(%bOR(iLOAD,iBP)%)              -- PUSH BP
 //	%-E        Emit1Code(%bOR(iMOV,3)%); -- iMOV or 11B -- MOV  BP,SP
 //	%-E        Encode2(%iBP%,%iSP%);
 //	%-E        if cnst.val > 0
@@ -2043,11 +2043,11 @@ public class Coasm {
 //	%+E       fmf:=qi.reg; qereg:=RegAvailable(qi);
 //	%+E                                              qereg:=qEAX; --- TEMP ?????
 //	%+E       if qereg<>0 then ereg:=iReg(%qereg%)
-//	%+E       else CodeSpace(%1%); Emit1Code(%iPUSH%); ereg:=iA endif;
+//	%+E       else CodeSpace(%1%); Emit1Code(%iLOAD%); ereg:=iA endif;
 //	%+E       fSD:=qi.subc; fwf:=bSHR(fSD,5); fSP:=bAND(fSD,31);
 //	%+E       cnst.val:=qi.val.int(0);
 //	%+E       if fmf=FMF_LREAL
-//	%+E       then CodeSpace(%1%); Emit1Code(%iPUSH%);  ---- TEMP ????????????
+//	%+E       then CodeSpace(%1%); Emit1Code(%iLOAD%);  ---- TEMP ????????????
 //	%+E            LoadCnst(qEAX+ereg,cnst,RegDies(qi,uF))
 //	%+E            if fwf=FMF_LREAL
 //	%+E            then EmitWTLR(wsLOAD,fSP+1,ereg);
@@ -2065,12 +2065,12 @@ public class Coasm {
 //	%+E import range(0:MaxByte) fSD,fmf,qereg; infix(MemAddr) opr;
 //	%+E begin range(0:MaxByte) fwf,fSP,ereg;
 //	%+E       if qereg<>0 then ereg:=iReg(%qereg%)
-//	%+E       else CodeSpace(%1%); Emit1Code(%iPUSH%); ereg:=iA endif;
+//	%+E       else CodeSpace(%1%); Emit1Code(%iLOAD%); ereg:=iA endif;
 //	%+E       fwf:=bSHR(fSD,5); fSP:=bAND(fSD,31);
 //	%+E       if fmf=FMF_SINT then EmitLOAD(qSEXT,qAX+ereg,opr)
 //	%+E       else
 //	%+E            if fmf=FMF_LREAL
-//	%+E            then CodeSpace(%1%); Emit1Code(%iPUSH%);  ---- TEMP ????????????
+//	%+E            then CodeSpace(%1%); Emit1Code(%iLOAD%);  ---- TEMP ????????????
 //	%+E                 EmitLOAD(0,qEAX+ereg,opr)
 //	%+E                 if fwf=FMF_LREAL
 //	%+E                 then EmitWTLR(wsLOAD,fSP+1,ereg);
@@ -2090,7 +2090,7 @@ public class Coasm {
 //	%+E import range(0:MaxByte) fSD,fmf,qereg; infix(MemAddr) opr;
 //	%+E begin range(0:MaxByte) fwf,fSP,ereg;
 //	%+E       if qereg<>0 then ereg:=iReg(%qereg%)
-//	%+E       else CodeSpace(%1%); Emit1Code(%iPUSH%); ereg:=iA endif;
+//	%+E       else CodeSpace(%1%); Emit1Code(%iLOAD%); ereg:=iA endif;
 //	%+E       fwf:=bSHR(fSD,5); fSP:=bAND(fSD,31);
 //	%+E       if fwf<>fmf then EmitWTO(WxCONV(fwf,fmf),fSP,fSP) endif;
 //	%+E       if fmf=FMF_SINT then ereg:=qAX+ereg
@@ -2112,7 +2112,7 @@ public class Coasm {
 //	%+D   if AllignDiff(%cnst.val%)<>0 then IERR("COASM:ModifySP") endif;
 //	      if cnst.val <= (2*AllignFac)
 //	      then if subc=qSUB
-//	           then rx:=qAX; fnc1:=bOR(iPUSH,iA); fnc2:=bOR(iDEC,iSP);
+//	           then rx:=qAX; fnc1:=bOR(iLOAD,iA); fnc2:=bOR(iDEC,iSP);
 //	           else rx:=RegAvailable(qi) fnc1:=bOR(iPOP,iReg(%rx%));
 //	                fnc2:=bOR(iINC,iSP);
 //	           endif;
@@ -2212,14 +2212,14 @@ public class Coasm {
 //	%+E             if (w=1) and (s=0) then Emit4Code(%cnst%)
 //	%+E             else Emit1Code(%cnst.LO%) endif;
 //	%-E        else LoadCnst(qi.reg,qi qua Qfrm2.aux,RegDies(qi,uF));
-//	%-E             CodeSpace(%1%); Emit1Code(%bOR(iPUSH,reg)%);
+//	%-E             CodeSpace(%1%); Emit1Code(%bOR(iLOAD,reg)%);
 //	%-E        endif;
 //	      else
 //	%-E        if CPUID < iAPX186
 //	%-E        then CodeSpace(%6%);
 //	%-E             Emit1Code(%bOR(bOR(iMOVI,8),reg)%); -- i.e. w=1
 //	%-E             EmitAddr(qi qua Qfrm2b.addr,qi qua Qfrm2b.aux.val)
-//	%-E             Emit1Code(%bOR(iPUSH,reg)%);
+//	%-E             Emit1Code(%bOR(iLOAD,reg)%);
 //	%-E        else
 //	                CodeSpace(%5%); Emit1Code(%iPUSHC%);
 //	%-E             EmitAddr(qi qua Qfrm2b.addr,qi qua Qfrm2b.aux.val)
@@ -2532,7 +2532,7 @@ public class Coasm {
 //	%+E        qereg:=RegAvailable(qi);
 //	%+E                                              qereg:=qEAX; --- TEMP ?????
 //	%+E        if qereg<>0 then ereg:=iReg(%qereg%)
-//	%+E        else CodeSpace(%1%); Emit1Code(%iPUSH%); ereg:=iA endif;
+//	%+E        else CodeSpace(%1%); Emit1Code(%iLOAD%); ereg:=iA endif;
 //	%+E        if fmf=FMF_SINT then EmitLOAD(qSEXT,qAX+ereg,opr)
 //	%+E        else EmitLOAD(0,qEAX+ereg,opr)
 //	%+E             if fmf=FMF_LREAL
@@ -2625,7 +2625,7 @@ public class Coasm {
 //	      when qPUSHR: ------ PUSHR   reg ----------------------  Format 1
 //	           CodeSpace(%1%);
 //	%-E        if subc < qES then
-//	                Emit1Code(%bOR(iPUSH,iReg(%subc%))%)
+//	                Emit1Code(%bOR(iLOAD,iReg(%subc%))%)
 //	%-E        else Emit1Code(%bOR(iPUSHS,bSHL(sReg(%subc%),3))%) endif;
 //	      when qPOPR: ------- POPR    reg ----------------------  Format 1
 //	           CodeSpace(%1%);
@@ -2639,7 +2639,7 @@ public class Coasm {
 //	           reg:=iReg(%qi.reg%);
 //	           opr:=qi qua Qfrm3.opr; CodeSpace(%5%);
 //	           Emit1Code(%iLEA%); EncodeEA(opr,reg);
-//	           Emit1Code(%bOR(iPUSH,reg)%)
+//	           Emit1Code(%bOR(iLOAD,reg)%)
 //	      when qPUSHM: ------ PUSHM   const opr ----------------  Format 4
 //	           EmitPUSHM(qi);
 //	      when qPOPK: ------- POPK    const --------------------  Format 2

@@ -15,9 +15,10 @@ import bec.value.ObjectAddress;
 import bec.value.ProgramAddress;
 import bec.value.RealValue;
 import bec.value.RecordValue;
+import bec.value.StringValue;
 import bec.value.TextValue;
 import bec.value.Value;
-import bec.virtualMachine.SVM_PUSHC;
+import bec.virtualMachine.SVM_LOADC;
 
 public abstract class PUSHC extends Instruction {
 	
@@ -91,44 +92,31 @@ public abstract class PUSHC extends Instruction {
 		    case Scode.S_C_GADDR:  type = Type.T_GADDR; value = GeneralAddress.ofScode(); break;
 		    case Scode.S_C_DOT:	   value = DotAddress.ofScode(); type = value.type; break;
 		    case Scode.S_C_RECORD: value = RecordValue.ofScode(); type = value.type; break;
-		    case Scode.S_TEXT:	   type = Type.T_TEXT; value = TextValue.ofScode(); break;
+		    case Scode.S_TEXT:   { type = Type.T_TEXT; TextValue txtval = TextValue.ofScode();
+		    					   ObjectAddress addr = txtval.emitChars(Global.TSEG);
+		    					   value = new StringValue(addr, txtval.textValue.length());
+		    					   type = Type.T_STRING; break;
+		    					 }
 		    default: Util.IERR("NOT IMPLEMENTED: " + Scode.edInstr(Scode.curinstr));
 		}
 		
-		if(type == Type.T_GADDR) {
-			if(value == null) {
-//				Global.PSEG.emit(new SVM_PUSHC(Type.T_INT, null), "GADDR'OFST: ");
-				Global.PSEG.emit(new SVM_PUSHC(null), "GADDR'OADDR: ");
-				Global.PSEG.emit(new SVM_PUSHC(null), "GADDR'OFST: ");
-			} else {
-				GeneralAddress gval = (GeneralAddress) value;
-				Global.PSEG.emit(new SVM_PUSHC(gval.base), "GADDR'OADDR: ");
-				Global.PSEG.emit(new SVM_PUSHC(IntegerValue.of(Type.T_INT, gval.ofst)), "GADDR'OFST: ");
-			}
-		} else if(type == Type.T_TEXT) {
-//			Global.CSEG.dump("PUSHC.ofScode: ");
-			TextValue txtval = (TextValue) value;
-			ObjectAddress addr = txtval.emitChars(Global.TSEG);
-			IntegerValue lng = IntegerValue.of(Type.T_INT, txtval.textValue.length());
-			Global.PSEG.emit(new SVM_PUSHC(addr), "TEXT'CHRADR'oaddr: ");
-			Global.PSEG.emit(new SVM_PUSHC(null), "TEXT'CHRADR'ofst:  ");
-			Global.PSEG.emit(new SVM_PUSHC(lng), "TEXT'lng:   ");
+//		if(type == Type.T_GADDR) {
+//			Global.PSEG.emit(new SVM_LOADC(type, value), "GADDR: ");				
+//		} else if(type == Type.T_TEXT) {
+//			TextValue txtval = (TextValue) value;
+//			ObjectAddress addr = txtval.emitChars(Global.TSEG);
+//			type = Type.T_STRING;
+//			value = new StringValue(addr, txtval.textValue.length());
+//			Global.PSEG.emit(new SVM_LOADC(type, value), "");
+//		} else if(type.isRecordType()) {
+//			Global.PSEG.emit(new SVM_LOADC(type, value), "Record: ");
+//		} else {
+//			Global.PSEG.emit(new SVM_LOADC(type, value), "");
+//		}
 
-			type = Type.T_STRING;				
-//			Global.PSEG.dump("PUSHC: "+value+": ");
-//			Util.IERR("");
-		} else if(type.isRecordType()) {
-			RecordValue rval = (RecordValue)value;
-//			for(Value val:rval.attrValues)
-			for(int i=0;i<rval.attrValues.size();i++) {
-//			for(int i=rval.attrValues.size()-1;i>=0;i--) {
-				Value val = rval.attrValues.get(i);
-				Global.PSEG.emit(new SVM_PUSHC(val), "Record: " + rval.tag);				
-			}
-//			Util.IERR("");
-		} else {
-			Global.PSEG.emit(new SVM_PUSHC(value), "");
-		}
+		Global.PSEG.emit(new SVM_LOADC(type, value), "");
+
+		
 //		value.print("NEW ConstItem: ");
 		ConstItem cns = new ConstItem(type, value);
 		CTStack.push(cns);

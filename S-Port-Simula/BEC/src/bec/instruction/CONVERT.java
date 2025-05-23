@@ -1,18 +1,9 @@
 package bec.instruction;
 
 import bec.compileTimeStack.CTStack;
-import bec.compileTimeStack.ConstItem;
 import bec.compileTimeStack.CTStackItem;
 import bec.util.Global;
-import bec.util.Scode;
 import bec.util.Type;
-import bec.util.Util;
-import bec.value.GeneralAddress;
-import bec.value.IntegerValue;
-import bec.value.LongRealValue;
-import bec.value.ObjectAddress;
-import bec.value.RealValue;
-import bec.value.Value;
 import bec.virtualMachine.SVM_CONVERT;
 
 public abstract class CONVERT extends Instruction {

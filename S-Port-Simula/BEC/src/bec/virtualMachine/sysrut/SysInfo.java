@@ -5,7 +5,7 @@ import bec.util.Type;
 import bec.util.Util;
 import bec.value.IntegerValue;
 import bec.virtualMachine.RTStack;
-import bec.virtualMachine.SVM_CALLSYS;
+import bec.virtualMachine.SVM_CALL_SYS;
 
 public abstract class SysInfo {
 	
@@ -14,7 +14,7 @@ public abstract class SysInfo {
 	 *  import range(0:127) index; export integer result  end;
 	 */
 	public static void getIntinfo() {
-		SVM_CALLSYS.ENTER("GINTIN: ", 1, 1); // exportSize, importSize
+		SVM_CALL_SYS.ENTER("GINTIN: ", 1, 1); // exportSize, importSize
 		int index = RTStack.popInt();
 		System.out.println("SVM_SYSCALL.getIntinfo: "+index);
 		int result=0;
@@ -28,7 +28,7 @@ public abstract class SysInfo {
 			default: Util.IERR("");
 		}
 		RTStack.push(IntegerValue.of(Type.T_INT, result), "EXPORT");
-		SVM_CALLSYS.EXIT("GINTIN: ");
+		SVM_CALL_SYS.EXIT("GINTIN: ");
 	}
 	
 	/**
@@ -37,7 +37,7 @@ public abstract class SysInfo {
 	 *  	export size result  end;
 	 */
 	public static void sizein() {
-		SVM_CALLSYS.ENTER("SIZEIN: ", 1, 2); // exportSize, importSize
+		SVM_CALL_SYS.ENTER("SIZEIN: ", 1, 2); // exportSize, importSize
 		int warea = RTStack.popInt();
 		int index = RTStack.popInt();
 		int result = 0;
@@ -55,7 +55,7 @@ public abstract class SysInfo {
 		}
 		System.out.println("SVM_SYSCALL.sizein: index=" + index + ", warea=" + warea + ", result=" +result);
 		RTStack.push(IntegerValue.of(Type.T_SIZE, result), "EXPORT");
-		SVM_CALLSYS.EXIT("SIZEIN: ");
+		SVM_CALL_SYS.EXIT("SIZEIN: ");
 	}
 
 }

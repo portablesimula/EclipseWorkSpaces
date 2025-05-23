@@ -12,10 +12,14 @@ import bec.segment.Segment;
 import bec.value.ProgramAddress;
 
 public class Global {
+	
+	public static final boolean TESTING_SAVE_RESTORE = true;
+
 	public static boolean INLINE_TESTING = false;
 	public static boolean verbose = false;
 	public static int traceMode = 0;
 	public static boolean SCODE_INPUT_TRACE = false;
+	public static boolean TRACE_ALLOC_FRAME = false;
 	public static boolean PRINT_GENERATED_SVM_DATA = false;
 	public static boolean PRINT_GENERATED_SVM_CODE = false;
 	public static boolean ATTR_INPUT_TRACE = false;

@@ -22,7 +22,7 @@ public class SVM_ADDREG extends SVM_Instruction {
 
 	@Override
 	public void execute() {
-		Value tos = RTStack.pop().value();
+		Value tos = RTStack.pop();
 		Value rval = RTRegister.getValue(xReg);
 		
 		if(DEBUG) {

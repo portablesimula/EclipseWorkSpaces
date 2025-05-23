@@ -5,6 +5,7 @@ import java.io.IOException;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
+import bec.util.Util;
 import bec.value.ObjectAddress;
 import bec.value.ProgramAddress;
 import bec.value.Value;
@@ -34,12 +35,44 @@ public class SVM_CALL extends SVM_Instruction {
 //		System.out.println("SVM_CALL:execute: " + this);
 		if(rutAddr == null) {
 			// CALL-TOS
-			Global.PSC = (ProgramAddress) RTStack.pop().value().copy();
+			
+//			boolean TESTING = false;
+//			
+//			if(TESTING) {
+//				String rutIdent = "CALL-TOS";
+//				int nParSlots = 1;
+//				int exportSize = 0;
+//				int importSize = 0;
+//				RTStack.precallStack.push(new CallStackFrame(rutIdent, RTStack.size() - nParSlots, exportSize, importSize));
+//				if(exportSize > 0) {
+//					if(nParSlots > 0) {
+////						RTStack.dumpRTStack("SVM_PRECALL.execute-1");
+//						RTStack.addExport(nParSlots, exportSize);
+////						RTStack.dumpRTStack("SVM_PRECALL.execute-2");
+////						Util.IERR("");
+//					} else {
+//						for(int i=0;i<exportSize;i++) {
+//							RTStack.push(null, "EXPORT"); // Export slots		
+//						}
+//					}
+//				}
+//			}
+			
+			Global.PSC = (ProgramAddress) RTStack.pop().copy();
 //			System.out.println("SVM_CALL.execute: PSC="+Global.PSC);
+//			Global.PSC.segment().dump("SVM_CALL.execute: ", 0, 10);
 		} else {
 			Global.PSC = rutAddr.copy();
 		}
 		RTStack.push(retur, "RETUR");
+
+//		if(rutAddr != null && rutAddr.toString().equals("PSEG_FIL_OUTTXT:BODY[0]")) {
+//			int idx = RTStack.size() - 2;
+//			System.out.println("SVM_CALL.execute: idx="+idx);
+//			RTStack.dumpRTStack("");
+//			RTStack.guard(idx);	
+////			Util.IERR("");
+//		}
 	}
 	
 	@Override	

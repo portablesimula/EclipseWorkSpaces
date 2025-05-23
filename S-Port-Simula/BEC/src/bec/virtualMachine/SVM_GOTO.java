@@ -18,7 +18,7 @@ public class SVM_GOTO extends SVM_Instruction {
 
 	@Override
 	public void execute() {
-		Global.PSC = (ProgramAddress) RTStack.pop().value();
+		Global.PSC = (ProgramAddress) RTStack.pop();
 		RTStack.checkStackEmpty();
 	}
 	

@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
-import bec.instruction.CONVERT;
 import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Type;
@@ -15,7 +14,6 @@ import bec.value.LongRealValue;
 import bec.value.ObjectAddress;
 import bec.value.RealValue;
 import bec.value.Value;
-import bec.virtualMachine.RTStack.RTStackItem;
 
 public class SVM_CONVERT extends SVM_Instruction {
 	int fromType;
@@ -32,8 +30,8 @@ public class SVM_CONVERT extends SVM_Instruction {
 	@Override
 	public void execute() {
 		if(DEBUG) {
-			System.out.println("SVM_CONVERT.execute: "+fromType+"  ==> " + toType);
-			RTStackItem tos = RTStack.peek();
+			System.out.println("SVM_CONVERT.execute: "+Scode.edTag(fromType)+"  ==> " + Scode.edTag(toType));
+			Value tos = RTStack.peek();
 			System.out.println("SVM_CONVERT.execute: TOS="+tos);
 		}
 		
@@ -41,19 +39,24 @@ public class SVM_CONVERT extends SVM_Instruction {
 		switch(fromType) {
 		case Scode.TAG_OADDR: fromValue = RTStack.popOADDR(); break;
 		case Scode.TAG_GADDR: fromValue = RTStack.popGADDR(); break;
-		default:			  fromValue = RTStack.pop().value();
+		default:			  fromValue = RTStack.pop();
 		}
 
 		if(DEBUG) {
-			System.out.println("SVM_CONVERT.execute: fromValue="+fromValue+"  ==> " + toType);
+			System.out.println("SVM_CONVERT.execute: fromValue="+fromValue+"  ==> " + Scode.edTag(toType));
 		}
 
 		Value toValue = convValue(fromValue, fromType, toType);
+
+		if(DEBUG) {
+			System.out.println("SVM_CONVERT.execute: fromValue="+fromValue+"  ==> toValue="+toValue);
+		}
+
 		RTStack.push(toValue, "CONVERT: ");
 		Global.PSC.ofst++;
 	}
 	
-//	%title ***    C o n v e r t   C o n s t a n t   V a l u e    ***
+
 	private static Value convValue(Value fromValue, int fromtype, int totype) {
 		Value toValue = null;
 		boolean ILL = false;
@@ -62,7 +65,21 @@ public class SVM_CONVERT extends SVM_Instruction {
 			IntegerValue fromval = (IntegerValue)fromValue;
 			int val = (fromval == null)? 0 : fromval.value;
 			switch(totype) {
+				case Scode.TAG_SINT:  toValue = IntegerValue.of(Type.T_SINT, val); break;
 				case Scode.TAG_INT:   toValue = IntegerValue.of(Type.T_INT, val); break;
+				case Scode.TAG_REAL:  toValue = RealValue.of(val); break;
+				case Scode.TAG_LREAL: toValue = LongRealValue.of(val); break;
+				default: ILL = true;
+			}
+			break;
+		}
+		case Scode.TAG_SINT: {
+			IntegerValue fromval = (IntegerValue)fromValue;
+			int val = (fromval == null)? 0 : fromval.value;
+			switch(totype) {
+				case Scode.TAG_CHAR:  toValue = IntegerValue.of(Type.T_CHAR, val); break;
+				case Scode.TAG_INT:   toValue = IntegerValue.of(Type.T_INT, val); break;
+				case Scode.TAG_SIZE:  toValue = IntegerValue.of(Type.T_SIZE, val); break;
 				case Scode.TAG_REAL:  toValue = RealValue.of(val); break;
 				case Scode.TAG_LREAL: toValue = LongRealValue.of(val); break;
 				default: ILL = true;
@@ -74,6 +91,7 @@ public class SVM_CONVERT extends SVM_Instruction {
 			int val = (fromval == null)? 0 : fromval.value;
 			switch(totype) {
 				case Scode.TAG_CHAR:  toValue = IntegerValue.of(Type.T_CHAR, val); break;
+				case Scode.TAG_SINT:  toValue = IntegerValue.of(Type.T_SINT, val); break;
 				case Scode.TAG_SIZE:  toValue = IntegerValue.of(Type.T_SIZE, val); break;
 				case Scode.TAG_REAL:  toValue = RealValue.of(val); break;
 				case Scode.TAG_LREAL: toValue = LongRealValue.of(val); break;
@@ -82,24 +100,51 @@ public class SVM_CONVERT extends SVM_Instruction {
 			break;
 		}
 		case Scode.TAG_REAL: {
-			RealValue fromval = (RealValue)fromValue;
-			float val = (fromval == null)? 0 : fromval.value;
-			switch(totype) {
-				case Scode.TAG_CHAR:  toValue = IntegerValue.of(Type.T_CHAR, (int)(val+0.5)); break;
-				case Scode.TAG_INT:   toValue = IntegerValue.of(Type.T_INT, (int)(val+0.5)); break;
-				case Scode.TAG_LREAL: toValue = LongRealValue.of(val); break;
-				default: ILL = true;
+//			RealValue fromval = (RealValue)fromValue;
+//			float val = (fromval == null)? 0 : fromval.value;
+			float val = (fromValue == null)? 0 : fromValue.toFloat();
+			if(val >0) {
+				int newVal = (int)(val+0.5);
+				switch(totype) {
+					case Scode.TAG_CHAR:  toValue = IntegerValue.of(Type.T_CHAR, newVal); break;
+					case Scode.TAG_SINT:  toValue = IntegerValue.of(Type.T_SINT, newVal); break;
+					case Scode.TAG_INT:   toValue = IntegerValue.of(Type.T_INT, newVal); break;
+					case Scode.TAG_LREAL: toValue = LongRealValue.of(val); break;
+					default: ILL = true;
+				}
+			} else {
+				int newVal = - (int)((-val)+0.5);
+				switch(totype) {
+					case Scode.TAG_CHAR:  toValue = IntegerValue.of(Type.T_CHAR, newVal); break;
+					case Scode.TAG_SINT:  toValue = IntegerValue.of(Type.T_SINT, newVal); break;
+					case Scode.TAG_INT:   toValue = IntegerValue.of(Type.T_INT, newVal); break;
+					case Scode.TAG_LREAL: toValue = LongRealValue.of(val); break;
+					default: ILL = true;
+				}
 			}
 			break;
 		}
 		case Scode.TAG_LREAL: {
 			LongRealValue fromval = (LongRealValue)fromValue;
 			double val = (fromval == null)? 0 : fromval.value;
-			switch(totype) {
-				case Scode.TAG_CHAR: toValue = IntegerValue.of(Type.T_CHAR, (int)(val+0.5)); break;
-				case Scode.TAG_INT:  toValue = IntegerValue.of(Type.T_INT, (int)(val+0.5)); break;
-				case Scode.TAG_REAL: toValue = RealValue.of((float)val); break;
-				default: ILL = true;
+			if(val > 0) {
+			int newVal = (int)(val+0.5);
+				switch(totype) {
+					case Scode.TAG_CHAR: toValue = IntegerValue.of(Type.T_CHAR, newVal); break;
+					case Scode.TAG_SINT: toValue = IntegerValue.of(Type.T_SINT, newVal); break;
+					case Scode.TAG_INT:  toValue = IntegerValue.of(Type.T_INT, newVal); break;
+					case Scode.TAG_REAL: toValue = RealValue.of((float)val); break;
+					default: ILL = true;
+				}
+			} else {
+				int newVal = - (int)((-val)+0.5);
+				switch(totype) {
+					case Scode.TAG_CHAR: toValue = IntegerValue.of(Type.T_CHAR, newVal); break;
+					case Scode.TAG_SINT: toValue = IntegerValue.of(Type.T_SINT, newVal); break;
+					case Scode.TAG_INT:  toValue = IntegerValue.of(Type.T_INT, newVal); break;
+					case Scode.TAG_REAL: toValue = RealValue.of((float)val); break;
+					default: ILL = true;
+				}	
 			}
 			break;
 		}
@@ -135,7 +180,7 @@ public class SVM_CONVERT extends SVM_Instruction {
 
 	
 	public String toString() {
-		return "CONVERT  " + fromType + " ==> " + toType;
+		return "CONVERT  " + Scode.edTag(fromType) + " ==> " + Scode.edTag(toType);
 	}
 
 	// ***********************************************************************************************

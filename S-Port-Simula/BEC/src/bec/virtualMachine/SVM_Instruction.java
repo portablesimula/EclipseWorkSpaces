@@ -22,11 +22,11 @@ public class SVM_Instruction {
 	public final static int iJUMPIF = 9;
 	public final static int iMULT = 10;
 	public final static int iNEG = 11;
-	public final static int iPUSH = 12;
+	public final static int iLOAD = 12;
 	public final static int iPUSHC = 13;
 	public final static int iRETURN = 14;
-	public final static int iPOP2REG = 15;
-	public final static int iPEEK2MEM = 16;
+	public final static int iSTORE2REG = 15;
+	public final static int iSTORE = 16;
 	public final static int iREM = 17;
 	public final static int iSUB = 18;
 	public final static int iSWITCH = 19;
@@ -56,6 +56,7 @@ public class SVM_Instruction {
 	public final static int iSAVE = 43;
 	public final static int iRESTORE = 44;
 	public final static int iSHIFT = 45;
+	public final static int iCALL_TOS = 46;
 	
 	public final static int iMax = 99;
 	
@@ -88,6 +89,7 @@ public class SVM_Instruction {
 			case iEQV:		return SVM_EQV.read(inpt);
 			case iIMP:		return SVM_IMP.read(inpt);
 			case iCALL:		return SVM_CALL.read(inpt);
+			case iCALL_TOS:	return SVM_CALL_TOS.read(inpt);
 			case iCOMPARE:	return SVM_COMPARE.read(inpt);
 			case iCONVERT:	return SVM_CONVERT.read(inpt);
 			case iDIV:		return SVM_DIV.read(inpt);
@@ -95,20 +97,20 @@ public class SVM_Instruction {
 			case iJUMPIF:	return SVM_JUMPIF.read(inpt);
 			case iMULT:		return SVM_MULT.read(inpt);
 			case iNEG:		return SVM_NEG.read(inpt);
-			case iPUSH:		return SVM_PUSH.read(inpt);
-			case iPUSHC:	return SVM_PUSHC.read(inpt);
+			case iLOAD:		return SVM_LOAD.read(inpt);
+			case iPUSHC:	return SVM_LOADC.read(inpt);
 			case iPUSHR:	return SVM_PUSHR.read(inpt);
 			case iPUSHLEN:	return SVM_PUSHLEN.read(inpt);
 			case iSAVE:		return SVM_SAVE.read(inpt);
 			case iRESTORE:	return SVM_RESTORE.read(inpt);
 			case iRETURN:	return SVM_RETURN.read(inpt);
-			case iPOP2REG:	return SVM_POP2REG.read(inpt);
-			case iPEEK2MEM:	return SVM_PEEK2MEM.read(inpt);
+			case iSTORE2REG:	return SVM_STORE2REG.read(inpt);
+			case iSTORE:	return SVM_STORE.read(inpt);
 			case iREM:		return SVM_REM.read(inpt);
 			case iSUB:		return SVM_SUB.read(inpt);
 			case iSWITCH:	return SVM_SWITCH.read(inpt);
 			case iLINE:		return SVM_LINE.read(inpt);
-			case iCALLSYS:	return SVM_CALLSYS.read(inpt);
+			case iCALLSYS:	return SVM_CALL_SYS.read(inpt);
 			case iNOOP:		return SVM_NOOP.read(inpt);
 			case iNOT:		return SVM_NOT.read(inpt);
 			case iGOTO:		return SVM_GOTO.read(inpt);
@@ -141,6 +143,7 @@ public class SVM_Instruction {
 			case iEQV:		return "iEQV";
 			case iIMP:		return "iIMP";
 			case iCALL:		return "iCALL";
+			case iCALL_TOS:	return "iCALL_TOS";
 			case iCOMPARE:	return "iCOMPARE";
 			case iCONVERT:	return "iCONVERT";
 			case iDIV:		return "iDIV";
@@ -148,15 +151,15 @@ public class SVM_Instruction {
 			case iJUMPIF:	return "iJUMPIF";
 			case iMULT:		return "iMULT";
 			case iNEG:		return "iNEG";
-			case iPUSH:		return "iPUSH";
+			case iLOAD:		return "iLOAD";
 			case iPUSHC:	return "iPUSHC";
 			case iPUSHR:	return "iPUSHR";
 			case iPUSHLEN:	return "iPUSHLEN";
 			case iSAVE:		return "iSAVE";
 			case iRESTORE:	return "iRESTORE";
 			case iRETURN:	return "iRETURN";
-			case iPOP2REG:	return "iPOP2REG";
-			case iPEEK2MEM:	return "iPEEK2MEM";
+			case iSTORE2REG:	return "iSTORE2REG";
+			case iSTORE:	return "iSTORE";
 			case iREM:	 	return "iSTOREC";
 			case iSUB:		return "iSUB";
 			case iSWITCH:	return "iSWITCH";

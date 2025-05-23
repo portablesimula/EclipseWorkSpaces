@@ -1,6 +1,8 @@
 package bec.util;
 
 import bec.compileTimeStack.CTStack;
+import bec.compileTimeStack.CTStackItem;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 
@@ -72,7 +74,21 @@ public class Scode {
 	}
 	
 	public static void flushTraceBuff() {
-		if(Global.SCODE_INPUT_TRACE) System.out.println(traceBuff);	
+		if(Global.SCODE_INPUT_TRACE) {
+			String ctstk = (CTStack.size() == 0)? "" : " STACK["+CTStack.size()+"]: "+CTStack.TOS();
+			String line = traceBuff.toString();
+			while(line.length() < 60) line = line + " ";
+			System.out.println(line + ctstk);
+			if(CTStack.size() > 1) {
+				line = "";
+				while(line.length() < 71) line = line + " ";
+				for(int i=CTStack.size()-2;i>=0;i--) {
+					CTStackItem item = CTStack.getItem(i);
+					System.out.println(line + item);
+				}
+//				CTStack.dumpStack("Scode.flushTraceBuff");
+			}
+		}
 		if(Global.PRINT_GENERATED_SVM_CODE) {
 			if(Global.PSEG != null) Global.PSEG.listInstructions();
 		}

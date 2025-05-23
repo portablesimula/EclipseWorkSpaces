@@ -23,7 +23,7 @@ public class SVM_NOT extends SVM_Instruction {
 
 	@Override
 	public void execute() {
-		Value tos = RTStack.pop().value();
+		Value tos = RTStack.pop();
 		Value res = null;
 		if(tos == null) res = BooleanValue.of(true);
 		else {

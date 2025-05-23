@@ -5,8 +5,11 @@ import java.io.IOException;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
+import bec.util.Util;
 import bec.value.GeneralAddress;
+import bec.value.IntegerValue;
 import bec.value.ObjectAddress;
+import bec.value.Value;
 
 /**
  * 
@@ -37,6 +40,8 @@ import bec.value.ObjectAddress;
  */
 public class SVM_REFER extends SVM_Instruction {
 	int xReg;
+	
+	private static final boolean TESTING = true;
 
 	public SVM_REFER(int xReg) {
 		this.opcode = SVM_Instruction.iREFER;
@@ -45,10 +50,26 @@ public class SVM_REFER extends SVM_Instruction {
 
 	@Override
 	public void execute() {
-		int gOfst = RTStack.popInt();
-		ObjectAddress objadr = (ObjectAddress) RTStack.pop().value();
-		RTRegister.putValue(xReg, new GeneralAddress(objadr, gOfst));
-
+		if(TESTING) {
+			int gOfst = 0;
+			ObjectAddress objadr = null;
+			Value tos = RTStack.pop();
+			if(tos instanceof ObjectAddress) {
+				System.out.println("SVM_REFER.execute: ERROR: GADDR in reverse order");
+				Util.IERR("");
+				objadr = (ObjectAddress) tos;
+				gOfst = RTStack.popInt();
+			} else {
+				gOfst = ((IntegerValue)tos).value;
+				objadr = (ObjectAddress) RTStack.pop();
+			}
+			RTRegister.putValue(xReg, new GeneralAddress(objadr, gOfst));
+			
+		} else {
+			int gOfst = RTStack.popInt();
+			ObjectAddress objadr = (ObjectAddress) RTStack.pop();
+			RTRegister.putValue(xReg, new GeneralAddress(objadr, gOfst));
+		}
 		Global.PSC.ofst++;
 	}
 	

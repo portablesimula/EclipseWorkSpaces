@@ -1,7 +1,7 @@
 package bec.virtualMachine;
 
 import bec.value.ProgramAddress;
-import bec.virtualMachine.RTStack.RTStackItem;
+import bec.value.Value;
 
 //	FRAME:
 //		EXPORT ?
@@ -38,7 +38,7 @@ public class CallStackFrame {
 	
 	public ProgramAddress returnAddress() {
 		int idx = rtStackIndex + exportSize + importSize;
-		return (ProgramAddress) RTStack.load(idx).value();
+		return (ProgramAddress) RTStack.load(idx);
 	}
 	
 	public ProgramAddress callAddress() {
@@ -54,21 +54,21 @@ public class CallStackFrame {
 		boolean first = true;
 		sb.append("Frame["+(stx-idx)+"]: ");
 		while(idx < stx) {
-			RTStackItem item = RTStack.load(idx++);
+			Value item = RTStack.load(idx++);
 			if(! first) sb.append(", "); first = false;
-			sb.append((item == null)? null : item.value());
+			sb.append((item == null)? null : item);
 		}
 		sb.append("  Stack["+(RTStack.size()-idx)+"]: ");
 		first = true;
 		while(idx < RTStack.size()) {
-			RTStackItem item = RTStack.load(idx++);
+			Value item = RTStack.load(idx++);
 			if(! first) sb.append(", "); first = false;
-			sb.append(item.value());
+			sb.append(item);
 		}
 		return sb.toString();
 	}
 
-	public void print(int dum,String title) {
+	public void print(String title) {
 		CallStackFrame callStackTop = RTStack.callStack_TOP();
 //		System.out.println("==================== " + title + " RTFrame'DUMP ====================");
 		String indent = "            ";
@@ -78,21 +78,21 @@ public class CallStackFrame {
 			System.out.println("    "+ident + ": callStackTop.rtStackIndex=" + idx);
 			if(exportSize > 0) {
 				for(int i=0;i<exportSize;i++) {
-					RTStackItem item = RTStack.load(idx);
-					System.out.println(indent+"EXPORT: " + idx + ": " + item.value()); idx++;
+					Value item = RTStack.load(idx);
+					System.out.println(indent+"EXPORT: " + idx + ": " + item); idx++;
 				}
 			}
 			for(int i=0;i<importSize;i++) {
-				RTStackItem item = RTStack.load(idx);
-				System.out.println(indent+"IMPORT: " + idx + ": " + item.value()); idx++;
+				Value item = RTStack.load(idx);
+				System.out.println(indent+"IMPORT: " + idx + ": " + item); idx++;
 			}
-			System.out.println(indent+"RETURN: " + idx + ": " + RTStack.load(idx).value()); idx++;
+			System.out.println(indent+"RETURN: " + idx + ": " + RTStack.load(idx)); idx++;
 			for(int i=0;i<localSize;i++) {
-				RTStackItem item = RTStack.load(idx);
-				System.out.println(indent+"LOCAL:  " + idx + ": " + item.value()); idx++;
+				Value item = RTStack.load(idx);
+				System.out.println(indent+"LOCAL:  " + idx + ": " + item); idx++;
 			}
 //			while(idx < RTStack.size()) {
-//				RTStackItem item = RTStack.load(idx);
+//				Value item = RTStack.load(idx);
 //				System.out.println(indent+"STACK:  " + idx + ": " + item.value()); idx++;			
 //			}
 		} catch(Exception e) {}
@@ -109,26 +109,26 @@ public class CallStackFrame {
 //			int idx = callStackTop.rtStackIndex;
 //			if(exportSize > 0) {
 //				for(int i=0;i<exportSize;i++) {
-//					RTStackItem item = RTStack.load(idx);
+//					Value item = RTStack.load(idx);
 //					System.out.println(indent+"EXPORT: " + idx + ": " + item.value()); idx++;
 //				}
 //			}
 //			for(int i=0;i<importSize;i++) {
-//				RTStackItem item = RTStack.load(idx);
+//				Value item = RTStack.load(idx);
 //				System.out.println(indent+"IMPORT: " + idx + ": " + item.value()); idx++;
 //			}
 //			System.out.println(indent+"RETURN: " + idx + ": " + RTStack.load(idx)); idx++;
 //			for(int i=0;i<localSize;i++) {
-//				RTStackItem item = RTStack.load(idx);
+//				Value item = RTStack.load(idx);
 //				System.out.println(indent+"LOCAL:  " + idx + ": " + item.value()); idx++;
 //			}
 //			while(idx < RTStack.size()) {
-//				RTStackItem item = RTStack.load(idx);
+//				Value item = RTStack.load(idx);
 //				System.out.println(indent+"STACK:  " + idx + ": " + item.value()); idx++;			
 //			}
 //		} catch(Exception e) {}
 		
-		print(44, title);
+		print(title);
 		
 		System.out.println("==================== " + title + " RTFrame' END  ====================");
 		if(curAddr != null) curAddr.segment().dump(title);

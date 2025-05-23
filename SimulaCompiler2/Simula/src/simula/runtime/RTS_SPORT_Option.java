@@ -53,12 +53,12 @@ public class RTS_SPORT_Option {
 	public static void print_SPORT_Options() {
 		System.out.println("print_SPORT_Options: FEC_Verbose:            " + FEC_Verbose);
 		System.out.println("print_SPORT_Options: FEC_TraceLevel:         " + FEC_TraceLevel);
-		System.out.println("print_SPORT_Options: ModuleName:             " + getModuleName());
-		System.out.println("print_SPORT_Options: SourceDirName:          " + SourceDirName);
-		System.out.println("print_SPORT_Options: SPORT_SourceFileName:   " + SPORT_SourceFileName);
-		System.out.println("print_SPORT_Options: SPORT_SysInsertDirName: " + SPORT_SysInsertDirName);
-		System.out.println("print_SPORT_Options: ListingFileName:        " + ListingFileName);
-		System.out.println("print_SPORT_Options: SCodeFileName():        " + getSCodeFileName());
+		System.out.println("print_SPORT_Options: ModuleName:             \"" + getModuleName() + '"');
+		System.out.println("print_SPORT_Options: SourceDirName:          \"" + SourceDirName + '"');
+		System.out.println("print_SPORT_Options: SPORT_SourceFileName:   \"" + SPORT_SourceFileName + '"');
+		System.out.println("print_SPORT_Options: SPORT_SysInsertDirName: \"" + SPORT_SysInsertDirName + '"');
+		System.out.println("print_SPORT_Options: ListingFileName:        \"" + ListingFileName + '"');
+		System.out.println("print_SPORT_Options: SCodeFileName():        \"" + getSCodeFileName() + '"');
 		System.out.println("print_SPORT_Options: FEC_TraceScode:         " + FEC_TraceScode);
 	}
 
@@ -149,7 +149,7 @@ public class RTS_SPORT_Option {
 	 *  Result: 0 - minimal information for error reporting.
 	 *  		1 - information at the module and block level, but no information about the attributes.
 	 *  		2 - complete information generated, including information about all attributes.	 */
-	static int SimobLevel = 2;
+	static int SimobLevel = 0;
 	
 	/** Used by getIntInfo. */ static int FEC_Verbose = 0;
 	/** Used by getIntInfo. */ static int FEC_TraceScode = 0;

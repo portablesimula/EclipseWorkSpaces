@@ -24,8 +24,8 @@ public class SVM_SUB extends SVM_Instruction {
 
 	@Override
 	public void execute() {
-		Value tos = RTStack.pop().value();
-		Value sos = RTStack.pop().value();
+		Value tos = RTStack.pop();
+		Value sos = RTStack.pop();
 		Value res = (sos == null)? ( (tos == null)? null : tos.neg()) : sos.sub(tos);
 		if(DEBUG) System.out.println("SVM_SUB: " + sos + " - " + tos + " ==> " + res);
 		RTStack.push(res, "SVM_SUB: " + sos + " - " + tos + " = " + res);

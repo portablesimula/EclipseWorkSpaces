@@ -3,6 +3,7 @@ package bec.statement;
 import bec.S_Module;
 import bec.compileTimeStack.CTStack;
 import bec.instruction.FETCH;
+import bec.instruction.Instruction;
 import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Type;
@@ -75,6 +76,9 @@ public class ProtectConstruction { // extends ProgramElement {
 	/// TOS is popped.
 	private static void doRESTORE() {
 		CTStack.checkTosRef(); CTStack.checkTosType(Type.T_OADDR);
+		if(Global.TESTING_SAVE_RESTORE) {
+			FETCH.doFetch(null);
+		}
 		CTStack.pop();
 		CTStack.checkStackEmpty();
 		CTStack.restoreState();
@@ -89,10 +93,17 @@ public class ProtectConstruction { // extends ProgramElement {
 	 */
 	public static void ofInstruction() {
 		// ProtectConstruction(false)
-		Util.IERR("NOT IMPLEMENTED");
+		doSAVE();
+		
+//		Scode.inputInstr();
+//		S_Module.programElements();
 //		repeat inputInstr while Instruction do endrepeat;
-//		printTree(0);
-		Util.IERR("NOT IMPLEMENTED");
+		do Scode.inputInstr(); while(Instruction.inInstruction());
+		System.out.println("ProtectConstruction.ofInstruction: " + Scode.edInstr(Scode.curinstr));
+		if(Scode.curinstr != Scode.S_RESTORE)
+			Util.IERR("Improper termination of protect-construction");
+		doRESTORE();
+//		Util.IERR("NOT IMPLEMENTED");
 	}
 	
 	public String toString() {

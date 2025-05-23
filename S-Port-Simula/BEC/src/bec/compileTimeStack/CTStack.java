@@ -36,6 +36,10 @@ public class CTStack {
 		return stack.get(stack.size()-2);
 	}
 	
+	public static CTStackItem getItem(int i) {
+		return stack.get(i);
+	}
+	
 	public static int size() {
 		return stack.size();
 	}

@@ -1,24 +1,27 @@
 begin
-   SYSINSERT RT,SYSR,KNWN,UTIL; 
+   SYSINSERT RT,SYSR,KNWN,UTIL
+   ,strg,cent,cint,arr,form,libr,fil,smst,sml,edit,mntr;
       
- routine TXT2STR;
-import infix (txtqnt) txt; export infix (string) str;
-begin str.nchr:=txt.lp - txt.sp;
-      str.chradr:=if txt.lp = 0 then noname
-      else name(txt.ent.cha(txt.sp));
-end;
-      
-    infix(String) str;
-    
-	infix(txtent:6) systxt = record:txtent(sort=S_TXTENT, misc=1, ncha=6, cha="SYSOUT"); 
+ Routine xOUTTXT;
+ import ref(filent) fil; infix(txtqnt) txt;
+ begin infix(txtqnt) img;           --  Local copy here for efficiency.
+       infix(string) src;           --  Copy from this string.
+       infix(string) dst;           --  Copy to this string.
+       integer imlength,tpos,tlen;  --  Used for long strings
+       
+%	   ed_str("*** OUTTXT: "); ed_oaddr(txt.ent);
+%	   ed_str(", CP: "); ed_int(txt.cp);
+%	   ed_str(", SP: "); ed_int(txt.sp);
+%	   ed_str(", LP: "); ed_int(txt.lp); ed_out;
+       
+%      img:=fil.img;
+       tpos:=txt.sp; tlen:=txt.lp-tpos;
+ end;
+ 
+ 	infix(txtent:6) systxt = record:txtent(sort=S_TXTENT, misc=1, ncha=6, cha="SYSOUT"); 
 	infix(txtqnt) sysid = record:txtqnt(ent=ref(systxt), lp=6);
-	infix(filent) ent = record:filent(eof=false);
-	ent.nam := sysid;
-	
-%	ED_STR("FIL.OPEN: sysid=");
-	ED_TXT(sysid); ED_OUT;  
-
-%	str := txt2str(sysid); 
+ 
+ 	xOUTTXT(none, sysid);
 
  end;
 	 

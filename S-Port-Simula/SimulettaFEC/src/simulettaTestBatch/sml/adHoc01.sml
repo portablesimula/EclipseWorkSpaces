@@ -1,24 +1,16 @@
 begin
-   SYSINSERT RT,SYSR,KNWN,UTIL,CENT;    
+   SYSINSERT RT,SYSR,KNWN,UTIL
+   ,strg,cent,cint,arr,form,libr,fil,smst,sml,edit,mntr;
 
- Visible record Z_txtqnt;  info "TYPE";
- begin ref(Z_txtent)        ent;
-       range(0:MAX_TXT)   cp;
-       range(0:MAX_TXT)   sp;
-       range(0:MAX_TXT)   lp;
- end;
+%	infix(txtent) ent1 = record:txtent(cha=('a','b','c','d','e','f'));
+	infix(txtent) ent1 = record:txtent(cha="   12345");
+	infix(txtqnt) txt1;
+	integer res;
 
- Visible record Z_txtent:entity;
- begin character cha(0); end;
-
-	infix(txtent) ent = record:txtent(cha=('a','b','c','c','c','c','c','c','c','c','c','c','c','c','c','c','c','c','c','c','c','c','c','c','c','c','c','c','c','c'));
-	infix(txtqnt) txt;
-	boolean res;
+	txt1.ent := ref(ent1);
+	txt1.lp  := 8;
 	
-	txt.ent := ref(ent);
-	txt.lp  := 10;
-	
-	ptintA(name(txt),444);
-	
+% 	res := gtintA(ref(txt1));
+ 	res := gtintT(txt1);
  end;
 	 

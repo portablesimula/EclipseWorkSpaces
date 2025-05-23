@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 
+import bec.compileTimeStack.CTStack;
+
 public class Util {
 
 	public static void setLine(Type type) {

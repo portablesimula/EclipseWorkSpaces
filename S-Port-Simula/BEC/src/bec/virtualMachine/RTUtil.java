@@ -9,6 +9,135 @@ import bec.value.ObjectAddress;
 import bec.value.Value;
 
 public class RTUtil {
+	public static DataSegment DSEG_RT;
+	public static int offset_CURINS = 0;
+	public static int offset_STATUS = 1;
+	public static int offset_ITSIZE = 2;
+	
+	public static int CURRENTDECIMALMARK;
+	public static int CURRENTLOWTEN;
+	
+	public static void INIT() {
+		DSEG_RT = (DataSegment) Segment.lookup("DSEG_RT");
+		CURRENTDECIMALMARK = '.';
+		CURRENTLOWTEN = '&';
+	}
+	
+	public static void set_ITEM_SIZE(int itemSize) {
+//		DSEG_RT.dump("SysDeEdit.set_ITEM_SIZE(1) ", 0, 10);
+		DSEG_RT.store(offset_ITSIZE, IntegerValue.of(Type.T_SIZE, itemSize));	
+//		DSEG_RT.dump("SysDeEdit.set_ITEM_SIZE(2) ", 0, 10);
+	}
+	
+	public static void set_STATUS(int status) {
+		System.out.println("RTUtil.set_STATUS: " + status + "  " + edStatus(status));
+//		Thread.dumpStack();
+		DSEG_RT.store(offset_STATUS, IntegerValue.of(Type.T_INT, status));	
+	}
+	
+	public static String edStatus(int status) {
+		switch(status) {
+			case 0: return"(not used)";
+					// Zero can never be returned from a routine. In case everything is OK the value of
+					// status is not changed.
+			case 1: return"Invalid filekey";
+					// The key is within the interval 1..255, but no data set is associated with the key.
+					// The file may have been closed, and consequently the filekey is again undefined.
+			case 2: return"File not defined";
+					// No real file associated with local name. The data set specification does not
+					// correspond to either a descriptor name or a data set name.
+			case 3: return"File does not exist";
+					// The file association has been given, but the fysical file specified does not exist.
+					// The data set specification refers a descriptor but this descriptor does not identify
+					// a data set.
+			case 4: return"File already exists";
+					// An attempt has been made to create a file which already exists.
+					// Some systems could allow you to define several files with the same
+					// name, e.g. scratch files. This should not occur.
+			case 5: return"File not open";
+					// An operation on a file is asked for, but the file is not open.
+			case 6: return"File already open";
+					// A request for file opening has been made on a file which is already open.
+			case 7: return"File already closed";
+					// For some exterior reason the data set has been closed outside the control of the
+					// Simula system, (e.g. a tape has been dismounted by the operator).
+			case 8: return"Illegal use of file";
+					// The data set organisation is incompatible with the wanted usage as given in
+					// filetype, e.g. an attempt to read from an outfile.
+			case 9: return"Illegal record format for directfile";
+					// The external record format is not compatible with the directfile definition.
+			case 10: return"Illegal filename";
+					// The string specified does not follow the syntax of a file name in this system.
+			case 11: return"Output image too long";
+					// The image length is longer than the file record on an attempt to write on the file.
+			case 12: return"Input image too short";
+					// When reading from a file, the image is not large enough to hold the complete
+					// record to be read.
+			case 13: return"End of file on input";
+					// When reading from a file, the end of file record was read.
+			case 14: return"Not enough space available";
+					// When work space is asked for, and the specified amount of storage cannot be
+					// allocated.
+			case 15: return"File full on output";
+					// When writing to a file, the space allocated to the file is exhausted, and no more
+					// space can be furnished.
+			case 16: return"Location out of range";
+					// When reading from a file, the specified record in the directfile has never been
+					// written. When writing or positioning in a file, the specified location will bring
+					// us outside the area reserved for the file.
+			case 17: return"I/O error, e.g. hardware fault";
+					// Any hardware detected error which does not refer to an error done by the user.
+			case 18: return"Specified action cannot be performed";
+					// The specified action for open file or close file has not been implemented,
+					// and consequently cannot be performed.
+			case 19: return"Impossible";
+					// This will mean that it is impossible to implement the the specified effect, or that the
+					// request has been defined illegal. This status is returned as a signal to the run time
+					// system that it need not bother to try recovery, the program should be aborted.
+					// There will normally be a separate specification of the interpretation of this code
+					// under each routine that can give this return value.
+			case 20: return"No write access to this file";
+					// Writing has been requested to a file that has been protected against writing.
+			case 21: return"Non-numeric item as first character";
+					// The de-editing of a string to a numeric item has been requested, but the string does
+					// not start according to the syntax of a numeric item.
+			case 22: return"Value out of range";
+					// The de-editing of a string to a numeric item has been requested, but the result is a
+					// numeric item that is to large to be represented in the specified type.
+			case 23: return"Incomplete syntax";
+					// The de-editing of a string to a real item has been requested, but the string does not
+					// complete a real item according to the syntax of a real item.
+			case 24: return"Text string too short";
+					// The editing of a numeric item into a string has been requested, but the string is
+					// too short to contain the result of the editing operation.
+			case 25: return"Fraction part less than zero";
+					// The editing of a real as a floating point or fixed point real has been requested,
+					// but the fraction part has been specified with a negative length.
+			case 26: return"No read access to this file.";
+					// Reading has been attempted on a read-protected file.
+			case 27: return"Argument out of range for system routine";
+					// The code refers mainly to the matematical library routines, and indicate that one
+					// of the arguments were out of range.
+			case 28: return"Key previously defined";
+					// This specifies that the generation of a key has been made for a file which already
+					// has a key referencing it.
+			case 29: return"Maximum number of keys exceeded";
+					// The S-port system restricts the number of files that may be open simultaneously
+					// to 255, it is however expected that the target system's limit is lower.
+					// If any of these limits are exceeded this status is returned from open.
+			case 30: return"This service function is not implemented";
+					// One of the give_ or get_ routines have been called with an index which is not known
+					// in this implementation, or which has not been implemented. Some default value will
+					// be assumed.
+			case 31: return"Syntax error in dsetspec";
+			case 32: return"No read access";
+			case 33: return"Illegal action";
+			case 34: return"Partial record read.";
+			case 35: return"Undefined record (on directfile).";
+			case 36: return"Maximum number of breakpoints set";
+			default: return"UNDEFINED";
+		}
+	}
 
 	// Instance sorts:  instances must be first
 	public static final int S_NOSORT =  0; //  no sort
@@ -181,8 +310,8 @@ public class RTUtil {
 	public static void dumpCurins() {
 		DataSegment rt = (DataSegment) Segment.find("DSEG_RT");
 		ObjectAddress curins = (ObjectAddress) rt.load(0);
-		System.out.println("SVM_ASSIGN: curins=" + curins);
-		RTUtil.printEntity(curins);
+		System.out.println("RTUtil.dumpCurins: curins=" + curins);
+		if(curins != null) RTUtil.printEntity(curins);
 //		Util.IERR("");
 	}
 	

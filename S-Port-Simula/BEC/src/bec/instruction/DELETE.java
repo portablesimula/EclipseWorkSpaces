@@ -27,7 +27,7 @@ public abstract class DELETE extends Instruction {
 //		Global.dumpDISPL("DELETE.ofScode: ", startTag -2);
 
 		for(int t=startTag;t<Global.DISPL.size();t++) {
-			System.out.println("DELETE.ofScode: DELETE: " + t + ": " + Global.DISPL.get(t));
+//			System.out.println("DELETE.ofScode: DELETE: " + t + ": " + Global.DISPL.get(t));
 			Global.DISPL.set(t, null);
 			Type.removeFromTMAP(t);
 		}

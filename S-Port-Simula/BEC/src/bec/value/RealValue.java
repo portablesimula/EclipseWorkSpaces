@@ -28,7 +28,12 @@ public class RealValue extends Value {
 	 */
 	public static RealValue ofScode() {
 		String r = Scode.inString();
-		if(r.startsWith("&")) r = "0" + r;
+		if(r.startsWith("-")) {
+			r = r.substring(1).trim();
+			r = (r.startsWith("&"))? "-1" + r : "-" + r;
+		}
+//		if(r.startsWith("&")) r = "0" + r;
+		if(r.startsWith("&")) r = "1" + r;
 		else if(r.startsWith("-&")) r = "-0" + r.substring(1);
 		return RealValue.of(Float.valueOf(r.replace('&', 'E')));
 	}
@@ -47,10 +52,21 @@ public class RealValue extends Value {
 	}
 
 	@Override
+	public float toFloat() {
+		return value;
+	}
+
+	@Override
+	public double toDouble() {
+		return (double) value;
+	}
+
+	@Override
 	public Value add(Value other) {
 		if(other == null) return this;
-		RealValue val2 = (RealValue) other;
-		float res = value + val2.value;
+//		RealValue val2 = (RealValue) other;
+		float val2 = other.toFloat();
+		float res = value + val2;
 		if(res == 0) return null;
 		return RealValue.of(res);
 	}
@@ -59,8 +75,9 @@ public class RealValue extends Value {
 	public Value sub(Value other) {
 		float res = 0;
 		if(other != null) {
-			RealValue val2 = (RealValue) other;
-			res = this.value - val2.value;
+//			RealValue val2 = (RealValue) other;
+			float val2 = other.toFloat();
+			res = this.value - val2;
 		} else res = this.value;
 //		System.out.println("IntegerValue.sub: " + this.value + " - " + other + " = " + res);
 		if(res == 0) return null;
@@ -70,8 +87,9 @@ public class RealValue extends Value {
 	@Override
 	public Value mult(Value other) {
 		if(other == null) return null;
-		RealValue val2 = (RealValue) other;
-		float res = value * val2.value;
+//		RealValue val2 = (RealValue) other;
+		float val2 = other.toFloat();
+		float res = value * val2;
 		if(res == 0) return null;
 		return RealValue.of(res);
 	}
@@ -81,8 +99,9 @@ public class RealValue extends Value {
 //		System.out.println("RealValue.div: " + other + " / " + this.value);
 		float res = 0;
 		if(other != null) {
-			RealValue val2 = (RealValue) other;
-			res = val2.value / this.value;
+//			RealValue val2 = (RealValue) other;
+			float val2 = other.toFloat();
+			res = val2 / this.value;
 		} else res = 0;
 //		System.out.println("RealValue.div: " + other + " / " + this.value + " = " + res);
 		if(res == 0) return null;

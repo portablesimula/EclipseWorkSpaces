@@ -735,7 +735,7 @@ public final class RTS_TXT {
 	/// and with a DECIMAL MARK followed by total of n digits if n>0. Each digit
 	/// group consists of 3 digits, except possibly the first one, and possibly the
 	/// last one following a DECIMAL MARK. The numeric item is an exact
-	/// representation of the number i/// 10**(-n).
+	/// representation of the number i * 10**(-n).
 	/// 
 	/// @param T the text reference
 	/// @param val an integer value

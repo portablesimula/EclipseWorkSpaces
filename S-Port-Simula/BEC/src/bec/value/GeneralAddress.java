@@ -91,6 +91,7 @@ public class GeneralAddress extends Value {
 	// *** Attribute File I/O
 	// ***********************************************************************************************
 	private GeneralAddress(AttributeInputStream inpt) throws IOException {
+		this.type = Type.T_GADDR;
 		base = (ObjectAddress) Value.read(inpt);
 		ofst = inpt.readShort();
 	}

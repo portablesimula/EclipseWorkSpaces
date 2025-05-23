@@ -73,6 +73,16 @@ public class IntegerValue extends Value {
 	}
 
 	@Override
+	public float toFloat() {
+		return (float) value;
+	}
+
+	@Override
+	public double toDouble() {
+		return (double) value;
+	}
+
+	@Override
 	public Value neg() {
 		return IntegerValue.of(this.type,- value);
 	}

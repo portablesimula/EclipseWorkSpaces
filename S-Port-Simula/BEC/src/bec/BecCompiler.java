@@ -28,7 +28,9 @@ public class BecCompiler {
 			if (arg.charAt(0) == '-') { // command line option
 				if (arg.equalsIgnoreCase("-help")) help();
 				else if (arg.equalsIgnoreCase("-inputTrace")) Global.SCODE_INPUT_TRACE = true;
-				else if (arg.equalsIgnoreCase("-listing")) Global.PRINT_GENERATED_SVM_CODE = true;
+				else if (arg.equalsIgnoreCase("-traceSVM_CODE")) Global.PRINT_GENERATED_SVM_CODE = true;
+				else if (arg.equalsIgnoreCase("-traceSVM_DATA")) Global.PRINT_GENERATED_SVM_DATA = true;
+//				else if (arg.equalsIgnoreCase("-listing")) Global.PRINT_GENERATED_SVM_CODE = true;
 				else if (arg.equalsIgnoreCase("-verbose")) Global.verbose = true;
 				else if (arg.equalsIgnoreCase("-execTrace")) Global.EXEC_TRACE = 1;
 				else if (arg.equalsIgnoreCase("-callTrace")) Global.CALL_TRACE_LEVEL = 2;

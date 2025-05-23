@@ -18,29 +18,19 @@ import bec.util.Type;
 import bec.util.Util;
 import bec.virtualMachine.CallStackFrame;
 import bec.virtualMachine.RTStack;
-import bec.virtualMachine.RTUtil;
 import bec.virtualMachine.SVM_CALL;
-import bec.virtualMachine.SVM_CALLSYS;
+import bec.virtualMachine.SVM_CALL_SYS;
 import bec.virtualMachine.SVM_Instruction;
 import bec.virtualMachine.SVM_RETURN;
 
 public class ProgramAddress extends Value {
-//	public Segment seg;
 	public String segID;
 	public int ofst;
 	
-	public ProgramAddress(String segID,	int ofst) {
+	public ProgramAddress(Type type, String segID, int ofst) {
+		this.type = type;
 		this.segID = segID;
 		this.ofst = ofst;
-		if(ofst > 9000 || ofst < 0) Util.IERR("");
-	}
-	
-	public ProgramAddress(Type type, Segment seg,	int ofst) {
-		this.type = type;
-//		this.seg = seg;
-		if(seg != null)	this.segID = seg.ident;
-		this.ofst = ofst;
-		if(ofst > 9000 || ofst < 0) Util.IERR("");
 	}
 	
 	/**
@@ -54,7 +44,7 @@ public class ProgramAddress extends Value {
 		Tag tag = Tag.ofScode();
 		Descriptor descr = tag.getMeaning();
 		if(descr == null) Util.IERR("IMPOSSIBLE: TESTING FAILED");
-//		System.out.println("OADDR_Value.ofScode: descr="+descr.getClass().getSimpleName()+"  "+descr);
+//		System.out.println("ProgramAddress.ofScode: descr="+descr.getClass().getSimpleName()+"  "+descr);
 		if(type == Type.T_RADDR) return ((RoutineDescr)descr).getAddress();
 		if(type == Type.T_PADDR) return ((LabelDescr)descr).getAddress();
 		Util.IERR("NOT IMPL");
@@ -62,7 +52,7 @@ public class ProgramAddress extends Value {
 	}
 	
 	public ProgramAddress ofset(int ofst) {
-		return new ProgramAddress(segID, this.ofst + ofst);
+		return new ProgramAddress(type, segID, this.ofst + ofst);
 	}
 	
 	public Segment segment() {
@@ -71,29 +61,13 @@ public class ProgramAddress extends Value {
 	}
 	
 	public ProgramAddress copy() {
-		return new ProgramAddress(segID, ofst);
+		return new ProgramAddress(type, segID, ofst);
 	}
 	
 	@Override
 	public void emit(DataSegment dseg, String comment) {
 		dseg.emit(this, comment);
 	}
-	
-//	public void store(Value value) {
-//		DataSegment dseg = (DataSegment) segment();
-//		dseg.store(ofst, value);
-////		dseg.dump("MemAddr.store: ");
-////		Util.IERR("");
-//	}
-//	
-//	public Value load() {
-//		DataSegment dseg = (DataSegment) segment();
-//		Value value =  dseg.load(ofst);
-////		dseg.dump("MemAddr.load: ");
-////		Util.IERR("");	
-//		return value;
-//	}
-
 
 	@Override
 	public boolean compare(int relation, Value other) {
@@ -106,8 +80,6 @@ public class ProgramAddress extends Value {
 		ProgramSegment seg = (ProgramSegment) segment();
 		int size = seg.instructions.size();
 		if(size == 0) {
-//			System.out.println("ProgramAddress.execute: " + seg.ident + " IS EMPTY -- NOTHING TO EXECUTE");
-//			System.exit(-1);
 			throw new EndProgram(-1,"ProgramAddress.execute: " + seg.ident + " IS EMPTY -- NOTHING TO EXECUTE");
 		}
 		
@@ -119,7 +91,7 @@ public class ProgramAddress extends Value {
 				Global.TSEG.dump("ProgramAddress.execute: FINAL CONSTANT TEXT SEGMENT ");
 //				Segment.lookup("DSEG_RT").dump("ProgramAddress.execute: BIOINS", 30, 82);
 //				Segment.lookup("POOL_1").dump("ProgramAddress.execute: FINAL POOL_1", 0, 20);
-				RTUtil.printPool("POOL_1");
+//				RTUtil.printPool("POOL_1");
 
 			}
 			RTStack.checkStackEmpty();
@@ -133,7 +105,7 @@ public class ProgramAddress extends Value {
 //				System.out.println("ProgramAddress.execute: "+cur.getClass().getSimpleName());
 				if(cur instanceof SVM_CALL)        ; // NOTHING
 				else if(cur instanceof SVM_RETURN) ; // NOTHING
-				else if(cur instanceof SVM_CALLSYS) ; // NOTHING
+				else if(cur instanceof SVM_CALL_SYS) ; // NOTHING
 				else printInstr(cur,true);
 			}
 		}
@@ -165,17 +137,9 @@ public class ProgramAddress extends Value {
 	// *** Attribute File I/O
 	// ***********************************************************************************************
 	private ProgramAddress(AttributeInputStream inpt) throws IOException {
-//		String ident = inpt.readString();
 		type = Type.read(inpt);
 		segID = inpt.readString();
-//		ofst = inpt.readInt();
 		ofst = inpt.readShort();
-//		if(ident != null) seg = Segment.lookup(ident);
-
-//		System.out.println("=============================================================================================================== " + this);
-		if(ofst > 9000 || ofst < 0) Util.IERR(""+ofst);
-//		Util.IERR(""+seg);
-//		System.out.println("NEW IMPORT: " + this);
 	}
 
 	public void write(AttributeOutputStream oupt) throws IOException {
@@ -183,10 +147,7 @@ public class ProgramAddress extends Value {
 		oupt.writeKind(Scode.S_C_PADDR);
 		type.write(oupt);
 		oupt.writeString(segID);
-//		oupt.writeInt(ofst);
 		oupt.writeShort(ofst);
-		if(ofst > 9000 || ofst < 0) Util.IERR("");
-//		System.out.println("=============================================================================================================== " + this);
 	}
 
 	public static ProgramAddress read(AttributeInputStream inpt) throws IOException {

@@ -27,8 +27,8 @@ public class SVM_AND extends SVM_Instruction {
 
 	@Override
 	public void execute() {
-		Value tos = RTStack.pop().value();
-		Value sos = RTStack.pop().value();
+		Value tos = RTStack.pop();
+		Value sos = RTStack.pop();
 		Value res = (tos == null)? null : tos.and(sos);
 		RTStack.push(res, "SVM_AND: " + tos + " and " + sos + " = " + res);
 		Global.PSC.ofst++;

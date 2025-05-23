@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
+import bec.segment.Segment;
 import bec.util.Global;
 import bec.util.Util;
 import bec.value.ProgramAddress;
@@ -29,12 +30,20 @@ public class SVM_ENTER extends SVM_Instruction {
 		callStackItem.localSize = localSize;
 		RTStack.callStack.push(callStackItem);
 		for(int i=0;i<localSize;i++) {
-			RTStack.push(null, "LOCAL");
+			RTStack.push(null, "LOCAL:");
 		}
 		if(Global.EXEC_TRACE > 2)
-			callStackItem.dump(""+curAddr+": ENTER: " + rutIdent);
-		if(Global.CALL_TRACE_LEVEL > 0)
-			RTStack.printCallTrace("SVM_ENTER.execute: ENTER " + rutIdent);
+			callStackItem.dump(""+curAddr+": ENTER: " + rutIdent + ", localSize=" + localSize);
+		if(Global.CALL_TRACE_LEVEL > 0) {
+			RTStack.printCallTrace("SVM_ENTER.execute: ENTER " + rutIdent + ", localSize=" + localSize);
+		}
+
+//		if(rutIdent.equalsIgnoreCase("PTLFXA")) {
+//			RTUtil.dumpCurins();
+//			Segment.lookup("PSEG_EDIT_PTLFXA:BODY").dump("ENTER: +++++++++++++++++++++++++++++++++++++++++++++", 0, 10);
+////			Util.IERR("");
+//		}
+
 		Global.PSC.ofst++;
 //		if(rutIdent.equalsIgnoreCase("OUTTXT")) {
 //			RTUtil.printCurins();

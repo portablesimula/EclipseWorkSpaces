@@ -1,12 +1,7 @@
 begin
+	integer j, u2;
+    u2:= 2011455689;
 
-	procedure err(t); text t; begin
-%		sysout.setpos(1);
-%		outtext("ABRA ");
-		outtext(t);
-		outimage;
-	end;
-
-  err("CADAB");
-
+	j:= randint (0, 4, u2);
+	
 end of program;

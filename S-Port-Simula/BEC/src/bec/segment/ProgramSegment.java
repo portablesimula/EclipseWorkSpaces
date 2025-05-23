@@ -27,7 +27,7 @@ public class ProgramSegment extends Segment {
 	}
 	
 	public ProgramAddress nextAddress() {
-		return new ProgramAddress(Type.T_PADDR, this,instructions.size());
+		return new ProgramAddress(Type.T_PADDR, this.ident, instructions.size());
 	}
 	
 	public SVM_Instruction load(int index) {

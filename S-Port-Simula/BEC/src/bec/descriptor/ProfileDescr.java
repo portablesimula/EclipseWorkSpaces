@@ -14,7 +14,7 @@ import bec.util.Tag;
 import bec.util.Util;
 import bec.value.ObjectAddress;
 import bec.value.Value;
-import bec.virtualMachine.SVM_CALLSYS;
+import bec.virtualMachine.SVM_CALL_SYS;
 
 public class ProfileDescr extends Descriptor {
 	public int pKind; // Peculiar Profile Kind
@@ -75,7 +75,7 @@ public class ProfileDescr extends Descriptor {
 	 * 			::= export parm:newtag resolved_type
 	 * 			::= exit return:newtag
 	 */
-	public static ProfileDescr ofProfile() {
+	public static ProfileDescr ofScode() {
 		Tag ptag = Tag.ofScode();
 //		System.out.println("ProfileDescr.inProfile: " + Scode.edTag(ptag));
 		ProfileDescr prf = new ProfileDescr(Kind.K_ProfileDescr, ptag);
@@ -89,21 +89,23 @@ public class ProfileDescr extends Descriptor {
 			 // peculiar ::= interface pid:string
 			Scode.inputInstr();
 			String xid = Scode.inString();
-			prf.pKind = SVM_CALLSYS.getSysKind(xid);
+			prf.pKind = SVM_CALL_SYS.getSysKind(xid);
 		} else if(Scode.nextByte() == Scode.S_KNOWN) {
 			// peculiar	::= known body:newtag kid:string
 			Scode.inputInstr();
 			Tag rtag = Tag.ofScode();
 			String xid = Scode.inString();
+			@SuppressWarnings("unused")
 			RoutineDescr rut = new RoutineDescr(Kind.K_IntRoutine, rtag, null);
-			prf.pKind = SVM_CALLSYS.getKnownKind(xid);
+			prf.pKind = SVM_CALL_SYS.getKnownKind(xid);
 		} else if(Scode.nextByte() == Scode.S_SYSTEM) {
 			 //	peculiar ::= system body:newtag sid:string
 			Scode.inputInstr();
 			Tag rtag = Tag.ofScode();
 			String xid = Scode.inString();
+			@SuppressWarnings("unused")
 			RoutineDescr rut = new RoutineDescr(Kind.K_IntRoutine, rtag, null);
-			prf.pKind = SVM_CALLSYS.getSysKind(xid);
+			prf.pKind = SVM_CALL_SYS.getSysKind(xid);
 		}
 		prf.imports = new Vector<Variable>();
 		prf.params = new Vector<Tag>();
@@ -169,7 +171,7 @@ public class ProfileDescr extends Descriptor {
 		if(returSlot != null) System.out.println(indent + "   ReturSlot = " + returSlot);
 		if(DSEG != null) System.out.println(indent + "   DSEG = " + DSEG);
 //		if(DSEG != null) DSEG.dump("ProfileDescr.print: ");
-		System.out.println(indent + "ENDPROFILE");	
+		System.out.println(indent + "ENDPROFILE  FrameHeadSize="+frameSize);	
 //		Util.IERR("");
 	}
 	

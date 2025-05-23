@@ -143,6 +143,6 @@ public class ConstItem extends Temp {
 	}
 	
 	public String toString() {
-		return "" +type + " " + value;
+		return edMode() + "CNST: " +type + " " + value;
 	}
 }

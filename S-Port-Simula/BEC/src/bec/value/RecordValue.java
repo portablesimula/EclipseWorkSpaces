@@ -7,11 +7,9 @@ import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.descriptor.Attribute;
 import bec.descriptor.ConstDescr;
-import bec.descriptor.LabelDescr;
 import bec.descriptor.RecordDescr;
 import bec.segment.DataSegment;
 import bec.util.Global;
-import bec.util.Relation;
 import bec.util.Scode;
 import bec.util.Tag;
 import bec.util.Type;
@@ -25,6 +23,18 @@ public class RecordValue extends Value {
 	
 	private RecordValue() {
 		attrValues = new Vector<Value>();
+	}
+	
+	public static RecordValue ofString(ObjectAddress addr, IntegerValue lng) {
+		RecordValue recValue = new RecordValue();
+		recValue.type = Type.T_STRING;
+		recValue.tag = new Tag(Scode.TAG_STRING);
+		recValue.attrValues.add(addr);
+		recValue.attrValues.add(null);
+//		recValue.attrValues.add(IntegerValue.of(Type.T_INT, 0));
+		recValue.attrValues.add(lng);
+//		Util.IERR("");
+		return recValue;
 	}
 
 	/**
@@ -210,7 +220,9 @@ public class RecordValue extends Value {
 		attrValues = new Vector<Value>();
 		int kind = inpt.readKind();
 		while(kind != Scode.S_ENDRECORD) {
-			Value value = Value.read(inpt);
+			Value value = null;
+			boolean present = inpt.readBoolean();
+			if(present) value = Value.read(inpt);
 			attrValues.add(value);
 			kind = inpt.readKind();
 		}
@@ -222,8 +234,15 @@ public class RecordValue extends Value {
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Global.ATTR_OUTPUT_TRACE) System.out.println("Value.write: " + this);
 		oupt.writeKind(Scode.S_C_RECORD);
-		tag.write(oupt);;
-		for(Value value:attrValues) value.write(oupt);
+		tag.write(oupt);
+		for(Value value:attrValues) {
+			if(value != null) {
+				oupt.writeBoolean(true);
+				value.write(oupt);
+			} else {
+				oupt.writeBoolean(false);
+			}
+		}
 		oupt.writeInstr(Scode.S_ENDRECORD);
 		
 //		this.printTree(2);

@@ -1,17 +1,8 @@
 begin
+	long real lon;                         !         -"-                 ;
+	text txt, t2;
 
-	procedure err(t); text t; begin end;
+	
+	txt.putfix (copy ("  -0&11  a'++ ").getreal, 1) ;
 
-%	procedure test; begin
-		text txt;
-		err ("*** error :  In " & txt);
-%	end;
-
-
-
-
-
-
-
-
-end of program;
+end;

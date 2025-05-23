@@ -22,6 +22,6 @@ public class Temp extends CTStackItem {
 
 	@Override
 	public String toString() {
-		return "Temp " + Scode.edTag(type.tag) + ", count=" + count + " " + comment;
+		return edMode() + "TEMP: " + Scode.edTag(type.tag) + ", count=" + count + " " + comment;
 	}
 }

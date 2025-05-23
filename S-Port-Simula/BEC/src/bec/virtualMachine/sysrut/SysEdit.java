@@ -2,6 +2,7 @@ package bec.virtualMachine.sysrut;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.Stack;
 
 import bec.util.Type;
 import bec.util.Util;
@@ -11,13 +12,13 @@ import bec.value.ObjectAddress;
 import bec.value.ProgramAddress;
 import bec.virtualMachine.RTStack;
 import bec.virtualMachine.RTUtil;
-import bec.virtualMachine.SVM_CALLSYS;
+import bec.virtualMachine.SVM_CALL_SYS;
 
 public abstract class SysEdit {
 
 	/// See: https://en.wikipedia.org/wiki/Plus_and_minus_signs
 	private static final char UNICODE_MINUS_SIGN = 0x2212;
-	
+
 	/**
 	 * Visible sysroutine("PUTSTR") PUTSTR;
 	 *		import infix (string) item; infix(string) val;
@@ -26,7 +27,7 @@ public abstract class SysEdit {
 	 */
 	public static void putstr() {
 		boolean DEBUG = false;
-		SVM_CALLSYS.ENTER("PUTSTR: ", 1, 6); // exportSize, importSize
+		SVM_CALL_SYS.ENTER("PUTSTR: ", 1, 6); // exportSize, importSize
 		int valNchr = RTStack.popInt();
 		ObjectAddress valAddr = RTStack.popGADDRasOADDR();
 		if(DEBUG) {
@@ -44,7 +45,7 @@ public abstract class SysEdit {
 		if(valNchr > 0) RTUtil.move(valAddr, itemAddr, valNchr);
 
 		RTStack.push(IntegerValue.of(Type.T_INT, valNchr), "EXPORT");
-		SVM_CALLSYS.EXIT("PUTSTR: ");
+		SVM_CALL_SYS.EXIT("PUTSTR: ");
 	}
 	
 	/**
@@ -53,9 +54,26 @@ public abstract class SysEdit {
 	 *  end;
 	 */
 	public static void putint() {
-		SVM_CALLSYS.ENTER("PUTINT: ", 0, 4); // exportSize, importSize
-		PUTINT();
-		SVM_CALLSYS.EXIT("PUTINT: ");
+		SVM_CALL_SYS.ENTER("PUTINT: ", 0, 4); // exportSize, importSize
+		int val = RTStack.popInt();
+		int itemNchr = RTStack.popInt();
+		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
+		String sval = ""+val;
+		int nchr = sval.length();
+//		System.out.println("SysEdit.PUTINT: "+val+" ===> "+sval);
+//		System.out.println("SysEdit.PUTINT: itemAddr="+itemAddr);
+//		System.out.println("SysEdit.PUTINT: itemNchr="+itemNchr);
+//		System.out.println("SysEdit.PUTINT: nchr="+nchr);
+		if(nchr > itemNchr) {
+			RTUtil.set_STATUS(24); // Text string too short
+		} else {
+			int diff = itemNchr - nchr;
+			RTUtil.move(sval, itemAddr.addOffset(diff), nchr);
+//			System.out.println("SysEdit.PUTINT: diff="+diff);
+			IntegerValue blnk = IntegerValue.of(Type.T_CHAR, ' ');
+			for(int i=diff-1;i>=0;i--) itemAddr.store(i, blnk, "");
+		}
+		SVM_CALL_SYS.EXIT("PUTINT: ");
 	}
 	
 	/**
@@ -65,13 +83,7 @@ public abstract class SysEdit {
 	 *  end;
 	 */
 	public static void putint2() {
-		SVM_CALLSYS.ENTER("PUTINT2: ", 1, 4); // exportSize, importSize
-		int nchr = PUTINT();
-		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
-		SVM_CALLSYS.EXIT("PUTINT2: ");
-	}
-
-	private static int PUTINT() {
+		SVM_CALL_SYS.ENTER("PUTINT2: ", 1, 4); // exportSize, importSize
 		int val = RTStack.popInt();
 		int itemNchr = RTStack.popInt();
 		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
@@ -79,9 +91,129 @@ public abstract class SysEdit {
 		int nchr = sval.length();
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
 		RTUtil.move(sval, itemAddr, nchr);
-//		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
-		return nchr;
+		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
+		SVM_CALL_SYS.EXIT("PUTINT2: ");
 	}
+	
+	/**
+	 *  Visible sysroutine("PTFRAC") PTFRAC;
+	 *      import infix (string) item; integer val, n
+	 *  end;
+	 */
+	public static void putfrac() {
+		SVM_CALL_SYS.ENTER("PTFRAC: ", 0, 4); // exportSize, importSize
+		int n = RTStack.popInt();
+		int val = RTStack.popInt();
+		int itemNchr = RTStack.popInt();
+		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
+		
+//		String sval = ""+val;
+		String sval = putfrac(itemNchr, val, n);
+//		System.out.println("SysEdit.putfrac: "+val+", n="+n +" ===> "+sval);
+		
+		int nchr = sval.length();
+//		System.out.println("SysEdit.PTFRAC: itemAddr="+itemAddr);
+//		System.out.println("SysEdit.PTFRAC: itemNchr="+itemNchr);
+//		System.out.println("SysEdit.PTFRAC: nchr="+nchr);
+		if(nchr > itemNchr) {
+			RTUtil.set_STATUS(24); // Text string too short
+		} else {
+			int diff = itemNchr - nchr;
+			RTUtil.move(sval, itemAddr.addOffset(diff), nchr);
+//			System.out.println("SysEdit.PTFRAC: diff="+diff);
+			IntegerValue blnk = IntegerValue.of(Type.T_CHAR, ' ');
+			for(int i=diff-1;i>=0;i--) itemAddr.store(i, blnk, "");
+		}
+		SVM_CALL_SYS.EXIT("PTFRAC: ");
+	}
+
+
+	/// Procedure putfrac.
+	/// 
+	/// The resulting numeric item is a GROUPED ITEM with no DECIMAL MARK if n<=0,
+	/// and with a DECIMAL MARK followed by total of n digits if n>0. Each digit
+	/// group consists of 3 digits, except possibly the first one, and possibly the
+	/// last one following a DECIMAL MARK. The numeric item is an exact
+	/// representation of the number i * 10**(-n).
+	/// 
+	/// @param T the text reference
+	/// @param val an integer value
+	/// @param n number of digits after a decimal mark
+//	public static void putfrac(final RTS_TXT T, final int val, final int n) {
+	private static String putfrac(final int lng, final int val, final int n) {
+		int v; // Scaled value (abs)
+		int d; // Number of digits written
+		int r; // Remaining digits in current group
+		int p; // Next available position in item
+		int c; // Current digit (numerical)
+//		char[] item = new char[T.LENGTH];
+//		char[] item = new char[lng];
+		char[] item = new char[100];
+		Stack<Character> chars = new Stack<Character>();
+
+		if (n <= 0)
+			r = 3;
+		else {
+			r = n % 3;
+			if (r == 0)
+				r = 3;
+		}
+
+		v = Math.abs(val);
+		d = 0;
+		p = item.length - 1;
+		try {
+			while ((v > 0) || (d < n)) {
+				c = v % 10;
+				v = v / 10;
+				if (r == 0) {
+					r = 3;
+					if (d != n) {
+						item[p--] = ' ';
+						chars.add(' ');
+					}
+				}
+//				System.out.println("SysEdit.putfrac: item["+p+"] <== "+(char) (c + '0'));
+				item[p--] = (char) (c + '0');
+				chars.add((char) (c + '0'));
+				r = r - 1;
+				d = d + 1;
+				if (d == n) {
+					item[p--] = (char) RTUtil.CURRENTDECIMALMARK;
+					chars.add((char) RTUtil.CURRENTDECIMALMARK);
+				}
+			}
+			if (val < 0) {
+				item[p--] = '-';
+				chars.add('-');
+			}
+			while (p >= 0) {
+				item[p--] = ' ';
+				chars.add(' ');
+			}
+		} catch (ArrayIndexOutOfBoundsException e) {
+//			RTS_UTIL.numberOfEditOverflows++;
+			for (int i = 0; i < item.length; i++)
+				item[i] = '*';
+		}
+		String res = "";
+		for (int i = 0; i < item.length; i++) {
+//			T.OBJ.MAIN[T.START + i] = item[i];
+			res = res + item[i];
+		}
+//		System.out.println("SysEdit.putfrac: res="+res);
+
+		String res2 = "";
+		for (Character cc:chars) {
+			res2 = res2 + cc;
+		}
+//		System.out.println("SysEdit.putfrac: res2="+res2);
+
+		res = res.trim();
+		return res;
+	}
+
+
 	
 	/**
 	 *  Visible sysroutine("PTREAL") PTREAL;
@@ -89,12 +221,28 @@ public abstract class SysEdit {
 	 *  end;
 	 */
 	public static void putreal() {
-		SVM_CALLSYS.ENTER("PTREAL: ", 0, 5); // exportSize, importSize
-		RTStack.dumpRTStack("PTREAL: ");
-		PUTREAL();
-		SVM_CALLSYS.EXIT("PTREAL: ");
+		SVM_CALL_SYS.ENTER("PTREAL: ", 0, 5); // exportSize, importSize
+		int frac = RTStack.popInt();
+		float val = RTStack.popReal();
+		int itemNchr = RTStack.popInt();
+		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
+//		System.out.println("SysEdit.putreal: "+val);
+		
+		String sval = SysEdit.putreal(val,frac);
+		sval = sval.replace(',', '.').replace('E', '&');
+		int nchr = sval.length();
+		if(nchr > itemNchr) {
+			RTUtil.set_STATUS(24); // Text string too short
+		} else {
+			int diff = itemNchr - nchr;
+			RTUtil.move(sval, itemAddr.addOffset(diff), nchr);
+			IntegerValue blnk = IntegerValue.of(Type.T_CHAR, ' ');
+			for(int i=diff-1;i>=0;i--) itemAddr.store(i, blnk, "");
+		}
+		SVM_CALL_SYS.EXIT("PTREAL: ");
+		
 	}
-	
+
 	/**
 	 *  Visible sysroutine("PTREAL2") PTREAL2;
 	 *      import infix (string) item; real val; integer frac; 
@@ -102,13 +250,7 @@ public abstract class SysEdit {
 	 *  end;
 	 */
 	public static void putreal2() {
-		SVM_CALLSYS.ENTER("PTREAL2: ", 1, 5); // exportSize, importSize
-		int nchr = PUTREAL();
-		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
-		SVM_CALLSYS.EXIT("PTREAL2: ");
-	}
-	
-	private static int PUTREAL() {
+		SVM_CALL_SYS.ENTER("PTREAL2: ", 1, 5); // exportSize, importSize
 		int frac = RTStack.popInt();
 		float val = RTStack.popReal();
 		int itemNchr = RTStack.popInt();
@@ -119,7 +261,8 @@ public abstract class SysEdit {
 		int nchr = sval.length();
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
 		RTUtil.move(sval, itemAddr, nchr);
-		return nchr;		
+		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
+		SVM_CALL_SYS.EXIT("PTREAL2: ");
 	}
 	
 	/**
@@ -128,9 +271,24 @@ public abstract class SysEdit {
 	 *  end;
 	 */
 	public static void putlreal() {
-		SVM_CALLSYS.ENTER("PLREAL2: ", 0, 5); // exportSize, importSize
-		PUTLREAL();
-		SVM_CALLSYS.EXIT("PLREAL2: ");
+		SVM_CALL_SYS.ENTER("PLREAL2: ", 0, 5); // exportSize, importSize
+		int frac = RTStack.popInt();
+		double val = RTStack.popLongReal();
+		int itemNchr = RTStack.popInt();
+		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
+		
+		String sval = SysEdit.putreal(val,frac);
+		sval = sval.replace(',', '.').replace('E', '&');
+		int nchr = sval.length();
+		if(nchr > itemNchr) {
+			RTUtil.set_STATUS(24); // Text string too short
+		} else {
+			int diff = itemNchr - nchr;
+			RTUtil.move(sval, itemAddr.addOffset(diff), nchr);
+			IntegerValue blnk = IntegerValue.of(Type.T_CHAR, ' ');
+			for(int i=diff-1;i>=0;i--) itemAddr.store(i, blnk, "");
+		}
+		SVM_CALL_SYS.EXIT("PLREAL2: ");
 	}
 	
 	/**
@@ -140,13 +298,7 @@ public abstract class SysEdit {
 	 *  end;
 	 */
 	public static void putlreal2() {
-		SVM_CALLSYS.ENTER("PLREAL2: ", 1, 5); // exportSize, importSize
-		int nchr = PUTLREAL();
-		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
-		SVM_CALLSYS.EXIT("PLREAL2: ");
-	}
-	
-	private static int PUTLREAL() {
+		SVM_CALL_SYS.ENTER("PLREAL2: ", 1, 5); // exportSize, importSize
 		int frac = RTStack.popInt();
 		double val = RTStack.popLongReal();
 		int itemNchr = RTStack.popInt();
@@ -157,7 +309,34 @@ public abstract class SysEdit {
 		int nchr = sval.length();
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
 		RTUtil.move(sval, itemAddr, nchr);
-		return nchr;		
+		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
+		SVM_CALL_SYS.EXIT("PLREAL2: ");
+	}
+	
+	/**
+	 *  Visible sysroutine("PUTFIX") PUTFIX;
+	 *      import infix (string) item; real val; integer frac; 
+	 *  end;
+	 */
+	public static void putfix() {
+		SVM_CALL_SYS.ENTER("PUTFIX: ", 0, 5); // exportSize, importSize
+		int frac = RTStack.popInt();
+		float val = RTStack.popReal();
+		int itemNchr = RTStack.popInt();
+		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
+		
+		String sval = SysEdit.putfix(val,frac);
+		sval = sval.replace(',', '.');
+		int nchr = sval.length();
+		if(nchr > itemNchr) {
+			RTUtil.set_STATUS(24); // Text string too short
+		} else {
+			int diff = itemNchr - nchr;
+			RTUtil.move(sval, itemAddr.addOffset(diff), nchr);
+			IntegerValue blnk = IntegerValue.of(Type.T_CHAR, ' ');
+			for(int i=diff-1;i>=0;i--) itemAddr.store(i, blnk, "");
+		}
+		SVM_CALL_SYS.EXIT("PUTFIX: ");
 	}
 	
 	/**
@@ -167,7 +346,7 @@ public abstract class SysEdit {
 	 *  end;
 	 */
 	public static void putfix2() {
-		SVM_CALLSYS.ENTER("PUTFIX2: ", 1, 5); // exportSize, importSize
+		SVM_CALL_SYS.ENTER("PUTFIX2: ", 1, 5); // exportSize, importSize
 		int frac = RTStack.popInt();
 		float val = RTStack.popReal();
 		int itemNchr = RTStack.popInt();
@@ -179,7 +358,33 @@ public abstract class SysEdit {
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
 		RTUtil.move(sval, itemAddr, nchr);
 		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
-		SVM_CALLSYS.EXIT("PUTFIX2: ");
+		SVM_CALL_SYS.EXIT("PUTFIX2: ");
+	}
+	
+	/**
+	 *  Visible sysroutine("PTLFIX") PTLFIX;
+	 *      import infix (string) item; long real val; integer frac; 
+	 *  end;
+	 */
+	public static void putlfix() {
+		SVM_CALL_SYS.ENTER("PUTFIX: ", 0, 5); // exportSize, importSize
+		int frac = RTStack.popInt();
+		double val = RTStack.popLongReal();
+		int itemNchr = RTStack.popInt();
+		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
+		
+		String sval = SysEdit.putfix(val,frac);
+		sval = sval.replace(',', '.');
+		int nchr = sval.length();
+		if(nchr > itemNchr) {
+			RTUtil.set_STATUS(24); // Text string too short
+		} else {
+			int diff = itemNchr - nchr;
+			RTUtil.move(sval, itemAddr.addOffset(diff), nchr);
+			IntegerValue blnk = IntegerValue.of(Type.T_CHAR, ' ');
+			for(int i=diff-1;i>=0;i--) itemAddr.store(i, blnk, "");
+		}
+		SVM_CALL_SYS.EXIT("PUTFIX: ");
 	}
 	
 	/**
@@ -189,7 +394,7 @@ public abstract class SysEdit {
 	 *  end;
 	 */
 	public static void putlfix2() {
-		SVM_CALLSYS.ENTER("PUTFIX2: ", 1, 5); // exportSize, importSize
+		SVM_CALL_SYS.ENTER("PUTFIX2: ", 1, 5); // exportSize, importSize
 		int frac = RTStack.popInt();
 		double val = RTStack.popLongReal();
 		int itemNchr = RTStack.popInt();
@@ -201,7 +406,7 @@ public abstract class SysEdit {
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
 		RTUtil.move(sval, itemAddr, nchr);
 		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
-		SVM_CALLSYS.EXIT("PUTFIX2: ");
+		SVM_CALL_SYS.EXIT("PUTFIX2: ");
 	}
 	
 	/**
@@ -211,7 +416,7 @@ public abstract class SysEdit {
 	 *  end;
 	 */
 	public static void puthex() {
-		SVM_CALLSYS.ENTER("PUTHEX: ", 1, 4); // exportSize, importSize
+		SVM_CALL_SYS.ENTER("PUTHEX: ", 1, 4); // exportSize, importSize
 		int val = RTStack.popInt();
 		int itemNchr = RTStack.popInt();
 		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
@@ -221,7 +426,7 @@ public abstract class SysEdit {
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
 		RTUtil.move(sval, itemAddr, nchr);
 		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
-		SVM_CALLSYS.EXIT("PUTHEX: ");
+		SVM_CALL_SYS.EXIT("PUTHEX: ");
 	}
 	
 	/**
@@ -231,7 +436,7 @@ public abstract class SysEdit {
 	 *  end;
 	 */
 	public static void putsize() {
-		SVM_CALLSYS.ENTER("PUTSIZE: ", 1, 4); // exportSize, importSize
+		SVM_CALL_SYS.ENTER("PUTSIZE: ", 1, 4); // exportSize, importSize
 		int val = RTStack.popInt();
 		int itemNchr = RTStack.popInt();
 		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
@@ -241,7 +446,7 @@ public abstract class SysEdit {
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
 		RTUtil.move(sval, itemAddr, nchr);
 		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
-		SVM_CALLSYS.EXIT("PUTSIZE: ");
+		SVM_CALL_SYS.EXIT("PUTSIZE: ");
 	}
 	
 	/**
@@ -251,7 +456,7 @@ public abstract class SysEdit {
 	 *  end;
 	 */
 	public static void ptoadr2() {
-		SVM_CALLSYS.ENTER("PTOADR2: ", 1, 4); // exportSize, importSize
+		SVM_CALL_SYS.ENTER("PTOADR2: ", 1, 4); // exportSize, importSize
 		ObjectAddress val = RTStack.popOADDR();
 		int itemNchr = RTStack.popInt();
 		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
@@ -260,7 +465,7 @@ public abstract class SysEdit {
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
 		RTUtil.move(sval, itemAddr, nchr);
 		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
-		SVM_CALLSYS.EXIT("PTOADR2: ");
+		SVM_CALL_SYS.EXIT("PTOADR2: ");
 	}
 	
 	/**
@@ -270,8 +475,8 @@ public abstract class SysEdit {
 	 *  end;
 	 */
 	public static void ptpadr2() {
-		SVM_CALLSYS.ENTER("PTPADR2: ", 1, 4); // exportSize, importSize
-		ProgramAddress val = (ProgramAddress) RTStack.pop().value();
+		SVM_CALL_SYS.ENTER("PTPADR2: ", 1, 4); // exportSize, importSize
+		ProgramAddress val = (ProgramAddress) RTStack.pop();
 		int itemNchr = RTStack.popInt();
 		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
 		String sval = (val == null)? "NOWHERE" : ""+val;
@@ -279,7 +484,7 @@ public abstract class SysEdit {
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
 		RTUtil.move(sval, itemAddr, nchr);
 		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
-		SVM_CALLSYS.EXIT("PTPADR2: ");
+		SVM_CALL_SYS.EXIT("PTPADR2: ");
 	}
 	
 	/**
@@ -289,8 +494,8 @@ public abstract class SysEdit {
 	 *  end;
 	 */
 	public static void ptradr2() {
-		SVM_CALLSYS.ENTER("PTAADR2	: ", 1, 4); // exportSize, importSize
-		ProgramAddress val = (ProgramAddress) RTStack.pop().value();
+		SVM_CALL_SYS.ENTER("PTAADR2	: ", 1, 4); // exportSize, importSize
+		ProgramAddress val = (ProgramAddress) RTStack.pop();
 		int itemNchr = RTStack.popInt();
 		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
 		String sval = (val == null)? "NOBODY" : ""+val;
@@ -298,7 +503,7 @@ public abstract class SysEdit {
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
 		RTUtil.move(sval, itemAddr, nchr);
 		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
-		SVM_CALLSYS.EXIT("PTRADR2	: ");
+		SVM_CALL_SYS.EXIT("PTRADR2	: ");
 	}
 	
 	/**
@@ -308,8 +513,8 @@ public abstract class SysEdit {
 	 *  end;
 	 */
 	public static void ptaadr2() {
-		SVM_CALLSYS.ENTER("PTRADR2	: ", 1, 4); // exportSize, importSize
-		IntegerValue val = (IntegerValue) RTStack.pop().value();
+		SVM_CALL_SYS.ENTER("PTRADR2	: ", 1, 4); // exportSize, importSize
+		IntegerValue val = (IntegerValue) RTStack.pop();
 		int itemNchr = RTStack.popInt();
 		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
 		String sval = (val == null)? "NOFIELD" : ""+val;
@@ -317,7 +522,7 @@ public abstract class SysEdit {
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
 		RTUtil.move(sval, itemAddr, nchr);
 		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
-		SVM_CALLSYS.EXIT("PTAADR2	: ");
+		SVM_CALL_SYS.EXIT("PTAADR2	: ");
 	}
 	
 	/**
@@ -327,16 +532,18 @@ public abstract class SysEdit {
 	 *  end;
 	 */
 	public static void ptgadr2() {
-		SVM_CALLSYS.ENTER("PTGADR2	: ", 1, 4); // exportSize, importSize
+		SVM_CALL_SYS.ENTER("PTGADR2	: ", 1, 5); // exportSize, importSize
+//		RTStack.dumpRTStack("SysEdit.ptgadr2: ");
 		GeneralAddress val = RTStack.popGADDR();
+//		System.out.println("SysEdit.ptgadr2: val="+val);
 		int itemNchr = RTStack.popInt();
 		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
 		String sval = (val == null)? "GNONE" : ""+val;
 		int nchr = sval.length();
-		if(nchr > itemNchr) Util.IERR("SVM_CALLSYS.move edit-buffer");
+		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
 		RTUtil.move(sval, itemAddr, nchr);
 		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
-		SVM_CALLSYS.EXIT("PTGADR2	: ");
+		SVM_CALL_SYS.EXIT("PTGADR2	: ");
 	}
 
 

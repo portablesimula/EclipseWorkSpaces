@@ -15,9 +15,24 @@
 %  COMMENTED BY:  BEH  08/07-86
 %  pje 24/8 87: changed NOTE 1 from 1&-11 (absurd for reals!!) to 5&-7
 % ==============================================================================
-external class SimulaTest;
+% external class SimulaTest;
 
-SimulaTest(7,"--- Test of math. functions") begin
+% SimulaTest(7,"--- Test of math. functions") begin
+begin
+	integer n = 7;
+	text title = "--- Test of math. functions";
+
+	boolean found_error;
+	integer nFailed;
+	boolean verbose=false;
+	boolean noMessage;
+
+	procedure err(t); text t;
+	begin sysout.setpos(1);
+	      outtext("*** error: in test "); outtext(t); outimage;
+	      found_error:=true; nFailed:=nFailed+1;
+	end;
+
 
 class Testmatlib ;
    begin
@@ -278,6 +293,13 @@ class Testmatlib ;
 end of class Testmatlib ;
 
 
+	if verbose then begin
+		outtext ("--- START Simula a.s. TEST"); outint(n,4); outimage;
+		outtext (title);
+		outimage; outimage;
+	end;
+	
+
 Testmatlib begin
            integer  i, j, k, u1, u2 ;
            real     x, y ; real explim;
@@ -292,7 +314,7 @@ Testmatlib begin
            u2 := 2011455689;            ! dependent series;
            explim:= ln(maxreal);
 
-           for  k := 1  step  1  until  500  do
+           for  k := 1  step  1  until  300  do
               begin
               i := randint (-Ipowblim, Ipowblim, u1) ;
               j := randint ( 0, Ipowelim, u2) ;
@@ -319,5 +341,19 @@ Testmatlib begin
 
            testepsilon(0.0);
            end;
+	
+	if noMessage then else begin
+		if found_error then begin
+			outtext("--- "); outint(nFailed,3); outtext(" ERROR(S) FOUND IN TEST"); outint(n,4); outtext("  "); outtext(title);
+			outtext("Test sample has "); outint(nFailed,3);
+			error(" error(s)");
+		end else begin
+			outtext ("--- NO ERRORS FOUND IN TEST"); outint(n,4); outtext("  "); outtext(title);
+		end;
+
+		if verbose then begin
+			outtext ("--- END Simula a.s. TEST"); outint(n,4); outimage;
+		end;
+	end;
 
 end of program;

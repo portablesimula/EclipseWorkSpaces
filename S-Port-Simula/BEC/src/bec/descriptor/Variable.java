@@ -171,9 +171,11 @@ public class Variable extends Descriptor {
 			else if(system.equalsIgnoreCase("MININT")) value = IntegerValue.of(Type.T_INT, Integer.MIN_VALUE);
 			else if(system.equalsIgnoreCase("MAXRNK")) value = IntegerValue.of(Type.T_INT, 255);
 			else if(system.equalsIgnoreCase("MAXREA")) value = RealValue.of(Float.MAX_VALUE);
-			else if(system.equalsIgnoreCase("MINREA")) value = RealValue.of(Float.MIN_VALUE);
+//			else if(system.equalsIgnoreCase("MINREA")) value = RealValue.of(Float.MIN_VALUE);
+			else if(system.equalsIgnoreCase("MINREA")) value = RealValue.of(-Float.MAX_VALUE);
 			else if(system.equalsIgnoreCase("MAXLRL")) value = LongRealValue.of(Double.MAX_VALUE);
-			else if(system.equalsIgnoreCase("MINLRL")) value = LongRealValue.of(Double.MIN_VALUE);
+//			else if(system.equalsIgnoreCase("MINLRL")) value = LongRealValue.of(Double.MIN_VALUE);
+			else if(system.equalsIgnoreCase("MINLRL")) value = LongRealValue.of(-Double.MAX_VALUE);
 			else if(system.equalsIgnoreCase("INIERR")) value = null;//new RoutineAddress(true);
 			else if(system.equalsIgnoreCase("ALLOCO")) value = null;//new RoutineAddress(true);
 			else if(system.equalsIgnoreCase("FREEOB")) value = null;//new RoutineAddress(true);

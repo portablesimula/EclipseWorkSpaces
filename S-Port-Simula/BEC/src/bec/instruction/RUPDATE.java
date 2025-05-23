@@ -6,8 +6,9 @@ import bec.compileTimeStack.CTStackItem;
 import bec.util.Global;
 import bec.util.Util;
 import bec.value.ObjectAddress;
+import bec.virtualMachine.RTAddress;
 import bec.virtualMachine.RTStack;
-import bec.virtualMachine.SVM_PEEK2MEM;
+import bec.virtualMachine.SVM_STORE;
 
 public abstract class RUPDATE extends Instruction {
 	private static final boolean DEBUG = false;
@@ -35,7 +36,7 @@ public abstract class RUPDATE extends Instruction {
 //			CTStack.dumpStack("RUPDATE-2: ");
 		}
 //		CTStack.dumpStack("RUPDATE: ");
-		Global.PSEG.emit(new SVM_PEEK2MEM(adr, adr.size), "RUPDATE: "); // Store into adr
+		Global.PSEG.emit(new SVM_STORE(new RTAddress(adr), adr.size), "RUPDATE: "); // Store into adr
 //		if(DEBUG) Global.PSEG.dump("RUPDATE: ");
 	}
 

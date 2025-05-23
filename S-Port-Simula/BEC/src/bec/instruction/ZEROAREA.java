@@ -3,7 +3,7 @@ package bec.instruction;
 import bec.compileTimeStack.CTStack;
 import bec.util.Global;
 import bec.util.Type;
-import bec.virtualMachine.SVM_CALLSYS;
+import bec.virtualMachine.SVM_CALL_SYS;
 
 public abstract class ZEROAREA extends Instruction {
 	
@@ -29,7 +29,7 @@ public abstract class ZEROAREA extends Instruction {
 
 		CTStack.checkTosType(Type.T_OADDR); CTStack.checkSosValue(); CTStack.checkSosType(Type.T_OADDR);
 		
-		Global.PSEG.emit(new SVM_CALLSYS(SVM_CALLSYS.P_ZEROAREA), "");
+		Global.PSEG.emit(new SVM_CALL_SYS(SVM_CALL_SYS.P_ZEROAREA), "");
 		
 		CTStack.pop();
 //		Util.IERR("NOT IMPL");

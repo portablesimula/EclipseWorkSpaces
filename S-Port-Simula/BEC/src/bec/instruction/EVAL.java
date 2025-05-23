@@ -2,11 +2,10 @@ package bec.instruction;
 
 import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.CTStackItem;
-import bec.util.Util;
 
 public abstract class EVAL extends Instruction {
 
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 
 	/**
 	 * eval_instruction ::= eval

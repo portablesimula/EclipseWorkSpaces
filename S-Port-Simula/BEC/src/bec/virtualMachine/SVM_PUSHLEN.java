@@ -40,7 +40,9 @@ public class SVM_PUSHLEN extends SVM_Instruction {
 	 */
 	@Override
 	public void execute() {
-		RTStack.push(IntegerValue.of(Type.T_SIZE, RTStack.size()), "SVM_PUSHLEN");
+		IntegerValue size = IntegerValue.of(Type.T_SIZE, RTStack.size());
+		RTStack.push(size, "SVM_PUSHLEN");
+//		System.out.println("SVM_PUSHLEN.execute:  SAVE-RESTORE " + size);
 //		Util.IERR("");
 		Global.PSC.ofst++;
 	}

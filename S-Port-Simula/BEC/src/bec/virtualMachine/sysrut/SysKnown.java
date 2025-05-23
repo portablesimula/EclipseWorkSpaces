@@ -2,13 +2,16 @@ package bec.virtualMachine.sysrut;
 
 import bec.segment.DataSegment;
 import bec.util.Type;
+import bec.util.Util;
 import bec.value.IntegerValue;
 import bec.value.ObjectAddress;
 import bec.value.Value;
 import bec.virtualMachine.RTStack;
-import bec.virtualMachine.SVM_CALLSYS;
+import bec.virtualMachine.SVM_CALL_SYS;
 
 public abstract class SysKnown {
+//   ---  Transfer all the characters in the source.
+//   ---  Blankfill any remaining characters of the destination.
 //	 Visible known("CMOVE") C_MOVE; import infix(string) src,dst;
 //	 begin integer i,n,rst; i:= -1; n:=src.nchr; rst:=dst.nchr-n;
 //	       if rst < 0 then n:=dst.nchr; rst:=0 endif;
@@ -20,12 +23,16 @@ public abstract class SysKnown {
 //	--	SETOPT(2,0); -- Option.RT_InstrStep=val;
 //	 end;
 	public static void cmove() {
-		SVM_CALLSYS.ENTER("CMOVE: ", 0, 6); // exportSize, importSize
+		SVM_CALL_SYS.ENTER("CMOVE: ", 0, 6); // exportSize, importSize
+		
+		boolean DEBUG = false;
 		
 		int dstNchr = RTStack.popInt();
 		ObjectAddress dstAddr = RTStack.popGADDRasOADDR();
 		int srcNchr = RTStack.popInt();
 		ObjectAddress srcAddr = RTStack.popGADDRasOADDR();
+
+		if(DEBUG) prtStr("\n\nTESTING CMOVE: Source: ", srcAddr, srcNchr);
 		
 		int n = srcNchr; int rst = dstNchr-n;
 		if(rst < 0) { n = dstNchr; rst = 0; };
@@ -33,12 +40,14 @@ public abstract class SysKnown {
 		int dstIdx = dstAddr.getOfst();
 
 //		boolean DEBUG = rst > 0;
-//		int idxTo = dstIdx+dstNchr;
-//		if(DEBUG) {
-//			System.out.println("SVM_SYSCALL.CMOVE: srcAddr="+srcAddr+", srcNchr="+srcNchr);
-//			System.out.println("SVM_SYSCALL.CMOVE: dstAddr="+dstAddr+", dstNchr="+dstNchr);
+		int idxTo = dstIdx+dstNchr;
+		if(DEBUG) {
+			System.out.println("SVM_SYSCALL.CMOVE: srcAddr="+srcAddr+", srcNchr="+srcNchr);
+			System.out.println("SVM_SYSCALL.CMOVE: dstAddr="+dstAddr+", dstNchr="+dstNchr);
+			System.out.println("SVM_SYSCALL.CMOVE: rst="+rst);
+			prtStr("TESTING CMOVE: dst: ", dstAddr.addOffset(-2), dstNchr+4);
 //			dstSeg.dump("SVM_SYSCALL.cmove: ", dstIdx-1, idxTo+1);
-//		}
+		}
 		
 		if(srcAddr != null) {
 			DataSegment srcSeg = srcAddr.segment();
@@ -53,18 +62,35 @@ public abstract class SysKnown {
 		}
 		
 		IntegerValue blnk = IntegerValue.of(Type.T_CHAR, ' ');
-		while(rst > 0) {
-			dstSeg.store(dstIdx + n, blnk); rst--;
+//		while(rst >= 0) {
+//			dstSeg.store(dstIdx + (n++), blnk); rst--;
+//			dstSeg.store(dstIdx + rst, blnk); rst--;
+//		}
+		for(int i=0;i<rst;i++) {
+			dstSeg.store(dstIdx + (n++), blnk);
 		}
 		
-//		if(DEBUG) {
+		if(DEBUG) {
+			prtStr("TESTING CMOVE: src: ", srcAddr, srcNchr);
+			prtStr("TESTING CMOVE: dst: ", dstAddr.addOffset(-2), dstNchr+4);
 //			dstSeg.dump("SVM_SYSCALL.cmove: ", dstIdx-1, idxTo+1);
 //			Util.IERR("");
-//		}
+		}
 		
 		
 //		RTStack.push(null, null); // ?????
-		SVM_CALLSYS.EXIT("CMOVE: ");
+		SVM_CALL_SYS.EXIT("CMOVE: ");
+	}
+	
+	public static void prtStr(String title, ObjectAddress addr, int nchr) {
+		System.out.print("prtStr: "+title+'"');
+		for(int i=0;i<nchr;i++) {
+			IntegerValue val = (IntegerValue) addr.addOffset(i).load();
+			if(val != null) System.out.print((char)val.value);
+			else System.out.print(".");
+		}
+		System.out.println("\"");
+//		Util.IERR("");
 	}
 
 	
@@ -76,7 +102,7 @@ public abstract class SysKnown {
 //	       endrepeat;
 //	 end;
 	public static void cblnk() {
-		SVM_CALLSYS.ENTER("CBLNK: ", 0, 3); // exportSize, importSize
+		SVM_CALL_SYS.ENTER("CBLNK: ", 0, 3); // exportSize, importSize
 		
 		int nchr = RTStack.popInt();
 		ObjectAddress addr = RTStack.popGADDRasOADDR();
@@ -97,7 +123,7 @@ public abstract class SysKnown {
 		
 		
 //		RTStack.push(null, null); // ?????
-		SVM_CALLSYS.EXIT("CBLNK: ");
+		SVM_CALL_SYS.EXIT("CBLNK: ");
 	}
 
 }

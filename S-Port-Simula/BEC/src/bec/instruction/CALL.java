@@ -14,10 +14,11 @@ import bec.util.Util;
 import bec.value.ObjectAddress;
 import bec.virtualMachine.SVM_CALL;
 import bec.virtualMachine.SVM_NOOP;
-import bec.virtualMachine.SVM_PEEK2MEM;
+import bec.virtualMachine.SVM_STORE;
 import bec.virtualMachine.SVM_PRECALL;
-import bec.virtualMachine.SVM_PUSHC;
-import bec.virtualMachine.SVM_CALLSYS;
+import bec.virtualMachine.SVM_LOADC;
+import bec.virtualMachine.SVM_CALL_SYS;
+import bec.virtualMachine.SVM_CALL_TOS;
 
 public abstract class CALL extends Instruction {
 	private static final boolean DEBUG = false;
@@ -54,6 +55,7 @@ public abstract class CALL extends Instruction {
 //		System.out.println("CALL.ofScode: nParStacked="+nParStacked);
 		int nParSlots = 0;
 		for(int i=0;i<nParStacked;i++) {
+			FETCH.doFetch(null);
 			CTStackItem par = CTStack.pop();
 			nParSlots = nParSlots + par.type.size();
 //			System.out.println("CALL.ofScode: par="+par+", nParSlots="+nParSlots);
@@ -61,7 +63,7 @@ public abstract class CALL extends Instruction {
 		
 		CTStack.push(pitem);
 	    
-//		System.out.println("CALL.ofScode: spec.pKind="+spec.pKind);
+//		System.out.println("CALL.ofScode: "+Scode.edTag(profileTag)+", spec.pKind="+SVM_CALL_SYS.edKind(spec.pKind)+':'+spec.pKind);
 		if(spec.pKind == 0) {
 			int exportSize = (spec.getExport() == null)? 0 : spec.getExport().type.size();
 			int importSize = spec.frameSize-exportSize-1;
@@ -109,11 +111,12 @@ public abstract class CALL extends Instruction {
 //		System.out.println("CALL.ofScode: export="+spec.exportSize);
 	    if(CALL_TOS) {
 	    	Global.PSEG.emit(SVM_CALL.ofTOS(spec.returSlot), "");
+//    		Global.PSEG.emit(new SVM_CALL_TOS(spec.ident, spec.returSlot, spec.nParSlots, spec.exportSize, spec.importSize), ""+Scode.edTag(profileTag));
 	    	CTStack.pop();
 	    } else {
 			int bodyTag = Scode.ofScode();
 	    	if(spec.pKind > 0) {
-	    		Global.PSEG.emit(new SVM_CALLSYS(spec.pKind), "");
+	    		Global.PSEG.emit(new SVM_CALL_SYS(spec.pKind), "");
 	    	} else {
 	    		RoutineDescr rut = (RoutineDescr) Global.DISPL.get(bodyTag);
 	    		if(rut == null) Util.IERR("Unknown Routine: " + Scode.edTag(bodyTag));
@@ -187,7 +190,7 @@ public abstract class CALL extends Instruction {
 			int n = parSize * (repCount - nrep);
 //			System.out.println("CallInstruction.putPar: nrep="+nrep+", repCount="+repCount+", n="+n+", parSize="+parSize);
 			for(int i=0;i<n;i++) {
-				Global.PSEG.emit(new SVM_PUSHC(null), "putPar: ASSREP'fill: ");
+				Global.PSEG.emit(new SVM_LOADC(Type.T_INT, null), "putPar: ASSREP'fill: ");
 				
 			}
 //			Util.IERR("");

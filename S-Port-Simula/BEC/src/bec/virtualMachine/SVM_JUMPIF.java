@@ -28,8 +28,8 @@ public class SVM_JUMPIF extends SVM_JUMP {
 	public void execute() {
 		boolean doJump = false;
 		if(typeSize == 1) {
-			Value tos = RTStack.pop().value();
-			Value sos = RTStack.pop().value();
+			Value tos = RTStack.pop();
+			Value sos = RTStack.pop();
 			doJump = relation.compare(sos, tos);
 			if(DEBUG) {
 				String jmp = (doJump)? "DO JUMP" : "NOT JUMP";
@@ -38,8 +38,8 @@ public class SVM_JUMPIF extends SVM_JUMP {
 		} else {
 			Value[] TOS = new Value[typeSize];
 			Value[] SOS = new Value[typeSize];
-			for(int i=0;i<typeSize;i++) TOS[i] = RTStack.pop().value();
-			for(int i=0;i<typeSize;i++) SOS[i] = RTStack.pop().value();
+			for(int i=0;i<typeSize;i++) TOS[i] = RTStack.pop();
+			for(int i=0;i<typeSize;i++) SOS[i] = RTStack.pop();
 			boolean equals = true;
 			Relation eqRel = new Relation(Scode.S_EQ);
 			LOOP:for(int i=0;i<typeSize;i++) {

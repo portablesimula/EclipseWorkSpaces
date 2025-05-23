@@ -20,12 +20,13 @@ public class SVM_ADD extends SVM_Instruction {
 
 	@Override
 	public void execute() {
-		Value tos = RTStack.pop().value();
-		Value sos = RTStack.pop().value();
+		Value tos = RTStack.pop();
+		Value sos = RTStack.pop();
 		if(DEBUG) {
 			if(tos != null)	System.out.println("SVM_ADD: TOS: " + tos.getClass().getSimpleName() + "  " + tos);
 			if(sos != null)	System.out.println("SVM_ADD: SOS: " + sos.getClass().getSimpleName() + "  " + sos);
 			System.out.println("SVM_ADD: " + sos + " + " + tos);
+//			RTUtil.dumpCurins();
 		}
 		Value res = (sos == null)? tos : sos.add(tos);
 		if(DEBUG) System.out.println("SVM_ADD: " + sos + " + " + tos + " ==> " + res);

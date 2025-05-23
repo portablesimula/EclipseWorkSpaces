@@ -28,6 +28,16 @@ public class Value {
 //		return null;
 	}
 
+	public float toFloat() {
+		Util.IERR("Method 'toFloat' need a redefinition in " + this.getClass().getSimpleName());
+		return 0;
+	}
+
+	public double toDouble() {
+		Util.IERR("Method 'toDouble' need a redefinition in " + this.getClass().getSimpleName());
+		return 0;
+	}
+
 	public Value copy() {
 		Util.IERR("Method 'copy' need a redefinition in " + this.getClass().getSimpleName());
 		return null;

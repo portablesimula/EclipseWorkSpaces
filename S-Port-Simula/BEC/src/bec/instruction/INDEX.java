@@ -5,10 +5,14 @@ import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.Temp;
 import bec.util.Global;
 import bec.util.Scode;
+import bec.util.Type;
 import bec.util.Util;
+import bec.value.IntegerValue;
 import bec.virtualMachine.RTRegister;
 import bec.virtualMachine.SVM_ADDREG;
-import bec.virtualMachine.SVM_POP2REG;
+import bec.virtualMachine.SVM_LOADC;
+import bec.virtualMachine.SVM_MULT;
+import bec.virtualMachine.SVM_STORE2REG;
 
 public abstract class INDEX extends Instruction {
 	int instr; // INDEX | INDEXV
@@ -37,13 +41,26 @@ public abstract class INDEX extends Instruction {
 		
 		CTStack.pop();
 		AddressItem adr = (AddressItem) CTStack.TOS();
+		int size = adr.size;
+		
+//		System.out.println("INDEX.ofScode: adr.offset="+adr.offset);
+//		System.out.println("INDEX.ofScode: adr.size="+adr.size);
 //		System.out.println("INDEX.ofScode: adr="+adr+"                 R"+adr.xReg);
 		
 		if(adr.xReg > 0) {
+			if(size > 1) {
+				Global.PSEG.emit(new SVM_LOADC(Type.T_INT, IntegerValue.of(Type.T_INT, size)), "INDEX.ofScode: ");
+				Global.PSEG.emit(new SVM_MULT(), "INDEX.ofScode: ");
+//				Util.IERR("NOT IMPL");
+			}
 			Global.PSEG.emit(new SVM_ADDREG(adr.xReg), "INDEX.ofScode: ");
 		} else {
 			adr.xReg = RTRegister.getFreeReg();
-			Global.PSEG.emit(new SVM_POP2REG(adr.xReg), "INDEX.ofScode: ");
+			if(size > 1) {
+				Global.PSEG.emit(new SVM_LOADC(Type.T_INT, IntegerValue.of(Type.T_INT, size)), "INDEX.ofScode: ");
+				Global.PSEG.emit(new SVM_MULT(), "INDEX.ofScode: ");
+			}
+			Global.PSEG.emit(new SVM_STORE2REG(adr.xReg), "INDEX.ofScode: ");
 		}
 		if(DEBUG) Global.PSEG.dump("INDEX.ofScode: ");
 		

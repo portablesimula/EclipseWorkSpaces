@@ -18,9 +18,9 @@ public abstract class CTStackItem {
 	public String edMode() {
 		if(mode == null) return("NULL    ");
 		switch(mode) {
-			case PROFILE: return("PROFILE ");
-			case REF:     return("REF     ");
-			case VAL:     return("VAL     ");
+			case PROFILE: return("PRF ");
+			case REF:     return("REF ");
+			case VAL:     return("VAL ");
 		}
 		Util.IERR("");
 		return null;

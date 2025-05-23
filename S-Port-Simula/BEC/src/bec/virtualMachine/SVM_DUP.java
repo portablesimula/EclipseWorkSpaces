@@ -25,7 +25,7 @@ public class SVM_DUP extends SVM_Instruction {
 
 	@Override
 	public void execute() {
-		Value tos = RTStack.pop().value();
+		Value tos = RTStack.pop();
 //		if(tos != null)	System.out.println("SVM_DUP: TOS: " + tos.getClass().getSimpleName() + "  " + tos);
 		RTStack.push(tos, "SVM_DUP: ");
 		if(rtAddr == null) {
@@ -33,6 +33,22 @@ public class SVM_DUP extends SVM_Instruction {
 			RTStack.push(tos, "SVM_DUP: ");
 //			Util.IERR("SJEKK DETTE");
 		} else {
+			boolean TESTING = true;
+			
+			if(TESTING) {
+
+				if(rtAddr.withRemoteBase) {
+					// this.addr is Stack Relative Address
+					ObjectAddress oaddr = RTStack.popOADDR();
+					RTStack.push(oaddr, "SVM_DUP: ");
+					RTAddress addr = new RTAddress(oaddr, rtAddr.offset);
+					addr.xReg = rtAddr.xReg;
+//					System.out.println("SVM_DUP.execute: UPDDATED addr="+addr);
+					tos = addr.load(0);
+				} else tos = rtAddr.load(0);
+//				System.out.println("SVM_DUP: "+rtAddr+" ===> NEW tos="+tos);
+//				Util.IERR("");
+			}
 //			ObjectAddress oaddr = (ObjectAddress) tos;
 //			oaddr = oaddr.addOffset(rtAddr.offset);
 //			RTStack.push(oaddr, "SVM_DUP: ");
@@ -47,7 +63,7 @@ public class SVM_DUP extends SVM_Instruction {
 	
 //	@Override
 	public void OLD_execute() {
-		Value tos = RTStack.pop().value();
+		Value tos = RTStack.pop();
 		if(tos != null)	System.out.println("SVM_DUP: TOS: " + tos.getClass().getSimpleName() + "  " + tos);
 		if(rtAddr == null) {
 			// DUP VALUE

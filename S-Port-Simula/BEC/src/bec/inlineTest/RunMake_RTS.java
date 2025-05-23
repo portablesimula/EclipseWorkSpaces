@@ -35,6 +35,7 @@ public class RunMake_RTS {
 		Global.verbose = true;
 //		Global.traceMode = 4;
 //		Global.SCODE_INPUT_TRACE = true;
+//		Global.TRACE_ALLOC_FRAME = true;
 //		Global.PRINT_GENERATED_SVM_CODE = true;
 //		Global.PRINT_GENERATED_SVM_DATA = true;
 //		Global.ATTR_INPUT_TRACE = true;

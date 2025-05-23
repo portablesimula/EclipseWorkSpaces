@@ -10,7 +10,7 @@ import bec.util.Type;
 import bec.util.Util;
 import bec.value.ObjectAddress;
 import bec.virtualMachine.RTAddress;
-import bec.virtualMachine.SVM_PUSH;
+import bec.virtualMachine.SVM_LOAD;
 
 /**
  * 
@@ -74,7 +74,7 @@ public abstract class REMOTE extends Instruction {
 //			Type type = adr.type;
 //			RTAddress rtAddr = new RTAddress(adr); 
 //			if(DEBUG) System.out.println("FETCH.doFetch: rtAddr="+rtAddr);
-//			Global.PSEG.emit(new SVM_PUSH(rtAddr, type.size()), "REMOTE " +type);
+//			Global.PSEG.emit(new SVM_LOAD(rtAddr, type.size()), "REMOTE " +type);
         }
         if(DEBUG) {
         	CTStack.dumpStack("REMOTE-2: ");

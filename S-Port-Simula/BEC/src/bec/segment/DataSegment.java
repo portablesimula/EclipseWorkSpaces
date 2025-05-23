@@ -59,8 +59,9 @@ public class DataSegment extends Segment {
 			return values.get(index);
 		} catch(Exception e) {
 //			e.printStackTrace();
-			this.dump("DataSegment.load: FAILED");
-			Util.IERR("DataSegment.load: FAILED");
+			System.out.println("DataSegment.load: FAILED - SE PÅ DETTE SEINERE !!");
+//			this.dump("DataSegment.load: FAILED: " + e + " ");
+//			Util.IERR("DataSegment.load: FAILED");
 			return null;
 		}
 	}

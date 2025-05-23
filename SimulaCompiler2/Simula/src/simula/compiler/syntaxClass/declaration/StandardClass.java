@@ -158,8 +158,10 @@ public final class StandardClass extends ClassDeclaration {
 
 		ENVIRONMENT.addStandardAttribute(Type.LongReal,"maxlongreal",Double.MAX_VALUE);  
 		ENVIRONMENT.addStandardAttribute(Type.LongReal,"minlongreal",-Double.MAX_VALUE);  
+//		ENVIRONMENT.addStandardAttribute(Type.LongReal,"minlongreal",Double.MIN_VALUE);  
 		ENVIRONMENT.addStandardAttribute(Type.Real,"maxreal",Float.MAX_VALUE);  
 		ENVIRONMENT.addStandardAttribute(Type.Real,"minreal",-Float.MAX_VALUE);  
+//		ENVIRONMENT.addStandardAttribute(Type.Real,"minreal",Float.MIN_VALUE);  
 		ENVIRONMENT.addStandardAttribute(Type.Integer,"maxrank",255);  
 		ENVIRONMENT.addStandardAttribute(Type.Integer,"maxint",Integer.MAX_VALUE);  
 		ENVIRONMENT.addStandardAttribute(Type.Integer,"minint",Integer.MIN_VALUE);  

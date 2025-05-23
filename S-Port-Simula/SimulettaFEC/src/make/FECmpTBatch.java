@@ -25,17 +25,17 @@ public final class FECmpTBatch {
 		Vector<String> names=new Vector<String>();
 		
 //		names.add("adHoc00");
-//		names.add("adHoc01");
-			names.add("adHoc02");
+		names.add("adHoc01");
+//		names.add("adHoc02");
 //		names.add("adHoc03");
 //		names.add("adHoc04");
 //		names.add("adHoc05");
 //		names.add("adHoc06");
 //		names.add("adHoc07");
-//			names.add("adHoc08");
+//		names.add("adHoc08");
 //		names.add("adHoc09");
 //		names.add("adHoc10");
-//			names.add("adHoc11");
+//		names.add("adHoc11");
 		
 //		names.add("smltst00"); // Standard layout of test programs
 //		names.add("smltst01"); // Simple Assignments

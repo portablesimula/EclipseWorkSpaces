@@ -9,7 +9,7 @@ import bec.util.Util;
 import bec.value.IntegerValue;
 import bec.virtualMachine.SVM_ADD;
 import bec.virtualMachine.SVM_MULT;
-import bec.virtualMachine.SVM_PUSHC;
+import bec.virtualMachine.SVM_LOADC;
 
 public abstract class DSIZE extends Instruction {
 	
@@ -37,10 +37,10 @@ public abstract class DSIZE extends Instruction {
 			CTStack.checkTosInt();
 			CTStack.pop();
 			IntegerValue nbrepValue = IntegerValue.of(Type.T_INT, n);
-			Global.PSEG.emit(new SVM_PUSHC(nbrepValue), "DSIZE'nbrep: ");
+			Global.PSEG.emit(new SVM_LOADC(Type.T_INT, nbrepValue), "DSIZE'nbrep: ");
 			Global.PSEG.emit(new SVM_MULT(), "MULT: ");
 			IntegerValue fixValue = IntegerValue.of(Type.T_INT, fixrec.size);
-			Global.PSEG.emit(new SVM_PUSHC(fixValue), "DSIZE'recSize: ");
+			Global.PSEG.emit(new SVM_LOADC(Type.T_INT, fixValue), "DSIZE'recSize: ");
 			Global.PSEG.emit(new SVM_ADD(), "ADD: ");
 			
 			CTStack.pushTempVAL(Type.T_SIZE, 1, "DSIZE: ");

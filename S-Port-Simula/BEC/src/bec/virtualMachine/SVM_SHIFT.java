@@ -31,8 +31,8 @@ public class SVM_SHIFT extends SVM_Instruction {
 
 	@Override
 	public void execute() {
-		Value tos = RTStack.pop().value();
-		Value sos = RTStack.pop().value();
+		Value tos = RTStack.pop();
+		Value sos = RTStack.pop();
 		if(DEBUG) {
 			if(tos != null)	System.out.println("SVM_SHIFT: TOS: " + tos.getClass().getSimpleName() + "  " + tos);
 			if(sos != null)	System.out.println("SVM_SHIFT: SOS: " + sos.getClass().getSimpleName() + "  " + sos);

@@ -1,41 +1,25 @@
 begin
 --   SYSINSERT envir,modl1;
    SYSINSERT RT,SYSR,KNWN,UTIL;    
+
+ routine OUTTXT;
+ import ref(filent) fil; infix(txtqnt) txt;
+ begin infix(txtqnt) img;           --  Local copy here for efficiency.
+       infix(string) src;           --  Copy from this string.
+       infix(string) dst;           --  Copy to this string.
+       integer imlength,tpos,tlen;  --  Used for long strings
+       
+%	   ed_str("*** OUTTXT: "); ed_oaddr(txt.ent);
+%	   ed_str(", CP: "); ed_int(txt.cp);
+%	   ed_str(", SP: "); ed_int(txt.sp);
+%	   ed_str(", LP: "); ed_int(txt.lp); ed_out;
+       
+       img:=fil.img; tpos:=txt.sp; tlen:=txt.lp-tpos;
+  end;
    
-	record REC4; begin
-%		label lab(3);
-		entry() entr(3);
-		ref() pnt(3);
-	  end
-	  
-	entry(routineProfile) routineRef;
-	infix(string) res;
-
-%   Visible global profile routineProfile;
-   Visible profile routineProfile;
-    import integer eno; ref() fil;
-           export infix(string) res;
-   end;
-	  
-   	Visible body(routineProfile) routineBody;
-    	-- import integer eno; ref(filent) fil; export infix(string) res;
-    	begin
-    	 --ed_str("ERROR: ");
-    	 -- ed_int(eno);
-    	 --     res:=get_ed;
-    	end;
-	  
-%	const infix(REC4) w1=record:REC4(lab=(LL1,LL2,NOWHERE));
-%	const infix(REC4) w2=record:REC4(entr=(entry(routineBody),NOBODY));
-	const infix(REC4) w3=record:REC4(pnt=(ref(str),NONE));
-
-	integer i;
-	infix(string) str; --="ABRACADAB";
-
-		i:=99;
-LL1:	i:=0;
-		i:=8888;
-LL2:	
+	name(infix(txtqnt)) qtex;
+	
+	qtex:=name(var(qtex)(1));
 
  end;
 		 

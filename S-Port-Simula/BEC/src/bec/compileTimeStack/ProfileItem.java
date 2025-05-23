@@ -16,7 +16,7 @@ public class ProfileItem extends CTStackItem {
 	}
 
 	public String toString() {
-		return ""+spc;
+		return edMode() + "PROF: " + spc;
 	}
 
 }

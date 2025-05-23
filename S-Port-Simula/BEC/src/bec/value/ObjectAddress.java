@@ -16,7 +16,6 @@ import bec.util.Type;
 import bec.util.Util;
 import bec.virtualMachine.CallStackFrame;
 import bec.virtualMachine.RTStack;
-import bec.virtualMachine.RTStack.RTStackItem;
 
 public class ObjectAddress extends Value {
 //	public DataSegment seg;
@@ -24,12 +23,14 @@ public class ObjectAddress extends Value {
 	protected int ofst;
 	
 	public ObjectAddress(String segID,	int ofst) {
+		this.type = Type.T_OADDR;
 		this.segID = segID;
 		this.ofst = ofst;
 //		if(ofst > 9000 || ofst < 0) Util.IERR("");
 	}
 	
 	private ObjectAddress(DataSegment seg,	int ofst) {
+		this.type = Type.T_OADDR;
 //		this.seg = seg;
 		if(seg != null)	this.segID = seg.ident;
 		this.ofst = ofst;
@@ -118,10 +119,10 @@ public class ObjectAddress extends Value {
 //			System.out.println("ObjectAddress.load: callStackTop="+RTStack.callStackTop.rtStackIndex);
 			CallStackFrame callStackTop = RTStack.callStack_TOP();
 			int bias = (callStackTop == null)? 0 : callStackTop.rtStackIndex;
-			RTStackItem item = RTStack.load(bias + ofst);
+			Value item = RTStack.load(bias + ofst);
 //			System.out.println("ObjectAddress.load: value="+value);
 //			Util.IERR("");
-			return item.value();
+			return item;
 		} else {
 		DataSegment dseg = segment();
 		Value value =  dseg.load(ofst);
@@ -209,6 +210,7 @@ public class ObjectAddress extends Value {
 	// *** Attribute File I/O
 	// ***********************************************************************************************
 	private ObjectAddress(AttributeInputStream inpt) throws IOException {
+		this.type = Type.T_OADDR;
 //		String ident = inpt.readString();
 		segID = inpt.readString();
 //		ofst = inpt.readInt();

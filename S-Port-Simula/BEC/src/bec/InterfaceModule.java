@@ -61,7 +61,7 @@ public class InterfaceModule extends S_Module {
 				case Scode.S_CONSTSPEC: ConstDescr.ofConstSpec(); break;
 				case Scode.S_CONST:		ConstDescr.ofConstDef(); break;
 				case Scode.S_RECORD:	RecordDescr.ofScode(); break;
-				case Scode.S_PROFILE:   ProfileDescr.ofProfile(); break;
+				case Scode.S_PROFILE:   ProfileDescr.ofScode(); break;
 				case Scode.S_ROUTINE:	RoutineDescr.ofRoutineDef();	break;
 				case Scode.S_LINE:		setLine(0); break;
 				case Scode.S_DECL:		CTStack.checkStackEmpty(); setLine(Kind.qDCL); break;

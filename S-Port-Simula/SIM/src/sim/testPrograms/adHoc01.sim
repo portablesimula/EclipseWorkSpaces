@@ -1,41 +1,9 @@
 begin
-	integer n = 5;
-	text title = "--- Test arithm. relations";
+	text t1, t2;
 
-	boolean found_error;
-	integer nFailed;
-	boolean verbose=false;
-	boolean noMessage;
+	t1 :- copy("12345678");
+	t2 :- t1.sub(3,4);
 
-	procedure err(t); text t;
-	begin sysout.setpos(1);
-	      outtext("*** error: in test "); outtext(t); outimage;
-	      found_error:=true; nFailed:=nFailed+1;
-	end;
-
-	real               r1;                ! To be compared by the relops;
-	real               r2;                ! To be compared by the relops;
-	real               minpreal;          ! To contain min pos real val.;
-	real               maxnreal;          ! To contain max neg real val.;
-	minpreal :=  addepsilon(0.0);         ! and negative real value with;
-	maxnreal :=  minreal;                 ! real precision.             ;
-
-
-
-
-
-
-
-
-
-r1 := maxnreal;   r2 := minpreal;
-
-if                 r1  = r1         and             r1 <  r2
-   and         -.1&00 <= r2         and not         r1  > .00002&0
-   and not         r1 >= r2         and             r1 <> r2  then
-else  err("real.7 (comparing REALs)");
-
-
-
-
+	t2 := notext;
+	
 end of program;

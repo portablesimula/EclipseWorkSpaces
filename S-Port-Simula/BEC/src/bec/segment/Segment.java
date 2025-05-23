@@ -129,10 +129,10 @@ public class Segment { // extends Descriptor {
 		Global.CSEG = new DataSegment("CSEG", Kind.K_SEG_CONST);
 		Global.DSEG = new DataSegment("DSEG", Kind.K_SEG_DATA);
 		
-		ProgramAddress seg1Low = new ProgramAddress("DSEG", 12);
-		ProgramAddress seg1High = new ProgramAddress("DSEG", 99);
-		ProgramAddress seg2Low = new ProgramAddress("CSEG", 12);
-		ProgramAddress seg2High = new ProgramAddress("CSEG", 99);
+		ProgramAddress seg1Low  = new ProgramAddress(Type.T_PADDR, "DSEG", 12);
+		ProgramAddress seg1High = new ProgramAddress(Type.T_PADDR, "DSEG", 99);
+		ProgramAddress seg2Low  = new ProgramAddress(Type.T_PADDR, "CSEG", 12);
+		ProgramAddress seg2High = new ProgramAddress(Type.T_PADDR, "CSEG", 99);
 		int nErr = 0;
 
 		nErr += TEST(seg1Low, Scode.S_LT, seg1High, true);

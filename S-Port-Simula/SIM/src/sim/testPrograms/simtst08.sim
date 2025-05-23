@@ -8,13 +8,35 @@
 %
 %  WRITTEN BY:  THE  27/10-83
 % ====================================================================
-external class SimulaTest;
+% external class SimulaTest;
 
-SimulaTest(8,"--- Simple scope test") begin
+% SimulaTest(8,"--- Simple scope test") begin
+begin
+	integer n = 8;
+	text title = "--- Simple scope test";
+
+	boolean found_error;
+	integer nFailed;
+	boolean verbose=false;
+	boolean noMessage;
+
+	procedure err(t); text t;
+	begin sysout.setpos(1);
+	      outtext("*** error: in test "); outtext(t); outimage;
+	      found_error:=true; nFailed:=nFailed+1;
+	end;
+
 
 integer            isum;               ! To contain control sum.     ;
 real               rsum;               ! To contain control sum.     ;
 text               txt;                ! Used in controlling real    ;
+
+	if verbose then begin
+		outtext ("--- START Simula a.s. TEST"); outint(n,4); outimage;
+		outtext (title);
+		outimage; outimage;
+	end;
+	
                                        ! controll sum.               ;
    begin
    integer            intr;
@@ -178,5 +200,20 @@ if isum <> 34911 or txt <> " 34911" then begin
    outtext ("    Result sums was : ");
    outtext (txt); outint (isum, 8); outimage;
 end;
+	
+	if noMessage then else begin
+		if found_error then begin
+			outtext("--- "); outint(nFailed,3); outtext(" ERROR(S) FOUND IN TEST"); outint(n,4); outtext("  "); outtext(title);
+			outtext("Test sample has "); outint(nFailed,3);
+			error(" error(s)");
+		end else begin
+			outtext ("--- NO ERRORS FOUND IN TEST"); outint(n,4); outtext("  "); outtext(title);
+		end;
+
+		if verbose then begin
+			outtext ("--- END Simula a.s. TEST"); outint(n,4); outimage;
+		end;
+	end;
+		
 
 end of program;

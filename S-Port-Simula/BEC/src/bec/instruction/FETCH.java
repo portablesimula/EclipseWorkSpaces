@@ -7,7 +7,7 @@ import bec.util.Type;
 import bec.util.Util;
 import bec.virtualMachine.RTAddress;
 import bec.virtualMachine.SVM_NOOP;
-import bec.virtualMachine.SVM_PUSH;
+import bec.virtualMachine.SVM_LOAD;
 
 public abstract class FETCH extends Instruction {
 
@@ -42,7 +42,7 @@ public abstract class FETCH extends Instruction {
 			Type type = addr.type;
 			RTAddress rtAddr = new RTAddress(addr); 
 			if(DEBUG) System.out.println("FETCH.doFetch: rtAddr="+rtAddr);
-			Global.PSEG.emit(new SVM_PUSH(rtAddr, type.size()), comment + " " +type);
+			Global.PSEG.emit(new SVM_LOAD(rtAddr, type.size()), comment + " " +type);
 			CTStack.pop(); CTStack.pushTempVAL(type, 1, "GQFetch: ");
 			if(DEBUG) {
 				CTStack.dumpStack("GQfetch: "+comment);

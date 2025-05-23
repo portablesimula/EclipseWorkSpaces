@@ -688,7 +688,7 @@ Module cent("RTS");
 
  Visible routine CONCAT;
    import range(0:MAX_DIM) npar; infix(txtqnt) param(MAX_DIM);
- export infix(txtqnt) res;
+   export infix(txtqnt) res;
  begin short integer ncha; size lng; infix(txtqnt) tmp;
        infix(string) res_str,src_str; short integer i;
        i:=ncha:=0;
@@ -883,7 +883,9 @@ Module cent("RTS");
  endmacro;
 
  Visible Routine ERR_PUT; import infix(string) item;
- begin if status = 25 then status:=0; ERROR(ENO_TXT_14);
+ begin
+% +M	   ED_STR("CENT.ERR_PUT: status="); ED_INT(status); ED_OUT;
+ 	   if status = 25 then status:=0; ERROR(ENO_TXT_14);
        elsif status <> 24 then IERR_E endif; -- internal error in ENVIR
        status:=0;
        ---  Overflow, not enough space for all the digits. Starfill.
@@ -946,7 +948,7 @@ Module cent("RTS");
        --- Insert save entity in the current instance's dynamic chain.
        sav.dl:=curins.dl; curins.dl:=sav;
        if lng = nosize then obj:=none endif;
-%  +M	   ED_STR("CENT.PRESAV: lng="); ED_SIZE(lng); ED_STR(", sav="); ED_OADDR(sav); ED_STR(", obj="); ED_OADDR(obj); ED_OUT;
+% +M	   ED_STR("CENT.PRESAV: lng="); ED_SIZE(lng); ED_STR(", sav="); ED_OADDR(sav); ED_STR(", obj="); ED_OADDR(obj); ED_OUT;
  end;
 
  Visible routine restor;

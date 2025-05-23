@@ -32,7 +32,7 @@ public class AddressItem extends CTStackItem {
 		if(xReg > 0) s += "+" + RTRegister.edReg(xReg);
 		s =  s  + "]";
 		if(withRemoteBase) s = s + " withRemoteBase";
-		return s;
+		return edMode() + "ADDR: " + s;
 	}
 
 }

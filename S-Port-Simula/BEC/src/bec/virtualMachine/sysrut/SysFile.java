@@ -6,7 +6,7 @@ import bec.value.IntegerValue;
 import bec.value.ObjectAddress;
 import bec.virtualMachine.RTStack;
 import bec.virtualMachine.RTUtil;
-import bec.virtualMachine.SVM_CALLSYS;
+import bec.virtualMachine.SVM_CALL_SYS;
 
 public abstract class SysFile {
 	
@@ -14,7 +14,7 @@ public abstract class SysFile {
 	/// import range(1:3) code; infix(string) spec;
 	/// export integer filled  end;
 	public static void gdspec() {
-		SVM_CALLSYS.ENTER("GDSPEC: ", 1, 4); // exportSize, importSize
+		SVM_CALL_SYS.ENTER("GDSPEC: ", 1, 4); // exportSize, importSize
 		@SuppressWarnings("unused")
 		int itemNchr = RTStack.popInt();
 		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
@@ -33,17 +33,17 @@ public abstract class SysFile {
 		RTUtil.move(result, itemAddr, result.length());
 
 		RTStack.push(IntegerValue.of(Type.T_INT, result.length()), "EXPORT");
-		SVM_CALLSYS.EXIT("GDSPEC: ");
+		SVM_CALL_SYS.EXIT("GDSPEC: ");
 	}
 	
 	/// Visible sysroutine("GETLPP") GETLPP;
 	/// import range(1:MAX_KEY) key; export integer lpp end;
 	public static void getlpp() {
-		SVM_CALLSYS.ENTER("GETLPP: ", 1, 1); // exportSize, importSize
+		SVM_CALL_SYS.ENTER("GETLPP: ", 1, 1); // exportSize, importSize
 		@SuppressWarnings("unused")
 		int key = RTStack.popInt();
 		RTStack.push(IntegerValue.of(Type.T_INT, 66), "GETLPP");
-		SVM_CALLSYS.EXIT("GETLPP: ");
+		SVM_CALL_SYS.EXIT("GETLPP: ");
 	}
 	
 	/// Visible sysroutine("OPFILE") OPFILE;
@@ -84,7 +84,7 @@ public abstract class SysFile {
 	/// -- The action string is always terminated by the NUL character ('!0!').
 	/// end;
 	public static void opfile() {
-		SVM_CALLSYS.ENTER("OPFILE: ", 1, 8); // exportSize, importSize
+		SVM_CALL_SYS.ENTER("OPFILE: ", 1, 8); // exportSize, importSize
 //		RTStack.dumpRTStack("SVM_SYSCALL.opfile: ");
 		int imglng = RTStack.popInt();
 //		System.out.println("SVM_SYSCALL.opfile: imglng="+imglng);
@@ -104,7 +104,7 @@ public abstract class SysFile {
 		}
 		RTStack.push(IntegerValue.of(Type.T_INT, key), "OPFILE");
 //		Util.IERR("");
-		SVM_CALLSYS.EXIT("OPFILE: ");
+		SVM_CALL_SYS.EXIT("OPFILE: ");
 	}
 
 	/// Visible sysroutine("CLFILE") OPFILE;
@@ -113,7 +113,7 @@ public abstract class SysFile {
 	/// end;
 	/// -- see OPFILE for encoding of action string --
 	public static void clfile() {
-		SVM_CALLSYS.ENTER("CLFILE: ", 0, 4); // exportSize, importSize
+		SVM_CALL_SYS.ENTER("CLFILE: ", 0, 4); // exportSize, importSize
 //		RTStack.dumpRTStack("SVM_SYSCALL.clfile: ");
 		String action = RTStack.popString();
 		int key = RTStack.popInt();
@@ -122,7 +122,19 @@ public abstract class SysFile {
 		if(key > 3) {
 			Util.IERR("NOT IMPL");
 		}
-		SVM_CALLSYS.EXIT("CLFILE: ");
+		SVM_CALL_SYS.EXIT("CLFILE: ");
+	}
+	
+	/// Visible sysroutine("NEWPAG") NEWPAG;
+	/// import range(1:MAX_KEY) key; end;
+	public static void newpag() {
+		SVM_CALL_SYS.ENTER("NEWPAG: ", 0, 1); // exportSize, importSize
+		@SuppressWarnings("unused")
+		int key = RTStack.popInt();
+		if(key > 3) {
+			Util.IERR("NOT IMPL");
+		}
+		SVM_CALL_SYS.EXIT("NEWPAG: ");
 	}
 
 }

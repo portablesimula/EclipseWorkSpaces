@@ -34,7 +34,7 @@ public abstract class S_Module {
 			switch(Scode.curinstr) {
 				case Scode.S_LABELSPEC ->	LabelDescr.ofLabelSpec();
 				case Scode.S_LABEL ->		LabelDescr.ofLabelDef(Tag.ofScode());
-				case Scode.S_PROFILE ->		ProfileDescr.ofProfile();
+				case Scode.S_PROFILE ->		ProfileDescr.ofScode();
 				case Scode.S_ROUTINE ->		RoutineDescr.ofRoutineDef();
 				case Scode.S_IF ->			IfConstrction.ofScode();
 				case Scode.S_SKIPIF ->		SkipifConstruction.ofScode();

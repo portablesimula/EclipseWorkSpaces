@@ -29,10 +29,21 @@ public class SVM_RETURN extends SVM_Instruction {
 	
 	@Override	
 	public void execute() {
+//		RTStack.printCallTrace("SVM_RETURN.execute: RETURN From "+ rutID);
 		ProgramAddress padr = (ProgramAddress) returAddr.load();
 		if(Global.CALL_TRACE_LEVEL > 0) {
 			System.out.println("SVM_RETURN.execute: RETURN From "+ rutID + " and Continue at " + padr);
 			RTStack.printCallTrace("SVM_RETURN.execute: RETURN From "+ rutID + " and Continue at " + padr);
+//			if(rutID.equals("CONCAT")) {
+//				RTStack.dumpRTStack("SVM_RETURN.execute: ");
+//				int idx = 0;
+//				Value txtent = RTStack.load(idx);
+//				System.out.println("SVM_RETURN.execute: TOS="+txtent);
+//				ObjectAddress obj = (ObjectAddress) txtent.value();
+//				System.out.println("SVM_RETURN.execute: obj="+obj);
+//				RTUtil.dumpEntity(obj);
+//				Util.IERR("");
+//			}
 		}
 		RTStack.checkStackEmpty();
 		CallStackFrame callStackTop = RTStack.callStack_TOP();
@@ -47,6 +58,10 @@ public class SVM_RETURN extends SVM_Instruction {
 		
 //		if(Global.EXEC_TRACE > 1) {
 		if(Global.EXEC_TRACE > 0) {
+//			if(rutID.equals("GTINTA")) {
+//				RTUtil.dumpCurins();
+//				Util.IERR("");
+//			}
 //			System.out.println("SVM_RETURN.execute: RETURN From "+ rutID + " and Continue at " + padr);
 			if(Global.EXEC_TRACE > 1) {
 				callStackTop = RTStack.callStack_TOP();

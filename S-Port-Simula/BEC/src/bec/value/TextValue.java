@@ -11,7 +11,7 @@ import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Type;
 import bec.util.Util;
-import bec.virtualMachine.SVM_PUSHC;
+import bec.virtualMachine.SVM_LOADC;
 
 public class TextValue extends Value {
 //	private ObjectAddress addr; // Pointer to a sequence of Characters.

@@ -12,6 +12,7 @@ import bec.util.Scode;
 import bec.util.Util;
 import bec.value.ObjectAddress;
 import bec.value.ProgramAddress;
+import bec.virtualMachine.RTUtil;
 import bec.virtualMachine.SVM_Instruction;
 
 public class MainProgram extends S_Module {
@@ -77,8 +78,9 @@ public class MainProgram extends S_Module {
 			Util.IERR("Illegal termination of program");
 		
 		try {
-		if(Global.verbose) System.out.println("\n\nNEW MainProgram: BEGIN EXECUTE: " + mainEntry);
-		Global.PSC = mainEntry;
+			if(Global.verbose) System.out.println("\n\nNEW MainProgram: BEGIN EXECUTE: " + mainEntry);
+			RTUtil.INIT();
+			Global.PSC = mainEntry;
 			while(true) {
 				Global.PSC.execute();
 			}
