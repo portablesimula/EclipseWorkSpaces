@@ -13,6 +13,7 @@ import bec.value.BooleanValue;
 import bec.value.IntegerValue;
 import bec.value.ObjectAddress;
 import bec.value.ProgramAddress;
+import bec.value.Value;
 import bec.virtualMachine.sysrut.SysDeEdit;
 import bec.virtualMachine.sysrut.SysDraw;
 import bec.virtualMachine.sysrut.SysEdit;
@@ -41,6 +42,7 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 			case P_TERMIN:   terminate(); break;
 			case P_STREQL:   stringEqual(); break;
 			case P_PRINTO:   printo(); break;
+			case P_MOVEIN:   movein(); break;
 
 			case P_GINTIN:   SysInfo.getIntinfo(); break;
 			case P_SIZEIN:   SysInfo.sizein(); break;
@@ -50,6 +52,13 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 			case P_OPFILE:   SysFile.opfile(); break;
 			case P_NEWPAG:   SysFile.newpag(); break;
 			case P_CLFILE:   SysFile.clfile(); break;
+			case P_INIMAG:   SysFile.INIMAG(); break;
+			case P_OUTIMA:   SysFile.OUTIMA(); break;
+			case P_INBYTE:   SysFile.INBYTE(); break;
+			case P_OUTBYT:   SysFile.OUTBYT(); break;
+			case P_LOCATE:   SysFile.LOCATE(); break;
+			case P_MAXLOC:   SysFile.MXLOC();  break;
+			case P_LSTLOC:   SysFile.LSTLOC(); break;
 
 			case P_GETINT:   SysDeEdit.getint(); break;
 			case P_GTFRAC:   SysDeEdit.getfrac(); break;
@@ -105,7 +114,7 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 			case P_CBLNK:    SysKnown.cblnk(); break;
 			default: Util.IERR("SVM_SYSCALL: Unknown System Routine " + edKind(kind));
 		}
-		Global.PSC.ofst++;
+		Global.PSC.addOfst(1);
 	}
 	
 	public static void ENTER(String ident, int exportSize, int importSize) {
@@ -225,6 +234,27 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 		System.out.println(sb);
 		EXIT("PRINTO: ");
 	}
+
+	/**
+	 *  Visible sysroutine("MOVEIN") MOVEIN;
+	 *  import ref() from,to; size length  end;
+	 */
+	private void movein() {
+		ENTER("MOVEIN: ", 0, 5); // exportSize, importSize		
+		int lng = RTStack.popInt();
+		ObjectAddress to = RTStack.popOADDR();
+		ObjectAddress from = RTStack.popOADDR();
+//		System.out.println("SVM_CALL.movein: from="+from);
+//		System.out.println("SVM_CALL.movein: to="+to);
+//		System.out.println("SVM_CALL.movein: lng="+lng);
+
+		for(int i=0;i<lng;i++) {
+			Value val = from.load(i);
+//			System.out.println("SVM_CALL.movein: idx="+i+", value="+val);
+			to.store(i, val, "MOVEIN: ");
+		}
+		EXIT("MOVEIN: ");
+	}
 	
 		
 	/**
@@ -249,7 +279,7 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 		}
 //		dseg.dump("SVM_SYSCALL.zeroarea: ", idxFrom, idxTo);
 //		Util.IERR("");
-		RTStack.push(null, null); // ?????
+		RTStack.push(null, ""); // ?????
 		EXIT("ZEROAREA: ");
 	}
 	

@@ -31,7 +31,7 @@ public class SVM_ADD extends SVM_Instruction {
 		Value res = (sos == null)? tos : sos.add(tos);
 		if(DEBUG) System.out.println("SVM_ADD: " + sos + " + " + tos + " ==> " + res);
 		RTStack.push(res, "SVM_ADD: " + tos + " + " + sos + " = " + res);
-		Global.PSC.ofst++;
+		Global.PSC.addOfst(1);
 	}
 
 	@Override	

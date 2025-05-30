@@ -40,8 +40,6 @@ import bec.value.Value;
  */
 public class SVM_REFER extends SVM_Instruction {
 	int xReg;
-	
-	private static final boolean TESTING = true;
 
 	public SVM_REFER(int xReg) {
 		this.opcode = SVM_Instruction.iREFER;
@@ -50,27 +48,10 @@ public class SVM_REFER extends SVM_Instruction {
 
 	@Override
 	public void execute() {
-		if(TESTING) {
-			int gOfst = 0;
-			ObjectAddress objadr = null;
-			Value tos = RTStack.pop();
-			if(tos instanceof ObjectAddress) {
-				System.out.println("SVM_REFER.execute: ERROR: GADDR in reverse order");
-				Util.IERR("");
-				objadr = (ObjectAddress) tos;
-				gOfst = RTStack.popInt();
-			} else {
-				gOfst = ((IntegerValue)tos).value;
-				objadr = (ObjectAddress) RTStack.pop();
-			}
-			RTRegister.putValue(xReg, new GeneralAddress(objadr, gOfst));
-			
-		} else {
-			int gOfst = RTStack.popInt();
-			ObjectAddress objadr = (ObjectAddress) RTStack.pop();
-			RTRegister.putValue(xReg, new GeneralAddress(objadr, gOfst));
-		}
-		Global.PSC.ofst++;
+		int gOfst = RTStack.popInt();
+		ObjectAddress objadr = (ObjectAddress) RTStack.pop();
+		RTRegister.putValue(xReg, new GeneralAddress(objadr, gOfst));
+		Global.PSC.addOfst(1);
 	}
 	
 	@Override	

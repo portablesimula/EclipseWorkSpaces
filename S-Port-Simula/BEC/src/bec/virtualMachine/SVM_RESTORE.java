@@ -22,7 +22,7 @@ public class SVM_RESTORE extends SVM_Instruction {
 	public void execute() {
 		restoreStack();
 //		Util.IERR("");
-		Global.PSC.ofst++;
+		Global.PSC.addOfst(1);
 	}
 	
 	private static void restoreStack() {
@@ -41,7 +41,8 @@ public class SVM_RESTORE extends SVM_Instruction {
 
 		for(int i=size-1;i>=0;i--) {
 //		for(int i=0;i<size;i++) {
-			Value item = saveObj.addOffset(SVM_SAVE.saveEntityHead + i).load();
+//			Value item = saveObj.addOffset(SVM_SAVE.saveEntityHead + i).load();
+			Value item = saveObj.load(SVM_SAVE.saveEntityHead + i);
 //			System.out.println("RTStack.restoreStack: RESTORE  item = " + item);
 			if(DEBUG) {
 				System.out.println("RTStack.saveStack:    SAVE-RESTORE " + item + " <=== saveObj("+(SVM_SAVE.saveEntityHead + i)+")");

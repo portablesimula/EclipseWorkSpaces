@@ -30,9 +30,9 @@ SimulaTest(30,"--- Simple test of Arrays.") begin
 		pARR(2) :- x;
 	end;
 	
-	% **********************************************
-	% *** Text array by default, value and name
-	% **********************************************
+% **********************************************
+% *** Text array by default, value and name
+% **********************************************
 
 	procedure P3(pARR); text array pARR; begin
 		text x;
@@ -47,9 +47,9 @@ SimulaTest(30,"--- Simple test of Arrays.") begin
 	end;
 
 	
-	% **********************************************
-	% *** Integer array by default, value and name
-	% **********************************************
+% **********************************************
+% *** Integer array by default, value and name
+% **********************************************
 
 	procedure P5(pARR); integer array pARR; begin
 		integer x;
@@ -64,9 +64,9 @@ SimulaTest(30,"--- Simple test of Arrays.") begin
 	end;
 
 
-	% **********************************************
-	% *** Statements -- ref(A) array
-	% **********************************************
+% **********************************************
+% *** Statements -- ref(A) array
+% **********************************************
 	ARR(1) :- new A(444);
 	P1(ARR);
 	if ARR(2).i ne 444 then err(" ERROR 1");
@@ -75,9 +75,9 @@ SimulaTest(30,"--- Simple test of Arrays.") begin
 	P2(ARR);
 	if ARR(2).i ne 666 then err(" ERROR 2");
 	
-	% **********************************************
-	% *** Statements -- Text array
-	% **********************************************
+% **********************************************
+% *** Statements -- Text array
+% **********************************************
 	tARR(1) :- copy("444");
 	P3(tARR);
 	if tARR(2) ne "444" then err(" ERROR 3");
@@ -86,9 +86,9 @@ SimulaTest(30,"--- Simple test of Arrays.") begin
 	P4(tARR);
 	if tARR(2) ne "666" then err(" ERROR 4");
 	
-	% **********************************************
-	% *** Statements Integer array
-	% **********************************************
+% **********************************************
+% *** Statements Integer array
+% **********************************************
 	iARR(1) := 444;
 	P5(iARR);
 	if iARR(2) ne 444 then err(" ERROR 5");

@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
+import bec.segment.Segment;
 import bec.util.Global;
 import bec.util.Util;
 import bec.value.ObjectAddress;
@@ -28,7 +29,8 @@ public class SVM_CALL extends SVM_Instruction {
 	@Override	
 	public void execute() {
 		ProgramAddress retur = Global.PSC.copy();
-		retur.ofst++;
+//		retur.ofst++;
+		retur.addOfst(1);
 		if(Global.EXEC_TRACE > 0) {
 			ProgramAddress.printInstr(this,false);
 		}
@@ -66,12 +68,15 @@ public class SVM_CALL extends SVM_Instruction {
 		}
 		RTStack.push(retur, "RETUR");
 
-//		if(rutAddr != null && rutAddr.toString().equals("PSEG_FIL_OUTTXT:BODY[0]")) {
-//			int idx = RTStack.size() - 2;
-//			System.out.println("SVM_CALL.execute: idx="+idx);
+//		if(rutAddr != null && rutAddr.toString().equals("PSEG_KNWN_AR1IND:BODY[0]")) {
+////			int idx = RTStack.size() - 2;
+////			System.out.println("SVM_CALL.execute: idx="+idx);
 //			RTStack.dumpRTStack("");
-//			RTStack.guard(idx);	
-////			Util.IERR("");
+//			Segment.lookup("POOL_1").dump("SVM_CALL.execute: ", 707, 727);
+//			RTUtil.dumpCurins();
+//			RTUtil.printPool("POOL_1");
+////			RTStack.guard(idx);	
+//			Util.IERR("");
 //		}
 	}
 	

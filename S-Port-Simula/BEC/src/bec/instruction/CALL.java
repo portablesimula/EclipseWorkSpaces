@@ -176,7 +176,11 @@ public abstract class CALL extends Instruction {
 				CTStackItem TOS = CTStack.pop();
 //				System.out.println("CALL.putPar: "+TOS);
 				if(TOS instanceof AddressItem) Util.IERR("MODE mismatch below TOS");
-				if(TOS.type != parType) Util.IERR("TYPE mismatch below TOS -- ASSREP");
+				if(TOS.type != parType) {
+					if(TOS.type.tag == Scode.TAG_INT && parType.tag == Scode.TAG_SINT) ; // OK
+					else if(TOS.type.tag == Scode.TAG_SINT && parType.tag == Scode.TAG_INT) ; // OK
+					else Util.IERR("TYPE mismatch below TOS -- ASSREP: TOS.type="+TOS.type+"  parType="+parType);
+				}
 			}
 //			CTStack.dumpStack("putPar: ");
 //			Global.PSEG.dump("putPar: ");

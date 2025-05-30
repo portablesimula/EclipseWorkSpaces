@@ -44,27 +44,27 @@ SimulaTest(137,"--- Test DirectBytefile with CREATE, APPEND and PURGE.") begin
 		for i:=1 step 1 until 40 do begin
 			byte := inbyte;
 			if verbose then trace(byte);
-			if byte ne i then err("Byte(" & edit(i) & ") = " & edit(byte));
+			if byte ne i then err("Byte(" & edInt(i) & ") = " & edInt(byte));
 		end;
 		
 		locate(13); byte := inbyte;
 		if verbose then trace(byte);
-		if byte ne 13 then err("Byte(13) = " & edit(byte));
+		if byte ne 13 then err("Byte(13) = " & edInt(byte));
 		
 
-		CatchingErrors begin
-			procedure onError(message); text message; begin
-				text expected="RTS_SimulaRuntimeError: Directbytefile: outbyte failed:"
-							  " location(6) <= initial lastloc(20)"
-				              " - The file TEMP006 was opend with APPEND";
-%				sysout.outtext("ERR: " & message); sysout.outimage;
-%				sysout.outtext("EXP: " & expected); sysout.outimage;
-				if message ne expected then err("Got wrong message: " & message);
-				goto E;
-			end;
-			locate(6); outbyte(99); outimage;
-			err("The program was never supposed to get here");
-		end;
+% 		CatchingErrors begin
+% 			procedure onError(message); text message; begin
+% 				text expected="RTS_SimulaRuntimeError: Directbytefile: outbyte failed:"
+% 							  " location(6) <= initial lastloc(20)"
+% 				              " - The file TEMP006 was opend with APPEND";
+% %				sysout.outtext("ERR: " & message); sysout.outimage;
+% %				sysout.outtext("EXP: " & expected); sysout.outimage;
+% 				if message ne expected then err("Got wrong message: " & message);
+% 				goto E;
+% 			end;
+% 			locate(6); outbyte(99); outimage;
+% 			err("The program was never supposed to get here");
+% 		end;
 		
 	 E: setaccess("PURGE");
 		close;

@@ -113,6 +113,25 @@ public class ObjectAddress extends Value {
 		}
 	}
 	
+	public Value load(int idx) {
+		if(segID == null) {
+			// load from rel-addr  callStackTop + ofst
+//			System.out.println("ObjectAddress.load: callStackTop="+RTStack.callStackTop.rtStackIndex);
+			CallStackFrame callStackTop = RTStack.callStack_TOP();
+			int bias = (callStackTop == null)? 0 : callStackTop.rtStackIndex;
+			Value item = RTStack.load(bias + ofst + idx);
+//			System.out.println("ObjectAddress.load: value="+value);
+//			Util.IERR("");
+			return item;
+		} else {
+		DataSegment dseg = segment();
+		Value value =  dseg.load(ofst + idx);
+//		dseg.dump("MemAddr.load: ");
+//		Util.IERR("");	
+		return value;
+		}
+	}
+	
 	public Value load() {
 		if(segID == null) {
 			// load from rel-addr  callStackTop + ofst
@@ -211,26 +230,17 @@ public class ObjectAddress extends Value {
 	// ***********************************************************************************************
 	private ObjectAddress(AttributeInputStream inpt) throws IOException {
 		this.type = Type.T_OADDR;
-//		String ident = inpt.readString();
 		segID = inpt.readString();
-//		ofst = inpt.readInt();
 		ofst = inpt.readShort();
-//		if(ident != null) seg = Segment.lookup(ident);
-
-//		System.out.println("=============================================================================================================== " + this);
-		if(ofst > 9000 || ofst < 0) Util.IERR(""+ofst);
-//		Util.IERR(""+seg);
-//		System.out.println("NEW IMPORT: " + this);
+//		System.out.println("ObjectAddress.read: " + this);
 	}
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Global.ATTR_OUTPUT_TRACE) System.out.println("Value.write: " + this);
 		oupt.writeKind(Scode.S_C_OADDR);
 		oupt.writeString(segID);
-//		oupt.writeInt(ofst);
 		oupt.writeShort(ofst);
-		if(ofst > 9000 || ofst < 0) Util.IERR("");
-//		System.out.println("=============================================================================================================== " + this);
+//		System.out.println("ObjectAddress.write: " + this + "   segID="+segID+", ofst="+ofst);
 	}
 
 	public static ObjectAddress read(AttributeInputStream inpt) throws IOException {

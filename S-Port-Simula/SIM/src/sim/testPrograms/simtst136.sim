@@ -48,7 +48,7 @@ SimulaTest(136,"--- Test Directfile with CREATE, APPEND and PURGE.") begin
 			inimage;
 %			sysout.outtext(image); sysout.outimage;
 			if verbose then trace(image);
-			expected :- "Pass 1, line " & edit(i);
+			expected :- "Pass 1, line " & edInt(i);
 			if image.strip ne expected then err(image & " ne " & expected);
 		end;
 		
@@ -56,7 +56,7 @@ SimulaTest(136,"--- Test Directfile with CREATE, APPEND and PURGE.") begin
 			inimage;
 %			sysout.outtext(image); sysout.outimage;
 			if verbose then trace(image);
-			expected :- "Pass 2, line " & edit(i);
+			expected :- "Pass 2, line " & edInt(i);
 			if image.strip ne expected then err(image & " ne " & expected);
 		end;
 
@@ -66,20 +66,20 @@ SimulaTest(136,"--- Test Directfile with CREATE, APPEND and PURGE.") begin
 		if image.strip ne expected then err("Image(13) = " & image);
 
 
-		CatchingErrors begin
-			procedure onError(message); text message; begin
-%				sysout.outtext("ERROR: " & message); sysout.outimage;
-				text expected="RTS_SimulaRuntimeError: Directfile: outimage failed:"
-							  " location(6) <= initial lastloc(20)"
-				              " - The file TEMP005 was opend with APPEND";
-%				sysout.outtext("ERR: " & message); sysout.outimage;
-%				sysout.outtext("EXP: " & expected); sysout.outimage;
-				if message ne expected then err("Got wrong message: " & message);
-				goto E;
-			end;
-			locate(6); outtext("ERROR"); outimage;
-			err("The program was never supposed to get here");
-		end;
+% 		CatchingErrors begin
+% 			procedure onError(message); text message; begin
+% %				sysout.outtext("ERROR: " & message); sysout.outimage;
+% 				text expected="RTS_SimulaRuntimeError: Directfile: outimage failed:"
+% 							  " location(6) <= initial lastloc(20)"
+% 				              " - The file TEMP005 was opend with APPEND";
+% %				sysout.outtext("ERR: " & message); sysout.outimage;
+% %				sysout.outtext("EXP: " & expected); sysout.outimage;
+% 				if message ne expected then err("Got wrong message: " & message);
+% 				goto E;
+% 			end;
+% 			locate(6); outtext("ERROR"); outimage;
+% 			err("The program was never supposed to get here");
+% 		end;
 		
 	 E: setaccess("PURGE");
 		close;

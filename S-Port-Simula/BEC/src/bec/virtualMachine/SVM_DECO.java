@@ -31,7 +31,7 @@ public class SVM_DECO extends SVM_Instruction {
 		ObjectAddress res = (sos == null)? new ObjectAddress(null, -tos) : sos.addOffset(-tos);
 		if(DEBUG) System.out.println("SVM_DECO: " + sos + " - " + tos + " ==> " + res);
 		RTStack.push(res, "SVM_DECO: " + tos + " - " + sos + " = " + res);
-		Global.PSC.ofst++;
+		Global.PSC.addOfst(1);
 	}
 
 	@Override	

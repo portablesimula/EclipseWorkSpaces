@@ -44,7 +44,7 @@ public class SVM_ENTER extends SVM_Instruction {
 ////			Util.IERR("");
 //		}
 
-		Global.PSC.ofst++;
+		Global.PSC.addOfst(1);
 //		if(rutIdent.equalsIgnoreCase("OUTTXT")) {
 //			RTUtil.printCurins();
 //			RTUtil.printPool("POOL_1");

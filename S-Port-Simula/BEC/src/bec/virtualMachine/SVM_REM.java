@@ -22,7 +22,7 @@ public class SVM_REM extends SVM_Instruction {
 		Value sos = RTStack.pop();
 		Value res = (tos == null)? null : tos.rem(sos);
 		RTStack.push(res, "SVM_REM: " + tos + " + " + sos + " = " + res);
-		Global.PSC.ofst++;
+		Global.PSC.addOfst(1);
 	}
 	
 	@Override	

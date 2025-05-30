@@ -24,7 +24,8 @@ public class AttributeOutputStream {
 
     public void writeKind(int i) throws IOException {
 		if(TRACE) System.out.println("AttributeOutputStream.writeKind: "+i+':'+Kind.edKind(i));
-		if(i > Scode.S_max || i < 1) throw new IllegalArgumentException("Argument = "+i);
+//		if(i > Scode.S_max || i < 1) throw new IllegalArgumentException("Argument = "+i);
+		if(i > Scode.S_max || i < 0) throw new IllegalArgumentException("Argument = "+i);
 		oupt.writeByte(i);
 	}
 
@@ -113,11 +114,17 @@ public class AttributeOutputStream {
 
     public void writeString(String s) throws IOException {
 		if(TRACE) System.out.println("AttributeOutputStream.writeString: "+s);
-		if(s == null) oupt.writeShort(0);
-		else {
+		if(s == null) {
+			oupt.writeShort(0);
+//			System.out.println("AttributeOutputStream.writeString: writeShort:" + 0);
+		} else {
 			int lng = s.length();
 			oupt.writeShort(lng+1);
-			for(int i=0;i<lng;i++) oupt.writeChar(s.charAt(i));
+//			System.out.println("AttributeOutputStream.writeString: writeShort:" + (lng+1));
+			for(int i=0;i<lng;i++) {
+				oupt.writeChar(s.charAt(i));
+//				System.out.println("AttributeOutputStream.writeString: writeChar:" + s.charAt(i));
+			}
 		}
 	}
 

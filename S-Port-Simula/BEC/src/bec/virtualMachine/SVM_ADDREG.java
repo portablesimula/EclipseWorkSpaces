@@ -33,7 +33,7 @@ public class SVM_ADDREG extends SVM_Instruction {
 		Value res = (rval == null)? tos : rval.add(tos);
 		if(DEBUG) System.out.println("SVM_ADD: " + rval + " + " + tos + " ==> " + res);
 		RTRegister.putValue(xReg, res);
-		Global.PSC.ofst++;
+		Global.PSC.addOfst(1);
 	}
 
 	@Override	

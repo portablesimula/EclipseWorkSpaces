@@ -35,7 +35,7 @@ public class SVM_STORE2REG extends SVM_Instruction {
 			Value value = RTStack.pop();
 			RTRegister.putValue(reg+i, value);
 		}
-		Global.PSC.ofst++;
+		Global.PSC.addOfst(1);
 //		if(DEBUG) {
 //			target.segment().dump("PEEK2MEM.execute: ");
 //			Util.IERR("");

@@ -23,7 +23,7 @@ public class SVM_POPK extends SVM_Instruction {
 			if(RTStack.curSize() <= 0) Util.IERR("RTStack underflow");
 			RTStack.pop();
 		}
-		Global.PSC.ofst++;
+		Global.PSC.addOfst(1);
 	}
 
 	public String toString() {

@@ -32,7 +32,8 @@ public class SVM_CALL_TOS extends SVM_Instruction {
 	@Override	
 	public void execute() {
 		ProgramAddress retur = Global.PSC.copy();
-		retur.ofst++;
+//		retur.ofst++;
+		retur.addOfst(1);
 		if(Global.EXEC_TRACE > 0) {
 			ProgramAddress.printInstr(this,false);
 		}

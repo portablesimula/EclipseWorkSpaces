@@ -30,7 +30,7 @@ public abstract class ASSIGN extends Instruction {
 		CTStackItem tos = CTStack.pop();
 		AddressItem sos = (AddressItem) CTStack.pop();
 		
-		Global.PSEG.emit(new SVM_ASSIGN(new RTAddress(sos), sos.size), "ASSIGN: "); // Store into adr
+		Global.PSEG.emit(new SVM_ASSIGN(false, new RTAddress(sos), sos.size), "ASSIGN: "); // Store into adr
 	}
 
 }

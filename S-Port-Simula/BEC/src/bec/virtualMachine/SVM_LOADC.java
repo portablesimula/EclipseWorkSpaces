@@ -10,6 +10,7 @@ import bec.util.Type;
 import bec.util.Util;
 import bec.value.GeneralAddress;
 import bec.value.IntegerValue;
+import bec.value.ProgramAddress;
 import bec.value.RecordValue;
 import bec.value.StringValue;
 import bec.value.Value;
@@ -44,13 +45,15 @@ public class SVM_LOADC extends SVM_Instruction {
 //		} else {
 //			switch(value.type.tag) {
 		
-		if(value != null ) {
-			if(value.type.tag != typeTag) Util.IERR("INCONSISTENT: typeTag="+Scode.edTag(typeTag) + ", value'tag="+Scode.edTag(value.type.tag));
-		}
+//		if(value != null ) {
+//			System.out.println("SVM_LOADC.execute: value="+value.getClass().getSimpleName()+"  "+value);
+//			System.out.println("SVM_LOADC.execute: typeTag="+Scode.edTag(typeTag));
+//			if(value.type.tag != typeTag) Util.IERR("INCONSISTENT: typeTag="+Scode.edTag(typeTag) + ", value'tag="+Scode.edTag(value.type.tag));
+//		}
 		switch(typeTag) {
 			case Scode.TAG_BOOL, Scode.TAG_CHAR, Scode.TAG_INT, Scode.TAG_SINT, Scode.TAG_REAL, Scode.TAG_LREAL,
 			     Scode.TAG_SIZE, Scode.TAG_AADDR, Scode.TAG_OADDR, Scode.TAG_PADDR, Scode.TAG_RADDR:
-			 		RTStack.push(value, "SVM_LOADC"); break;
+					RTStack.push(value, "SVM_LOADC"); break;
 			case Scode.TAG_TEXT:
 				Util.IERR("IMPOSSIBLE");
 				break;
@@ -86,7 +89,7 @@ public class SVM_LOADC extends SVM_Instruction {
 				break;
 		}
 //		}
-		Global.PSC.ofst++;
+		Global.PSC.addOfst(1);
 	}
 	
 	@Override

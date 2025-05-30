@@ -69,7 +69,7 @@ SimulaTest(83,"--- Test name Parameter with EXTREME BI-EFFECTS") begin
 
       procedure Q(ii); name ii; integer ii;
       begin
-         ii:=ii+2
+         ii:=ii+2;
          if verbose then
          begin outtext("INC: x.i,v.i=");
             if x =/= none then outint(x.i,3) else outtext("x==NONE ");

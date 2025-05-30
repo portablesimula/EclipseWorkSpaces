@@ -32,11 +32,13 @@ public abstract class FDEST extends Instruction {
 		ProgramAddress addr = Global.DESTAB[destination];
 		if(addr == null) Util.IERR("Destination is undefined");
 		Global.DESTAB[destination] = null;
-		SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(addr.ofst);
+//		SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(addr.ofst);
+		SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(addr.getOfst());
 		instr.destination = Global.PSEG.nextAddress();
       	Global.PSEG.emit(new SVM_NOOP(), "FDEST " + destination);
       	if(DEBUG) {
-      		System.out.println("FDEST.ofScode: FIXUP["+addr.ofst+"]: "+instr);
+//      		System.out.println("FDEST.ofScode: FIXUP["+addr.ofst+"]: "+instr);
+      		System.out.println("FDEST.ofScode: FIXUP["+addr.getOfst()+"]: "+instr);
 			Global.PSEG.dump("FDEST.ofScode: FIXUP: ");
 //			Util.IERR(""+this);
       	}

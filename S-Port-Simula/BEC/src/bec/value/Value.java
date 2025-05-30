@@ -142,6 +142,26 @@ public class Value {
 			default: Util.IERR("MISSING: " + Scode.edInstr(kind)); return null;
 		}
 	}
+	
+	public static Value read(int kind, AttributeInputStream inpt) throws IOException {
+//		System.out.println("Value.read: kind="+Scode.edInstr(kind));
+		switch(kind) {
+			case Scode.S_NULL:		return null;
+			case Scode.S_TRUE:		return BooleanValue.of(true);
+			case Scode.S_FALSE:		return BooleanValue.of(false);
+			case Scode.S_C_INT, Scode.S_C_CHAR, Scode.S_C_SIZE, Scode.S_C_AADDR: return IntegerValue.read(inpt);
+			case Scode.S_C_REAL:	return RealValue.read(inpt);
+			case Scode.S_C_LREAL:	return LongRealValue.read(inpt);
+			case Scode.S_TEXT:		return TextValue.read(inpt);
+			case Scode.S_STRING:	return StringValue.read(inpt);
+			case Scode.S_C_RECORD:	return RecordValue.read(inpt);
+			case Scode.S_C_OADDR:	return ObjectAddress.read(inpt);
+			case Scode.S_C_GADDR:	return GeneralAddress.read(inpt);
+			case Scode.S_C_PADDR, Scode.S_C_RADDR: return ProgramAddress.read(inpt);
+//			case Scode.S_C_DOT:		return DotAddress.read(inpt);
+			default: Util.IERR("MISSING: " + Scode.edInstr(kind)); return null;
+		}
+	}
 
 
 }

@@ -77,7 +77,7 @@ public abstract class SkipifConstruction {
 
 		if(Scode.curinstr != Scode.S_ENDSKIP) Util.IERR("Missing ENDSKIP: " + Scode.edInstr(Scode.curinstr));
 		// FIXUP:
-		SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(IF_LABEL.ofst);
+		SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(IF_LABEL.getOfst());
 		instr.destination = Global.PSEG.nextAddress();
       	Global.PSEG.emit(new SVM_NOOP(), "ENDSKIP["+Global.ifDepth+"]:");			
 

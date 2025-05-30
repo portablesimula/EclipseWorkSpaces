@@ -26,7 +26,7 @@ public abstract class POP extends Instruction {
 		CTStack.pop();
 //		CTStack.dumpStack("POP: ");
 		Global.PSEG.emit(new SVM_POPK(size), "POPK: " + size);
-		if(CTStack.size() == 0) RTRegister.ckearFreeRegs();
+//		if(CTStack.size() == 0) RTRegister.clearFreeRegs();
 	}
 
 }

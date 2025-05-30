@@ -24,7 +24,7 @@ SimulaTest(101,"--- Test Standard Procedure 'sourceline'.") begin
       if verbose then begin outtext(case1); outimage; end;
       if case1 <> facit(traceCase) then
       begin
-         err("Trace Case " & edit(traceCase) & " at line " & edit(line));
+         err("FAILED !"); outtext("Trace Case "); outint(traceCase, 0);; outtext(" at line "); outint(line, 0);
          outtext("Trace Case: " & case1); outimage;
          outtext("     Facit: " & facit(traceCase)); outimage;
       end;

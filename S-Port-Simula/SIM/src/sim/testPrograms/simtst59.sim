@@ -5,8 +5,8 @@ SimulaTest(59,"--- Test 2-dim Array by value.") begin
 
    procedure fillArray(RA,v1); integer array RA; integer v1;
    begin integer i,j;
-      for i:=lowerbound(RA,1) step 1 until upperbound(RA,1) do
-      for j:=lowerbound(RA,2) step 1 until upperbound(RA,2) do
+      for i:=lowerbound(RA(0),1) step 1 until upperbound(RA(0),1) do
+      for j:=lowerbound(RA(0),2) step 1 until upperbound(RA(0),2) do
       begin
          RA(i,j):=v1; v1:=v1+1;
       end;
@@ -14,8 +14,8 @@ SimulaTest(59,"--- Test 2-dim Array by value.") begin
 
    procedure checkArray(msg,RA,v1); text msg; integer array RA; integer v1;
    begin integer i,j;
-      for i:=lowerbound(RA,1) step 1 until upperbound(RA,1) do
-      for j:=lowerbound(RA,2) step 1 until upperbound(RA,2) do
+      for i:=lowerbound(RA(0),1) step 1 until upperbound(RA(0),1) do
+      for j:=lowerbound(RA(0),2) step 1 until upperbound(RA(0),2) do
       begin
          if RA(i,j) ne v1 then
          begin

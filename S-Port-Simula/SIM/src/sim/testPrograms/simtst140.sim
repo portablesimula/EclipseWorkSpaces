@@ -26,7 +26,7 @@ SimulaTest(140,"--- Test For-Statement with ControlVariable with Type Conversion
       if verbose then
       	 begin outtext(msg); outimage; end;
       if msg ne facit(traceCase) then
-      begin err("Case " & edit(traceCase));
+      begin err("FAILED !"); outtext("Trace Case "); outint(traceCase, 0);
          outtext("Trace: " & msg); outimage;
          outtext("Facit: " & facit(traceCase)); outimage;
       end;
@@ -174,8 +174,8 @@ SimulaTest(140,"--- Test For-Statement with ControlVariable with Type Conversion
 
 % =================== For-step-until elements
 
-   r := 1.5
-   lr := 7.49
+   r := 1.5;
+   lr := 7.49;
    for i := lr step r until 10.0 do trace("Case 33,34: i = " & edit(i));
 
    i := 2;

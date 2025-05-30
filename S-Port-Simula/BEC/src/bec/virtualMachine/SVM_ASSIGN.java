@@ -5,7 +5,6 @@ import java.util.Vector;
 
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
-import bec.segment.DataSegment;
 import bec.segment.Segment;
 import bec.util.Global;
 import bec.util.Util;
@@ -16,14 +15,14 @@ import bec.value.Value;
  * Remove two items on the Runtime-Stack and push the value (SOS + TOS)
  */
 public class SVM_ASSIGN extends SVM_Instruction {
-	private RTAddress rtAddr;  // REMOVE IF  Global.TESTING_ASSIGN = false
+	private boolean update; // false: ASSIGN, true: UPDATE
+	private RTAddress rtAddr;
 	private int size;
-	private int offset;        // REMOVE IF  Global.TESTING_ASSIGN = true
 
 	private final boolean DEBUG = false;
 
 	/**
-	 * assign_instruction ::= assign | update | rupdate
+	 * assign_instruction ::= assign | update
 	 * 
 	 * assign (dyadic)
 	 * 
@@ -36,8 +35,9 @@ public class SVM_ASSIGN extends SVM_Instruction {
 	 * TOS or SOS, that has been deferred for optimisation purposes, must take place before the
 	 * assignment code is generated. SOS and TOS are popped from the stack.
 	 */
-	public SVM_ASSIGN(RTAddress rtAddr, int size) {
+	public SVM_ASSIGN(boolean update, RTAddress rtAddr, int size) {
 		this.opcode = SVM_Instruction.iASSIGN;
+		this.update = update;
 		this.rtAddr = rtAddr;
 		this.size = size;
 	}
@@ -45,6 +45,7 @@ public class SVM_ASSIGN extends SVM_Instruction {
 	@Override
 	public void execute() {
 		if(DEBUG) {
+			System.out.println("\nSVM_ASSIGN: BEGIN DEBUG INFO ++++++++++++++++++++++øø++++++++++++++++++++++++++++++++++++++++++++++");
 			RTUtil.printCurins();
 			RTStack.dumpRTStack("SVM_ASSIGN: ");
 		}
@@ -59,18 +60,35 @@ public class SVM_ASSIGN extends SVM_Instruction {
 			addr.xReg = this.rtAddr.xReg;
 		}
 		
-		if(DEBUG) for(int i=0;i<size;i++) System.out.println("SVM_ASSIGN: BEFORE: sos.store: " + (offset+i) + " " + values.get(i));
+		if(DEBUG) for(int i=0;i<size;i++) System.out.println("SVM_ASSIGN: BEFORE: sos.store: " + i + " " + values.get(i));
 		int n = size;
 		for(int i=0;i<size;i++) {
-			addr.store(offset + i, values.get((--n)), "");
+//			addr.store(offset + i, values.get((--n)), "");
+			addr.store(i, values.get((--n)), "");
 		}
-		if(DEBUG) for(int i=0;i<size;i++) System.out.println("SVM_ASSIGN: AFTER: sos.store: " + (offset+i) + " " + values.get(i));
-		Global.PSC.ofst++;
+		if(DEBUG) for(int i=0;i<size;i++) System.out.println("SVM_ASSIGN: AFTER: sos.store: " + i + " " + values.get(i));
+		
+		if(update) {
+			for(int i=0;i<size;i++) {
+				RTStack.pushx(values, "SVM_ASSIGN");
+			}
+			if(DEBUG) {
+				RTUtil.printCurins();
+				RTStack.dumpRTStack("SVM_ASSIGN: ");
+				System.out.println("SVM_ASSIGN: END DEBUG INFO\n");
+			}
+//			Util.IERR("NOT IMPL");
+		}
+//		RTUtil.printCurins();
+//		Segment.lookup("POOL_1").dump(null, 717, 717+13+13);
+		
+		Global.PSC.addOfst(1);
 	}
 
 	@Override	
 	public String toString() {
-		return "ASSIGN      " + rtAddr + ", size=" + size;
+		String id = (update)? "UPDATE   " : "ASSIGN   ";
+		return id + rtAddr + ", size=" + size;
 	}
 
 	// ***********************************************************************************************
@@ -81,12 +99,13 @@ public class SVM_ASSIGN extends SVM_Instruction {
 		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
 		if(rtAddr == null) Util.IERR("");
 		oupt.writeOpcode(opcode);
+		oupt.writeBoolean(update);
 		rtAddr.write(oupt);
 		oupt.writeShort(size);
 	}
 
 	public static SVM_ASSIGN read(AttributeInputStream inpt) throws IOException {
-		SVM_ASSIGN instr = new SVM_ASSIGN(RTAddress.read(inpt), inpt.readShort());
+		SVM_ASSIGN instr = new SVM_ASSIGN(inpt.readBoolean(), RTAddress.read(inpt), inpt.readShort());
 		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + instr);
 		return instr;			
 	}

@@ -26,7 +26,7 @@ public class SVM_GETO extends SVM_Instruction {
 	public void execute() {
 		ObjectAddress next = SVM_INITO.get();
 		RTStack.push(next, "GETO: ");
-		Global.PSC.ofst++;
+		Global.PSC.addOfst(1);
 	}
 	
 	@Override	

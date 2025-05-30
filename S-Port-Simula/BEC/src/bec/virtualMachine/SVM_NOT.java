@@ -35,7 +35,7 @@ public class SVM_NOT extends SVM_Instruction {
 			} else Util.IERR("");
 		}
 		RTStack.push(res, "SVM_NOT:  not " + tos + " ==> " + res);
-		Global.PSC.ofst++;
+		Global.PSC.addOfst(1);
 	}
 	
 	@Override	

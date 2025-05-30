@@ -94,7 +94,7 @@ public abstract class IfConstrction {
 			Global.PSEG.emit(new SVM_JUMP(null), "GOTO_ENDIF["+Global.ifDepth+"]:");
 			
 			// FIXUP:
-			SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(IF_LABEL.ofst);
+			SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(IF_LABEL.getOfst());
 			instr.destination = Global.PSEG.nextAddress();
 	      	Global.PSEG.emit(new SVM_NOOP(), "ELSE["+Global.ifDepth+"]:");
 	      	
@@ -119,12 +119,12 @@ public abstract class IfConstrction {
 		// program point.		
 		if(ELSE_LABEL != null) {
 			// FIXUP:
-			SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(ELSE_LABEL.ofst);
+			SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(ELSE_LABEL.getOfst());
 			instr.destination = Global.PSEG.nextAddress();
 	      	Global.PSEG.emit(new SVM_NOOP(), "ENDIF["+Global.ifDepth+"]:");		
 		} else {
 			// FIXUP:
-			SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(IF_LABEL.ofst);
+			SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(IF_LABEL.getOfst());
 			instr.destination = Global.PSEG.nextAddress();
 	      	Global.PSEG.emit(new SVM_NOOP(), "ENDIF["+Global.ifDepth+"]:");			
 		}

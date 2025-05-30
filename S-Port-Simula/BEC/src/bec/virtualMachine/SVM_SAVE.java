@@ -38,7 +38,7 @@ public class SVM_SAVE extends SVM_Instruction {
 	public void execute() {
 		saveStack();
 //		Util.IERR("");
-		Global.PSC.ofst++;
+		Global.PSC.addOfst(1);
 	}
 //	private static Stack<Stack<Value>> saveStack = new Stack<Stack<Value>>();
 	

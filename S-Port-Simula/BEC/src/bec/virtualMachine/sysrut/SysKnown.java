@@ -85,7 +85,7 @@ public abstract class SysKnown {
 	public static void prtStr(String title, ObjectAddress addr, int nchr) {
 		System.out.print("prtStr: "+title+'"');
 		for(int i=0;i<nchr;i++) {
-			IntegerValue val = (IntegerValue) addr.addOffset(i).load();
+			IntegerValue val = (IntegerValue) addr.load(i);
 			if(val != null) System.out.print((char)val.value);
 			else System.out.print(".");
 		}

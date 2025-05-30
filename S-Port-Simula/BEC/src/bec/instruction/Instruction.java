@@ -93,7 +93,7 @@ public class Instruction { // extends ProgramElement {
 			case Scode.S_POP ->         POP.ofScode();
 			case Scode.S_POPALL ->      POPALL.ofScode();
 			case Scode.S_ASSIGN ->      ASSIGN.ofScode();
-			case Scode.S_UPDATE ->      UPDATE.ofScode(0);
+			case Scode.S_UPDATE ->      UPDATE.ofScode();
 			case Scode.S_RUPDATE ->     RUPDATE.ofScode();
 			case Scode.S_BSEG ->        BSEG.ofScode();
 			case Scode.S_IF ->          IfConstrction.ofScode();

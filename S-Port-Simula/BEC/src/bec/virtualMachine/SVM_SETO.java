@@ -22,7 +22,7 @@ public class SVM_SETO extends SVM_Instruction {
 	public void execute() {
 		ObjectAddress oaddr = RTStack.popOADDR();
 		SVM_INITO.set(oaddr);
-		Global.PSC.ofst++;
+		Global.PSC.addOfst(1);
 	}
 	
 	@Override	

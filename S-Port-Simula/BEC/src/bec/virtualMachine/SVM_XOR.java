@@ -31,7 +31,7 @@ public class SVM_XOR extends SVM_Instruction {
 		Value sos = RTStack.pop();
 		Value res = (tos == null)? sos : tos.xor(sos);
 		RTStack.push(res, "SVM_XOR: " + tos + " ^ " + sos + " = " + res);
-		Global.PSC.ofst++;
+		Global.PSC.addOfst(1);
 	}
 	
 	@Override	

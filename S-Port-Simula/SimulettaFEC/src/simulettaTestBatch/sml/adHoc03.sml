@@ -1,25 +1,48 @@
 begin
---   SYSINSERT envir,modl1;
    SYSINSERT RT,SYSR,KNWN,UTIL;    
 
- routine OUTTXT;
- import ref(filent) fil; infix(txtqnt) txt;
- begin infix(txtqnt) img;           --  Local copy here for efficiency.
-       infix(string) src;           --  Copy from this string.
-       infix(string) dst;           --  Copy to this string.
-       integer imlength,tpos,tlen;  --  Used for long strings
+	Visible record REC:inst;
+	begin integer  i(4);
+    	  integer  j;
+	end;
+
+	Visible routine ALLOC;
+	import size length;	export ref(inst) ins;
+	begin ins:=bio.nxtAdr qua ref(inst);
+		  bio.nxtAdr:= ( bio.nxtAdr + length) qua ref(entity);
+		  ins.sort:= S_SUB;
+	end;
        
-%	   ed_str("*** OUTTXT: "); ed_oaddr(txt.ent);
-%	   ed_str(", CP: "); ed_int(txt.cp);
-%	   ed_str(", SP: "); ed_int(txt.sp);
-%	   ed_str(", LP: "); ed_int(txt.lp); ed_out;
-       
-       img:=fil.img; tpos:=txt.sp; tlen:=txt.lp-tpos;
-  end;
-   
-	name(infix(txtqnt)) qtex;
+	ref() pool;
+	size poolsize;
+	integer sequ;
 	
-	qtex:=name(var(qtex)(1));
+	ref(REC) r1;
+	ref(REC) x,w;
+
+ 	sequ := 1;
+		poolsize:=SIZEIN(1,sequ);
+		pool:=DWAREA(poolsize,sequ);
+		bio.nxtAdr:=pool qua ref(entity);
+		bio.lstAdr:=(pool+poolsize) qua ref(entity);
+	
+		r1:=ALLOC(size(REC));
+		x:=ALLOC(size(REC));
+		w:=ALLOC(size(REC));
+		
+		w.i(0):=1111;
+		w.i(1):=2222;
+		w.i(2):=3333;
+		w.i(3):=4444;
+		w.j:=5555;
+		w.sl := x;
+		ED_STR("w.j="); ED_INT(w.j); ED_OUT;
+		ED_STR("r1.j="); ED_INT(r1.j); ED_OUT;
+		
+		MOVEIN(w, r1, size(REC));
+		
+		ED_STR("w.j="); ED_INT(w.j); ED_OUT;
+		ED_STR("r1.j="); ED_INT(r1.j); ED_OUT;
 
  end;
 		 

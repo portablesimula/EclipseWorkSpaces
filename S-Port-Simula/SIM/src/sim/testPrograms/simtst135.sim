@@ -42,7 +42,7 @@ SimulaTest(135,"--- Test Outbytefile with CREATE, APPEND and PURGE.") begin
 		for i:=1 step 1 until 40 do begin
 			byte := inbyte;
 			if verbose then trace(byte);
-			if byte ne i then err("Byte(" & edit(i) & ") = " & edit(byte));
+			if byte ne i then err("Byte(" & edInt(i) & ") = " & edInt(byte));
 		end;
 		close;
 	end;	

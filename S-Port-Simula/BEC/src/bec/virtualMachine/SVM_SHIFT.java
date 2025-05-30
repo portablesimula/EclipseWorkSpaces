@@ -42,7 +42,7 @@ public class SVM_SHIFT extends SVM_Instruction {
 		if(DEBUG)
 			System.out.println("SVM_SHIFT: " + sos + " " + Scode.edInstr(instr)+ " " + tos + " ==> " + res);
 		RTStack.push(res, "SVM_SHIFT: " + tos + " " + Scode.edInstr(instr)+ " " + sos + " = " + res);
-		Global.PSC.ofst++;
+		Global.PSC.addOfst(1);
 	}
 
 	@Override	

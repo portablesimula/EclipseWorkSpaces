@@ -163,9 +163,9 @@ public class Segment { // extends Descriptor {
 	
 	private static int TEST(ProgramAddress LHS, int relation, ProgramAddress RHS, boolean expected) {
 		String LHSegID = (LHS == null)? null : ((ProgramAddress)LHS).segID;
-		int lhs = (LHS == null)? 0 : ((ProgramAddress)LHS).ofst;
+		int lhs = (LHS == null)? 0 : ((ProgramAddress)LHS).getOfst();
 		String RHSegID = (RHS == null)? null : ((ProgramAddress)RHS).segID;
-		int rhs = (RHS == null)? 0 : ((ProgramAddress)RHS).ofst;
+		int rhs = (RHS == null)? 0 : ((ProgramAddress)RHS).getOfst();
 		if(Segment.compare(LHSegID, lhs, relation, RHSegID, rhs) != expected) {
 			System.out.println("ERROR: " + LHS + " " + Scode.edInstr(relation) + " " + RHS + " ==> " + (! expected));
 			return 1;

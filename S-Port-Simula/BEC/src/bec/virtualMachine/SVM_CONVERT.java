@@ -53,7 +53,7 @@ public class SVM_CONVERT extends SVM_Instruction {
 		}
 
 		RTStack.push(toValue, "CONVERT: ");
-		Global.PSC.ofst++;
+		Global.PSC.addOfst(1);
 	}
 	
 

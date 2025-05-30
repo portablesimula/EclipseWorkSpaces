@@ -30,6 +30,7 @@ public class SVM_JUMPIF extends SVM_JUMP {
 		if(typeSize == 1) {
 			Value tos = RTStack.pop();
 			Value sos = RTStack.pop();
+//			System.out.println("SVM_JUMPIF: " + tos + "  " + relation + "  " + sos);
 			doJump = relation.compare(sos, tos);
 			if(DEBUG) {
 				String jmp = (doJump)? "DO JUMP" : "NOT JUMP";
@@ -55,7 +56,7 @@ public class SVM_JUMPIF extends SVM_JUMP {
 		}
 		
 		if(doJump) Global.PSC = destination.copy();
-		else Global.PSC.ofst++;
+		else Global.PSC.addOfst(1);
 	}
 	
 	@Override	

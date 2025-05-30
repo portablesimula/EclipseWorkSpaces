@@ -205,7 +205,7 @@ public class Type {
 		int tag = inpt.readTag();
 //		System.out.println("NEW Type(inpt): " + Scode.edInstr(tag));
 		Type type = TMAP.get(tag);
-//		Util.IERR("SJEKK DETTE");
+		if(type == null) Util.IERR("SJEKK DETTE");
 		return type;
 	}
 

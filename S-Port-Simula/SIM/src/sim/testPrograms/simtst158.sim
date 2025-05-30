@@ -18,11 +18,16 @@ SimulaTest(158,"--- Test Specified Virtual Boolean Functions as part of an Expre
 		if verbose then
 		begin outtext(msg); outimage; end;
 		if msg ne facit(traceCase) then begin
-			err("Case " & edit(traceCase));
+			err("FAILED !"); outtext("Trace Case "); outint(traceCase, 0);
 			outtext("Trace: """ & msg & """"); outimage;
 			outtext("Facit: """ & facit(traceCase) & """"); outimage;
 		end;
 		traceCase:=traceCase+1;
+	end;
+	
+	text procedure concTB(t, b); text t; boolean b; begin
+		if b then concTB :- t & "true"
+		     else concTB :- t & "false";
 	end;
 
 
@@ -58,10 +63,10 @@ SimulaTest(158,"--- Test Specified Virtual Boolean Functions as part of an Expre
 	
 	first :- new A;
 	b := ( not first.virt1) or b;
-	trace("b = " & edit(b));
+	trace(concTB("b = ", b));
 	
 	b := first.virt1;
-	trace("b = " & edit(b));
+	trace(concTB("b = ", b));
 
 	if not first.virt1 then begin
 		trace("In if not first.virt1");
@@ -74,10 +79,10 @@ SimulaTest(158,"--- Test Specified Virtual Boolean Functions as part of an Expre
 % ========================================================
 
 	b := ( not first.virt2(0,0)) imp b;
-	trace("b = " & edit(b));
+	trace(concTB("b = ", b));
 	
 	b := first.virt2(1,2);
-	trace("b = " & edit(b));
+	trace(concTB("b = ",b));
 
 	if not first.virt2(3,3) then begin
 		trace("In if not first.virt2");

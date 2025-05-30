@@ -57,7 +57,7 @@ public class SVM_DUP extends SVM_Instruction {
 			RTStack.push(tos, "SVM_DUP: ");
 		}
 //		RTStack.push(tos, "SVM_DUP: ");
-		Global.PSC.ofst++;
+		Global.PSC.addOfst(1);
 //		Util.IERR("");
 	}
 	
@@ -77,7 +77,7 @@ public class SVM_DUP extends SVM_Instruction {
 			System.out.println("SVM_DUP: NEW tos="+tos);
 		}
 		RTStack.push(tos, "SVM_DUP: ");
-		Global.PSC.ofst++;
+		Global.PSC.addOfst(1);
 //		Util.IERR("");
 	}
 	
@@ -94,13 +94,20 @@ public class SVM_DUP extends SVM_Instruction {
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
-//		oupt.writeBoolean(address);
-		rtAddr.write(oupt);
+		if(rtAddr == null) {
+			oupt.writeBoolean(false);
+		} else {
+			oupt.writeBoolean(true);
+			rtAddr.write(oupt);
+		}
 	}
 
 	public static SVM_DUP read(AttributeInputStream inpt) throws IOException {
 //		SVM_DUP instr = new SVM_DUP(inpt.readBoolean());
-		SVM_DUP instr = new SVM_DUP(RTAddress.read(inpt));
+		RTAddress rtAddr = null;
+		boolean present = inpt.readBoolean();
+		if(present) rtAddr = RTAddress.read(inpt);
+		SVM_DUP instr = new SVM_DUP(rtAddr);
 		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + instr);
 		return instr;
 	}

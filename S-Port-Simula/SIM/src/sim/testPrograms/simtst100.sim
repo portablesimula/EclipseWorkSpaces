@@ -146,6 +146,8 @@ SimulaTest(100,"--- Test that put-get-put delivers the identity.") begin
        r:=10&&40; testputget(r,up);
 EXIT:
        if min_signif=signpos then ! no significant deviations found;
-       else err(" Number of significant digits varies between" & edit(min_signif) & " and " & edit(max_signif));
+       else begin
+       		 outtext(" Number of significant digits varies between"); outint(min_signif, 0); outtext(" and "); outint(max_signif, 0);
+       		 err("FAILED !");
 
 end

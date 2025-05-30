@@ -18,6 +18,7 @@ import bec.util.Type;
 import bec.util.Util;
 import bec.virtualMachine.CallStackFrame;
 import bec.virtualMachine.RTStack;
+import bec.virtualMachine.RTUtil;
 import bec.virtualMachine.SVM_CALL;
 import bec.virtualMachine.SVM_CALL_SYS;
 import bec.virtualMachine.SVM_Instruction;
@@ -25,7 +26,7 @@ import bec.virtualMachine.SVM_RETURN;
 
 public class ProgramAddress extends Value {
 	public String segID;
-	public int ofst;
+	private int ofst;
 	
 	public ProgramAddress(Type type, String segID, int ofst) {
 		this.type = type;
@@ -51,8 +52,28 @@ public class ProgramAddress extends Value {
 		return null;
 	}
 	
-	public ProgramAddress ofset(int ofst) {
-		return new ProgramAddress(type, segID, this.ofst + ofst);
+	public int getOfst() {
+		return this.ofst;
+	}
+	
+	public void setOfst(int ofst) {
+//		if(segID.equalsIgnoreCase("PSEG_ADHOC00")) {
+//			if(this.ofst == 51) {
+//				System.out.println("ProgramAddress.setOfst: NEW OFFSET: "+this.ofst+" ===> "+ofst);
+//				Util.IERR("");
+//			}
+//		}
+		this.ofst = ofst;
+	}
+	
+	public void addOfst(int incr) {
+//		if(segID.equalsIgnoreCase("PSEG_ADHOC00")) {
+//			if(this.ofst == 51) {
+//				System.out.println("ProgramAddress.addOfst: NEW OFFSET: "+this.ofst+" ===> "+(this.ofst + incr));
+//				Util.IERR("");
+//			}
+//		}
+		this.ofst = this.ofst + incr;
 	}
 	
 	public Segment segment() {
@@ -90,7 +111,7 @@ public class ProgramAddress extends Value {
 				Global.CSEG.dump("ProgramAddress.execute: FINAL CONSTANT SEGMENT ");
 				Global.TSEG.dump("ProgramAddress.execute: FINAL CONSTANT TEXT SEGMENT ");
 //				Segment.lookup("DSEG_RT").dump("ProgramAddress.execute: BIOINS", 30, 82);
-//				Segment.lookup("POOL_1").dump("ProgramAddress.execute: FINAL POOL_1", 0, 20);
+				Segment.lookup("POOL_1").dump("ProgramAddress.execute: FINAL POOL_1", 0, 60);
 //				RTUtil.printPool("POOL_1");
 
 			}

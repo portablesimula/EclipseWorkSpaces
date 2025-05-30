@@ -7,6 +7,7 @@ import bec.util.Scode;
 import bec.util.Type;
 import bec.util.Util;
 import bec.value.Value;
+import bec.virtualMachine.RTRegister;
 
 public class CTStack {
 	private static Stack<CTStackItem> stack = new Stack<CTStackItem>();
@@ -64,6 +65,7 @@ public class CTStack {
 	}
 	
 	public static CTStackItem pop() {
+		if(stack.size() == 1) RTRegister.clearFreeRegs();
 		return stack.pop();
 	}
 	

@@ -43,7 +43,8 @@ public class CallStackFrame {
 	
 	public ProgramAddress callAddress() {
 		ProgramAddress addr = returnAddress();
-		addr.ofst--;
+//		addr.ofst--;
+		addr.addOfst(-1);
 		return addr;
 	}
 

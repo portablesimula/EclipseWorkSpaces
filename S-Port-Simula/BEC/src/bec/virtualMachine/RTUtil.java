@@ -564,19 +564,16 @@ public class RTUtil {
 	
 	
 	public static void move(String src, ObjectAddress dst, int count) {
-		ObjectAddress into = dst.addOffset(0);
 		for(int i=0;i<count;i++) {
 			Value x = IntegerValue.of(Type.T_CHAR, src.charAt(i));
-			into.store(i, x, "MOVE DEST: "); //into.incrOffset();
+			dst.store(i, x, "MOVE DEST: "); //into.incrOffset();
 		}
 	}
 	
 	public static void move(ObjectAddress src, ObjectAddress dst, int count) {
-		ObjectAddress from = src.addOffset(0);
-		ObjectAddress into = dst.addOffset(0);
 		for(int i=0;i<count;i++) {
-			Value x = from.load(); from.incrOffset();
-			into.store(i, x, "MOVE DEST: "); //into.incrOffset();
+			Value x = src.load(i);
+			dst.store(i, x, "MOVE DEST: "); //into.incrOffset();
 		}
 	}
 

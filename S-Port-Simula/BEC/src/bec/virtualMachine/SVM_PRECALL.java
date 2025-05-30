@@ -35,7 +35,7 @@ public class SVM_PRECALL extends SVM_Instruction {
 				}
 			}
 		}
-		Global.PSC.ofst++;
+		Global.PSC.addOfst(1);
 	}
 	
 	@Override	

@@ -24,7 +24,7 @@ public class SVM_DIV extends SVM_Instruction {
 		if(tos == null) Util.IERR("DIV by zero: " + sos + " / 0");
 		Value res = (tos == null)? null : tos.div(sos);
 		RTStack.push(res, "SVM_DIV: " + tos + " / " + sos + " = " + res);
-		Global.PSC.ofst++;
+		Global.PSC.addOfst(1);
 	}
 	
 	@Override	

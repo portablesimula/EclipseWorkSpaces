@@ -60,7 +60,7 @@ public class SVM_STORE extends SVM_Instruction {
 			addr.dumpArea("STORE.execute: ", size);
 		}
 		
-		Global.PSC.ofst++;		
+		Global.PSC.addOfst(1);		
 	}
 	
 	public String toString() {

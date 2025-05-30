@@ -18,7 +18,7 @@ public class SVM_PUSHR extends SVM_Instruction {
 	@Override
 	public void execute() {
 		RTStack.pushr(reg, "" + RTRegister.edReg(reg));
-		Global.PSC.ofst++;
+		Global.PSC.addOfst(1);
 	}
 	
 	@Override

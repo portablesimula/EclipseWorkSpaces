@@ -104,7 +104,7 @@ public abstract class RTStack {
 	}
 
 	public static void push(Value value, String comment) {
-//		System.out.println("RTStack.push: " + value);
+//		System.out.println("RTStack.: " + value);
 		stack.push(value);
 //		Util.IERR("");
 	}
@@ -150,6 +150,17 @@ public abstract class RTStack {
 	
 	public static Value peek() {
 		return stack.peek();
+//		Util.IERR("");
+	}
+
+	public static void pushx(Vector<Value> values, String comment) {
+//		for(Value value:values) {
+//		for(int i=0;i<values.size();i++) {
+		for(int i=values.size()-1;i>=0;i--) {
+			Value value = values.get(i);
+//			System.out.println("RTStack.push: " + value);
+			stack.push(value);
+		}
 //		Util.IERR("");
 	}
 	

@@ -73,12 +73,12 @@ public class SVM_INITO extends SVM_Instruction {
 		SAVE_OBJECT = RTStack.popOADDR();
 		SAVE_INDEX = 0+6;
 		if(DEBUG) System.out.println("SVM_INITO: " + SAVE_OBJECT.getClass().getSimpleName() + " " + SAVE_OBJECT);
-		IntegerValue sort = (IntegerValue) SAVE_OBJECT.addOffset(1).load();
-		IntegerValue lng = (IntegerValue) SAVE_OBJECT.addOffset(3).load();
+		IntegerValue sort = (IntegerValue) SAVE_OBJECT.load(1);
+		IntegerValue lng = (IntegerValue) SAVE_OBJECT.load(3);
 		if(DEBUG) System.out.println("SVM_INITO: sort="+sort+", lng="+lng);
 		if(sort.value != 1) Util.IERR("NOT A SAVE OBJECT");
 		SAVE_LENGTH = lng.value;
-		Global.PSC.ofst++;
+		Global.PSC.addOfst(1);
 	}
 	
 	@Override	

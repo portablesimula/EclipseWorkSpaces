@@ -7,7 +7,7 @@ public final class RTRegister {
 	
 	private static int nRegUsed;
 	
-	public static final int rMax = 10;
+	public static final int rMax = 50;
 	private static RTRegister[] register = new RTRegister[rMax];
 	
 	private RTRegister(Value value) {
@@ -16,12 +16,13 @@ public final class RTRegister {
 	
 	public static int getFreeReg() {
 		nRegUsed++;
-//		System.out.println("RTRegister.getFreeReg: "+nRegUsed);
-//		return nRegUsed;
-		return 1;
+		System.out.println("RTRegister.getFreeReg: "+nRegUsed);
+		return nRegUsed;
+//		return 1;
 	}
 	
-	public static void ckearFreeRegs() {
+	public static void clearFreeRegs() {
+//		System.out.println("RTRegister.clearFreeRegs: "+nRegUsed+" ===> 0");
 		nRegUsed = 0;
 	}
 	

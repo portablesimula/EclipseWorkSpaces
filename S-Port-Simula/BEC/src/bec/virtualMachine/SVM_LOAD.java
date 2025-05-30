@@ -50,7 +50,7 @@ public class SVM_LOAD extends SVM_Instruction {
 //			addr.segment().dump("LOAD.execute: ", addr.offset, addr.offset+size);
 			addr.dumpArea("LOAD.execute: ", size);
 		}
-		Global.PSC.ofst++;
+		Global.PSC.addOfst(1);
 	}
 	
 	@Override

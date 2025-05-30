@@ -31,7 +31,7 @@ SimulaTest(98,"--- Test attribute protection. Test visibility of labels.") begin
             then begin outtext(programpoint); outimage end;
             outtext("- l."); outint(line,4); outtext(": ");
             outtext(t); outint(i,3);
-            if i<>expected then err(" WRONG! - should be:" & edit(expected));
+            if i<>expected then err(" WRONG!"); -- - should be:" & edit(expected));
        end;
 
       procedure outim; if trace then outimage;

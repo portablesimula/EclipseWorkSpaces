@@ -16,7 +16,7 @@ SimulaTest(125,"--- Test goto label within compound statements") begin
    begin
       if verbose then begin outtext(msg); outimage; end;
       if msg <> facit(traceCase) then
-      begin err("Case " & edit(traceCase));
+      begin err("FAILED !"); outtext("Trace Case "); outint(traceCase, 0);
             outtext("Trace: " & msg); outimage;
             outtext("Facit: " & facit(traceCase)); outimage;
       end;

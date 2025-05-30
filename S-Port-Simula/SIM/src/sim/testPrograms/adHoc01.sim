@@ -1,9 +1,15 @@
-begin
-	text t1, t2;
+ begin
 
-	t1 :- copy("12345678");
-	t2 :- t1.sub(3,4);
+   ref(A) x;
 
-	t2 := notext;
-	
-end of program;
+   class A; virtual: procedure P;
+   begin integer i;
+      procedure P; begin
+%        trace(line,"Call P");
+      end;
+   end;
+   
+   
+	x:-new A;
+	x.P;
+end

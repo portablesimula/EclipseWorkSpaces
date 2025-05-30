@@ -23,7 +23,7 @@ public class SVM_COMPARE extends SVM_Instruction {
 		Value sos = RTStack.pop();
 		boolean res = relation.compare(sos, tos);
 		RTStack.push(BooleanValue.of(res), "SVM_COMPARE: " + tos + " " + relation + " " + sos + " = " + res);
-		Global.PSC.ofst++;
+		Global.PSC.addOfst(1);
 	}
 	
 	public String toString() {

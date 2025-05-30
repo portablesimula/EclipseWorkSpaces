@@ -18,11 +18,12 @@ public abstract class BSEG extends Instruction {
 		Scode.inputInstr();
 		
 		ProgramSegment prevPSEG = Global.PSEG;
-		Global.PSEG = new ProgramSegment("PSEG_BSEG_" + SEQU++, Kind.K_SEG_CODE);
+		Global.PSEG = new ProgramSegment(Global.getSourceID()+"_BSEG_" + SEQU++, Kind.K_SEG_CODE);
 
 		S_Module.programElements();
 //		Scode.inputInstr();
 		if(Scode.curinstr != Scode.S_ESEG) Util.IERR("Missing ESEG, Got " + Scode.edInstr(Scode.curinstr));
+		Global.routineSegments.add(Global.PSEG);
 		Global.PSEG = prevPSEG;
 		
 //		Util.IERR("SJEKK DETTE");	

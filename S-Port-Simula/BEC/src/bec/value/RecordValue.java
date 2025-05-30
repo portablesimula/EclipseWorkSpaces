@@ -216,37 +216,40 @@ public class RecordValue extends Value {
 	// *** Attribute File I/O
 	// ***********************************************************************************************
 	private RecordValue(AttributeInputStream inpt) throws IOException {
+		int expectedSize = inpt.readShort();
 		tag = Tag.read(inpt);
 		attrValues = new Vector<Value>();
+//		System.out.println("\nBEGIN READ RecordValue: ");
 		int kind = inpt.readKind();
 		while(kind != Scode.S_ENDRECORD) {
-			Value value = null;
-			boolean present = inpt.readBoolean();
-			if(present) value = Value.read(inpt);
+//			System.out.println("READ RecordValue: kind="+Scode.edInstr(kind));
+			Value value = Value.read(kind, inpt);
+//			System.out.println("READ RecordValue: add "+value);
 			attrValues.add(value);
 			kind = inpt.readKind();
 		}
-		System.out.println("NEW RECORD VALUE: ");
+//		System.out.println("NEW RECORD VALUE: "+attrValues.size());
 //		printTree(2);
-//		Util.IERR("");
+		if(attrValues.size() != expectedSize) Util.IERR("TRAP: expected size="+expectedSize+"  read size="+attrValues.size());
 	}
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Global.ATTR_OUTPUT_TRACE) System.out.println("Value.write: " + this);
 		oupt.writeKind(Scode.S_C_RECORD);
+		oupt.writeShort(attrValues.size());
 		tag.write(oupt);
+//		System.out.println("\nWRITE RECORD VALUE: "+attrValues.size());
 		for(Value value:attrValues) {
 			if(value != null) {
-				oupt.writeBoolean(true);
+//				System.out.println("WRITE RECORD VALUE: "+value);
 				value.write(oupt);
 			} else {
-				oupt.writeBoolean(false);
+//				System.out.println("WRITE RECORD VALUE: Scode.S_NULL");
+				oupt.writeKind(Scode.S_NULL);
 			}
 		}
+//		System.out.println("WRITE RECORD VALUE: ENDRECORD: "+Scode.S_ENDRECORD);
 		oupt.writeInstr(Scode.S_ENDRECORD);
-		
-//		this.printTree(2);
-//		Util.IERR("");
 	}
 
 	public static RecordValue read(AttributeInputStream inpt) throws IOException {
