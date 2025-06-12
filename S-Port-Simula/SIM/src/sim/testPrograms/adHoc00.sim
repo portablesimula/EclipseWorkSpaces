@@ -1,27 +1,6 @@
- begin
-% *** Ref(A) array by default, value and name
+external class adHocPRE;
 
-	ref(A)  array ARR(1:10);
+adHocPRE(1430,"--- Simple test.") begin
 
-	class A(i); integer i; begin end;
-
-	procedure P2(pARR); name pARR; ref(A) array pARR; begin
-		ref(A) x;
-		x :- pARR(1);
-%		pARR(2) :- x;
-	end;
 	
-
-
-% **********************************************
-% *** Statements -- ref(A) array
-% **********************************************
-	ARR(1) :- new A(444);
-
-	ARR(1).i := 666;	
-	P2(ARR);
-%	if ARR(2).i ne 666 then outtext(" ERROR 2");
-	
-	
-
-end;
+end

@@ -50,7 +50,7 @@ SimulaTest(157,"--- Test identifier access") begin
 				pp := 222;
 				arr(5) := 999;
 				i4 := fnc;
-				trace("End P i4=" & edit(i4));
+				trace("End P i4=" & edINT(i4));
 				goto lab;
 			end;
 		end;
@@ -71,8 +71,8 @@ SimulaTest(157,"--- Test identifier access") begin
 	P(i1,i1, iarr, ifnc, L1);
 	
 	L1:
-	trace("At L1  i1=" & edit(i1));
-	trace("At L1  iarr(5)=" & edit(iarr(5)));
+	trace("At L1  i1=" & edINT(i1));
+	trace("At L1  iarr(5)=" & edINT(iarr(5)));
 	
 	trace("At END");
 

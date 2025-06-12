@@ -44,6 +44,7 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 			case P_PRINTO:   printo(); break;
 			case P_MOVEIN:   movein(); break;
 
+			case P_DMPENT:   SysInfo.dmpent(); break;
 			case P_GINTIN:   SysInfo.getIntinfo(); break;
 			case P_SIZEIN:   SysInfo.sizein(); break;
 
@@ -88,6 +89,7 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 			case P_RSUBEP:   SysMath.rsubep(); break;
 			case P_DADDEP:   SysMath.daddep(); break;
 			case P_DSUBEP:   SysMath.dsubep(); break;
+			case P_MODULO:   SysMath.modulo(); break;
 			case P_IIPOWR:   SysMath.iipowr(); break;
 			case P_RIPOWR:   SysMath.ripowr(); break;
 			case P_DIPOWR:   SysMath.dipowr(); break;

@@ -1,0 +1,59 @@
+EXEC: PSEG_FORM_E_FPT:BODY[103]  PRECALL   ENCINT, nParSlots=0, exportSize=1, importSize=2
+   Frame[14]: POOL_1[907], null, CSEG_SIMTST101[205], CSEG_SIMTST101[310], POOL_1[714], null, null, null, null, PSEG_SIMTST101[126], POOL_1[907], FIELD:7, CSEG_SIMTST101[310], CSEG_SIMTST101[205]
+   Stack[1]: null
+   
+EXEC: PSEG_FORM_E_FPT:BODY[104]  LINE     687                            Frame[14]: POOL_1[907], null, CSEG_SIMTST101[205], CSEG_SIMTST101[310], POOL_1[714], null, null, null, null, PSEG_SIMTST101[126], POOL_1[907], FIELD:7, CSEG_SIMTST101[310], CSEG_SIMTST101[205]  Stack[1]: null
+
+EXEC: PSEG_FORM_E_FPT:BODY[105]  LOADC    T[9:GADDR] REL_ADR[callStackTop+2][0]
+   Frame[14]: POOL_1[907], null, CSEG_SIMTST101[205], CSEG_SIMTST101[310], POOL_1[714], null, null, null, null, PSEG_SIMTST101[126], POOL_1[907], FIELD:7, CSEG_SIMTST101[310], CSEG_SIMTST101[205]
+   Stack[3]: null, REL_ADR[callStackTop+2], null
+EXEC: PSEG_FORM_E_FPT:BODY[106]  NOOP                                    Frame[14]: POOL_1[907], null, CSEG_SIMTST101[205], CSEG_SIMTST101[310], POOL_1[714], null, null, null, null, PSEG_SIMTST101[126], POOL_1[907], FIELD:7, CSEG_SIMTST101[310], CSEG_SIMTST101[205]  Stack[3]: null, REL_ADR[callStackTop+2], null
+EXEC: PSEG_FORM_E_FPT:BODY[107]  CALL     PSEG_FORM_ENCINT:BODY[0] Return=REL_ADR[callStackTop+3]   Frame[14]: POOL_1[907], null, CSEG_SIMTST101[205], CSEG_SIMTST101[310], POOL_1[714], null, null, null, null, PSEG_SIMTST101[126], POOL_1[907], FIELD:7, CSEG_SIMTST101[310], CSEG_SIMTST101[205]  Stack[3]: null, REL_ADR[callStackTop+2], null
+EXEC: PSEG_FORM_ENCINT:BODY[0]  ENTER    nLOCAL=2                        Frame[6]: null, REL_ADR[callStackTop+2], null, PSEG_FORM_E_FPT:BODY[108], null, null  Stack[0]: 
+EXEC: PSEG_FORM_ENCINT:BODY[1]  PRECALL   NPACCA, nParSlots=0, exportSize=2, importSize=2   Frame[6]: null, REL_ADR[callStackTop+2], null, PSEG_FORM_E_FPT:BODY[108], null, null  Stack[2]: null, null
+EXEC: PSEG_FORM_ENCINT:BODY[2]  LOAD     REL_ADR[callStackTop+1], 2      Frame[6]: null, REL_ADR[callStackTop+2], null, PSEG_FORM_E_FPT:BODY[108], null, null  Stack[4]: null, null, REL_ADR[callStackTop+2], null
+EXEC: PSEG_FORM_ENCINT:BODY[3]  NOOP                                     Frame[6]: null, REL_ADR[callStackTop+2], null, PSEG_FORM_E_FPT:BODY[108], null, null  Stack[4]: null, null, REL_ADR[callStackTop+2], null
+EXEC: PSEG_FORM_ENCINT:BODY[4]  CALL     PSEG_FORM_NPACCA:BODY[0] Return=REL_ADR[callStackTop+4]   Frame[6]: null, REL_ADR[callStackTop+2], null, PSEG_FORM_E_FPT:BODY[108], null, null  Stack[4]: null, null, REL_ADR[callStackTop+2], null
+EXEC: PSEG_FORM_NPACCA:BODY[0]  ENTER    nLOCAL=1                        Frame[6]: null, null, REL_ADR[callStackTop+2], null, PSEG_FORM_ENCINT:BODY[5], null  Stack[0]: 
+EXEC: PSEG_FORM_NPACCA:BODY[1]  LOAD     REL_ADR[callStackTop+2], 2      Frame[6]: null, null, REL_ADR[callStackTop+2], null, PSEG_FORM_ENCINT:BODY[5], null  Stack[2]: REL_ADR[callStackTop+2], null
+RTRegister.putValue: REL_ADR[callStackTop+2][0], reg=1, value=REL_ADR[callStackTop+2][0]
+RTRegister.putValue: GADDR: REL_ADR[callStackTop+2][0]
+==== RTStack ================ SVM_REFER.execute: NOTE:  RTStack'DUMP ====================
+   0: POOL_1[907]
+   1: null
+   2: CSEG_SIMTST101[205]
+   3: CSEG_SIMTST101[310]
+   4: POOL_1[714]
+   5: null
+   6: null
+   7: null
+   8: null
+   9: PSEG_SIMTST101[126]
+   10: POOL_1[907]
+   11: FIELD:7
+   12: CSEG_SIMTST101[310]
+   13: CSEG_SIMTST101[205]
+   14: null
+   15: REL_ADR[callStackTop+2]
+   16: null
+   17: PSEG_FORM_E_FPT:BODY[108]
+   18: null
+   19: null
+   20: null
+   21: null
+   22: REL_ADR[callStackTop+2]
+   23: null
+   24: PSEG_FORM_ENCINT:BODY[5]
+   25: null
+==== RTStack ================ SVM_REFER.execute: NOTE:  RTStack' END  ====================
+ERROR: Internal error: 
+java.lang.Exception: Stack trace
+	at java.base/java.lang.Thread.dumpStack(Thread.java:1991)
+	at bec.util.Util.IERR(Util.java:37)
+	at bec.virtualMachine.RTRegister.putValue(RTRegister.java:54)
+	at bec.virtualMachine.SVM_REFER.execute(SVM_REFER.java:50)
+	at bec.value.ProgramAddress.execute(ProgramAddress.java:123)
+	at bec.MainProgram.<init>(MainProgram.java:85)
+	at bec.BecCompiler.<init>(BecCompiler.java:129)
+	at bec.BecCompiler.main(BecCompiler.java:53)
+RETURN: 0

@@ -7,10 +7,7 @@ import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Tag;
 import bec.util.Type;
-import bec.util.Util;
 import bec.value.ObjectAddress;
-import bec.virtualMachine.RTAddress;
-import bec.virtualMachine.SVM_LOAD;
 
 /**
  * 
@@ -57,15 +54,14 @@ public abstract class REMOTE extends Instruction {
 	public static void ofScode(int instr) {
 		if(DEBUG) CTStack.dumpStack("REMOTE-1: ");
 		Tag tag = Tag.ofScode();
-//		CTStack.checkTosRef();
+		CTStack.forceTosValue();			
 		CTStack.checkTosType(Type.T_OADDR);
 		FETCH.doFetch("REMOTE-1 " + tag + ": ");
 		Attribute attr = (Attribute) tag.getMeaning();
 		CTStack.pop();
 		
-		ObjectAddress memAddr = ObjectAddress.ofRelAddr(null);
+		ObjectAddress memAddr = ObjectAddress.ofRemoteAddr();
 		AddressItem adr = new AddressItem(attr.type, attr.rela, memAddr);
-        adr.withRemoteBase = true;
 		CTStack.push(adr);
 		
         if(instr == Scode.S_REMOTEV) {

@@ -32,6 +32,31 @@ SimulaTest(142,"--- Simple test of Random drawing procedures.") begin
       traceCase:=traceCase+1;
    end;
 
+	text procedure edFix(r, i); real r; integer i; begin
+   		text t;
+   		t:-blanks(19); 
+   		t.putfix(r, i);
+   		t :- trim(t);
+   		edFix :- t;
+	end;
+   
+	text procedure edReal(r); real r; begin
+   		text t;
+   		t:-blanks(19); 
+   		t.putreal(r, 3);
+   		t :- trim(t);
+   		edReal :- t;
+	end;
+   
+	text procedure edLReal(r); long real r; begin
+   		text t;
+   		t:-blanks(19); 
+   		t.putreal(r, 3);
+   		t :- trim(t);
+   		edLReal :- t;
+	end;
+
+
 	facit(0):-"At START";
 	facit(1):-"Test draw: res = true";
 	facit(2):-"Test randint: res = 7";
@@ -52,15 +77,15 @@ SimulaTest(142,"--- Simple test of Random drawing procedures.") begin
 	trace("At START");
 	U:= 1566259315; 
 
-	trace("Test draw: res = "     & edit(draw(3.14, U)));
-	trace("Test randint: res = "  & edit(randint(3,7, U)));
+	trace("Test draw: res = "     & edBool(draw(3.14, U)));
+	trace("Test randint: res = "  & edInt(randint(3,7, U)));
 	trace("Test uniform: res = "  & edfix(uniform(3.14,7.31, U),3));
 	trace("Test normal: res = "   & edfix(normal(3.14,7.31, U),3));
 	trace("Test negexp: res = "   & edfix(negexp(7.31, U),3));
-	trace("Test Poisson: res = "  & edit(Poisson(7.31, U)));
+	trace("Test Poisson: res = "  & edInt(Poisson(7.31, U)));
 	trace("Test Erlang: res = "   & edfix(Erlang(3.14,7.31, U),3));
-	trace("Test discrete: res = " & edit(discrete(RA, U)));
-	trace("Test discrete: res = " & edit(discrete(LRA, U)));
+	trace("Test discrete: res = " & edInt(discrete(RA(0), U)));
+	trace("Test discrete: res = " & edInt(discrete(LRA(0), U)));
 	
 		
 	for i := 1 step 1 until 8 do begin
@@ -69,12 +94,12 @@ SimulaTest(142,"--- Simple test of Random drawing procedures.") begin
 	end;
 	RA(9) := RB(9) := LRA(9) := LRB(9) := 1;
 	
-	trace("Test linear: res = "   & edfix(linear(RA, RB, U),3));
-	trace("Test linear: res = "   & edfix(linear(RA, LRB, U),3));
-	trace("Test linear: res = "   & edfix(linear(LRA, RB, U),3));
-	trace("Test linear: res = "   & edfix(linear(LRA, LRB, U),3));
+	trace("Test linear: res = "   & edfix(linear(RA(0), RB(0), U),3));
+	trace("Test linear: res = "   & edfix(linear(RA(0), LRB(0), U),3));
+	trace("Test linear: res = "   & edfix(linear(LRA(0), RB(0), U),3));
+	trace("Test linear: res = "   & edfix(linear(LRA(0), LRB(0), U),3));
 	
-	trace("Test histd: res = "    & edit(histd(RA, U)));
+	trace("Test histd: res = "    & edInt(histd(RA(0), U)));
 
 	trace("At END");
 	

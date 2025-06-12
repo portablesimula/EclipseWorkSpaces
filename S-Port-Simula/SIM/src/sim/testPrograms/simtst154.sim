@@ -25,6 +25,14 @@ SimulaTest(154,"--- Test function result assignment") begin
 		traceCase:=traceCase+1;
 	end;
 
+	text procedure edFix(r, i); real r; integer i; begin
+   		text t;
+   		t:-blanks(19); 
+   		t.putfix(r, i);
+   		t :- trim(t);
+   		edFix :- t;
+	end;
+
 	text procedure P1(T); text T; begin
 			
 		integer procedure P2; begin
@@ -39,7 +47,7 @@ SimulaTest(154,"--- Test function result assignment") begin
 			trace("P3=" & edfix(P3,2));
 		end;
 			
-		trace("P2=" & edit(P2));
+		trace("P2=" & edInt(P2));
 	end;
 
 	facit(0) :- "At START";

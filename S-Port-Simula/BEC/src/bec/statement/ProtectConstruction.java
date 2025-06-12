@@ -29,7 +29,7 @@ public class ProtectConstruction { // extends ProgramElement {
 		
 		Scode.inputInstr();
 		S_Module.programElements();
-		System.out.println("ProtectConstruction.ofStatement: " + Scode.edInstr(Scode.curinstr));
+//		System.out.println("ProtectConstruction.ofStatement: " + Scode.edInstr(Scode.curinstr));
 		if(Scode.curinstr != Scode.S_RESTORE)
 			Util.IERR("Improper termination of protect-construction");
 		doRESTORE();
@@ -53,7 +53,7 @@ public class ProtectConstruction { // extends ProgramElement {
 		CTStack.checkTosType(Type.T_OADDR);
 		FETCH.doFetch(null);
 		CTStack.pop();
-		CTStack.saveAndPurge();
+		CTStack.SAVE("SAVE");
 		
 		Global.PSEG.emit(new SVM_SAVE(), "ProtectConstruction.ofStatement: ");
 	}
@@ -76,12 +76,10 @@ public class ProtectConstruction { // extends ProgramElement {
 	/// TOS is popped.
 	private static void doRESTORE() {
 		CTStack.checkTosRef(); CTStack.checkTosType(Type.T_OADDR);
-		if(Global.TESTING_SAVE_RESTORE) {
-			FETCH.doFetch(null);
-		}
+		FETCH.doFetch(null);
 		CTStack.pop();
 		CTStack.checkStackEmpty();
-		CTStack.restoreState();
+		CTStack.RESTORE();
 		
 		Global.PSEG.emit(new SVM_RESTORE(), "ProtectConstruction.ofStatement: ");
 	}

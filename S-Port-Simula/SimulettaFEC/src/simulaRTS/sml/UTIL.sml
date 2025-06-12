@@ -108,162 +108,162 @@ Visible define TRM_ERR = 2; -- Error in user program or observation tool
 Visible define TRM_SYS = 3; -- System error
 Visible define MAX_TRM = 3;
 
- const infix(string) ERR_MSG(MAX_ENO) = (
+Visible const infix(string) ERR_MSG(MAX_ENO) = (
 
-%-X "Unspecified error condition.",                              --   0
-%-X "Invalid floating point operation.",                         --   1
-%-X "Floating point division by zero.",                          --   2
-%-X "Floating point overflow.",                                  --   3
-%-X "Floating point underflow.",                                 --   4
-%-X "Inexact result (floating point operation).",                --   5
-%-X "Integer overflow.",                                         --   6
-%-X "Integer division by zero.",                                 --   7
-%-X "Illegal address trap.",                                     --   8
-%-X "Illegal instruction trap.",                                 --   9
-%-X "Breakpoint trap.",                                          --  10
-%-X "User interrupt - NOT YET IMPLEMENTED.",                     --  11
-%-X "Cpu time limit overflow.",                                  --  12
-%-X "Continuation is impossible.",                               --  13
-%-X "Start of statement exception - NOT YET IMPLEMENTED.",       --  14
-%-X "Array index out of range",                                  --  15
-%-X "Attempted attribute access through none",                   --  16
-%-X "Trap caused by interrupt or exception:",                    --  17
-%-X "Internal error in Simula System (RTS): ",                   --  18
-%-X "Internal error in Simula System (ENV): ",                   --  19
-%-X "Internal error in Simula System (SIMOB): ",                 --  20
-%-X "Breakpoint trap, but no observation tool is available.",    --  21
-%-X "Not enough primary storage for predefined instances.",      --  22
-%-X "Qualification check fails.",                                --  23
-%-X "Attempt to access attribute == NONE ('attr.y' or 'attr QUA ...').",
-%-X "Unexpected non-zero status on return from environment routine call.",
-%-X "Exponentiation: Result is undefined.",                      --  26
-%-X "Impossible to satisfy the request, maybe because it is illegal.",
-%-X "Actual parameter value is out of range.",                   --  28
-%-X "The service function is not implemented.",                  --  29
-%-X "Illegal action.",                                           --  30
-%-X "Storage request cannot be met, not enough primary storage.",--  31
-%-X "Requested termination: Not enough available storage after compaction",
-%-X "Illegal goto destination.",                                 --  33
-%-X "x.Detach: x is not on the operating chain.",                --  34
-%-X "Resume(x): x is none.",                                     --  35
-%-X "Resume(x): x is not local to sub-block or prefixed block instance",
-%-X "Resume(x): x is not in detached state.",                    --  37
-%-X "Process is not local to prefixed block, illegal implicit Resume.",
-%-X "Implicit Resume(x): Process object x is not in detached state.",
-%-X "Call(x): x is none.",                                       --  40
-%-X "Call(x): x is not in detached state.",                      --  41
-%-X "Wrong number of parameters in call on formal or virtual procedure.",
-%-X "Virtual attribute has no match.",                           --  43
-%-X "Lower/upperbound(a,i): illegal value of i.",                --  44
-%-X "Incorrect number of array indices.",                        --  45
-%-X "Array index value is out of bounds.",                       --  46
-%-X "Array index value is out of bounds.",                       --  47
-%-X "Blanks(n):  n is negative or too large.",                   --  48
-%-X "Text value assignment x := y: x.Length < y.Length, maybe x == notext",
-%-X "Text value assignment x := y: x.Constant = True.",          --  50
-%-X "Sub(i,n):  i is less than 1.",                              --  51
-%-X "Sub(i,n):  n is negative.",                                 --  52
-%-X "t.Sub(i,n): i + n > t.Length + 1, maybe t == notext.",      --  53
-%-X "t.Get...:  t == notext.",                                   --  54
-%-X "t.Get...:  Non-numeric item.",                              --  55
-%-X "t.Get...:  Numeric item is out of range.",                  --  56
-%-X "t.Get...:  Numeric item is not complete.",                  --  57
-%-X "t.Getchar:  t.More = False, maybe t == notext.",            --  58
-%-X "t.Put...:  t == notext.",                                   --  59
-%-X "t.Put...:  t.Constant = True.",                             --  60
-%-X "t.Put...(r,n):  Fraction size specification n is negative.",--  61
-%-X "t.Putchar:  t.More = False, maybe t == notext.",            --  62
-%-X "Parameter called by name:",                                 --  63
-%-X "Assignment to formal: Actual is no variable, cannot assign.",
-%-X "Parameter transmission: Actual is no variable.",            --  65
-%-X "The types of the actual and the formal parameter are different.",
-%-X "Different qualifications of the actual and the formal parameter.",
-%-X "Assignment to formal:  object is not subordinate to actual.",
-%-X "Occurrence of formal: actual object is not subordinate to formal.",
-%-X "Occurrence of formal: actual procedure is not subordinate to formal.",
-%-X "Parameter transmission to formal or virtual procedure:",    --  71
-%-X "Actual object is not subordinate to formal parameter.",     --  72
-%-X "Actual procedure parameter is not subordinate to formal parameter.",
-%-X "Actual and formal parameter are of different kinds.",       --  74
-%-X "Actual and formal parameter are of different types.",       --  75
-%-X "Actual and formal parameter are of incompatible types.",    --  76
-%-X "Transplantation: actual and formal qualification are dynamically different.",
-%-X "Qualification of actual and formal reference array do not coincide.",
-%-X "Types of actual and formal procedure are neither coincident nor subordinate.",
-%-X "file.Open:  The file is open already.",                     --  80
-%-X "new ...file: FILENAME == notext.",                          --  81
-%-X "file.OPEN = false.",                                        --  82
-%-X "file.ENDFILE == true.",                                     --  83
-%-X "file.In...:  file.image == notext  or  file not open.",     --  84
-%-X "file.Inimage:  file.image.Constant = true.",                --  85
-%-X "Directfile.Inimage:  End of file was encountered.",         --  86
-%-X "file.In...:  Attempt to read through end of file.",         --  87
-%-X "file.In...:  Non-numeric item.",                            --  88
-%-X "file.In...:  Numeric item is out of range.",                --  89
-%-X "file.In...:  Numeric item is not complete.",                --  90
-%-X "file.Intext(n):  n is negative or too large.",              --  91
-%-X "file.Out...:  file.image == notext  or  file not open.",    --  92
-%-X "file.Out...(...,w):  w < 0.",                               --  93
-%-X "file.Out...(...,w):  w > file.image.Length",                --  94
-%-X "file.Out...:  file.image.Constant = true.",                 --  95
-%-X "file.Out...(...,n,...):  Fraction size specification n is negative.",
-%-X "file.Outtext(t):  t.Length > file.image.Length",            --  97
-%-X "Printfile.Spacing(n):  n < 0  or  n > Linesperpage.",       --  98
-%-X "Printfile.Eject(n):  n <= 0.",                              --  99
-%-X "File.Close:  The file is closed already.",                  -- 100
-%-X "Illegal file operation, not compatible with this file.",    -- 101
-%-X "The external record format is not compatible with this directfile.",
-%-X "File.Open:  Illegal file name.",                            -- 103
-%-X "file.Out...:  Output image too long.",                      -- 104
-%-X "file.In...:  Input image too long.",                        -- 105
-%-X "file.Out...:  The file is full.",                           -- 106
-%-X "Directfile:  Location out of range.",                       -- 107
-%-X "I/O error, e.g. hardware fault.",                           -- 108
-%-X "No write access to the file.",                              -- 109
-%-X "File.Open:  Too many files open simultaneously.",           -- 110
-%-X "No read access to the file.",                               -- 111
-%-X "End of file has been encountered already.",                 -- 112
-%-X "The file is closed",                                        -- 113
-%-X "Simulation:  (Re)Activate empties SQS.",                    -- 114
-%-X "Simulation:  Cancel,Passivate or Wait empties SQS",         -- 115
-%-X "Process.Evtime:  The process is idle.",                     -- 116
-%-X "Random drawing:  Actual array parameter is not one-dimensional.",
-%-X "Histd(a,u):  An element of the array a is negative.",       -- 118
-%-X "Linear(a,b,u):  The number of elements in a and b are different.",
-%-X "Linear(a,b,u):  The array a does not satisfy the stated assumptions.",
-%-X "Negexp(a,u) :  a <= 0.",                                    -- 121
-%-X "Randint(a,b,U) or Uniform(a,b,U) :   b < a.",               -- 122
-%-X "Erlang(a,b,u):  a <= 0  or  b <= 0.",                       -- 123
-%-X "Normal(a,b,u):  b <= 0.",                                   -- 124
-%-X "Erlang/Negexp/Normal/Poisson: parameter U <= 0",            -- 125
-%-X "Histo(a,b,c,d):  Array parameter is not one-dimensional.",  -- 126
-%-X "Histo(a,b,c,d):  number of elements in a <= number of elements in b.",
-%-X "Standard function call:  Parameter value is out of range.", -- 128
-%-X "Switch designator:  Index value is out of range.",          -- 129
-%-X "Call on external non-SIMULA procedure:  actual label is not local.",
-%-X "Lowten(c): c is illegal",                                   -- 131
-%-X "Decimalmark(c): ci is neither '.' or ','",                  -- 132
-%-X "RTS_Utility: first parameter is out of range",              -- 133
-%-X "No such data set",                                          -- 134
-%-X "Filename does not describe a data set",                     -- 135
-%-X "File cannot be CREATEd, it exists already",                 -- 136
-%-X "Open/Close: file access code is not implemented",           -- 137
-%-X "A file operation cannot be performed"                       -- 138
+ "Unspecified error condition.",                              --   0
+ "Invalid floating point operation.",                         --   1
+ "Floating point division by zero.",                          --   2
+ "Floating point overflow.",                                  --   3
+ "Floating point underflow.",                                 --   4
+ "Inexact result (floating point operation).",                --   5
+ "Integer overflow.",                                         --   6
+ "Integer division by zero.",                                 --   7
+ "Illegal address trap.",                                     --   8
+ "Illegal instruction trap.",                                 --   9
+ "Breakpoint trap.",                                          --  10
+ "User interrupt - NOT YET IMPLEMENTED.",                     --  11
+ "Cpu time limit overflow.",                                  --  12
+ "Continuation is impossible.",                               --  13
+ "Start of statement exception - NOT YET IMPLEMENTED.",       --  14
+ "Array index out of range",                                  --  15
+ "Attempted attribute access through none",                   --  16
+ "Trap caused by interrupt or exception:",                    --  17
+ "Internal error in Simula System (RTS): ",                   --  18
+ "Internal error in Simula System (ENV): ",                   --  19
+ "Internal error in Simula System (SIMOB): ",                 --  20
+ "Breakpoint trap, but no observation tool is available.",    --  21
+ "Not enough primary storage for predefined instances.",      --  22
+ "Qualification check fails.",                                --  23
+ "Attempt to access attribute == NONE ('attr.y' or 'attr QUA ...').",
+ "Unexpected non-zero status on return from environment routine call.",
+ "Exponentiation: Result is undefined.",                      --  26
+ "Impossible to satisfy the request, maybe because it is illegal.",
+ "Actual parameter value is out of range.",                   --  28
+ "The service function is not implemented.",                  --  29
+ "Illegal action.",                                           --  30
+ "Storage request cannot be met, not enough primary storage.",--  31
+ "Requested termination: Not enough available storage after compaction",
+ "Illegal goto destination.",                                 --  33
+ "x.Detach: x is not on the operating chain.",                --  34
+ "Resume(x): x is none.",                                     --  35
+ "Resume(x): x is not local to sub-block or prefixed block instance",
+ "Resume(x): x is not in detached state.",                    --  37
+ "Process is not local to prefixed block, illegal implicit Resume.",
+ "Implicit Resume(x): Process object x is not in detached state.",
+ "Call(x): x is none.",                                       --  40
+ "Call(x): x is not in detached state.",                      --  41
+ "Wrong number of parameters in call on formal or virtual procedure.",
+ "Virtual attribute has no match.",                           --  43
+ "Lower/upperbound(a,i): illegal value of i.",                --  44
+ "Incorrect number of array indices.",                        --  45
+ "Array index value is out of bounds.",                       --  46
+ "Array index value is out of bounds.",                       --  47
+ "Blanks(n):  n is negative or too large.",                   --  48
+ "Text value assignment x := y: x.Length < y.Length, maybe x == notext",
+ "Text value assignment x := y: x.Constant = True.",          --  50
+ "Sub(i,n):  i is less than 1.",                              --  51
+ "Sub(i,n):  n is negative.",                                 --  52
+ "t.Sub(i,n): i + n > t.Length + 1, maybe t == notext.",      --  53
+ "t.Get...:  t == notext.",                                   --  54
+ "t.Get...:  Non-numeric item.",                              --  55
+ "t.Get...:  Numeric item is out of range.",                  --  56
+ "t.Get...:  Numeric item is not complete.",                  --  57
+ "t.Getchar:  t.More = False, maybe t == notext.",            --  58
+ "t.Put...:  t == notext.",                                   --  59
+ "t.Put...:  t.Constant = True.",                             --  60
+ "t.Put...(r,n):  Fraction size specification n is negative.",--  61
+ "t.Putchar:  t.More = False, maybe t == notext.",            --  62
+ "Parameter called by name:",                                 --  63
+ "Assignment to formal: Actual is no variable, cannot assign.",
+ "Parameter transmission: Actual is no variable.",            --  65
+ "The types of the actual and the formal parameter are different.",
+ "Different qualifications of the actual and the formal parameter.",
+ "Assignment to formal:  object is not subordinate to actual.",
+ "Occurrence of formal: actual object is not subordinate to formal.",
+ "Occurrence of formal: actual procedure is not subordinate to formal.",
+ "Parameter transmission to formal or virtual procedure:",    --  71
+ "Actual object is not subordinate to formal parameter.",     --  72
+ "Actual procedure parameter is not subordinate to formal parameter.",
+ "Actual and formal parameter are of different kinds.",       --  74
+ "Actual and formal parameter are of different types.",       --  75
+ "Actual and formal parameter are of incompatible types.",    --  76
+ "Transplantation: actual and formal qualification are dynamically different.",
+ "Qualification of actual and formal reference array do not coincide.",
+ "Types of actual and formal procedure are neither coincident nor subordinate.",
+ "file.Open:  The file is open already.",                     --  80
+ "new ...file: FILENAME == notext.",                          --  81
+ "file.OPEN = false.",                                        --  82
+ "file.ENDFILE == true.",                                     --  83
+ "file.In...:  file.image == notext  or  file not open.",     --  84
+ "file.Inimage:  file.image.Constant = true.",                --  85
+ "Directfile.Inimage:  End of file was encountered.",         --  86
+ "file.In...:  Attempt to read through end of file.",         --  87
+ "file.In...:  Non-numeric item.",                            --  88
+ "file.In...:  Numeric item is out of range.",                --  89
+ "file.In...:  Numeric item is not complete.",                --  90
+ "file.Intext(n):  n is negative or too large.",              --  91
+ "file.Out...:  file.image == notext  or  file not open.",    --  92
+ "file.Out...(...,w):  w < 0.",                               --  93
+ "file.Out...(...,w):  w > file.image.Length",                --  94
+ "file.Out...:  file.image.Constant = true.",                 --  95
+ "file.Out...(...,n,...):  Fraction size specification n is negative.",
+ "file.Outtext(t):  t.Length > file.image.Length",            --  97
+ "Printfile.Spacing(n):  n < 0  or  n > Linesperpage.",       --  98
+ "Printfile.Eject(n):  n <= 0.",                              --  99
+ "File.Close:  The file is closed already.",                  -- 100
+ "Illegal file operation, not compatible with this file.",    -- 101
+ "The external record format is not compatible with this directfile.",
+ "File.Open:  Illegal file name.",                            -- 103
+ "file.Out...:  Output image too long.",                      -- 104
+ "file.In...:  Input image too long.",                        -- 105
+ "file.Out...:  The file is full.",                           -- 106
+ "Directfile:  Location out of range.",                       -- 107
+ "I/O error, e.g. hardware fault.",                           -- 108
+ "No write access to the file.",                              -- 109
+ "File.Open:  Too many files open simultaneously.",           -- 110
+ "No read access to the file.",                               -- 111
+ "End of file has been encountered already.",                 -- 112
+ "The file is closed",                                        -- 113
+ "Simulation:  (Re)Activate empties SQS.",                    -- 114
+ "Simulation:  Cancel,Passivate or Wait empties SQS",         -- 115
+ "Process.Evtime:  The process is idle.",                     -- 116
+ "Random drawing:  Actual array parameter is not one-dimensional.",
+ "Histd(a,u):  An element of the array a is negative.",       -- 118
+ "Linear(a,b,u):  The number of elements in a and b are different.",
+ "Linear(a,b,u):  The array a does not satisfy the stated assumptions.",
+ "Negexp(a,u) :  a <= 0.",                                    -- 121
+ "Randint(a,b,U) or Uniform(a,b,U) :   b < a.",               -- 122
+ "Erlang(a,b,u):  a <= 0  or  b <= 0.",                       -- 123
+ "Normal(a,b,u):  b <= 0.",                                   -- 124
+ "Erlang/Negexp/Normal/Poisson: parameter U <= 0",            -- 125
+ "Histo(a,b,c,d):  Array parameter is not one-dimensional.",  -- 126
+ "Histo(a,b,c,d):  number of elements in a <= number of elements in b.",
+ "Standard function call:  Parameter value is out of range.", -- 128
+ "Switch designator:  Index value is out of range.",          -- 129
+ "Call on external non-SIMULA procedure:  actual label is not local.",
+ "Lowten(c): c is illegal",                                   -- 131
+ "Decimalmark(c): ci is neither '.' or ','",                  -- 132
+ "RTS_Utility: first parameter is out of range",              -- 133
+ "No such data set",                                          -- 134
+ "Filename does not describe a data set",                     -- 135
+ "File cannot be CREATEd, it exists already",                 -- 136
+ "Open/Close: file access code is not implemented",           -- 137
+ "A file operation cannot be performed"                       -- 138
 
-%+X "0","1","2","3","4","5","6","7","8","9",
-%+X "10","11","12","13","14","15","16","17","18","19",
-%+X "20","21","22","23","24","25","26","27","28","29",
-%+X "30","31","32","33","34","35","36","37","38","39",
-%+X "40","41","42","43","44","45","46","47","48","49",
-%+X "50","51","52","53","54","55","56","57","58","59",
-%+X "60","61","62","63","64","65","66","67","68","69",
-%+X "70","71","72","73","74","75","76","77","78","79",
-%+X "80","81","82","83","84","85","86","87","88","89",
-%+X "90","91","92","93","94","95","96","97","98","99",
-%+X "110","101","102","103","104","105","106","107","108","109",
-%+X "110","111","112","113","114","115","116","117","118","119",
-%+X "120","121","122","123","124","125","126","127","128","129",
-%+X "130","131","132","133","134","135","136","137","138"
+% +X "0","1","2","3","4","5","6","7","8","9",
+% +X "10","11","12","13","14","15","16","17","18","19",
+% +X "20","21","22","23","24","25","26","27","28","29",
+% +X "30","31","32","33","34","35","36","37","38","39",
+% +X "40","41","42","43","44","45","46","47","48","49",
+% +X "50","51","52","53","54","55","56","57","58","59",
+% +X "60","61","62","63","64","65","66","67","68","69",
+% +X "70","71","72","73","74","75","76","77","78","79",
+% +X "80","81","82","83","84","85","86","87","88","89",
+% +X "90","91","92","93","94","95","96","97","98","99",
+% +X "110","101","102","103","104","105","106","107","108","109",
+% +X "110","111","112","113","114","115","116","117","118","119",
+% +X "120","121","122","123","124","125","126","127","128","129",
+% +X "130","131","132","133","134","135","136","137","138"
  );
 %title ***   E r r o r    H a n d l i n g   ***
 

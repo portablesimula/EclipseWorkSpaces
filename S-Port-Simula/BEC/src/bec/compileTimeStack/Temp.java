@@ -6,6 +6,9 @@ import bec.util.Type;
 public class Temp extends CTStackItem {
 	int count;
 	String comment;
+	int sequ;
+	
+	private static int SEQU = 1;
 	
 	// Value is pushed on RT-stack
 	public Temp(Mode mode, Type type, int count, String comment) {
@@ -13,6 +16,7 @@ public class Temp extends CTStackItem {
 		this.type = type;
 		this.count = count;
 		this.comment = comment;
+		this.sequ = SEQU++;
 	}
 
 	@Override
@@ -22,6 +26,6 @@ public class Temp extends CTStackItem {
 
 	@Override
 	public String toString() {
-		return edMode() + "TEMP: " + Scode.edTag(type.tag) + ", count=" + count + " " + comment;
+		return edMode() + "TEMP("+sequ+"): " + Scode.edTag(type.tag) + ", count=" + count + " " + comment;
 	}
 }

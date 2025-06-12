@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
+import bec.segment.DataSegment;
 import bec.segment.Segment;
 import bec.util.Global;
 import bec.util.Util;
@@ -43,6 +44,11 @@ public class SVM_ENTER extends SVM_Instruction {
 //			Segment.lookup("PSEG_EDIT_PTLFXA:BODY").dump("ENTER: +++++++++++++++++++++++++++++++++++++++++++++", 0, 10);
 ////			Util.IERR("");
 //		}
+//		if(rutIdent.equalsIgnoreCase("B_SUB")) {
+//			((DataSegment)Segment.lookup("POOL_1")).addGuard(748);
+////			Util.IERR("");
+//		}
+
 
 		Global.PSC.addOfst(1);
 //		if(rutIdent.equalsIgnoreCase("OUTTXT")) {

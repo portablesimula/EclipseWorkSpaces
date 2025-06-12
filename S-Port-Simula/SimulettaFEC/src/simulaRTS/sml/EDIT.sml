@@ -79,6 +79,9 @@ Module edit("RTS");
        ALLOC(S_PRO,ins,ppp.lng,sl);
        ---  Fill in procedure attributes.
        ins.sl:=sl; ins.pp:=ppp;
+%      ED_STR("EDIT.A_VIRT: ins="); ED_OADDR(ins); ED_OUT;
+% 	   DMPENT(ins);
+% 	   DMPOOL(1);
  end;
 
 
@@ -110,7 +113,8 @@ Module edit("RTS");
  begin infix(string) dst_str,src_str;
        src_str.nchr:=src.lp - src.sp;
        dst_str.nchr:=var(dst).lp - var(dst).sp;
-% %+M	   ED_STR("EDIT.TXTASS: src.chradr="); ED_OADDR(src.chradr); ED_OUT;
+% +M	   ED_STR("EDIT.TXTASS: dst_str.nchr="); ED_INT(dst_str.nchr); ED_OUT;
+% +M	   ED_STR("EDIT.TXTASS: src_str.nchr="); ED_INT(src_str.nchr); ED_OUT;
        assert dst_str.nchr >= src_str.nchr skip ERROR(ENO_TXT_2) endskip
        ---   var(dst) = notext  ===>  src = notext
        if var(dst).ent<>none -- notext?

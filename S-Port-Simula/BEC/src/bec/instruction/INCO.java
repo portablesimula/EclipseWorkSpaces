@@ -22,6 +22,7 @@ public abstract class INCO extends Instruction {
 	 * where + corresponds to inco and - to deco.
 	 */
 	public static void ofScode() {
+		CTStack.forceTosValue();			
 		CTStack.checkTosType(Type.T_SIZE); CTStack.checkSosValue(); CTStack.checkSosType(Type.T_OADDR);
 		Global.PSEG.emit(new SVM_INCO(), "");
 		CTStack.pop();

@@ -4,6 +4,7 @@ import bec.S_Module;
 import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.CTStackItem;
 import bec.util.Global;
+import bec.util.NamedStack;
 import bec.util.Relation;
 import bec.util.Scode;
 import bec.util.Util;
@@ -13,6 +14,8 @@ import bec.virtualMachine.SVM_JUMPIF;
 import bec.virtualMachine.SVM_NOOP;
 
 public abstract class IfConstrction {
+	
+	private static final boolean DEBUG = true;
 
 	private IfConstrction() {
 	}
@@ -45,24 +48,20 @@ public abstract class IfConstrction {
 		// The generated code will compute the value of the relation, and transfer control to an "else-label" (to be
 		// defined later) if the relation is false. A copy of the complete state of the S-compiler's stack is saved as
 		// the "if-stack".
-//		CTStack.dumpStack("IfConstruction.ofScode: ");
 		
+		CTStack.forceTosValue();
 		CTStack.checkTypesEqual();
 		CTStack.checkSosValue();
 		Relation relation = Relation.ofScode();
 		Global.ifDepth++;
-		
-//		int cond = Util.GQrelation();
-		// Check Relation
 		CTStackItem tos = CTStack.pop();
 		CTStack.pop();
-		
-//		CTStackItem old_SAV = CTStack.SAV;
-//		CTStack.SAV = CTStack.TOS();
-		CTStack.saveState();
-
-//		CTStack.dumpStack("IfConstruction.ofScode: ");
-//		Util.IERR("");
+		NamedStack<CTStackItem> IF_Stack = CTStack.copy("IF-Stack-Copy-"+Global.ifDepth);
+		String indent = "";
+		if(DEBUG) {
+			for(int i=0;i<Global.ifDepth;i++) indent = indent + "      ";
+			IF_Stack.dumpStack(Global.ifDepth, "IF: SAVE IF_Stack");
+		}
 		
 		ProgramAddress IF_LABEL = Global.PSEG.nextAddress();
 		ProgramAddress ELSE_LABEL = null;
@@ -71,6 +70,8 @@ public abstract class IfConstrction {
 
 //		Relation relation = Relation.ofScode();
 //		System.out.println("IfConstruction.ofScode: CurInstr="+Scode.edInstr(Scode.curinstr));
+		
+		NamedStack<CTStackItem> ELSE_Stack = null;
 		
 		Scode.inputInstr();
 		S_Module.programElements();
@@ -83,12 +84,13 @@ public abstract class IfConstrction {
 			// 	An unconditional forward branch is generated to an "end-label" (to be defined later). A copy is made of
 			// 	the complete state of the stack and this is saved as the "else-stack", then the stack is restored to the state
 			// 	saved as the "if-stack". Finally the "else-label" (used by if) is located at the current program point.
-			
-//			CTStack.TOS = CTStack.SAV;
-//			CTStack.SAV = old_SAV;
-			CTStack.restoreState();
-//			CTStack.dumpStack("IfConstruction.ofScode: ");
-//			Util.IERR("");
+			CTStack.forceTosValue();
+			ELSE_Stack = CTStack.copy("ELSE-Stack-Copy-"+Global.ifDepth);
+			CTStack.reestablish(IF_Stack);
+			if(DEBUG) {
+				ELSE_Stack.dumpStack(Global.ifDepth, "ELSE: SAVE ELSE_Stack");
+				IF_Stack.dumpStack(Global.ifDepth, "ELSE: reestablish IF_Stack");
+			}
 			
 			ELSE_LABEL = Global.PSEG.nextAddress();
 			Global.PSEG.emit(new SVM_JUMP(null), "GOTO_ENDIF["+Global.ifDepth+"]:");
@@ -116,7 +118,8 @@ public abstract class IfConstrction {
 		// stacks do not contain the same number of elements or if any pair of stack items cannot be made
 		// identical. After the merge the saved stack is deleted.
 		// If no else-part was processed the "else-label", otherwise the "end-label", is located at the current
-		// program point.		
+		// program point.
+		CTStack.forceTosValue();
 		if(ELSE_LABEL != null) {
 			// FIXUP:
 			SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(ELSE_LABEL.getOfst());
@@ -129,11 +132,21 @@ public abstract class IfConstrction {
 	      	Global.PSEG.emit(new SVM_NOOP(), "ENDIF["+Global.ifDepth+"]:");			
 		}
 		
-//     	Global.PSEG.dump("IfConstruction.ofScode: ELSE: ");
-//		CTStack.dumpStack("IfConstruction.ofScode: ");
-//		Util.IERR("");
+		if(ELSE_Stack != null) {
+			if(DEBUG) {
+				ELSE_Stack.dumpStack(Global.ifDepth, "ENDIF: resulting ELSE_Stack");
+				CTStack.current().dumpStack(Global.ifDepth, "ENDIF: current Stack");
+			}
+			if(! CTStack.equals(CTStack.current(), ELSE_Stack)) {
+				Util.IERR("Merge IF-Stack and ELSE-Stack FAILED !");
+			}
+//		} else {
+//			CTStack.reestablish(IF_Stack);
+//			if(DEBUG) {
+//				IF_Stack.dumpStack(Global.ifDepth, "ENDIF: reestablish IF_Stack");
+//			}
+		}
 		
-//		Scode.inputInstr();  // ????
 		Global.ifDepth--;
 	
 	}

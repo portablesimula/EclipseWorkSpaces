@@ -7,7 +7,6 @@ import bec.virtualMachine.RTRegister;
 public class AddressItem extends CTStackItem {
 	public ObjectAddress objadr;
 	public int offset;
-	public boolean withRemoteBase;
 	public int xReg;
 	
 	public AddressItem(Type type, int offset, ObjectAddress objadr) {
@@ -22,7 +21,6 @@ public class AddressItem extends CTStackItem {
 	public CTStackItem copy() {
 		AddressItem addr = new AddressItem(type, offset, objadr);
 		addr.xReg = xReg;
-		addr.withRemoteBase = withRemoteBase;
 		return addr;
 	}
 
@@ -31,7 +29,7 @@ public class AddressItem extends CTStackItem {
 		String s = "" + type + " AT " + objadr + "[" + offset;
 		if(xReg > 0) s += "+" + RTRegister.edReg(xReg);
 		s =  s  + "]";
-		if(withRemoteBase) s = s + " withRemoteBase";
+		if(objadr.kind == ObjectAddress.REMOTE_ADDR) s = s + " withRemoteBase";
 		return edMode() + "ADDR: " + s;
 	}
 

@@ -4,7 +4,6 @@ import bec.compileTimeStack.AddressItem;
 import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.CTStackItem;
 import bec.util.Global;
-import bec.virtualMachine.RTAddress;
 import bec.virtualMachine.SVM_ASSIGN;
 
 public abstract class ASSIGN extends Instruction {
@@ -26,11 +25,11 @@ public abstract class ASSIGN extends Instruction {
 	public static void ofScode() {
 		CTStack.checkSosRef();
 		CTStack.checkTypesEqual();
+		CTStack.forceTosValue();
 		@SuppressWarnings("unused")
 		CTStackItem tos = CTStack.pop();
 		AddressItem sos = (AddressItem) CTStack.pop();
-		
-		Global.PSEG.emit(new SVM_ASSIGN(false, new RTAddress(sos), sos.size), "ASSIGN: "); // Store into adr
+		Global.PSEG.emit(new SVM_ASSIGN(false, sos.objadr.addOffset(sos.offset), sos.xReg, sos.size), "ASSIGN: "); // Store into adr
 	}
 
 }

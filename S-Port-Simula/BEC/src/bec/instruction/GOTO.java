@@ -25,6 +25,7 @@ public abstract class GOTO extends Instruction {
 	 * TOS is popped and instructions generated to perform the control transfer.
 	 */
 	public static void ofScode() {
+		CTStack.forceTosValue();			
 		CTStack.checkTosType(Type.T_PADDR);
 		CTStackItem TOS = CTStack.TOS();
 		
@@ -47,7 +48,7 @@ public abstract class GOTO extends Instruction {
 			Global.PSEG.emit(new SVM_GOTO(), "GOTO: " + citm);
 			CTStack.pop();
 		} else {
-			FETCH.doFetch("GOTO: ");
+			FETCH.doFetch("GOTO: "); // Force TOS Value
 			Global.PSEG.emit(new SVM_GOTO(), "GOTO-TOS: ");
 			CTStack.pop();
 //	%+E                  Qf2(qRET,0,0,0,0);

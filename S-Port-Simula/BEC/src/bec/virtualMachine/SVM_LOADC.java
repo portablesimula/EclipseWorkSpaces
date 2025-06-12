@@ -10,6 +10,7 @@ import bec.util.Type;
 import bec.util.Util;
 import bec.value.GeneralAddress;
 import bec.value.IntegerValue;
+import bec.value.ObjectAddress;
 import bec.value.ProgramAddress;
 import bec.value.RecordValue;
 import bec.value.StringValue;
@@ -50,10 +51,24 @@ public class SVM_LOADC extends SVM_Instruction {
 //			System.out.println("SVM_LOADC.execute: typeTag="+Scode.edTag(typeTag));
 //			if(value.type.tag != typeTag) Util.IERR("INCONSISTENT: typeTag="+Scode.edTag(typeTag) + ", value'tag="+Scode.edTag(value.type.tag));
 //		}
+//		System.out.println("SVM_LOADC.execute: value=" + Scode.edTag(typeTag) + " " + value);
 		switch(typeTag) {
 			case Scode.TAG_BOOL, Scode.TAG_CHAR, Scode.TAG_INT, Scode.TAG_SINT, Scode.TAG_REAL, Scode.TAG_LREAL,
-			     Scode.TAG_SIZE, Scode.TAG_AADDR, Scode.TAG_OADDR, Scode.TAG_PADDR, Scode.TAG_RADDR:
+			     Scode.TAG_SIZE, Scode.TAG_AADDR, Scode.TAG_PADDR, Scode.TAG_RADDR:
 					RTStack.push(value, "SVM_LOADC"); break;
+			case Scode.TAG_OADDR:
+				
+				if(Global.TESTING_STACK_ADDRESS) {
+					ObjectAddress oaddr = (ObjectAddress) value;
+					if(oaddr != null && oaddr.segID == null) {
+						System.out.println("SVM_LOADC.execute: OADDR: "+oaddr);
+						RTStack.dumpRTStack("SVM_LOADC.execute: NOTE: ");
+//						RTStack.callStack_TOP().dump("SVM_REFER.execute: NOTE: ");
+						Util.IERR("");
+					}
+				}
+				
+				RTStack.push(value, "SVM_LOADC"); break;
 			case Scode.TAG_TEXT:
 				Util.IERR("IMPOSSIBLE");
 				break;
@@ -71,9 +86,17 @@ public class SVM_LOADC extends SVM_Instruction {
 					RTStack.push(null, "GADDR'OADR: ");
 					RTStack.push(null, "GADDR'OFST: ");
 				} else {
-					GeneralAddress gval = (GeneralAddress) value;
-					RTStack.push(gval.base, "GADDR'OADR: ");
-					RTStack.push(IntegerValue.of(Type.T_INT, gval.ofst), "GADDR'OFST: ");
+					GeneralAddress gaddr = (GeneralAddress) value;
+					
+					if(Global.TESTING_STACK_ADDRESS) {
+						ObjectAddress oaddr = gaddr.base;
+						if(oaddr != null && oaddr.kind == ObjectAddress.REL_ADDR) {
+							gaddr.base = oaddr.toStackAddress();
+						}
+					}
+					
+					RTStack.push(gaddr.base, "GADDR'OADR: ");
+					RTStack.push(IntegerValue.of(Type.T_INT, gaddr.ofst), "GADDR'OFST: ");
 				} break;
 			default:
 				RecordValue rval = (RecordValue)value;

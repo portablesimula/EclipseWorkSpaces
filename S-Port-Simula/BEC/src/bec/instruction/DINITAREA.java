@@ -31,6 +31,7 @@ public abstract class DINITAREA extends Instruction {
 //		Line 117: sCode.Output: DINITAREA T1171:REC2 FIXREP 4 
 //		Line 117: sCode.Output: POP 
 
+		CTStack.forceTosValue();
 		CTStack.checkTosType(Type.T_OADDR); CTStack.checkSosValue(); CTStack.checkSosType(Type.T_INT);
 		Type type = Type.ofScode();
 		Scode.expect(Scode.S_FIXREP);

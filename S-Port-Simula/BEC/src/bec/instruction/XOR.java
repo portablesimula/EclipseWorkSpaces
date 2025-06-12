@@ -23,6 +23,7 @@ public abstract class XOR extends Instruction {
 	 * Note that SOS is the left operand.
 	 */
 	public static void ofScode() {
+		CTStack.forceTosValue();			
 		CTStackItem tos = CTStack.TOS();
 		CTStackItem sos = CTStack.SOS();
 	    

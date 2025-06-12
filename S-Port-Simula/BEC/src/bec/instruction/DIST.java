@@ -19,6 +19,7 @@ public abstract class DIST extends Instruction {
 	 * TOS and SOS are replaced by a description of the signed distance from TOS to SOS.
 	 */
 	public static void ofScode() {
+		CTStack.forceTosValue();
 		CTStack.checkTosType(Type.T_OADDR); CTStack.checkSosValue(); CTStack.checkSosType(Type.T_OADDR);
 		Global.PSEG.emit(new SVM_DIST(), "");
 		CTStack.pop();

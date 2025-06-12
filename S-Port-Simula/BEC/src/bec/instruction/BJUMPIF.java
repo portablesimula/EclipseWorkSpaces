@@ -26,6 +26,7 @@ public abstract class BJUMPIF extends Instruction {
 	 */
 	public static void ofScode() {
 //		CTStack.dumpStack();
+		CTStack.forceTosValue();
 		CTStack.checkTypesEqual();
 		CTStack.checkSosValue();
 		Relation relation = Relation.ofScode();

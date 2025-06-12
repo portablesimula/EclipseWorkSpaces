@@ -1,7 +1,15 @@
 begin
-	integer j, u2;
-    u2:= 2011455689;
 
-	j:= randint (0, 4, u2);
-	
+
+   integer procedure ip ;  ip := 11 ;
+
+   procedure AP(i, r); integer i; real r; begin end;
+
+   procedure P(F); procedure F; begin
+
+      F (ip, ip + 1) ;
+
+   end;
+
+
 end of program;

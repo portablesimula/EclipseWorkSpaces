@@ -33,7 +33,8 @@ public class StringValue extends Value {
 //		addr = ObjectAddress.read(inpt);
 		String segID = inpt.readString();
 		int ofst = inpt.readShort();
-		addr = new ObjectAddress(segID,	ofst);
+//		addr = new ObjectAddress(segID,	ofst);
+		addr = ObjectAddress.ofSegAddr(segID,	ofst);
 //		System.out.println("NEW StringValue: addr="+addr);
 		lng = inpt.readShort();
 //		System.out.println("NEW StringValue: " + this);

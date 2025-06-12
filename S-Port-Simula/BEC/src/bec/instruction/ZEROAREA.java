@@ -27,6 +27,7 @@ public abstract class ZEROAREA extends Instruction {
 //		Line 96: sCode.Output: ZEROAREA 
 //		Line 96: sCode.Output: POP 
 
+		CTStack.forceTosValue();			
 		CTStack.checkTosType(Type.T_OADDR); CTStack.checkSosValue(); CTStack.checkSosType(Type.T_OADDR);
 		
 		Global.PSEG.emit(new SVM_CALL_SYS(SVM_CALL_SYS.P_ZEROAREA), "");

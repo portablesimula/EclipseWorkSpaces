@@ -335,7 +335,8 @@ public class RTUtil {
 		DataSegment dseg = (DataSegment) Segment.lookup(segID);
 		dseg.dump("POOL_1: " , 0, 40);
 
-		ObjectAddress pool = new ObjectAddress(segID, 0);
+//		ObjectAddress pool = new ObjectAddress(segID, 0);
+		ObjectAddress pool = ObjectAddress.ofSegAddr(dseg, 0);
 		ObjectAddress suc = (ObjectAddress) pool.load();
 		ObjectAddress nxt = (ObjectAddress) pool.addOffset(1).load();
 		ObjectAddress lim = (ObjectAddress) pool.addOffset(2).load();
@@ -352,7 +353,8 @@ public class RTUtil {
 		System.out.println(""+pool.addOffset(5) + ": MINGAP   " + mingap);
 		System.out.println(""+pool.addOffset(6) + ": SEQU     " + sequ);
 		
-		ObjectAddress ent = new ObjectAddress(segID, 7);
+//		ObjectAddress ent = new ObjectAddress(segID, 7);
+		ObjectAddress ent = ObjectAddress.ofSegAddr(dseg, 7);
 		
 		try {
 			while(RTUtil.printEntity(ent)) {
@@ -406,7 +408,8 @@ public class RTUtil {
 	
 	public static void printBasicIO() {
 		DataSegment dseg = (DataSegment) Segment.lookup("DSEG_RT");
-		ObjectAddress ent = new ObjectAddress("DSEG_RT", 0);
+//		ObjectAddress ent = new ObjectAddress("DSEG_RT", 0);
+		ObjectAddress ent = ObjectAddress.ofSegAddr(dseg, 0);
 		
 //		dseg.dump("BasicIO ", 30, 60);
 		
@@ -492,7 +495,8 @@ public class RTUtil {
 	
 	public static void printDSEG_RT() {
 		DataSegment dseg = (DataSegment) Segment.lookup("DSEG_RT");
-		ObjectAddress ent = new ObjectAddress("DSEG_RT", 0);
+//		ObjectAddress ent = new ObjectAddress("DSEG_RT", 0);
+		ObjectAddress ent = ObjectAddress.ofSegAddr(dseg, 0);
 		
 //		dseg.dump("DSEG_RT ", 0, 60);
 		

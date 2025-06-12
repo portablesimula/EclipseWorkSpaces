@@ -97,6 +97,22 @@ public abstract class RTStack {
 		stack.set(index, value);
 	}
 	
+	public static void dup(int n) {
+//		System.out.println("RTStack.dup: "+n);
+		Vector<Value> values = new Vector<Value>();
+		int idx = stack.size()-1;
+		for(int i=0;i<n;i++) {
+			Value val = stack.get(idx-i);
+//			System.out.println("RTStack.dup: add: "+val);
+			values.add(val);
+		}
+//		for(int i=0;i<n;i++) {
+		for(int i=n-1;i>=0;i--) {
+			stack.push(values.get(i));
+//			System.out.println("RTStack.dup: push: "+values.get(i));
+		}		
+	}
+	
 	private static int GUARD = -1;
 	public static void guard(int index) {
 		RTStack.dumpRTStack("RTStack.guard: "+index);
@@ -212,6 +228,7 @@ public abstract class RTStack {
 //		RTStack.dumpRTStack("RTStack.popGADDRasOADDR:");
 //		RTStack.printCallStack("RTStack.popGADDRasOADDR:");
 		int ofst = RTStack.popInt();
+//		System.out.println("RTStack.popGADDRasOADDR: ofst="+ofst);
 		ObjectAddress chradr = (ObjectAddress) RTStack.pop();
 //		System.out.println("RTStack.popGADDRasOADDR: chradr="+chradr+", ofst="+ofst);
 		if(chradr == null) {
@@ -288,15 +305,9 @@ public abstract class RTStack {
 	}
 	
 	public static void dumpRTStack(String title) {
-//		if(stack.size() == 0) return;
 		System.out.println("==== RTStack ================ " + title + " RTStack'DUMP ====================");
-//		for(Value value:stack) {
-//			System.out.println("   " + value);
-//		}
 		int n = stack.size();
-//		System.out.println("   " + n);
 		for(int i=0;i<n;i++) {
-//		for(int i=n-1;i>=0;i--) {
 			Value item = stack.get(i);
 			System.out.println("   " + i + ": " + item);
 		}

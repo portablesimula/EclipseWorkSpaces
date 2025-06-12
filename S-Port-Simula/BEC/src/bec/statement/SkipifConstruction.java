@@ -4,6 +4,7 @@ import bec.S_Module;
 import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.CTStackItem;
 import bec.util.Global;
+import bec.util.NamedStack;
 import bec.util.Relation;
 import bec.util.Scode;
 import bec.util.Util;
@@ -45,50 +46,29 @@ public abstract class SkipifConstruction {
 	 * stack.
 	 */
 	public static void ofScode() {
-//		CTStack.dumpStack("SkipifConstruction.ofScode: ");
-		
-		CTStack.checkTypesEqual();
-		CTStack.checkSosValue();
+		CTStack.forceTosValue(); CTStack.checkTypesEqual(); CTStack.checkSosValue();
 		Relation relation = Relation.ofScode();
-		Global.ifDepth++;
-		
-//		int cond = Util.GQrelation();
-		// Check Relation
 		CTStackItem tos = CTStack.pop();
 		CTStack.pop();
-
-//		CTStackItem old_SAV = CTStack.SAV;
-//		CTStack.SAV = CTStack.TOS();
-//		CTStack.saveState();                 // TODO ????????????????
-
-//		CTStack.dumpStack("SkipifConstruction.ofScode: ");
-//		Util.IERR("");
 		
-		ProgramAddress IF_LABEL = Global.PSEG.nextAddress();
-		ProgramAddress END_LABEL = null;
+		Global.ifDepth++;
+		NamedStack<CTStackItem> SKIP_Stack = CTStack.copy("IF-Stack-Copy-"+Global.ifDepth);
+		ProgramAddress END_LABEL = Global.PSEG.nextAddress();
 		Global.PSEG.emit(new SVM_JUMPIF(relation, tos.type.size(), null), "JUMPIF["+Global.ifDepth+"] " + relation + ':');
-//		Global.PSEG.dump();
-
-//		Relation relation = Relation.ofScode();
-//		System.out.println("SkipifConstruction.ofScode: CurInstr="+Scode.edInstr(Scode.curinstr));
 		
 		Scode.inputInstr();
 		S_Module.programElements();
 
 		if(Scode.curinstr != Scode.S_ENDSKIP) Util.IERR("Missing ENDSKIP: " + Scode.edInstr(Scode.curinstr));
+		
+		// * endskip
+		// * check stack empty; restore skip-stack;
+		CTStack.reestablish(SKIP_Stack);
+		
 		// FIXUP:
-		SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(IF_LABEL.getOfst());
+		SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(END_LABEL.getOfst());
 		instr.destination = Global.PSEG.nextAddress();
       	Global.PSEG.emit(new SVM_NOOP(), "ENDSKIP["+Global.ifDepth+"]:");			
-
-//      	Global.PSEG.dump("SkipifConstruction.ofScode: ELSE: ");
-//		CTStack.dumpStack("SkipifConstruction.ofScode: ");
-//		Util.IERR("");
-		
-//		Scode.inputInstr();  // ????
 		Global.ifDepth--;
-
-//		if(Scode.inputTrace > 3) print();
-//		Util.IERR("NOT IMPLEMENTED");
 	}
 }

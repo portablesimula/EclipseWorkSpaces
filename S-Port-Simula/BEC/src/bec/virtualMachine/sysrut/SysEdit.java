@@ -31,18 +31,21 @@ public abstract class SysEdit {
 		int valNchr = RTStack.popInt();
 		ObjectAddress valAddr = RTStack.popGADDRasOADDR();
 		if(DEBUG) {
-			// valAddr.segment().dump("SVM_SYSCALL.putstr:");
+			valAddr.segment().dump("SVM_SYSCALL.putstr:");
 			System.out.println("SVM_SYSCALL.putstr: valAddr="+valAddr);
 			System.out.println("SVM_SYSCALL.putstr: valNchr="+valNchr);
 		}
 		int itemNchr = RTStack.popInt();
 		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
 		if(DEBUG) {
-			// itemAddr.segment().dump("SVM_SYSCALL.putstr:");
+//			itemAddr.segment().dump("SVM_SYSCALL.putstr:");
 			System.out.println("SVM_SYSCALL.putstr: itemAddr="+itemAddr);
 			System.out.println("SVM_SYSCALL.putstr: itemNchr="+itemNchr);
 		}
 		if(valNchr > 0) RTUtil.move(valAddr, itemAddr, valNchr);
+
+//		itemAddr.segment().dump("SVM_SYSCALL.putstr:",54,70);
+//		RTUtil.printBasicIO();
 
 		RTStack.push(IntegerValue.of(Type.T_INT, valNchr), "EXPORT");
 		SVM_CALL_SYS.EXIT("PUTSTR: ");

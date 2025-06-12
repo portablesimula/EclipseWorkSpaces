@@ -26,6 +26,21 @@ SimulaTest(148,"--- Test procedure min and max with arguments of all types") beg
       traceCase:=traceCase+1;
    end;
 
+	text procedure edChar(c); character c; begin
+   		text t;
+   		t:-blanks(1); 
+   		t.putchar(c);
+   		edChar :- t;
+	end;
+
+	text procedure edFix(r, i); real r; integer i; begin
+   		text t;
+   		t:-blanks(19); 
+   		t.putfix(r, i);
+   		t :- trim(t);
+   		edFix :- t;
+	end;
+
 	integer i,j; real r,x,y; character c;
     long real lx,ly; text t;
 	
@@ -86,7 +101,7 @@ SimulaTest(148,"--- Test procedure min and max with arguments of all types") beg
     x := min(lx,y);  trace("min(lx,y)   => " & edfix(x,4));
     x := min(lx,ly); trace("min(lx,ly)  => " & edfix(x,4));
        
-    c := min('A','B');trace("min(A,B) => " & edit(c));
+    c := min('A','B');trace("min(A,B) => " & edChar(c));
 	t :- min("AAA","BBB"); trace("min(AAA,BBB) => " & t);
 
 % ========================================================
@@ -103,7 +118,7 @@ SimulaTest(148,"--- Test procedure min and max with arguments of all types") beg
     x := max(lx,y);  trace("max(lx,y)   => " & edfix(x,4));
     x := max(lx,ly); trace("max(lx,ly)  => " & edfix(x,4));
        
-    c := max('A','B');trace("max(A,B) => " & edit(c));
+    c := max('A','B');trace("max(A,B) => " & edChar(c));
 	t :- max("AAA","BBB"); trace("max(AAA,BBB) => " & t);
 
 

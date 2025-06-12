@@ -16,7 +16,7 @@ SimulaTest(102,"--- LEGAL GOTO out of an operating process and the enclosing Sys
    procedure trace(line,msg); integer line; text msg;
    begin
       text case1;
-      case1:-"LINE " & edit(line) & ": " & msg;
+      case1:-"LINE " & edINT(line) & ": " & msg;
       if verbose then begin outtext(case1); outimage; end;
       if case1 <> facit(traceCase) then
       begin

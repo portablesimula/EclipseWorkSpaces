@@ -40,6 +40,7 @@ public abstract class LOCATE extends Instruction {
 	 *                               '==========================='
 	 */
 	public static void ofScode() {
+		CTStack.forceTosValue();			
 		CTStack.checkTosType(Type.T_AADDR); CTStack.checkSosValue();
 		CTStack.checkSosType2(Type.T_OADDR,Type.T_GADDR);
 		CTStack.pop();

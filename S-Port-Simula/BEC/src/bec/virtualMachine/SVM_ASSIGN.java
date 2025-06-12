@@ -5,9 +5,9 @@ import java.util.Vector;
 
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
-import bec.segment.Segment;
 import bec.util.Global;
 import bec.util.Util;
+import bec.value.GeneralAddress;
 import bec.value.ObjectAddress;
 import bec.value.Value;
 
@@ -16,7 +16,8 @@ import bec.value.Value;
  */
 public class SVM_ASSIGN extends SVM_Instruction {
 	private boolean update; // false: ASSIGN, true: UPDATE
-	private RTAddress rtAddr;
+	private ObjectAddress rtAddr;
+	private int xReg;
 	private int size;
 
 	private final boolean DEBUG = false;
@@ -35,10 +36,11 @@ public class SVM_ASSIGN extends SVM_Instruction {
 	 * TOS or SOS, that has been deferred for optimisation purposes, must take place before the
 	 * assignment code is generated. SOS and TOS are popped from the stack.
 	 */
-	public SVM_ASSIGN(boolean update, RTAddress rtAddr, int size) {
+	public SVM_ASSIGN(boolean update, ObjectAddress rtAddr, int xReg, int size) {
 		this.opcode = SVM_Instruction.iASSIGN;
 		this.update = update;
 		this.rtAddr = rtAddr;
+		this.xReg = xReg;
 		this.size = size;
 	}
 
@@ -52,19 +54,36 @@ public class SVM_ASSIGN extends SVM_Instruction {
 		Vector<Value> values = RTStack.pop(size);
 		if(DEBUG) for(int i=0;i<size;i++) System.out.println("SVM_ASSIGN: values["+i+"] = " + values.get(i));
 		
-		RTAddress addr = this.rtAddr;
-		if(addr.withRemoteBase) {
-			// this.addr is Stack Relative Address
-			ObjectAddress oaddr = RTStack.popOADDR();
-			addr = new RTAddress(oaddr, addr.offset);
-			addr.xReg = this.rtAddr.xReg;
+		ObjectAddress addr = this.rtAddr;
+		switch(rtAddr.kind) {
+			case ObjectAddress.SEGMNT_ADDR: doAssign(addr, xReg, values); break;
+			case ObjectAddress.REL_ADDR:    doAssign(addr, xReg, values); break;
+			case ObjectAddress.STACK_ADDR:  Util.IERR(""); doAssign(addr, xReg, values); break;
+			case ObjectAddress.REMOTE_ADDR:
+				// this.addr is Stack Relative Address
+				ObjectAddress oaddr = RTStack.popOADDR();
+				addr = oaddr.addOffset(addr.getOfst());
+				doAssign(addr, xReg, values);
+				break;
+				
+			case ObjectAddress.REFER_ADDR:
+				GeneralAddress gaddr = (GeneralAddress) RTRegister.getValue(xReg);
+				addr = gaddr.base.addOffset(rtAddr.getOfst() + gaddr.ofst);
+				doAssign(addr, 0, values);
+				break;
+	
+			default: Util.IERR("");
 		}
 		
+		Global.PSC.addOfst(1);
+	}
+	
+	private void doAssign(ObjectAddress addr, int xReg, Vector<Value> values) {
 		if(DEBUG) for(int i=0;i<size;i++) System.out.println("SVM_ASSIGN: BEFORE: sos.store: " + i + " " + values.get(i));
-		int n = size;
+		int idx = size;
+		int rx = (xReg == 0)? 0 : RTRegister.getIntValue(xReg);
 		for(int i=0;i<size;i++) {
-//			addr.store(offset + i, values.get((--n)), "");
-			addr.store(i, values.get((--n)), "");
+			addr.store(rx + i, values.get((--idx)), "");
 		}
 		if(DEBUG) for(int i=0;i<size;i++) System.out.println("SVM_ASSIGN: AFTER: sos.store: " + i + " " + values.get(i));
 		
@@ -77,12 +96,7 @@ public class SVM_ASSIGN extends SVM_Instruction {
 				RTStack.dumpRTStack("SVM_ASSIGN: ");
 				System.out.println("SVM_ASSIGN: END DEBUG INFO\n");
 			}
-//			Util.IERR("NOT IMPL");
-		}
-//		RTUtil.printCurins();
-//		Segment.lookup("POOL_1").dump(null, 717, 717+13+13);
-		
-		Global.PSC.addOfst(1);
+		}		
 	}
 
 	@Override	
@@ -94,20 +108,27 @@ public class SVM_ASSIGN extends SVM_Instruction {
 	// ***********************************************************************************************
 	// *** Attribute File I/O
 	// ***********************************************************************************************
+	private SVM_ASSIGN(AttributeInputStream inpt) throws IOException {
+		this.opcode = SVM_Instruction.iSTORE;
+		this.update = inpt.readBoolean();
+		this.rtAddr = ObjectAddress.read(inpt);
+		this.xReg = inpt.readReg();
+		this.size = inpt.readShort();
+		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + this);
+	}
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
 		if(rtAddr == null) Util.IERR("");
 		oupt.writeOpcode(opcode);
 		oupt.writeBoolean(update);
-		rtAddr.write(oupt);
+		rtAddr.writeBody(oupt);
+		oupt.writeReg(xReg);
 		oupt.writeShort(size);
 	}
-
+	
 	public static SVM_ASSIGN read(AttributeInputStream inpt) throws IOException {
-		SVM_ASSIGN instr = new SVM_ASSIGN(inpt.readBoolean(), RTAddress.read(inpt), inpt.readShort());
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + instr);
-		return instr;			
+		return new SVM_ASSIGN(inpt);
 	}
 
 }

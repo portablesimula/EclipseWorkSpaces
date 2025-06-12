@@ -40,7 +40,7 @@ begin
 			inspect new XXXX do begin
 				trace("PAS2INIT.main:");
 				x:- this XXXX;
-				trace("x.iiii=" & edit(x.iiii) );
+				trace("x.iiii=" & edINT(x.iiii) );
 			end;
 		end;
 		

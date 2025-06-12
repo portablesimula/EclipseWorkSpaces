@@ -23,8 +23,7 @@ public abstract class IMP extends Instruction {
 	 * Note that SOS is the left operand.
 	 */
 	public static void ofScode() {
-//		CTStack.dumpStack();
-//		Global.PSEG.dump();
+		CTStack.forceTosValue();			
 		CTStackItem tos = CTStack.TOS();
 	    
 	    Type at = tos.type;

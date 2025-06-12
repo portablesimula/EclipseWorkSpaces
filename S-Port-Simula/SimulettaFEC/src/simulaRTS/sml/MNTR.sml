@@ -242,7 +242,8 @@ const infix(string) smlid="Simuletta 1.0"
 ---    ed_str(", er_msg:"); ed_int(er_msg);
 ---    ed_str(", er_msx:"); ed_int(er_msx);
 
-%+M	   ED_STR("MNTR.EXERR: "); ED_INT(eno); ED_STR("  SEE  UTIL.ERR_MSG"); ED_OUT;
+%+M	   ED_STR("*** MNTR.EXERR: "); ED_INT(eno); ED_STR(": ");
+%+M	   ED_STR(ERR_MSG(eno)); ED_OUT;
 %+M    TERMIN(1,"MNTR.EXERR:");
 
        if eno = ENO_SYS_1 then er_msg:=er_msx:= 0;

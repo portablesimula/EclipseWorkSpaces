@@ -28,31 +28,35 @@ public class SVM_RESTORE extends SVM_Instruction {
 	private static void restoreStack() {
 //		RTStack.dumpRTStack("RTStack.restoreStack: ");
 		ObjectAddress savePos = RTStack.popOADDR();
-		ObjectAddress saveObj = savePos.addOffset(-SVM_SAVE.saveEntityHead);
-		IntegerValue entitySize = (IntegerValue) saveObj.addOffset(SVM_SAVE.sizeOffset).load();
-		int size = entitySize.value - SVM_SAVE.saveEntityHead;
-		
-		if(DEBUG) {
-			System.out.println("RTStack.restoreStack: BEGIN RESTORE ++++++++++++++++++++++++++++++++++++++++");
-			RTUtil.dumpEntity(saveObj);
-			System.out.println("RTStack.restoreStack: RESTORE  entitySize = " + entitySize);
-			System.out.println("RTStack.restoreStack: RESTORE  Size = " + size);
-		}
-
-		for(int i=size-1;i>=0;i--) {
-//		for(int i=0;i<size;i++) {
-//			Value item = saveObj.addOffset(SVM_SAVE.saveEntityHead + i).load();
-			Value item = saveObj.load(SVM_SAVE.saveEntityHead + i);
-//			System.out.println("RTStack.restoreStack: RESTORE  item = " + item);
+		if(savePos == null) {
+//			Util.IERR("");
+		} else {
+			ObjectAddress saveObj = savePos.addOffset(-SVM_SAVE.saveEntityHead);
+			IntegerValue entitySize = (IntegerValue) saveObj.addOffset(SVM_SAVE.sizeOffset).load();
+			int size = entitySize.value - SVM_SAVE.saveEntityHead;
+			
 			if(DEBUG) {
-				System.out.println("RTStack.saveStack:    SAVE-RESTORE " + item + " <=== saveObj("+(SVM_SAVE.saveEntityHead + i)+")");
+				System.out.println("RTStack.restoreStack: BEGIN RESTORE ++++++++++++++++++++++++++++++++++++++++");
+				RTUtil.dumpEntity(saveObj);
+				System.out.println("RTStack.restoreStack: RESTORE  entitySize = " + entitySize);
+				System.out.println("RTStack.restoreStack: RESTORE  Size = " + size);
 			}
-			RTStack.push(item, "RESTORE: ");
-		}
-
-		if(DEBUG) {
-			RTStack.dumpRTStack("RTStack.restoreStack: ");
-			Util.IERR("");
+	
+			for(int i=size-1;i>=0;i--) {
+//			for(int i=0;i<size;i++) {
+//				Value item = saveObj.addOffset(SVM_SAVE.saveEntityHead + i).load();
+				Value item = saveObj.load(SVM_SAVE.saveEntityHead + i);
+//				System.out.println("RTStack.restoreStack: RESTORE  item = " + item);
+				if(DEBUG) {
+					System.out.println("RTStack.saveStack:    SAVE-RESTORE " + item + " <=== saveObj("+(SVM_SAVE.saveEntityHead + i)+")");
+				}
+				RTStack.push(item, "RESTORE: ");
+			}
+	
+			if(DEBUG) {
+				RTStack.dumpRTStack("RTStack.restoreStack: ");
+				Util.IERR("");
+			}
 		}
 	}
 

@@ -19,6 +19,7 @@ public abstract class INITO extends Instruction {
 	 * TOS is popped.
 	 */
 	public static void ofScode() {
+		CTStack.forceTosValue();			
 		CTStack.checkTosType(Type.T_OADDR);
 		FETCH.doFetch("INITO: ");
 		CTStack.pop();

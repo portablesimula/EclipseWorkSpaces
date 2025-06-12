@@ -16,7 +16,7 @@ SimulaTest(104,"--- Test procedure parameter 'F' by name.") begin
    begin
       if verbose or (r <> facit) then
       begin
-         text case=msg & ", Result=" & edit(r) & "  Facit=" & edit(facit);
+         text case=msg & ", Result=" & edINT(r) & "  Facit=" & edINT(facit);
          if r <> facit then err(case)
          else outtext("TRACE: " & case); outimage;
       end;

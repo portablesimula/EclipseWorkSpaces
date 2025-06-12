@@ -1745,6 +1745,11 @@ begin
                      if q qua extquantity.clf <= Clf002 then begin
                         if q.descr is extbrecord then begin
                            ! Allocate tags to external Simula module;
+                           
+		 				   sysout.outtext("BUILDER2-LINE "); sysout.outint(sourceline,0);
+							      sysout.outtext(": ALLOCATE-EXTERNAL: fTag="); sysout.outint(lastusedtag+1, 0); 
+						  		  sysout.outtext("  count="); sysout.outint(q.descr qua extbrecord.exttagnum, 0); sysout.outimage;
+
                            q.descr qua extbrecord.ftag:=lastusedtag+1;
                            newTags(q.descr qua extbrecord.exttagnum);
                         end;

@@ -1915,15 +1915,15 @@ end recognizer;
 
        when
        IECWI, IEND do begin !4 + 4*(number of unmatched virts);
-%+T    		sysout.outimage; sysout.outtext("SCANNER: when IECWI, IEND do"); sysout.outimage;  ! TODO: TESTING ;
+% +T    		sysout.outimage; sysout.outtext("SCANNER: when IECWI, IEND do"); sysout.outimage;  ! TODO: TESTING ;
             if cbrec.kind = K_class then begin
-%+T    		  sysout.outimage; sysout.outtext("SCANNER: when IECWI, IEND (2)"); sysout.outimage;  ! TODO: TESTING ;
+% +T    		  sysout.outimage; sysout.outtext("SCANNER: when IECWI, IEND (2)"); sysout.outimage;  ! TODO: TESTING ;
 %-Z %IMPLNONE OFF
               inspect cbrec do begin
-%+T    			  sysout.outimage; sysout.outtext("SCANNER: when IECWI, IEND (3)"); sysout.outimage;  ! TODO: TESTING ;
+% +T    			  sysout.outimage; sysout.outtext("SCANNER: when IECWI, IEND (3)"); sysout.outimage;  ! TODO: TESTING ;
                   virq:-favirt;
                   while true do inspect virq do begin
-%+T    			     sysout.outimage; sysout.outtext("SCANNER: when IECWI, IEND (4)"); sysout.outimage;  ! TODO: TESTING ;
+% +T    			     sysout.outimage; sysout.outtext("SCANNER: when IECWI, IEND (4)"); sysout.outimage;  ! TODO: TESTING ;
                      ! insert dummy matches for non-matched virtprocs,
                      ! note that virt quant is unaffected by this;
                      if kind<>K_proc then goto NXTVIRT;
@@ -1960,7 +1960,7 @@ end recognizer;
                   
                   EXvloop:
 
-%+T    			  sysout.outimage; sysout.outtext("SCANNER: when IECWI, IEND (5)"); sysout.outimage;  ! TODO: TESTING ;
+% +T    			  sysout.outimage; sysout.outtext("SCANNER: when IECWI, IEND (5)"); sysout.outimage;  ! TODO: TESTING ;
                   fvis:-hidlist; hidlist:-x:-none;
                   while fvis=/=none do begin
 %-Z %IMPLNONE OFF
@@ -2010,7 +2010,7 @@ end recognizer;
                   end idpacklist scan;
                   if x=/=none then x.next:-none;
               end inspect cbrec;
-%+T    		  sysout.outimage; sysout.outtext("SCANNER: when IECWI, IEND (6)"); sysout.outimage;  ! TODO: TESTING ;
+% +T    		  sysout.outimage; sysout.outtext("SCANNER: when IECWI, IEND (6)"); sysout.outimage;  ! TODO: TESTING ;
             end termClass;
 
             if opdlo <> NUL then begin

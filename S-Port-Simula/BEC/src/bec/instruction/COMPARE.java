@@ -26,6 +26,7 @@ public abstract class COMPARE extends Instruction {
 //		CTStack.dumpStack();
 		Relation relation = Relation.ofScode();
 		
+		CTStack.forceTosValue();
 		CTStack.checkTypesEqual(); CTStack.checkSosValue();	
 		CTStack.pop(); CTStack.pop();
 		Global.PSEG.emit(new SVM_COMPARE(relation), "");

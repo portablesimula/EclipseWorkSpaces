@@ -34,6 +34,7 @@ public abstract class DSIZE extends Instruction {
 		if(fixrec.nbrep != 0) {
 //			CTStack.dumpStack("DSIZE.ofScode: ");
 			int n = fixrec.nbrep;
+			CTStack.forceTosValue();
 			CTStack.checkTosInt();
 			CTStack.pop();
 			IntegerValue nbrepValue = IntegerValue.of(Type.T_INT, n);

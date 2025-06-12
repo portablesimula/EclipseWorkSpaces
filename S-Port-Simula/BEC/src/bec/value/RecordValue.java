@@ -69,6 +69,7 @@ public class RecordValue extends Value {
 				if(DEBUG) System.out.println("RecordValue.ofScode: FIXREP = " + ConstDescr.fixrepTail);
 				int n = 0;
 				for(Value val:atrvalue.values) {
+//					System.out.println("RecordValue.ofScode: FIXREP = " + ConstDescr.fixrepTail + " VALUE: "+ val);
 					if(val != null && val.type == Type.T_TEXT && attr.type == Type.T_CHAR) {
 						n += recValue.addChars((TextValue) val);
 					} else n += recValue.addValue(val);
@@ -97,6 +98,7 @@ public class RecordValue extends Value {
 //		if(Scode.inputTrace > 3) printTree(0);
 		RecordDescr recordDescr = (RecordDescr) Global.DISPL.get(recValue.tag.val);
 		recValue.type = Type.lookupType(recordDescr);
+//		System.out.println("RecordValue.ofScode: type = " + recValue.type);
 		return recValue;
 	}
 
@@ -161,15 +163,22 @@ public class RecordValue extends Value {
 		} else if(value instanceof StringValue str) {
 			Util.IERR("");
 		} else if(value instanceof TextValue txt) {
-			System.out.println("RecordValue.ofScode: attrValue: txt.typee="+txt.type);
+//			System.out.println("RecordValue.ofScode: attrValue: txt.typee="+txt.type);
 			addValue(txt.emitChars(Global.TSEG));
 			addValue(null);
 			addValue(IntegerValue.of(Type.T_INT, txt.textValue.length()));
 			return 3;
 		} else if(value instanceof RecordValue rval) {
-			Util.IERR("");
+			System.out.println("RecordValue.addValue: "+rval);
+			int n = 0;
+			for(Value val:rval.attrValues) {
+				n = n + addValue(val);
+			}
+//			Util.IERR(""+rval);
+			return n;
 		} else if(value instanceof RepetitionValue rval) {
 			Util.IERR("");
+//			return rval.size ???
 		}
 		attrValues.add(value);
 		return 1;

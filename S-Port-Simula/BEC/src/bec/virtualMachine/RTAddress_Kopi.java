@@ -14,32 +14,35 @@ import bec.value.IntegerValue;
 import bec.value.ObjectAddress;
 import bec.value.Value;
 
-public class RTAddress extends Value {
+public class RTAddress_Kopi extends Value {
 	String segID; // null: RelAddr
 	public int offset;
 	public int xReg; // 0: no index register
-	public boolean withRemoteBase;
+	public int kind;
 
-	public RTAddress(AddressItem itm) {
+	public RTAddress_Kopi(AddressItem itm) {
 		if(itm.objadr != null) {
-			this.segID =  itm.objadr.segID;
+			this.kind   = itm.objadr.kind;
+			this.segID  = itm.objadr.segID;
 			this.offset = itm.objadr.getOfst() + itm.offset;
-			this.withRemoteBase = itm.withRemoteBase;
 		}
 		this.xReg = itm.xReg;
 //		System.out.println("NEW RTAddress: " + itm + " ==> " + this);
+		if(kind == 0) Util.IERR("");
 	}
 
-	public RTAddress(ObjectAddress objadr, int gOfst) {
+	public RTAddress_Kopi(ObjectAddress objadr, int gOfst) {
+		this.kind = objadr.kind;
 		this.segID =  objadr.segID;
-		this.offset = objadr.getOfst() + gOfst;			
+		this.offset = objadr.getOfst() + gOfst;	
+		if(kind == 0) Util.IERR("");
 	}
 
-	public RTAddress(RTAddress rtadr, int ofst) {
+	public RTAddress_Kopi(RTAddress_Kopi rtadr, int ofst) {
 		this.segID  = rtadr.segID;
 		this.offset = rtadr.offset + ofst;	
 		this.xReg   = rtadr.xReg;
-		this.withRemoteBase = rtadr.withRemoteBase;
+		if(kind == 0) Util.IERR("");
 	}
 	
 	public DataSegment segment() {
@@ -65,7 +68,7 @@ public class RTAddress extends Value {
 		} else {
 			System.out.println("\nRTAddress.dumpArea: BEGIN " + title + " +++++++++++++++++++++++++++++++++++++");
 			for(int i=0;i<lng;i++) {
-				RTAddress rtadr = new RTAddress(this, i);
+				RTAddress_Kopi rtadr = new RTAddress_Kopi(this, i);
 				System.out.println(""+rtadr+": " + load(offset+i));
 			}
 			System.out.println("RTAddress.dumpArea: ENDOF " + title + " +++++++++++++++++++++++++++++++++++++");
@@ -245,36 +248,51 @@ public class RTAddress extends Value {
 	public String toString() {
 		String s = "";
 		
-//		s = (segID == null)? "xRELADR[" : "xSEGADR["+segID+':';
-		if(segID == null) {
-			s = (withRemoteBase)? "REMOTE[" : "RELADR[";
-		} else {
-			if(segID.equals("DSEG_RT") && offset == 0) {
-				s = "CURINS=";
-			}
-			s = s + "SEGADR["+segID+':';
-		}
+////		s = (segID == null)? "xRELADR[" : "xSEGADR["+segID+':';
+//		if(segID == null) {
+//			s = (withRemoteBase)? "REMOTE[" : "RELADR[";
+//		} else {
+//			if(segID.equals("DSEG_RT") && offset == 0) {
+//				s = "CURINS=";
+//			}
+//			s = s + "SEGADR["+segID+':';
+//		}
+//		
+//		s = s + offset;
+//		if(xReg > 0) {
+//			s = s + "+" + RTRegister.edReg(xReg);
+//			Value value = RTRegister.getValue(xReg);
+//				s = s + '(' + value + ')';
+//		}
+//		s = s + "]";		
+////		if(withRemoteBase) s = s + "WithRemoteBase";
+//		return s;
 		
-		s = s + offset;
+		
 		if(xReg > 0) {
 			s = s + "+" + RTRegister.edReg(xReg);
 			Value value = RTRegister.getValue(xReg);
 				s = s + '(' + value + ')';
 		}
-		s = s + "]";		
-//		if(withRemoteBase) s = s + "WithRemoteBase";
-		return s;
+		switch(kind) {
+			case ObjectAddress.SEGMNT_ADDR: return segID + '[' + offset + s + ']';
+			case ObjectAddress.REMOTE_ADDR: return "REMOTE_ADDR[RTStackTop+" + offset + s + ']';
+			case ObjectAddress.REFER_ADDR:  return "REFER_ADDR[" + offset + s +']';
+			case ObjectAddress.REL_ADDR:    return "REL_ADR[callStackTop+" + offset + s + ']';
+			case ObjectAddress.STACK_ADDR:  return "STACK_ADR[RTStack(" + offset + s + ")]";
+			default: return "UNKNOWN:"+kind;
+		}
+
 	}
 
 
 	// ***********************************************************************************************
 	// *** Attribute File I/O
 	// ***********************************************************************************************
-	private RTAddress(AttributeInputStream inpt) throws IOException {
+	private RTAddress_Kopi(AttributeInputStream inpt) throws IOException {
 		segID = inpt.readString();
 		offset = inpt.readShort();
 		xReg = inpt.readReg();
-		withRemoteBase = inpt.readBoolean();
 	}
 
 //	@Override
@@ -283,11 +301,10 @@ public class RTAddress extends Value {
 		oupt.writeString(segID);
 		oupt.writeShort(offset);
 		oupt.writeReg(xReg);
-		oupt.writeBoolean(withRemoteBase);
 	}
 
-	public static RTAddress read(AttributeInputStream inpt) throws IOException {
-		return new RTAddress(inpt);
+	public static RTAddress_Kopi read(AttributeInputStream inpt) throws IOException {
+		return new RTAddress_Kopi(inpt);
 	}
 
 

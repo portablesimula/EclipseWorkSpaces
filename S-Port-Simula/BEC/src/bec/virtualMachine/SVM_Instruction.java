@@ -57,6 +57,7 @@ public class SVM_Instruction {
 	public final static int iRESTORE = 44;
 	public final static int iSHIFT = 45;
 	public final static int iCALL_TOS = 46;
+	public final static int iDEREF = 47;
 	
 	public final static int iMax = 99;
 	
@@ -128,6 +129,7 @@ public class SVM_Instruction {
 			case iDUP:		return SVM_DUP.read(inpt);
 			case iASSIGN:	return SVM_ASSIGN.read(inpt);
 			case iSHIFT:	return SVM_SHIFT.read(inpt);
+			case iDEREF:	return SVM_DEREF.read(inpt);
 			
 			default: Util.IERR("MISSING: " + edOpcode(opcode));
 		}
@@ -182,6 +184,7 @@ public class SVM_Instruction {
 			case iDUP:		return "iDUP";
 			case iASSIGN:	return "iASSIGN";
 			case iSHIFT:	return "iSHIFT";
+			case iDEREF:	return "iDEREF";
 
 			default:		return "UNKNOWN:" + opcode;
 		}

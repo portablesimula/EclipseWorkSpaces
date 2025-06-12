@@ -27,8 +27,7 @@ public abstract class REM extends Instruction {
 	 */
 	private REM() {}
 	public static void ofScode() {
-//		CTStack.dumpStack();
-//		Global.PSEG.dump();
+		CTStack.forceTosValue();			
 		CTStack.checkTosArith(); CTStack.checkSosArith(); CTStack.checkSosValue(); CTStack.checkTypesEqual();
 		CTStackItem tos = CTStack.TOS();
 		CTStackItem sos = CTStack.SOS();

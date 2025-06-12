@@ -124,7 +124,8 @@ public class Variable extends Descriptor {
 		Variable var = new Variable(Kind.K_LocalVar, tag);
 		var.type = Type.ofScode();
 		var.repCount = (Scode.accept(Scode.S_REP)) ? Scode.inNumber() : 1;
-		var.address = new ObjectAddress(null, rela);
+//		var.address = new ObjectAddress(null, rela);
+		var.address = ObjectAddress.ofRelFrameAddr(rela);
 		return var;
 	}
 	

@@ -26,6 +26,21 @@ SimulaTest(149,"--- Test all mode/type parameters to a Class") begin
       traceCase:=traceCase+1;
    end;
 
+	text procedure edChar(c); character c; begin
+   		text t;
+   		t:-blanks(1); 
+   		t.putchar(c);
+   		edChar :- t;
+	end;
+
+	text procedure edFix(r, i); real r; integer i; begin
+   		text t;
+   		t:-blanks(19); 
+   		t.putfix(r, i);
+   		t :- trim(t);
+   		edFix :- t;
+	end;
+
 
 % The available transmission modes for parameters of class declarations.
 %          -------------------------------------------------
@@ -43,10 +58,10 @@ SimulaTest(149,"--- Test all mode/type parameters to a Class") begin
 
 %   Value types
 	class A(i,r,lr,c); integer i; real r; long real lr; character c; begin
-		trace("A.i = "  & edit(i));
+		trace("A.i = "  & edInt(i));
 		trace("A.r = "  & edfix(r,4));
 		trace("A.lr = " & edfix(lr,4));
-		trace("A.c = "  & edit(c));
+		trace("A.c = "  & edChar(c));
 	end;   
 
 %   Type text
@@ -57,10 +72,10 @@ SimulaTest(149,"--- Test all mode/type parameters to a Class") begin
 	
 %	Object ref. type
 	class C(x); ref(A) x; begin
-		trace("x.i = "  & edit(x.i));
+		trace("x.i = "  & edInt(x.i));
 		trace("x.r = "  & edfix(x.r,4));
 		trace("x.lr = " & edfix(x.lr,4));
-		trace("x.c = "  & edit(x.c));
+		trace("x.c = "  & edChar(x.c));
 	end;
 	
 %	Value type array
@@ -76,10 +91,10 @@ SimulaTest(149,"--- Test all mode/type parameters to a Class") begin
 	
 %   ref.type array
 	class E(arr); ref(A) array arr; begin
-		trace("arr(3).i = "  & edit(arr3(3).i));
+		trace("arr(3).i = "  & edInt(arr3(3).i));
 		trace("arr(3).r = "  & edfix(arr3(3).r,4));
 		trace("arr(3).lr = " & edfix(arr3(3).lr,4));
-		trace("arr(3).c = "  & edit(arr3(3).c));
+		trace("arr(3).c = "  & edChar(arr3(3).c));
 	end;		  
 
 	integer i,j; real r; character k;
@@ -140,10 +155,10 @@ SimulaTest(149,"--- Test all mode/type parameters to a Class") begin
 	lr := 15.987;
 	k := 'f';
 	x :- new  A(i,r,lr,k);
-	trace("x.i = "  & edit(x.i));
+	trace("x.i = "  & edInt(x.i));
 	trace("x.r = "  & edfix(x.r,4));
 	trace("x.lr = " & edfix(x.lr,4));
-	trace("x.c = "  & edit(x.c));
+	trace("x.c = "  & edChar(x.c));
 	
 %   Type text
 	t1 :- copy("AbraCaDabra");

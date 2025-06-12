@@ -7,12 +7,14 @@ import bec.AttributeOutputStream;
 import bec.descriptor.Attribute;
 import bec.descriptor.Variable;
 import bec.segment.DataSegment;
+import bec.segment.Segment;
 import bec.util.Global;
 import bec.util.Relation;
 import bec.util.Scode;
 import bec.util.Tag;
 import bec.util.Type;
 import bec.util.Util;
+import bec.virtualMachine.RTUtil;
 
 public class IntegerValue extends Value {
 	public int value;

@@ -4,11 +4,31 @@ import bec.segment.Segment;
 import bec.util.Type;
 import bec.util.Util;
 import bec.value.IntegerValue;
+import bec.value.ObjectAddress;
 import bec.virtualMachine.RTStack;
+import bec.virtualMachine.RTUtil;
 import bec.virtualMachine.SVM_CALL_SYS;
 
 public abstract class SysInfo {
-	
+
+	/// Visible sysroutine("DMPSEG") DMPSEG;
+	/// import infix(string) segnam; integer start,lng  end;
+
+	/// Visible sysroutine("DMPENT") DMPENT;
+	/// import ref() rtAddr;  end;
+	public static void dmpent() {
+		SVM_CALL_SYS.ENTER("DMPENT: ", 0, 1); // exportSize, importSize
+//		int index = RTStack.popInt();
+		ObjectAddress oaddr = RTStack.popOADDR();
+		System.out.println("SVM_SYSCALL.dmpent: "+oaddr);
+		RTUtil.dumpEntity(oaddr);
+//		Util.IERR("");
+		SVM_CALL_SYS.EXIT("DMPENT: ");
+	}
+
+	/// Visible sysroutine("DMPOOL") DMPOOL; -- Dump POOL_n
+	/// import integer n;  end;
+
 	/**
 	 * Visible sysroutine("GINTIN") GINTIN;
 	 *  import range(0:127) index; export integer result  end;

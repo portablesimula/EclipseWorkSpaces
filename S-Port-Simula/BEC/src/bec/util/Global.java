@@ -13,7 +13,7 @@ import bec.value.ProgramAddress;
 
 public class Global {
 	
-	public static final boolean TESTING_SAVE_RESTORE = true;
+	public static final boolean TESTING_STACK_ADDRESS = true;	
 
 	public static boolean INLINE_TESTING = false;
 	public static boolean verbose = false;

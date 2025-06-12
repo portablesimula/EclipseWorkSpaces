@@ -72,7 +72,7 @@ begin
 	if x in B then trace("TEST-5: x in B");
 	
 	B begin 
-		trace("TEST-6: In B with N = " & edit(N));
+		trace("TEST-6: In B with N = " & edInt(N));
 	end;
 	
 	trace("At Precompiled'END");

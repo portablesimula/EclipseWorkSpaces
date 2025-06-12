@@ -75,7 +75,8 @@ public class Scode {
 	
 	public static void flushTraceBuff() {
 		if(Global.SCODE_INPUT_TRACE) {
-			String ctstk = (CTStack.size() == 0)? "" : " STACK["+CTStack.size()+"]: "+CTStack.TOS();
+//			String ctstk = (CTStack.size() == 0)? "" : " STACK["+CTStack.size()+"]: "+CTStack.TOS();
+			String ctstk = (CTStack.size() == 0)? "" : " "+CTStack.ident()+"-STACK"+"["+CTStack.size()+"]: "+CTStack.TOS();
 			String line = traceBuff.toString();
 			while(line.length() < 60) line = line + " ";
 			System.out.println(line + ctstk);

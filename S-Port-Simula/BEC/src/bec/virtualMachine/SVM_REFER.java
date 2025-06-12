@@ -5,15 +5,11 @@ import java.io.IOException;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
-import bec.util.Util;
 import bec.value.GeneralAddress;
-import bec.value.IntegerValue;
 import bec.value.ObjectAddress;
 import bec.value.Value;
 
 /**
- * 
- * Remove the top item on the Runtime-Stack and push the NOT value
  * 
  * refer resolved_type
  * force TOS value; check TOS type(GADDR);
@@ -50,13 +46,15 @@ public class SVM_REFER extends SVM_Instruction {
 	public void execute() {
 		int gOfst = RTStack.popInt();
 		ObjectAddress objadr = (ObjectAddress) RTStack.pop();
+		
 		RTRegister.putValue(xReg, new GeneralAddress(objadr, gOfst));
+
 		Global.PSC.addOfst(1);
 	}
 	
 	@Override	
 	public String toString() {
-		return "REFER    " + " R" + xReg;
+		return "REFER    " + "R" + xReg;
 	}
 	
 	// ***********************************************************************************************

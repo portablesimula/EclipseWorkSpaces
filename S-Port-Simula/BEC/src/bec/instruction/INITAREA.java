@@ -20,6 +20,7 @@ public abstract class INITAREA extends Instruction {
 	 * NOTE: In this implementation  INITAREA == NOOP
 	 */
 	public static void ofScode() {
+		CTStack.forceTosValue();			
 		CTStack.checkTosType(Type.T_OADDR);
 		Type type = Type.ofScode();
 //		CTStack.pop();

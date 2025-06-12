@@ -4,9 +4,10 @@ import java.io.IOException;
 
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
-import bec.compileTimeStack.AddressItem;
 import bec.util.Global;
 import bec.util.Util;
+import bec.value.GeneralAddress;
+import bec.value.IntegerValue;
 import bec.value.ObjectAddress;
 import bec.value.Value;
 
@@ -14,7 +15,8 @@ import bec.value.Value;
 
 //The size values on the top of the operand stack is stored at addr...
 public class SVM_STORE extends SVM_Instruction {
-	RTAddress addr;
+	ObjectAddress rtAddr;
+	int xReg;
 	int size;
 	
 	private final boolean DEBUG = false;
@@ -25,10 +27,12 @@ public class SVM_STORE extends SVM_Instruction {
 //		this.size = size;
 //	}
 	
-	public SVM_STORE(RTAddress addr, int size) {
+	public SVM_STORE(ObjectAddress rtAddr, int xReg, int size) {
 		this.opcode = SVM_Instruction.iSTORE;
-		this.addr = addr;
+		this.rtAddr = rtAddr;
+		this.xReg = xReg;
 		this.size = size;
+//		System.out.println("NEW SVM_STORE: " + this);
 	}
 	
 	@Override
@@ -37,21 +41,21 @@ public class SVM_STORE extends SVM_Instruction {
 //			Global.PSC.segment().dump("STORE.execute: ");
 			RTStack.dumpRTStack("STORE.execute: ");
 		}
-			
-		RTAddress addr = this.addr;
-		if(this.addr.withRemoteBase) {
-			// this.addr is Stack Relative Address
-			ObjectAddress oaddr = RTStack.popOADDR();
-			addr = new RTAddress(oaddr, addr.offset);
-			addr.xReg = this.addr.xReg;
-		}
-		int n = RTStack.size()-1;
-		int idx = size - 1;
-		for(int i=0;i<size;i++) {
-			Value item = RTStack.load(n-i);
-			if(DEBUG) System.out.println("STORE: "+item+" ==> "+addr + "["+idx+"]");
-			addr.store(idx--, item, "");
-//			RTStack.printCallTrace("STORE.execute: ");
+		
+		ObjectAddress addr = this.rtAddr;
+		switch(addr.kind) {
+			case ObjectAddress.SEGMNT_ADDR: doStore(addr, xReg); break;
+			case ObjectAddress.REL_ADDR:    doStore(addr, xReg); break;
+			case ObjectAddress.STACK_ADDR:  Util.IERR(""); doStore(addr, xReg); break;
+			case ObjectAddress.REMOTE_ADDR:
+				ObjectAddress oaddr = RTStack.popOADDR();
+				addr = oaddr.addOffset(addr.getOfst());
+				doStore(addr, xReg); break;
+			case ObjectAddress.REFER_ADDR:
+				GeneralAddress gaddr = (GeneralAddress) RTRegister.getValue(xReg);
+				addr = gaddr.base.addOffset(rtAddr.getOfst() + gaddr.ofst);
+				doStore(addr, 0); break;
+			default: Util.IERR("");
 		}
 		
 		if(DEBUG) {
@@ -63,11 +67,24 @@ public class SVM_STORE extends SVM_Instruction {
 		Global.PSC.addOfst(1);		
 	}
 	
+	private void doStore(ObjectAddress addr, int xReg) {
+		int n = RTStack.size()-1;
+		int idx = size - 1;
+		if(xReg > 0) idx = idx + RTRegister.getIntValue(xReg);
+		for(int i=0;i<size;i++) {
+			Value item = RTStack.load(n-i);
+			if(DEBUG) System.out.println("STORE: "+item+" ==> "+addr + "["+idx+"]");
+			addr.store(idx--, item, "");
+//			RTStack.printCallTrace("STORE.execute: ");
+		}
+		
+	}
+	
 	public String toString() {
-		String cnt = "";
-		if(size > 1) cnt = ", size=" + size;
-//		return "PEEK2MEM  " + addr + cnt;
-		return "STORE    " + addr + cnt;
+		String s = "";
+		if(xReg != 0) s = s + "+R" + xReg + "(" + RTRegister.getValue(xReg) + ')';
+		if(size > 1) s = ", size=" + size;
+		return "STORE    " + rtAddr + s;
 	}
 
 	// ***********************************************************************************************
@@ -75,10 +92,8 @@ public class SVM_STORE extends SVM_Instruction {
 	// ***********************************************************************************************
 	private SVM_STORE(AttributeInputStream inpt) throws IOException {
 		this.opcode = SVM_Instruction.iSTORE;
-		boolean present = inpt.readBoolean();
-		if(present) {
-			this.addr = RTAddress.read(inpt);
-		}
+		this.rtAddr = ObjectAddress.read(inpt);
+		this.xReg = inpt.readReg();
 		this.size = inpt.readShort();
 		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + this);
 	}
@@ -87,10 +102,8 @@ public class SVM_STORE extends SVM_Instruction {
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
-		if(addr != null) {
-			oupt.writeBoolean(true);
-			addr.write(oupt);
-		} else oupt.writeBoolean(false);
+		rtAddr.writeBody(oupt);
+		oupt.writeReg(xReg);
 		oupt.writeShort(size);
 	}
 

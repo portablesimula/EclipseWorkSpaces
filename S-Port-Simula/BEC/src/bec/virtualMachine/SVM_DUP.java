@@ -16,75 +16,91 @@ import bec.value.Value;
 	 * A duplicate of TOS is pushed onto the stack and forced into value mode.
  */
 public class SVM_DUP extends SVM_Instruction {
-	RTAddress rtAddr;
+	ObjectAddress rtAddr;
+	int xReg;
+	int size;
 	
-	public SVM_DUP(RTAddress rtAddr) {
+	public SVM_DUP(ObjectAddress rtAddr, int xReg, int size) {
 		this.opcode = SVM_Instruction.iDUP;
 		this.rtAddr = rtAddr;
+		this.xReg = xReg;
+		this.size = size;
 	}
 
 	@Override
 	public void execute() {
+		if(rtAddr == null) {
+			// DUP VALUE
+			if(size == 1) {
+//				Value tos = RTStack.pop();
+//				RTStack.push(tos, "SVM_DUP: ");
+//				RTStack.push(tos, "SVM_DUP: ");				
+				RTStack.push(RTStack.peek(), "SVM_DUP: ");				
+			} else {
+				RTStack.dup(size);
+			}
+			if(xReg != 0) Util.IERR("NOT IMPL: xReg="+xReg);
+		} else {
+			Value tos = RTStack.pop();
+//			if(tos != null)	System.out.println("SVM_DUP: TOS: " + tos.getClass().getSimpleName() + "  " + tos);
+			RTStack.push(tos, "SVM_DUP: ");
+			if(rtAddr.kind == ObjectAddress.REMOTE_ADDR) {
+				// this.addr is Stack Relative Address
+				ObjectAddress oaddr = RTStack.popOADDR();
+//				System.out.println("SVM_DUP.execute: oaddr="+oaddr+", rtAddr="+rtAddr);
+				RTStack.push(oaddr, "SVM_DUP: ");
+				oaddr = oaddr.addOffset(rtAddr.getOfst());
+				
+				if(size != 1) Util.IERR("NOT IMPL: size="+size);
+				tos = oaddr.load(0);
+				RTStack.push(tos, "SVM_DUP: ");				
+			} else {
+				if(size != 1) Util.IERR("NOT IMPL: size="+size);
+				tos = rtAddr.load(0);
+				RTStack.push(tos, "SVM_DUP: ");
+			}
+		}
+		Global.PSC.addOfst(1);
+	}
+
+	public void OLD_execute() {
 		Value tos = RTStack.pop();
 //		if(tos != null)	System.out.println("SVM_DUP: TOS: " + tos.getClass().getSimpleName() + "  " + tos);
 		RTStack.push(tos, "SVM_DUP: ");
 		if(rtAddr == null) {
 			// DUP VALUE
+			if(size != 1) Util.IERR("NOT IMPL: size="+size);
+			if(xReg != 0) Util.IERR("NOT IMPL: xReg="+xReg);
 			RTStack.push(tos, "SVM_DUP: ");
 //			Util.IERR("SJEKK DETTE");
 		} else {
-			boolean TESTING = true;
-			
-			if(TESTING) {
-
-				if(rtAddr.withRemoteBase) {
-					// this.addr is Stack Relative Address
-					ObjectAddress oaddr = RTStack.popOADDR();
-					RTStack.push(oaddr, "SVM_DUP: ");
-					RTAddress addr = new RTAddress(oaddr, rtAddr.offset);
-					addr.xReg = rtAddr.xReg;
-//					System.out.println("SVM_DUP.execute: UPDDATED addr="+addr);
-					tos = addr.load(0);
-				} else tos = rtAddr.load(0);
-//				System.out.println("SVM_DUP: "+rtAddr+" ===> NEW tos="+tos);
-//				Util.IERR("");
+			if(rtAddr.kind == ObjectAddress.REMOTE_ADDR) {
+				// this.addr is Stack Relative Address
+				ObjectAddress oaddr = RTStack.popOADDR();
+//				System.out.println("SVM_DUP.execute: oaddr="+oaddr+", rtAddr="+rtAddr);
+				RTStack.push(oaddr, "SVM_DUP: ");
+				oaddr = oaddr.addOffset(rtAddr.getOfst());
+				
+				if(size != 1) Util.IERR("NOT IMPL: size="+size);
+				tos = oaddr.load(0);
+				RTStack.push(tos, "SVM_DUP: ");				
+			} else {
+				if(size != 1) Util.IERR("NOT IMPL: size="+size);
+				tos = rtAddr.load(0);
+				RTStack.push(tos, "SVM_DUP: ");
 			}
-//			ObjectAddress oaddr = (ObjectAddress) tos;
-//			oaddr = oaddr.addOffset(rtAddr.offset);
-//			RTStack.push(oaddr, "SVM_DUP: ");
-//			tos = oaddr.load();
-//			System.out.println("SVM_DUP: NEW tos="+tos);
-			RTStack.push(tos, "SVM_DUP: ");
 		}
-//		RTStack.push(tos, "SVM_DUP: ");
 		Global.PSC.addOfst(1);
-//		Util.IERR("");
 	}
-	
-//	@Override
-	public void OLD_execute() {
-		Value tos = RTStack.pop();
-		if(tos != null)	System.out.println("SVM_DUP: TOS: " + tos.getClass().getSimpleName() + "  " + tos);
-		if(rtAddr == null) {
-			// DUP VALUE
-			RTStack.push(tos, "SVM_DUP: ");
-//			Util.IERR("SJEKK DETTE");
-		} else {
-			ObjectAddress oaddr = (ObjectAddress) tos;
-			oaddr = oaddr.addOffset(rtAddr.offset);
-			RTStack.push(oaddr, "SVM_DUP: ");
-			tos = oaddr.load();
-			System.out.println("SVM_DUP: NEW tos="+tos);
-		}
-		RTStack.push(tos, "SVM_DUP: ");
-		Global.PSC.addOfst(1);
-//		Util.IERR("");
-	}
-	
+
 	@Override	
 	public String toString() {
-//		return "DUP      " + address;
-		return "DUP      " + rtAddr;
+		String s = "";
+		if(rtAddr != null) {
+			s = rtAddr.toString();
+			s = s + ( (xReg == 0)? "" : "+R" + xReg + "(" + RTRegister.getValue(xReg) + ')' );
+		}
+		return "DUP      " + s;
 	}
 
 	// ***********************************************************************************************
@@ -98,16 +114,20 @@ public class SVM_DUP extends SVM_Instruction {
 			oupt.writeBoolean(false);
 		} else {
 			oupt.writeBoolean(true);
-			rtAddr.write(oupt);
+			rtAddr.writeBody(oupt);
 		}
+		oupt.writeReg(xReg);
+		oupt.writeShort(size);
 	}
 
 	public static SVM_DUP read(AttributeInputStream inpt) throws IOException {
 //		SVM_DUP instr = new SVM_DUP(inpt.readBoolean());
-		RTAddress rtAddr = null;
+		ObjectAddress rtAddr = null;
 		boolean present = inpt.readBoolean();
-		if(present) rtAddr = RTAddress.read(inpt);
-		SVM_DUP instr = new SVM_DUP(rtAddr);
+		if(present) rtAddr = ObjectAddress.read(inpt);
+		int xReg = inpt.readReg();
+		int size = inpt.readShort();
+		SVM_DUP instr = new SVM_DUP(rtAddr, xReg, size);
 		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + instr);
 		return instr;
 	}

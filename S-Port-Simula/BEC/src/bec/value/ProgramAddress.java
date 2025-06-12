@@ -111,7 +111,7 @@ public class ProgramAddress extends Value {
 				Global.CSEG.dump("ProgramAddress.execute: FINAL CONSTANT SEGMENT ");
 				Global.TSEG.dump("ProgramAddress.execute: FINAL CONSTANT TEXT SEGMENT ");
 //				Segment.lookup("DSEG_RT").dump("ProgramAddress.execute: BIOINS", 30, 82);
-				Segment.lookup("POOL_1").dump("ProgramAddress.execute: FINAL POOL_1", 0, 60);
+//				Segment.lookup("POOL_1").dump("ProgramAddress.execute: FINAL POOL_1", 0, 60);
 //				RTUtil.printPool("POOL_1");
 
 			}

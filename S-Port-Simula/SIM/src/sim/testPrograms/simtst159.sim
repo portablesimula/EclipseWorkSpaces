@@ -25,6 +25,14 @@ SimulaTest(159,"--- Test Specified Virtual Real Functions as part of an Expressi
 		traceCase:=traceCase+1;
 	end;
 
+	text procedure edFix(r, i); real r; integer i; begin
+   		text t;
+   		t:-blanks(19); 
+   		t.putfix(r, i);
+   		t :- trim(t);
+   		edFix :- t;
+	end;
+
 
 	ref(A) first;
 	real r;

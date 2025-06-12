@@ -49,7 +49,7 @@ public class DataSegment extends Segment {
 	}
 	
 	public void store(int index, Value value) {
-		if(index == guard) Util.IERR("");
+		if(index == guard) Util.IERR("FATAL ERROR: Attempt to change Guarded location: "+ObjectAddress.ofSegAddr(this, index)+" from "+values.get(index)+" to "+value);
 		values.set(index, value);
 	}
 	
@@ -58,8 +58,8 @@ public class DataSegment extends Segment {
 		try {
 			return values.get(index);
 		} catch(Exception e) {
-//			e.printStackTrace();
-			System.out.println("DataSegment.load: FAILED - SE PÅ DETTE SEINERE !!");
+			e.printStackTrace();
+			System.out.println("DataSegment.load: FAILED - SE PÅ DETTE SEINERE !! e="+e);
 //			this.dump("DataSegment.load: FAILED: " + e + " ");
 //			Util.IERR("DataSegment.load: FAILED");
 			return null;

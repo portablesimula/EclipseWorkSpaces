@@ -66,7 +66,7 @@ SimulaTest(141,"--- Test For-Statement with SIMSET and SIMULATION list-processin
 		for i:=1 step 1 until 10 do new Element(i).into(set);
 		
 		for x :- set.first, x.suc while x =/= none do begin
-			trace("Simset List: i = " & edit(x.i));
+			trace("Simset List: i = " & edINT(x.i));
 		end;
 	
 	end;
@@ -85,7 +85,7 @@ SimulaTest(141,"--- Test For-Statement with SIMSET and SIMULATION list-processin
 		for i:=1 step 1 until 10 do new Person(i).into(queue);
 	
 		for x:-queue.first, x.suc while x =/= none do begin
-			trace("Simulation Queue: i = " & edit(x.i));
+			trace("Simulation Queue: i = " & edINT(x.i));
 		end;
 	
 	end;

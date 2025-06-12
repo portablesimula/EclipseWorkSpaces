@@ -4,13 +4,9 @@ import bec.compileTimeStack.AddressItem;
 import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.CTStackItem;
 import bec.util.Global;
-import bec.util.Util;
-import bec.virtualMachine.RTAddress;
 import bec.virtualMachine.SVM_ASSIGN;
 
 public abstract class UPDATE extends Instruction {
-	
-	private static final boolean TESTING = true;
 	
 	/**
 	 * assign_instruction ::= assign | update | rupdate
@@ -38,19 +34,15 @@ public abstract class UPDATE extends Instruction {
 	 * describe the value assigned.
 	 */
 	public static void ofScode() {
+		CTStack.forceTosValue();			
 		CTStack.checkSosRef();
 		CTStack.checkTypesEqual();
+//		FETCH.doFetch("ASSIGN: "); // Force TOS value
 		CTStackItem tos = CTStack.pop();
-		AddressItem sos;
-		if(TESTING) {
-			sos = (AddressItem) CTStack.pop();
-			CTStack.pushTempVAL(tos.type, 1, "UPDATE: ");
-		} else {
-			sos = (AddressItem) CTStack.TOS();
-		}
+		AddressItem sos = (AddressItem) CTStack.pop();
+		CTStack.pushTempVAL(tos.type, 1, "UPDATE: ");
 		
-		Global.PSEG.emit(new SVM_ASSIGN(true, new RTAddress(sos), sos.size), "UPDATE: "); // Store into adr
-//		Util.IERR("NOT IMPL");
+		Global.PSEG.emit(new SVM_ASSIGN(true, sos.objadr.addOffset(sos.offset), sos.xReg, sos.size), "UPDATE: "); // Store into adr
 	}
 
 }

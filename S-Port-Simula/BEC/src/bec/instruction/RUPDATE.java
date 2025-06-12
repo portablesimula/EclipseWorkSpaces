@@ -3,7 +3,6 @@ package bec.instruction;
 import bec.compileTimeStack.AddressItem;
 import bec.compileTimeStack.CTStack;
 import bec.util.Global;
-import bec.virtualMachine.RTAddress;
 import bec.virtualMachine.SVM_STORE;
 
 public abstract class RUPDATE extends Instruction {
@@ -22,19 +21,18 @@ public abstract class RUPDATE extends Instruction {
 	 * roles of TOS and SOS are interchanged, i.e. the value transfer is from SOS to TOS.
 	 */
 	public static void ofScode() {
-//		if(DEBUG) CTStack.dumpStack("RUPDATE-1: ");
+		if(DEBUG)
+			CTStack.dumpStack("RUPDATE.ofScode: ");
 		CTStack.checkTosRef(); CTStack.checkSosValue(); CTStack.checkTypesEqual();
-//		ObjectAddress adr = Util.getTosDstAdr();
 		AddressItem adr = (AddressItem) CTStack.pop();
+		CTStack.forceTosValue();			
 		if(DEBUG) {
 			System.out.println("RUPDATE.ofScode: adr="+adr);
 			System.out.println("RUPDATE.ofScode: sos="+CTStack.TOS());
 //			Util.IERR("");
 //			CTStack.dumpStack("RUPDATE-2: ");
 		}
-//		CTStack.dumpStack("RUPDATE: ");
-		Global.PSEG.emit(new SVM_STORE(new RTAddress(adr), adr.size), "RUPDATE: "); // Store into adr
-//		if(DEBUG) Global.PSEG.dump("RUPDATE: ");
+		Global.PSEG.emit(new SVM_STORE(adr.objadr.addOffset(adr.offset), adr.xReg, adr.size), "RUPDATE: "); // Store into adr
 	}
 
 }

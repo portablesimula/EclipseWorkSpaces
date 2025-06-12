@@ -17,8 +17,7 @@ public abstract class NEG extends Instruction {
 	 * TOS is replaced by a description of the TOS value with its sign inverted.
 	 */
 	public static void ofScode() {
-//		CTStack.dumpStack();
-//		Global.PSEG.dump();
+		CTStack.forceTosValue();			
 		CTStack.checkTosArith();
 		Type at = CTStack.TOS().type;
 		Global.PSEG.emit(new SVM_NEG(), "");

@@ -23,13 +23,13 @@ public final class RunSingle_SML_TestBatch {
 	public static void main(String[] args) {
 		Global.INLINE_TESTING = true;
 		
-//		SVM_CALLSYS.RUNTIME_VERBOSE = true;
-//		Global.verbose = true;
+////		SVM_CALLSYS.RUNTIME_VERBOSE = true;
+////		Global.verbose = true;
 //		Global.SCODE_INPUT_TRACE = true;
 //		Global.PRINT_GENERATED_SVM_CODE = true;
-//		Global.PRINT_GENERATED_SVM_DATA = true;
+////		Global.PRINT_GENERATED_SVM_DATA = true;
 //		Global.EXEC_TRACE = 1;
-//		Global.CALL_TRACE_LEVEL = 2;
+////		Global.CALL_TRACE_LEVEL = 2;
 //		Global.DUMPS_AT_EXIT = true;
 		
 		// Set Compiler Options.
@@ -45,14 +45,17 @@ public final class RunSingle_SML_TestBatch {
 //		names.add("adHoc04.scd");
 //		names.add("adHoc05.scd");
 //		names.add("adHoc06.scd"); 
-//			names.add("adHoc07.scd");
+//		names.add("adHoc07.scd");
 //		names.add("adHoc08.scd");
 //		names.add("adHoc09.scd");
 //		names.add("adHoc10.scd");
-//		names.add("adHoc11.scd");
+//			names.add("adHoc11.scd");
+//			names.add("adHoc12.scd");
+//			names.add("adHoc13.scd");
+//			names.add("adHoc14.scd");
 		
 //		names.add("smltst00.scd"); // Standard layout of test programs
-//		names.add("smltst01.scd"); // Simple Assignments
+//			names.add("smltst01.scd"); // Simple Assignments
 //		names.add("smltst02.scd"); // Test Case Statement
 //		names.add("smltst03.scd"); // Test Assert Statement
 //		names.add("smltst04.scd"); // Test Parameter Transmission
@@ -93,7 +96,9 @@ public final class RunSingle_SML_TestBatch {
 //		names.add("smltst39.scd"); // Boolean Operators IMP and EQV
 //		names.add("smltst40.scd"); // Fixup Object Address
 //		names.add("smltst41.scd"); // Shift opr: LSHIFTL, RSHIFTL, LSHIFTA, RSHIFTA
-		names.add("smltst42.scd"); // Test routine MOVEIN
+//		names.add("smltst42.scd"); // Test routine MOVEIN
+//		names.add("smltst43.scd"); // Test name(infix) parameter
+		names.add("smltst44.scd"); // Test Routine MODULO
 
 		for (String name : names) {
 			String fileName = smlSCodeDir + name;

@@ -25,8 +25,7 @@ public abstract class MULT extends Instruction {
 	 * SOS op TOS. All arithmetic on subranges of INT should be performed in full integer arithmetic. 
 	 */
 	public static void ofScode() {
-//		CTStack.dumpStack();
-//		Global.PSEG.dump();
+		CTStack.forceTosValue();			
 		CTStack.checkTosArith(); CTStack.checkSosArith(); CTStack.checkSosValue(); CTStack.checkTypesEqual();
 		CTStackItem tos = CTStack.TOS();
 		CTStackItem sos = CTStack.SOS();

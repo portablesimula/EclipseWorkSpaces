@@ -33,6 +33,22 @@ SimulaTest(140,"--- Test For-Statement with ControlVariable with Type Conversion
       traceCase:=traceCase+1;
    end;
 
+	text procedure edReal(r); real r; begin
+   		text t;
+   		t:-blanks(19); 
+   		t.putreal(r, 3);
+   		t :- trim(t);
+   		edReal :- t;
+	end;
+   
+	text procedure edLReal(r); long real r; begin
+   		text t;
+   		t:-blanks(19); 
+   		t.putreal(r, 3);
+   		t :- trim(t);
+   		edLReal :- t;
+	end;
+
 	facit(0):-"At START";
 	facit(1):-"Case 1: i = 57";
 	facit(2):-"Case 2: i = 56";
@@ -86,50 +102,50 @@ SimulaTest(140,"--- Test For-Statement with ControlVariable with Type Conversion
 	trace("At START");
 
 	r := 56.56;
-	for i := r do trace("Case 1: i = " & edit(i));
+	for i := r do trace("Case 1: i = " & edINT(i));
 	r := 56.49;
-	for i := r do trace("Case 2: i = " & edit(i));
+	for i := r do trace("Case 2: i = " & edINT(i));
 
 	lr := 56.50;
-	for i := lr do trace("Case 3: i = " & edit(i));
+	for i := lr do trace("Case 3: i = " & edINT(i));
 	lr := 56.43;
-	for i := lr do trace("Case 4: i = " & edit(i));
+	for i := lr do trace("Case 4: i = " & edINT(i));
 
 	r := 76.39;
 	lr := 76.50;
-	for i := r, lr do trace("Case 5,6: i = " & edit(i));
+	for i := r, lr do trace("Case 5,6: i = " & edINT(i));
 
 
 	i := 5656;
-	for r := i do trace("Case 7: r = " & edit(r));
+	for r := i do trace("Case 7: r = " & edREAL(i));
 	lr := 56.49;
-	for r := lr do trace("Case 8: r = " & edit(r));
-	for r := lr, i do trace("Case 9,10: r = " & edit(r));
+	for r := lr do trace("Case 8: r = " & edREAL(i));
+	for r := lr, i do trace("Case 9,10: r = " & edREAL(i));
 
 	i := 5656;
-	for lr := i do trace("Case 11: lr = " & edit(lr));
+	for lr := i do trace("Case 11: lr = " & edLREAL(i));
 	r := 56.49;
-	for lr := r do trace("Case 12: lr = " & edit(lr));
-	for lr := r, i do trace("Case 13,14: lr = " & edit(lr));
+	for lr := r do trace("Case 12: lr = " & edLREAL(i));
+	for lr := r, i do trace("Case 13,14: lr = " & edLREAL(i));
 
 % =================== integer   While elements
 	
    r := 234.789;
    for i := r while k < 10 do begin
    	   k := k + 8;
-   	   trace("Case 15,16: i = " & edit(i));
+   	   trace("Case 15,16: i = " & edINT(i));
    end;
 	
    lr := 765.49; k := 0;
    for i := lr while k < 10 do begin
    	   k := k + 8;
-   	   trace("Case 17,18: i = " & edit(i));
+   	   trace("Case 17,18: i = " & edINT(i));
    end;
 
    k := 0;
    for i := lr, r while k < 10 do begin
    	   k := k + 8;
-   	   trace("Case 19,20: i = " & edit(i));
+   	   trace("Case 19,20: i = " & edINT(i));
    end;
 
 % =================== real   While elements
@@ -137,19 +153,19 @@ SimulaTest(140,"--- Test For-Statement with ControlVariable with Type Conversion
    i := 234789; k := 0;
    for r := i while k < 10 do begin
    	   k := k + 8;
-   	   trace("Case 21,22: r = " & edit(r));
+   	   trace("Case 21,22: r = " & edREAL(i));
    end;
 	
    lr := 765.49; k := 0;
    for r := lr while k < 10 do begin
    	   k := k + 8;
-   	   trace("Case 23,24: r = " & edit(r));
+   	   trace("Case 23,24: r = " & edREAL(i));
    end;
 
    k := 0;
    for r := i, lr while k < 10 do begin
    	   k := k + 8;
-   	   trace("Case 25,26: r = " & edit(r));
+   	   trace("Case 25,26: r = " & edREAL(i));
    end;
 
 % =================== long real   While elements
@@ -157,46 +173,46 @@ SimulaTest(140,"--- Test For-Statement with ControlVariable with Type Conversion
    i := 234789; k := 0;
    for lr := i while k < 10 do begin
    	   k := k + 8;
-   	   trace("Case 27,28: lr = " & edit(lr));
+   	   trace("Case 27,28: lr = " & edLREAL(i));
    end;
 	
    r := 765.49; k := 0;
    for lr := r while k < 10 do begin
    	   k := k + 8;
-   	   trace("Case 29,30: lr = " & edit(lr));
+   	   trace("Case 29,30: lr = " & edLREAL(i));
    end;
 
    k := 0;
    for lr := i, r while k < 10 do begin
    	   k := k + 8;
-   	   trace("Case 31,32: lr = " & edit(lr));
+   	   trace("Case 31,32: lr = " & edLREAL(i));
    end;
 
 % =================== For-step-until elements
 
    r := 1.5;
    lr := 7.49;
-   for i := lr step r until 10.0 do trace("Case 33,34: i = " & edit(i));
+   for i := lr step r until 10.0 do trace("Case 33,34: i = " & edINT(i));
 
    i := 2;
-   for r := lr step i until 10.0 do trace("Case 35,36: r = " & edit(r));
+   for r := lr step i until 10.0 do trace("Case 35,36: r = " & edREAL(i));
 
    i := 7; r := 2.5;
-   for lr := i step r until 10.0 do trace("Case 37,38: lr = " & edit(lr));
+   for lr := i step r until 10.0 do trace("Case 37,38: lr = " & edLREAL(i));
 
 % =================== Ref-type elements
 	
 	y :- new B(444);
-	for x :- y do trace("Case 39: i = " & edit(x.i));
+	for x :- y do trace("Case 39: i = " & edINT(x.i));
 	
 	x :- new B(666);
-	for y :- x do trace("Case 40: i = " & edit(y.i));
+	for y :- x do trace("Case 40: i = " & edINT(y.i));
 
 	x :- new B(333); y :- new B(777);
-	for z :- y, x do trace("Case 41,42: i = " & edit(z.i));
+	for z :- y, x do trace("Case 41,42: i = " & edINT(z.i));
 	
 	x :- new B(333); y :- new B(777); i := 1;
-	for z :- x, x.next while z =/= none do begin trace("Case 43: i = " & edit(z.i)); i := 0 end;
+	for z :- x, x.next while z =/= none do begin trace("Case 43: i = " & edINT(z.i)); i := 0 end;
 
 	trace("At END");
 	

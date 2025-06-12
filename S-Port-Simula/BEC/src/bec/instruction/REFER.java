@@ -45,6 +45,7 @@ public abstract class REFER extends Instruction {
 	public static void ofScode() {
 		if(DEBUG) CTStack.dumpStack("REFER.ofScode");
 		Type type = Type.ofScode();
+		CTStack.forceTosValue();			
 		CTStack.checkTosType(Type.T_GADDR);
 		
 		if(DEBUG) System.out.println("REFER.ofScode: TOS="+CTStack.TOS().getClass().getSimpleName()+"  "+CTStack.TOS());
@@ -53,7 +54,7 @@ public abstract class REFER extends Instruction {
 		Global.PSEG.emit(new SVM_REFER(reg), "REFER: " + Scode.edTag(type.tag));
 		
 		// LOAD GADDR FROM TOS
-		ObjectAddress a = ObjectAddress.ofRelAddr(null);
+		ObjectAddress a = ObjectAddress.ofReferAddr();	
 		AddressItem adr = new AddressItem(type, 0, a);
 		adr.xReg = reg;
         CTStack.pop(); 

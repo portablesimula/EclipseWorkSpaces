@@ -23,6 +23,7 @@ public abstract class AND extends Instruction {
 	 * Note that SOS is the left operand.
 	 */
 	public static void ofScode() {
+		CTStack.forceTosValue();
 		CTStackItem tos = CTStack.TOS();
 	    
 	    Type at = tos.type;

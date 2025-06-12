@@ -133,16 +133,16 @@ public class ProfileDescr extends Descriptor {
 		// Allocate StackFrame
 		int rela = 0;
 		if(prf.export != null) {
-			prf.export.address = new ObjectAddress(null, rela);
+			prf.export.address = ObjectAddress.ofRelFrameAddr(rela);
 			prf.exportSize = prf.export.type.size();
 			rela += prf.exportSize;
 		}
 		for(Variable par:prf.imports) {
-			par.address = new ObjectAddress(null, rela);
+			par.address = ObjectAddress.ofRelFrameAddr(rela);
 			rela += par.type.size() * par.repCount;
 		}
 		// Allocate Return address
-		prf.returSlot = new ObjectAddress(null, rela++);
+		prf.returSlot = ObjectAddress.ofRelFrameAddr(rela++);
 		
 		if(prf.exit != null) {
 			prf.exit.address = prf.returSlot;

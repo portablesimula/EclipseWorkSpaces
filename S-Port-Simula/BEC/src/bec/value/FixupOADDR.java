@@ -7,7 +7,7 @@ public class FixupOADDR extends ObjectAddress {
 	Descriptor descr; // ConstDescr
 	
 	public FixupOADDR(Type type, Descriptor descr) {
-		super(null, 0);
+		super(ObjectAddress.SEGMNT_ADDR, null, 0);
 		this.descr = descr;
 	}
 

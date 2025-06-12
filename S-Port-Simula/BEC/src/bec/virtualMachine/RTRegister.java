@@ -1,5 +1,10 @@
 package bec.virtualMachine;
 
+import bec.util.Global;
+import bec.util.Util;
+import bec.value.GeneralAddress;
+import bec.value.IntegerValue;
+import bec.value.ObjectAddress;
 import bec.value.Value;
 
 public final class RTRegister {
@@ -16,9 +21,8 @@ public final class RTRegister {
 	
 	public static int getFreeReg() {
 		nRegUsed++;
-		System.out.println("RTRegister.getFreeReg: "+nRegUsed);
+//		System.out.println("RTRegister.getFreeReg: "+nRegUsed);
 		return nRegUsed;
-//		return 1;
 	}
 	
 	public static void clearFreeRegs() {
@@ -27,8 +31,31 @@ public final class RTRegister {
 	}
 	
 	public static void putValue(int reg, Value value) {
+		
+		if(Global.TESTING_STACK_ADDRESS) {
+			if(value instanceof ObjectAddress oaddr) {
+//				System.out.println("RTRegister.putValue: "+value+", reg="+reg+", value="+register[reg-1]);
+//				System.out.println("RTRegister.putValue: OADDR: "+oaddr);
+				if(oaddr != null && oaddr.kind == ObjectAddress.REL_ADDR) {
+//					RTStack.dumpRTStack("RTRegister.putValue: NOTE: ");
+					Util.IERR("DETTE SKAL IKKE FOREKOMME");
+				}			
+			}
+			if(value instanceof GeneralAddress gaddr) {
+//				System.out.println("RTRegister.putValue: "+value+", reg="+reg+", value="+register[reg-1]);
+//				System.out.println("RTRegister.putValue: GADDR: "+gaddr);
+				ObjectAddress oaddr = gaddr.base;
+				if(oaddr != null && oaddr.kind == ObjectAddress.REL_ADDR) {
+//					RTStack.dumpRTStack("RTRegister.putValue: NOTE: ");
+					gaddr.base = oaddr.toStackAddress();
+//					System.out.println("RTRegister.putValue: GADDR: "+gaddr);
+					Util.IERR("DETTE SKAL IKKE FOREKOMME");
+				}
+			}
+		}
+
 		register[reg-1] = new RTRegister(value);
-//		System.out.println("RTRegister.putValue: "+value+", reg="+reg+", value="+register[reg-1]);
+
 	}
 	
 	public static Value getValue(int reg) {
@@ -38,6 +65,24 @@ public final class RTRegister {
 		} catch(Exception e) {
 //			return -1;
 			return null;
+		}
+	}
+
+	public static int getIntValue(int reg) {
+		Value value = RTRegister.getValue(reg);
+		if(value == null) return 0;
+		if(value instanceof IntegerValue ival) {
+			return ival.value;
+		} else if(value instanceof GeneralAddress gaddr) {
+			Value val = gaddr.base.load(gaddr.ofst);
+			System.out.println("RTRegister.getIntValue: gaddr="+gaddr);
+//			System.out.println("RTRegister.getIntValue: "+val.getClass().getSimpleName()+"  "+val);
+			System.out.println("RTRegister.getIntValue: "+val);
+//			Util.IERR("");
+			return 0;
+		} else {
+			Util.IERR(""+value.getClass().getSimpleName()+"  "+value);
+			return 0;
 		}
 	}
 

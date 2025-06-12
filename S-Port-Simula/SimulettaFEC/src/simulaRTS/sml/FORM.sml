@@ -318,6 +318,8 @@
  import name(infix(parqnt)) fnp;  --  parameter quantity address
  export name() adr;               --  actual parameter's address
  begin ref(pardes)   ap;          --  Local copy here for efficiency.
+ 
+% +M    ed_str("FORM.npAccA: fnp="); ed_GADDR(fnp); ed_out;
        ap:= var(fnp).ap;
        case 0:MAX_PAR (ap.code)
        when PAR_QNT_LIT:
@@ -406,8 +408,8 @@
  Visible routine EncRef;
  import name(infix(parqnt)) fnp; export ref(inst) val;
  begin val:= var(npAccA(fnp) qua name(ref(inst)));
- 	   ED_STR("FORM.EncRef: val="); ED_OADDR(val); ED_OUT;
- 	   DMPENT(val);
+% 	   ED_STR("FORM.EncRef: val="); ED_OADDR(val); ED_OUT;
+% 	   DMPENT(val);
        ---  Check that the qualification of the accessed object is
        ---  subordinate the the formal qualification.
        if val <> none

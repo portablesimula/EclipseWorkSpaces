@@ -63,7 +63,45 @@ public abstract class SysMath {
 		RTStack.push(IntegerValue.of(Type.T_INT, res), "EXPORT");
 		SVM_CALL_SYS.EXIT("IIPOWR: ");
 	}
-	
+
+	/// Visible sysroutine("MODULO") MOD;
+	/// import integer x,y; export integer val  end;
+	///
+	/// The modulo operator in Java, denoted by the percent sign (%),
+	/// calculates the remainder of a division operation.
+	/// It is used with the following syntax:
+	///		 operand1 % operand2,
+	///	 where operand1 is the dividend and operand2 is the divisor.
+	/// The result is the remainder when operand1 is divided by operand2. 
+	///
+	/// Simula Standard:
+	///		integer procedure mod(i,j); integer i,j; begin
+	///			integer res;
+	///			res := i - (i//j)*j;
+	///			mod := if res = 0 then 0
+	///			else if sign(res) <> sign(j) then res+j
+	///			else res
+	///		end mod;
+	///The result is the mathematical modulo value of the parameters.
+	public static void modulo() {
+		SVM_CALL_SYS.ENTER("MODULO: ", 1, 2); // exportSize, importSize
+		int y = RTStack.popInt();
+		int x = RTStack.popInt();
+		int res = x % y;
+		System.out.println("SysMath.modulo: "+x+" mod "+y+" ===> "+res);
+		if(res == 0); //OK
+		else if(sign(res) != sign(y)) res = res + y;
+		
+//		int res = y % x;
+		RTStack.push(IntegerValue.of(Type.T_INT, res), "EXPORT");
+		SVM_CALL_SYS.EXIT("MODULO: ");
+	}
+	private static int sign(int i) {
+		if(i < 0) return -1;
+		if(i > 0) return +1;
+		return 0;
+	}
+
     //*******************************************************************************
     //*** IPOW - Integer Power: b ** x
     //*******************************************************************************

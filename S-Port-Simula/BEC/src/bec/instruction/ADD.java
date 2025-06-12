@@ -31,6 +31,7 @@ public abstract class ADD extends Instruction {
 //		CTStack.dumpStack("ADD: ");
 //		Global.PSEG.dump("ADD: ");
 		
+		CTStack.forceTosValue();
 		CTStack.checkTosArith(); CTStack.checkSosArith(); CTStack.checkSosValue(); CTStack.checkTypesEqual();
 		CTStackItem tos = CTStack.TOS();
 		CTStackItem sos = CTStack.SOS();

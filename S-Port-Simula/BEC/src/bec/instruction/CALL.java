@@ -124,7 +124,11 @@ public abstract class CALL extends Instruction {
 	    	}
 	    }
 		Global.PSEG.emit(new SVM_NOOP(), "Return Point");
-	    if(CTStack.TOS() != pitem) Util.IERR("PARSE.CallSYS-3");
+//	    if(CTStack.TOS() != pitem) {
+	    if(! (CTStack.TOS() instanceof ProfileItem)) {
+			CTStack.dumpStack("CALL.ofScode: ");
+	    	Util.IERR("CALL.ofScode: Missing ProfileItem on TOS");
+	    }
 	    CTStack.pop();
 		
 		// Routines return values on the RT-Stack

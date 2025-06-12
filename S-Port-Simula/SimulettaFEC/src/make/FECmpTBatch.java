@@ -24,7 +24,7 @@ public final class FECmpTBatch {
 		long startTimeMs = System.currentTimeMillis( );
 		Vector<String> names=new Vector<String>();
 		
-//		names.add("adHoc00");
+		names.add("adHoc00");
 //		names.add("adHoc01");
 //		names.add("adHoc02");
 //		names.add("adHoc03");
@@ -35,7 +35,10 @@ public final class FECmpTBatch {
 //		names.add("adHoc08");
 //		names.add("adHoc09");
 //		names.add("adHoc10");
-//		names.add("adHoc11");
+//			names.add("adHoc11");
+//			names.add("adHoc12");
+//			names.add("adHoc13");
+//			names.add("adHoc14");
 		
 //		names.add("smltst00"); // Standard layout of test programs
 //		names.add("smltst01"); // Simple Assignments
@@ -79,7 +82,9 @@ public final class FECmpTBatch {
 //		names.add("smltst39"); // Boolean Operators IMP and EQV
 //		names.add("smltst40"); // Fixup Object Address
 //		names.add("smltst41"); // Shift opr: LSHIFTL, RSHIFTL, LSHIFTA, RSHIFTA
-		names.add("smltst42"); // Test routine MOVEIN
+//		names.add("smltst42"); // Test routine MOVEIN
+//		names.add("smltst43"); // Test name(infix) parameter
+		names.add("smltst44"); // Test Routine MODULO
 
 		// Set Compile Time Options and tracing
 //		Option.INLINE_TESTING=true;

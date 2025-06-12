@@ -36,6 +36,7 @@ public abstract class INDEX extends Instruction {
 	 * be performed.
 	 */
 	public static void ofScode(int instr) {
+		CTStack.forceTosValue();			
 		CTStack.checkTosInt(); CTStack.checkSosRef();
 		if(! (CTStack.TOS() instanceof Temp)) Util.IERR("");
 		

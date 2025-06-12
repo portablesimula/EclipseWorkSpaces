@@ -2,7 +2,9 @@ package bec.compileTimeStack;
 
 import java.util.Stack;
 
+import bec.instruction.FETCH;
 import bec.util.Global;
+import bec.util.NamedStack;
 import bec.util.Scode;
 import bec.util.Type;
 import bec.util.Util;
@@ -10,30 +12,112 @@ import bec.value.Value;
 import bec.virtualMachine.RTRegister;
 
 public class CTStack {
-	private static Stack<CTStackItem> stack = new Stack<CTStackItem>();
-	private static Stack<Stack<CTStackItem>> saveStack = new Stack<Stack<CTStackItem>>();
+//	private static Stack<CTStackItem> stack = new Stack<CTStackItem>();
+	private static NamedStack<CTStackItem> stack = new NamedStack<CTStackItem>("MAIN");
 	
+//	private static Stack<Stack<CTStackItem>> saveStack = new Stack<Stack<CTStackItem>>();
+	private static Stack<NamedStack<CTStackItem>> saveStack = new Stack<NamedStack<CTStackItem>>();
+	private static Stack<NamedStack<CTStackItem>> bsegStack = new Stack<NamedStack<CTStackItem>>();
+
 //	private static final boolean DEBUG = false;
 	
-	@SuppressWarnings("unchecked")
-	public static void saveState() {
-		saveStack.push((Stack<CTStackItem>) stack.clone());
+	public static String ident() {
+		return stack.ident();
 	}
 
-	public static void saveAndPurge() {
+	public static NamedStack<CTStackItem> current() {
+		return stack;
+	}
+	
+//	@SuppressWarnings("unchecked")
+//	public static NamedStack<CTStackItem> getClone() {
+////		System.out.println("CTStack.get: "+stack.ident());
+//		return (NamedStack<CTStackItem>) stack.clone();
+//	}
+	public static NamedStack<CTStackItem> copy(String ident) {
+//		System.out.println("CTStack.get: "+stack.ident());
+		NamedStack<CTStackItem> copy = new NamedStack<CTStackItem>(ident);
+		for(CTStackItem item:stack) {
+			copy.add(item.copy());
+		}
+//		if(stack.size() > 1) {
+//			stack.dumpStack("THIS STACK");
+//			stack.dumpStack("COPY STACK");
+////			Util.IERR("");
+//		}
+		return copy;
+	}
+
+	public static void reestablish(NamedStack<CTStackItem> saved) {
+//		stack = saved;
+//		stack = saved.getCopy();
+		stack = new NamedStack<CTStackItem>(saved.ident());
+		for(CTStackItem item:saved) {
+			stack.add(item.copy());
+		}
+		
+//		System.out.println("CTStack.reestablish: "+stack.ident());
+//		stack.dumpStack("RESTORE: ");
+	}
+	
+	public static boolean equals(NamedStack<CTStackItem> stack1, NamedStack<CTStackItem> stack2) {
+//		System.out.println("\nCTStack.equals: "+stack1.ident()+"  "+stack2.ident());
+//		stack1.dumpStack("CTStack.equals: STACK-1");
+//		stack2.dumpStack("CTStack.equals: STACK-2");
+		if(stack1.size() != stack2.size()) return false;
+		for(int i=0;i<stack1.size();i++) {
+			CTStackItem itm1 = stack1.get(i);
+			CTStackItem itm2 = stack2.get(i);
+			if(itm1.type == null) {
+				if(itm2.type != null) return false;				
+			} else {
+				if(itm1.type.tag != itm2.type.tag) return false;
+			}
+		}
+		return true;
+	}
+
+	/// * remember stack;
+	/// * purge stack;
+	public static void SAVE(String ident) {
+//		System.out.println("CTStack.SAVE: STACK="+stack.ident());
 		saveStack.push(stack);
-		stack = new Stack<CTStackItem>();
+		stack = new NamedStack<CTStackItem>(ident);
 	}
 
-	public static void restoreState() {
+	public static void RESTORE() {
 		stack = saveStack.pop();
+//		System.out.println("CTStack.RESTORE: STACK="+stack.ident());
+//		stack.dumpStack("RESTORE: ");
+	}
+
+	/// * remember stack;
+	/// * purge stack;
+	public static void BSEG(String ident) {
+//		System.out.println("CTStack.BSEG: STACK="+stack.ident());
+		bsegStack.push(stack);
+		stack = new NamedStack<CTStackItem>(ident);
+	}
+
+	public static void ESEG() {
+		stack = bsegStack.pop();
+//		System.out.println("CTStack.ESEG: STACK="+stack.ident());
+//		stack.dumpStack("RESTORE: ");
 	}
 	
 	public static CTStackItem TOS() { // Top of Compile-time stack
+		if(stack.size() < 1) {
+			stack.dumpStack("CTSTACK UNDERFLOW at TOS");
+			Util.IERR("CTSTACK UNDERFLOW at SOS");
+		}
 		return stack.getLast();
 	}
 	
 	public static CTStackItem SOS() { // Second of Compile-time stack
+		if(stack.size() < 2) {
+			stack.dumpStack("CTSTACK UNDERFLOW at SOS");
+			Util.IERR("CTSTACK UNDERFLOW at SOS");
+		}
 		return stack.get(stack.size()-2);
 	}
 	
@@ -46,12 +130,12 @@ public class CTStack {
 	}
 	
 	public static void push(CTStackItem s) {
-//		System.out.println("CTStack.push: " + s.edMode() + " " + s);
+//		System.out.println("CTStack.push: " + s.edMode() + " " + s+"  STACK="+stack.ident());
 		stack.push(s);
 	}
 	
 	public static void pushTempVAL(Type type, int count, String comment) {
-//		System.out.println("CTStack.pushTempVAL: " + type + " " + count + " " + comment);
+//		System.out.println("CTStack.pushTempVAL: " + type + " " + count + " " + comment+"  STACK="+stack.ident);
 		push(new Temp(CTStackItem.Mode.VAL, type, count, comment));
 	}
 	
@@ -103,6 +187,10 @@ public class CTStack {
 		CTStack.dumpStack("STKERR: ");
 		Global.PSEG.dump("STKERR: ");
 		Util.IERR("FORCED EXIT: " + msg);
+	}
+
+	public static void forceTosValue() {
+		FETCH.doFetch("forceTosValue");
 	}
 
 	public static void checkTosRef() {
@@ -180,27 +268,18 @@ public class CTStack {
 	}
 
 	public static void checkStackEmpty() {
-		if(stack.size() != 0) STKERR("Stack should be empty");
-		stack = new Stack<CTStackItem>();
+		if(stack.size() != 0) {
+			STKERR("Stack should be empty");
+			stack = new NamedStack<CTStackItem>("ERR");
+		}
 	}
 
 	public static void dumpStack(String title) {
-		String lead = title + ": Current Stack";
-		if(stack.empty()) {
-			System.out.println(lead + ": **Empty**");				
-		} else {
-			System.out.println(lead);
-			lead ="  TOS: ";
-			for(int i=stack.size()-1;i>=0;i--) {
-				CTStackItem item = stack.get(i);
-				String mode = item.edMode();
-//				if(item instanceof ProfileItem) System.out.println(lead+"PROFILE:  " + item);
-//				else if(item instanceof AddressItem) System.out.println(lead+"REF:      " + item);
-//				else System.out.println(lead+"VAL:      " + item.getClass().getSimpleName() + "  " + item);
-				System.out.println(lead + mode + item);
-				lead ="       ";					
-			}
-		}
+		stack.dumpStack(0, title);
+	}
+
+	public static void dumpStack(int level, String title) {
+		stack.dumpStack(level, title);
 	}
 
 	public static Type arithType(Type t1, Type t2) { // export range(0:MaxType) ct;

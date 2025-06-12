@@ -80,17 +80,19 @@ public class Type {
 	}
 
 	public static void newRecType(RecordDescr rec) {
-//		Type x = new Type(rec.size, null, rec.tag.toString());
+		System.out.println("DataType.newRecType: " + Scode.edTag(rec.tag.val) + ", size="+rec.size);
 		Type type = new Type(rec.tag.val, rec.size);
 		type.rep0size = rec.nbrep;
 		type.comment = "From " + rec;
-		if(TMAP.get(rec.tag.val) != null) {
+		Type old = TMAP.get(rec.tag.val);
+		if(old != null) {
+			System.out.println("DataType.newRecType: old=" + old);
 			if(rec.tag.val != Scode.TAG_STRING)	Util.IERR("Already defined: " + type);
 		} else {
+//			if(rec.tag.val == 2483) Util.IERR("");
 			TMAP.put(rec.tag.val, type);
 			RECTYPES.add(type);
 		}
-//		System.out.println("DataType.newRecType: " + Scode.edTag(tag) + ", size="+size);
 	}
 	
 	public static void removeFromTMAP(int tag) {
@@ -142,6 +144,7 @@ public class Type {
 
 	private static Type newBasType(int tag, int size) {
 		Type type = new Type(tag, size);
+		if(tag == 2483) Util.IERR("");
 		TMAP.put(tag, type);
 		return type;
 	}
@@ -188,6 +191,10 @@ public class Type {
 			
 			if(tag == Scode.TAG_STRING) ; // OK Predefinert
 			else if(TMAP.get(tag) ==null) {
+				if(tag == 2483) {
+					System.out.println("Type.readRECTYPES: NEW Type: " + type + ", tag=" + tag);
+//					Util.IERR("");
+				}
 				TMAP.put(tag, type);
 				RECTYPES.add(type);
 //				Type.dumpTypes("Type.readRECTYPES: ");
@@ -195,6 +202,7 @@ public class Type {
 //			System.out.println("Type.readRECTYPES: NEW Type: " + type);
 //			Util.IERR("");
 		}
+//		Type.dumpTypes("Type.readRECTYPES: ");
 	}
 
 	public void write(AttributeOutputStream oupt) throws IOException {

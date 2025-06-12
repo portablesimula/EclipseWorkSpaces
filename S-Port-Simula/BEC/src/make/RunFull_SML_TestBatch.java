@@ -94,6 +94,8 @@ public final class RunFull_SML_TestBatch {
 		names.add("smltst40.scd"); // Fixup Object Address
 		names.add("smltst41.scd"); // Shift opr: LSHIFTL, RSHIFTL, LSHIFTA, RSHIFTA
 		names.add("smltst42.scd"); // Test routine MOVEIN
+		names.add("smltst43.scd"); // Test name(infix) parameter
+		names.add("smltst44.scd"); // Test Routine MODULO
 
 		for (String name : names) {
 			String fileName = smlSCodeDir + name;

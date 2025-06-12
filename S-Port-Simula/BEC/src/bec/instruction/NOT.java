@@ -18,8 +18,7 @@ public abstract class NOT extends Instruction {
 	 * TOS is replaced by a description of the negated TOS value.
 	 */
 	public static void ofScode() {
-//		CTStack.dumpStack();
-//		Global.PSEG.dump();
+		CTStack.forceTosValue();			
 		CTStackItem tos = CTStack.TOS();
 	    
 	    Type at = tos.type;

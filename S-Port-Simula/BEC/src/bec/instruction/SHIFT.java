@@ -32,12 +32,7 @@ public abstract class SHIFT extends Instruction {
 	 * SOS op TOS. All arithmetic on subranges of INT should be performed in full integer arithmetic. 
 	 */
 	public static void ofScode(int instr) {
-//		BITWISE_SHIFT shift = new BITWISE_SHIFT();
-//		shift.instr = instr;
-		
-//		CTStack.checkTosArith(); CTStack.checkSosArith(); CTStack.checkSosValue(); CTStack.checkTypesEqual();
-
-//		CTStack.checkTosInt(); CTStack.checkSosArith(); CTStack.checkSosValue();
+		CTStack.forceTosValue();			
 		CTStackItem tos = CTStack.TOS();
 		CTStackItem sos = CTStack.SOS();
 //	    Type at = CTStack.arithType(tos.type, sos.type);

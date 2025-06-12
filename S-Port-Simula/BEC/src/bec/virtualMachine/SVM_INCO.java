@@ -28,7 +28,8 @@ public class SVM_INCO extends SVM_Instruction {
 			System.out.println("SVM_INCO: SOS: " + sos);
 			System.out.println("SVM_INCO: " + sos + " + " + tos);
 		}
-		ObjectAddress res = (sos == null)? new ObjectAddress(null, tos) : sos.addOffset(tos);
+//		ObjectAddress res = (sos == null)? new ObjectAddress(null, tos) : sos.addOffset(tos);
+		ObjectAddress res = (sos == null)? ObjectAddress.ofRelFrameAddr(tos) : sos.addOffset(tos);
 		if(DEBUG) System.out.println("SVM_INCO: " + sos + " + " + tos + " ==> " + res);
 		RTStack.push(res, "SVM_INCO: " + tos + " + " + sos + " = " + res);
 		Global.PSC.addOfst(1);
