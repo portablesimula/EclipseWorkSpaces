@@ -81,7 +81,7 @@ begin ! the main program reading and treating full program lines;
       !*** unknowns must have a declquant ***;
       unknowns.declquant:-setprefgoing; setprefgoing.descr:-unknowns;
       !*** Form full program head string ***;
-      progheadstring:- gettextinfo(13);
+      progheadstring:- ENV.ENV_gettextinfo(13);
       progheadstring:- timestamp.sub(1,23) & sportid & progheadstring;
 
 end   ******  PASS 1  ******;

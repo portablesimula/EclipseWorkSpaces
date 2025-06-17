@@ -29,6 +29,7 @@ begin
 
       procedure ENDCOMP; goto FINI;
 
+
 %+T TRC("FECMAIN",sourceline,"PASS 1 BEGIN");
     !****************   P  A  S  S    1   ****************;
     !******;                                        !*****;

@@ -73,6 +73,8 @@ SimulaTest(79,"--- Test the attribute 'isopen' of class File.") begin
    xf qua Infile.open(blanks(10));
    Test(sourceline,xf.isopen, true, 2);
 
+   xf qua Infile.close;
+
    xf:- new Infile(anyExistingImagefile);             !***** NOTE 1, NOTE 3 *****;
    Test(sourceline,xf.isopen, false, 3);
 

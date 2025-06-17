@@ -142,7 +142,7 @@ begin text txt; short integer iii;
 
 %    ********   former procedure "initialize"   *********
 
-            NoneCheck:=BoundCheck:= getintinfo(9)=0;
+            NoneCheck:=BoundCheck:= ENV.ENV_getintinfo(9)=0;
 %-Z         QuaCheck:=true;
 %+Z         QuaCheck:=false; !no qua-test generated default in compiler;
             maxtagstack:=125; !maxblev//2;
@@ -346,7 +346,7 @@ begin text txt; short integer iii;
          L2buf:-L2codebuffer;
          implNone:=true;
 
-%+D         t:-gettextinfo(16);
+%+D         t:-ENV.ENV_gettextinfo(16);
 %+D         for i:=0 step 1 until 95 do option(i):=NUL;
 %+D         while t.more do begin
 %+D            if t.getchar=':' then begin

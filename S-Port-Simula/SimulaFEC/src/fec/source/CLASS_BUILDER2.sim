@@ -609,12 +609,11 @@ restartloop:
 %+Z            clf:=permt.getchar;
 %+Z			end;
 
-%+TZ        if idlength = NUL then outtext("PROCEDURE PARAMETER: ");  !procedure parameter;
-%+T    		outtext(K_code(kind) & " " & symb.symbol);
-%+T    		outtext(", exttag=" & edit(xtag) & ", type=" & edType(type));
-%+T    		outtext(", kind=" & K_code(kind) & ", categ=" & C_code(categ) & ", clf=" & edit(rank(clf)));
-% +TZ   		outtext(", permt=""" & permt.sub(2,permt.length-1) & """");
-%+T    		outimage;
+% +TZ        if idlength = NUL then outtext("PROCEDURE PARAMETER: ");  !procedure parameter;
+% +T    		outtext(K_code(kind) & " " & symb.symbol);
+% +T    		outtext(", exttag=" & edit(xtag) & ", type=" & edType(type));
+% +T    		outtext(", kind=" & K_code(kind) & ", categ=" & C_code(categ) & ", clf=" & edit(rank(clf)));
+% +T    		outimage;
 
 
             !*** basic quantity descriptor, size computed above ***;
@@ -1746,9 +1745,10 @@ begin
                         if q.descr is extbrecord then begin
                            ! Allocate tags to external Simula module;
                            
-		 				   sysout.outtext("BUILDER2-LINE "); sysout.outint(sourceline,0);
-							      sysout.outtext(": ALLOCATE-EXTERNAL: fTag="); sysout.outint(lastusedtag+1, 0); 
-						  		  sysout.outtext("  count="); sysout.outint(q.descr qua extbrecord.exttagnum, 0); sysout.outimage;
+%		 				   sysout.outtext("BUILDER2-LINE "); sysout.outint(sourceline,0);
+%							      sysout.outtext(": ALLOCATE-EXTERNAL: fTag="); sysout.outint(lastusedtag+1, 0); 
+%						  		  sysout.outtext("  count="); sysout.outint(q.descr qua extbrecord.exttagnum, 0); sysout.outimage;
+						   sysout.outtext("*** WARNING: Seperate compiled class/procedure is not fully implemented. May result in bad S-Code"); sysout.outimage;
 
                            q.descr qua extbrecord.ftag:=lastusedtag+1;
                            newTags(q.descr qua extbrecord.exttagnum);

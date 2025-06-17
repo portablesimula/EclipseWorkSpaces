@@ -787,4 +787,141 @@ public final class RTS_TXT {
 			T.OBJ.MAIN[T.START + i] = item[i];
 	}
 
+	
+	/// Text Extension Procedure trim.
+	/// 
+	/// Convert the text by removing all leading and trailing white spaces.
+	/// 
+	/// @param T a text reference
+	/// @return the converted text.
+	public static RTS_TXT trim(final RTS_TXT T) {
+		String t = T.edText().strip();
+		return new RTS_TXT(t);
+	}
+
+	/// Text Extension Procedure loadChar.
+	/// 
+	/// Load a character from a text.
+	///
+	/// Note: character positions are counted from zero.
+	/// 
+	/// @param T a text reference
+	/// @param p the text position in which the character is stored 
+	/// @return the character at position p
+	public static char loadChar(final RTS_TXT T, final int p) {
+		// Returns the character at position p+1 (NB).
+		// I.e. characters are counted from zero
+		// c=t.char[p];
+		RTS_TEXTOBJ obj = T.OBJ;
+		char c = obj.MAIN[T.START + p];
+		return (c);
+	}
+
+
+	/// Text Extension Procedure storeChar.
+	/// 
+	/// Store character into a text.
+	///
+	/// Note: character positions are counted from zero.
+	/// 
+	/// @param T a text reference
+	/// @param c a character
+	/// @param p the text position in which the character is stored 
+	public static void storeChar(final RTS_TXT T, char c, final int p) {
+		// Deposit c at position p+1 (NB).
+		// I.e. characters are counted from zero
+		// t.char[p]=c;
+		RTS_TEXTOBJ obj = T.OBJ;
+		obj.MAIN[T.START + p] = c;
+	}
+
+	/// Text Extension Procedure startsWith.
+	/// 
+	/// Tests if the text 'T' starts with the specified prefix.
+	/// 
+	/// @param T a text reference
+	/// @param U prefix text
+	/// @return true if the text 'T' starts with the specified prefix; false otherwise. 
+	public static boolean startsWith(final RTS_TXT T, final RTS_TXT U) {
+		String t = T.edText();
+		String u = U.edText();
+		return t.startsWith(u);
+	}
+
+	/// Text Extension Procedure endsWith.
+	/// 
+	/// Tests if the text 'T' ends with the specified prefix.
+	/// 
+	/// @param T a text reference
+	/// @param U prefix text
+	/// @return true if the text 'T' ends with the specified prefix; false otherwise. 
+	public static boolean endsWith(final RTS_TXT T, final RTS_TXT U) {
+		String t = T.edText();
+		String u = U.edText();
+		return t.endsWith(u);
+	}
+
+	/// Text Extension Procedure indexOf.
+	/// 
+	/// Return the index of the first occurrence of the character 'c'
+	///
+	/// Note: character positions are counted from zero.
+	/// 
+	/// @param T a text reference
+	/// @param c a character
+	/// @return the index of the first occurrence of the character 'c', or -1 if the character does not occur.
+	public static int indexOf(final RTS_TXT T, final char c) {
+		String t = T.edText();
+		return t.indexOf(c);
+	}
+
+	/// Text Extension Procedure replace.
+	/// 
+	/// Return a text copy resulting from replacing all occurrences of oldChar with newChar.
+	/// 
+	/// @param T a text reference
+	/// @param oldChar a character
+	/// @param newChar a character
+	/// @return a text resulting from replacing all occurrences of oldChar with newChar.
+	public static RTS_TXT replace(final RTS_TXT T, final char oldChar, final char newChar) {
+		String t = T.edText().replace(oldChar, newChar);
+		return new RTS_TXT(t);
+	}
+
+	/// Text Extension Procedure replace.
+	/// 
+	/// Return a text copy resulting from replacing all occurrences of oldChar with newChar.
+	/// 
+	/// @param T a text reference
+	/// @param oldChar a character
+	/// @param newChar a character
+	/// @return a text resulting from replacing all occurrences of oldChar with newChar.
+	public static RTS_TXT replaceText(final RTS_TXT T, final RTS_TXT oldText, final RTS_TXT newText) {
+		String oldStr = oldText.edText();
+		String newStr = newText.edText();
+		String t = T.edText().replace(oldStr, newStr);
+		return new RTS_TXT(t);
+	}
+
+	/// Text Extension Procedure toLowerCase.
+	/// 
+	/// Converts all the characters in 'T' to lower case 
+	/// 
+	/// @param T a text reference
+	/// @return the converted text.
+	public static RTS_TXT toLowerCase(final RTS_TXT T) {
+		String t = T.edText().toLowerCase();
+		return new RTS_TXT(t);
+	}
+
+	/// Text Extension Procedure toUpperCase.
+	/// 
+	/// Converts all the characters in 'T' to upper case 
+	/// 
+	/// @param T a text reference
+	/// @return the converted text.
+	public static RTS_TXT toUpperCase(final RTS_TXT T) {
+		String t = T.edText().toUpperCase();
+		return new RTS_TXT(t);
+	}
 }

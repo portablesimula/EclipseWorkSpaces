@@ -42,7 +42,7 @@ public class RTDirectfile extends RTImageFile {
 		RECORDSIZE = imglng;
 		MAXLOC = Integer.MAX_VALUE - 1;
 		try {
-			System.out.println("NEW RTOutfile: fileName=" + fileName);
+//			System.out.println("NEW RTDirectfile: fileName=" + fileName);
 //			writer = new FileWriter(file, this.fileAction._APPEND);
 			String mode = "rws"; // mode is one of "r", "rw", "rws", or "rwd"
 			if (fileAction._SYNCHRONOUS)

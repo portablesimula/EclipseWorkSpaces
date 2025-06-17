@@ -115,6 +115,21 @@ public final class StandardClass extends ClassDeclaration {
 		typeText.addStandardProcedure(ObjectKind.MemberMethod,null,"putfrac",parameter("i",Type.Integer),parameter("n",Type.Integer));  
 		typeText.addStandardProcedure(ObjectKind.MemberMethod,mtd,null,"putfix", parameter("r",new OverLoad(Type.Real,Type.LongReal)),parameter("n",Type.Integer)); 
 		typeText.addStandardProcedure(ObjectKind.MemberMethod,mtd,null,"putreal",parameter("r",new OverLoad(Type.Real,Type.LongReal)),parameter("n",Type.Integer)); 
+		// **************************************
+		// *** Additional Text Procedures ***
+		// **************************************
+		if(Option.EXTENSIONS) {
+			typeText.addStandardProcedure(ObjectKind.MemberMethod,Type.Text,"trim"); 
+			typeText.addStandardProcedure(ObjectKind.MemberMethod,Type.Character,"loadChar",parameter("i",Type.Integer)); 
+			typeText.addStandardProcedure(ObjectKind.MemberMethod,null,"storeChar",parameter("c",Type.Character),parameter("i",Type.Integer)); 
+			typeText.addStandardProcedure(ObjectKind.MemberMethod,Type.Boolean,"startsWith",parameter("t",Type.Text)); 
+			typeText.addStandardProcedure(ObjectKind.MemberMethod,Type.Boolean,"endsWith",parameter("t",Type.Text)); 
+			typeText.addStandardProcedure(ObjectKind.MemberMethod,Type.Integer,"indexOf",parameter("c",Type.Character)); 
+			typeText.addStandardProcedure(ObjectKind.MemberMethod,Type.Text,"replace",parameter("old",Type.Character),parameter("new",Type.Character)); 
+			typeText.addStandardProcedure(ObjectKind.MemberMethod,Type.Text,"replaceText",parameter("old",Type.Text),parameter("new",Type.Text)); 
+			typeText.addStandardProcedure(ObjectKind.MemberMethod,Type.Text,"toLowerCase"); 
+			typeText.addStandardProcedure(ObjectKind.MemberMethod,Type.Text,"toUpperCase"); 
+		}
 	}
 
 	// ******************************************************************
@@ -295,6 +310,9 @@ public final class StandardClass extends ClassDeclaration {
 				,parameter("x",new OverLoad(Type.Real,Type.LongReal)),parameter("n",Type.Integer));
 			ENVIRONMENT.addStandardProcedure(ObjectKind.ContextFreeMethod,mtd6,Type.Text,"edtime"
 				,parameter("x",new OverLoad(Type.Real,Type.LongReal)));
+			ENVIRONMENT.addStandardProcedure(ObjectKind.ContextFreeMethod,Type.Text,"argv",parameter("index",Type.Integer)); 
+			ENVIRONMENT.addStandardProcedure(ObjectKind.ContextFreeMethod,null,"exit",parameter("status",Type.Integer)); 
+			ENVIRONMENT.addStandardProcedure(ObjectKind.ContextFreeMethod,Type.Integer,"hash",parameter("t",Type.Text));
 		}
 		
 		// *****************************************
@@ -302,7 +320,7 @@ public final class StandardClass extends ClassDeclaration {
 		// *****************************************
 		if(Option.internal.SPORT) {
 			ENVIRONMENT.addStandardProcedure(ObjectKind.ContextFreeMethod,null,"DEFEXCEPTION",parameter("erh",Parameter.Kind.Procedure,Parameter.Mode.value,null));
-			ENVIRONMENT.addStandardProcedure(ObjectKind.ContextFreeMethod,Type.Integer,"hash",parameter("t",Type.Text));
+//			ENVIRONMENT.addStandardProcedure(ObjectKind.ContextFreeMethod,Type.Integer,"hash",parameter("t",Type.Text));
 			ENVIRONMENT.addStandardProcedure(ObjectKind.ContextFreeMethod,Type.Character,"loadChar",parameter("t",Type.Text),parameter("i",Type.Integer)); 
 			ENVIRONMENT.addStandardProcedure(ObjectKind.ContextFreeMethod,null,"storeChar",parameter("c",Type.Character),parameter("t",Type.Text),parameter("i",Type.Integer)); 
 			ENVIRONMENT.addStandardProcedure(ObjectKind.ContextFreeMethod,Type.Text,"getTextInfo",parameter("i",Type.Integer)); 

@@ -676,7 +676,7 @@ public final class SimulaScanner extends DefaultScanner {
     				String result=accumulatedTextConstant.toString(); accumulatedTextConstant=null;
     				if(Option.internal.TRACE_SCAN) Util.TRACE("scanTextConstant(2): Result=\""+result+"\", "+edcurrent());
     				if(firstLine<lastLine)
-    					Util.warning("Illegal Text constant. Simple string span mutiple source lines. See Simula Standard 1.6");
+    					Util.warning("Illegal Text constant. Simple string span mutiple source lines ("+firstLine+':'+lastLine+"). See Simula Standard 1.6");
     				tokenQueue.add(newToken(KeyWord.TEXTKONST,result));
     				break LOOP;
     			}

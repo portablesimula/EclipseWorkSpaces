@@ -15,7 +15,7 @@ import bec.virtualMachine.SVM_NOOP;
 
 public abstract class IfConstrction {
 	
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 
 	private IfConstrction() {
 	}

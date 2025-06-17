@@ -81,6 +81,7 @@ public final class ObjectKind {
 
 	/** Null */						public static final int NULL = 0;
 	/** Object Reference */			public static final int ObjectReference = 60;
+	/** Undefined */				public static final int UndefinedDeclaration = 61;
 
 	/** Max Value */				public static final int MAX_VALUE = 63;
 
@@ -118,6 +119,7 @@ public final class ObjectKind {
 			case ExternalDeclaration:		return "ExternalDeclaration";
 			case HiddenSpecification:		return "HiddenSpecification";
 			case ProtectedSpecification:	return "ProtectedSpecification";
+			case UndefinedDeclaration:		return "UndefinedDeclaration";
 			
 			case ActivationStatement:		return "ActivationStatement";
 			case BlockStatement:			return "BlockStatement";

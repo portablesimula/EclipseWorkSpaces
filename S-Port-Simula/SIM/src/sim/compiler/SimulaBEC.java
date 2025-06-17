@@ -12,7 +12,7 @@ public abstract class SimulaBEC {
 		cmds.add("java");
 		cmds.add("-jar");
 		cmds.add("C:\\SPORT\\CommonBEC.jar");
-		cmds.add("-verbose");
+		if(becVerbose) cmds.add("-verbose");
 		if(becSCodeTrace) cmds.add("-inputTrace");
 		if(becTraceSVM_CODE) cmds.add("-traceSVM_CODE");
 		if(becTraceSVM_DATA) cmds.add("-traceSVM_DATA");

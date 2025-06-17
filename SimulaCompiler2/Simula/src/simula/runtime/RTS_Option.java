@@ -5,6 +5,9 @@ public class RTS_Option {
 	
 	/// Default constructor.
 	RTS_Option() {}
+	
+	/// Command line arguments
+	public static String[] argv;
 
 	/// Output messages about what the RTS is doing.
 	/// Default: false.

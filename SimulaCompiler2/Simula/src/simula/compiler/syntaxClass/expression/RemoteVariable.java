@@ -21,6 +21,7 @@ import simula.compiler.syntaxClass.declaration.Parameter;
 import simula.compiler.syntaxClass.declaration.ProcedureDeclaration;
 import simula.compiler.syntaxClass.declaration.StandardClass;
 import simula.compiler.syntaxClass.declaration.StandardProcedure;
+import simula.compiler.syntaxClass.declaration.UndefinedDeclaration;
 import simula.compiler.syntaxClass.declaration.VirtualSpecification;
 import simula.compiler.utilities.Global;
 import simula.compiler.utilities.Meaning;
@@ -100,13 +101,22 @@ public final class RemoteVariable extends Expression {
 		Type result;
 		obj.doChecking();
 		Type objType = obj.type;
+		if(objType == null) {
+			Util.error("doRemoteChecking: Object Expression (" + obj + ") has no type");
+			return Type.Undef;
+		}
+//		if(objType.keyWord == Type.T_UNDEF) {
+//			return Type.Undef;
+//		}
 		if (objType.keyWord == Type.T_TEXT)
 			return (doRemoteTextChecking(obj, attr));
 
 		objType.doChecking(Global.getCurrentScope()); // Nødvendig hvis TypeDeclaration er nedenfor
 		ClassDeclaration qual = objType.getQual();
-		if (qual == null)
-			Util.error("doRemoteChecking: Object Expression (" + obj + ") is not a ref() type rather " + objType);
+		if (qual == null) {
+			if(objType.keyWord != Type.T_UNDEF)
+				Util.error("doRemoteChecking: Object Expression (" + obj + ") is not a ref() type rather " + objType);
+		}
 		else if (qual.hasLocalClasses)
 			if(Option.internal.SPORT)
 			     Util.warning("Illegal remote access into object of class with local classes.");
@@ -117,8 +127,11 @@ public final class RemoteVariable extends Expression {
 			qual = objType.getQual();
 			if(qual!=null) remoteAttribute = qual.findRemoteAttributeMeaning(ident);
 			if (remoteAttribute == null) {
-				Util.error("RemoteVariable.doRemoteChecking: " + ident + " is not an attribute of "	+ objType.getRefIdent());
-				return (Type.Integer); // Error Recovery
+				if(objType.keyWord != Type.T_UNDEF)
+					Util.error("RemoteVariable.doRemoteChecking: " + ident + " is not an attribute of "	+ objType.getRefIdent());
+				UndefinedDeclaration undef = new UndefinedDeclaration(ident);
+				remoteAttribute = new Meaning(undef, Global.getCurrentScope()); // Error Recovery
+//				return (Type.Integer); // Error Recovery
 			}
 			var.setRemotelyAccessed(remoteAttribute);
 

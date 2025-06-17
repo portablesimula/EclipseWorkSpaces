@@ -34,8 +34,7 @@ public class RTDirectBytefile extends RTByteFile {
 		}
 		MAXLOC = Integer.MAX_VALUE - 1;
 		try {
-			System.out.println("NEW RTInbytefile: fileName=" + fileName);
-//			lineReader = new BufferedReader(new FileReader(file));
+//			System.out.println("NEW RTDirectBytefile: fileName=" + fileName);
 			String mode = "rws"; // mode is one of "r", "rw", "rws", or "rwd"
 			if (fileAction._SYNCHRONOUS)
 				mode = "rws";

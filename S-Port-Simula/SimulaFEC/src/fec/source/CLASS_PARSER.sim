@@ -796,10 +796,10 @@ readspecificationexit:
 %+Z              else attrfilename;
 %+Z            checkcode:-copy("SYS");
 %+Z         end else begin
-%+T			   TRC("PARSER",sourceline,"REGSEPCOMP: giveTextInfo(1,""" & nameof(opdhi,opdlo) & """)");
-               givetextinfo(1,nameof(opdhi,opdlo));
-               attrfilename:-gettextinfo(11);
-               moduleident:-gettextinfo(14); checkcode:-gettextinfo(15);
+%+T			   TRC("PARSER",sourceline,"REGSEPCOMP: ENV.giveTextInfo(1,""" & nameof(opdhi,opdlo) & """)");
+               ENV.givetextinfo(1,nameof(opdhi,opdlo));
+               attrfilename:-ENV.ENV_gettextinfo(11);
+               moduleident:-ENV.ENV_gettextinfo(14); checkcode:-ENV.ENV_gettextinfo(15);
                if checkcode==notext then checkcode:-timestamp;
                if not recomp and moduleident=notext then begin
                   if GiveNotes then note1(397,attrfilename);

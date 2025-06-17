@@ -1,6 +1,6 @@
-external class adHocPRE;
-
-adHocPRE(1430,"--- Simple test.") begin
-
+begin
+	text array facit(0:17);
 	
-end
+	facit(0) :- "At START";
+	
+ end;

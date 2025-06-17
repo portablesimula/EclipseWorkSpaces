@@ -12,6 +12,7 @@ import java.lang.classfile.CodeBuilder;
 import java.lang.classfile.constantpool.ConstantPoolBuilder;
 import java.lang.constant.ClassDesc;
 
+import simula.compiler.syntaxClass.Type;
 import simula.compiler.utilities.DeclarationList;
 import simula.compiler.utilities.RTS;
 import simula.compiler.utilities.Global;
@@ -156,9 +157,9 @@ public abstract class DeclarationScope extends Declaration  {
 		if (meaning == null) {
 			if (!Global.duringParsing) {
 				Util.error("Undefined variable: " + identifier);
-				Thread.dumpStack();
 			}
-			meaning = new Meaning(null, null); // Error Recovery: No Meaning
+			UndefinedDeclaration undef = new UndefinedDeclaration(identifier);
+			meaning = new Meaning(undef, this); // Error Recovery
 		}
 		return (meaning);
 	}

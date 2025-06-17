@@ -118,7 +118,7 @@ begin
             end
        else if i > 0 and then i <= uplim then begin
                if ERRORFILE==none then begin
-                  t:-gettextinfo(22);
+                  t:-ENV.ENV_gettextinfo(22);
                   if t==notext then t:-"FECERROR";   ! WHAT ELSE ?;
                   ERRORFILE:-new directfile(t);
                   ERRORFILE.setaccess("READONLY");

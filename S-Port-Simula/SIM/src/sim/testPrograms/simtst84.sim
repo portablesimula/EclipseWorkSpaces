@@ -71,7 +71,7 @@ SimulaTest(84,"--- Test Directbytefile") begin
 			end;
 
 			locate(1); t:-blanks(35); intext(t);
-			sysout.outtext(t); outimage;
+%			sysout.outtext(t); outimage;
 			trace("Test2: " & t);
 
 			for i:=2,3,1,5,4 do begin

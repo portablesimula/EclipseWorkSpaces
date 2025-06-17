@@ -281,7 +281,7 @@ public abstract class Expression extends SyntaxClass {
 
 	/// Parse Utility: Accept multiplicative operation.
 	/// <pre>
-	/// Term  =  Factor  {  (/// | / | // )  Factor }
+	/// Term  =  Factor  {  ( * | / | // )  Factor }
 	/// </pre>
 	/// @return an expression
 	private static Expression acceptMULDIV() {

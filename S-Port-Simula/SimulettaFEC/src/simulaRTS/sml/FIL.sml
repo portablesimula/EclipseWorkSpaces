@@ -550,7 +550,7 @@ DEFINE ENO_FST_1 =113, -- Invalid filekey
        infix(txtqnt) filact;
        res:=false; acc:=STRIP(acc);
        if acc.ent=none then goto F1 endif; -- notext AFTER strip
-       ED_STR("FIL.SETACC: fil="); ED_TXT(fil.nam); ED_STR(", acc="); ED_TXT(acc); ED_OUT;
+%      ED_STR("FIL.SETACC: fil="); ED_TXT(fil.nam); ED_STR(", acc="); ED_TXT(acc); ED_OUT;
        lng:=acc.lp-acc.sp; if lng>255 then goto F2 endif; -- too long
        filact:=fil.action;
        acc:=COPY(acc); UPTX(acc); -- TEMP until STRequal incl.
@@ -571,8 +571,8 @@ DEFINE ENO_FST_1 =113, -- Invalid filekey
 ---                if TXTREP(accstr,accstring(pos),2)
 				   if STRequal(accstr,accstring(pos))
                    then ch:=accesscode(pos); pos:=accesspos(pos);
-						ED_STR("FIL.SETACC: fil="); ED_TXT(fil.nam); ED_STR(", accstr="); ED_STR(accstr); ED_OUT;
-						ED_STR("FIL.SETACC: pos="); ED_INT(pos); ED_STR(", ch="); ED_INT(ch); ED_OUT;
+%						ED_STR("FIL.SETACC: fil="); ED_TXT(fil.nam); ED_STR(", accstr="); ED_STR(accstr); ED_OUT;
+%						ED_STR("FIL.SETACC: pos="); ED_INT(pos); ED_STR(", ch="); ED_INT(ch); ED_OUT;
                         filact.ent.cha(pos):=ch qua character;
                         res:=true; goto T1
                    endif;

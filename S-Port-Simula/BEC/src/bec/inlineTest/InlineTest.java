@@ -9,7 +9,7 @@ public class InlineTest {
 		String scodeSource = Pick_RTS_Source();		
 //		String scodeSource = Pick_FEC_Source();
 		
-		Global.verbose = true;
+//		Global.verbose = true;
 		Global.traceMode = 4;
 		Global.SCODE_INPUT_TRACE = true;
 		Global.PRINT_GENERATED_SVM_CODE = true;

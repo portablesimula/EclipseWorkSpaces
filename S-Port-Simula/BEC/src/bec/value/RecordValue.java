@@ -169,7 +169,7 @@ public class RecordValue extends Value {
 			addValue(IntegerValue.of(Type.T_INT, txt.textValue.length()));
 			return 3;
 		} else if(value instanceof RecordValue rval) {
-			System.out.println("RecordValue.addValue: "+rval);
+//			System.out.println("RecordValue.addValue: "+rval);
 			int n = 0;
 			for(Value val:rval.attrValues) {
 				n = n + addValue(val);

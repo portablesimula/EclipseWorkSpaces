@@ -23,7 +23,7 @@ public class RTInbytefile extends RTByteFile {
 			return;
 		}
 		try {
-			System.out.println("NEW RTInbytefile: fileName=" + fileName);
+//			System.out.println("NEW RTInbytefile: fileName=" + fileName);
 			inputStream = new FileInputStream(file);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

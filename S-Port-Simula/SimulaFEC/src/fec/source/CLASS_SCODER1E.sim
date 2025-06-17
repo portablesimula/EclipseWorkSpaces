@@ -291,7 +291,7 @@ begin
                ! q is the sep. compiled proc/class;
                sim_id_tag:=identifiertag(q.symb);
             end;
-            simsymbol:-gettextinfo(1);
+            simsymbol:-ENV.ENV_gettextinfo(1);
             if simsymbol <> "sysin" then begin DEFCONST;
                source_tag:=identifiertag(boxof(hashhi,hashlo)); end;
             if separatecomp then begin

@@ -28,10 +28,44 @@ public class Make_SIM_Jarfile {
 			
 			SINGLE_INLINE_TEST();
 //			FULL_INLINE_TEST();
+//			INLINE_TEST_SAMPLES();
 			
 		} catch(Exception e) { e.printStackTrace(); }
 	}
 
+	@SuppressWarnings("unused")
+	private static void INLINE_TEST_SAMPLES() {
+		Vector<String> names = new Vector<String>();
+//		names.add("Atkins");
+//		names.add("FittingRoom");
+//		names.add("JensensDevice");
+		names.add("PrimeUnder");  // ERR
+//		names.add("Quine");
+//		names.add("TQueens"); // GARB
+		
+		
+//	verbose = true;
+//	fecListing = true;
+//	fecSCodeTrace = true;
+////	fecTraceLevel = 4;
+//
+//		becVerbose = true;
+////	becTraceSVM_CODE = true;
+////	becTraceSVM_DATA = true;
+////	becListing = true;
+//	becSCodeTrace = true;
+////	execTrace = 1;
+////	callTrace = 1;//2;
+////	dumpsAtExit = true;
+	
+		for(String name:names) {
+			//                C:\GitHub\EclipseWorkSpaces\S-Port-Simula\SIM\src\sim\samplePrograms\Atkins.sim
+			sourceFileName = "C:\\GitHub\\EclipseWorkSpaces/S-Port-Simula\\SIM\\src\\sim\\samplePrograms\\"+name+".sim";
+			sCodeFileName  = "C:\\GitHub\\EclipseWorkSpaces/S-Port-Simula\\SIM\\src\\sim\\samplePrograms\\scode\\"+name+".scd";
+			doCompile();
+		}
+	}
+	
 	@SuppressWarnings("unused")
 	private static void SINGLE_INLINE_TEST() {
 		Vector<String> names = new Vector<String>();
@@ -63,21 +97,21 @@ public class Make_SIM_Jarfile {
 //		names.add("simtst17"); // OK:  Editing and De-editing
 //		names.add("simtst18"); // OK:  The put- and get-procedures for texts.
 //		names.add("simtst19"); // OK:  Text concatenation and text expression evaluation.
-//		names.add("simtst20"); // OK:  Simple tests: integer relations <, <=, =, >=, > and <>
+		names.add("simtst20"); // OK:  Simple tests: integer relations <, <=, =, >=, > and <>
 //
 //		names.add("simtst21"); // OK:  Arrays of simple types and text.
 //		names.add("simtst22"); // OK:  Test for-loops with various for-list elements
 //		names.add("simtst23"); // OK:  Type conversions in for step-until element.
 //		names.add("simtst24"); // OK:  Conditional statements with more complex Boolean expressions.
 //		names.add("simtst25"); // OK:  Multiple arithmetic assignment
-////		names.add("simtst26"); // ERR:  Designational expressions, goto statement and switch declaration.  // SORRY, switch element requiring thunk IS NOT IMPLEMENTED
+//// NOT IMPL		names.add("simtst26"); // ERR:  Designational expressions, goto statement and switch declaration.  // SORRY, switch element requiring thunk IS NOT IMPLEMENTED
 //		names.add("simtst27"); // OK:  Test while-loops.
 //		names.add("simtst28"); // OK:  Paramenter transmission to procedures by value.
 //		names.add("simtst29"); // OK:  Procedure parameters by value
 //		names.add("simtst30a"); // OK:  Simple test of Arrays.
 //		names.add("simtst30"); // OK:  Name parameters (Modified: 2-dim arrays removed)
 //
-////		names.add("simtst31"); // ERR:  Labels and switches as parameters to procedures.  // SORRY, complex switch element IS NOT IMPLEMENTED
+//// NOT IMPL		names.add("simtst31"); // ERR:  Labels and switches as parameters to procedures.  // SORRY, complex switch element IS NOT IMPLEMENTED
 //		names.add("simtst32"); // OK:  Simple test of formal procedures.
 //		names.add("simtst33"); // OK:  Test call by reference
 //		names.add("simtst34"); // OK:  Procedures with procedures as parameters.
@@ -111,14 +145,14 @@ public class Make_SIM_Jarfile {
 //		names.add("simtst56"); // OK:  Test virtual procedures.
 //		names.add("simtst57"); // OK:  Virtual procedure - different number of parameters
 //		names.add("simtst58"); // OK:  Goto from within a connection into otherwise
-		names.add("simtst59"); // ERR:  Test 2-dim Array by value.
+////		names.add("simtst59"); // ERR:  Test 2-dim Array by value.
 //		names.add("simtst60"); // OK:  Visibility of protected attributes.
 //
 //		names.add("simtst61"); // OK:  Remote access to attributes which are protected.
 //		names.add("simtst62"); // OK:  Test complex use of detach and resume.  Re-trow
 //		names.add("simtst63"); // OK:  Transmission by name of reference types. 
-////		names.add("simtst64"); // ERR:  Parameter transmission by value to classes.
-////		names.add("simtst65"); // ERR:  Parameter transmission by reference to classes.
+//		names.add("simtst64"); // OK:  Parameter transmission by value to classes.
+//		names.add("simtst65"); // ERR:  Parameter transmission by reference to classes.
 //		names.add("simtst66"); // OK:  Test coroutines and two infiles which read from the same file.
 //		names.add("simtst67"); // OK:  Simple test of detach, call and resume.
 //		names.add("simtst68"); // OK:  Test of coroutines.
@@ -140,7 +174,7 @@ public class Make_SIM_Jarfile {
 //		names.add("simtst82"); // OK:  Simple test of the operations +, -, *, / and //.
 ////		names.add("simtst83"); // ERR:  Name Parameter with EXTREME BI-EFFECTS
 //		names.add("simtst84"); // OK:  Test DirectBytefile.
-////		names.add("simtst85"); // ERR:  Test Directfile.
+//		names.add("simtst85"); // ERR:  Test Directfile.
 //		names.add("Separat");  // OK:  Precompile this for Simtst 86.
 //		names.add("simtst86"); // OK:  Simple Test of Separately Compiled Class.
 //		names.add("simtst87"); // OK:  Specification of Virtual Procedures.
@@ -152,8 +186,8 @@ public class Make_SIM_Jarfile {
 ////		names.add("simtst92"); // ERR:  Test 1-dim Array by value.
 //		names.add("simtst93"); // OK:  Test Simset - linkage, head, link, into, out, follow and precede
 //		names.add("simtst94"); // OK:  Test Simset - first, last, empty, cardinal and clear.
-////		names.add("simtst95"); // ERR:  Test Environment Interface.
-////		names.add("simtst96"); // ERR:  Test hidden, protected attributes.
+//// NOT IMPL		names.add("simtst95"); // ERR:  Test Environment Interface.
+//		names.add("simtst96"); // OK:  Test hidden, protected attributes.
 //		names.add("simtst97"); // OK:  Test nested hidden and protected.
 ////		names.add("simtst98"); // ERR:  Test attribute protection - complex example. Test visibility of labels.
 //		names.add("simtst99");  // OK: Test mod, rem, min, max.
@@ -162,7 +196,7 @@ public class Make_SIM_Jarfile {
 //		names.add("simtst101"); // OK:  Test Standard Procedure 'sourceline'.
 //		names.add("simtst102"); // OK: GOTO out of an operating Process
 //		names.add("simtst103"); // OK: All kinds of Activation Statements
-////		names.add("simtst104"); // ERR: Procedure parameter 'F' by name.
+//		names.add("simtst104"); // OK: Procedure parameter 'F' by name.
 //		names.add("simtst105"); // OK: Multiple assignments.
 ////		names.add("simtst106"); // ERR: Test SIMULATION, complex example. FEILER OGSÅ I DET NYE
 //		names.add("simtst107"); // OK:  Test Process, activation statements, idle, terminated, time.
@@ -173,7 +207,7 @@ public class Make_SIM_Jarfile {
 //		names.add("simtst111"); // OK: Virtual Label Sample 1
 //		names.add("simtst112"); // OK: Virtual Label Sample 2
 ////		names.add("simtst113"); // ERR: Virtual Switch Sample 1
-////		names.add("simtst114"); // ERR: Switch Statement
+//// NOT IMPL		names.add("simtst114"); // ERR: Switch Statement
 //		names.add("simtst115"); // OK: Simple QPS-Sample 1
 //		names.add("simtst116"); // OK: Simple QPS-Sample 2
 //		names.add("simtst117"); // OK: Simple QPS-Sample 3
@@ -185,18 +219,18 @@ public class Make_SIM_Jarfile {
 //
 //		names.add("simtst121"); // OK: LEGAL GOTO out of an operating Process and the enclosing System.
 //		names.add("simtst122"); // OK: GOTO LABEL IN SUPER CLASS
-////		names.add("simtst123"); // ERR: GOTO VIRTUAL LABEL  // SORRY, switch element requiring thunk IS NOT IMPLEMENTED
+//// NOT IMPL		names.add("simtst123"); // ERR: GOTO VIRTUAL LABEL  // SORRY, switch element requiring thunk IS NOT IMPLEMENTED
 //		names.add("simtst124"); // OK: GOTO VIRTUAL LABEL
 //		names.add("simtst125"); // OK: GOTO LABEL WITHIN NESTED COMPOUND STATEMENTS
-//		names.add("simtst126"); // OK: GOTO SIMPLE SWITCH   // SORRY, switch element requiring thunk IS NOT IMPLEMENTED
-////		names.add("simtst127"); // ERR: Switch (character) Statement
+//// NOT IMPL		names.add("simtst126"); // OK: GOTO SIMPLE SWITCH   // SORRY, switch element requiring thunk IS NOT IMPLEMENTED
+//// NOT IMPL		names.add("simtst127"); // ERR: Switch (character) Statement
 //		names.add("simtst128"); // OK: Standard Procedure edit and edfix
 ////		names.add("Precompiled129"); // ERR: Precompile this for Simtst 129.
 ////		names.add("simtst129"); // ERR: Switch in precompiled class
-////		names.add("simtst130"); // ERR: Class SimLib, a set of utility procedures from DEC Handbook.  // NOT IMPLEMENTED
+//// NOT IMPL		names.add("simtst130"); // ERR: Class SimLib, a set of utility procedures from DEC Handbook.  // NOT IMPLEMENTED
 //
-////		names.add("simtst131"); // ERR: Catching Errors     // NOT IMPLEMENTED
-////		names.add("simtst132"); // ERR: SPORT Options
+//// NOT IMPL		names.add("simtst131"); // ERR: Catching Errors     // NOT IMPLEMENTED
+//// NOT IMPL		names.add("simtst132"); // ERR: SPORT Options
 //		names.add("simtst133"); // OK: Test infile reading with inimage and inrecord.
 //		names.add("simtst134"); // OK: Outfile with CREATE, APPEND, SYNCHRONOUS and PURGE.
 //		names.add("simtst135"); // OK: OutBytefile with CREATE, APPEND, SYNCHRONOUS and PURGE.
@@ -220,7 +254,7 @@ public class Make_SIM_Jarfile {
 //		names.add("simtst151"); // OK: Test multiple assignments
 //		names.add("simtst152"); // OK: Test nested connection statements
 //		names.add("simtst153"); // OK: Test GOTO ConditionalExpression
-////		names.add("simtst154"); // OK: Test function result assignment
+//		names.add("simtst154"); // OK: Test function result assignment
 ////		names.add("Pre155");    // ERR: Precompile this for Simtst 155.
 ////		names.add("simtst155"); // ERR: Test inspection in SubBlock in Precompiled inner class
 //		names.add("simtst156"); // OK: Test arrays in multiple assignments
@@ -229,19 +263,20 @@ public class Make_SIM_Jarfile {
 //		names.add("simtst159"); // OK: Test Specified Virtual Real Functions as part of an Expression
 //
 //		names.add("simtst160"); // OK: Test Specified Virtual Text Functions as part of an Expression
-////		names.add("simtst161"); // ERR: Test Specified Virtual ref-type Functions as part of an Expression
+//// NOT IMPL		names.add("simtst161"); // ERR: Test Specified Virtual ref-type Functions as part of an Expression
 //		names.add("simtst162"); // OK: Test Complicated nested inspection
 //		names.add("simtst163"); // OK: Test Inspect when, when, otherwise (selected)
 		
-//		verbose = true;
+		verbose = true;
 		fecListing = true;
 		fecSCodeTrace = true;
 //		fecTraceLevel = 4;
 
+		becVerbose = true;
 //		becTraceSVM_CODE = true;
 //		becTraceSVM_DATA = true;
 //		becListing = true;
-		becSCodeTrace = true;
+//		becSCodeTrace = true;
 //		execTrace = 1;
 //		callTrace = 1;//2;
 //		dumpsAtExit = true;
@@ -339,7 +374,7 @@ public class Make_SIM_Jarfile {
 		names.add("simtst61"); // OK:  Remote access to attributes which are protected.
 		names.add("simtst62"); // OK:  Test complex use of detach and resume.  Re-trow
 		names.add("simtst63"); // OK:  Transmission by name of reference types. 
-//		names.add("simtst64"); // ERR:  Parameter transmission by value to classes.
+		names.add("simtst64"); // OK:  Parameter transmission by value to classes.
 //		names.add("simtst65"); // ERR:  Parameter transmission by reference to classes.
 		names.add("simtst66"); // OK:  Test coroutines and two infiles which read from the same file.
 		names.add("simtst67"); // OK:  Simple test of detach, call and resume.
@@ -375,7 +410,7 @@ public class Make_SIM_Jarfile {
 		names.add("simtst93"); // OK:  Test Simset - linkage, head, link, into, out, follow and precede
 		names.add("simtst94"); // OK:  Test Simset - first, last, empty, cardinal and clear.
 //		names.add("simtst95"); // ERR:  Test Environment Interface.
-//		names.add("simtst96"); // ERR:  Test hidden, protected attributes.
+		names.add("simtst96"); // OK:  Test hidden, protected attributes.
 		names.add("simtst97"); // OK:  Test nested hidden and protected.
 //		names.add("simtst98"); // ERR:  Test attribute protection - complex example. Test visibility of labels.
 		names.add("simtst99");  // OK: Test mod, rem, min, max.
@@ -384,7 +419,7 @@ public class Make_SIM_Jarfile {
 		names.add("simtst101"); // OK:  Test Standard Procedure 'sourceline'.
 		names.add("simtst102"); // OK: GOTO out of an operating Process
 		names.add("simtst103"); // OK: All kinds of Activation Statements
-//		names.add("simtst104"); // ERR: Procedure parameter 'F' by name.
+		names.add("simtst104"); // OK: Procedure parameter 'F' by name.
 		names.add("simtst105"); // OK: Multiple assignments.
 //		names.add("simtst106"); // ERR: Test SIMULATION, complex example. FEILER OGSÅ I DET NYE
 		names.add("simtst107"); // OK:  Test Process, activation statements, idle, terminated, time.
@@ -410,7 +445,7 @@ public class Make_SIM_Jarfile {
 //		names.add("simtst123"); // ERR: GOTO VIRTUAL LABEL  // SORRY, switch element requiring thunk IS NOT IMPLEMENTED
 		names.add("simtst124"); // OK: GOTO VIRTUAL LABEL
 		names.add("simtst125"); // OK: GOTO LABEL WITHIN NESTED COMPOUND STATEMENTS
-		names.add("simtst126"); // OK: GOTO SIMPLE SWITCH   // SORRY, switch element requiring thunk IS NOT IMPLEMENTED
+//		names.add("simtst126"); // ERR: GOTO SIMPLE SWITCH   // SORRY, switch element requiring thunk IS NOT IMPLEMENTED
 //		names.add("simtst127"); // ERR: Switch (character) Statement
 		names.add("simtst128"); // OK: Standard Procedure edit and edfix
 //		names.add("Precompiled129"); // ERR: Precompile this for Simtst 129.
@@ -442,7 +477,7 @@ public class Make_SIM_Jarfile {
 		names.add("simtst151"); // OK: Test multiple assignments
 		names.add("simtst152"); // OK: Test nested connection statements
 		names.add("simtst153"); // OK: Test GOTO ConditionalExpression
-//		names.add("simtst154"); // OK: Test function result assignment
+		names.add("simtst154"); // OK: Test function result assignment
 //		names.add("Pre155");    // ERR: Precompile this for Simtst 155.
 //		names.add("simtst155"); // ERR: Test inspection in SubBlock in Precompiled inner class
 		names.add("simtst156"); // OK: Test arrays in multiple assignments
@@ -460,6 +495,7 @@ public class Make_SIM_Jarfile {
 //		fecSCodeTrace = true;
 //		fecTraceLevel = 4;
 
+//		becVerbose = true;
 //		becListing = true;
 //		becSCodeTrace = true;
 //		execTrace = 1;
@@ -475,7 +511,7 @@ public class Make_SIM_Jarfile {
 
 	private static void doCompile() {
 		int execCode = SimulaFEC.callSimulaFEC();
-		verbose = true;
+//		verbose = true;
 		if(verbose) System.out.println("RETURN FROM FEC: ExitCode = "+execCode+"\n\n");
 		if(execCode == 0) SimulaBEC.callBEC();
 		

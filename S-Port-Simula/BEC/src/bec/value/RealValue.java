@@ -9,6 +9,7 @@ import bec.util.Global;
 import bec.util.Relation;
 import bec.util.Scode;
 import bec.util.Type;
+import bec.util.Util;
 
 public class RealValue extends Value {
 	public float value;
@@ -110,8 +111,14 @@ public class RealValue extends Value {
 
 	@Override
 	public boolean compare(int relation, Value other) {
-		float LHS = this.value;
-		float RHS = (other == null)? 0 : ((RealValue)other).value;
+//		float LHS = this.value;
+//		float RHS = (other == null)? 0 : ((RealValue)other).value;
+		double LHS = this.value;
+		double RHS = 0;
+		if(other == null); // Nothing
+		else if(other instanceof RealValue rval) RHS = rval.value;
+		else if(other instanceof LongRealValue lrval) RHS = lrval.value;
+		else Util.IERR("");
 		boolean res = false;
 		switch(relation) {
 			case Scode.S_LT: res = LHS <  RHS; break;

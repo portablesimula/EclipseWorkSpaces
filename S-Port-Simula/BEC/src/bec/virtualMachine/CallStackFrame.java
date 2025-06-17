@@ -87,7 +87,7 @@ public class CallStackFrame {
 				Value item = RTStack.load(idx);
 				System.out.println(indent+"IMPORT: " + idx + ": " + item); idx++;
 			}
-			System.out.println(indent+"RETURN: " + idx + ": " + RTStack.load(idx)); idx++;
+//			System.out.println(indent+"RETURN: " + idx + ": " + RTStack.load(idx)); idx++;
 			for(int i=0;i<localSize;i++) {
 				Value item = RTStack.load(idx);
 				System.out.println(indent+"LOCAL:  " + idx + ": " + item); idx++;

@@ -53,14 +53,14 @@ SimulaTest(30,"--- Simple test of Arrays.") begin
 
 	procedure P5(pARR); integer array pARR; begin
 		integer x;
-		x :- pARR(1);
-		pARR(2) :- x;
+		x := pARR(1);
+		pARR(2) := x;
 	end;
 
 	procedure P6(pARR); name pARR; integer array pARR; begin
 		integer x;
-		x :- pARR(1);
-		pARR(2) :- x;
+		x := pARR(1);
+		pARR(2) := x;
 	end;
 
 

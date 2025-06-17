@@ -362,6 +362,7 @@ public final class VariableExpression extends Expression {
 				break;
 
 			case ObjectKind.SimpleVariableDeclaration:
+			case ObjectKind.UndefinedDeclaration:
 				if(params != null) Util.error("Illegal subscription of variable " + this.identifier);
 				break;
 				
@@ -624,6 +625,9 @@ public final class VariableExpression extends Expression {
 					Util.IERR();
 				VirtualSpecification virtual = (VirtualSpecification) decl;
 				return CallProcedure.virtual(this, virtual, remotelyAccessed);
+
+			case ObjectKind.UndefinedDeclaration:
+				Util.IERR("");
 	
 			default:
 				Util.IERR(""+ObjectKind.edit(decl.declarationKind));

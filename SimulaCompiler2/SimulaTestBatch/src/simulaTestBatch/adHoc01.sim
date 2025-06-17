@@ -1,25 +1,12 @@
 begin
+		integer i; boolean more; text arg;
+		
+		more := true;
+		while more do begin
+			arg :- argv(i); i := i + 1;
+			outtext("ENVIR.INIT: arg=" & arg); outimage;
+			if arg = NOTEXT then more := false;
+		end;
+		exit(-60);
 
-   text t;
-
-   class A;
-   begin
-      integer         i, j, k;
-   end of class A;
-
-   A class B;;
-
-   ref(A)            ra;
-   integer            l;
-
-   ra :- new A;
-
-
-
-   inspect ra
-%   when A do outtext("Case A")
-   when B do outtext("Case B")
-   otherwise outtext("Case Otherwise");
-
-
-end;
+end;	

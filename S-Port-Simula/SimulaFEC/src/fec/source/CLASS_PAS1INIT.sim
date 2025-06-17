@@ -33,24 +33,26 @@ begin
 
 %     ******   R e a d  C o m p i l e r   P a r a m e t e r s   ******
 
-      L2NAME:-getTextInfo(7); nscodename:-getTextInfo(4); scodeListing:-getTextInfo(6);
+	  ENV :- new ENVIRONMENT_INTERFACE;
 
-      verbose := getintinfo(44) > 0;
-	  traceScode := getintinfo(45) > 0;
-	  traceLevel := getintinfo(46);
+      L2NAME:-ENV.ENV_getTextInfo(7); nscodename:-ENV.ENV_getTextInfo(4); scodeListing:-ENV.ENV_getTextInfo(6);
+
+      verbose    := ENV.ENV_getintinfo(44) > 0;
+	  traceScode := ENV.ENV_getintinfo(45) > 0;
+	  traceLevel := ENV.ENV_getintinfo(46);
 	  
-%+R   RealCap := getintinfo(43) <= 0;
+%+R   RealCap := ENV.ENV_getintinfo(43) <= 0;
 %+R   if RealCap then starttime:=cputime;
-      recomp:=getintinfo(22)=1;
-      GenerateScode:=getintinfo(1)=1;
+      recomp        := ENV.ENV_getintinfo(22)=1;
+      GenerateScode := ENV.ENV_getintinfo(1)=1;
 
       timestamp:-datetime;
-      maxerrno:=getintinfo(4);            ! How many errors allowed?;
-      GiveNotes:= getintinfo(5)=0;        ! "NOTEs" to be output?;
-      simob_level:=getintinfo(30);
+      maxerrno    := ENV.ENV_getintinfo(4);            ! How many errors allowed?;
+      GiveNotes   := ENV.ENV_getintinfo(5)=0;        ! "NOTEs" to be output?;
+      simob_level := ENV.ENV_getintinfo(30);
       simob_descr:=  simob_level>0;
       simob_entity:= simob_level>=2; simob_const:=simob_level>=3;
-% %-A %+Z   simsetname:-gettextinfo(20); simulaname:-gettextinfo(21);
+% %-A %+Z   simsetname:-ENV.ENV_gettextinfo(20); simulaname:-ENV.ENV_gettextinfo(21);
 
 	  if verbose then begin
 	  	outtext("BEGIN PASS 1:"); outimage;
@@ -61,12 +63,12 @@ begin
 
 %     ********* Open listing file ***********
 
-      listname:-gettextinfo(2);  listlength:=sysout.image.length;
+      listname:-ENV.ENV_gettextinfo(2);  listlength:=sysout.image.length;
       if listname=/=notext then begin
          t:-copy(listname); t:-lowcase(t);
          if t = "sysout" then listfile:-sysout
          else inspect new printfile(listname) do begin
-              listlength:=getintinfo(7); t:-blanks(listlength);
+              listlength:=ENV.ENV_getintinfo(7); t:-blanks(listlength);
               if not open(t) then begin
                  listlength:=0; error1(-366,listname) end
               else listfile:-this printfile;
@@ -76,7 +78,7 @@ begin
 
 %     !*** set options and selectors as given to environment ***;
 
-      t:-gettextinfo(16);
+      t:-ENV.ENV_gettextinfo(16);
       while t.more do if t.getchar=':' then begin
           if t.more then feoptions:-copy(t.sub(t.pos,t.length-t.pos+1));
           t:-t.sub(1,t.pos-2); goto SETem;
@@ -100,7 +102,7 @@ begin
 %+I %INSERT $SIMSRC/fec/common.mne
 %+I %INSERT $SIMSRC/fec/parser.mne
 
-      predefname:-gettextinfo(19);
+      predefname:-ENV.ENV_gettextinfo(19);
 
 %+Z   dummygen:=false;    !*** DO NOT generate blocks for insp-varibles;
 %-Z   dummygen:=true;     !*** generate blocks for insp-varibles;
@@ -232,7 +234,7 @@ begin
 %     *********  Open source file  *********
 
       signiflength:=     255      ;    ! - of source input;
-      cursource:-new SourceElt(false,gettextinfo(1));
+      cursource:-new SourceElt(false,ENV.ENV_gettextinfo(1));
       incrlnr:=true;
 
 %title ******   initialise L2CODER   ******

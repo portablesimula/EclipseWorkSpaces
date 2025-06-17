@@ -80,13 +80,13 @@ public class Type {
 	}
 
 	public static void newRecType(RecordDescr rec) {
-		System.out.println("DataType.newRecType: " + Scode.edTag(rec.tag.val) + ", size="+rec.size);
+//		System.out.println("DataType.newRecType: " + Scode.edTag(rec.tag.val) + ", size="+rec.size);
 		Type type = new Type(rec.tag.val, rec.size);
 		type.rep0size = rec.nbrep;
 		type.comment = "From " + rec;
 		Type old = TMAP.get(rec.tag.val);
 		if(old != null) {
-			System.out.println("DataType.newRecType: old=" + old);
+//			System.out.println("DataType.newRecType: old=" + old);
 			if(rec.tag.val != Scode.TAG_STRING)	Util.IERR("Already defined: " + type);
 		} else {
 //			if(rec.tag.val == 2483) Util.IERR("");

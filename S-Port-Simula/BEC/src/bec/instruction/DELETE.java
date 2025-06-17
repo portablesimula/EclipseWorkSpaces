@@ -1,5 +1,6 @@
 package bec.instruction;
 
+import bec.compileTimeStack.CTStack;
 import bec.util.Global;
 import bec.util.Tag;
 import bec.util.Type;
@@ -21,7 +22,8 @@ public abstract class DELETE extends Instruction {
 //		System.out.println("DELETE.ofScode: " + tag);
 		
 		// check stacks empty;
-		System.out.println("DELETE.ofScode: SJEKK DETTE SEINERE EN GANG: check stacks empty;");
+		CTStack.checkStackEmpty();
+//		System.out.println("DELETE.ofScode: SJEKK DETTE SEINERE EN GANG: check stacks empty;");
 
 		int startTag = tag.val;
 //		Global.dumpDISPL("DELETE.ofScode: ", startTag -2);

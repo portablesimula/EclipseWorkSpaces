@@ -1,6 +1,7 @@
 package bec.virtualMachine.sysrut;
 
 import bec.segment.Segment;
+import bec.util.Global;
 import bec.util.Type;
 import bec.util.Util;
 import bec.value.IntegerValue;
@@ -36,7 +37,7 @@ public abstract class SysInfo {
 	public static void getIntinfo() {
 		SVM_CALL_SYS.ENTER("GINTIN: ", 1, 1); // exportSize, importSize
 		int index = RTStack.popInt();
-		System.out.println("SVM_SYSCALL.getIntinfo: "+index);
+//		System.out.println("SVM_SYSCALL.getIntinfo: "+index);
 		int result=0;
 		switch(index) {
 			case 19: result = 0; break; // 19 Should the symbolic debugger SIMOB be entered prior to the execution of the
@@ -73,9 +74,25 @@ public abstract class SysInfo {
 				break;
 			default: Util.IERR("");
 		}
-		System.out.println("SVM_SYSCALL.sizein: index=" + index + ", warea=" + warea + ", result=" +result);
+		if(Global.verbose) System.out.println("SVM_SYSCALL.sizein: index=" + index + ", warea=" + warea + ", result=" +result);
 		RTStack.push(IntegerValue.of(Type.T_SIZE, result), "EXPORT");
 		SVM_CALL_SYS.EXIT("SIZEIN: ");
 	}
 
+	/// Visible sysroutine("GVIINF")  GVIINF;
+	/// import range(0:127) index; integer inform  end;
+	public static void gviinf() {
+		SVM_CALL_SYS.ENTER("GVIINF: ", 0, 2); // exportSize, importSize
+		int inform = RTStack.popInt();
+		int index = RTStack.popInt();
+		System.out.println("SVM_SYSCALL.gviinf: index=" + index + ", inform=" + inform);
+		switch(index) {
+			case 6: // Garbage collection information. Info=0 signals the start of a garbage collection,
+				    // Info=1 signals termination of g.c. (see 5.2).
+				break;
+			default: Util.IERR(""+index);
+		}
+		SVM_CALL_SYS.EXIT("GVIINF: ");
+	}
+	
 }

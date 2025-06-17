@@ -32,6 +32,10 @@ SimulaTest(66,"--- Test corutines and two infiles which read from the same file.
             outimage;
          end;   
       end;
+      
+      procedure close; begin
+      	 fil.close;
+      end;
 
 
       fil :- new Infile(navn);
@@ -97,5 +101,8 @@ SimulaTest(66,"--- Test corutines and two infiles which read from the same file.
          outimage;
       end;
    end;
+   
+   fil1.close;
+   fil2.close;
 
  end

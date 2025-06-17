@@ -2,6 +2,7 @@ package bec.virtualMachine;
 
 import bec.segment.DataSegment;
 import bec.segment.Segment;
+import bec.util.Global;
 import bec.util.Type;
 import bec.util.Util;
 import bec.value.IntegerValue;
@@ -30,7 +31,7 @@ public class RTUtil {
 	}
 	
 	public static void set_STATUS(int status) {
-		System.out.println("RTUtil.set_STATUS: " + status + "  " + edStatus(status));
+		if(Global.verbose) System.out.println("RTUtil.set_STATUS: " + status + "  " + edStatus(status));
 //		Thread.dumpStack();
 		DSEG_RT.store(offset_STATUS, IntegerValue.of(Type.T_INT, status));	
 	}

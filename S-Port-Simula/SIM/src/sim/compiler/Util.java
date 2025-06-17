@@ -29,7 +29,7 @@ public class Util {
 	public static int exec(String... cmd) throws IOException {
 		String line="";
 		for(int i=0;i<cmd.length;i++) line=line+" "+cmd[i];
-        System.out.println("MakeSIM.execute: command="+line);
+        if(Global.verbose) System.out.println("MakeSIM.execute: command="+line);
 		ProcessBuilder processBuilder = new ProcessBuilder(cmd);
 		processBuilder.redirectErrorStream(true);
 		try {
@@ -40,7 +40,7 @@ public class Util {
 					System.out.append((char) output.read());
 //				System.out.println("ALIVE: "+process.isAlive());
 			}
-			System.out.println("RETURN: "+process.exitValue());
+			if(Global.verbose) System.out.println("RETURN: "+process.exitValue());
 //			Thread.dumpStack();
 			return (process.exitValue());
 

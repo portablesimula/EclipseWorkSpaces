@@ -90,68 +90,17 @@ public class ProtectConstruction { // extends ProgramElement {
 	 * End-Condition: Scode'nextByte = First byte after RESTORE  ???
 	 */
 	public static void ofInstruction() {
-		// ProtectConstruction(false)
 		doSAVE();
 		
-//		Scode.inputInstr();
-//		S_Module.programElements();
-//		repeat inputInstr while Instruction do endrepeat;
 		do Scode.inputInstr(); while(Instruction.inInstruction());
-		System.out.println("ProtectConstruction.ofInstruction: " + Scode.edInstr(Scode.curinstr));
+
 		if(Scode.curinstr != Scode.S_RESTORE)
 			Util.IERR("Improper termination of protect-construction");
 		doRESTORE();
-//		Util.IERR("NOT IMPLEMENTED");
 	}
 	
 	public String toString() {
 		return "SAVE "; // + lab;
 	}
-	
-//	Routine ProtectConstruction; import Boolean stm;
-//	begin Boolean skipped; range(0:255) lng,i; infix(MemAddr) opr;
-//	      ref(StackItem) old_SAV; infix(MemAddr) SDpnt;
-//	      infix(WORD) dum;
-//	      skipped:=SkipProtect; lng:=SavLng;
-//	      if skipped then Save86(0,noadr)
-//	      else -- lng > 0 --
-//	           SDpnt:=EmitLiteral(@sMap.n,(sMap.n+1)*2); sMap.n:=0;
-//	%+C        CheckTosType(T_OADDR);
-//	%+E        GetTosValueIn86(qEBX); Pop;
-//	           opr.kind:=reladr; opr.rela.val:=4; opr.segmid.val:=0;
-//	%+E        opr.sibreg:=bEBX+NoIREG;
-//	           Save86(lng,opr); opr.rela.val:=0;
-//	%+E        Qf4b(qMOVMC,0,qw_D,cOBJ,0,opr,SDpnt);
-//	      endif;
-//	      old_SAV:=SAV; SAV:=TOS;
-//	      if stm then programElements
-//	             else repeat inputInstr while Instruction do endrepeat;
-//	      endif
-//	%+C   if CurInstr <> S_RESTORE
-//	%+C   then IERR("Improper termination of protect-construction") endif;
-//	%+C   CheckTosRef; CheckTosType(T_OADDR);
-//	      SAV:=old_SAV;
-//	      if skipped
-//	      then -- Remove Effect of: PRECALL restore / CALL restore / PUSH rstr
-//	           GQpop;
-//	           if qlast.fnc <> qCALL then IERR("PARSE.SAVE-1")
-//	           else DeleteLastQ endif;
-//	%-E %+C    if CHKSTK then Qf5(qCALL,1,0,0,X_CHKSTK) endif;
-//	           InputInstr;
-//	%+D        if CurInstr<>S_PRECALL then IERR("PARSE.SAVE-2") endif;
-//	           InTag(%dum%);  -- Skip: PRECALL PRESTO
-//	           InputInstr;
-//	%+D        if CurInstr<>S_CALL   then IERR("PARSE.SAVE-3") endif;
-//	           InTag(%dum%);  -- Skip: CALL    PRESTO
-//	           Rstr86(0,noadr);
-//	      else -- lng>0 --
-//	%-E        GQfetch; GetTosValueIn86R3(qBX,qES,0); Pop;
-//	%+E        GQfetch; GetTosValueIn86(qEBX); Pop;
-//	%-E %+C    if CHKSTK then Qf5(qCALL,1,0,0,X_CHKSTK) endif;
-//	           opr.rela.val:=4; Rstr86(lng,opr);
-//	%-E        MindMask:=wAND(wNOT(wOR(uES,uBX)),MindMask);
-//	%+E        MindMask:=wAND(wNOT(uEBX),MindMask);
-//	      endif;
-//	end;
 
 }

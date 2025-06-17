@@ -143,7 +143,7 @@ public final class TypeConversion extends Expression {
 		Type fromType = expression.type;
 		if(fromType==null) {
 			Util.error("Expression "+expression+" has no type - can't be converted to "+toType);
-			Thread.dumpStack();
+//			Thread.dumpStack();
 			return(false);
 		}
 		ConversionKind conversionKind = fromType.isConvertableTo(toType);

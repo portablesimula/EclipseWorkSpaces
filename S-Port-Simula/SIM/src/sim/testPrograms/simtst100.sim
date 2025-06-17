@@ -149,5 +149,5 @@ EXIT:
        else begin
        		 outtext(" Number of significant digits varies between"); outint(min_signif, 0); outtext(" and "); outint(max_signif, 0);
        		 err("FAILED !");
-
+	   end;
 end

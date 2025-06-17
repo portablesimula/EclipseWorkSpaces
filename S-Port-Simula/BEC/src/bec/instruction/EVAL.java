@@ -9,10 +9,13 @@ public abstract class EVAL extends Instruction {
 
 	/**
 	 * eval_instruction ::= eval
+	 * 
+	 * NOTE: when S_EVAL: --  Qf1(qEVAL,0) -- REMOVED FOR AD'HOC TEST  - IN OLD BEC for PC-Simula
+
 	 */
 	public static void ofScode() {
 //		Util.IERR("NOT IMPL");
-		System.out.println("EVAL.ofScode: SJEKK DETTE SEINERE EN GANG");
+//		System.out.println("EVAL.ofScode: SJEKK DETTE SEINERE EN GANG");
 		CTStackItem tos = CTStack.TOS();
 
 		if(DEBUG) {
@@ -21,7 +24,8 @@ public abstract class EVAL extends Instruction {
 //			Util.IERR("");
 		}
 		
-		tos.mode = CTStackItem.Mode.VAL;
+//		tos.mode = CTStackItem.Mode.VAL;
+//		CTStack.forceTosValue();
 	}
 
 }

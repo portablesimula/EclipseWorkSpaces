@@ -40,6 +40,9 @@ virtual: procedure COMMONerror
 % INSERT sportid.def
 %INSERT C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/SPORTID.DEF
 
+%INSERT C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/ENVIR.sim
+		ref(ENVIRONMENT_INTERFACE) ENV;
+
 % +T	integer TRACE_ATTRIBUTE_OUTPUT=1;
 %+T		integer TRACE_ATTRIBUTE_INPUT=0;
 %+T		integer indent;
@@ -389,7 +392,7 @@ virtual: procedure COMMONerror
 
       text procedure leftint(i); integer i;
       begin leftintbuf.putint(i); i:=11;
-            while loadchar(leftintbuf,i)<>' ' do i:=i-1;
+            while leftintbuf.loadchar(i)<>' ' do i:=i-1;
             leftint:-copy(leftintbuf.sub(i+2,11-i));
       end;
 
@@ -987,9 +990,9 @@ virtual: procedure COMMONerror
                     else begin
 %+T					   TRC("COMMON",sourceline,"openattributefile: giveTextInfo(2," & id & ")");
 %+T					   TRC("COMMON",sourceline,"openattributefile: giveTextInfo(3," & (if xid="!63!" then notext else xid) & ")");
-                       givetextinfo(2,id);
-                       givetextinfo(3,if xid="!63!" then notext else xid);
-                       t:-gettextinfo(12);
+                       ENV.givetextinfo(2,id);
+                       ENV.givetextinfo(3,if xid="!63!" then notext else xid);
+                       t:-ENV.ENV_gettextinfo(12);
                     end;
                  end otherwise t:-attrfilename;
 %+T				 TRC("COMMON",sourceline,"OPEN ATTRIBUTEFILE " & t);
@@ -1008,8 +1011,8 @@ virtual: procedure COMMONerror
 %+T				 TRC("COMMON",sourceline,"CHECK ATTR-LAYOUT(2): attrbuffer=" & attrbuffer.sub(1,12));
                  !must start "S-port 108.1x" where 'x' is layout index;
                  if attrbuffer.sub(1,7) <> "S-port " then wrongLayout;
-                 sysattrfile:=loadchar(attrbuffer,10) = ':';
-%                readattrlayout:=loadchar(attrbuffer,12); p:=13;
+                 sysattrfile:=attrbuffer.loadchar(10) = ':';
+%                readattrlayout:=attrbuffer.loadchar(12); p:=13;
                                                           p:=12;
                  gettext; DEFCONST;
                  attrckhi:=hashhi; attrcklo:=hashlo;
@@ -1066,15 +1069,15 @@ virtual: procedure COMMONerror
 
 %+PQ      prior
           procedure nextKey;
-          begin REP: key:=loadchar(attrbuffer,p); p:=p+1;
+          begin REP: key:=attrbuffer.loadchar(p); p:=p+1;
                 if key = bufSwap then begin
                    swapIbuffer; goto REP end;
           end;
 
 %+PQ      prior
           short integer procedure nextNumber;
-          begin nextNumber:=rank(loadchar(attrbuffer,p  ))*256 +
-                            rank(loadchar(attrbuffer,p+1)); p:=p+2;
+          begin nextNumber:=rank(attrbuffer.loadchar(p  ))*256 +
+                            rank(attrbuffer.loadchar(p+1)); p:=p+2;
           end;
 
 %+Z       text procedure nextitemoft;
@@ -1126,17 +1129,17 @@ virtual: procedure COMMONerror
 %+T			if TRACE_ATTRIBUTE_INPUT>3 then TRC("COMMON",sourceline,"fetchquant: xkind=" & edit(rank(xkind)));  
 %+T			if TRACE_ATTRIBUTE_INPUT>3 then TRC("COMMON",sourceline,"fetchquant: xcateg=" & edit(rank(xcateg)));  
 
-            xtype:= loadchar(attrbuffer,p); p:=p+1;
+            xtype:= attrbuffer.loadchar(p); p:=p+1;
 %+T			if TRACE_ATTRIBUTE_INPUT>3 then TRC("COMMON",sourceline,"fetchquant: xtype=" & edit(rank(xtype)));  
             if xtype >= '!128!'  then begin !*** prefix;
                xtype:=char(rank(xtype)-128);
-               key:=loadchar(attrbuffer,p);
+               key:=attrbuffer.loadchar(p);
                simsymbol:-attrbuffer.sub(p+2,rank(key)); DEFIDENT;
                p:=p+1+rank(key);
                xprefqhi:=hashhi; xprefqlo:=hashlo;
             end;
 
-            xclf := loadchar(attrbuffer,p); p:=p+1;
+            xclf := attrbuffer.loadchar(p); p:=p+1;
 %+T			if TRACE_ATTRIBUTE_INPUT>3 then TRC("COMMON",sourceline,"fetchquant: xclf=" & edit(rank(xclf)));  
 
             if xclf>='!128!' then begin !*** procedure parameter;
@@ -1151,7 +1154,7 @@ virtual: procedure COMMONerror
             xftag:=nextNumber-1;
 %+T			if TRACE_ATTRIBUTE_INPUT>3 then TRC("COMMON",sourceline,"fetchquant: xftag=" & edit(xftag));  
 
-            key:=loadchar(attrbuffer,p); p:=p+1;
+            key:=attrbuffer.loadchar(p); p:=p+1;
 %+T			if TRACE_ATTRIBUTE_INPUT>3 then TRC("COMMON",sourceline,"fetchquant: key=" & edit(rank(key)));  
             if key<>NUL then begin
                simsymbol:-xidentstring:-attrbuffer.sub(p+1,rank(key));
@@ -1173,7 +1176,7 @@ virtual: procedure COMMONerror
 
   CHCKMARK:
 %+T			if TRACE_ATTRIBUTE_INPUT>3 then TRC("COMMON",sourceline,"fetchquant: CHCKMARK-LOOP key=" & edit(rank(key)));  
-  			key:=loadchar(attrbuffer,p); p:=p+1;
+  			key:=attrbuffer.loadchar(p); p:=p+1;
             if key>=lowkey then begin
                switch(lowkey:hikey) key  begin
                when forcMark do begin !*** force creation ***;
@@ -1183,17 +1186,17 @@ virtual: procedure COMMONerror
                end;
 
                when protMark do begin !*** force creation ***;
-                  xprotect:=loadchar(attrbuffer,p); p:=p+1;
+                  xprotect:=attrbuffer.loadchar(p); p:=p+1;
                   goto CHCKMARK;
                end;
 
                when dimMark do begin !*** dim ***;
-                  xdim:=rank(loadchar(attrbuffer,p)); p:=p+1;
+                  xdim:=rank(attrbuffer.loadchar(p)); p:=p+1;
                   goto CHCKMARK;
                end;
 
                when overMark do begin !*** overloaded ***;
-                  xlongindic:=loadchar(attrbuffer,p); p:=p+1;
+                  xlongindic:=attrbuffer.loadchar(p); p:=p+1;
                   goto CHCKMARK;
                   end;
 
@@ -1202,10 +1205,10 @@ virtual: procedure COMMONerror
                      xlanguage:=nextNumber; xextident:=nextNumber;
                      goto CHCKMARK;
                   end;
-                  xspecial:=loadchar(attrbuffer,p); p:=p+1;
+                  xspecial:=attrbuffer.loadchar(p); p:=p+1;
                   if xspecial > '!128!' then begin
                      xspecial:=char(rank(xspecial)-128);
-                     xarrlo:=loadchar(attrbuffer,p); p:=p+1 end
+                     xarrlo:=attrbuffer.loadchar(p); p:=p+1 end
                   else begin
            GETARR:   gettext; DEFCONST;
                      xarrhi:=hashhi; xarrlo:=hashlo end;
@@ -1233,12 +1236,12 @@ virtual: procedure COMMONerror
                end;
 
                when nestMark do begin !*** for/connect vars ;
-                  xconnests:=loadchar(attrbuffer,p); p:=p+1;
+                  xconnests:=attrbuffer.loadchar(p); p:=p+1;
                   goto CHCKMARK;
                end;
 
                when thisMark do begin !*** inr, hasCode, thisused ;
-                  nxtc:=loadchar(attrbuffer,p); p:=p+1;
+                  nxtc:=attrbuffer.loadchar(p); p:=p+1;
                   if nxtc >= '!64!' then begin
                      xthisused:=true; nxtc:=char(rank(nxtc)-64) end;
                   if nxtc >= '!32!' then begin

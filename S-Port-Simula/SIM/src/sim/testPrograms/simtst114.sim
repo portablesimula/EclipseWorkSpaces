@@ -29,7 +29,8 @@ SimulaTest(114,"--- Test Switch Statement") begin
       integer case1=1;
       integer case2=2;
 
-      switch(lowKey:hiKey) key
+%      switch(lowKey:hiKey) key
+      switch key(lowKey:hiKey)
       begin
          when case1 do begin
               trace(msg & " selected case 1");

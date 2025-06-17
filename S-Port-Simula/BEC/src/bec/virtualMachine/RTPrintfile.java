@@ -15,7 +15,7 @@ public class RTPrintfile extends RTOutfile {
 //			return;
 //		}
 //		try {
-//			System.out.println("NEW RTOutfile: fileName=" + fileName);
+//			System.out.println("NEW RTPrintfile: fileName=" + fileName);
 //			writer = new FileWriter(file, this.fileAction._APPEND);
 //		} catch (FileNotFoundException e) {
 //			// TODO Auto-generated catch block

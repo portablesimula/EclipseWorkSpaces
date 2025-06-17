@@ -68,7 +68,7 @@ public class Type extends SyntaxClass {
 	// **************************************************************************************************
 	// *** BASIC TYPES
 	// **************************************************************************************************
-	/** Simula's No type */			public static final int T_VOID = 0;
+	/** Simula's No type */			public static final int T_UNDEF = 0;
 	/** Simula's Integer type */	public static final int T_INTEGER = 1;
 	/** Simula's Real type */		public static final int T_REAL = 2;
 	/** Simula's Long Real type */	public static final int T_LONG_REAL = 3;
@@ -80,6 +80,7 @@ public class Type extends SyntaxClass {
 	/** Simula's Label type */		public static final int T_LABEL = 9;
 	
 
+	/** Simula's Undefined type */	public static final Type Undef = new Type(Type.T_UNDEF);
 	/** Simula's Integer type */	public static final Type Integer = new Type(Type.T_INTEGER);
 	/** Simula's Real type */		public static final Type Real = new Type(Type.T_REAL);
 	/** Simula's Long Real type */	public static final Type LongReal = new Type(Type.T_LONG_REAL);
@@ -266,6 +267,7 @@ public class Type extends SyntaxClass {
     public ConversionKind isConvertableTo(final Type to) {
 	    ConversionKind result;
 	    if(to==null) result=ConversionKind.Illegal;
+	    else if(to.keyWord == T_UNDEF) result=ConversionKind.DirectAssignable;
 	    else if(this.equals(to)) result=ConversionKind.DirectAssignable;
 	    else if(this.isArithmeticType()&&to.isArithmeticType()) result=ConversionKind.ConvertValue;
 	    else if(this.isSubReferenceOf(to)) result=ConversionKind.DirectAssignable;  
@@ -358,7 +360,7 @@ public class Type extends SyntaxClass {
 	/// @return an edited default value of this Type
 	public String edDefaultValue() {
 		switch(keyWord) {
-			case T_VOID:		return("void");
+			case T_UNDEF:		return("void");
 			case T_BOOLEAN:		return("false");
 			case T_CHARACTER:	return("0");
 			case T_INTEGER:		return("0");
@@ -375,7 +377,7 @@ public class Type extends SyntaxClass {
 	/// @return the resulting code string.
 	public String toJavaType() {
 		switch(keyWord) {
-			case T_VOID:		return("void");
+			case T_UNDEF:		return("void");
 			case T_BOOLEAN:		return("boolean");
 			case T_CHARACTER:	return("char");
 			case T_INTEGER:		return("int");
@@ -392,7 +394,7 @@ public class Type extends SyntaxClass {
 	/// @return the resulting code string.
 	public String toJavaTypeClass() {
 		switch(keyWord) {
-			case T_VOID:		return("void");
+			case T_UNDEF:		return("void");
 			case T_BOOLEAN:		return("Boolean");
 			case T_CHARACTER:	return("Character");
 			case T_INTEGER:		return("Integer");
@@ -449,7 +451,7 @@ public class Type extends SyntaxClass {
 	/// @return the resulting code string.
 	public String toJVMType() {
 		switch(keyWord) {
-			case T_VOID:		return("V");
+			case T_UNDEF:		return("V");
 			case T_BOOLEAN:		return("Z");
 			case T_CHARACTER:	return("C");
 			case T_INTEGER:		return("I");
@@ -477,7 +479,7 @@ public class Type extends SyntaxClass {
 	public static String toJVMClassType(Type type,int kind) {
 		if(kind == Parameter.Kind.Procedure) return("Lsimula/runtime/RTS_PRCQNT;");
 		switch(type.keyWord) {
-			case T_VOID:		return("V");
+			case T_UNDEF:		return("V");
 			case T_BOOLEAN:		return("Ljava/lang/Boolean;");
 			case T_CHARACTER:	return("Ljava/lang/Character;");
 			case T_INTEGER:		return("Ljava/lang/Integer;");
@@ -522,7 +524,7 @@ public class Type extends SyntaxClass {
 	/// @return the resulting Class Descriptor.
 	public ClassDesc toClassDesc() {
 		switch(keyWord) {
-			case T_VOID:		return(ConstantDescs.CD_void);
+			case T_UNDEF:		return(ConstantDescs.CD_void);
 			case T_BOOLEAN:		return(ConstantDescs.CD_boolean);
 			case T_CHARACTER:	return(ConstantDescs.CD_char);
 			case T_INTEGER:		return(ConstantDescs.CD_int);
@@ -554,7 +556,7 @@ public class Type extends SyntaxClass {
 	/// @return the resulting Class Descriptor.
 	public ClassDesc toObjectClassDesc() {
 		switch(keyWord) {
-			case T_VOID:		return(ConstantDescs.CD_void);
+			case T_UNDEF:		return(ConstantDescs.CD_void);
 			case T_BOOLEAN:		return(ConstantDescs.CD_Boolean);
 			case T_CHARACTER:	return(ConstantDescs.CD_Character);
 			case T_INTEGER:		return(ConstantDescs.CD_Integer);

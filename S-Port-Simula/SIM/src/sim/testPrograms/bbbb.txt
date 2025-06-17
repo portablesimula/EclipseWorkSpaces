@@ -1,59 +1,102 @@
-EXEC: PSEG_FORM_E_FPT:BODY[103]  PRECALL   ENCINT, nParSlots=0, exportSize=1, importSize=2
-   Frame[14]: POOL_1[907], null, CSEG_SIMTST101[205], CSEG_SIMTST101[310], POOL_1[714], null, null, null, null, PSEG_SIMTST101[126], POOL_1[907], FIELD:7, CSEG_SIMTST101[310], CSEG_SIMTST101[205]
-   Stack[1]: null
-   
-EXEC: PSEG_FORM_E_FPT:BODY[104]  LINE     687                            Frame[14]: POOL_1[907], null, CSEG_SIMTST101[205], CSEG_SIMTST101[310], POOL_1[714], null, null, null, null, PSEG_SIMTST101[126], POOL_1[907], FIELD:7, CSEG_SIMTST101[310], CSEG_SIMTST101[205]  Stack[1]: null
 
-EXEC: PSEG_FORM_E_FPT:BODY[105]  LOADC    T[9:GADDR] REL_ADR[callStackTop+2][0]
-   Frame[14]: POOL_1[907], null, CSEG_SIMTST101[205], CSEG_SIMTST101[310], POOL_1[714], null, null, null, null, PSEG_SIMTST101[126], POOL_1[907], FIELD:7, CSEG_SIMTST101[310], CSEG_SIMTST101[205]
-   Stack[3]: null, REL_ADR[callStackTop+2], null
-EXEC: PSEG_FORM_E_FPT:BODY[106]  NOOP                                    Frame[14]: POOL_1[907], null, CSEG_SIMTST101[205], CSEG_SIMTST101[310], POOL_1[714], null, null, null, null, PSEG_SIMTST101[126], POOL_1[907], FIELD:7, CSEG_SIMTST101[310], CSEG_SIMTST101[205]  Stack[3]: null, REL_ADR[callStackTop+2], null
-EXEC: PSEG_FORM_E_FPT:BODY[107]  CALL     PSEG_FORM_ENCINT:BODY[0] Return=REL_ADR[callStackTop+3]   Frame[14]: POOL_1[907], null, CSEG_SIMTST101[205], CSEG_SIMTST101[310], POOL_1[714], null, null, null, null, PSEG_SIMTST101[126], POOL_1[907], FIELD:7, CSEG_SIMTST101[310], CSEG_SIMTST101[205]  Stack[3]: null, REL_ADR[callStackTop+2], null
-EXEC: PSEG_FORM_ENCINT:BODY[0]  ENTER    nLOCAL=2                        Frame[6]: null, REL_ADR[callStackTop+2], null, PSEG_FORM_E_FPT:BODY[108], null, null  Stack[0]: 
-EXEC: PSEG_FORM_ENCINT:BODY[1]  PRECALL   NPACCA, nParSlots=0, exportSize=2, importSize=2   Frame[6]: null, REL_ADR[callStackTop+2], null, PSEG_FORM_E_FPT:BODY[108], null, null  Stack[2]: null, null
-EXEC: PSEG_FORM_ENCINT:BODY[2]  LOAD     REL_ADR[callStackTop+1], 2      Frame[6]: null, REL_ADR[callStackTop+2], null, PSEG_FORM_E_FPT:BODY[108], null, null  Stack[4]: null, null, REL_ADR[callStackTop+2], null
-EXEC: PSEG_FORM_ENCINT:BODY[3]  NOOP                                     Frame[6]: null, REL_ADR[callStackTop+2], null, PSEG_FORM_E_FPT:BODY[108], null, null  Stack[4]: null, null, REL_ADR[callStackTop+2], null
-EXEC: PSEG_FORM_ENCINT:BODY[4]  CALL     PSEG_FORM_NPACCA:BODY[0] Return=REL_ADR[callStackTop+4]   Frame[6]: null, REL_ADR[callStackTop+2], null, PSEG_FORM_E_FPT:BODY[108], null, null  Stack[4]: null, null, REL_ADR[callStackTop+2], null
-EXEC: PSEG_FORM_NPACCA:BODY[0]  ENTER    nLOCAL=1                        Frame[6]: null, null, REL_ADR[callStackTop+2], null, PSEG_FORM_ENCINT:BODY[5], null  Stack[0]: 
-EXEC: PSEG_FORM_NPACCA:BODY[1]  LOAD     REL_ADR[callStackTop+2], 2      Frame[6]: null, null, REL_ADR[callStackTop+2], null, PSEG_FORM_ENCINT:BODY[5], null  Stack[2]: REL_ADR[callStackTop+2], null
-RTRegister.putValue: REL_ADR[callStackTop+2][0], reg=1, value=REL_ADR[callStackTop+2][0]
-RTRegister.putValue: GADDR: REL_ADR[callStackTop+2][0]
-==== RTStack ================ SVM_REFER.execute: NOTE:  RTStack'DUMP ====================
-   0: POOL_1[907]
-   1: null
-   2: CSEG_SIMTST101[205]
-   3: CSEG_SIMTST101[310]
-   4: POOL_1[714]
-   5: null
-   6: null
-   7: null
-   8: null
-   9: PSEG_SIMTST101[126]
-   10: POOL_1[907]
-   11: FIELD:7
-   12: CSEG_SIMTST101[310]
-   13: CSEG_SIMTST101[205]
-   14: null
-   15: REL_ADR[callStackTop+2]
-   16: null
-   17: PSEG_FORM_E_FPT:BODY[108]
-   18: null
-   19: null
-   20: null
-   21: null
-   22: REL_ADR[callStackTop+2]
-   23: null
-   24: PSEG_FORM_ENCINT:BODY[5]
-   25: null
-==== RTStack ================ SVM_REFER.execute: NOTE:  RTStack' END  ====================
-ERROR: Internal error: 
-java.lang.Exception: Stack trace
-	at java.base/java.lang.Thread.dumpStack(Thread.java:1991)
-	at bec.util.Util.IERR(Util.java:37)
-	at bec.virtualMachine.RTRegister.putValue(RTRegister.java:54)
-	at bec.virtualMachine.SVM_REFER.execute(SVM_REFER.java:50)
-	at bec.value.ProgramAddress.execute(ProgramAddress.java:123)
-	at bec.MainProgram.<init>(MainProgram.java:85)
-	at bec.BecCompiler.<init>(BecCompiler.java:129)
-	at bec.BecCompiler.main(BecCompiler.java:53)
-RETURN: 0
+--- NO ERRORS FOUND IN TEST  29  --- Test procedure parameters by value, effect and values.                                                                                                                                                                                                                                                                             
+
+Warn.: (l. 56) 159: assignment operator incompatible with type
+Warn.: (l. 57) 159: assignment operator incompatible with type
+Warn.: (l. 62) 159: assignment operator incompatible with type
+Warn.: (l. 63) 159: assignment operator incompatible with type
+   NUMBER OF WARNINGS: 4
+--- NO ERRORS FOUND IN TEST  30  --- Simple test of Arrays.                                                                                                                                                                                                                                                                                                             
+
+
+--- NO ERRORS FOUND IN TEST  49  --- Test for statements in connection blocks.                                                                                                                                                                                                                                                                                          
+
+Note!: (l. 36) 396: 'WHEN e'-branch will never be executed
+Note!: (l. 40) 396: 'WHEN d'-branch will never be executed
+--- NO ERRORS FOUND IN TEST  50  --- Test when and otherwise-clause in connection statement.                                                                                                                                                                                                                                                                            
+
+--- NO ERRORS FOUND IN TEST  64  --- Test parameter transmission by value to classes.                                                                                                                                                                                                                                                                                   
+
+--- NO ERRORS FOUND IN TEST  66  --- Test corutines and two infiles which read from the same file.                                                                                                                                                                                                                                                                      
+The file(s) C:/GitHub/EclipseWorkSpaces/SimulaCompiler2/SimulaTestBatch/src/simulaTestBatch/files/any66, C:/GitHub/EclipseWorkSpaces/SimulaCompiler2/SimulaTestBatch/src/simulaTestBatch/files/any66
+ -- closed at program termination by SIMULA Runtime System
+
+--- NO ERRORS FOUND IN TEST  67  --- Simple test of detach, call and resume.                                                                                                                                                                                                                                                                                            
+
+
+--- NO ERRORS FOUND IN TEST  69  --- Test complex use of detach, call and resume.                                                                                                                                                                                                                                                                                       
+Warn.: 367: 1 END(s) inserted after source text
+
+   NUMBER OF WARNINGS: 1
+--- NO ERRORS FOUND IN TEST  70  --- Test the text attributes length, pos, main, setpos,                                                                                                                                                                                                                                                                                
+
+
+--- NO ERRORS FOUND IN TEST  78  --- Test the text procedure filename of class file.                                                                                                                                                                                                                                                                                    
+
+File access mode=noCreate but File "anyNoneExitingfile" does not exist
+--- NO ERRORS FOUND IN TEST  79  --- Test the attribute 'isopen' of class File.                                                                                                                                                                                                                                                                                         
+The file(s) C:/GitHub/EclipseWorkSpaces/SimulaCompiler2/SimulaTestBatch/src/simulaTestBatch/files/anyImageFile79
+ -- closed at program termination by SIMULA Runtime System
+
+--- NO ERRORS FOUND IN TEST  80  --- Test the attribute 'isopen' of class file.                                                                                                                                                                                                                                                                                         
+
+
+--- NO ERRORS FOUND IN TEST  82  --- Do a simple test of the operations +, -, *, / and //.                                                                                                                                                                                                                                                                              
+
+BCDEFText 1Text 2Text 3Text 4Text 5                                                                                                                                                                                                                                                                                                                                     
+--- NO ERRORS FOUND IN TEST  84  --- Test Directbytefile                                                                                                                                                                                                                                                                                                                
+
+
+--- NO ERRORS FOUND IN TEST  94  --- Test Simset - first, last, empty, cardinal and clear.                                                                                                                                                                                                                                                                              
+
+Warn.: (l. 26) 369: HIDDEN x ignored, not PROTECTED
+   NUMBER OF WARNINGS: 1
+--- NO ERRORS FOUND IN TEST  96  --- Test hidden, protected attributes.                                                                                                                                                                                                                                                                                                 
+
+
+--- NO ERRORS FOUND IN TEST  99  --- Test mod, rem, min, max.                                                                                                                                                                                                                                                                                                           
+Warn.: 367: 1 END(s) inserted after source text
+
+   NUMBER OF WARNINGS: 1
+--- NO ERRORS FOUND IN TEST 100  --- Test that put-get-put delivers the identity.                                                                                                                                                                                                                                                                                       
+
+
+--- NO ERRORS FOUND IN TEST 102  --- LEGAL GOTO out of an operating process and the enclosing System.                                                                                                                                                                                                                                                                   
+Warn.: 367: 1 END(s) inserted after source text
+
+   NUMBER OF WARNINGS: 1
+--- NO ERRORS FOUND IN TEST 103  --- Test all kinds of Activation Statements                                                                                                                                                                                                                                                                                            
+    27:          text case := msg & ", Result=" & edReal(r) & "  Facit=" & edReal(facit);
+        ===================I
+Warn.: 254: :=/:- illegal - attribute treated as READONLY
+
+   NUMBER OF WARNINGS: 1
+--- NO ERRORS FOUND IN TEST 104  --- Test procedure parameter 'F' by name.                                                                                                                                                                                                                                                                                              
+
+--- NO ERRORS FOUND IN TEST 105  --- Test Multiple Assignments                                                                                                                                                                                                                                                                                                          
+Warn.: 367: 1 END(s) inserted after source text
+
+   NUMBER OF WARNINGS: 1
+--- NO ERRORS FOUND IN TEST 107  --- Test Process, activation statements, idle, terminated, time.                                                                                                                                                                                                                                                                       
+Warn.: 367: 1 END(s) inserted after source text
+
+   NUMBER OF WARNINGS: 1
+--- NO ERRORS FOUND IN TEST 108  --- Simple Co-Routine Sample 1: detach - call                                                                                                                                                                                                                                                                                          
+Warn.: 367: 1 END(s) inserted after source text
+
+   NUMBER OF WARNINGS: 1
+--- NO ERRORS FOUND IN TEST 109  --- Simple Co-Routine Sample 2: detach - resume                                                                                                                                                                                                                                                                                        
+
+
+--- NO ERRORS FOUND IN TEST 133  --- Test infile reading with inimage and inrecord.                                                                                                                                                                                                                                                                                     
+The file(s) C:/GitHub/EclipseWorkSpaces/SimulaCompiler2/SimulaTestBatch/src/simulaTestBatch/files/anyFile133
+ -- closed at program termination by SIMULA Runtime System
+
+--- NO ERRORS FOUND IN TEST 134  --- Test Outfile with CREATE, APPEND and PURGE.                                                                                                                                                                                                                                                                                        
+
+--- NO ERRORS FOUND IN TEST 135  --- Test Outbytefile with CREATE, APPEND and PURGE.                                                                                                                                                                                                                                                                                    
+The file(s) TEMP004
+ -- closed at program termination by SIMULA Runtime System
+
+--- NO ERRORS FOUND IN TEST 136  --- Test Directfile with CREATE, APPEND and PURGE.                                                                                                                                                                                                                                                                                     
+

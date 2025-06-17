@@ -10,6 +10,8 @@ public class Global {
 	public static boolean fecListing;
 	public static boolean fecSCodeTrace;
 	public static int fecTraceLevel;
+	
+	public static boolean becVerbose;
 	public static boolean becSCodeTrace;
 	public static boolean becTraceSVM_CODE;
 	public static boolean becTraceSVM_DATA;

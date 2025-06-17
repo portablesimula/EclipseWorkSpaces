@@ -35,6 +35,7 @@ SimulaTest(135,"--- Test Outbytefile with CREATE, APPEND and PURGE.") begin
 	for i:=1 step 1 until 20 do begin
 		f2.outbyte(i+20); 
 	end;
+	f2.close;
 	
 %	outtext("===================  PASS 3  ================"); outimage;
 	inspect new Inbytefile("TEMP004") do begin

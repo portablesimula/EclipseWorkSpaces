@@ -1,22 +1,45 @@
 begin
+	integer i;
+	text t, u;
+	character c;
+	boolean b;
+	
+	t :- copy("   ABCDE\fghi\JKLMN   ");
+	
+	t :- t.trim;
+	outtext("t.trim  ==> t=" & t); outimage;
+	
+	c := t.loadChar(4);
+	outtext("t.loadChar(4)=" & edit(c)); outimage;
+	 
+	t.storeChar('Z', 4);
+	outtext("t.storeChar('Z', 4)  ==> t=" & t); outimage;
+	
+	b := t.startsWith("ABC");
+	outtext("t.startsWith(""ABC"")  ==> " & edit(b)); outimage;
+	
+	b := t.startsWith("FGH");
+	outtext("t.startsWith(""FGH"")  ==> " & edit(b)); outimage;
+	
+	b := t.endsWith("LMN");
+	outtext("t.endsWith(""LMN"")  ==> " & edit(b)); outimage;
+	
+	b := t.endsWith("ABC");
+	outtext("t.endsWith(""ABC"")  ==> " & edit(b)); outimage;
 
-	real               r1;                ! To be compared by the relops;
-	real               r2;                ! To be compared by the relops;
-	real               minpreal;          ! To contain min pos real val.;
-	real               maxnreal;          ! To contain max neg real val.;
-	minpreal :=  addepsilon(0.0);         ! and negative real value with;
-	maxnreal :=  minreal;                 ! real precision.             ;
+	i := t.indexOf('Z');
+	outtext("t.indexOf('Z')  ==> " & edit(i)); outimage;
 
-r1 := maxnreal;   r2 := minpreal;
+	i := t.indexOf('W');
+	outtext("t.indexOf('W')  ==> " & edit(i)); outimage;
 
-outtext("minreal="); outreal(minreal,4,11); outimage;
-outtext("maxreal="); outreal(maxreal,4,11); outimage;
-outtext("minpreal="); outreal(minpreal,4,11); outimage;
+	t :- t.replace('\','%');
+	outtext("t.replace('\','%')  ==> t=" & t); outimage;
 
-outtext("r1="); outreal(r1,4,11); outtext("  r2="); outreal(r2,4,11); outimage;
+	u :- t.toLowerCase;
+	outtext("t.toLowerCase  ==> U=" & u); outimage;
 
-
-if r1 = r2            then begin  outtext("real.75 (comparing REALs)");  outimage; end;
-
-
+	u :- t.toUpperCase;
+	outtext("t.toUpperCase  ==> U=" & u); outimage;
+	
 end of program;

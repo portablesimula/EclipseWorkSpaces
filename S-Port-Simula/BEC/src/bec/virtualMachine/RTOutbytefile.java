@@ -24,7 +24,7 @@ public class RTOutbytefile extends RTByteFile {
 			return;
 		}
 		try {
-			System.out.println("NEW RTInbytefile: fileName=" + fileName);
+//			System.out.println("NEW RTOutbytefile: fileName=" + fileName);
 			outputStream = new FileOutputStream(file, fileAction. _APPEND);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

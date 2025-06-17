@@ -704,7 +704,7 @@ public class ClassDeclaration extends BlockDeclaration {
 			prefixClass = cls;
 			return (cls);
 		}
-		Thread.dumpStack();
+//		Thread.dumpStack();
 		Util.error("Prefix " + prefix + " is not a Class but " + decl.getClass().getSimpleName()
 				+ " Declared in " + this.sourceFileName + " at line " + decl.lineNumber);
 		printStaticChain("",0);

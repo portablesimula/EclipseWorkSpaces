@@ -69,5 +69,5 @@ SimulaTest(133,"--- Test infile reading with inimage and inrecord.") begin
          trace(inrecord);
 
       trace("At END OF TEST");
-   
+      fil.close;
  end

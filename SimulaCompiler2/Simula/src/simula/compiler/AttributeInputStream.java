@@ -27,6 +27,7 @@ import simula.compiler.syntaxClass.declaration.PrefixedBlockDeclaration;
 import simula.compiler.syntaxClass.declaration.ProcedureDeclaration;
 import simula.compiler.syntaxClass.declaration.SimpleVariableDeclaration;
 import simula.compiler.syntaxClass.declaration.StandardClass;
+import simula.compiler.syntaxClass.declaration.UndefinedDeclaration;
 import simula.compiler.syntaxClass.declaration.VirtualSpecification;
 import simula.compiler.syntaxClass.expression.ArithmeticExpression;
 import simula.compiler.syntaxClass.expression.AssignmentOperation;
@@ -155,7 +156,7 @@ public class AttributeInputStream {
     	if(TRACE) System.out.println("AttributeInputStream.readConstant: key=" + (int)key + " \"" + key +"\"");
     	Object res = null;
 		switch(key) {
-			case Type.T_VOID:		res = null; break;
+			case Type.T_UNDEF:		res = null; break;
 			case Type.T_BOOLEAN:	res = inpt.readBoolean(); break;
 			case Type.T_CHARACTER:	res = inpt.readChar(); break;
 			case Type.T_INTEGER:	res = inpt.readShort(); break;
@@ -260,6 +261,7 @@ public class AttributeInputStream {
 			case ObjectKind.ExternalDeclaration:		return ExternalDeclaration.readObject(inpt);
 			case ObjectKind.HiddenSpecification:		return HiddenSpecification.readObject(inpt);
 			case ObjectKind.ProtectedSpecification:		return ProtectedSpecification.readObject(inpt);
+			case ObjectKind.UndefinedDeclaration:		return UndefinedDeclaration.readObject(inpt);
 
 			case ObjectKind.ActivationStatement:		return ActivationStatement.readObject(inpt);
 			case ObjectKind.BlockStatement:				return BlockStatement.readObject(inpt);

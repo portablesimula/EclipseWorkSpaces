@@ -91,11 +91,11 @@ public final class RunSingleTest {
 		
 		Vector<String> names=new Vector<String>();
 //		names.add("AdHoc_SimulaTest.sim"); // Simula TestBatch Framework
-		names.add("adHoc00.sim"); // For ad'hoc testing
+//		names.add("adHoc00.sim"); // For ad'hoc testing
 //		names.add("adHoc01.sim"); // For ad'hoc testing
 		// *** SIMULA TEST BATCH TIL EKSEKVERING
 		// String name=Global.packetName+"/sim/InspectionSamples.sim";
-//		names.add("SimulaTest.sim"); // Simula TestBatch Framework
+		names.add("SimulaTest.sim"); // Simula TestBatch Framework
 //		names.add("simtst00.sim"); // OK:  Empty test
 //		names.add("simtst01.sim"); // OK:  Meaningless test of conditional statements,
 //		names.add("simtst02.sim"); // OK:  Test boolean operators/expressions
@@ -284,6 +284,8 @@ public final class RunSingleTest {
 //		names.add("simtst160.sim"); // OK: Test Specified Virtual Text Functions as part of an Expression
 //		names.add("simtst161.sim"); // OK: Test Specified Virtual ref-type Functions as part of an Expression
 //		names.add("simtst162.sim"); // OK: Test Complicated nested inspection
+//		names.add("simtst163.sim"); // OK: Test Inspect when, when, otherwise (selected)
+		names.add("simtst164.sim"); // OK: Test Extended Text Procedures
 //		
 //		names.add("RT_ErrorTest.sim"); // Simula TestBatch Framework
 //		names.add("simerr01.sim"); // OK: ILLEGAL GOTO out of an operating Process and into the enclosing System.

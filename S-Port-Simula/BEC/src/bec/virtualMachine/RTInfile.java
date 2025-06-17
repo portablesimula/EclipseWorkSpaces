@@ -31,7 +31,7 @@ public class RTInfile extends RTImageFile {
 			return;
 		}
 		try {
-			System.out.println("NEW RTInfile: fileName=" + fileName);
+//			System.out.println("NEW RTInfile: fileName=" + fileName);
 			lineReader = new BufferedReader(new FileReader(file));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

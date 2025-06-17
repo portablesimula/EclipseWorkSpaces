@@ -60,6 +60,7 @@ public final class RelationalOperation extends Expression {
 	/// @param opr the relation
 	/// @param rhs the right hand side
 	RelationalOperation(final Expression lhs,final int opr,final Expression rhs) {
+		this.type = Type.Boolean;
 		this.lhs = lhs;
 		this.opr = opr;
 		this.rhs = rhs;

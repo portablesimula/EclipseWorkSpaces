@@ -10,6 +10,8 @@ import java.lang.reflect.Field;
 import java.nio.charset.Charset;
 import javax.swing.JOptionPane;
 
+import simula.compiler.utilities.Global;
+
 /// Utility class containing a lot of common stuff.
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/SimulaCompiler2/Simula/src/simula/runtime/RTS_UTIL.java"><b>Source File</b></a>.
@@ -519,6 +521,7 @@ public final class RTS_UTIL {
 	/// Set runtime options.
 	/// @param args argument array
 	public static void setRuntimeOptions(final String[] args) {
+		RTS_Option.argv = args;
 		// Parse command line arguments.
 		RTS_Option.RUNTIME_USER_DIR = System.getProperty("user.dir", null);
 		File file = null;

@@ -47,6 +47,7 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 			case P_DMPENT:   SysInfo.dmpent(); break;
 			case P_GINTIN:   SysInfo.getIntinfo(); break;
 			case P_SIZEIN:   SysInfo.sizein(); break;
+			case P_GVIINF:   SysInfo.gviinf(); break;
 
 			case P_GDSPEC:   SysFile.gdspec(); break;
 			case P_GETLPP:   SysFile.getlpp(); break;
@@ -169,7 +170,7 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 	private void initia() {
 		ENTER("INITIA: ", 0, 1); // exportSize, importSize
 		ProgramAddress exchdl = (ProgramAddress) RTStack.pop();
-		System.out.println("SVM_SYSCALL.initia: "+exchdl);
+		if(Global.verbose) System.out.println("SVM_SYSCALL.initia: "+exchdl);
 		EXIT("INITIA: ");
 	}
 	

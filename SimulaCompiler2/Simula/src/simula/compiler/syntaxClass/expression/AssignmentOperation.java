@@ -98,6 +98,9 @@ public final class AssignmentOperation extends Expression {
 		}
 		rhs.doChecking();
 		Type fromType = rhs.type;
+		if(toType.keyWord == Type.T_UNDEF) {
+			lhs.type = fromType;
+		}
 		if (opr == KeyWord.ASSIGNVALUE)
 			this.textValueAssignment = (toType.keyWord == Type.T_TEXT);
 		rhs = (Expression) TypeConversion.testAndCreate(toType, rhs);

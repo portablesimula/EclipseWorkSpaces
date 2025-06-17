@@ -54,7 +54,7 @@ public abstract class SysFile {
 				result = "SYSTRACE"; break;
 			default: Util.IERR("");
 		}
-		System.out.println("SVM_SYSCALL.gdspec: index=" + index + ", result=" +result);
+//		System.out.println("SVM_SYSCALL.gdspec: index=" + index + ", result=" +result);
 		RTUtil.move(result, itemAddr, result.length());
 
 		RTStack.push(IntegerValue.of(Type.T_INT, result.length()), "EXPORT");

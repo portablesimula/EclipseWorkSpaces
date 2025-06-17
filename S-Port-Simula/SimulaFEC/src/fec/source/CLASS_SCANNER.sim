@@ -39,7 +39,7 @@ begin
       ref(recognizer) lexScanner;
 
       procedure setP1line;
-            line:-lexscanner.line.sub(1,lexscanner.linelength-1);
+           line:-lexscanner.line.sub(1,lexscanner.linelength-1);
 
       procedure P1error(n); short integer n;
       begin setP1line; outP1message(lexscanner.linepos+1,n,'!2!');
@@ -1131,7 +1131,7 @@ EXIT: end;
              scanahead;
 %            atom:=loadchar(line,linepos); linepos:=linepos+1;
              if atom='-' then begin
-                if not SportOK then P1warn(233);
+%               if not SportOK then P1warn(233);
                 nextLine; goto ASSESS;
              end;
              goto ParserC;
