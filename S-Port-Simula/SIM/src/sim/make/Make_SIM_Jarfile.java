@@ -26,8 +26,8 @@ public class Make_SIM_Jarfile {
 			
 			System.out.println("Make_SIM_Jarfile - DONE: " + RELEASE_HOME + "/CommonSIM.jar");
 			
-			SINGLE_INLINE_TEST();
-//			FULL_INLINE_TEST();
+//			SINGLE_INLINE_TEST();
+			FULL_INLINE_TEST();
 //			INLINE_TEST_SAMPLES();
 			
 		} catch(Exception e) { e.printStackTrace(); }

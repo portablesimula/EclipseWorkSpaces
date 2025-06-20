@@ -211,7 +211,7 @@ begin
                   outbyte(2); outbyte(i//10+48); outbyte(rem(i,10)+48);
                end else begin
                   leftsintbuf.putint(i); i:=6;
-                  while loadchar(leftsintbuf,i)<>' ' do i:=i-1;
+                  while leftsintbuf.loadchar(i)<>' ' do i:=i-1;
                   i:=6-i;
                   outbyte(i); outtext(leftsintbuf.sub(8-i,i));
                end;
@@ -221,7 +221,7 @@ begin
          begin ! Outputs a direct integer constant;
 %+S            Freq(115):=Freq(115)+1;
                leftintbuf.putint(i); i:=11;
-               while loadchar(leftintbuf,i)<>' ' do i:=i-1;
+               while leftintbuf.loadchar(i)<>' ' do i:=i-1;
                i:=11-i;
                outbyte(i); outtext(leftintbuf.sub(13-i,i));
          end;

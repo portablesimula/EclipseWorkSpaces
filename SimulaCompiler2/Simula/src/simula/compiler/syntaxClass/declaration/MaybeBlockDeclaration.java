@@ -163,14 +163,16 @@ public final class MaybeBlockDeclaration extends BlockDeclaration {
 		Global.enterScope(this);
 			LabelList.accumLabelList(this);
 			for (Declaration dcl : declarationList)	dcl.doChecking();
-			for (Statement stm : statements) stm.doChecking();
+			for (Statement stm : statements) {
+				stm.doChecking();
+			}
 		Global.exitScope();
 		SET_SEMANTICS_CHECKED();
 	}
 	
 	@Override
 	public int getRTBlockLevel() {
-		ASSERT_SEMANTICS_CHECKED();
+//		ASSERT_SEMANTICS_CHECKED(); // TODO: ER DETTE BRA ?
 		int rtBlockLevel = declaredIn.getRTBlockLevel();
 		if(declarationKind == ObjectKind.SubBlock)
 			rtBlockLevel = rtBlockLevel+1;

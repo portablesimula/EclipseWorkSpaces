@@ -170,7 +170,7 @@ begin
 %-I   short integer procedure newTag; begin
 %-I   	  newtag:=lastusedtag:=lastusedtag+1;
 %-I %+T	  TRC("BUILDER1",sourceline,"newTag " & edit(lastusedtag) & "  -- Should be replaced by 'newTTag(ident)'" );
-%-I %+T	  RTS_Utility(5,0);
+%-I %+T	  ENV.RTS_Utility(5,0);
 %-I   end;
 
 --%+T   procedure newTTags(ident,incr); text ident; short integer incr; if incr > 0 then begin

@@ -863,16 +863,32 @@ public final class RTS_TXT {
 
 	/// Text Extension Procedure indexOf.
 	/// 
-	/// Return the index of the first occurrence of the character 'c'
+	/// Return the index of the first occurrence of the character 'c' after 'pos'.
 	///
 	/// Note: character positions are counted from zero.
 	/// 
 	/// @param T a text reference
 	/// @param c a character
-	/// @return the index of the first occurrence of the character 'c', or -1 if the character does not occur.
+	/// @return the index of the character 'c', or -1 if the character does not occur.
 	public static int indexOf(final RTS_TXT T, final char c) {
 		String t = T.edText();
-		return t.indexOf(c);
+		int p = T.START + T.POS;
+		return t.indexOf(c, p);
+	}
+
+	/// Text Extension Procedure lastIndexOf.
+	/// 
+	/// Return the index of the last occurrence of the character 'c'.
+	///
+	/// Note: character positions are counted from zero.
+	/// 
+	/// @param T a text reference
+	/// @param c a character
+	/// @return the index of the character 'c', or -1 if the character does not occur.
+	public static int lastIndexOf(final RTS_TXT T, final char c) {
+		String t = T.edText();
+//		System.out.println("RTS_TXT.lastIndexOf: " + c + " IN " + t + " ==> " + t.lastIndexOf(c));
+		return t.lastIndexOf(c);
 	}
 
 	/// Text Extension Procedure replace.
@@ -893,8 +909,8 @@ public final class RTS_TXT {
 	/// Return a text copy resulting from replacing all occurrences of oldChar with newChar.
 	/// 
 	/// @param T a text reference
-	/// @param oldChar a character
-	/// @param newChar a character
+	/// @param oldText a character
+	/// @param newText a character
 	/// @return a text resulting from replacing all occurrences of oldChar with newChar.
 	public static RTS_TXT replaceText(final RTS_TXT T, final RTS_TXT oldText, final RTS_TXT newText) {
 		String oldStr = oldText.edText();

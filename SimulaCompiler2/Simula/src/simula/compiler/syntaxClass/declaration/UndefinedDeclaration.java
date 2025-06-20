@@ -30,9 +30,8 @@ import simula.compiler.utilities.Util;
 /// @author Øystein Myhre Andersen
 public class UndefinedDeclaration extends Declaration {
 
-	/// Create a new SimpleVariableDeclaration.
+	/// Create a new UndefinedDeclaration.
 	/// 
-	/// @param type       the variable type
 	/// @param identifier the variable identifier
 	public UndefinedDeclaration(final String identifier) {
 		super(identifier);

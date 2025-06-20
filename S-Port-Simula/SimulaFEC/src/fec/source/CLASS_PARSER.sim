@@ -1591,7 +1591,7 @@ readspecificationexit:
 %-Z %IMPLNONE OFF
                else inspect stepexpr do begin
                   cvar.emit;
-                  new_elt(if loadchar(nameof(opdhii,opdloo),0)='-'
+                  new_elt(if nameof(opdhii,opdloo).loadchar(0)='-'
                           then IGE else ILE);
                end;
                this grammer.detach; !moresymbols;
@@ -2035,7 +2035,7 @@ readspecificationexit:
                         !convert to negative constant;
 %-Z %IMPLNONE OFF
                         inspect boxof(opdhi,opdlo) do begin
-                           if digit(loadchar(symbol,0))
+                           if digit(symbol.loadchar(0))
                            then begin simsymbol:-"-"&symbol;
                               DEFCONST; opdhi:=hashhi; opdlo:=hashlo;
                               goto constout;

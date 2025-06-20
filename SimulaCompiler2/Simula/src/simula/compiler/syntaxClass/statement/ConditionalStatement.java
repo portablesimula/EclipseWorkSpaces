@@ -93,8 +93,9 @@ public final class ConditionalStatement extends Statement {
 		if (condition.type == null || condition.type.keyWord != Type.T_BOOLEAN)
 			Util.error("ConditionalStatement.doChecking: Condition is not of Type Boolean, but: " + condition.type);
 		thenStatement.doChecking();
-		if (elseStatement != null)
+		if (elseStatement != null) {
 			elseStatement.doChecking();
+		}
 		SET_SEMANTICS_CHECKED();
 	}
 	

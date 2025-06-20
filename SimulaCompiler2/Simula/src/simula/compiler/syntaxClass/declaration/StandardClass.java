@@ -125,6 +125,7 @@ public final class StandardClass extends ClassDeclaration {
 			typeText.addStandardProcedure(ObjectKind.MemberMethod,Type.Boolean,"startsWith",parameter("t",Type.Text)); 
 			typeText.addStandardProcedure(ObjectKind.MemberMethod,Type.Boolean,"endsWith",parameter("t",Type.Text)); 
 			typeText.addStandardProcedure(ObjectKind.MemberMethod,Type.Integer,"indexOf",parameter("c",Type.Character)); 
+			typeText.addStandardProcedure(ObjectKind.MemberMethod,Type.Integer,"lastIndexOf",parameter("c",Type.Character)); 
 			typeText.addStandardProcedure(ObjectKind.MemberMethod,Type.Text,"replace",parameter("old",Type.Character),parameter("new",Type.Character)); 
 			typeText.addStandardProcedure(ObjectKind.MemberMethod,Type.Text,"replaceText",parameter("old",Type.Text),parameter("new",Type.Text)); 
 			typeText.addStandardProcedure(ObjectKind.MemberMethod,Type.Text,"toLowerCase"); 
@@ -313,21 +314,7 @@ public final class StandardClass extends ClassDeclaration {
 			ENVIRONMENT.addStandardProcedure(ObjectKind.ContextFreeMethod,Type.Text,"argv",parameter("index",Type.Integer)); 
 			ENVIRONMENT.addStandardProcedure(ObjectKind.ContextFreeMethod,null,"exit",parameter("status",Type.Integer)); 
 			ENVIRONMENT.addStandardProcedure(ObjectKind.ContextFreeMethod,Type.Integer,"hash",parameter("t",Type.Text));
-		}
-		
-		// *****************************************
-		// *** Additional S-Port'like Procedures ***
-		// *****************************************
-		if(Option.internal.SPORT) {
 			ENVIRONMENT.addStandardProcedure(ObjectKind.ContextFreeMethod,null,"DEFEXCEPTION",parameter("erh",Parameter.Kind.Procedure,Parameter.Mode.value,null));
-//			ENVIRONMENT.addStandardProcedure(ObjectKind.ContextFreeMethod,Type.Integer,"hash",parameter("t",Type.Text));
-			ENVIRONMENT.addStandardProcedure(ObjectKind.ContextFreeMethod,Type.Character,"loadChar",parameter("t",Type.Text),parameter("i",Type.Integer)); 
-			ENVIRONMENT.addStandardProcedure(ObjectKind.ContextFreeMethod,null,"storeChar",parameter("c",Type.Character),parameter("t",Type.Text),parameter("i",Type.Integer)); 
-			ENVIRONMENT.addStandardProcedure(ObjectKind.ContextFreeMethod,Type.Text,"getTextInfo",parameter("i",Type.Integer)); 
-			ENVIRONMENT.addStandardProcedure(ObjectKind.ContextFreeMethod,null,"giveTextInfo",parameter("i",Type.Integer),parameter("t",Type.Text)); 
-			ENVIRONMENT.addStandardProcedure(ObjectKind.ContextFreeMethod,Type.Integer,"getIntInfo",parameter("i",Type.Integer)); 
-			ENVIRONMENT.addStandardProcedure(ObjectKind.ContextFreeMethod,null,"giveIntInfo",parameter("i",Type.Integer),parameter("val",Type.Integer)); 
-			ENVIRONMENT.addStandardProcedure(ObjectKind.ContextFreeMethod,null,"rts_utility",parameter("index",Type.Integer),parameter("level",Type.Integer)); 
 		}
 	}
 

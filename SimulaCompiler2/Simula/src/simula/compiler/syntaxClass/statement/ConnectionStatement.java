@@ -183,7 +183,7 @@ public final class ConnectionStatement extends Statement {
 		inspectVariableDeclaration.type = exprType;
 		inspectedVariable.type = exprType;
 		inspectedVariable.doChecking();
-		
+
 		for(ConnectionDoPart part:connectionPart) part.doChecking();
 		if (otherwise != null) otherwise.doChecking();
 		

@@ -10,6 +10,7 @@ package make.java;
 import java.io.File;
 import java.util.Vector;
 
+import simula.compiler.Simula;
 import simula.compiler.SimulaCompiler;
 import simula.compiler.utilities.Global;
 import simula.compiler.utilities.Option;
@@ -37,6 +38,8 @@ public final class RunSingleTest {
 //		Option.CaseSensitive=true;
 //		Option.noExecution=true;
 //		Option.WARNINGS=false;
+		Simula.setSelectors("ZDTW");
+//		Simula.setSelectors("ZD");
 
 		// Set internal test, debug options.
 		Option.internal.INLINE_TESTING=true;
@@ -93,6 +96,8 @@ public final class RunSingleTest {
 //		names.add("AdHoc_SimulaTest.sim"); // Simula TestBatch Framework
 //		names.add("adHoc00.sim"); // For ad'hoc testing
 //		names.add("adHoc01.sim"); // For ad'hoc testing
+//		names.add("CLASS_COMMON.sim"); // For ad'hoc testing
+		
 		// *** SIMULA TEST BATCH TIL EKSEKVERING
 		// String name=Global.packetName+"/sim/InspectionSamples.sim";
 		names.add("SimulaTest.sim"); // Simula TestBatch Framework

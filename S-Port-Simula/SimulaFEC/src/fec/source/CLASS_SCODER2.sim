@@ -71,10 +71,10 @@ begin short integer ll1,ll2;
                then begin
                   !*** context parameter for Simuletta routines ***;
                   it:-copy("xxx _CONTEXT");
-                  storechar(char(48 !rank('0'); + t_ref),it,0);
+                  it.storechar(char(48 !rank('0'); + t_ref),0);
                                  !rtstypecode(rank(IREF)));
-                  storechar(char(48 !rank('0'); + k_smp),it,1);
-                  storechar(char(48 !rank('0'); + m_ref),it,2);
+                  it.storechar(char(48 !rank('0'); + k_smp),1);
+                  it.storechar(char(48 !rank('0'); + m_ref),2);
                   outtext( s_import & "!0!!0!" );
                   outtag(extq.ftag+contextdisp);
                   outbyte(it.length); outtext(it);
@@ -90,10 +90,10 @@ begin short integer ll1,ll2;
                      then it:-"700 " & symbol
                      else begin
                         it:-blanks(4);
-                        storechar(char(48 + rank(qty.type)), it,0);
+                        it.storechar(char(48 + rank(qty.type)), 0);
                                  !rtstypecode(rank(type));
-                        storechar(char(48 + rank(qty.kind)), it,1);
-                        storechar(char(48 + rank(qty.categ)),it,2);
+                        it.storechar(char(48 + rank(qty.kind)), 1);
+                        it.storechar(char(48 + rank(qty.categ)),2);
                         it:-it & symbol;
                      end;
                      outtext( s_import & "!0!!0!" );outtag(qty.ftag);

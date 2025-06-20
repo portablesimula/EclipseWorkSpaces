@@ -118,7 +118,7 @@ public final class SimulaCompiler {
 		File desktop = new File(System.getProperty("user.home"), "Desktop");
 		if (Option.verbose) {
 			// https://docs.oracle.com/javase/tutorial/essential/environment/sysprop.html
-			Util.println("------------  ENVIRONMENT SUMMARY  ------------");
+			Util.println("------------  SIMULA ENVIRONMENT SUMMARY  ------------");
 			Util.println("Simula Properties    " + Global.simulaPropertiesFile);
 			Util.println("Simula Home          " + Global.simulaHome);
 			Util.println("Simula Home (prev)   " + Global.getSimulaProperty("simula.home", null));
@@ -137,6 +137,7 @@ public final class SimulaCompiler {
 //			Util.println("32/64 bit JVM        " + System.getProperty("sun.arch.data.model"));
 			Util.println("file.encoding        " + System.getProperty("file.encoding"));
 			Util.println("defaultCharset       " + Charset.defaultCharset());
+			Util.println("compilerMode         " + Option.compilerMode);
 
 			// This will list the current system properties
 			// System.getProperties().list(System.out);

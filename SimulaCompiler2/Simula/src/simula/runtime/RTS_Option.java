@@ -32,4 +32,8 @@ public class RTS_Option {
 	/// Specify where Simula files (Outfile, Infile, ...) are written and read.
 	/// Default: User working directory. System.property("user.dir")
 	public static String RUNTIME_USER_DIR = "";
+	
+	/// Selectors for conditional compilation.
+	static String Selectors = "AZ";
+
 }

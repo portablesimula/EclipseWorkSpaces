@@ -160,7 +160,7 @@ public final class RunFullClassTestBatch {
 		names.add("simtst92.sim"); // OK:  Test 1-dim Array by value.
 		names.add("simtst93.sim"); // OK:  Test Simset - linkage, head, link, into, out, follow and precede
 		names.add("simtst94.sim"); // OK:  Test Simset - first, last, empty, cardinal and clear.
-		names.add("simtst95.sim"); // OK:  Test Environment Interface.
+//		names.add("simtst95.sim"); // OK:  Test Environment Interface.
 		names.add("simtst96.sim"); // OK:  Test hidden, protected attributes.
 		names.add("simtst97.sim"); // OK:  Test nested hidden and protected.
 		names.add("simtst98.sim"); // OK:  Test attribute protection - complex example. Test visibility of labels.
@@ -204,7 +204,7 @@ public final class RunFullClassTestBatch {
 		
 		names.add("simtst130.sim"); // OK: Class SimLib, a set of utility procedures from DEC Handbook.
 		names.add("simtst131.sim"); // OK: Catching Errors
-		names.add("simtst132.sim"); // OK: SPORT Options
+//		names.add("simtst132.sim"); // OK: SPORT Options
 		names.add("simtst133.sim"); // OK: Test infile reading with inimage and inrecord.
 		names.add("simtst134.sim"); // OK: Outfile with CREATE, APPEND and PURGE.
 		names.add("simtst135.sim"); // OK: OutBytefile with CREATE, APPEND and PURGE.

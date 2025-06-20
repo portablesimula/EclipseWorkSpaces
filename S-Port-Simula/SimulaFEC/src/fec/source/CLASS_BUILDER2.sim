@@ -514,12 +514,12 @@ restartloop:
 
       procedure storebyte(ch); character ch; begin
 %+T		 TRC("BUILDER2",sourceline,"storebyte: " & edit(rank(ch)));
-         storechar(ch,attrbuffer,p); p:=p+1;
+         attrbuffer.storechar(ch,p); p:=p+1;
       end;
 
       procedure outKey(k); character k; begin
 %+T		 TRC("BUILDER2",sourceline,"outKey: " & edKey(k));
-         storechar(k,attrbuffer,p); p:=p+1;
+         attrbuffer.storechar(k,p); p:=p+1;
       end;
 
       procedure putstring(hi,lo); character hi,lo;
@@ -550,14 +550,14 @@ restartloop:
 
       procedure putNumber(i); short integer i; begin
 %+T			TRC("BUILDER2",sourceline,"putNumber: " & edit(i));
-			storechar(char(    i//256),attrbuffer,p  );
-            storechar(char(mod(i,256)),attrbuffer,p+1); p:=p+2;
+			attrbuffer.storechar(char(    i//256),p  );
+            attrbuffer.storechar(char(mod(i,256)),p+1); p:=p+2;
       end;
 
       procedure swapObuffer;
       begin outKey(bufSwap);
-            storechar(char(    p//256),attrbuffer,0);
-            storechar(char(mod(p,256)),attrbuffer,1);
+            attrbuffer.storechar(char(    p//256),0);
+            attrbuffer.storechar(char(mod(p,256)),1);
             AOF.outtext(attrbuffer.sub(1,p));
             p:=2; !leave room for actual size;
       end;
@@ -591,8 +591,8 @@ restartloop:
 				idlength:=char(
 %+Z              !symbols starting with a single underline are skipped ;
 %+Z                        if kind <> K_Class and then symb.symbol.length>1 and then
-%+Z                           loadchar(symb.symbol,1)<> '_' and then
-%+Z                           loadchar(symb.symbol,0) = '_' then 1 else
+%+Z                           symb.symbol.loadchar(1)<> '_' and then
+%+Z                           symb.symbol.loadchar(0) = '_' then 1 else
                            (symb.symbol.length+1) );
 			end;
 %+T			TRC("BUILDER2",sourceline,"outquantwlist: *** TEST 3");

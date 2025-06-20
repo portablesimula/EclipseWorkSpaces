@@ -409,7 +409,7 @@ begin
 %-X         begin short integer i;
 %-X %+S           Freq(105):=Freq(105)+1;
 %-X               leftintbuf.putint(val);
-%-X               i:=11; while loadchar(leftintbuf,i)<>' ' do i:=i-1;
+%-X               i:=11; while leftintbuf.loadchar(i)<>' ' do i:=i-1;
 %-X               simsymbol:-leftintbuf.sub(i+2,11-i); DEFCONST;
 %-X               exptop:-new arithconst(sos.pred,ICONS);
 %-X               exptop qua arithconst.ixhi:=hashhi;
@@ -556,7 +556,7 @@ begin
 %-X            if tos is arithconst then begin !invert sign;
 %-X               lht:-boxof(tos qua const.ixhi,tos qua const.ixlo)
 %-X                    .symbol;
-%-X               simsymbol:- if loadchar(lht,0)='-'
+%-X               simsymbol:- if lht.loadchar(0)='-'
 %-X                           then lht.sub(2,lht.length-1)
 %-X                           else ("-" & lht);
 %-X               DEFCONST;
@@ -846,7 +846,7 @@ REPEAT:     tos:-sos:-none;
 
 %-I %+PQ  prior
 %-I       procedure getOpd;
-%-I       begin opdhi:=loadchar(L2buf,L2p);opdlo:=loadchar(L2buf,L2p+1);
+%-I       begin opdhi:=L2buf.loadchar(L2p);opdlo:=L2buf.loadchar(L2p+1);
 %-I             opdSymb:-boxof(opdhi,opdlo); L2p:=L2p+2;
 %-I %+D         if option(rank('R'))<>NUL then inspect sysout do begin
 %-I %+D            outtext(", opd: "); outtext(opdSymb.symbol) end;
@@ -854,8 +854,8 @@ REPEAT:     tos:-sos:-none;
 
 %-I %+PQ  prior
 %-I       procedure getlastblno;
-%-I       begin lastblhi:=loadchar(L2buf,L2p);
-%-I             lastbllo:=loadchar(L2buf,L2p+1);
+%-I       begin lastblhi:=L2buf.loadchar(L2p);
+%-I             lastbllo:=L2buf.loadchar(L2p+1);
 %-I             L2p:=L2p+2;
 %-I %+D         if option(rank('R'))<>NUL then inspect sysout do begin
 %-I %+D            outtext(":");
@@ -884,7 +884,7 @@ REPEAT:     tos:-sos:-none;
 %+D          end;
 %+D    end;
 
-       opn:=loadchar(L2buf,L2p); L2p:=L2p+1;
+       opn:=L2buf.loadchar(L2p); L2p:=L2p+1;
 
 %+D    if option(rank('R'))<>NUL then inspect sysout do
 %+D    begin outimage; outtext("opn: "); outtext(DB(rank(opn)));
@@ -961,8 +961,8 @@ REPLACE: ust.optstack(opttop):=opn; expexptop(opttop):-exptop;
     when
     ICOMN,         ! Start of declaration (S-code DECL) ;
     IROPD do begin ! Start of statement (S-code STMT) ;
-         opi:=rank(loadchar(L2buf,L2p  ))*256 +
-              rank(loadchar(L2buf,L2p+1));      L2p:=L2p+2;
+         opi:=rank(L2buf.loadchar(L2p  ))*256 +
+              rank(L2buf.loadchar(L2p+1));      L2p:=L2p+2;
          if option(rank('L'))<>NUL
 %+D         or option(rank('R'))<>NUL
          then begin sysout.outchar('/'); sysout.outint(opi,4) end;
@@ -1073,7 +1073,7 @@ REPLACE: ust.optstack(opttop):=opn; expexptop(opttop):-exptop;
     when
     IBOOL do begin               ! single constant;
 %+D      if option(rank('R'))<>NUL then inspect sysout do begin
-%+D         outtext(", opd: "); outtext(DB(rank(loadchar(L2buf,L2p))));
+%+D         outtext(", opd: "); outtext(DB(rank(L2buf.loadchar(L2p))));
 %+D      end;
          exptop:-new boolconst(exptop,ICONS);
          goto SetCo1 end;
@@ -1081,7 +1081,7 @@ REPLACE: ust.optstack(opttop):=opn; expexptop(opttop):-exptop;
     when
     ICHAR do begin               ! single constant;
 %+D      if option(rank('R'))<>NUL then inspect sysout do begin
-%+D         outtext(", opd: "); outint(rank(loadchar(L2buf,L2p)),3) end;
+%+D         outtext(", opd: "); outint(rank(L2buf.loadchar(L2p)),3) end;
          exptop:-new charconst(exptop,ICONS);
          goto SetCo1 end;
 
@@ -1099,10 +1099,10 @@ REPLACE: ust.optstack(opttop):=opn; expexptop(opttop):-exptop;
  SetCon:
 %+D      if option(rank('R'))<>NUL
 %+D      then inspect sysout do begin outtext(", opd: ");
-%+D         outtext(nameof(loadchar(L2buf,L2p),loadchar(L2buf,L2p+1)));
+%+D         outtext(nameof(L2buf.loadchar(L2p),L2buf.loadchar(L2p+1)));
 %+D      end;
-         exptop qua const.ixhi:=loadchar(L2buf,L2p); L2p:=L2p+1;
- SetCo1: exptop qua const.ixlo:=loadchar(L2buf,L2p); L2p:=L2p+1;
+         exptop qua const.ixhi:=L2buf.loadchar(L2p); L2p:=L2p+1;
+ SetCo1: exptop qua const.ixlo:=L2buf.loadchar(L2p); L2p:=L2p+1;
  SetCo2: exptop.type:=exptop.ctype:=opn; exptop.cl:=IEEXPcl;
     end;
 
@@ -1587,8 +1587,8 @@ LIWHEN1: getOpd;
 
     when
     ILINE do begin ! Line shift (for error reporting) ;
-         linenr:=rank(loadchar(L2buf,L2p  ))*256 +
-                 rank(loadchar(L2buf,L2p+1));
+         linenr:=rank(L2buf.loadchar(L2p  ))*256 +
+                 rank(L2buf.loadchar(L2p+1));
          L2p:=L2p+2;
          if option(rank('L'))<>NUL
 %+D         or option(rank('R') )<>NUL
@@ -1597,9 +1597,9 @@ LIWHEN1: getOpd;
 
     when
     ISSWA do begin
-         ssnuma:=rank(loadchar(L2buf,L2p  ))*256 +
-                 rank(loadchar(L2buf,L2p+1)); L2p:=L2p+2;
-         opdhi:=loadchar(L2buf,L2p); opdlo:=loadchar(L2buf,L2p+1);
+         ssnuma:=rank(L2buf.loadchar(L2p  ))*256 +
+                 rank(L2buf.loadchar(L2p+1)); L2p:=L2p+2;
+         opdhi:=L2buf.loadchar(L2p); opdlo:=L2buf.loadchar(L2p+1);
          getOpd;
 %        array bounds checking: ssnuma=256, opi=0/1 (off=0)  ;
 %        none checking:         ssnuma=257, opi=0/1 (off=0)  ;

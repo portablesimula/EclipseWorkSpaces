@@ -1004,6 +1004,7 @@ public class ClassDeclaration extends BlockDeclaration {
     	this.isLoaded = true;
     }
 
+	
 	// ***********************************************************************************************
 	// *** ByteCoding: buildClassFile
 	// ***********************************************************************************************
@@ -1021,52 +1022,14 @@ public class ClassDeclaration extends BlockDeclaration {
 		//
 		// My solution: It was possible to implement a re-try loop solution.
 		//              But it did not turn out very pretty.
-		int count = 5;
+		int count = 15;
 		while((count--) > 0) {
 			try {
 				if(Option.verbose)
 					Util.println("ClassDeclaration.buildClassFile: TRY: "+CD_ThisClass+" extends "+CD_SuperClass);
-				byte[] bytes = ClassFile.of(ClassFile.ClassHierarchyResolverOption.of(ClassHierarchy.getResolver())).build(CD_ThisClass,
-						classBuilder -> {
-							classBuilder
-								.with(SourceFileAttribute.of(Global.sourceFileName))
-								.withFlags(ClassFile.ACC_PUBLIC + ClassFile.ACC_SUPER)
-								.withSuperclass(CD_SuperClass);
-		
-							if(this.hasAccumLabel())
-								for (LabelDeclaration lab : labelList.getAccumLabels())
-									lab.buildDeclaration(classBuilder,this);
-		
-							for (Declaration decl : declarationList)
-								decl.buildDeclaration(classBuilder,this);
-							
-							for (Parameter par : parameterList)
-								par.buildDeclaration(classBuilder,this);
-							
-							for (VirtualSpecification virtual : virtualSpecList) 
-								if (!virtual.hasDefaultMatch) 
-									virtual.buildMethod(classBuilder);
-							
-							for (VirtualMatch match : virtualMatchList)
-								match.buildMethod(classBuilder);
-		
-							classBuilder
-								.withMethodBody("<init>", MethodTypeDesc.ofDescriptor(edConstructorSignature()), ClassFile.ACC_PUBLIC,
-									codeBuilder -> buildConstructor(codeBuilder))
-								.withMethodBody("_STM", MethodTypeDesc.ofDescriptor("()Lsimula/runtime/RTS_RTObject;"), ClassFile.ACC_PUBLIC,
-									codeBuilder -> buildMethod_STM(codeBuilder));
-							
-							if (isDetachUsed()) 
-								classBuilder
-									.withMethodBody("isDetachUsed", MethodTypeDesc.ofDescriptor("()Z"), ClassFile.ACC_PUBLIC,
-										codeBuilder -> buildIsMethodDetachUsed(codeBuilder));
-						}
-				);
-				if(Option.verbose)
-					Util.println("ClassDeclaration.buildClassFile: DONE: "+CD_ThisClass+" extends "+CD_SuperClass);
-				return(bytes);
+				return tryBuildClassFile(CD_ThisClass, CD_SuperClass);
 			} catch(IllegalArgumentException e) {
-				Util.println("ClassDeclaration.buildClassFile: FATAL ERROR CAUSED BY "+e);
+//				Util.println("ClassDeclaration.buildClassFile: FATAL ERROR CAUSED BY "+e);
 				boolean feasibleToReTry = false;
 				String msg = e.getMessage();
 				if(msg.startsWith("Could not resolve class")) {
@@ -1078,12 +1041,59 @@ public class ClassDeclaration extends BlockDeclaration {
 						feasibleToReTry = classInfo != null;
 					}
 				}
-				if(Option.verbose)
-					Util.println("ClassDeclaration.buildClassFile: FAILED: "+CD_ThisClass+" extends "+CD_SuperClass+"  feasibleToReTry="+feasibleToReTry);
+				Util.println("ClassDeclaration.buildClassFile: FATAL ERROR CAUSED BY "+e+" FeasibleToReTry="+feasibleToReTry);
 				if(count <= 0 || !feasibleToReTry) throw e;
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * Try to build classFile for this ClassDeclaration
+	 * @param CD_ThisClass this class descriptor
+	 * @param CD_SuperClass super class descriprot
+	 * @return class file bytes
+	 */
+	private byte[] tryBuildClassFile(ClassDesc CD_ThisClass, ClassDesc CD_SuperClass) {
+		byte[] bytes = ClassFile.of(ClassFile.ClassHierarchyResolverOption.of(ClassHierarchy.getResolver())).build(CD_ThisClass,
+				classBuilder -> {
+					classBuilder
+						.with(SourceFileAttribute.of(Global.sourceFileName))
+						.withFlags(ClassFile.ACC_PUBLIC + ClassFile.ACC_SUPER)
+						.withSuperclass(CD_SuperClass);
+	
+					if(this.hasAccumLabel())
+						for (LabelDeclaration lab : labelList.getAccumLabels())
+							lab.buildDeclaration(classBuilder,this);
+	
+					for (Declaration decl : declarationList)
+						decl.buildDeclaration(classBuilder,this);
+					
+					for (Parameter par : parameterList)
+						par.buildDeclaration(classBuilder,this);
+					
+					for (VirtualSpecification virtual : virtualSpecList) 
+						if (!virtual.hasDefaultMatch) 
+							virtual.buildMethod(classBuilder);
+					
+					for (VirtualMatch match : virtualMatchList)
+						match.buildMethod(classBuilder);
+	
+					classBuilder
+						.withMethodBody("<init>", MethodTypeDesc.ofDescriptor(edConstructorSignature()), ClassFile.ACC_PUBLIC,
+							codeBuilder -> buildConstructor(codeBuilder))
+						.withMethodBody("_STM", MethodTypeDesc.ofDescriptor("()Lsimula/runtime/RTS_RTObject;"), ClassFile.ACC_PUBLIC,
+							codeBuilder -> buildMethod_STM(codeBuilder));
+					
+					if (isDetachUsed()) 
+						classBuilder
+							.withMethodBody("isDetachUsed", MethodTypeDesc.ofDescriptor("()Z"), ClassFile.ACC_PUBLIC,
+								codeBuilder -> buildIsMethodDetachUsed(codeBuilder));
+				}
+		);
+		if(Option.verbose)
+			Util.println("ClassDeclaration.buildClassFile: DONE: "+CD_ThisClass+" extends "+CD_SuperClass);
+		return(bytes);
 	}
 
 	// ***********************************************************************************************

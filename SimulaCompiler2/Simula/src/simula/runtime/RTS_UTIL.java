@@ -532,7 +532,9 @@ public final class RTS_UTIL {
 			else if (arg.charAt(0) == '-') { // command line option
 				// General RTS Options
 				if (arg.equalsIgnoreCase("-help"))					help();
-				else if (arg.equalsIgnoreCase("-verbose"))			{ RTS_Option.VERBOSE = true; RTS_SPORT_Option.FEC_Verbose = 1; }
+				else if (arg.equalsIgnoreCase("-verbose"))			{ RTS_Option.VERBOSE = true;
+//																	  RTS_SPORT_Option.FEC_Verbose = 1;
+																	}
 				else if (arg.equalsIgnoreCase("-blockTracing"))		RTS_Option.BLOCK_TRACING = true;
 				else if (arg.equalsIgnoreCase("-gotoTracing"))		RTS_Option.GOTO_TRACING = true;
 				else if (arg.equalsIgnoreCase("-qpsTracing"))		RTS_Option.QPS_TRACING = true;

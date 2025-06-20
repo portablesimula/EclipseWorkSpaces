@@ -87,11 +87,11 @@ FINI:
       if listfile=/=none and then listfile=/=sysout
       then listfile.close;
 
-      giveintinfo(1,rank(termstatus)-48 !rank('0'););
-      giveintinfo(2,maxnumoftags);  giveintinfo(3,numberoflines);
-      giveintinfo(4,numerrfound);
+      ENV.giveintinfo(1,rank(termstatus)-48 !rank('0'););
+      ENV.giveintinfo(2,maxnumoftags);  ENV.giveintinfo(3,numberoflines);
+      ENV.giveintinfo(4,numerrfound);
       !*** now also signal FEC end to environment ***;
-      giveintinfo(5,numwarnfound);
+      ENV.giveintinfo(5,numwarnfound);
 
 end COMMON-block;
 end of FECMAIN;

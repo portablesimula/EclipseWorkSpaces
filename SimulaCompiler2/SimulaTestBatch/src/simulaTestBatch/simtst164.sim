@@ -48,8 +48,10 @@ SimulaTest(164,"--- Test Extended Text Procedures") begin
 	facit(11) :- "t.replaceText(""ABCD"",""XYZ"")  ==> t=XYZZ%fghi%JKLMN";
 	facit(12) :- "t.toLowerCase  ==> U=xyzz%fghi%jklmn";
 	facit(13) :- "t.toUpperCase  ==> U=XYZZ%FGHI%JKLMN";
+	facit(14) :- "t.lastIndexOf('%')  ==> 9";
+	facit(15) :- "t.indexOf('%')  ==> 9";
 	
-	facit(14) :- "At END";
+	facit(16) :- "At END";
 	
 % ========================================================
 
@@ -96,6 +98,13 @@ SimulaTest(164,"--- Test Extended Text Procedures") begin
 
 	u :- t.toUpperCase;
 	trace("t.toUpperCase  ==> U=" & u);
+
+	i := t.lastIndexOf('%');
+	trace("t.lastIndexOf('%')  ==> " & edit(i));
+
+	t.setpos(6);
+	i := t.indexOf('%');
+	trace("t.indexOf('%')  ==> " & edit(i));
 
 
 	trace("At END");

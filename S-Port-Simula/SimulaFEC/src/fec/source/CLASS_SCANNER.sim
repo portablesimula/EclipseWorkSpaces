@@ -171,8 +171,8 @@ begin
 %+M         NXT:  inspect cursource do call(this input)
 %+M               otherwise ; !ERROR;
 %+M               linlen:=lexscanner.linelength;
-%+M               if loadchar(line,0)='%' then begin
-%+M                  if loadchar(line,1)=' ' then goto NXT;
+%+M               if line.loadchar(0)='%' then begin
+%+M                  if line.loadchar(1)=' ' then goto NXT;
 %+M                  if linlen>=(preflng+9) then begin
 %+M                     if prefix=line.sub(1,preflng) and then
 %+M                        lowcase(copy(line.sub(preflng+1,9)))
@@ -454,7 +454,8 @@ begin
                end;
                if linlen = 0 then goto NEXTIMAGE;
                if linlen>signiflength then linlen:=signiflength;
-               storechar(EOL,line,linlen);
+%               storechar(EOL,line,linlen);
+               line.storechar(EOL,linlen);
       EXIT:    lexscanner.linelength:=linlen+1;
             end of source input read loop;
       end SourceElt;
@@ -628,7 +629,7 @@ begin
       begin
       REP:  inspect cursource do call(this input)
             otherwise detach; !cursource none: end of source;
-            atom:=loadchar(line,0); linepos:=1;
+            atom:=line.loadchar(0); linepos:=1;
             while atom='%' do begin
                directive; if atom=EOL then goto REP end;
       end;
@@ -662,7 +663,7 @@ begin
             end;
 
             procedure nextChar;
-            begin atom:=loadchar(line,linepos); linepos:=linepos+1;
+            begin atom:=line.loadchar(linepos); linepos:=linepos+1;
                   if atom='!9!' !TAB; then atom:=' ' else
                   if atom>'!127!' then atom:=char(rank(atom)-127) end;
 
@@ -824,12 +825,12 @@ begin
             when Exclam_cl do begin L1:
                  while atom<>';' do begin
                      if linepos < linelength then begin
-                        atom:=loadchar(line,linepos); linepos:=linepos+1
+                        atom:=line.loadchar(linepos); linepos:=linepos+1
                      end else nextLine;
                  end;
                  goto SCAN end;
             when Skip_cl,Format_cl do begin
-     SCAN:       atom:=loadchar(line,linepos); linepos:=linepos+1;
+     SCAN:       atom:=line.loadchar(linepos); linepos:=linepos+1;
 %+D              if linepos > linelength
 %+D              then internerr('!2!',sourceline);
                  goto SCN1 end;
@@ -842,7 +843,7 @@ begin
       procedure scanahead;
       begin
             while true do begin
-               atom:=loadchar(line,linepos); linepos:=linepos+1;
+               atom:=line.loadchar(linepos); linepos:=linepos+1;
 %+D            if linepos > linelength then internerr('!2!',sourceline);
                switch(NUL:Skip_cl) InputClass(rank(atom)) begin
                when Skip_cl do;
@@ -861,7 +862,7 @@ EXIT: end;
 %     begin
 %     SCAN: while atom<>';' do begin
 %                 if linepos < linelength then begin
-%                    atom:=loadchar(line,linepos); linepos:=linepos+1;
+%                    atom:=line.loadchar(linepos); linepos:=linepos+1;
 %                 end else detach;
 %           end;
 %           atom:=' ';
@@ -911,8 +912,8 @@ EXIT: end;
      TEST:
                switch(NUL:Skip_cl) InputClass(rank(atom)) begin
                when Letter_cl,LetterC_cl,Uscore_cl,Digit_cl do begin
-                    storechar(atom,hashbuf,hashpos); hashpos:=hashpos+1;
-     SCAN:          atom:=loadchar(line,linepos); linepos:=linepos+1;
+                    hashbuf.storechar(atom,hashpos); hashpos:=hashpos+1;
+     SCAN:          atom:=line.loadchar(linepos); linepos:=linepos+1;
 %+D                 if linepos>linelength then internerr('!2!',sourceline);
                     goto TEST;
                     end;
@@ -974,14 +975,14 @@ EXIT: end;
 
                 when '0' do
                      if not skipzeroes then begin
-                        storechar(atom,hashbuf,hashpos);
+                        hashbuf.storechar(atom,hashpos);
                         hashpos:=hashpos+1 end;
 
                 when '1':'9' do begin
                      if atom>=radix then begin
                         P1error(183); atom:='0' end;
              digit:  skipzeroes:=false;
-                     storechar(atom,hashbuf,hashpos);
+                     hashbuf.storechar(atom,hashpos);
                      hashpos:=hashpos+1; end;
 
                 when 'a':'f','A':'F' do begin
@@ -994,19 +995,19 @@ EXIT: end;
 
                 end;
 
-                atom:=loadchar(line,linepos); linepos:=linepos+1;
+                atom:=line.loadchar(linepos); linepos:=linepos+1;
 %+D             if linepos > linelength then internerr('!2!',sourceline)
 
              end  USLOOP;
 
       nterm: skipzeroes:=false;
              if startpos=hashpos then begin !*** store at least 1 zero;
-                storechar('0',hashbuf,hashpos); hashpos:=hashpos+1 end
+                hashbuf.storechar('0',hashpos); hashpos:=hashpos+1 end
         else if radix<>decradix then begin
 %+Z             short integer array Dec(0:100); !100 is enough!!!;
 %-Z             short integer       Dec(  100); !100 is enough!!!;
                 short integer carry,j; character k,N;
-                if loadchar(hashbuf,hashpos-1)='R' then begin
+                if hashbuf.loadchar(hashpos-1)='R' then begin
                    !no legal digit found after R, it was not a radix
                     number after all!!!;
                    hashpos:=hashpos-1; radix:=decradix; goto nterm;
@@ -1018,7 +1019,7 @@ EXIT: end;
                 hashpos:= startpos + (if radix=hexradix then 3 else 2);
                 N:=char(rank(N)-hashpos); radix:=char(rank(radix)-48);
                 while N <> NUL do begin N:=char(rank(N)-1);
-                    carry:=rank(loadchar(hashbuf,hashpos))-48;
+                    carry:=rank(hashbuf.loadchar(hashpos))-48;
                     if carry>9 then carry:=carry-7; !A->10, etc.;
                     hashpos:=hashpos+1;
                     for j:=0 step 1 until rank(k) do begin
@@ -1031,7 +1032,7 @@ EXIT: end;
                 end;
                 hashpos:=startpos; k:=char(rank(k)+1);
                 while k<>NUL do begin k:=char(rank(k)-1);
-                    storechar(char(Dec(rank(k))+48),hashbuf,hashpos);
+                    hashbuf.storechar(char(Dec(rank(k))+48),hashpos);
                     hashpos:=hashpos+1;
                 end;
                 !Now, the decimal number is stored in hashbuf, and
@@ -1048,11 +1049,11 @@ EXIT: end;
 
                detach;  !*** to do initialisations ***;
                nextLine; goto ASSESS;
-      NxtChar: atom:=loadchar(line,linepos); linepos:=linepos+1;
+      NxtChar: atom:=line.loadchar(linepos); linepos:=linepos+1;
 %+D            if linepos > linelength then internerr('!2!',sourceline);
                goto ASSESS;  !*** skip parser call;
 
-      ReadPC:  atom:=loadchar(line,linepos); linepos:=linepos+1;
+      ReadPC:  atom:=line.loadchar(linepos); linepos:=linepos+1;
 %+D            if linepos > linelength then internerr('!2!',sourceline);
       ParserC: inspect parser do begin
                   getopt:=true;
@@ -1079,7 +1080,7 @@ EXIT: end;
 
         when ':' do begin
 %+D          scanahead;
-%-D          atom:=loadchar(line,linepos); linepos:=linepos+1;
+%-D          atom:=line.loadchar(linepos); linepos:=linepos+1;
              if atom = '=' then begin opt:= IASSG; goto ReadPC end;
 %-A          if atom = '-' then begin opt:= IDENO; goto ReadPC end;
              opt:= ICL;  goto ParserC end;
@@ -1095,7 +1096,7 @@ EXIT: end;
 
         when '.' do begin
              scanahead;
-%            atom:=loadchar(line,linepos); linepos:=linepos+1;
+%            atom:=line.loadchar(linepos); linepos:=linepos+1;
              if InputClass(rank(atom))=Digit_cl then begin
                 if optx<>NUL then OperandToParser;
                 goto ndot end;
@@ -1106,7 +1107,7 @@ EXIT: end;
 
         when '&' do begin
 %+D          scanahead;
-%-D          atom:=loadchar(line,linepos); linepos:=linepos+1;
+%-D          atom:=line.loadchar(linepos); linepos:=linepos+1;
              if InputClass(rank(atom))=Digit_cl or else atom='&' or else
                 atom='-' or else atom='+'
              then begin
@@ -1116,7 +1117,7 @@ EXIT: end;
 
         when '*' do begin
              scanahead;
-%            atom:=loadchar(line,linepos); linepos:=linepos+1;
+%            atom:=line.loadchar(linepos); linepos:=linepos+1;
 %-A          if atom = '*' then opt:= IPOWE
 %-A          else begin opt:= IMULT; goto ParserC end;
 %+A          opt:= IMULT;
@@ -1129,7 +1130,7 @@ EXIT: end;
         when '-' do begin
              opt:= IMINU;
              scanahead;
-%            atom:=loadchar(line,linepos); linepos:=linepos+1;
+%            atom:=line.loadchar(linepos); linepos:=linepos+1;
              if atom='-' then begin
 %               if not SportOK then P1warn(233);
                 nextLine; goto ASSESS;
@@ -1139,33 +1140,33 @@ EXIT: end;
 
         when '/' do begin
              scanahead;
-%            atom:=loadchar(line,linepos); linepos:=linepos+1;
+%            atom:=line.loadchar(linepos); linepos:=linepos+1;
 %-A          if atom <> '/' then begin opt:=ISLAS; goto ParserC end;
 %-A          opt:= IIDIV end;
 %+A          opt:= ISLAS end;
 
         when '<' do begin
 %+D          scanahead;
-%-D          atom:=loadchar(line,linepos); linepos:=linepos+1;
+%-D          atom:=line.loadchar(linepos); linepos:=linepos+1;
              if atom = '>' then       opt:= INE else
              if atom <>'=' then begin opt:= ILT; goto ParserC end
              else                     opt:= ILE; end;
 
         when '=' do begin
 %+D          scanahead;
-%-D          atom:=loadchar(line,linepos); linepos:=linepos+1;
+%-D          atom:=line.loadchar(linepos); linepos:=linepos+1;
 %+A          opt:= IEQ;
 %-A          if atom = '=' then begin opt:= IRFEQ; goto ReadPC end;
 %-A          if atom <>'/' then begin opt:= IEQ; goto ParserC end;
 %-A          opt:= IRFNE;
 %-A %+D      scanahead;
-%-A %-D      atom:=loadchar(line,linepos); linepos:=linepos+1;
+%-A %-D      atom:=line.loadchar(linepos); linepos:=linepos+1;
 %-A          if atom <> '=' then begin P1warn(273); goto ParserC end;
              end;
 
         when '>' do begin
 %+D          scanahead;
-%-D          atom:=loadchar(line,linepos); linepos:=linepos+1;
+%-D          atom:=line.loadchar(linepos); linepos:=linepos+1;
              if atom <> '=' then begin opt:=IGT; goto ParserC end;
              opt:= IGE end;
 
@@ -1186,17 +1187,17 @@ EXIT: end;
              hashbuf :- blanks(200);           ! MYH ;
  QUOTE:      startpos:=linepos;  i:=textpos;
    QREP1:    
-             atom:=loadchar(line,linepos); linepos:=linepos+1;
+             atom:=line.loadchar(linepos); linepos:=linepos+1;
              if atom<>'"' then begin
                 if atom <> EOL or else linepos < linelength then begin
                    if atom='!' then ISOcode;
-                   storechar(atom,hashbuf,textpos); textpos:=textpos+1;
+                   hashbuf.storechar(atom,textpos); textpos:=textpos+1;
                    goto QREP1
                 end;
                 !*** insert missing " before rpar, semic or EOL ***;
                 linepos:=startpos;      textpos:=i;
                 while linepos<linelength do begin
-                   atom:=loadchar(line,linepos); linepos:=linepos+1;
+                   atom:=line.loadchar(linepos); linepos:=linepos+1;
                    if atom=')' or atom=';' then goto QWARN;
                    textpos:=textpos+1;
                 end;
@@ -1204,9 +1205,9 @@ EXIT: end;
              end
              else begin !*** " found, check for "" ***;
                 scanahead;
-%               atom:=loadchar(line,linepos); linepos:=linepos+1;
+%               atom:=line.loadchar(linepos); linepos:=linepos+1;
                 if atom='"' then begin
-                   storechar(atom,hashbuf,textpos); textpos:=textpos+1;
+                   hashbuf.storechar(atom,textpos); textpos:=textpos+1;
                    goto QUOTE end;
              end;
              scanPastFormat;
@@ -1230,16 +1231,16 @@ EXIT: end;
         when ''' do begin
              if optx<>NUL then OperandToParser;
              scanahead;
-%            atom:=loadchar(line,linepos); linepos:=linepos+1;
+%            atom:=line.loadchar(linepos); linepos:=linepos+1;
              if atom=EOL then begin
                 P1error(182); nextLine; goto ASSESS end;
              if atom='!' then ISOcode;
              opdlo:=atom; optx:=ICHAR; parser.cs:=ICONS;
              scanahead;
-%            atom:=loadchar(line,linepos); linepos:=linepos+1;
+%            atom:=line.loadchar(linepos); linepos:=linepos+1;
              if atom=''' then begin
                 scanahead;
-%               atom:=loadchar(line,linepos); linepos:=linepos+1;
+%               atom:=line.loadchar(linepos); linepos:=linepos+1;
 %+D             if linepos > linelength then internerr('!2!',sourceline)
              end else begin
                 P1warn(274); if atom='!' then scanahead;
@@ -1254,14 +1255,14 @@ EXIT: end;
             if atom='.' then begin scanahead;
 %+S            Freq(9):=Freq(9)+1;
      ndot:     optx:=IREAL;
-               storechar('.',hashbuf,hashpos); hashpos:=hashpos+1;
+               hashbuf.storechar('.',hashpos); hashpos:=hashpos+1;
                if InputClass(rank(atom))<>Digit_cl then goto NumERR;
                call(unsignedInt);
             end;
             if atom='&' then begin scanahead;
 %+S            Freq(9):=Freq(9)+1;
      nampsand: optx:=IREAL; !***ILONG;
-               storechar('&',hashbuf,hashpos); hashpos:=hashpos+1;
+               hashbuf.storechar('&',hashpos); hashpos:=hashpos+1;
                if atom='&' then begin optx:=ILONG; scanahead;
 %+S               Freq(9):=Freq(9)+1;
                end;
@@ -1269,13 +1270,13 @@ EXIT: end;
 %+S               Freq(9):=Freq(9)+1;
                end
           else if atom='-' then begin
-                  storechar(atom,hashbuf,hashpos); hashpos:=hashpos+1;
+                  hashbuf.storechar(atom,hashpos); hashpos:=hashpos+1;
 %+S               Freq(9):=Freq(9)+1;
                   scanahead end;
                if InputClass(rank(atom)) = Digit_cl then begin
                   skipzeroes:=atom='0'; call(unsignedInt) end
                else begin
-     numERR:      storechar('0',hashbuf,hashpos); hashpos:=hashpos+1;
+     numERR:      hashbuf.storechar('0',hashpos); hashpos:=hashpos+1;
                   P1error(181); !invalid numerical constant;
                   while InputClass(rank(atom)) = Digit_cl or else
                         atom='&' or else atom='.'
@@ -1296,7 +1297,7 @@ EXIT: end;
     idscan: i:=linepos; ! == POS of first ident character ;
     idloop:
 %+D         if linepos>linelength then internerr('!2!',sourceline);
-            switch(NUL:'!255!') loadchar(line,linepos) begin
+            switch(NUL:'!255!') line.loadchar(linepos) begin
             when '0':'9','a':'z','A':'Z','_' do
                  begin !*** identifier constituents ***;
                  linepos:=linepos+1; goto idloop; end;
@@ -1308,7 +1309,7 @@ EXIT: end;
                  if linepos<>linelength-1 then goto Lidi;
                  goto idterm end;
             when NONE do begin !*** identifier terminators ***;
-     idterm:     atom:=loadchar(line,linepos); linepos:=linepos+1;
+     idterm:     atom:=line.loadchar(linepos); linepos:=linepos+1;
                  simsymbol:-line.sub(i,linepos-i);
                  end;
 
@@ -1370,7 +1371,7 @@ EXIT: end;
 %-A           when ICOMN do begin
 %-A SawComment:    while atom<>';' do begin
 %-A                      if linepos < linelength then begin
-%-A                         atom:=loadchar(line,linepos);
+%-A                         atom:=line.loadchar(linepos);
 %-A                         linepos:=linepos+1;
 %-A                      end else nextLine;
 %-A                end;
@@ -1459,7 +1460,7 @@ EXIT: end;
             FindEnd:  !*** look for semicolon or special keyword ***;
                       if atom=';' then begin
               SawSMCL:   opt:=ISMCL; optpos:=linepos;
-                         atom:=loadchar(line,linepos);
+                         atom:=line.loadchar(linepos);
                          linepos:=linepos+1;
 %+D                      if linepos > linelength
 %+D                      then internerr('!2!',sourceline);
@@ -1469,7 +1470,7 @@ EXIT: end;
                          do begin
 %-Z %setopt +D
                             if atom=EOL then nextLine
-                            else begin atom:=loadchar(line,linepos);
+                            else begin atom:=line.loadchar(linepos);
                                  linepos:=linepos+1 end;
 %-Z %setopt -D
                             if atom=';' then goto SawSMCL;
@@ -1490,7 +1491,7 @@ EXIT: end;
                          else begin
                             while InputClass(rank(atom)) <= Uscore_cl
                             do begin
-                               atom:=loadchar(line,linepos);
+                               atom:=line.loadchar(linepos);
                                linepos:=linepos+1;
                             end;
                             goto FindEnd;
@@ -1706,9 +1707,9 @@ end recognizer;
 %+P         prior
             procedure store3chars(ch1,ch2,ch3);
                   character ch1,ch2,ch3;
-            begin storechar(ch1,L2buf,L2p  );
-                  storechar(ch2,L2buf,L2p+1);
-                  storechar(ch3,L2buf,L2p+2); L2p:=L2p+3;
+            begin L2buf.storechar(ch1,L2p  );
+                  L2buf.storechar(ch2,L2p+1);
+                  L2buf.storechar(ch3,L2p+2); L2p:=L2p+3;
 %+S               Freq(11):=Freq(11)+1;
             end;
 
@@ -1723,7 +1724,7 @@ end recognizer;
 %+D                  outtext(" OPN=EXNM (end buffer), L2p=");
 %+D                  outint(L2p,0);
 %+D               end;
-                  storechar(IEXNM,L2buf,L2p);
+                  L2buf.storechar(IEXNM,L2p);
                   if L2OUPT==none then
                   begin
                      setaccess("%NOBUFFER");
@@ -1800,7 +1801,7 @@ end recognizer;
        IASSG, IDENO, ITRUE, IFALS, IDO,   IFDNO, IUNTI,
        IASGE, ICOMA, IARGE, ICAPE, IESTM, IOTHE,
        ICONC, ICAND, ICOR,  ISMCL  do begin !1 byte;
- OPNOUT:    storechar(opn,L2buf,L2p); L2p:=L2p+1;
+ OPNOUT:    L2buf.storechar(opn,L2p); L2p:=L2p+1;
             goto NEXTOPN;
             end;
 
@@ -1808,9 +1809,9 @@ end recognizer;
 %+D    ISSWB, !new options directly from %SETOPT;
        ISIDN, IIDN,  IIDNP, IDOT,  IDOTP, INEW,  INEWP, ISTEP,
        IIN,   IIS,   IQUA,  ITHIS, IELME  do begin !3 byte;
- OPDOUT:    storechar(opn  ,L2buf,L2p  );
-            storechar(opdhi,L2buf,L2p+1);
-            storechar(opdlo,L2buf,L2p+2);
+ OPDOUT:    L2buf.storechar(opn  ,L2p  );
+            L2buf.storechar(opdhi,L2p+1);
+            L2buf.storechar(opdlo,L2p+2);
             L2p:=L2p+3;;
             goto NEXTOPN;
             end;
@@ -1854,14 +1855,14 @@ end recognizer;
        when 
        ISCST, ICONS do begin  !max 3 bytes out;
             !The type is output first;
-            storechar(optx ,L2buf,L2p); ! L2p:=L2p+1;
+            L2buf.storechar(optx ,L2p); ! L2p:=L2p+1;
             switch(NUL:ITEXT) optx begin
             when IBOOL,ICHAR do begin
-                 storechar(opdlo,L2buf,L2p+1); L2p:=L2p+2;
+                 L2buf.storechar(opdlo,L2p+1); L2p:=L2p+2;
                  goto NEXTOPN end;
             when ISHOR,IINTG,IREAL,ILONG,ITEXT do begin
-                 storechar(opdhi,L2buf,L2p+1); ! L2p:=L2p+1;
-        SINGLE:  storechar(opdlo,L2buf,L2p+2); L2p:=L2p+3;
+                 L2buf.storechar(opdhi,L2p+1); ! L2p:=L2p+1;
+        SINGLE:  L2buf.storechar(opdlo,L2p+2); L2p:=L2p+3;
                  goto NEXTOPN end;
             when NONE do
                  L2p:=L2p+1;
@@ -1951,7 +1952,7 @@ end recognizer;
                      end;
                      store3chars(IBREC,cbrec.blnohi,cbrec.blnolo);
                      brecterm;
-                     storechar(IEREC,L2buf,L2p); L2p:=L2p+1;
+                     L2buf.storechar(IEREC,L2p); L2p:=L2p+1;
                      if L2p > L2limit then outbuffer;
          NXTVIRT:    virq:-next;
                   end otherwise begin
@@ -2275,8 +2276,8 @@ end recognizer;
             if xbrec.connests<jjj then xbrec.connests:=jjj;
             if opn=ICONB then goto BLOCKOUT;
 QBLOCKOUT:  store3chars(opn,cbrec.blnohi,cbrec.blnolo);
-            storechar(opdhi,L2buf,L2p  );
-            storechar(opdlo,L2buf,L2p+1); L2p:=L2p+2;
+            L2buf.storechar(opdhi,L2p  );
+            L2buf.storechar(opdlo,L2p+1); L2p:=L2p+2;
             goto NEXTOPN; end;
 
        when
@@ -2292,7 +2293,7 @@ QBLOCKOUT:  store3chars(opn,cbrec.blnohi,cbrec.blnolo);
        IEOP  do begin !2 byte out;
 %+D         inspect sysout do begin if pos>1 then outimage end;
             while cbrec=/=none do brecterm;
-            storechar(IEOP,L2buf,L2p); storechar(IEOP,L2buf,L2p+1);
+            L2buf.storechar(IEOP,L2p); L2buf.storechar(IEOP,L2p+1);
             L2codebuffer.setpos(L2p+2); !*** optimize outtext;
             while true do detach; !*** until killed by control ***;
             end;
@@ -2340,7 +2341,7 @@ QBLOCKOUT:  store3chars(opn,cbrec.blnohi,cbrec.blnolo);
        when
        IFASG do begin ! ':=' in const. element, mark quant read only; !2 bytes;
             cquant.protect:='!2!'; cbrec.dcltag:='!2!';
-            storechar(IFASG,L2buf,L2p); L2p:=L2p+1;
+            L2buf.storechar(IFASG,L2p); L2p:=L2p+1;
             opn:=opdlo; goto OPNOUT end;
 
        when
@@ -2359,8 +2360,8 @@ QBLOCKOUT:  store3chars(opn,cbrec.blnohi,cbrec.blnolo);
        ISSWA do begin !6 bytes out;
             !*** Now both scanner and parser are bypassed;
             storecharint(ISSWA,cswa);
-            storechar(char(cswb//256),    L2buf,L2p  );
-            storechar(char(rem(cswb,256)),L2buf,L2p+1); L2p:=L2p+2;
+            L2buf.storechar(char(cswb//256),    L2p  );
+            L2buf.storechar(char(rem(cswb,256)),L2p+1); L2p:=L2p+2;
 %+D         if option(rank('5'))<>NUL then inspect sysout do begin
 %+D               outtext("SWITCHES: "); outint(cswa,3);
 %+D               outint(cswb,3); outimage; end;
@@ -2368,7 +2369,7 @@ QBLOCKOUT:  store3chars(opn,cbrec.blnohi,cbrec.blnolo);
 
        when
        IGOTO do begin !max 4 bytes out;
-              storechar(IGOTO,L2buf,L2p); L2p:=L2p+1;
+              L2buf.storechar(IGOTO,L2p); L2p:=L2p+1;
 %-Z %setopt +D
               detach; !*******   N O T E   *******;
 %-Z %setopt -D

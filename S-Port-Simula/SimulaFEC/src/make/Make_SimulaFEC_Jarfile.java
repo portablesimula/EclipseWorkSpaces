@@ -21,31 +21,31 @@ public class Make_SimulaFEC_Jarfile {
 	
 	public static void main(String[] argv) {
 		compile("CLASS_COMMON.sim");   // Output -> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/CLASS_COMMON.jar
-//		compile("CLASS_ERRMSG.sim");   // Output -> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/CLASS_ERRMSG.jar
-//		compile("CLASS_SCANNER.sim");  // Output -> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/CLASS_SCANNER.jar
-//		compile("CLASS_SCANINP.sim");  // Output -> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/CLASS_SCANINP.jar
-//		compile("CLASS_PARSER.sim");   // Output -> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/CLASS_PARSER.jar
-//		compile("CLASS_PAS1INIT.sim"); // Output -> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/CLASS_PAS1INIT.jar
-//		compile("CLASS_BUILDER1.sim"); // Output -> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/CLASS_BUILDER1.jar
-//		compile("CLASS_BUILDER2.sim"); // Output -> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/CLASS_BUILDER2.jar
-//		compile("CLASS_CHECKER1.sim"); // Output -> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/CLASS_CHECKER1.jar
-//		compile("CLASS_CHECKER2.sim"); // Output -> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/CLASS_CHECKER2.jar
-//		
-//		compile("CLASS_SCODER0.sim");  // Output -> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/CLASS_SCODER0.jar
-//		compile("CLASS_SCODER1.sim");  // Output -> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/CLASS_SCODER1.jar
-//		compile("CLASS_SCODER1E.sim"); // Output -> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/CLASS_SCODER1E.jar	
-//		compile("CLASS_SCODER2.sim");  // Output -> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/CLASS_SCODER2.jar
-//		compile("CLASS_SCODER3.sim");  // Output -> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/CLASS_SCODER3.jar
-//		compile("CLASS_SCODER4.sim");  // Output -> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/CLASS_SCODER4.jar
-//		
-//		compile("CLASS_PAS2INIT.sim"); // Output -> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/CLASS_PAS2INIT.jar
-//		compile("CLASS_SCODMAIN.sim"); // Output -> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/CLASS_SCODMAIN.jar
-//
-////		compile("GENMSG.sim");            // WILL GENERATE FILE MessageGenerator.sim
-////		compile("MessageGenerator.sim");  // WILL GENERATE ERROR MESSAGE FILE FECERROR.txt
-//		
-//		compile("FEC.sim");  // WILL CREATE THE S-PORT COMPILER:  C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/FEC.jar
-//		copyFECtoSPORT_HOME();
+		compile("CLASS_ERRMSG.sim");   // Output -> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/CLASS_ERRMSG.jar
+		compile("CLASS_SCANNER.sim");  // Output -> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/CLASS_SCANNER.jar
+		compile("CLASS_SCANINP.sim");  // Output -> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/CLASS_SCANINP.jar
+		compile("CLASS_PARSER.sim");   // Output -> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/CLASS_PARSER.jar
+		compile("CLASS_PAS1INIT.sim"); // Output -> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/CLASS_PAS1INIT.jar
+		compile("CLASS_BUILDER1.sim"); // Output -> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/CLASS_BUILDER1.jar
+		compile("CLASS_BUILDER2.sim"); // Output -> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/CLASS_BUILDER2.jar
+		compile("CLASS_CHECKER1.sim"); // Output -> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/CLASS_CHECKER1.jar
+		compile("CLASS_CHECKER2.sim"); // Output -> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/CLASS_CHECKER2.jar
+		
+		compile("CLASS_SCODER0.sim");  // Output -> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/CLASS_SCODER0.jar
+		compile("CLASS_SCODER1.sim");  // Output -> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/CLASS_SCODER1.jar
+		compile("CLASS_SCODER1E.sim"); // Output -> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/CLASS_SCODER1E.jar	
+		compile("CLASS_SCODER2.sim");  // Output -> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/CLASS_SCODER2.jar
+		compile("CLASS_SCODER3.sim");  // Output -> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/CLASS_SCODER3.jar
+		compile("CLASS_SCODER4.sim");  // Output -> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/CLASS_SCODER4.jar
+		
+		compile("CLASS_PAS2INIT.sim"); // Output -> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/CLASS_PAS2INIT.jar
+		compile("CLASS_SCODMAIN.sim"); // Output -> C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/CLASS_SCODMAIN.jar
+
+//		compile("GENMSG.sim");            // WILL GENERATE FILE MessageGenerator.sim
+//		compile("MessageGenerator.sim");  // WILL GENERATE ERROR MESSAGE FILE FECERROR.txt
+		
+		compile("FEC.sim");  // WILL CREATE THE S-PORT COMPILER:  C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/FEC.jar
+		copyFECtoSPORT_HOME();
 
 		System.out.append("END MakeFEC");
 	}
@@ -71,9 +71,12 @@ public class Make_SimulaFEC_Jarfile {
 		cmds.add("-jar");
 		cmds.add("C:\\Users\\omyhr\\Simula\\Simula-2.0\\simula.jar");
 //		cmds.add("-verbose");
+		cmds.add("-compilerMode"); cmds.add("directClassFiles");
+//		cmds.add("-compilerMode"); cmds.add("simulaClassLoader");
+//		cmds.add("-compilerMode"); cmds.add("viaJavaSource");
 		cmds.add("-noexec");
 		cmds.add("-nowarn");
-//		cmds.add("-sport");
+		cmds.add("-sport");
 		cmds.add("-select"); cmds.add("ZDTW");
 //		cmds.add("-select"); cmds.add("ZDW");
 		cmds.add(fileName);

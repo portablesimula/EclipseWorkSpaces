@@ -190,30 +190,16 @@ class ENVIRONMENT_INTERFACE; begin
 %    < c > This is an identification of the S-code compiler supplied to the front-end
 %    compiler when get_textinfo is called with index 13 (see page 15).
 
-%	text procedure ENV_getTextInfo(index); integer index; begin
-%		text t1, t2;
-%		t1 :- replace(getTextInfo(index),'\','/');
-%		t2 :- replace(NEW_getTextInfo(index),'\','/');
-%		if t1 ne t2 then begin
-%			outimage; outtext("*** ERROR: getTextInfo("); outint(index, 0); outchar(')'); outimage;
-%			outtext("ENVIR.ENV_getTextInfo: OLD=" & t1); outimage;
-%			outtext("ENVIR.ENV_getTextInfo: NEW=" & t2); outimage;
-%			outtext("ENVIR.ENV_getTextInfo: Terminates"); exit(-1);
-%		end;
-%		ENV_getTextInfo :- t2;
-%	end;
-	
-%	text procedure NEW_getTextInfo(index); integer index; begin
 	text procedure ENV_getTextInfo(index); integer index; begin
 		text res;
 		switch (1:25) index begin
-		when 1  do res :- getSourceFileName;
+		when 1  do res :- SPORT_SourceFileName;
 		when 2  do res :- listingFileName;
 		when 4  do res :- SPORT_SCodeFileName;
 		when 6  do res :- "#sysout";
-		when 7  do res :- getScratchFileName;
-		when 11 do res :- getAttributeOutputFileName;
-		when 12 do res :-  getExternalAttributeFileName;
+		when 7  do res :- createSubfileName("temp", getModuleName & ".tmp"); -- ScratchFileName
+		when 11 do res :- createSubfileName("temp", currentModuleID & ".atr"); -- AttributeOutputFileName
+		when 12 do res :- getExternalAttributeFileName;
 		when 13 do res :- "/JAVA";
 		when 14 do res :- currentModuleID;
 		when 15 do res :- "abracadab";
@@ -228,13 +214,12 @@ class ENVIRONMENT_INTERFACE; begin
 			outtext("NOT IMPL: getTextInfo(25)"); terminate_program;
 			end;
 		when none do
-			begin outtext("NOT IMPL: getTextInfo(index)"); exit(-1); end;
+			begin outtext("NOT IMPL: getTextInfo(index)"); outimage; exit(-1); end;
 		end;
-%		NEW_getTextInfo :- res;
 		ENV_getTextInfo :- res;
-%		if FEC_Verbose > 0 then begin
+		if FEC_Verbose > 0 then begin
 			outtext("ENVIR.getTextInfo: index="); outint(index, 0); outtext(", res=" & res); outimage;
-%		end;
+		end;
 	end;
 
 
@@ -407,20 +392,6 @@ class ENVIRONMENT_INTERFACE; begin
 %    If the environment returns a value of zero for any of these indices, some default value
 %    will be chosen by the system.
 
-%	integer procedure ENV_getIntInfo(index); integer index; begin
-%		integer i1, i2;
-%		i1 := getIntInfo(index);
-%		i2 :- NEW_getIntInfo(index);
-%		if i1 ne i2 then begin
-%			outimage; outtext("*** ERROR: ENV_getIntInfo("); outint(index, 0); outchar(')'); outimage;
-%			outtext("ENVIR.ENV_getIntInfo: OLD="); outint(i1, 0); outimage;
-%			outtext("ENVIR.ENV_getIntInfo: NEW="); outint(i2, 0); outimage;
-%			outtext("ENVIR.ENV_getIntInfo: Terminates"); exit(-1);
-%		end;
-%		ENV_getIntInfo := i2;
-%	end;
-
-%	integer procedure NEW_getIntInfo(index); integer index; begin
 	integer procedure ENV_getIntInfo(index); integer index; begin
 		integer res;
 		switch (1:46) index begin
@@ -435,13 +406,11 @@ class ENVIRONMENT_INTERFACE; begin
 			when 44 do res := FEC_Verbose;
 			when 45 do res := FEC_TraceScode;
 			when 46 do res := FEC_TraceLevel;
-%			when none do
-%			outtext("NOT IMPL: res(index)"); terminate_program;
+			when none do begin outtext("NOT IMPL: getIntInfo(index)"); outimage; exit(-1); end;
 		end;
-%		if FEC_Verbose > 0 then begin
+		if FEC_Verbose > 0 then begin
 			outtext("ENVIR.getIntInfo: index="); outint(index, 0); outtext(", res="); outint(res, 0); outimage;
-%		end;
-%		NEW_getIntInfo := res;
+		end;
 		ENV_getIntInfo := res;
 	end;
 
@@ -501,11 +470,8 @@ class ENVIRONMENT_INTERFACE; begin
 			when 2 do if FEC_Verbose > 0 then begin sysout.outtext("Max tag="); outint(info, 0); end;
 			when 3 do if FEC_Verbose > 0 then begin sysout.outtext("nSourceLines="); outint(info, 0); end;
 			when 4 do if FEC_Verbose > 0 then begin sysout.outtext("nErrors="); outint(info, 0); end;
-			when 5 do if FEC_Verbose > 0 then begin 
-				sysout.outtext("nWarnings="); outint(info, 0); outimage;
---				System.exit(exitCode);
-				terminate_program;
-			end;
+			when 5 do if FEC_Verbose > 0 then begin	sysout.outtext("nWarnings="); outint(info, 0); end;
+			when none do begin outtext("NOT IMPL: giveIntInfo(index)"); outimage; exit(-1); end;
 		end;
 		if FEC_Verbose > 0 then sysout.outimage
 	end;
@@ -543,17 +509,15 @@ class ENVIRONMENT_INTERFACE; begin
 %    @param info text info
 
 	procedure giveTextInfo(index, info); integer index; text info; begin
-%		if FEC_Verbose > 0 then begin
+		if FEC_Verbose > 0 then begin
 			outtext("ENVIR.giveTextInfo: index="); outint(index, 0); outtext(", info=" & info); outimage;
-%		end;
+		end;
 		switch (1:4) index begin
 			when 1 do currentModuleID :- info;
 			when 2 do extIdent :- info;
 			when 3 do extFile :- info;
 			when 4 do SPORT_SysInsertDirName :- info;
-			when none do begin
-				outtext("NOT IMPL: giveTextInfo(index, info)"); terminate_program;
-			end;
+			when none do begin outtext("NOT IMPL: giveTextInfo(index, info) " & info); outimage; exit(-1); end;
 		end;
 	end;
 
@@ -585,57 +549,33 @@ class ENVIRONMENT_INTERFACE; begin
 %			NOT_IMPLEMENTED("getIntInfo: " + index);
 %		end;
 		
-		outtext("NOT IMPL: rts_utility(index, level)"); terminate_program;
+		outtext("NOT IMPL: rts_utility(index, level)"); outimage; exit(-1);
 	end;
 
+%    =================================================================
+%    S-PORT Extension Procedure setRuntimeOptions.
+%    =================================================================
 	procedure setRuntimeOptions; begin
 		integer i; boolean more; text arg, file;
-		
-		boolean DEBUG; DEBUG := false;
-		
 		-- Parse command line arguments.
-%		RTS_Option.RUNTIME_USER_DIR = System.getProperty("user.dir", null);
-%		text file :- NOTEXT;
-
-		if DEBUG then begin
-			more := true;
-			while more do begin
-				arg :- argv(i); i := i + 1;
-%				outtext("ENVIR.INIT: arg("); outint(i, 0); outtext(")=" & arg); outimage;
-				if arg = NOTEXT then more := false;
-			end;
-		end;
-		
 		more := true; i := 0;
 		while more do begin
 			arg :- argv(i); i := i + 1;
-%			outtext("ENVIR.INIT: arg=" & arg); outimage;
 			if arg = NOTEXT then more := false else begin
-				
 				arg.setpos(1);
 				if arg.getchar = '-' then begin -- command line option
-
 					-- Spesial S-Port Simula and Simuletta Options. Used by get/give ... info routines
-					if DEBUG then begin outtext("NEXT ARG: " & arg); outimage; end;
 					if arg = "-SPORT_SOURCE_FILE" then begin
 						SPORT_SourceFileName :- argv(i); i := i+1;
-%						File sourceFile = new File(RTS_SPORT_Option.SPORT_SourceFileName);
-%						RTS_SPORT_Option.SourceDirName = sourceFile.getParent();
 						SourceDirName :- getParent(SPORT_SourceFileName);
 					end
-					else if arg = "-SPORT:listing"    then		ListingFileName :- "#sysout"
-					else if arg = "-SPORT:noConsole"  then		noConsole := true
-					else if arg = "-verbose"          then		FEC_Verbose := 1
-					else if arg = "-SPORT:traceScode" then		FEC_TraceScode := 1
-					else if arg = "-SPORT:SCodeFile"  then
-						begin
-							SPORT_SCodeFileName :- argv(i); i := i+1;
-							if DEBUG then begin outtext("SPORT_SCodeFileName = " & SPORT_SCodeFileName); outimage; end;
-%							outtext("NOT IMPL: -SPORT:SCodeFile"); exit(-1);
-						end
+					else if arg = "-SPORT:listing"    then	 	 ListingFileName :- "#sysout"
+					else if arg = "-SPORT:noConsole"  then	 	 noConsole := true
+					else if arg = "-verbose"          then		 FEC_Verbose := 1
+					else if arg = "-SPORT:traceScode" then		 FEC_TraceScode := 1
+					else if arg = "-SPORT:SCodeFile"  then begin SPORT_SCodeFileName :- argv(i); i := i+1; end
 					else if arg = "-SPORT:select" 	  then begin Selectors :- argv(i); i := i+1; end
 					else if arg = "-SPORT:trace"      then begin FEC_TraceLevel := decode(argv(i)); i := i+1; end
-
 					else begin
 						outtext("ENVIR.INIT: Unknown option " & arg); outimage;
 						exit(-1);
@@ -656,12 +596,10 @@ class ENVIRONMENT_INTERFACE; begin
 			end;
 		end;	
 
-%		if (FEC_Verbose) begin
-%			outtext("Begin Execution of Simula Program using " & getJavaID()); outimage;
-%			listRuntimeOptions();
+		if FEC_Verbose > 0 then begin
+			outtext("Begin Execution of Simula Program"); outimage;
 			print_Options;
-%			outtext("NOT IMPL: setRuntimeOptions"); exit(-1);
-%		end;
+		end;
 
 	end;
 
@@ -671,58 +609,21 @@ class ENVIRONMENT_INTERFACE; begin
 	integer procedure decode(t); text t; begin
 		t.setpos(0);
 		decode := t.getint;
-		outtext("NOT IMPL: getModuleName"); exit(-1);
 	end;
 	
 	text procedure getParent(fn); text fn; begin
-		text res; character c; integer lastSlashPos;
-%		outtext("ENVIR.getParent: fn=" & fn); outimage;
-		fn.setpos(1);
-		while fn.more do begin
-			c := fn.getchar;
-%			outtext("ENVIR.getModuleName: c="); outchar(c); outimage;
-			if c = '/' or c = '\' then begin
-				lastSlashPos := fn.pos;
-%				outtext("ENVIR.getParent: GOT SLASH at pos "); outint(lastSlashPos, 0); outimage;
-			end
-		end;
-		res :- fn.sub(1, lastSlashPos - 2);
-%		outtext("ENVIR.getParent: LAST SLASH at pos "); outint(lastSlashPos, 0); outimage;
-%		outtext("ENVIR.getParent: res=" & res); outimage;
-%		outtext("NOT IMPL: getParent"); exit(-1);
-		getParent :- res;
+		text tmp; character c; integer lastSlashPos;
+		tmp :- SPORT_SourceFileName.replace('\','/');
+		getParent :- fn.sub(1, tmp.lastIndexOf('/'));
 	end;
 
 	text procedure getModuleName; begin
-%		return (new File(SPORT_SourceFileName).getName());
-		text res; character c; integer lastSlashPos, dotPos;
-		res :- SPORT_SourceFileName;
-%		outtext("ENVIR.getModuleName: res=" & res); outimage;
-		res.setpos(1);
-		while res.more do begin
-			c := res.getchar;
-%			outtext("ENVIR.getModuleName: c="); outchar(c); outimage;
-			if c = '/' or c = '\' then begin
-				lastSlashPos := res.pos;
-%				outtext("ENVIR.getModuleName: GOT SLASH at pos "); outint(lastSlashPos, 0); outimage;
-			end
-		end;
-		
-%		outtext("ENVIR.getModuleName: LAST SLASH at pos "); outint(lastSlashPos, 0); outtext(", dotPos="); outint(dotPos, 0); outimage;
-		res :- res.sub(lastSlashPos, res.length - lastSlashPos + 1);
-%		outtext("ENVIR.getModuleName: REMOVED HEAD " & res); outimage;	
-%		outtext("NOT IMPL: getModuleName"); exit(-1);
-		getModuleName :- res;
+		-- return (new File(SPORT_SourceFileName).getName());
+		text tmp; character c; integer lastSlashPos;
+		tmp :- SPORT_SourceFileName.replace('\','/');
+		lastSlashPos := tmp.lastIndexOf('/') + 2;
+		getModuleName :- tmp.sub(lastSlashPos, tmp.length - lastSlashPos + 1);
 	end;
-
-%    Returns the source file name.
-%    
-%    Used by ENVIRONMENT'getTextInfo
-%    @return the source file name
-	text procedure getSourceFileName; begin
-		getSourceFileName :- SPORT_SourceFileName;
-	end;
-
 	
 	procedure print_Options; begin
 		outtext("ENVIR.print_Options: FEC_Verbose:            "); outint(FEC_Verbose, 0); outimage;
@@ -750,29 +651,7 @@ class ENVIRONMENT_INTERFACE; begin
 		createSubfileName :- SourceDirName & "/" & subdir & "/" & name_;
 	end;
 
-	text procedure getScratchFileName; begin
-		getScratchFileName :- createSubfileName("temp", getModuleName & ".tmp");
-	end;
-
-	text procedure getAttributeOutputFileName; begin
-		getAttributeOutputFileName :- createSubfileName("temp", currentModuleID & ".atr");
-	end;
 	
-    text procedure replace(txt,oldchar,newchar); value txt; text txt; character oldchar,newchar; begin
-        character c; text subtxt;
-%		outtext("Replace-1: " & txt); outimage;
-        
-		while txt.more do begin
-			c := txt.getchar;
-			if c = oldchar then begin
-				subtxt :- txt.sub(txt.pos-1, 1);
-				subtxt.setpos(1); subtxt.putchar(newchar);
-			end;
-		end;
-%		outtext("Replace-2: " & txt); outimage;
-		txt.setpos(1);
-        replace :- txt;
-    end;
 
 
 	INIT;

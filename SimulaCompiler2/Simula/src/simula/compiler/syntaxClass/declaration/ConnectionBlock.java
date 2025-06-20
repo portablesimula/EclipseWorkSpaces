@@ -164,7 +164,6 @@ public final class ConnectionBlock extends DeclarationScope {
 	public int getRTBlockLevel() {
 //		ASSERT_SEMANTICS_CHECKED();
 		int rtBlockLevel = declaredIn.getRTBlockLevel();
-//		System.out.println("DeclarationScope.getRTBlockLevel: "+this.getClass().getSimpleName()+" "+this);
 		return rtBlockLevel;
 	}
 

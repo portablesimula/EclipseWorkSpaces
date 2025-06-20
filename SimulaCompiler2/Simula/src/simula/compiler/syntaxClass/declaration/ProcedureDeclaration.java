@@ -8,11 +8,13 @@ package simula.compiler.syntaxClass.declaration;
 import java.io.IOException;
 import java.lang.classfile.ClassBuilder;
 import java.lang.classfile.ClassFile;
+import java.lang.classfile.ClassHierarchyResolver;
 import java.lang.classfile.CodeBuilder;
 import java.lang.classfile.CodeBuilder.BlockCodeBuilder;
 import java.lang.classfile.Label;
 import java.lang.classfile.MethodBuilder;
 import java.lang.classfile.MethodSignature;
+import java.lang.classfile.ClassHierarchyResolver.ClassHierarchyInfo;
 import java.lang.classfile.attribute.SignatureAttribute;
 import java.lang.classfile.attribute.SourceFileAttribute;
 import java.lang.classfile.constantpool.ConstantPoolBuilder;
@@ -137,7 +139,8 @@ public class ProcedureDeclaration extends BlockDeclaration {
 		proc.sourceFileName = Global.sourceFileName;
 		proc.lineNumber=Parse.prevToken.lineNumber;
 		proc.type = type;
-		if (Option.internal.TRACE_PARSE)	Parse.TRACE("Parse ProcedureDeclaration, type=" + type);
+		if (Option.internal.TRACE_PARSE)
+			Parse.TRACE("Parse ProcedureDeclaration, type=" + type);
 		proc.modifyIdentifier(Parse.expectIdentifier());
 		if (Parse.accept(KeyWord.BEGPAR)) {
 			expectFormalParameterPart(proc.parameterList);
@@ -300,7 +303,7 @@ public class ProcedureDeclaration extends BlockDeclaration {
 			if (declarationKind == ObjectKind.Procedure)
 				for (Parameter par : this.parameterList) par.setExternalIdentifier(prfx);
 			for (Declaration par : this.parameterList) par.doChecking();
-			for (Declaration dcl : declarationList)	dcl.doChecking();
+			for (Declaration dcl : declarationList) dcl.doChecking();
 			for (Statement stm : statements) stm.doChecking();
 			VirtualSpecification virtualSpec = VirtualSpecification.getVirtualSpecification(this);
 			if (virtualSpec != null) {
@@ -541,6 +544,38 @@ public class ProcedureDeclaration extends BlockDeclaration {
 		if(isPreCompiledFromFile != null) return getBytesFromFile();
 		ClassHierarchy.addClassToSuperClass(CD_ThisClass, RTS.CD.RTS_PROCEDURE);
 		
+		int count = 15;
+		while((count--) > 0) {
+			try {
+				if(Option.verbose)
+					Util.println("ProcedureDeclaration.buildClassFile: TRY: "+CD_ThisClass);
+				return tryBuildClassFile(CD_ThisClass);
+			} catch(IllegalArgumentException e) {
+//				Util.println("ProcedureDeclaration.buildClassFile: FATAL ERROR CAUSED BY "+e);
+				boolean feasibleToReTry = false;
+				String msg = e.getMessage();
+				if(msg.startsWith("Could not resolve class")) {
+					String classID = msg.substring(24);
+					ClassDesc CD = ClassHierarchy.getClassDesc(classID);
+					if(CD != null) {
+						ClassHierarchyResolver resolver = ClassHierarchy.getResolver();
+						ClassHierarchyInfo classInfo = resolver.getClassInfo(CD);
+						feasibleToReTry = classInfo != null;
+					}
+				}
+				Util.println("ProcedureDeclaration.buildClassFile: FATAL ERROR CAUSED BY "+e+" FeasibleToReTry="+feasibleToReTry);
+				if(count <= 0 || !feasibleToReTry) throw e;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Try to build classFile for this ProcedureDeclaration
+	 * @param CD_ThisClass this class descriptor
+	 * @return class file bytes
+	 */
+	private byte[] tryBuildClassFile(ClassDesc CD_ThisClass) {
 		byte[] bytes = ClassFile.of(ClassFile.ClassHierarchyResolverOption.of(ClassHierarchy.getResolver())).build(CD_ThisClass,
 				classBuilder -> {
 					classBuilder

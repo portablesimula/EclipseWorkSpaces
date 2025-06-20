@@ -68,7 +68,7 @@ begin
          if ec='!2!' then begin
             numerrfound:=numerrfound+1;
             if termstatus<'5' then termstatus:='5';
-%+D         giveintinfo(1,rank(termstatus)-rank('0'));
+%+D         ENV.giveintinfo(1,rank(termstatus)-rank('0'));
          end;
 % +Z      RTS_utility(rank(ec),0);
          if numerrfound>maxerrno or ec>'!2!' then AbortCompilation;
@@ -79,8 +79,8 @@ begin
             diagmerge:-t:-errmsg(n);
             if diag(0) =/= notext then begin
                while diag(i) =/= notext do begin
-                  if loadchar(diag(i),0)='_' and then 
-                     loadchar(diag(i),1)='_'
+                  if diag(i).loadchar(0)='_' and then 
+                     diag(i).loadchar(1)='_'
                   then begin
                      if n=337 then begin
                         diagmerge:-errmsg(168); goto EX end;
@@ -230,7 +230,7 @@ begin
              end;
           end;
           outimage;
-%+Z       RTS_Utility(3,0);
+%+Z       ENV.RTS_Utility(3,0);
           ENDCOMP;
       end;
 %title ******   Pass 2 Error Routines   ******
@@ -978,14 +978,14 @@ begin
 
       procedure AbortCompilation;
       begin
-%+D         giveintinfo(1,6);  !*** ensure that back-end is informed;
+%+D         ENV.giveintinfo(1,6);  !*** ensure that back-end is informed;
             termstatus:='6';
             printDiag(if numerrfound>maxerrno
                       then "*** COMPILATION STOPPED: Too many errors ***"
                  else if numerrfound = 0
                       then "*** COMPILATION ABORTED ***"
                       else "*** COMPILATION CANNOT CONTINUE ***");
-%+Z         RTS_Utility(4,0);
+%+Z         ENV.RTS_Utility(4,0);
 %+D         if option(rank('T'))<>NUL then sqrt(-1);
             ENDCOMP;
      end;
