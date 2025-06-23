@@ -1491,15 +1491,16 @@ public class RTS_ENVIRONMENT extends RTS_RTObject {
 		try {
 			arg = new RTS_TXT(RTS_Option.argv[index]);
 		} catch(Exception e) {}
-//		String info2 = (arg == null) ? "NOTEXT" : arg.edText();
-//		if(RTS_SPORT_Option.FEC_Verbose > 0) System.out.println("RTS_ENVIRONMENT.argv("+index+") = "+info2);
 		return(arg);
 	}
 
 	/// Extended Standard procedure exit.
 	/// @param status exit status
 	public static void exit(final int status) {
-//		if(RTS_SPORT_Option.FEC_Verbose > 0) System.out.println("RTS_ENVIRONMENT.exit("+status+")");
+//		if(console != null) {
+//			console.write("EXIT: ");
+//			console.read();
+//		}
 		System.exit(status);
 	}
 

@@ -76,7 +76,6 @@ public class Make_SimulaFEC_Jarfile {
 //		cmds.add("-compilerMode"); cmds.add("viaJavaSource");
 		cmds.add("-noexec");
 		cmds.add("-nowarn");
-		cmds.add("-sport");
 		cmds.add("-select"); cmds.add("ZDTW");
 //		cmds.add("-select"); cmds.add("ZDW");
 		cmds.add(fileName);

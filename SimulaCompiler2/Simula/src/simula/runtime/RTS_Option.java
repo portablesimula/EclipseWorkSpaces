@@ -12,6 +12,9 @@ public class RTS_Option {
 	/// Output messages about what the RTS is doing.
 	/// Default: false.
 	public static boolean VERBOSE = false;
+
+	/// TRUE:Don't create popUps at runtime
+	static boolean noPopup = false;
 	
 	/// Debug: Trace enter and exit of blocks, classes and procedures.
 	/// Default: false.

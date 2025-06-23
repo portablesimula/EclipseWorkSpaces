@@ -44,7 +44,6 @@ public final class RunFullClassTestBatch {
 //		cmds.add("-nowarn");
 //		cmds.add("-noextension");
 //		cmds.add("-verbose");
-		cmds.add("-sport");
 	}
 
 	public static void runFullTestBatch(String compilerMode) {

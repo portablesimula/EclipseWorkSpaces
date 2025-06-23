@@ -12,7 +12,8 @@ public abstract class SimulaFEC {
 		cmds.add("java");
 		cmds.add("-jar");
 		cmds.add("C:\\SPORT\\SimulaFEC.jar");
-		cmds.add("-SPORT:noConsole");
+//		cmds.add("-SPORT:noConsole");
+		cmds.add("-nopopup");
 		if(verbose) cmds.add("-verbose");
 		if(fecTraceLevel > 0) { cmds.add("-SPORT:trace"); cmds.add(""+fecTraceLevel); }
 		if(fecListing) cmds.add("-SPORT:listing");

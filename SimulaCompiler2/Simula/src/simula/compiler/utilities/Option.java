@@ -48,6 +48,9 @@ public final class Option {
 	
 	/// Generate warning messages
 	public static boolean WARNINGS=true;
+
+	/// TRUE:Do not create popUps at runtime
+	public static boolean noPopup = false; 
 	
 	/// true: Don't execute generated .jar file
 	public static boolean noExecution = false;
@@ -68,12 +71,6 @@ public final class Option {
 
 		/// INLINE_TESTING on/off
 		public static boolean INLINE_TESTING = false; 
-
-		/// TRUE:Do not create popUp Console at runtime
-		public static boolean noConsole = false; 
-		
-		/// S-PORT extensions  on/off
-		public static boolean SPORT=false;
 		
 		/// Used by Java-Coding to save the generated .java files.
 		/// If not set, a temp directory is used/created.
@@ -116,9 +113,7 @@ public final class Option {
 		
 		/// Initiate Compiler options
 		public static void InitCompilerOptions() {
-			Option.internal.SPORT=false;
 
-			// Overall TRACING Options
 			Option.internal.TRACING=false;
 			Option.internal.DEBUGGING=false;
 
@@ -251,7 +246,6 @@ public final class Option {
 		if(id.equalsIgnoreCase("noExecution")) return(noExecution); 
 		if(id.equalsIgnoreCase("WARNINGS")) return(WARNINGS); 
 		if(id.equalsIgnoreCase("EXTENSIONS")) return(EXTENSIONS); 
-		if(id.equalsIgnoreCase("SPORT")) return(internal.SPORT); 
 		if(id.equalsIgnoreCase("TRACING")) return(internal.TRACING); 
 		if(id.equalsIgnoreCase("TRACE_SCAN")) return(internal.TRACE_SCAN); 
 		if(id.equalsIgnoreCase("TRACE_COMMENTS")) return(internal.TRACE_COMMENTS); 
@@ -274,7 +268,6 @@ public final class Option {
 		if(id.equalsIgnoreCase("noExecution")) noExecution=val; 
 		if(id.equalsIgnoreCase("WARNINGS")) WARNINGS=val; 
 		if(id.equalsIgnoreCase("EXTENSIONS")) EXTENSIONS=val; 
-		if(id.equalsIgnoreCase("SPORT")) internal.SPORT=val; 
 		if(id.equalsIgnoreCase("TRACING")) internal.TRACING=val; 
 		if(id.equalsIgnoreCase("TRACE_SCAN")) internal.TRACE_SCAN=val; 
 		if(id.equalsIgnoreCase("TRACE_COMMENTS")) internal.TRACE_COMMENTS=val; 

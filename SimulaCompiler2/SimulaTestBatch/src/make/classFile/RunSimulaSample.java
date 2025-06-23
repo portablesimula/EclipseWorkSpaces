@@ -52,9 +52,8 @@ public final class RunSimulaSample {
 
 		// Set internal test, debug options.
 		Option.internal.INLINE_TESTING=true;
-		Option.internal.noConsole = true;
+		Option.noPopup = true;
 		Option.internal.TESTING_STACK_SIZE = true;
-//		Option.internal.SPORT=true;
 //		Option.internal.TRACING=false;
 //		Option.internal.TRACE_ATTRIBUTE_OUTPUT=true;
 //		Option.internal.TRACE_ATTRIBUTE_INPUT=true;

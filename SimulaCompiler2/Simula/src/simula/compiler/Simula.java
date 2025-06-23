@@ -108,15 +108,13 @@ public final class Simula {
 		Util.println("  -caseSensitive             Source file is case sensitive.");	
 		Util.println("  -compilerMode modeString   Simula Compiler mode *) see below.");	
 		Util.println("  -noexec                    Don't execute generated .jar file");
-		Util.println("  -nowarn                    Generate no warnings");
 		Util.println("  -noextension               Disable all language extensions");
 		Util.println("                             In other words, follow the Simula Standard literally");
+		Util.println("  -noPopup                   Don't create popUps at runtime");
+		Util.println("  -nowarn                    Generate no warnings");
 		Util.println("  -verbose                   Output messages about what the compiler is doing");
-
 		Util.println("  -select characters         First, all selectors are reset.");
-		Util.println("                             Then, for each character, the corresponding selector is set");
-		Util.println("  -sport                     Enable all S-PORT extensions");
-		
+		Util.println("                             Then, for each character, the corresponding selector is set");		
 		Util.println("  -keepJava <directory>      Specify where to place generated .java files");
 		Util.println("                             Default: Temp directory which is deleted upon exit");
 		Util.println("  -output <directory>        Specify where to place generated executable .jar file");
@@ -173,13 +171,11 @@ public final class Simula {
 				else if (arg.equalsIgnoreCase("-caseSensitive")) Option.CaseSensitive=true;
 				else if (arg.equalsIgnoreCase("-compilerMode")) Option.setCompilerMode(argv[++i]);
 				else if (arg.equalsIgnoreCase("-noexec")) Option.noExecution=true;
-				else if (arg.equalsIgnoreCase("-nowarn")) Option.WARNINGS=false;
 				else if (arg.equalsIgnoreCase("-noextension")) Option.EXTENSIONS=false;
+				else if (arg.equalsIgnoreCase("-noPopup")) Option.noPopup = true;
+				else if (arg.equalsIgnoreCase("-nowarn")) Option.WARNINGS=false;
 				else if (arg.equalsIgnoreCase("-verbose")) Option.verbose=true;
-
-				else if (arg.equalsIgnoreCase("-select")) setSelectors(argv[++i]);
-				else if (arg.equalsIgnoreCase("-sport")) Option.internal.SPORT=true;
-				
+				else if (arg.equalsIgnoreCase("-select")) setSelectors(argv[++i]);				
 				else if (arg.equalsIgnoreCase("-keepJava")) setKeepJava(argv[++i]);
 				else if (arg.equalsIgnoreCase("-output")) setOutputDir(argv[++i]);
 				else if (arg.equalsIgnoreCase("-extLib")) Global.extLib=new File(argv[++i]);
@@ -188,14 +184,6 @@ public final class Simula {
 				else if (arg.equalsIgnoreCase("-source")) Option.internal.SOURCE_FILE=argv[++i];
 				else if (arg.equalsIgnoreCase("-sourceFileDir")) sourceFileDir=argv[++i];
 				else if (arg.equalsIgnoreCase("-runtimeUserDir")) Option.internal.RUNTIME_USER_DIR=argv[++i];
-				else if (arg.equalsIgnoreCase("-noConsole")) Option.internal.noConsole = true;
-
-//				else if (arg.equalsIgnoreCase("-SPORT:listing"))		RTS_SPORT_Option.ListingFileName = "#sysout";
-//				else if (arg.equalsIgnoreCase("-SPORT:noConsole"))		RTS_SPORT_Option.noConsole = true;
-//				else if (arg.equalsIgnoreCase("-SPORT:SCodeFile"))		RTS_SPORT_Option.SPORT_SCodeFileName = args[++i];
-//				else if (arg.equalsIgnoreCase("-SPORT:select"))			RTS_SPORT_Option.Selectors = args[++i];
-//				else if (arg.equalsIgnoreCase("-SPORT:trace"))			RTS_SPORT_Option.FEC_TraceLevel = Integer.decode(args[++i]);
-
 				else {
 					System.out.println("Simula ERROR: Unknown option " + arg);
 					help();

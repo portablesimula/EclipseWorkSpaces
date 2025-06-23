@@ -396,7 +396,7 @@ public class RTS_Printfile extends RTS_Outfile {
 	private void ensureSysoutOpened() {
 		if(writer == null) {
 			if (FILE_NAME.edText().equalsIgnoreCase("#sysout")) {
-				if(RTS_SPORT_Option.noConsole) {
+				if(RTS_Option.noPopup) {
 					writer = new PrintWriter(System.out);
 				} else {
 					if (RTS_UTIL.console == null)

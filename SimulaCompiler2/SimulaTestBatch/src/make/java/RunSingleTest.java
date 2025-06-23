@@ -14,7 +14,6 @@ import simula.compiler.Simula;
 import simula.compiler.SimulaCompiler;
 import simula.compiler.utilities.Global;
 import simula.compiler.utilities.Option;
-import simula.editor.RTOption;
 
 /**
  * Simula Test Batch donated by Simula as.
@@ -43,9 +42,8 @@ public final class RunSingleTest {
 
 		// Set internal test, debug options.
 		Option.internal.INLINE_TESTING=true;
-		Option.internal.noConsole = true;
+		Option.noPopup = true;
 		Option.internal.TESTING_STACK_SIZE = true;
-		Option.internal.SPORT=true;
 //		Option.internal.DEBUGGING=true;
 //		Option.internal.LIST_GENERATED_CLASS_FILES=true;
 

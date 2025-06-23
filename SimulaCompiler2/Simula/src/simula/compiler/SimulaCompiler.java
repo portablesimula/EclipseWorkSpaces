@@ -366,8 +366,8 @@ public final class SimulaCompiler {
 			cmds.add(Global.outputDir.getParentFile().getAbsolutePath());
 		}
 		RTOption.addRTArguments(cmds);
-		if(Option.internal.noConsole) {
-			cmds.add("-SPORT:noConsole");			
+		if(Option.noPopup) {
+			cmds.add("-noPopup");			
 		}
 //		if (Option.internal.SOURCE_FILE.length() > 0) {
 		if (Option.internal.SOURCE_FILE != null) {

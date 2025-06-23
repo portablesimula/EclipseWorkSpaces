@@ -10,8 +10,6 @@ import java.lang.reflect.Field;
 import java.nio.charset.Charset;
 import javax.swing.JOptionPane;
 
-import simula.compiler.utilities.Global;
-
 /// Utility class containing a lot of common stuff.
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/SimulaCompiler2/Simula/src/simula/runtime/RTS_UTIL.java"><b>Source File</b></a>.
@@ -345,7 +343,7 @@ public final class RTS_UTIL {
 						System.out.println("RTS_UTIL.treatException: Return after 'Illege GOTO' message");
 					}
 //					System.exit(-1);
-					doExit(-1);
+					RTS_ENVIRONMENT.exit(-1);
 				}
 			}
 		} else if (e instanceof RTS_EndProgram) {
@@ -367,7 +365,7 @@ public final class RTS_UTIL {
 					while(true) Thread.yield();
 				}
 //				System.exit(-1);
-				doExit(-1);
+				RTS_ENVIRONMENT.exit(-1);
 			}
 			
 		} else if (e instanceof Error) {
@@ -377,12 +375,12 @@ public final class RTS_UTIL {
 			if (RTS_Option.VERBOSE)
 				e.printStackTrace();
 //			System.exit(-1);				
-			doExit(-1);
+			RTS_ENVIRONMENT.exit(-1);
 		} else {
 			RTS_UTIL.printError(threadID + "UNCAUGHT EXCEPTION: " + e.getMessage());
 			e.printStackTrace();
 //			System.exit(-1);				
-			doExit(-1);
+			RTS_ENVIRONMENT.exit(-1);
 		}
 		if (RTS_Option.GOTO_TRACING)
 			RTS_UTIL.printThreadList();
@@ -496,26 +494,20 @@ public final class RTS_UTIL {
 	/// Print synopsis of standard options
 	private static void help() {
 		println(RTS_ENVIRONMENT.simulaReleaseID + " See: https://github.com/portablesimula\n");
-		println("Usage: java -jar simula.jar  [options]  sourceFile\n\n"
+		println("Usage: java -jar jarFile.jar  [options]  sourceFile\n\n"
 				+ "jarFile			Any output jar file from the simula compiler\n\n" + "possible options include:\n"
 				+ "  -help                 Print this synopsis of standard options\n"
 				+ "  -verbose              Output messages about what the RTS is doing\n"
-				+ "  -useConsole           Map sysout and sysin to a popUp Console\n"
+				+ "  -noPopup              Don't create popups at runtime\n"
 				+ "  -blockTracing         Debug: Trace enter and exit of blocks, classes and procedures\n"
 				+ "  -gotoTracing          Debug: Trace goto statements\n"
 				+ "  -qpsTracing           Debug: Trace detach, resume and call\n"
 				+ "  -smlTracing           Debug: Trace Simulation events\n"
 				+ "  -userDir <directory>  Specify where Simula files (Outfile, Infile, ...) are written and read\n"
 				+ "                        Default: User working directory. System.property(\"user.dir\")\n"
-				+ "\n"
-				+ "  -SPORT:listing              Print the SPORT source listing on sysout\n"
-				+ "  -SPORT:noConsole            Do not map sysout to a popup Console\n"
-				+ "  -SPORT:SCodeFile <fileName> The SPORT Scode file\n"
-				+ "  -SPORT:select <string>      The SPORT selection string\n"
-				+ "  -SPORT:trace <traceLevel>   Debug: The SPORT trace level\n"
 		);
 //		System.exit(-2);
-		doExit(-2);
+		RTS_ENVIRONMENT.exit(-2);
 	}
 
 	/// Set runtime options.
@@ -524,7 +516,7 @@ public final class RTS_UTIL {
 		RTS_Option.argv = args;
 		// Parse command line arguments.
 		RTS_Option.RUNTIME_USER_DIR = System.getProperty("user.dir", null);
-		File file = null;
+//		File file = null;
 		for (int i = 0; i < args.length; i++) {
 			String arg = args[i];
 			if(arg == null) ; // Nothing
@@ -532,49 +524,31 @@ public final class RTS_UTIL {
 			else if (arg.charAt(0) == '-') { // command line option
 				// General RTS Options
 				if (arg.equalsIgnoreCase("-help"))					help();
-				else if (arg.equalsIgnoreCase("-verbose"))			{ RTS_Option.VERBOSE = true;
-//																	  RTS_SPORT_Option.FEC_Verbose = 1;
-																	}
+				else if (arg.equalsIgnoreCase("-verbose"))			RTS_Option.VERBOSE = true;
+				else if (arg.equalsIgnoreCase("-noPopup"))			RTS_Option.noPopup = true;
 				else if (arg.equalsIgnoreCase("-blockTracing"))		RTS_Option.BLOCK_TRACING = true;
 				else if (arg.equalsIgnoreCase("-gotoTracing"))		RTS_Option.GOTO_TRACING = true;
 				else if (arg.equalsIgnoreCase("-qpsTracing"))		RTS_Option.QPS_TRACING = true;
 				else if (arg.equalsIgnoreCase("-smlTracing"))		RTS_Option.SML_TRACING = true;
 				else if (arg.equalsIgnoreCase("-userDir"))			RTS_Option.RUNTIME_USER_DIR = args[++i];
-
-				// Spesial S-Port Simula and Simuletta Options. Used by get/give ... info routines
-				else if (arg.equalsIgnoreCase("-SPORT_SOURCE_FILE")) {
-					RTS_SPORT_Option.SPORT_SourceFileName = args[++i];
-					File sourceFile = new File(RTS_SPORT_Option.SPORT_SourceFileName);
-					RTS_SPORT_Option.SourceDirName = sourceFile.getParent();
-				}
-				else if (arg.equalsIgnoreCase("-SPORT:listing"))		RTS_SPORT_Option.ListingFileName = "#sysout";
-				else if (arg.equalsIgnoreCase("-SPORT:noConsole"))		RTS_SPORT_Option.noConsole = true;
-				else if (arg.equalsIgnoreCase("-SPORT:SCodeFile"))		RTS_SPORT_Option.SPORT_SCodeFileName = args[++i];
-				else if (arg.equalsIgnoreCase("-SPORT:traceScode"))		RTS_SPORT_Option.FEC_TraceScode = 1;
-				else if (arg.equalsIgnoreCase("-SPORT:select"))			RTS_SPORT_Option.Selectors = args[++i];
-				else if (arg.equalsIgnoreCase("-SPORT:trace"))			RTS_SPORT_Option.FEC_TraceLevel = Integer.decode(args[++i]);
-
-				else{
-					System.out.println("RTS_UTIL.BPRG: Unknown option " + arg);
-					help();
-				}
-			} else {
-				if (file == null) {
-					file = new File(arg);
-					RTS_SPORT_Option.SPORT_SourceFileName = arg;
-					RTS_SPORT_Option.SourceDirName = file.getParent();
-				} else{
-					System.out.println("ERROR: multiple input files specified");
-					System.out.println("File 1: " + file);
-					System.out.println("File 2: " + arg);
-					help();
-				}
+//				else{
+//					System.out.println("RTS_UTIL.setRuntimeOptions: Unknown option " + arg);
+//					help();
+//				}
+//			} else {
+//				if (file == null) {
+//					file = new File(arg);
+//				} else {
+//					System.out.println("ERROR: multiple input files specified");
+//					System.out.println("File 1: " + file);
+//					System.out.println("File 2: " + arg);
+//					help();
+//				}
 			}
 		}
 		if (RTS_Option.VERBOSE) {
 			RTS_UTIL.println("Begin Execution of Simula Program using " + getJavaID());
 			listRuntimeOptions();
-			RTS_SPORT_Option.print_SPORT_Options();
 		}
 	}
 
@@ -614,7 +588,7 @@ public final class RTS_UTIL {
 	/// Print a line on the runtime console if present, otherwise on System.out
 	/// @param msg the message to print
 	static void println(final String msg) {
-		if(RTS_SPORT_Option.noConsole) {
+		if(RTS_Option.noPopup) {
 			System.out.println(msg);
 		} else {
 			ensureOpenRuntimeConsole();
@@ -625,7 +599,7 @@ public final class RTS_UTIL {
 	/// Print an error on the runtime console if present, otherwise on System.out
 	/// @param msg the message to print
 	static void printError(final String msg) {
-		if(RTS_SPORT_Option.noConsole) {
+		if(RTS_Option.noPopup) {
 			System.out.println(msg);
 		} else {
 			ensureOpenRuntimeConsole();
@@ -636,7 +610,7 @@ public final class RTS_UTIL {
 	/// Print a warning message on the runtime console if present, otherwise on System.out
 	/// @param msg the message to print
 	static void printWarning(final String msg) {
-		if(RTS_SPORT_Option.noConsole) {
+		if(RTS_Option.noPopup) {
 			System.out.println(msg);
 		} else {
 			ensureOpenRuntimeConsole();
@@ -663,22 +637,7 @@ public final class RTS_UTIL {
 	static void IERR(final String msg) {
 		printError(msg);
 		Thread.dumpStack();
-//		System.exit(-1);
-		doExit(-1);
-	}
-	
-	/// FEC-Utility.
-	/// @param code exit code
-	public static void doExit(int code) {
-		if(RTS_SPORT_Option.SPORT_SourceFileName != null) {
-//			while(true) Thread.yield();
-			if(console != null) {
-				console.write("EXIT: ");
-				console.read();
-			}
-			
-		}
-		System.exit(code);
+		RTS_ENVIRONMENT.exit(-1);
 	}
 
 	// *********************************************************************

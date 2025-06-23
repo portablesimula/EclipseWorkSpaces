@@ -576,11 +576,11 @@ class ENVIRONMENT_INTERFACE; begin
 					else if arg = "-SPORT:SCodeFile"  then begin SPORT_SCodeFileName :- argv(i); i := i+1; end
 					else if arg = "-SPORT:select" 	  then begin Selectors :- argv(i); i := i+1; end
 					else if arg = "-SPORT:trace"      then begin FEC_TraceLevel := decode(argv(i)); i := i+1; end
-					else begin
-						outtext("ENVIR.INIT: Unknown option " & arg); outimage;
-						exit(-1);
+%					else begin
+%						outtext("ENVIR.INIT: Unknown option " & arg); outimage;
+%						exit(-1);
 %						help();
-					end;
+%					end;
 				end else begin
 					if file = NOTEXT then begin
 						file :- arg;

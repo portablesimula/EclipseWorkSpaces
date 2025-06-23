@@ -504,7 +504,7 @@ public class RTS_DEC_Lib extends RTS_CLASS {
 		switch (code) {
 		case 0:
 //			System.exit(-1);
-			RTS_UTIL.doExit(-1);
+			RTS_ENVIRONMENT.exit(-1);
 		case 1:
 			RTS_UTIL.endProgram(0);
 		case 2:

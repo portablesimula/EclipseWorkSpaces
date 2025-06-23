@@ -91,8 +91,7 @@ public abstract class RTS_CatchingErrors extends RTS_CLASS {
 		} catch (RuntimeException x) {
 			System.out.println("RuntimeException within onError: " + RTS_UTIL.getErrorMessage(e));
 			e.printStackTrace(System.out);
-//			System.exit(-1);
-			RTS_UTIL.doExit(-1);
+			RTS_ENVIRONMENT.exit(-1);
 		}
 	}
 

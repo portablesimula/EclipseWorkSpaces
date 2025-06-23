@@ -176,11 +176,13 @@ public class RTS_File extends RTS_CLASS {
 		    		if(RTS_Option.VERBOSE) e.printStackTrace();
 				}
 		}
-		JFileChooser fileChooser = new JFileChooser(file.getParent());
-		fileChooser.setDialogTitle("Can't Open " + fileName + ", select another");
-		int answer = fileChooser.showOpenDialog(null);
-		if (answer == JFileChooser.APPROVE_OPTION) {
-			return (fileChooser.getSelectedFile());
+		if(! RTS_Option.noPopup) {
+			JFileChooser fileChooser = new JFileChooser(file.getParent());
+			fileChooser.setDialogTitle("Can't Open " + fileName + ", select another");
+			int answer = fileChooser.showOpenDialog(null);
+			if (answer == JFileChooser.APPROVE_OPTION) {
+				return (fileChooser.getSelectedFile());
+			}
 		}
 		return (null);
 	}

@@ -43,9 +43,8 @@ public final class RunSingleClassTest {
 
 		// Set internal test, debug options.
 		Option.internal.INLINE_TESTING=true;
-		Option.internal.noConsole = true;
+		Option.noPopup = true;
 		Option.internal.TESTING_STACK_SIZE = true;
-		Option.internal.SPORT=true;
 //		Option.internal.DEBUGGING=true;
 //		Option.internal.LIST_GENERATED_CLASS_FILES=true;
 

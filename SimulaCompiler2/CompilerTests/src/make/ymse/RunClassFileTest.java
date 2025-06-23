@@ -37,7 +37,6 @@ public final class RunClassFileTest {
 		Option.internal.INLINE_TESTING=true;
 		Option.internal.TESTING_STACK_SIZE = true;
 //		Option.compilerMode = Option.CompilerMode.viaJavaSource;
-		Option.internal.SPORT=true;
 //		Option.internal.DEBUGGING=true;
 		Option.internal.LIST_GENERATED_CLASS_FILES=true;
 
