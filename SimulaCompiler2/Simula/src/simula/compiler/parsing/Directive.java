@@ -6,7 +6,6 @@
 package simula.compiler.parsing;
 
 import java.io.File;
-import simula.compiler.utilities.Option;
 import simula.compiler.utilities.Util;
 
 /// Utility class Directive.
@@ -23,13 +22,13 @@ public class Directive {
 	/// @param id      the directive identifier
 	/// @param arg     the directive argument
 	static void treatDirectiveLine(final SimulaScanner scanner, final String id, final String arg) {
-		if (id.equalsIgnoreCase("OPTION"))			Directive.setOption();
+		if (id.equalsIgnoreCase("OPTION"))			; // Ignored in this implementation
 		else if (id.equalsIgnoreCase("INSERT"))		Directive.insert(scanner, arg);
-		else if (id.equalsIgnoreCase("SPORT"))		Directive.setSport(arg);
-		else if (id.equalsIgnoreCase("TITLE"))		Directive.setTitle(arg);
-		else if (id.equalsIgnoreCase("PAGE"))		Directive.page();
-		else if (id.equalsIgnoreCase("KEEP_JAVA"))	Directive.setKeepJava(arg);
-		else if (id.equalsIgnoreCase("EOF"))		Directive.eof(scanner);
+		else if (id.equalsIgnoreCase("SPORT"))		; // Ignored in this implementation
+		else if (id.equalsIgnoreCase("TITLE"))		; // Ignored in this implementation
+		else if (id.equalsIgnoreCase("PAGE"))		; // Ignored in this implementation
+		else if (id.equalsIgnoreCase("KEEP_JAVA"))	; // Ignored in this implementation
+		else if (id.equalsIgnoreCase("EOF"))		scanner.sourceFileReader.forceEOF();
 		else Util.warning("Unknown Compiler Directive: " + id + ' ' + arg);
 	}
 
@@ -50,55 +49,6 @@ public class Directive {
 			scanner.insert(file);
 		} else
 			Util.error("Can't open " + fileName + " for reading");
-	}
-
-	/// %PAGE
-	/// 
-	/// Will cause the compiler to change to a new page in the listing file. If the
-	/// page heading (as defined by %TITLE, see below) is non-empty, it will be
-	/// printed on top of the new page.
-	private static void page() {
-		// Ignored in this implementation
-	}
-
-	/// %OPTION name value
-	/// 
-	/// Will set compiler switch 'name' to the value 'value'. The facility is
-	/// intended for compiler maitenance, and is not explained further.
-	private static void setOption() {
-		Util.warning("NOT IMPLEMENTED: Compiler Directive: %OPTION");
-	}
-
-	/// %SPORT ON / OFF
-	/// 
-	/// Enables/disables special S-Port Simula features, such as inclusion of the
-	/// S-Port Library.
-	/// 
-	/// The initial value is ON.
-	/// @param onoff the on/off string
-	private static void setSport(final String onoff) {
-		// Ignored in this implementation
-	}
-
-	/// %EOF
-	/// @param scanner the SimulaScanner
-	private static void eof(final SimulaScanner scanner) {
-		scanner.sourceFileReader.forceEOF();
-	}
-
-	/// %TITLE title-string
-	/// @param title title string
-	private static void setTitle(final String title) {
-		// Ignored in this implementation
-	}
-
-	/// %KEEP_JAVA directory-string
-	/// @param dir directory-string
-	private static void setKeepJava(final String dir) {
-		if (dir != null)
-			Option.internal.keepJava = new File(dir);
-		else
-			Util.warning("Missing directory in KEEP_JAVA directive");
 	}
 
 }

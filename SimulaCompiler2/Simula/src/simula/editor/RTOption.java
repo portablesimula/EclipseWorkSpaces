@@ -32,7 +32,6 @@ public final class RTOption {
 	/** Runtime Option */ public static boolean GOTO_TRACING = false;
 	/** Runtime Option */ public static boolean QPS_TRACING = false;
 	/** Runtime Option */ public static boolean SML_TRACING = false;
-//	/** Runtime Option */ public static String SPORT_SOURCE_FILE;
 
 
 	/// The default constructor
@@ -46,7 +45,6 @@ public final class RTOption {
 		RTOption.GOTO_TRACING = false;
 		RTOption.QPS_TRACING = false;
 		RTOption.SML_TRACING = false;
-//		RTOption.SPORT_SOURCE_FILE = null;
 	}
 
     /// Add Runtime options to the argument vector.
@@ -58,10 +56,6 @@ public final class RTOption {
 		if(RTOption.GOTO_TRACING) args.add("-gotoTracing");
 		if(RTOption.QPS_TRACING) args.add("-qpsTracing");
 		if(RTOption.SML_TRACING) args.add("-smlTracing");
-//		if(RTOption.SPORT_SOURCE_FILE!=null) {
-//			args.add("-SPORT_SOURCE_FILE");
-//			args.add(SPORT_SOURCE_FILE);
-//		}
 	}
 	
 	/// Get Compiler options from property file.
