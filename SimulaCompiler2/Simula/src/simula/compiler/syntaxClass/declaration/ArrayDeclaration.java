@@ -226,7 +226,7 @@ public final class ArrayDeclaration extends Declaration {
 		Global.sourceLineNumber = lineNumber;
 		ASSERT_SEMANTICS_CHECKED();
 		// --------------------------------------------------------------------
-		// public _FLOAT_GARRAY Tab=null;
+		// public RTS_REAL_ARRAY rTab=null;
 		// --------------------------------------------------------------------
 		String arrType = this.type.toJavaArrayType();
 		String arrayIdent = this.getJavaIdentifier();
@@ -248,10 +248,8 @@ public final class ArrayDeclaration extends Declaration {
 		sb.append(arrayIdent).append("=new " + arrType);
 		char sep = '(';
 		for (BoundPair boundPair : boundPairList) {
-			sb.append(sep);
-			sep = ',';
-			sb.append("new RTS_BOUNDS(").append(boundPair.LB.toJavaCode()).append(',').append(boundPair.UB.toJavaCode())
-					.append(')');
+			sb.append(sep); sep = ',';
+			sb.append("new RTS_BOUNDS(").append(boundPair.LB.toJavaCode()).append(',').append(boundPair.UB.toJavaCode()).append(')');
 		}
 		sb.append(");");
 		JavaSourceFileCoder.code(sb.toString());

@@ -232,7 +232,7 @@ public abstract class Declaration extends SyntaxClass {
 				System.out.println("Declaration.verifyTree: "+this.getClass().getSimpleName()+".head="+head);
 				System.out.println("Declaration.verifyTree: head.identifier=" + decl.identifier);
 				System.out.println("Declaration.verifyTree: declaredIn.identifier=" + declaredIn.identifier);
-//				Util.IERR("verifyTree FAILED");
+				Util.IERR("verifyTree FAILED");
 			}
 		}
 	}

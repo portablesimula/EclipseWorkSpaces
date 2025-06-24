@@ -34,7 +34,7 @@ public class InspectVariableDeclaration extends Declaration {
 	// String externalIdent; // Inherited
 	// Type type; // Inherited
 
-	/// The assosiated ConnectionStatement 
+	/// The associated ConnectionStatement 
 	ConnectionStatement connectionStatement;
 	
 	/// The owner.

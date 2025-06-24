@@ -478,7 +478,6 @@ public final class VariableExpression extends Expression {
 		ASSERT_SEMANTICS_CHECKED();
 		String rightPart = null;
 		String result = this.editVariable(rightPart); // Not a destination
-		// System.out.println("Variable.get: RETURN "+result);
 		return (result);
 	}
 
@@ -808,7 +807,7 @@ public final class VariableExpression extends Expression {
 //						.getfield(inspectedVariable.getFieldRefEntry(pool))
 //						.checkcast( ((DeclarationScope)ivar.declaredIn).getClassDesc())
 //						.getfield(ivar.getFieldRefEntry(pool));
-					Util.IERR(); // TROR IKKE DETTE FOREKOMMER !
+					Util.IERR("DON'T BELIEVE THIS WILL EVER HAPPEN !");
 				} else {
 					buildIdentifierAccess(destination,codeBuilder);
 					codeBuilder.getfield(ivar.getFieldRefEntry(pool));

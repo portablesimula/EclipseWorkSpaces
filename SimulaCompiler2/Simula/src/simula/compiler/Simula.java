@@ -44,6 +44,8 @@ import simula.editor.SimulaEditor;
 ///      -noexec                 Don't execute generated .jar file
 ///      
 ///      -nowarn                 Generate no warnings
+///
+///		 -noPopup                Don't create popUps at runtime");
 ///      
 ///      -noextension            Disable all language extensions.
 ///                              In other words, follow the Simula Standard literally
@@ -110,8 +112,8 @@ public final class Simula {
 		Util.println("  -noexec                    Don't execute generated .jar file");
 		Util.println("  -noextension               Disable all language extensions");
 		Util.println("                             In other words, follow the Simula Standard literally");
-		Util.println("  -noPopup                   Don't create popUps at runtime");
 		Util.println("  -nowarn                    Generate no warnings");
+		Util.println("  -noPopup                   Don't create popUps at runtime");
 		Util.println("  -verbose                   Output messages about what the compiler is doing");
 		Util.println("  -select characters         First, all selectors are reset.");
 		Util.println("                             Then, for each character, the corresponding selector is set");		
@@ -154,14 +156,12 @@ public final class Simula {
 	/// Main entry.
 	/// @param argv arguments
 	public static void main(String[] argv) {
-//		String fileName = null;
 		String sourceFileDir = null;
 		Vector<String> fileNames = new Vector<String>();
 		Option.verbose=false;
 		Option.WARNINGS=true;
 		Option.EXTENSIONS=true;
 		Global.initSimulaProperties();
-//		boolean noConsole = false;
 
 		// Parse command line arguments.
 		for(int i=0;i<argv.length;i++) {
@@ -180,7 +180,7 @@ public final class Simula {
 				else if (arg.equalsIgnoreCase("-output")) setOutputDir(argv[++i]);
 				else if (arg.equalsIgnoreCase("-extLib")) Global.extLib=new File(argv[++i]);
 				
-				// Special FEC Options ???
+				// Special RT Options
 				else if (arg.equalsIgnoreCase("-source")) Option.internal.SOURCE_FILE=argv[++i];
 				else if (arg.equalsIgnoreCase("-sourceFileDir")) sourceFileDir=argv[++i];
 				else if (arg.equalsIgnoreCase("-runtimeUserDir")) Option.internal.RUNTIME_USER_DIR=argv[++i];
@@ -191,20 +191,16 @@ public final class Simula {
 			} else fileNames.add(arg);
 		}
 		
-//	    if(!Option.internal.INLINE_TESTING) Global.simulaRtsLib=new File(Global.simulaHome,"Simula-2.0/rts");
 	    if(!Option.internal.INLINE_TESTING) Global.simulaRtsLib=new File(Global.releaseHome, "/rts");
 	    
-//		if (fileName == null) {
 		if (fileNames.isEmpty()) {
 			// *** STARTING SIMULA EDITOR ***
-//			Global.sampleSourceDir = new File(Global.simulaHome, "Simula-2.0/samples");
 			Global.sampleSourceDir = new File(Global.releaseHome, "/samples");
 			RTOption.InitRuntimeOptions();
 			Option.InitCompilerOptions();
 			SimulaEditor editor = new SimulaEditor();
 			editor.setVisible(true);
 		} else {
-//			RTOption.USE_CONSOLE = ! noConsole;	
 			for(String fileName:fileNames) {
 				// *** STARTING SIMULA COMPILER ***
 				try {
@@ -216,14 +212,6 @@ public final class Simula {
 			}
 		}
 	}
-
-//	/// Utility: Print an error message on a popup panel.
-//	/// @param msg the error message
-//	private static void error(final String msg) {
-//		System.err.println("Simula: " + msg + "\n");
-//		Util.popUpError(msg);
-//		help();
-//	}
 
 	/// Set selectors for conditional compilation.
 	/// 

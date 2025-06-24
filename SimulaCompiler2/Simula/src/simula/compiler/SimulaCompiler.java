@@ -134,7 +134,6 @@ public final class SimulaCompiler {
 			Util.println("OS name              " + System.getProperty("os.name"));
 			Util.println("OS architecture      " + System.getProperty("os.arch"));
 			Util.println("OS version           " + System.getProperty("os.version"));
-//			Util.println("32/64 bit JVM        " + System.getProperty("sun.arch.data.model"));
 			Util.println("file.encoding        " + System.getProperty("file.encoding"));
 			Util.println("defaultCharset       " + Charset.defaultCharset());
 			Util.println("compilerMode         " + Option.compilerMode);
@@ -369,7 +368,6 @@ public final class SimulaCompiler {
 		if(Option.noPopup) {
 			cmds.add("-noPopup");			
 		}
-//		if (Option.internal.SOURCE_FILE.length() > 0) {
 		if (Option.internal.SOURCE_FILE != null) {
 			cmds.add(Option.internal.SOURCE_FILE);
 		}
@@ -386,7 +384,6 @@ public final class SimulaCompiler {
 		} else {
 			doExecuteJarFile(jarFile,cmds);
 		}
-		
 		
 		if (Option.internal.DEBUGGING)
 			Util.println("------------  CLEANING UP TEMP FILES  ------------");

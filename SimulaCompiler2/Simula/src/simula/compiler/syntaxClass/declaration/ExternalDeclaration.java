@@ -150,11 +150,9 @@ public final class ExternalDeclaration extends Declaration {
 					Type moduleType = AttributeFileIO.readAttributeFile(identifier, jarFile, enclosure);
 					if(moduleType == null) {
 						if (expectedType != null) Util.error("Missing external type: "+expectedType);
-					}
-					else if(expectedType == null) {
-//						Util.error("Wrong external type: "+moduleType+". No Type Expected");	
-					}
-					else if (!moduleType.equals(expectedType)) {
+					} else if(expectedType == null) {
+						// NOTHING
+					} else if (!moduleType.equals(expectedType)) {
 						if (expectedType != null)
 							Util.error("Wrong external type: "+moduleType+". Expected type: "+expectedType);
 					}
@@ -162,7 +160,6 @@ public final class ExternalDeclaration extends Declaration {
 			}
 
 			if (Parse.accept(KeyWord.IS)) {
-				// ...
 				Util.error("*** NOT IMPLEMENTED: " + "External non-Simula Procedure");
 				break LOOP;
 			}

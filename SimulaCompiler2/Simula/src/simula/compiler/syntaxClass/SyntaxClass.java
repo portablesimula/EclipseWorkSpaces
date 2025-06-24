@@ -12,7 +12,6 @@ import simula.compiler.AttributeInputStream;
 import simula.compiler.AttributeOutputStream;
 import simula.compiler.JavaSourceFileCoder;
 import simula.compiler.syntaxClass.declaration.Declaration;
-import simula.compiler.syntaxClass.statement.ProgramModule;
 import simula.compiler.utilities.Global;
 import simula.compiler.utilities.Util;
 
@@ -45,6 +44,7 @@ import simula.compiler.utilities.Util;
 ///                  Parameter 
 ///                  SimpleVariableDeclaration 
 ///                     LabelDeclaration 
+///                  UndefinedDeclaration 
 ///                  VirtualMatch 
 ///                  VirtualSpecification 
 ///               Statement
@@ -93,7 +93,7 @@ public abstract class SyntaxClass {
 	/// Object sequence number used by Attribute File I/O to fixup object references.
 	/// 
 	/// During Attribute File Input it is index to the Object Reference Table.
-	/// See: Global.
+	/// See: Global.Object_SEQU
 	public int OBJECT_SEQU;
 	
 	/// The source line number
@@ -136,9 +136,7 @@ public abstract class SyntaxClass {
 	/// Assert that semantic checking done.
 	protected void ASSERT_SEMANTICS_CHECKED() {
 		if (!CHECKED) {
-//			Util.error("FATAL error - Semantic checker not called: " + this.getClass().getName() + ", " + this + "  HashCode=" + this.hashCode());
-			System.out.println("FATAL error - THE Semantic checker not called: " + this.getClass().getName() + ", " + this + "  HashCode=" + this.hashCode());
-//			Thread.dumpStack();
+			System.out.println("FATAL error - THE Semantic checker not called: " + this.getClass().getName() + ", " + this);
 			System.exit(-1);
 		}
 		if (this instanceof Declaration decl) {

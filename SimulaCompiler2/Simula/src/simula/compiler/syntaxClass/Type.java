@@ -273,7 +273,6 @@ public class Type extends SyntaxClass {
 	    else if(this.isSubReferenceOf(to)) result=ConversionKind.DirectAssignable;  
 	    else if(to.isSubReferenceOf(this)) result=ConversionKind.ConvertRef; // Needs Runtime-Check
 	    else result=ConversionKind.Illegal;
-		//System.out.println("Type.isConvertableTo: "+this+"  ==>  " + to + "   RESULT=" + result);
 	    return(result); 
     }
   
@@ -286,11 +285,11 @@ public class Type extends SyntaxClass {
     /// @param other the other type
     /// @return true if the condition holds
 	public boolean isSubReferenceOf(final Type other) {
-		String thisRef=this.getRefIdent(); // May be null for NONE
+		String thisRef=this.getRefIdent();   // May be null for NONE
 		String otherRef=other.getRefIdent(); // May be null for NONE
 		boolean result;		
-		if(otherRef==null) result=false;  // No ref is a super-reference of NONE
-		else if(thisRef==null) result=true; // Any ref is a sub-reference of NONE
+		if(otherRef==null) result=false;     // No ref is a super-reference of NONE
+		else if(thisRef==null) result=true;  // Any ref is a sub-reference of NONE
 		else {
 			ClassDeclaration thisDecl=(ClassDeclaration)Global.getCurrentScope().findMeaning(thisRef).declaredAs;
 			ClassDeclaration otherDecl=(ClassDeclaration)Global.getCurrentScope().findMeaning(otherRef).declaredAs;
@@ -684,7 +683,7 @@ public class Type extends SyntaxClass {
 			case T_TEXT:		return "Text";
 			case T_PROCEDURE:	return "Procedure";
 			case T_LABEL:		return "Label";
-			case T_REF:			//return "Ref()";
+			case T_REF:
 				if(declaredIn==null) {
 					return("ref("+classIdent+')');
 				}

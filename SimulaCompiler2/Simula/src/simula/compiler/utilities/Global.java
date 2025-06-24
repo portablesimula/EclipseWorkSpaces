@@ -41,9 +41,6 @@ public final class Global {
 	public static ImageIcon simIcon;
 	/// A small Simula icon
 	static ImageIcon sIcon;
-	
-	/// Max number of work spaces.
-	private static final int MAX_WORKSPACE = 10;
 
 	/// The Simula Home directory.
 	public static File simulaHome;

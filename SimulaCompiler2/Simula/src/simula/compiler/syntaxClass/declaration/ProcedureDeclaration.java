@@ -544,14 +544,13 @@ public class ProcedureDeclaration extends BlockDeclaration {
 		if(isPreCompiledFromFile != null) return getBytesFromFile();
 		ClassHierarchy.addClassToSuperClass(CD_ThisClass, RTS.CD.RTS_PROCEDURE);
 		
-		int count = 15;
+		int count = 5;
 		while((count--) > 0) {
 			try {
 				if(Option.verbose)
 					Util.println("ProcedureDeclaration.buildClassFile: TRY: "+CD_ThisClass);
 				return tryBuildClassFile(CD_ThisClass);
 			} catch(IllegalArgumentException e) {
-//				Util.println("ProcedureDeclaration.buildClassFile: FATAL ERROR CAUSED BY "+e);
 				boolean feasibleToReTry = false;
 				String msg = e.getMessage();
 				if(msg.startsWith("Could not resolve class")) {
@@ -818,6 +817,7 @@ public class ProcedureDeclaration extends BlockDeclaration {
 	///     }
 	/// </pre>
 	/// @param methodBuilder the MethodBuilder to use.
+	@SuppressWarnings("unused")
 	private void buildSetPar(MethodBuilder methodBuilder) {
 		methodBuilder
 			.withFlags(ClassFile.ACC_PUBLIC)
@@ -842,7 +842,7 @@ public class ProcedureDeclaration extends BlockDeclaration {
 										codeBuilder.astore(2);
 										Util.buildSimulaRuntimeError("Wrong type of parameter: ", codeBuilder);
 									}));
-		
+					
 					codeBuilder
 						.aload(0)
 						.areturn()

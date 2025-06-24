@@ -347,12 +347,12 @@ public abstract class Expression extends SyntaxClass {
 				return(null);
 			}
 		}
-		// Så kan det komme en sekvens av postfikser, som bygger tre “oppover mot høyre”
+		// Then there can be a sequence of postfixes, which builds a tree “upwards to the right”
 		while (Parse.acceptPostfixOprator()) {
 			int opr=Parse.prevToken.getKeyWord(); // opr == DOT || opr== IS || opr == IN || opr == QUA
 			if (opr == KeyWord.DOT ) 
 				expr=new RemoteVariable(expr,expectVariable());
-			else {  // Vet at opr == IS or opr == IN or opr == QUA.  Alle skal ha et klassenavn etter seg
+			else {  // opr == IS or opr == IN or opr == QUA.  Then a class identifier must follow.
 				String classIdentifier=Parse.expectIdentifier();
 				if(opr==KeyWord.QUA)
 					expr=new QualifiedObject(expr,classIdentifier);
@@ -371,8 +371,7 @@ public abstract class Expression extends SyntaxClass {
 	/// NOTE: That a SubscriptedVariable may be an subscripted array or a function designator.
 	/// @return the created Variable
 	private static VariableExpression expectVariable() { 
-		// Et navn med valgfri argument-parentes etter.  Er også det som kan stå etter DOT
-		// Altså: Enkelt-variabel, array-aksess eller prosedyre-kall. 
+		// An identifier, possibly followed by arguments in parentheses.
 		String ident=Parse.expectIdentifier();
 		return(VariableExpression.expectVariable(ident));
 	}

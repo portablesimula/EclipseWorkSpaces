@@ -142,7 +142,8 @@ public final class ObjectRelation extends Expression {
 	}
 
 	@Override
-	public void buildEvaluation(Expression rightPart,CodeBuilder codeBuilder) {	setLineNumber();
+	public void buildEvaluation(Expression rightPart,CodeBuilder codeBuilder) {
+		setLineNumber();
 		ASSERT_SEMANTICS_CHECKED();
 		if(opr == KeyWord.IS) {
 			lhs.buildEvaluation(null,codeBuilder);

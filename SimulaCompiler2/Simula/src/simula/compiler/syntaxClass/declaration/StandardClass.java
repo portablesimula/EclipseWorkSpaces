@@ -358,7 +358,6 @@ public final class StandardClass extends ClassDeclaration {
 		BASICIO.isContextFree=true;
 		BASICIO.addStandardProcedure(ObjectKind.ContextFreeMethod,Type.Ref("Infile"),"sysin");  
 		BASICIO.addStandardProcedure(ObjectKind.ContextFreeMethod,Type.Ref("Printfile"),"sysout");  
-//		BASICIO.addStandardProcedure(ObjectKind.MemberMethod,null,"terminate_program");  
 		BASICIO.addStandardProcedure(ObjectKind.ContextFreeMethod,null,"terminate_program");  
 		BASICIO.addStandardProcedure(ObjectKind.MemberMethod,null,"call",parameter("obj",Type.Ref("RTObject")));
 		BASICIO.addStandardProcedure(ObjectKind.MemberMethod,null,"resume",parameter("obj",Type.Ref("RTObject")));

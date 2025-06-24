@@ -153,13 +153,6 @@ public class JarFileBuilder {
 
 		if (Option.internal.TRACING)
 			Util.println("END Create .jar File: " + outputJarFile);
-//		if (Option.internal.DEBUGGING) {
-//			Util.println(
-//					"SimulaCompiler.createJarFile: BEGIN LIST GENERATED .jar FILE  ========================================================");
-//			listJarFile(outputJarFile);
-//			Util.println(
-//					"SimulaCompiler.createJarFile: ENDOF LIST GENERATED .jar FILE  ========================================================");
-//		}
 		return (outputJarFile);
 	}
 	

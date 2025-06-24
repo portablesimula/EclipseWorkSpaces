@@ -152,7 +152,6 @@ public final class AttributeFileIO {
 
 		ClassHierarchy.readObject(inpt);
 
-		// Read External Head ?
 		int declarationKind = inpt.readKind();
 		while(declarationKind == ObjectKind.ExternalDeclaration) {
 			ExternalDeclaration xdecl = ExternalDeclaration.readObject(inpt);

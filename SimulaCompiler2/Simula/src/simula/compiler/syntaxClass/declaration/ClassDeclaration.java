@@ -704,7 +704,6 @@ public class ClassDeclaration extends BlockDeclaration {
 			prefixClass = cls;
 			return (cls);
 		}
-//		Thread.dumpStack();
 		Util.error("Prefix " + prefix + " is not a Class but " + decl.getClass().getSimpleName()
 				+ " Declared in " + this.sourceFileName + " at line " + decl.lineNumber);
 		printStaticChain("",0);
@@ -1022,14 +1021,13 @@ public class ClassDeclaration extends BlockDeclaration {
 		//
 		// My solution: It was possible to implement a re-try loop solution.
 		//              But it did not turn out very pretty.
-		int count = 15;
+		int count = 5;
 		while((count--) > 0) {
 			try {
 				if(Option.verbose)
 					Util.println("ClassDeclaration.buildClassFile: TRY: "+CD_ThisClass+" extends "+CD_SuperClass);
 				return tryBuildClassFile(CD_ThisClass, CD_SuperClass);
 			} catch(IllegalArgumentException e) {
-//				Util.println("ClassDeclaration.buildClassFile: FATAL ERROR CAUSED BY "+e);
 				boolean feasibleToReTry = false;
 				String msg = e.getMessage();
 				if(msg.startsWith("Could not resolve class")) {
@@ -1278,6 +1276,7 @@ public class ClassDeclaration extends BlockDeclaration {
 	/// @param codeBuilder the CodeBuilder
 	/// @param begScope label
 	/// @param endScope label
+	@SuppressWarnings("unused")
 	private void buildMethod_CatchingErrors_TRY_CATCH(CodeBuilder codeBuilder, Label begScope, Label endScope) {
 		codeBuilder.trying(
 			tryCodeBuilder -> {
@@ -1325,7 +1324,6 @@ public class ClassDeclaration extends BlockDeclaration {
 	private void buildStatementsAfterInner(CodeBuilder codeBuilder) {
 		for (Statement stm : statements){
 			if(!(stm instanceof DummyStatement)) Util.buildLineNumber(codeBuilder,stm.lineNumber);
-//			System.out.println("ClassDeclaration.buildStatementsAfterInner: "+stm.getClass().getSimpleName()+"  "+stm);
 			stm.buildByteCode(codeBuilder);
 		}
 		if (hasRealPrefix()) {

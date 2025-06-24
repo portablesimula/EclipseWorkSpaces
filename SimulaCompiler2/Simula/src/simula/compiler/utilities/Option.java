@@ -87,14 +87,14 @@ public final class Option {
 
 		// Parser Trace Options
 		/** Debug option */	public static boolean TRACE_PARSE=false;
-		/** Debug option */	public static int PRINT_SYNTAX_TREE=0;
+		/** Debug option */	public static int     PRINT_SYNTAX_TREE=0;
 		/** Debug option */	public static boolean TRACE_ATTRIBUTE_OUTPUT=false;
 		/** Debug option */	public static boolean TRACE_ATTRIBUTE_INPUT=false;
 
 		// Checker Trace Options
 		/** Debug option */	public static boolean TRACE_CHECKER=false;
 		/** Debug option */	public static boolean TRACE_CHECKER_OUTPUT=false;
-		/** Debug option */	public static int TRACE_FIND_MEANING=0;
+		/** Debug option */	public static int     TRACE_FIND_MEANING=0;
 
 		// Java Coder Options
 		/** Debug option */	public static boolean TRACE_CODING=false;         // Only when .java output

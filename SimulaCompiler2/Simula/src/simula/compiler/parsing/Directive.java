@@ -35,11 +35,7 @@ public class Directive {
 	/// %INSERT file-name
 	/// 
 	/// Will cause the compiler to include the indicated file at this place in the
-	/// source input stream. INSERT may occur in the included file. In contrast to
-	/// COPY, the included lines are not counted (they will all be numbered with the
-	/// line number of the line containing the outermost INSERT). Furthermore, if the
-	/// source is being listed, listing is turned off during the inclusion and turned
-	/// on again when reading continues after this directive.
+	/// source input stream. INSERT may occur in the included file.
 	/// @param scanner the SimulaScanner
 	/// @param fileName the file to insert
 	private static void insert(final SimulaScanner scanner, final String fileName) {

@@ -39,12 +39,6 @@ public class UndefinedDeclaration extends Declaration {
 		this.type = Type.Undef;
 	}
 
-//	/// Constant indicator. Is used to prevent assignment of a new value.
-//	/// @return the constant indicator
-//	public boolean isConstant() {
-//		return false;
-//	}
-
 	@Override
 	public void doChecking() {
 		if (IS_SEMANTICS_CHECKED())
@@ -57,32 +51,14 @@ public class UndefinedDeclaration extends Declaration {
 
 	@Override
 	public void doDeclarationCoding() {
-//		if (constantElement != null && !(constantElement instanceof Constant)) {
-//			// Initiate Final Variable
-//			String value = constantElement.toJavaCode();
-//			JavaSourceFileCoder.code(getJavaIdentifier() + '=' + value + ';');
-//		}
+		// NOTHING
 	}
 
 	@Override
 	public String toJavaCode() {
 		ASSERT_SEMANTICS_CHECKED();
-		String modifier = "public ";
-//		if (this.isConstant())
-//			modifier = modifier + "final ";
-//		if (constantElement != null) {
-//			constantElement = TypeConversion.testAndCreate(type, constantElement.evaluate());
-//			constantElement.doChecking();
-//			if (constantElement instanceof Constant) {
-//				String value = constantElement.toJavaCode();
-//				String putValue = TypeConversion.mayBeConvert(constantElement.type, type, value);
-//				return (modifier + type.toJavaType() + ' ' + getJavaIdentifier() + putValue);
-//			} else {
-//				return (modifier + type.toJavaType() + ' ' + getJavaIdentifier() + ';');
-//			}
-//		}
 		String value = type.edDefaultValue();
-		return (modifier + type.toJavaType() + ' ' + getJavaIdentifier() + '=' + value + ';');
+		return ("public " + type.toJavaType() + ' ' + getJavaIdentifier() + '=' + value + ';');
 	}
 
 	

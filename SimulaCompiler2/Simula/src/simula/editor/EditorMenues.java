@@ -39,7 +39,6 @@ import simula.compiler.SimulaCompiler;
 import simula.compiler.utilities.Global;
 import simula.compiler.utilities.Option;
 import simula.compiler.utilities.Util;
-import simula.runtime.RTS_EndProgram;
 
 /// The editor's menues.
 /// 
@@ -498,7 +497,6 @@ public class EditorMenues extends JMenuBar {
 	/// The debug action
 	private void doDebugAction() {
 		Option.internal.DEBUGGING=true;
-//		RTOption.internal.DEBUGGING=true;
 		RTOption.VERBOSE=true;
 		RTOption.selectRuntimeOptions();
 		doStartRunning();

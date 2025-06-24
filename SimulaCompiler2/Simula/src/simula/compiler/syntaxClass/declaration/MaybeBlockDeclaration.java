@@ -299,7 +299,7 @@ public final class MaybeBlockDeclaration extends BlockDeclaration {
 	}
 	
 	// ***********************************************************************************************
-	// *** ByteCoding: buildClassFile
+	// *** ByteCoding: getClassDesc
 	// ***********************************************************************************************
 	@Override
 	public ClassDesc getClassDesc() {

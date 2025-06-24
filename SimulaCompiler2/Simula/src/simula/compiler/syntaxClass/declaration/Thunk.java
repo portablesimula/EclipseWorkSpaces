@@ -164,7 +164,6 @@ public final class Thunk extends DeclarationScope {
 	/// </pre>
 	/// @param codeBuilder the CodeBuilder
 	private void buildConstructor(CodeBuilder codeBuilder) {
-
 		Label begScope = codeBuilder.newLabel();
 		Label endScope = codeBuilder.newLabel();
 		codeBuilder
@@ -251,15 +250,6 @@ public final class Thunk extends DeclarationScope {
 					.aconst_null()                // TESTING_STACK_SIZE
 					.ifnonnull(checkStackSize);  // TESTING_STACK_SIZE				
 			}
-			
-			//	public Integer put(Integer x_) {
-			//		return (p_n = (int) x_);
-			//	}
-			// ENDRES TIL:
-			//	public Integer put(Integer x_) {
-			//		p_n = (int) x_;
-			//		return (x);
-			//	}
 
 			writeableVariable.buildIdentifierAccess(true,codeBuilder);
 				
@@ -380,7 +370,7 @@ public final class Thunk extends DeclarationScope {
 	}
 	
 	// ********************************************************************
-	// *** edProcedureQuant
+	// *** buildProcedureQuant
 	// ********************************************************************
 	/// ClassFile Coding Utility: Edit new procedure quant.
 	/// @param apar the actual parameter

@@ -27,7 +27,7 @@ import simula.compiler.utilities.Util;
 /// "https://github.com/portablesimula/EclipseWorkSpaces/blob/main/SimulaCompiler2/Simula/src/simula/compiler/syntaxClass/declaration/ProtectedSpecification.java"><b>Source File</b></a>.
 /// 
 /// @author Øystein Myhre Andersen
-public final class ProtectedSpecification extends SyntaxClass { // {
+public final class ProtectedSpecification extends SyntaxClass {
 	
 	/// The protected identifier.
 	public String identifier;
@@ -36,7 +36,7 @@ public final class ProtectedSpecification extends SyntaxClass { // {
 	public ClassDeclaration definedIn;
 	
 	/// Set during doChecking.
-    HiddenSpecification hiddenBy; // Set during doChecking
+    HiddenSpecification hiddenBy;
 
     /// Create a new ProtectedSpecification.
     /// @param definedIn the class it is defined in

@@ -143,7 +143,7 @@ public abstract class BuildCPV {
 	/// @param variable the procedure variable
 	/// @param procedureSpec the procedure spec
 	/// @param codeBuilder the CodeBuilder
-	static void buildCSVP(final VariableExpression variable,final ProcedureSpecification procedureSpec,CodeBuilder codeBuilder) {
+	private static void buildCSVP(final VariableExpression variable,final ProcedureSpecification procedureSpec,CodeBuilder codeBuilder) {
 //        25: invokevirtual #46                 // Method simula/runtime/RTS_PRCQNT.CPF:()Lsimula/runtime/RTS_PROCEDURE;
 		
 //        28: bipush        7

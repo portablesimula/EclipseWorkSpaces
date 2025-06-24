@@ -151,21 +151,8 @@ public class SimulaEditor extends JFrame {
         this.setJMenuBar(menuBar);
         this.setVisible(true);
         
-//		int javaVersion=getJavaVersion();
 		int javaVersion=getJavaSpecVersion();
 		if(javaVersion < 24) {
-//		if(javaVersion < 28) {
-//			checkJAVA_HOME();
-//			Util.popUpError("You have installed Java "+System.getProperty("java.version")+'.'  // TODO: CHECK DETTE
-//					     +"\nWe recommend at least Java 24."
-//					     +"\nCheck the settings and consider"
-//					     +"\ninstalling a newer version.\n"
-//					+ "\nRemember to set Environment Variables:"
-//					     +"\n - JAVA_HOME"
-//					     +"\n - CLASSPATH"
-//					     +"\n - PATH\n"
-//					+ "See: https://portablesimula.github.io/github.io/"
-//					);
 			String msg = "You have installed Java "+System.getProperty("java.version")+'.'  // TODO: CHECK DETTE
 					+"\nWe recommend at least Java 24."
 					+"\nCheck the settings and consider"
@@ -187,7 +174,8 @@ public class SimulaEditor extends JFrame {
 				} catch (Exception ex) {
 					msg="Unable to open Desktop Browser\n\n"
 							+"Go to your Browser and open page:\n"
-							+" https://portablesimula.github.io/github.io/\n\n"
+//							+" https://portablesimula.github.io/github.io/\n\n"
+							+" https://dev.java/download/\n\n"
 							+"Do you want to continue ?";
 					result=Util.optionDialog(msg,"Update Notification",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,"Yes","No");
 					if(result!=0) System.exit(-1); // Stop the Editor
@@ -524,7 +512,6 @@ public class SimulaEditor extends JFrame {
 			@Override
 			public void run() {
 				String userDir=jarFile.getParentFile().getParent();
-//				String[] cmds= {"java","-jar",jarFile.toString(),"-useConsole","-userDir",userDir};
 				String[] cmds= {"java","-jar",jarFile.toString(),"-userDir",userDir};
 				Util.execute(cmds);
 			}

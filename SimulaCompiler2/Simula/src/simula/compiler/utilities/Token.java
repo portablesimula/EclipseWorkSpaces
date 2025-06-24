@@ -84,15 +84,15 @@ public final class Token {
 	/// @return the style code for this Token's keyword
 	public StyleCode getStyleCode() {
 		switch(keyWord) {
-		    case KeyWord.ASSIGNVALUE: case KeyWord.ASSIGNREF: case KeyWord.COMMA: case KeyWord.COLON: case KeyWord.SEMICOLON:
-		    case KeyWord.BEGPAR: case KeyWord.ENDPAR: case KeyWord.BEGBRACKET: case KeyWord.ENDBRACKET: case KeyWord.EQR: case KeyWord.NER:
-		    case KeyWord.EQ: case KeyWord.GE: case KeyWord.GT: case KeyWord.LE: case KeyWord.LT: case KeyWord.NE:
-		    case KeyWord.PLUS: case KeyWord.MINUS: case KeyWord.MUL: case KeyWord.DIV: case KeyWord.INTDIV: case KeyWord.EXP:
-		    case KeyWord.IDENTIFIER: case KeyWord.DOT:
+		    case KeyWord.ASSIGNVALUE, KeyWord.ASSIGNREF, KeyWord.COMMA, KeyWord.COLON, KeyWord.SEMICOLON,
+		    	 KeyWord.BEGPAR, KeyWord.ENDPAR, KeyWord.BEGBRACKET, KeyWord.ENDBRACKET, KeyWord.EQR, KeyWord.NER,
+			     KeyWord.EQ, KeyWord.GE, KeyWord.GT, KeyWord.LE, KeyWord.LT, KeyWord.NE,
+			     KeyWord.PLUS, KeyWord.MINUS, KeyWord.MUL, KeyWord.DIV, KeyWord.INTDIV, KeyWord.EXP,
+			     KeyWord.IDENTIFIER, KeyWord.DOT:
 		    	 return(Token.StyleCode.regular);
 		    	 
-		    case KeyWord.BOOLEANKONST: case KeyWord.INTEGERKONST: case KeyWord.CHARACTERKONST:
-		    case KeyWord.REALKONST: case KeyWord.TEXTKONST: case KeyWord.STRING:
+		    case KeyWord.BOOLEANKONST, KeyWord.INTEGERKONST, KeyWord.CHARACTERKONST,
+		    	 KeyWord.REALKONST, KeyWord.TEXTKONST, KeyWord.STRING:
 		    	 return(Token.StyleCode.constant);
 		    	 
 		    case KeyWord.COMMENT:
@@ -181,7 +181,7 @@ public final class Token {
 		case KeyWord.BOOLEANKONST:	return ("BOOLEANKONST(" + (Boolean) value + ")");
 		case KeyWord.IDENTIFIER:	return ("" + value);
 
-		case KeyWord.INTEGER: case KeyWord.REAL: {
+		case KeyWord.INTEGER, KeyWord.REAL: {
 			// Possible SHORT or LONG in value part
 			String res = KeyWord.edit(keyWord);
 			if (value != null)

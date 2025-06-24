@@ -254,147 +254,147 @@ public final class SimulaScanner extends DefaultScanner {
 	    String ident=(Option.CaseSensitive)?name:name.toLowerCase();
 	    switch(Character.toLowerCase(ident.charAt(0))) {
 	        case 'a':
-		        if(ident.equals("abstract"))	return(javaKeyword(name)); // Java KeyWord
-		        if(ident.equals("activate"))    return(newToken(KeyWord.ACTIVATE));
-		        if(ident.equals("after"))	    return(newToken(KeyWord.AFTER));
-		        if(ident.equals("and"))			return(newToken(KeyWord.AND));
-		        if(ident.equals("and_then"))	return(newToken(KeyWord.AND_THEN));
-		        if(ident.equals("array"))	    return(newToken(KeyWord.ARRAY));
-		        if(ident.equals("assert"))	    return(javaKeyword(name)); // Java KeyWord
-		        if(ident.equals("at"))		    return(newToken(KeyWord.AT));
+		        if(ident.equals("abstract"))	 return(javaKeyword(name)); // Java KeyWord
+		        if(ident.equals("activate"))     return(newToken(KeyWord.ACTIVATE));
+		        if(ident.equals("after"))	     return(newToken(KeyWord.AFTER));
+		        if(ident.equals("and"))			 return(newToken(KeyWord.AND));
+		        if(ident.equals("and_then"))	 return(newToken(KeyWord.AND_THEN));
+		        if(ident.equals("array"))	     return(newToken(KeyWord.ARRAY));
+		        if(ident.equals("assert"))	     return(javaKeyword(name)); // Java KeyWord
+		        if(ident.equals("at"))		     return(newToken(KeyWord.AT));
 		        break;
 	        case 'b':
-	        	if(ident.equals("before"))     return(newToken(KeyWord.BEFORE));
-	        	if(ident.equals("begin"))      return(newToken(KeyWord.BEGIN));
-	        	if(ident.equals("boolean"))    return(newToken(KeyWord.BOOLEAN));
-	        	if(ident.equals("break"))	    return(javaKeyword(name)); // Java KeyWord
-	        	if(ident.equals("byte"))	    return(javaKeyword(name)); // Java KeyWord
+	        	if(ident.equals("before"))       return(newToken(KeyWord.BEFORE));
+	        	if(ident.equals("begin"))        return(newToken(KeyWord.BEGIN));
+	        	if(ident.equals("boolean"))      return(newToken(KeyWord.BOOLEAN));
+	        	if(ident.equals("break"))	     return(javaKeyword(name)); // Java KeyWord
+	        	if(ident.equals("byte"))	     return(javaKeyword(name)); // Java KeyWord
 	        	break;
 	        case 'c':
-	        	if(ident.equals("case"))		return(javaKeyword(name)); // Java KeyWord
-	        	if(ident.equals("catch"))	    return(javaKeyword(name)); // Java KeyWord
-	        	if(ident.equals("char"))  	    return(javaKeyword(name)); // Java KeyWord
-	        	if(ident.equals("character"))	return(newToken(KeyWord.CHARACTER));
-	        	if(ident.equals("class"))       return(newToken(KeyWord.CLASS));
-	        	if(ident.equals("comment"))     return(scanComment());
-	        	if(ident.equals("const"))	    return(javaKeyword(name)); // Java KeyWord
-	        	if(ident.equals("continue"))	return(javaKeyword(name)); // Java KeyWord
+	        	if(ident.equals("case"))		 return(javaKeyword(name)); // Java KeyWord
+	        	if(ident.equals("catch"))	     return(javaKeyword(name)); // Java KeyWord
+	        	if(ident.equals("char"))  	     return(javaKeyword(name)); // Java KeyWord
+	        	if(ident.equals("character"))	 return(newToken(KeyWord.CHARACTER));
+	        	if(ident.equals("class"))        return(newToken(KeyWord.CLASS));
+	        	if(ident.equals("comment"))      return(scanComment());
+	        	if(ident.equals("const"))	     return(javaKeyword(name)); // Java KeyWord
+	        	if(ident.equals("continue"))	 return(javaKeyword(name)); // Java KeyWord
 	        	break;
 	        case 'd':
-	        	if(ident.equals("default"))		return(javaKeyword(name)); // Java KeyWord
-	        	if(ident.equals("delay"))   	return(newToken(KeyWord.DELAY));
-	        	if(ident.equals("do")) 	    	return(newToken(KeyWord.DO));
-	        	if(ident.equals("double"))	    return(javaKeyword(name)); // Java KeyWord
+	        	if(ident.equals("default"))		 return(javaKeyword(name)); // Java KeyWord
+	        	if(ident.equals("delay"))   	 return(newToken(KeyWord.DELAY));
+	        	if(ident.equals("do")) 	    	 return(newToken(KeyWord.DO));
+	        	if(ident.equals("double"))	     return(javaKeyword(name)); // Java KeyWord
 	        	break;
 	        case 'e':
-	        	if(ident.equals("else"))       return(newToken(KeyWord.ELSE));
-	        	if(ident.equals("end"))   	    return(scanEndComment());
-	        	if(ident.equals("enum"))		return(javaKeyword(name)); // Java KeyWord
-	        	if(ident.equals("eq"))	        return(newToken(KeyWord.EQ));
-	        	if(ident.equals("eqv"))	    return(newToken(KeyWord.EQV));
-	        	if(ident.equals("extends"))	return(javaKeyword(name)); // Java KeyWord
-	        	if(ident.equals("external"))   return(newToken(KeyWord.EXTERNAL));
+	        	if(ident.equals("else"))         return(newToken(KeyWord.ELSE));
+	        	if(ident.equals("end"))   	     return(scanEndComment());
+	        	if(ident.equals("enum"))		 return(javaKeyword(name)); // Java KeyWord
+	        	if(ident.equals("eq"))	         return(newToken(KeyWord.EQ));
+	        	if(ident.equals("eqv"))	         return(newToken(KeyWord.EQV));
+	        	if(ident.equals("extends"))	     return(javaKeyword(name)); // Java KeyWord
+	        	if(ident.equals("external"))     return(newToken(KeyWord.EXTERNAL));
 	        	break;
 	        case 'f':
-	        	if(ident.equals("false"))  	return(newToken(KeyWord.BOOLEANKONST,false));
-	        	if(ident.equals("final"))  	return(javaKeyword(name)); // Java KeyWord
-	        	if(ident.equals("finally"))	return(javaKeyword(name)); // Java KeyWord
-	        	if(ident.equals("float"))	    return(javaKeyword(name)); // Java KeyWord
-	        	if(ident.equals("for"))    	return(newToken(KeyWord.FOR));
+	        	if(ident.equals("false"))  	     return(newToken(KeyWord.BOOLEANKONST,false));
+	        	if(ident.equals("final"))  	     return(javaKeyword(name)); // Java KeyWord
+	        	if(ident.equals("finally"))	     return(javaKeyword(name)); // Java KeyWord
+	        	if(ident.equals("float"))	     return(javaKeyword(name)); // Java KeyWord
+	        	if(ident.equals("for"))    	     return(newToken(KeyWord.FOR));
 	        	break;
 	        case 'g':
-	        	if(ident.equals("ge"))     return(newToken(KeyWord.GE));
-	        	if(ident.equals("go"))     return(newToken(KeyWord.GO));
-	        	if(ident.equals("goto"))   return(newToken(KeyWord.GOTO));
-	        	if(ident.equals("gt"))     return(newToken(KeyWord.GT));
+	        	if(ident.equals("ge"))           return(newToken(KeyWord.GE));
+	        	if(ident.equals("go"))           return(newToken(KeyWord.GO));
+	        	if(ident.equals("goto"))         return(newToken(KeyWord.GOTO));
+	        	if(ident.equals("gt"))           return(newToken(KeyWord.GT));
 	        	break;
 	        case 'h':
-	        	if(ident.equals("hidden")) return(newToken(KeyWord.HIDDEN));
+	        	if(ident.equals("hidden"))       return(newToken(KeyWord.HIDDEN));
 	        	break;
 	        case 'i':
-	        	if(ident.equals("if"))	        return(newToken(KeyWord.IF));
-	        	if(ident.equals("imp"))   	    return(newToken(KeyWord.IMP));
-	        	if(ident.equals("implements")) return(javaKeyword(name)); // Java KeyWord
-	        	if(ident.equals("import"))	    return(javaKeyword(name)); // Java KeyWord
-	        	if(ident.equals("in"))   	    return(newToken(KeyWord.IN));
-	        	if(ident.equals("inner"))	    return(newToken(KeyWord.INNER));
-	        	if(ident.equals("inspect")) 	return(newToken(KeyWord.INSPECT));
-	        	if(ident.equals("instanceOf")) return(javaKeyword(name)); // Java KeyWord
-	        	if(ident.equals("int"))		return(javaKeyword(name)); // Java KeyWord
-	        	if(ident.equals("integer"))	return(newToken(KeyWord.INTEGER));
-	        	if(ident.equals("interface"))  return(javaKeyword(name)); // Java KeyWord
-	        	if(ident.equals("is"))         return(newToken(KeyWord.IS));
+	        	if(ident.equals("if"))	         return(newToken(KeyWord.IF));
+	        	if(ident.equals("imp"))   	     return(newToken(KeyWord.IMP));
+	        	if(ident.equals("implements"))   return(javaKeyword(name)); // Java KeyWord
+	        	if(ident.equals("import"))	     return(javaKeyword(name)); // Java KeyWord
+	        	if(ident.equals("in"))   	     return(newToken(KeyWord.IN));
+	        	if(ident.equals("inner"))	     return(newToken(KeyWord.INNER));
+	        	if(ident.equals("inspect")) 	 return(newToken(KeyWord.INSPECT));
+	        	if(ident.equals("instanceOf"))   return(javaKeyword(name)); // Java KeyWord
+	        	if(ident.equals("int"))		     return(javaKeyword(name)); // Java KeyWord
+	        	if(ident.equals("integer"))	     return(newToken(KeyWord.INTEGER));
+	        	if(ident.equals("interface"))    return(javaKeyword(name)); // Java KeyWord
+	        	if(ident.equals("is"))           return(newToken(KeyWord.IS));
 	        	break;
 	        case 'l':
-	        	if(ident.equals("label")) return(newToken(KeyWord.LABEL));
-	        	if(ident.equals("le"))    return(newToken(KeyWord.LE));
-	        	if(ident.equals("long"))  return(newToken(KeyWord.LONG));
-	        	if(ident.equals("lt"))    return(newToken(KeyWord.LT));
+	        	if(ident.equals("label"))        return(newToken(KeyWord.LABEL));
+	        	if(ident.equals("le"))           return(newToken(KeyWord.LE));
+	        	if(ident.equals("long"))         return(newToken(KeyWord.LONG));
+	        	if(ident.equals("lt"))           return(newToken(KeyWord.LT));
 	        	break;
 	        case 'n':
-	        	if(ident.equals("name"))   return(newToken(KeyWord.NAME));
-	        	if(ident.equals("native")) return(javaKeyword(name)); // Java KeyWord
-	        	if(ident.equals("ne"))     return(newToken(KeyWord.NE));
-	        	if(ident.equals("new"))    return(newToken(KeyWord.NEW));
-	        	if(ident.equals("none"))   return(newToken(KeyWord.NONE));
-	        	if(ident.equals("not"))    return(newToken(KeyWord.NOT));
-	        	if(ident.equals("notext")) return(newToken(KeyWord.NOTEXT));
-	        	if(ident.equals("null"))   return(javaKeyword(name)); // Java NullLiteral
+	        	if(ident.equals("name"))         return(newToken(KeyWord.NAME));
+	        	if(ident.equals("native"))       return(javaKeyword(name)); // Java KeyWord
+	        	if(ident.equals("ne"))           return(newToken(KeyWord.NE));
+	        	if(ident.equals("new"))          return(newToken(KeyWord.NEW));
+	        	if(ident.equals("none"))         return(newToken(KeyWord.NONE));
+	        	if(ident.equals("not"))          return(newToken(KeyWord.NOT));
+	        	if(ident.equals("notext"))       return(newToken(KeyWord.NOTEXT));
+	        	if(ident.equals("null"))         return(javaKeyword(name)); // Java NullLiteral
 	        	break;
 	        case 'o':
-	        	if(ident.equals("or"))         return(newToken(KeyWord.OR));
-	        	if(ident.equals("or_else"))    return(newToken(KeyWord.OR_ELSE));
-	        	if(ident.equals("otherwise"))  return(newToken(KeyWord.OTHERWISE));
+	        	if(ident.equals("or"))           return(newToken(KeyWord.OR));
+	        	if(ident.equals("or_else"))      return(newToken(KeyWord.OR_ELSE));
+	        	if(ident.equals("otherwise"))    return(newToken(KeyWord.OTHERWISE));
 	        	break;
 	        case 'p':
-	        	if(ident.equals("package"))	return(javaKeyword(name)); // Java KeyWord
-	        	if(ident.equals("prior"))      return(newToken(KeyWord.PRIOR));
-	        	if(ident.equals("private"))	return(javaKeyword(name)); // Java KeyWord
-	        	if(ident.equals("procedure"))  return(newToken(KeyWord.PROCEDURE));
-	        	if(ident.equals("protected"))  return(newToken(KeyWord.PROTECTED));
-	        	if(ident.equals("public"))	    return(javaKeyword(name)); // Java KeyWord
+	        	if(ident.equals("package"))      return(javaKeyword(name)); // Java KeyWord
+	        	if(ident.equals("prior"))        return(newToken(KeyWord.PRIOR));
+	        	if(ident.equals("private"))	     return(javaKeyword(name)); // Java KeyWord
+	        	if(ident.equals("procedure"))    return(newToken(KeyWord.PROCEDURE));
+	        	if(ident.equals("protected"))    return(newToken(KeyWord.PROTECTED));
+	        	if(ident.equals("public"))	     return(javaKeyword(name)); // Java KeyWord
 	        	break;
 	        case 'q':
-	        	if(ident.equals("qua"))        return(newToken(KeyWord.QUA));
+	        	if(ident.equals("qua"))          return(newToken(KeyWord.QUA));
 	        	break;
 	        case 'r':
-	        	if(ident.equals("reactivate")) return(newToken(KeyWord.REACTIVATE));
-	        	if(ident.equals("real"))       return(newToken(KeyWord.REAL));
-	        	if(ident.equals("ref"))        return(newToken(KeyWord.REF));
-	        	if(ident.equals("return"))	    return(javaKeyword(name)); // Java KeyWord
+	        	if(ident.equals("reactivate"))   return(newToken(KeyWord.REACTIVATE));
+	        	if(ident.equals("real"))         return(newToken(KeyWord.REAL));
+	        	if(ident.equals("ref"))          return(newToken(KeyWord.REF));
+	        	if(ident.equals("return"))	     return(javaKeyword(name)); // Java KeyWord
 	        	break;
 	        case 's':
-	        	if(ident.equals("short"))  		return(newToken(KeyWord.SHORT));
-	        	if(ident.equals("static"))	        return(javaKeyword(name)); // Java KeyWord
-	        	if(ident.equals("step"))   		return(newToken(KeyWord.STEP));
-	        	if(ident.equals("strictfp"))	    return(javaKeyword(name)); // Java KeyWord
-	        	if(ident.equals("super"))	        return(javaKeyword(name)); // Java KeyWord
-	        	if(ident.equals("switch")) 		return(newToken(KeyWord.SWITCH));
-	        	if(ident.equals("synchronized"))	return(javaKeyword(name)); // Java KeyWord
+	        	if(ident.equals("short"))  		 return(newToken(KeyWord.SHORT));
+	        	if(ident.equals("static"))	     return(javaKeyword(name)); // Java KeyWord
+	        	if(ident.equals("step"))   		 return(newToken(KeyWord.STEP));
+	        	if(ident.equals("strictfp"))	 return(javaKeyword(name)); // Java KeyWord
+	        	if(ident.equals("super"))	     return(javaKeyword(name)); // Java KeyWord
+	        	if(ident.equals("switch")) 		 return(newToken(KeyWord.SWITCH));
+	        	if(ident.equals("synchronized")) return(javaKeyword(name)); // Java KeyWord
 	        	break;
 	        case 't':
-	        	if(ident.equals("text"))  	    return(newToken(KeyWord.TEXT));
-	        	if(ident.equals("then"))  	    return(newToken(KeyWord.THEN));
-	        	if(ident.equals("this"))   	return(newToken(KeyWord.THIS));
-	        	if(ident.equals("throw"))	    return(javaKeyword(name)); // Java KeyWord
-	        	if(ident.equals("throws"))	    return(javaKeyword(name)); // Java KeyWord
-	        	if(ident.equals("to"))         return(newToken(KeyWord.TO));
-	        	if(ident.equals("transient"))  return(javaKeyword(name)); // Java KeyWord
-	        	if(ident.equals("true"))   	return(newToken(KeyWord.BOOLEANKONST,true));
-	        	if(ident.equals("try"))	  	return(javaKeyword(name)); // Java KeyWord
+	        	if(ident.equals("text"))  	     return(newToken(KeyWord.TEXT));
+	        	if(ident.equals("then"))  	     return(newToken(KeyWord.THEN));
+	        	if(ident.equals("this"))   	     return(newToken(KeyWord.THIS));
+	        	if(ident.equals("throw"))	     return(javaKeyword(name)); // Java KeyWord
+	        	if(ident.equals("throws"))	     return(javaKeyword(name)); // Java KeyWord
+	        	if(ident.equals("to"))           return(newToken(KeyWord.TO));
+	        	if(ident.equals("transient"))    return(javaKeyword(name)); // Java KeyWord
+	        	if(ident.equals("true"))   	     return(newToken(KeyWord.BOOLEANKONST,true));
+	        	if(ident.equals("try"))	  	     return(javaKeyword(name)); // Java KeyWord
 	        	break;
 	        case 'u':
-	        	if(ident.equals("until"))     return(newToken(KeyWord.UNTIL));
+	        	if(ident.equals("until"))        return(newToken(KeyWord.UNTIL));
 	        	break;
 	        case 'v':
-	        	if(ident.equals("value"))     return(newToken(KeyWord.VALUE));
-	        	if(ident.equals("virtual"))   return(newToken(KeyWord.VIRTUAL));
-	        	if(ident.equals("void"))	   return(javaKeyword(name)); // Java KeyWord
-	        	if(ident.equals("volatile"))  return(javaKeyword(name)); // Java KeyWord
+	        	if(ident.equals("value"))        return(newToken(KeyWord.VALUE));
+	        	if(ident.equals("virtual"))      return(newToken(KeyWord.VIRTUAL));
+	        	if(ident.equals("void"))	     return(javaKeyword(name)); // Java KeyWord
+	        	if(ident.equals("volatile"))     return(javaKeyword(name)); // Java KeyWord
 	        	break;
 	        case 'w':
-	        	if(ident.equals("when"))  return(newToken(KeyWord.WHEN));
-	        	if(ident.equals("while")) return(newToken(KeyWord.WHILE));
+	        	if(ident.equals("when"))         return(newToken(KeyWord.WHEN));
+	        	if(ident.equals("while"))        return(newToken(KeyWord.WHILE));
 	        	break;
 	    }
 	    return(identifierToken(name));

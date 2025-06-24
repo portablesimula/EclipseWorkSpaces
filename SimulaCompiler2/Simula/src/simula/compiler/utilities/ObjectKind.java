@@ -14,12 +14,12 @@ package simula.compiler.utilities;
 /// @author Øystein Myhre Andersen
 public final class ObjectKind {
 
-	/** Standard Class */		public static final int StandardClass = 1;
-	/** Connection Block */		public static final int ConnectionBlock = 2;
-	/** Compound Statement */	public static final int CompoundStatement = 3;
-	/** Subblock */				public static final int SubBlock = 4;
-	/** Normal Simula Procedure implemented as a Java Class */	public static final int Procedure = 5;
-//	/** Prior Procedure implemented as a Member Method */		public static final int PriorProcedure = 6;
+	/** Undefined */				public static final int UndefinedDeclaration = 1;
+	/** Standard Class */			public static final int StandardClass = 2;
+	/** Connection Block */			public static final int ConnectionBlock = 3;
+	/** Compound Statement */		public static final int CompoundStatement = 4;
+	/** Subblock */					public static final int SubBlock = 5;
+	/** Normal Simula Procedure implemented as a Java Class */	public static final int Procedure = 6;
 	/** Procedure coded as a Java Member Method. */				public static final int MemberMethod = 7;
 	/** Procedure treated as a Java Static Method. */			public static final int ContextFreeMethod = 8;
 	/** Class */					public static final int Class = 9;
@@ -81,7 +81,6 @@ public final class ObjectKind {
 
 	/** Null */						public static final int NULL = 0;
 	/** Object Reference */			public static final int ObjectReference = 60;
-	/** Undefined */				public static final int UndefinedDeclaration = 61;
 
 	/** Max Value */				public static final int MAX_VALUE = 63;
 
@@ -97,12 +96,12 @@ public final class ObjectKind {
 			case NULL:						return "null";
 			case ObjectReference:			return "ObjectReference";
 
+			case UndefinedDeclaration:		return "UndefinedDeclaration";
 			case StandardClass:				return "StandardClass";
 			case ConnectionBlock:			return "ConnectionBlock";
 			case CompoundStatement:			return "CompoundStatement";
 			case SubBlock:					return "SubBlock";
 			case Procedure:					return "Procedure";
-//			case PriorProcedure:			return "PriorProcedure";
 			case MemberMethod:				return "MemberMethod";
 			case ContextFreeMethod:			return "ContextFreeMethod";
 			case Class:						return "Class";
@@ -119,7 +118,6 @@ public final class ObjectKind {
 			case ExternalDeclaration:		return "ExternalDeclaration";
 			case HiddenSpecification:		return "HiddenSpecification";
 			case ProtectedSpecification:	return "ProtectedSpecification";
-			case UndefinedDeclaration:		return "UndefinedDeclaration";
 			
 			case ActivationStatement:		return "ActivationStatement";
 			case BlockStatement:			return "BlockStatement";

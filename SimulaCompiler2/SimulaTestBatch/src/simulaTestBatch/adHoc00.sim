@@ -1,45 +1,6 @@
 begin
-	integer i;
-	text t, u;
-	character c;
-	boolean b;
-	
-	t :- copy("   ABCDE\fghi\JKLMN   ");
-	
-	t :- t.trim;
-	outtext("t.trim  ==> t=" & t); outimage;
-	
-	c := t.loadChar(4);
-	outtext("t.loadChar(4)=" & edit(c)); outimage;
-	 
-	t.storeChar('Z', 4);
-	outtext("t.storeChar('Z', 4)  ==> t=" & t); outimage;
-	
-	b := t.startsWith("ABC");
-	outtext("t.startsWith(""ABC"")  ==> " & edit(b)); outimage;
-	
-	b := t.startsWith("FGH");
-	outtext("t.startsWith(""FGH"")  ==> " & edit(b)); outimage;
-	
-	b := t.endsWith("LMN");
-	outtext("t.endsWith(""LMN"")  ==> " & edit(b)); outimage;
-	
-	b := t.endsWith("ABC");
-	outtext("t.endsWith(""ABC"")  ==> " & edit(b)); outimage;
 
-	i := t.indexOf('Z');
-	outtext("t.indexOf('Z')  ==> " & edit(i)); outimage;
-
-	i := t.indexOf('W');
-	outtext("t.indexOf('W')  ==> " & edit(i)); outimage;
-
-	t :- t.replace('\','%');
-	outtext("t.replace('\','%')  ==> t=" & t); outimage;
-
-	u :- t.toLowerCase;
-	outtext("t.toLowerCase  ==> U=" & u); outimage;
-
-	u :- t.toUpperCase;
-	outtext("t.toUpperCase  ==> U=" & u); outimage;
-	
+	procedure p(x); name z; integer x; begin
+	end;
+		
 end of program;

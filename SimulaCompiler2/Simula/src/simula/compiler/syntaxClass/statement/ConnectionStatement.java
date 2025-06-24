@@ -226,7 +226,6 @@ public final class ConnectionStatement extends Statement {
 		FieldRefEntry FRE=pool.fieldRefEntry(BlockDeclaration.currentClassDesc(),inspectedVariable.identifier, CD_type);
 		codeBuilder.putfield(FRE);
 		
-
 		if (!hasWhenPart) {
 			codeBuilder.aload(0);
 			codeBuilder.getfield(FRE);

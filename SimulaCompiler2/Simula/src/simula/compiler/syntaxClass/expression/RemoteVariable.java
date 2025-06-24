@@ -105,9 +105,6 @@ public final class RemoteVariable extends Expression {
 			Util.error("doRemoteChecking: Object Expression (" + obj + ") has no type");
 			return Type.Undef;
 		}
-//		if(objType.keyWord == Type.T_UNDEF) {
-//			return Type.Undef;
-//		}
 		if (objType.keyWord == Type.T_TEXT)
 			return (doRemoteTextChecking(obj, attr));
 
@@ -131,7 +128,6 @@ public final class RemoteVariable extends Expression {
 					Util.error("RemoteVariable.doRemoteChecking: " + ident + " is not an attribute of "	+ objType.getRefIdent());
 				UndefinedDeclaration undef = new UndefinedDeclaration(ident);
 				remoteAttribute = new Meaning(undef, Global.getCurrentScope()); // Error Recovery
-//				return (Type.Integer); // Error Recovery
 			}
 			var.setRemotelyAccessed(remoteAttribute);
 

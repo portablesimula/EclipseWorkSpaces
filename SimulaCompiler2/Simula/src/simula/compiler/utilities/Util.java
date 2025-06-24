@@ -120,7 +120,6 @@ public final class Util {
 				line = sourceName + ':' + line;
 			}
 		}
-		
 		return(line);
 	}
 	
