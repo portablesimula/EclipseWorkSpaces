@@ -5,7 +5,6 @@
 /// page: https://creativecommons.org/licenses/by/4.0/
 package simula.runtime;
 
-import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -1498,7 +1497,7 @@ public class RTS_ENVIRONMENT extends RTS_RTObject {
 	/// @param status exit status
 	public static void exit(final int status) {
 //		if(console != null) {
-//			console.write("EXIT: ");
+//			console.write("EXIT: ");  // TODO:
 //			console.read();
 //		}
 		System.exit(status);
@@ -1643,14 +1642,12 @@ public class RTS_ENVIRONMENT extends RTS_RTObject {
 	/// The registered EXCEPTION_HANDLER or null.
 	public static RTS_PRCQNT EXCEPTION_HANDLER = null;
 
-	/// S-PORT Extension Procedure hash.
-	/// 
+	/// S-PORT Extension Procedure DEFEXCEPTION.
+	///
 	/// Register an EXCEPTION_HANDLER to be used by the runtime system when a runtime error occur.
 	/// @param EXCEPTION_HANDLER the argument
 	public static void DEFEXCEPTION(final RTS_PRCQNT EXCEPTION_HANDLER) {
-//		System.out.println("RTS_ENVIRONMENT.DEFEXCEPTION: EXCEPTION_HANDLER ="+EXCEPTION_HANDLER);
 		RTS_ENVIRONMENT.EXCEPTION_HANDLER = EXCEPTION_HANDLER;
-//		System.out.println("RTS_ENVIRONMENT.DEFEXCEPTION: EXCEPTION_HANDLER ="+RTS_ENVIRONMENT.EXCEPTION_HANDLER);
 	}
 
 

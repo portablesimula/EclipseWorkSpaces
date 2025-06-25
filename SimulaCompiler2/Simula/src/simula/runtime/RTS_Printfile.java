@@ -168,7 +168,7 @@ public class RTS_Printfile extends RTS_Outfile {
 		setpos(1);
 		if (FILE_NAME.edText().equalsIgnoreCase("#sysout")) {
 			// NOTHING - Sysout is opened later
-//		} else if (fileName.toUpperCase().startsWith("CONSOLE: ")) {
+//		} else if (fileName.toUpperCase().startsWith("CONSOLE: ")) {  // TODO:
 //			RTS_ConsolePanel console = new RTS_ConsolePanel();
 //			String title = fileName.substring(9);
 //			console.popup(title);

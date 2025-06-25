@@ -152,7 +152,6 @@ public class RTS_Coroutine implements Runnable {
 		if (targetThread == null) { // START VIRTUAL THREAD
 			Runnable runner = new Runnable() {
 				public void run() {
-//					target.run();
 					if (RTS_Option.GOTO_TRACING) {
 						try {
 							target.run();

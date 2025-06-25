@@ -13,8 +13,8 @@ package simula.runtime;
 /// A fictitious base is also Calculated.
 /// This base is the relative address of the array element (0,0, ... 0).
 /// 
-/// See <a href="https://portablesimula.github.io/github.io/doc/SimulaRTS.pdf">Mapping Simula to Java (runtime design)</a> 
-/// Sect. 3.4 Array Quantities
+/// See <a href="https://portablesimula.github.io/github.io/doc/SimulaDesign.pdf">The Design of a new Simula System</a> 
+/// Sect. 2.3.4 Array Quantities
 /// 
 /// Link to GitHub: <a href=
 /// "https://github.com/portablesimula/EclipseWorkSpaces/blob/main/SimulaCompiler2/Simula/src/simula/runtime/RTS_ARRAY.java"><b>Source File</b></a>.

@@ -96,7 +96,7 @@ import javax.swing.JFrame;
 public class RTS_Drawing extends RTS_Simset {
 	
 	/// DEBUG on/off
-	private static boolean DEBUG = false;
+	private static final boolean DEBUG = false;
 
 	/// The color white.
 	public static final int _white_1 = 0xffffff; // Color white: R=255, G=255, B=255.
@@ -443,14 +443,4 @@ public class RTS_Drawing extends RTS_Simset {
 		});
 	}
 		
-	
-//	private void listRenderingSet() {
-//		_Link lnk = RENDERING_SET.first();
-//		_RT.println("RENDERING SET: first=" + lnk);
-//		while (lnk != null) {
-//			_RT.println(" - " + lnk.getClass().getSimpleName());
-//			lnk = lnk.suc();
-//		}
-//	}
-
 }

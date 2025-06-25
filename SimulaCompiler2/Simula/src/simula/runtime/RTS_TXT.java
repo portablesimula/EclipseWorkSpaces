@@ -779,7 +779,6 @@ public final class RTS_TXT {
 			while (p >= 0)
 				item[p--] = ' ';
 		} catch (ArrayIndexOutOfBoundsException e) {
-//			RTS_UTIL.numberOfEditOverflows++;
 			for (int i = 0; i < item.length; i++)
 				item[i] = '*';
 		}
@@ -887,7 +886,6 @@ public final class RTS_TXT {
 	/// @return the index of the character 'c', or -1 if the character does not occur.
 	public static int lastIndexOf(final RTS_TXT T, final char c) {
 		String t = T.edText();
-//		System.out.println("RTS_TXT.lastIndexOf: " + c + " IN " + t + " ==> " + t.lastIndexOf(c));
 		return t.lastIndexOf(c);
 	}
 

@@ -97,15 +97,6 @@ public class RTS_TextElement extends RTS_Link implements RTS_Drawing.Animable {
 
 	@Override
 	public RTS_TextElement _STM() {
-		// TRACE_BEGIN_STM("_TextElement");
-//		_TextElement.this.str=str; _TextElement.this.x=x; _TextElement.this.y=y;
-//		_TextElement.this.color=((_Drawing)(staticLink)).currentDrawColor;
-//		_TextElement.this.stroke=((_Drawing)(staticLink)).currentStroke;
-//		_TextElement.this.font=((_Drawing)(staticLink)).currentFont;
-//	    into(((_Drawing)(staticLink)).RENDERING_SET);
-//	    animation.repaintMe();
-		// INNER
-		// TRACE_END_STM("_TextElement");
 		EBLK();
 		return (this);
 	}

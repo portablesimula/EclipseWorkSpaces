@@ -234,7 +234,7 @@ public class RTS_File extends RTS_CLASS {
 		String id = mode.edText().trim();
 		String ID = id.toUpperCase();
 		boolean unrecognized = false;
-//		else if(ID.equals("SHARED")) notImplemented=true; 
+//		else if(ID.equals("SHARED")) notImplemented=true;   // TODO:
 //		else if(ID.equals("NOSHARED")) notImplemented=true; 
 		if (ID.equals("APPEND"))
 			_APPEND = true;

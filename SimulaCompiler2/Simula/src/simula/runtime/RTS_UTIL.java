@@ -5,7 +5,6 @@
 /// page: https://creativecommons.org/licenses/by/4.0/
 package simula.runtime;
 
-import java.io.File;
 import java.lang.reflect.Field;
 import java.nio.charset.Charset;
 import javax.swing.JOptionPane;
@@ -342,7 +341,6 @@ public final class RTS_UTIL {
 					if (RTS_Option.GOTO_TRACING) {
 						System.out.println("RTS_UTIL.treatException: Return after 'Illege GOTO' message");
 					}
-//					System.exit(-1);
 					RTS_ENVIRONMENT.exit(-1);
 				}
 			}
@@ -364,7 +362,6 @@ public final class RTS_UTIL {
 				if(RTS_UTIL.console != null) {
 					while(true) Thread.yield();
 				}
-//				System.exit(-1);
 				RTS_ENVIRONMENT.exit(-1);
 			}
 			
@@ -374,12 +371,10 @@ public final class RTS_UTIL {
 			RTS_UTIL.printSimulaStackTrace(e, 0);
 			if (RTS_Option.VERBOSE)
 				e.printStackTrace();
-//			System.exit(-1);				
 			RTS_ENVIRONMENT.exit(-1);
 		} else {
 			RTS_UTIL.printError(threadID + "UNCAUGHT EXCEPTION: " + e.getMessage());
 			e.printStackTrace();
-//			System.exit(-1);				
 			RTS_ENVIRONMENT.exit(-1);
 		}
 		if (RTS_Option.GOTO_TRACING)
@@ -516,7 +511,6 @@ public final class RTS_UTIL {
 		RTS_Option.argv = args;
 		// Parse command line arguments.
 		RTS_Option.RUNTIME_USER_DIR = System.getProperty("user.dir", null);
-//		File file = null;
 		for (int i = 0; i < args.length; i++) {
 			String arg = args[i];
 			if(arg == null) ; // Nothing
@@ -531,19 +525,6 @@ public final class RTS_UTIL {
 				else if (arg.equalsIgnoreCase("-qpsTracing"))		RTS_Option.QPS_TRACING = true;
 				else if (arg.equalsIgnoreCase("-smlTracing"))		RTS_Option.SML_TRACING = true;
 				else if (arg.equalsIgnoreCase("-userDir"))			RTS_Option.RUNTIME_USER_DIR = args[++i];
-//				else{
-//					System.out.println("RTS_UTIL.setRuntimeOptions: Unknown option " + arg);
-//					help();
-//				}
-//			} else {
-//				if (file == null) {
-//					file = new File(arg);
-//				} else {
-//					System.out.println("ERROR: multiple input files specified");
-//					System.out.println("File 1: " + file);
-//					System.out.println("File 2: " + arg);
-//					help();
-//				}
 			}
 		}
 		if (RTS_Option.VERBOSE) {
@@ -769,7 +750,7 @@ public final class RTS_UTIL {
 				t.printStackTrace();
 			}
 		} catch (Exception e) {
-//			if (Option.VERBOSE)
+//			if (Option.VERBOSE)   // TODO:
 //				e.printStackTrace();
 		}
 		return (false);

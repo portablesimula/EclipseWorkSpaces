@@ -823,15 +823,6 @@ public abstract class RTS_RTObject {
 		return (s.toString());
 	}
 
-//	public void printStaticContextChain() {
-//		_RTObject x = this;
-//		_RT.println("STATIC CONTEXT CHAIN:");
-//		while (x != null) {
-//			_RT.println(" - " + x.edObjectAttributes());
-//			x = x._SL;
-//		}
-//	}
-
 	/// Returns a string representation of the object.
 	@Override
 	public String toString() {
