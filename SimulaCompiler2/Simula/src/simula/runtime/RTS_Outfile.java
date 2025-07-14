@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 
+import simula.runtime.RTS_File._CreateAction;
+
 /// System class Outfile.
 /// <pre>
 ///  file class outfile;
@@ -53,6 +55,7 @@ public class RTS_Outfile extends RTS_Imagefile {
 	/// @param FN FILENAME
 	public RTS_Outfile(final RTS_RTObject SL, final RTS_TXT FN) {
 		super(SL, FN);
+		_CREATE = _CreateAction.anyCreate; // Default
 	}
 
 	// Class Statements

@@ -85,10 +85,14 @@ public abstract class SysInfo {
 		SVM_CALL_SYS.ENTER("GVIINF: ", 0, 2); // exportSize, importSize
 		int inform = RTStack.popInt();
 		int index = RTStack.popInt();
-		System.out.println("SVM_SYSCALL.gviinf: index=" + index + ", inform=" + inform);
+//		System.out.println("SVM_SYSCALL.gviinf: index=" + index + ", inform=" + inform);
 		switch(index) {
 			case 6: // Garbage collection information. Info=0 signals the start of a garbage collection,
 				    // Info=1 signals termination of g.c. (see 5.2).
+				if(Global.execVerbose) {
+					String more = (inform == 0)? " Begin" : " Endof";
+					System.out.println("SVM_SYSCALL.gviinf: index=" + index + ", inform=" + inform + more + " Garbage Collection");
+				}
 				break;
 			default: Util.IERR(""+index);
 		}

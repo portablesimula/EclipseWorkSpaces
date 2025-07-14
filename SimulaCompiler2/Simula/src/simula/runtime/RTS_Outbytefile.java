@@ -11,6 +11,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import simula.runtime.RTS_File._CreateAction;
+
 /// System class Outbytefile.
 /// 
 /// <pre>
@@ -44,6 +46,7 @@ public class RTS_Outbytefile extends RTS_Bytefile {
 	/// @param FN file name
 	public RTS_Outbytefile(final RTS_RTObject SL, final RTS_TXT FN) {
 		super(SL, FN);
+		_CREATE = _CreateAction.anyCreate; // Default
 	}
 
 	// Class Statements
@@ -66,7 +69,7 @@ public class RTS_Outbytefile extends RTS_Bytefile {
 	/// @return true:ok, false:error
 	public boolean open() {
 		if (RTS_Option.VERBOSE)
-			TRACE_OPEN("open Outbytefile");
+			TRACE_OPEN("open Outbytefile:");
 		if (_OPEN)
 			return (false);
 		File file = doCreateAction();

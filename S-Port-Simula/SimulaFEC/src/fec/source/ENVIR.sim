@@ -217,7 +217,7 @@ class ENVIRONMENT_INTERFACE; begin
 			begin outtext("NOT IMPL: getTextInfo(index)"); outimage; exit(-1); end;
 		end;
 		ENV_getTextInfo :- res;
-		if FEC_Verbose > 0 then begin
+		if FEC_TraceLevel > 0 then begin
 			outtext("ENVIR.getTextInfo: index="); outint(index, 0); outtext(", res=" & res); outimage;
 		end;
 	end;
@@ -408,7 +408,7 @@ class ENVIRONMENT_INTERFACE; begin
 			when 46 do res := FEC_TraceLevel;
 			when none do begin outtext("NOT IMPL: getIntInfo(index)"); outimage; exit(-1); end;
 		end;
-		if FEC_Verbose > 0 then begin
+		if FEC_TraceLevel > 0 then begin
 			outtext("ENVIR.getIntInfo: index="); outint(index, 0); outtext(", res="); outint(res, 0); outimage;
 		end;
 		ENV_getIntInfo := res;
@@ -453,7 +453,7 @@ class ENVIRONMENT_INTERFACE; begin
 		switch (1:5) index begin
 			when 1 do begin
 				exitCode := if info < 3 then 0 else -info;
-				if FEC_Verbose > 0 then begin
+				if FEC_TraceLevel > 0 then begin
 					sysout.outtext("End of pass "); sysout.outint(PASS_NO, 0); sysout.outtext(": ");
 					PASS_NO := PASS_NO + 1;
 					switch (0:6) info begin
@@ -467,13 +467,13 @@ class ENVIRONMENT_INTERFACE; begin
 					end;
 				end;
 			end;
-			when 2 do if FEC_Verbose > 0 then begin sysout.outtext("Max tag="); outint(info, 0); end;
-			when 3 do if FEC_Verbose > 0 then begin sysout.outtext("nSourceLines="); outint(info, 0); end;
-			when 4 do if FEC_Verbose > 0 then begin sysout.outtext("nErrors="); outint(info, 0); end;
-			when 5 do if FEC_Verbose > 0 then begin	sysout.outtext("nWarnings="); outint(info, 0); end;
+			when 2 do if FEC_TraceLevel > 0 then begin sysout.outtext("Max tag="); outint(info, 0); end;
+			when 3 do if FEC_TraceLevel > 0 then begin sysout.outtext("nSourceLines="); outint(info, 0); end;
+			when 4 do if FEC_TraceLevel > 0 then begin sysout.outtext("nErrors="); outint(info, 0); end;
+			when 5 do if FEC_TraceLevel > 0 then begin	sysout.outtext("nWarnings="); outint(info, 0); end;
 			when none do begin outtext("NOT IMPL: giveIntInfo(index)"); outimage; exit(-1); end;
 		end;
-		if FEC_Verbose > 0 then sysout.outimage
+		if FEC_TraceLevel > 0 then sysout.outimage
 	end;
 	
 
@@ -509,7 +509,7 @@ class ENVIRONMENT_INTERFACE; begin
 %    @param info text info
 
 	procedure giveTextInfo(index, info); integer index; text info; begin
-		if FEC_Verbose > 0 then begin
+		if FEC_TraceLevel > 0 then begin
 			outtext("ENVIR.giveTextInfo: index="); outint(index, 0); outtext(", info=" & info); outimage;
 		end;
 		switch (1:4) index begin
@@ -531,7 +531,7 @@ class ENVIRONMENT_INTERFACE; begin
 %    @param level not used
 
 	procedure rts_utility(index, level); integer index, level; begin
-%		if FEC_Verbose > 0 then begin
+%		if FEC_TraceLevel > 0 then begin
 			outtext("rts_utility: index="); outint(index, 0); outtext(", level="); outint(level, 0); outtext("  Error or Warning given"); outimage;
 %		end;
 		
@@ -549,7 +549,7 @@ class ENVIRONMENT_INTERFACE; begin
 %			NOT_IMPLEMENTED("getIntInfo: " + index);
 %		end;
 		
-		outtext("NOT IMPL: rts_utility(index, level)"); outimage; exit(-1);
+		outtext("NOT IMPL: rts_utility("); outint(index, 0); outchar(','); outint(level, 0); outchar(')'); outimage; exit(-1);
 	end;
 
 %    =================================================================
@@ -596,7 +596,7 @@ class ENVIRONMENT_INTERFACE; begin
 			end;
 		end;	
 
-		if FEC_Verbose > 0 then begin
+		if FEC_TraceLevel > 0 then begin
 			outtext("Begin Execution of Simula Program"); outimage;
 			print_Options;
 		end;

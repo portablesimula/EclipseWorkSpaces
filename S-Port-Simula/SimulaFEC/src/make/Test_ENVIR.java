@@ -33,7 +33,7 @@ public class Test_ENVIR {
 		try {
 			exec(cmds);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			System.out.println("Test_ENVIR.compile - Exit: ");
 			e.printStackTrace();
 			System.exit(0);
 		}

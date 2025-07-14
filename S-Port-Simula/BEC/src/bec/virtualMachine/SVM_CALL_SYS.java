@@ -1,6 +1,8 @@
 package bec.virtualMachine;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
@@ -8,6 +10,7 @@ import bec.descriptor.Kind;
 import bec.segment.DataSegment;
 import bec.util.EndProgram;
 import bec.util.Global;
+import bec.util.Type;
 import bec.util.Util;
 import bec.value.BooleanValue;
 import bec.value.IntegerValue;
@@ -38,6 +41,7 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 			case P_INITIA:   initia(); break;
 			case P_DWAREA:   dwarea(); break;
 			case P_ZEROAREA: zeroarea(); break;
+			case P_DATTIM:   dattim(); break;
 			case P_CPUTIM:   cputime(); break;
 			case P_TERMIN:   terminate(); break;
 			case P_STREQL:   stringEqual(); break;
@@ -56,6 +60,7 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 			case P_CLFILE:   SysFile.clfile(); break;
 			case P_INIMAG:   SysFile.INIMAG(); break;
 			case P_OUTIMA:   SysFile.OUTIMA(); break;
+			case P_BREAKO:   SysFile.BREAKO(); break;
 			case P_INBYTE:   SysFile.INBYTE(); break;
 			case P_OUTBYT:   SysFile.OUTBYT(); break;
 			case P_LOCATE:   SysFile.LOCATE(); break;
@@ -221,7 +226,7 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 	private void printo() {
 		ENTER("PRINTO: ", 0, 5); // exportSize, importSize
 
-		/*int spc = */RTStack.popInt();
+		int spc = RTStack.popInt();
 		int nchr = RTStack.popInt();
 		int ofst = RTStack.popInt();
 		ObjectAddress chradr = (ObjectAddress) RTStack.pop();
@@ -234,7 +239,20 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 			char c = (ival == null)? '.' : ((char) ival.value);
 			sb.append(c);
 		}
-		System.out.println(sb);
+		String res = sb.toString().stripTrailing();
+//		System.out.println("SVM_CALL.printo: \""+res+'"');
+		if(Global.console != null)
+			Global.console.write(res+'\n');
+		System.out.println(res);
+		
+		if(spc != 1) {
+			if(spc < 1) {
+				RTUtil.set_STATUS(19);
+			} else {
+				for(int i=1;i<spc;i++) System.out.println();
+			}
+		}
+		
 		EXIT("PRINTO: ");
 	}
 
@@ -312,6 +330,35 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 		RTStack.push(null, "CPUTIM: ");
 		EXIT("CPUTIM: ");
 	}
+	
+	/// Visible sysroutine("DATTIM") DATTIM;
+	/// import infix(string) item; export integer filled  end;
+	///
+	/// The result of a call on the routine will be filled into the string.
+	/// The string should have the following syntax:
+	/// "yyyy-mm-dd hh:nn:ss.ppp""
+	private void dattim() {
+		ENTER("DATTIM: ", 1, 3); // exportSize, importSize
+		int nchr = RTStack.popInt();
+		ObjectAddress oaddr = RTStack.popGADDRasOADDR();
+		
+//		String s = "2025-06-27 08:22:13.123";
+		DateTimeFormatter form = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+		String s = LocalDateTime.now().format(form);
+		int length = s.length();
+		if(nchr < length) {
+			RTUtil.set_STATUS(24);
+			length = 0;
+		} else {
+			for(int i=0;i<length;i++) {
+				Value val = IntegerValue.of(Type.T_CHAR, s.charAt(i));
+				oaddr.store(i, val, "DATTIM: ");
+			}
+		}
+		RTStack.push(IntegerValue.of(Type.T_INT, length), "DATTIM: ");
+		EXIT("DATTIM: ");
+	}
+
 
 
 	public static int getSysKind(String s) {

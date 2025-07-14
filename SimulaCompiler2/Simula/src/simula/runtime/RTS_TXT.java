@@ -263,14 +263,14 @@ public final class RTS_TXT {
 	public static RTS_TXT sub(RTS_TXT T, final int i, final int n) {
 //		if (i < 0 || n < 0 || i + n > LENGTH + 1)  // NOTE: FEIL I SIMULA STANDARD
 		if (i <= 0)
-			throw new RTS_SimulaRuntimeError(" ! Sub(i=" + i + ",n=" + n + ") is out of frame, i <= 0");
+			throw new RTS_SimulaRuntimeError(" ! Sub(i=" + i + ",n=" + n + ") is out of frame, i <= 0, T=" + T.toString());
 		if (n < 0)
-			throw new RTS_SimulaRuntimeError(" ! Sub(i=" + i + ",n=" + n + ") is out of frame, n < 0");
+			throw new RTS_SimulaRuntimeError(" ! Sub(i=" + i + ",n=" + n + ") is out of frame, n < 0, T=" + T.toString());
 		if (T == null)
 			T = RTS_UTIL.NOTEXT;
 		if (i + n > T.LENGTH + 1)
 			throw new RTS_SimulaRuntimeError(
-					" ! Sub(i=" + i + ",n=" + n + ") is out of frame, i + n > LENGTH + 1, LENGTH = " + T.LENGTH);
+					" ! Sub(i=" + i + ",n=" + n + ") is out of frame, i + n > LENGTH + 1, LENGTH = " + T.LENGTH + ", T=" + T.toString());
 		else if (n > 0) {
 			RTS_TXT U = new RTS_TXT();
 			U.OBJ = T.OBJ;

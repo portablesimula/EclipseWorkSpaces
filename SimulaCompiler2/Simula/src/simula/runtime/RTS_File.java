@@ -314,37 +314,41 @@ public class RTS_File extends RTS_CLASS {
 			if (!file.isAbsolute() && RTS_Option.RUNTIME_USER_DIR.length() > 0) {
 				file = new File(RTS_Option.RUNTIME_USER_DIR + '/' + FILE_NAME.edText());
 			}
+			if(RTS_Option.VERBOSE) System.out.println("FILE.doCreateAction: " + _CREATE + " on "+file+", file.exists="+file.exists());
 			switch (_CREATE) {
-			case NA -> {
-			}
-			case noCreate -> {
-				// If the value is "nocreate", the associated file must exist at "open".
-				if (!file.exists())
-					throw new RTS_SimulaRuntimeError("File access mode=noCreate but File \"" + file + "\" does not exist");
-			}
-			case create -> {
-				// If the value is "create", the external file associated with FILENAME
-				// must not exist at "open" (if it does, "open" returns false);
-				// a new file is created by the environment.
-				if (!file.exists()) {
-					boolean success = file.createNewFile();
-					if (!success)
-						throw new RTS_SimulaRuntimeError(
-								"File access mode=Create but couldn't create a new empty file: " + file);
+				case NA -> {
 				}
-			}
-			case anyCreate -> {
-				// The value "anycreate" implies that if the file does exist
-				// at "open" the file is opened, otherwise a new file is created.
-				if (!file.exists()) {
-					boolean success = file.createNewFile();
-					// System.out.println("FILE.doCreateAction: Create on "+file+",
-					// success="+success);
-					if (!success)
-						throw new RTS_SimulaRuntimeError(
-								"File access mode=anyCreate but couldn't create a new empty file: " + file);
+				case noCreate -> {
+					// If the value is "nocreate", the associated file must exist at "open".
+					if(RTS_Option.VERBOSE) System.out.println("FILE.doCreateAction: noCreate on "+file+", success="+file.exists());
+					if (!file.exists())
+						throw new RTS_SimulaRuntimeError("File access mode=noCreate but File \"" + file + "\" does not exist");
 				}
-			}
+				case create -> {
+					// If the value is "create", the external file associated with FILENAME
+					// must not exist at "open" (if it does, "open" returns false);
+					// a new file is created by the environment.
+					if (!file.exists()) {
+						file.getParentFile().mkdirs();
+						boolean success = file.createNewFile();
+						if(RTS_Option.VERBOSE) System.out.println("FILE.doCreateAction: Create on "+file+", success="+success);
+						if (!success)
+							throw new RTS_SimulaRuntimeError(
+									"File access mode=Create but couldn't create a new empty file: " + file);
+					}
+				}
+				case anyCreate -> {
+					// The value "anycreate" implies that if the file does exist
+					// at "open" the file is opened, otherwise a new file is created.
+					if (!file.exists()) {
+						file.getParentFile().mkdirs();
+						boolean success = file.createNewFile();
+						if(RTS_Option.VERBOSE) System.out.println("FILE.doCreateAction: anyCreate on "+file+", success="+success);
+						if (!success)
+							throw new RTS_SimulaRuntimeError(
+									"File access mode=anyCreate but couldn't create a new empty file: " + file);
+					}
+				}
 			}
 		} catch (IOException e) {
     		if(RTS_Option.VERBOSE) e.printStackTrace();

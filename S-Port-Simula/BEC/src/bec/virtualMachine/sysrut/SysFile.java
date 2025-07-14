@@ -2,6 +2,7 @@ package bec.virtualMachine.sysrut;
 
 import java.util.Vector;
 
+import bec.util.Global;
 import bec.util.Type;
 import bec.util.Util;
 import bec.value.IntegerValue;
@@ -130,17 +131,17 @@ public abstract class SysFile {
 			
 			RTFile fileSpec = null;
 			switch(type) {
-			case RTFile.FIL_INFILE ->		  fileSpec = new RTInfile(spec, type, action, imglng);
-			case RTFile.FIL_OUTFILE ->		  fileSpec = new RTOutfile(spec, type, action, imglng);
-			case RTFile.FIL_PRINTFILE ->	  fileSpec = new RTPrintfile(spec, type, action, imglng);
-			case RTFile.FIL_DIRECTFILE ->	  fileSpec = new RTDirectfile(spec, type, action, imglng);
-			case RTFile.FIL_INBYTEFILE ->	  fileSpec = new RTInbytefile(spec, type, action, imglng);
-			case RTFile.FIL_OUTBYTEFILE ->    fileSpec = new RTOutbytefile(spec, type, action, imglng);
-			case RTFile.FIL_DIRECTBYTEFILE -> fileSpec = new RTDirectBytefile(spec, type, action, imglng);
-			default -> Util.IERR(""+RTFile.edFileType(type));
+				case RTFile.FIL_INFILE ->		  fileSpec = new RTInfile(spec, type, action, imglng);
+				case RTFile.FIL_OUTFILE ->		  fileSpec = new RTOutfile(spec, type, action, imglng);
+				case RTFile.FIL_PRINTFILE ->	  fileSpec = new RTPrintfile(spec, type, action, imglng);
+				case RTFile.FIL_DIRECTFILE ->	  fileSpec = new RTDirectfile(spec, type, action, imglng);
+				case RTFile.FIL_INBYTEFILE ->	  fileSpec = new RTInbytefile(spec, type, action, imglng);
+				case RTFile.FIL_OUTBYTEFILE ->    fileSpec = new RTOutbytefile(spec, type, action, imglng);
+				case RTFile.FIL_DIRECTBYTEFILE -> fileSpec = new RTDirectBytefile(spec, type, action, imglng);
+				default -> Util.IERR(""+RTFile.edFileType(type));
 			}
 			key = addRTFile(fileSpec);
-//			System.out.println("SVM_SYSCALL.opfile: key=" + key + ", spec="+spec);
+			if(Global.execVerbose) System.out.println("SVM_SYSCALL.opfile: key=" + key + ", spec="+spec);
 //			Util.IERR("NOT IMPL");
 		}
 		RTStack.push(IntegerValue.of(Type.T_INT, key), "OPFILE");
@@ -208,7 +209,9 @@ public abstract class SysFile {
 //		System.out.println("SVM_SYSCALL.INIMAG: chrAddr="+chrAddr);
 		int filled = 0;
 		if(key == RTFile.KEY_SYSIN) {
-			Util.IERR("");
+			System.out.println("SVM_SYSCALL.INIMAG: SYSIN:  nchr="+nchr);
+			filled = RTInfile.sysinInimage(chrAddr, nchr);
+//			Util.IERR("");
 		} else if(key > 3) {
 			RTImageFile spec = (RTImageFile) lookup(key);
 //			System.out.println("SVM_SYSCALL.INIMAG: spec="+spec);
@@ -225,7 +228,7 @@ public abstract class SysFile {
 	/// import range(1:MAX_KEY) key; infix(string) img  end;
 	///
 	///		Key: The key associated with the data set.
-	/// 	Image: Output buffer.
+	/// 	img: Output buffer.
 	///
 	/// If the file is of type 2 or 4, image is copied into the record at the current position of the data set, and
 	/// the data set is positioned at the sequentially next record. On printfiles the image is printed from the
@@ -245,13 +248,53 @@ public abstract class SysFile {
 			Util.IERR("");
 		} else if(key > 3) {
 			RTImageFile spec = (RTImageFile) lookup(key);
-//			System.out.println("SVM_SYSCALL.INIMAG: spec="+spec);
+//			System.out.println("SVM_SYSCALL.OUTIMA: spec="+spec);
 			spec.outimage(image);
 //			Util.IERR("NOT IMPL");
 		} else {
 			Util.IERR("");
 		}
 		SVM_CALL_SYS.EXIT("OUTIMA: ");
+	}
+	
+	/// Visible sysroutine("BREAKO") BREAKO;
+	/// import range(1:MAX_KEY) key; infix(string) img  end;
+	///
+	///		Key: The key associated with the data set.
+	/// 	img: A string to be output
+	///
+	/// The routine Breako will output the string img to the current record of the data set, beginning at the
+	/// current position. The record should not be "closed" i.e. the next Breako (or Outima) will output to
+	/// the same record, beginning at the new position. If this is not possible, Breako shall perform as Outima.
+	///
+	/// On display terminals, Breako will output the string from the current cursor position, and leave the
+	/// cursor positioned after the last charcter of img. Note that trailing blanks (of img) shall be output.
+	///
+	/// On other external data sets, it may be necessary for the environment to buffer the output internally.
+	///
+	/// The routine is legal for outfiles and printfiles only.
+	public static void BREAKO() {
+		SVM_CALL_SYS.ENTER("BREAKO: ", 0, 4); // exportSize, importSize
+		String image = RTStack.popString();
+		int key = RTStack.popInt();
+//		System.out.println("SVM_SYSCALL.BREAKO: key="+key);
+//		System.out.println("SVM_SYSCALL.BREAKO: nchr="+nchr);
+//		System.out.println("SVM_SYSCALL.BREAKO: chrAddr="+chrAddr);
+		if(key == RTFile.KEY_SYSOUT || key == RTFile.KEY_SYSTRACE) {
+			System.out.println("SVM_SYSCALL.BREAKO: SYSOUT:  key="+key);
+			if(Global.console != null)
+				 Global.console.write(image);
+			else System.out.print(image);
+//			Util.IERR("");
+		} else if(key > 3) {
+			RTImageFile spec = (RTImageFile) lookup(key);
+//			System.out.println("SVM_SYSCALL.BREAKO: spec="+spec);
+			spec.breakOutimage(image);
+//			Util.IERR("NOT IMPL");
+		} else {
+			Util.IERR("");
+		}
+		SVM_CALL_SYS.EXIT("BREAKO: ");
 	}
 
 	/// Visible sysroutine("INBYTE") fINBYT;

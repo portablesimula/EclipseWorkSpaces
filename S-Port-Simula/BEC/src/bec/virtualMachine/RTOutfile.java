@@ -57,4 +57,16 @@ public class RTOutfile extends RTImageFile {
 //		Util.IERR(""+image);
 	}
 
+	@Override
+	public void breakOutimage(String image) {
+		try {
+			writer.write(image);
+			writer.write("\n");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+//		Util.IERR(""+image);
+	}
+
 }

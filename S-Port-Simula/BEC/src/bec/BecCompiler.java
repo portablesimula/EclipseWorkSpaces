@@ -4,7 +4,7 @@ import java.util.HashMap;
 import bec.descriptor.Descriptor;
 import bec.segment.Segment;
 import bec.util.Array;
-import bec.util.EndProgram;
+import bec.util.AwtConsole;
 import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Type;
@@ -12,15 +12,10 @@ import bec.util.Util;
 
 public class BecCompiler {
 	String programHead;
-//	PREV_S_Module module;
+	static String scodeSource;
 	
 	public static void main(String[] argv) {
-		String scodeSource = null;
-//		Scode.inputTrace = 4;
-//		new Pick_FEC_Source();
-//		new Pick_RTS_Source();		
-
-		
+		Global.console = new AwtConsole();
 
 		// Parse command line arguments.
 		for(int i=0;i<argv.length;i++) {
@@ -30,8 +25,8 @@ public class BecCompiler {
 				else if (arg.equalsIgnoreCase("-inputTrace")) Global.SCODE_INPUT_TRACE = true;
 				else if (arg.equalsIgnoreCase("-traceSVM_CODE")) Global.PRINT_GENERATED_SVM_CODE = true;
 				else if (arg.equalsIgnoreCase("-traceSVM_DATA")) Global.PRINT_GENERATED_SVM_DATA = true;
-//				else if (arg.equalsIgnoreCase("-listing")) Global.PRINT_GENERATED_SVM_CODE = true;
 				else if (arg.equalsIgnoreCase("-verbose")) Global.verbose = true;
+				else if (arg.equalsIgnoreCase("-execVerbose")) Global.execVerbose = true;
 				else if (arg.equalsIgnoreCase("-execTrace")) Global.EXEC_TRACE = 1;
 				else if (arg.equalsIgnoreCase("-callTrace")) Global.CALL_TRACE_LEVEL = 2;
 				else if (arg.equalsIgnoreCase("-dumpsAtExit")) Global.DUMPS_AT_EXIT = true;
@@ -47,9 +42,7 @@ public class BecCompiler {
 			Util.ERROR("no input file specified");
 			help();
 		}
-
-//		Global.scodeSource = scodeSource;
-//		Scode.initScode();
+		
 		new BecCompiler(scodeSource);
 	}
 
@@ -59,10 +52,11 @@ public class BecCompiler {
 	 */
 	private static void help() {
 		System.out.println("");
-		System.out.println("Usage: java -jar SportFEC.jar  [options]  ScodeFile ");
+		System.out.println("Usage: java -jar SportBEC.jar  [options]  ScodeFile ");
 		System.out.println("");
 		System.out.println("possible options include:");
-		System.out.println("  -verbose     Output messages about what the compiler is doing");
+		System.out.println("  -becVerbose  Output messages about what the compiler is doing");
+		System.out.println("  -execVerbose Output messages about what the executor is doing");
 		System.out.println("  -help        Print this synopsis of standard options");
 		System.out.println("  -inputTrace  Produce input Scode trace");
 		System.out.println("  -listing     Produce pretty Scode listing");
@@ -72,6 +66,8 @@ public class BecCompiler {
 		System.out.println("");
 		System.out.println("sourceFile ::= S-Code Source File");
 
+		System.out.println("BecCompiler.help - Exit: ");
+		Thread.dumpStack();
 		System.exit(0);
 	}
 
@@ -87,34 +83,25 @@ public class BecCompiler {
 	 * 		::= main <local_quantity>* <program_element>*
 	 */
 	public BecCompiler(String scodeSource) {
-//		if(Global.verbose) System.out.println("START: BecCompiler: " + scodeSource);
+		if(Global.verbose) Util.println("BEC: Start BecCompiler with " + scodeSource);
 		Global.scodeSource = scodeSource;
 		Global.DISPL = new Array<Descriptor>();
 		Global.SEGMAP = new HashMap<String, Segment>();
 		Global.ifDepth = 0;
 		Scode.initScode();
-//		DataType.initDataTypes();
 		Type.init();
 
-//		Thread.currentThread().setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-//			public void uncaughtException(Thread thread, Throwable e) {
-//				System.out.println("BecCompiler.UncaughtExceptionHandler: GOT Exception: " + e.getClass().getSimpleName());
-//				if(e instanceof EndProgram eprog) {
-//					if(Global.verbose) System.out.println(""+eprog);
-//					if(Global.INLINE_TESTING) {
-//						System.out.println("BecCompiler.UncaughtExceptionHandler: INLINE_TESTING: return");
-//						Thread.dumpStack();
-//						return;
-//					}
-//					System.exit(eprog.exitCode);
-//				} else {
-//					Util.IERR("BecCompiler.UncaughtExceptionHandler: GOT Exception: " + e);
-//				}
-//		}});
+		Thread.currentThread().setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+			public void uncaughtException(Thread thread, Throwable e) {
+				Util.println("BecCompiler.UncaughtExceptionHandler: BEC GOT Exception: " + e.getClass().getSimpleName());
+				if(Global.console != null) {
+					while(true) Thread.yield();
+				}
+				System.exit(-1);
+		}});
 
 		Scode.inputInstr();
 		if(Scode.curinstr == Scode.S_PROGRAM) {
-//	  		System.out.println("Parse.MONITOR: S_PROGRAM");
 	  		Global.progIdent = Scode.inString();
 			Scode.inputInstr();
 			if(Scode.curinstr == Scode.S_GLOBAL) {

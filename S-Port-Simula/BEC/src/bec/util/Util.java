@@ -2,9 +2,11 @@ package bec.util;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-
-import bec.compileTimeStack.CTStack;
+import java.io.OutputStream;
+import java.io.Reader;
+import java.io.Writer;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 public class Util {
 
@@ -16,6 +18,12 @@ public class Util {
 		if(Global.SCODE_INPUT_TRACE) {
 			Scode.initTraceBuff("Line " + Scode.curline + "  " + id + ": " + msg);
 		}
+	}
+	
+	public static void println(String s) {
+		if(Global.console != null)
+			Global.console.write(s + '\n');
+		System.out.println(s);
 	}
 
 	public static void WARNING(String msg) {
@@ -57,24 +65,71 @@ public class Util {
 			System.out.println("ATTR INPUT: " + msg);
 	}
 
-//	%title *********    D i c t i o n a r y    *********
-	public static HashMap<Integer,String> dicMap = new HashMap<Integer,String>();
-	public static int nSymb;
+
 	
-	public static int DefSymb(String symb) {
-		int key = nSymb++;
-		dicMap.put(key, symb);
-		return key;
+	// ***************************************************************
+	// *** EXTERNAL CONSOLE BINDING
+	// ***************************************************************
+
+	public static InputStream getConsoleInputStream() {
+		try {
+			Class<?> console = getClass("simula.compiler.utilities.ConsolePanel", "sim.Console");
+			System.out.println("Util.getConsoleReader: console="+console);
+			Field field_current = console.getDeclaredField("current");
+			System.out.println("Util.getConsoleReader: field_current="+field_current);
+			Method getInputStream = console.getDeclaredMethod("getInputStream");
+			System.out.println("Util.getConsoleReader: getInputStream="+getInputStream);
+			Object object = field_current.get(console);
+			return (InputStream) getInputStream.invoke(object);
+		} catch(Exception e) { e.printStackTrace(); return null; }
 	}
 
-	public static String DICSMB(int n) {
-		String s = dicMap.get(n);
-		return s;
+	public static OutputStream getConsoleOutputStream() {
+		try {
+			Class<?> console = getClass("simula.compiler.utilities.ConsolePanel", "sim.Console");
+			System.out.println("Util.getConsoleWriter: console="+console);
+			Field field_current = console.getDeclaredField("current");
+			System.out.println("Util.getConsoleWriter: field_current="+field_current);
+			Method getOutputStream = console.getDeclaredMethod("getOutputStream");
+			System.out.println("Util.getConsoleWriter: getOutputStream="+getOutputStream);
+			Object object = field_current.get(console);
+			return (OutputStream) getOutputStream.invoke(object);
+		} catch(Exception e) { e.printStackTrace(); return null; }
 	}
 
-	public static String edSymb(int i) {
-		return DICSMB(i);
+	public static Reader getConsoleReader() {
+		try {
+			Class<?> console = getClass("simula.compiler.utilities.ConsolePanel", "sim.Console");
+			System.out.println("Util.getConsoleReader: console="+console);
+			Field field_current = console.getDeclaredField("current");
+			System.out.println("Util.getConsoleReader: field_current="+field_current);
+			Method getReader = console.getDeclaredMethod("getReader");
+			System.out.println("Util.getConsoleReader: getReader="+getReader);
+			Object object = field_current.get(console);
+			return (Reader) getReader.invoke(object);
+		} catch(Exception e) { e.printStackTrace(); return null; }
 	}
+
+	public static Writer getConsoleWriter() {
+		try {
+			Class<?> console = getClass("simula.compiler.utilities.ConsolePanel", "sim.Console");
+			System.out.println("Util.getConsoleWriter: console="+console);
+			Field field_current = console.getDeclaredField("current");
+			System.out.println("Util.getConsoleWriter: field_current="+field_current);
+			Method getWriter = console.getDeclaredMethod("getWriter");
+			System.out.println("Util.getConsoleWriter: getWriter="+getWriter);
+			Object object = field_current.get(console);
+			return (Writer) getWriter.invoke(object);
+		} catch(Exception e) { e.printStackTrace(); return null; }
+	}
+
+	private static Class<?> getClass(String... names) {
+		for(String name:names)
+			try { return Class.forName(name); } catch (ClassNotFoundException e) {}
+		return null;
+	}
+
+
 
 	
 	// ***************************************************************

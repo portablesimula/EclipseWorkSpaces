@@ -3,10 +3,10 @@ package sim.make;
 import java.io.File;
 import java.util.Vector;
 
+import sim.compiler.Option;
 import sim.compiler.SimulaBEC;
 import sim.compiler.SimulaFEC;
 import sim.compiler.Util;
-
 import static sim.compiler.Global.*;
 
 public class Make_SIM_Jarfile {
@@ -39,24 +39,25 @@ public class Make_SIM_Jarfile {
 //		names.add("Atkins");
 //		names.add("FittingRoom");
 //		names.add("JensensDevice");
-		names.add("PrimeUnder");  // ERR
+//		names.add("PrimeUnder");  // ERR
 //		names.add("Quine");
+		names.add("Sudoku");
 //		names.add("TQueens"); // GARB
 		
-		
-//	verbose = true;
-//	fecListing = true;
-//	fecSCodeTrace = true;
-////	fecTraceLevel = 4;
+	Option.verbose = true;
+	
+//	Option.fecListing = true;
+//	Option.fecSCodeTrace = true;
+////	Option.fecTraceLevel = 4;
 //
-//		becVerbose = true;
-////	becTraceSVM_CODE = true;
-////	becTraceSVM_DATA = true;
-////	becListing = true;
-//	becSCodeTrace = true;
-////	execTrace = 1;
-////	callTrace = 1;//2;
-////	dumpsAtExit = true;
+////	Option.becTraceSVM_CODE = true;
+////	Option.becTraceSVM_DATA = true;
+////	Option.becListing = true;
+//	Option.becSCodeTrace = true;
+	
+////	Option.execTrace = 1;
+////	Option.callTrace = 1;//2;
+////	Option.dumpsAtExit = true;
 	
 		for(String name:names) {
 			//                C:\GitHub\EclipseWorkSpaces\S-Port-Simula\SIM\src\sim\samplePrograms\Atkins.sim
@@ -76,7 +77,7 @@ public class Make_SIM_Jarfile {
 //		names.add("adHoc03");
 
 //		names.add("SimulaTest"); // Simula TestBatch Framework
-//		names.add("simtst00"); // OK:  Empty test
+		names.add("simtst00"); // OK:  Empty test
 //		names.add("simtst01"); // OK:  Meaningless test of conditional statements,
 //		names.add("simtst02"); // OK:  Test boolean operators/expressions
 //		names.add("simtst03"); // OK:  Test Text Value Relations
@@ -97,7 +98,7 @@ public class Make_SIM_Jarfile {
 //		names.add("simtst17"); // OK:  Editing and De-editing
 //		names.add("simtst18"); // OK:  The put- and get-procedures for texts.
 //		names.add("simtst19"); // OK:  Text concatenation and text expression evaluation.
-		names.add("simtst20"); // OK:  Simple tests: integer relations <, <=, =, >=, > and <>
+//		names.add("simtst20"); // OK:  Simple tests: integer relations <, <=, =, >=, > and <>
 //
 //		names.add("simtst21"); // OK:  Arrays of simple types and text.
 //		names.add("simtst22"); // OK:  Test for-loops with various for-list elements
@@ -267,19 +268,19 @@ public class Make_SIM_Jarfile {
 //		names.add("simtst162"); // OK: Test Complicated nested inspection
 //		names.add("simtst163"); // OK: Test Inspect when, when, otherwise (selected)
 		
-		verbose = true;
-		fecListing = true;
-		fecSCodeTrace = true;
-//		fecTraceLevel = 4;
+		Option.verbose = true;
+		Option.fecListing = true;
+		Option.fecSCodeTrace = true;
+//		Option.fecTraceLevel = 4;
 
-		becVerbose = true;
-//		becTraceSVM_CODE = true;
-//		becTraceSVM_DATA = true;
-//		becListing = true;
-//		becSCodeTrace = true;
-//		execTrace = 1;
-//		callTrace = 1;//2;
-//		dumpsAtExit = true;
+//		Option.becTraceSVM_CODE = true;
+//		Option.becTraceSVM_DATA = true;
+//		Option.becListing = true;
+//		Option.becSCodeTrace = true;
+		
+//		Option.execTrace = 1;
+//		OptioncallTrace = 1;//2;
+//		OptiondumpsAtExit = true;
 		
 		for(String name:names) {
 			sourceFileName = "C:\\GitHub\\EclipseWorkSpaces/S-Port-Simula\\SIM\\src\\sim\\testPrograms\\"+name+".sim";
@@ -490,12 +491,12 @@ public class Make_SIM_Jarfile {
 		names.add("simtst162"); // OK: Test Complicated nested inspection
 		names.add("simtst163"); // OK: Test Inspect when, when, otherwise (selected)
 		
-//		verbose = true;
+//		FEC_Option.verbose = true;
 //		fecListing = true;
 //		fecSCodeTrace = true;
 //		fecTraceLevel = 4;
 
-//		becVerbose = true;
+//		BEC_Option.verbose = true;
 //		becListing = true;
 //		becSCodeTrace = true;
 //		execTrace = 1;
@@ -510,10 +511,11 @@ public class Make_SIM_Jarfile {
 	}
 
 	private static void doCompile() {
-		int execCode = SimulaFEC.callSimulaFEC();
-//		verbose = true;
-		if(verbose) System.out.println("RETURN FROM FEC: ExitCode = "+execCode+"\n\n");
-		if(execCode == 0) SimulaBEC.callBEC();
+//		int execCode = SimulaFEC.callSimulaFEC();
+		int execCode = SimulaFEC.invokeSimulaFEC();
+		if(Option.verbose) System.out.println("RETURN FROM FEC: ExitCode = "+execCode+"\n\n");
+//		if(execCode == 0) SimulaBEC.callBEC();
+		if(execCode == 0) SimulaBEC.invokeBEC();
 		
 	}
 }

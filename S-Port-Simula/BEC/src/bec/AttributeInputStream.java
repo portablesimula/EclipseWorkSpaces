@@ -6,9 +6,7 @@ import java.io.InputStream;
 
 //import PREV.syntaxClass.SyntaxClass;
 import bec.descriptor.Kind;
-import bec.util.Global;
 import bec.util.Scode;
-import bec.util.Util;
 import bec.virtualMachine.RTRegister;
 
 public class AttributeInputStream {

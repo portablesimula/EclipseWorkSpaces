@@ -484,8 +484,8 @@ EXIT1: if attempt<>0 -- mingap shall only be tested after true GC
        ref(entity) pnxt; ref(area) p,pool,q1,q2; long real gctime;
 
 %+CD   PRT("* * * * * *    S T A R T   G C    * * * * * *");
-       ED_STR("STRG.GARB: Begin Garbage Collection - NOT TESTED"); ED_OUT;
-       ED_STR("STRG.GARB: CHECK BACK-END-COMPILER ROUTINE  SYSTEM.SIZEIN"); ED_OUT;
+%       ED_STR("STRG.GARB: Begin Garbage Collection - NOT TESTED"); ED_OUT;
+%       ED_STR("STRG.GARB: CHECK BACK-END-COMPILER ROUTINE  SYSTEM.SIZEIN"); ED_OUT;
 %       TERMIN(3,"GARBAGE COLLECTOR NOT TESTED");
 %+CD   nodump:=true; dmpPool;
        current_pool.nxt:=bio.nxtAdr; -- consistency
@@ -574,7 +574,7 @@ EXIT1: if attempt<>0 -- mingap shall only be tested after true GC
        ref(filent) F,N; -- Used to scan the open file list
        ref(area) p,Dest; ref(entity) gap,zero;
 
-%+D    PRT("**********  BEGIN PASS 1  ************");
+% +D    PRT("**********  BEGIN PASS 1  ************");
 ---    chain:= ref(nostring); MARK_INSTANCE(bioref);
        bio.gcl:=ref(nostring) qua ref(); chain:=ref(bio);
 

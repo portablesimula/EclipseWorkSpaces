@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import bec.util.Global;
 import bec.util.Type;
 import bec.util.Util;
 import bec.value.IntegerValue;
@@ -79,15 +80,6 @@ public class RTInfile extends RTImageFile {
 				RTUtil.set_STATUS(13); // End of file on input";
 				return 0;
 			}
-//			if (line != null) {
-//				if (line.length() > lng) {
-//					Util.IERR(this.spec + ": Image too short: input.length=" + line.length() + ", image.length=" + lng);
-//				}
-//				ASGSTR(image, line);
-//			} else {
-//				ASGSTR(image, "" + (char) 25);
-//				_ENDFILE = true;
-//			}
 			if(line.length() <= nchr) {
 				for(int i=0;i<line.length();i++) {
 					chrAddr.store(i, IntegerValue.of(Type.T_CHAR, line.charAt(i)), "INIMA: ");
@@ -103,6 +95,60 @@ public class RTInfile extends RTImageFile {
 		} catch (IOException e) {
 //			throw new RTS_SimulaRuntimeError("Inimage failed", e);
 			Util.IERR("Inimage failed: " + e);
+		}
+		return 0;
+	}
+	
+	private static String sysinRest = null;
+	
+	private static String readLine() throws IOException {
+		System.out.println("RTInfile.readLine: Global.consoleReader="+Global.console);
+		StringBuilder sb = new StringBuilder();
+		if(Global.console != null) {
+			System.out.println("RTInfile.readLine: JUST BEFORE: int c = Global.console.read();");
+			int c = Global.console.read();
+			System.out.println("RTInfile.readLine: c="+(char)c+ "  "+c);
+			while(c != '\n') {
+				sb.append((char)c);
+				c = Global.console.read();
+				System.out.println("RTInfile.readLine: c="+(char)c+ "  "+c);
+			}
+		} else {
+			int c = System.in.read();
+			while(c != '\n') {
+				sb.append((char)c);
+				c = System.in.read();
+			}
+		}
+		System.out.println("RTInfile.readLine: "+sb);
+//		Util.IERR("");
+		return sb.toString();
+	}
+
+	public static int sysinInimage(ObjectAddress chrAddr, int nchr) {
+		try {
+			String line = (sysinRest != null) ? sysinRest : readLine();
+			System.out.println("RTInfile.sysinInimage: line=\"" + line + '"');
+			sysinRest = null;
+			if(line == null) {
+				RTUtil.set_STATUS(13); // End of file on input";
+				return 0;
+			}
+			if(line.length() <= nchr) {
+				for(int i=0;i<line.length();i++) {
+					chrAddr.store(i, IntegerValue.of(Type.T_CHAR, line.charAt(i)), "INIMA: ");
+				}
+				return line.length();
+			} else {
+				for(int i=0;i<nchr;i++) {
+					chrAddr.store(i, IntegerValue.of(Type.T_CHAR, line.charAt(i)), "INIMA: ");
+				}
+				sysinRest = line.substring(nchr);
+				return nchr;
+			}
+		} catch (IOException e) {
+//			throw new RTS_SimulaRuntimeError("Inimage failed", e);
+			Util.IERR("sysinInimage failed: " + e);
 		}
 		return 0;
 	}

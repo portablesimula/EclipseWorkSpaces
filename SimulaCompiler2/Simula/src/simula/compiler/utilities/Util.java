@@ -325,41 +325,6 @@ public final class Util {
 			throw new RuntimeException("Process Execution failed: " + cmdarray[0], e);
 		}
 	}
-
-//	/// Execute an OS command
-//	/// 
-//	/// @param cmdarray command array
-//	/// @return exit value
-//	/// @throws IOException if an I/O error occurs
-//	public static int execute(final String... cmdarray) throws IOException {
-//		Runtime runtime = Runtime.getRuntime();
-//		if (Option.verbose) {
-//			String line = "";
-//			for (int i = 0; i < cmdarray.length; i++)
-//				line = line + " " + cmdarray[i];
-//			Util.println("Execute: " + line);
-//		}
-//		Process process = runtime.exec(cmdarray);
-//		InputStream err = process.getErrorStream();
-//		InputStream inp = process.getInputStream();
-//		StringBuilder error = new StringBuilder();
-//		while (process.isAlive()) {
-//			while (err.available() > 0) {
-//				char c = (char) err.read();
-//				System.err.append(c);
-//				error.append(c);
-//			}
-//			while (inp.available() > 0) {
-//				if (Global.console != null)
-//					Global.console.write("" + (char) inp.read());
-//				else
-//					System.out.append((char) inp.read());
-//			}
-//		}
-//		if (error.length() > 0)
-//			Util.error(error.toString());
-//		return (process.exitValue());
-//	}
   
 	/// Build invoke Simula Runtime Error.
 	/// @param mss the error message.

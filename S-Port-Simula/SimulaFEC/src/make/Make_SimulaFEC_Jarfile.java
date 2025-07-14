@@ -83,7 +83,7 @@ public class Make_SimulaFEC_Jarfile {
 		try {
 			exec(cmds);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			System.out.println("Make_SimulaFEC_Jarfile.compile - Exit: ");
 			e.printStackTrace();
 			System.exit(0);
 		}

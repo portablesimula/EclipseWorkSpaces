@@ -83,7 +83,7 @@ SimulaTest(79,"--- Test the attribute 'isopen' of class File.") begin
    xf qua Infile.close;
    Test(sourceline,xf.isopen, false, 6);
 
-   xf:- new Inbytefile("anyNoneExitingfile");         !***** NOTE 1, NOTE 2 *****;
+   xf:- new Inbytefile("anyNoneExitingfile2");         !***** NOTE 1, NOTE 2 *****;
    Test(sourceline,xf.isopen, false, 7);
 
    xf qua Inbytefile.open;

@@ -1,19 +1,8 @@
 package sim.compiler;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.attribute.FileTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.Enumeration;
-import java.util.Locale;
-import java.util.Set;
-import java.util.Vector;
-import java.util.jar.Attributes;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
-import java.util.jar.Manifest;
+
+import sim.editor.SPortEditor;
 
 import static sim.compiler.Global.*;
 
@@ -27,7 +16,7 @@ public class SportSimula {
 	 * Print synopsis of standard options
 	 */
 	private static void help() {
-//		System.out.println(Global.simulaReleaseID+" See: https://github.com/portablesimula");
+//		System.out.println(Global.sPortReleaseID+" See: https://github.com/portablesimula");
 		System.out.println("");
 		System.out.println("Usage: java -jar simula.jar  [options]  sourceFile ");
 		System.out.println("");
@@ -45,6 +34,8 @@ public class SportSimula {
 		System.out.println("                             Then, for each character, the corresponding selector is set");
 		System.out.println("  -sport                     Enable all S-PORT extensions");
 		
+		System.out.println("SportSimula.help - Exit: ");
+		Thread.dumpStack();
 		System.exit(0);
 	}
 
@@ -61,13 +52,13 @@ public class SportSimula {
 //					else if (arg.equalsIgnoreCase("-noexec")) Option.noExecution=true;
 //					else if (arg.equalsIgnoreCase("-nowarn")) Option.WARNINGS=false;
 //					else if (arg.equalsIgnoreCase("-noextension")) Option.EXTENSIONS=false;
-					else if (arg.equalsIgnoreCase("-verbose")) verbose=true;
+					else if (arg.equalsIgnoreCase("verbose")) Option.verbose=true;
 
-					else if (arg.equalsIgnoreCase("-select")) selectors = argv[++i];
+					else if (arg.equalsIgnoreCase("-FEC:select")) selectors = argv[++i];
+					else if (arg.equalsIgnoreCase("-FEC:Listing")) Option.fecListing = true;
 					
-					else if (arg.equalsIgnoreCase("-FEC:Listing")) fecListing = true;
-					else if (arg.equalsIgnoreCase("-BEC:TraceSVM_CODE")) becTraceSVM_CODE = true;
-					else if (arg.equalsIgnoreCase("-BEC:TraceSVM_DATA")) becTraceSVM_DATA = true;
+					else if (arg.equalsIgnoreCase("-BEC:TraceSVM_CODE")) Option.becTraceSVM_CODE = true;
+					else if (arg.equalsIgnoreCase("-BEC:TraceSVM_DATA")) Option.becTraceSVM_DATA = true;
 //					else if (arg.equalsIgnoreCase("-output")) setOutputDir(argv[++i]);
 //					else if (arg.equalsIgnoreCase("-extLib")) Global.extLib=new File(argv[++i]);
 //					else if (arg.equalsIgnoreCase("-source")) Option.internal.SOURCE_FILE=argv[++i];
@@ -88,7 +79,18 @@ public class SportSimula {
 			
 			if(sourceFileName==null) {
 				System.out.println("ERROR: no input file specified");
-				help();
+//				help();
+				String userDir="C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SIM";
+//				Global.simulaRtsLib=new File(userDir,"bin"); // To use Eclipse Project's simula.runtime  Download
+				Option.INIT();
+				Global.sampleSourceDir=new File(userDir+"/src/sim/samplePrograms");
+				Thread.currentThread().setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+					public void uncaughtException(Thread thread, Throwable e) {
+						System.out.print("SimulaEditor.UncaughtExceptionHandler: GOT Exception: " + e);
+						e.printStackTrace();
+				}});
+				SPortEditor editor=new SPortEditor();
+		    	editor.setVisible(true);
 			}
 						
 //			INLINE_TEST();
@@ -123,7 +125,7 @@ public class SportSimula {
 //		sourceFileName = "C:\\GitHub\\EclipseWorkSpaces/S-Port-Simula\\SIM\\src\\sim\\testPrograms\\"+name+".sim";
 //		sCodeFileName  = "C:\\GitHub\\EclipseWorkSpaces/S-Port-Simula\\SIM\\src\\sim\\testPrograms\\scode\\"+name+".scd";
 		
-		verbose = true;
+		Option.verbose = true;
 //		fecListing = true;
 //		fecSCodeTrace = true;
 //		fecTraceLevel = 4;
@@ -135,7 +137,7 @@ public class SportSimula {
 //		dumpsAtExit = true;
 		
 		int execCode = SimulaFEC.callSimulaFEC();
-		if(verbose) System.out.println("RETURN FROM FEC: ExitCode = "+execCode+"\n\n");
+		if(Option.verbose) System.out.println("RETURN FROM FEC: ExitCode = "+execCode+"\n\n");
 		
 		if(execCode == 0) SimulaBEC.callBEC();
 	}

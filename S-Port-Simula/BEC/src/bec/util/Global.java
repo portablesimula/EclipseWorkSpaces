@@ -1,6 +1,8 @@
 package bec.util;
 
 import java.io.File;
+import java.io.Reader;
+import java.io.Writer;
 import java.util.Map;
 import java.util.Vector;
 
@@ -17,6 +19,7 @@ public class Global {
 
 	public static boolean INLINE_TESTING = false;
 	public static boolean verbose = false;
+	public static boolean execVerbose = false;
 	public static int traceMode = 0;
 	public static boolean SCODE_INPUT_TRACE = false;
 	public static boolean TRACE_ALLOC_FRAME = false;
@@ -31,6 +34,12 @@ public class Global {
 	public static int EXEC_TRACE = 0;
 	public static int CALL_TRACE_LEVEL = 0;
 	public static boolean DUMPS_AT_EXIT = false;
+	
+//	public static ConsoleNewEdition console;
+//	public static RTS_ConsolePanel console;
+	public static AwtConsole console;
+//	public static Writer consoleWriter; // = Reflect.getConsoleWriter();
+//	public static Reader consoleReader; // = Reflect.getConsoleReader();
 	
 	public static Vector<Segment> routineSegments;
 	
