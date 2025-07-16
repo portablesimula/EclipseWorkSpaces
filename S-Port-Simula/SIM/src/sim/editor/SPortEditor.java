@@ -111,7 +111,6 @@ public class SPortEditor extends JFrame {
         int topHeight=500;//300;
         int frameWidth=1000;
         setSize(frameWidth, frameHeight);
-		this.addWindowFocusListener(windowFocusListener);
 
         // Set the title of the window
         setTitle(Global.sPortVersion);
@@ -133,17 +132,11 @@ public class SPortEditor extends JFrame {
 				}
 			}});
         boolean continuousLayout = true;
-//        if(Option.TESTING) {
-////        	splitPane1 = new JSplitPane(JSplitPane.VERTICAL_SPLIT,continuousLayout, tabbedPane,Global.console);        	
-//            getContentPane().add(tabbedPane);
-//        } else {
-            JSplitPane splitPane1 = null;
-//        	splitPane1 = new JSplitPane(JSplitPane.VERTICAL_SPLIT,continuousLayout, tabbedPane,Global.oldConsole);
-        	splitPane1 = new JSplitPane(JSplitPane.VERTICAL_SPLIT,continuousLayout, tabbedPane,Global.oldConsole);
-            splitPane1.setOneTouchExpandable(true);
-            splitPane1.setDividerLocation(topHeight);
-            getContentPane().add(splitPane1);
-//        }
+        JSplitPane splitPane1 = null;
+    	splitPane1 = new JSplitPane(JSplitPane.VERTICAL_SPLIT,continuousLayout, tabbedPane,Global.consolePanel);
+        splitPane1.setOneTouchExpandable(true);
+        splitPane1.setDividerLocation(topHeight);
+        getContentPane().add(splitPane1);
 
         autoRefresher=new AutoRefresher(); autoRefresher.start();
 
@@ -523,26 +516,5 @@ public class SPortEditor extends JFrame {
 			}
 		}
 	}
-
-
-	private WindowFocusListener windowFocusListener = new WindowFocusListener() {
-
-		@Override
-		public void windowGainedFocus(WindowEvent event) {
-			System.out.println("\nSPortEditor'windowGainedFocus: "+event);
-			KeyboardFocusManager kbm = KeyboardFocusManager.getCurrentKeyboardFocusManager();
-			System.out.println("SPortEditor'windowGainedFocus: FocusedWindow=" + kbm.getFocusedWindow());
-			System.out.println("SPortEditor'windowGainedFocus: FocusOwner=" + kbm.getFocusOwner());
-		}
-
-		@Override
-		public void windowLostFocus(WindowEvent event) {
-			System.out.println("\nSPortEditor'windowLostFocus: "+event);
-			KeyboardFocusManager kbm = KeyboardFocusManager.getCurrentKeyboardFocusManager();
-			System.out.println("SPortEditor'windowLostFocus: FocusedWindow=" + kbm.getFocusedWindow());
-			System.out.println("SPortEditor'windowLostFocus: FocusOwner=" + kbm.getFocusOwner());
-		}
-		
-	};
 
 }

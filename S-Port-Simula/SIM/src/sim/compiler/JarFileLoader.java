@@ -50,11 +50,12 @@ public class JarFileLoader {
         }
 		Class<?> loadedClass = null;
     	try { loadedClass = classLoader.loadClass(className); } catch (ClassNotFoundException e) { e.printStackTrace(); }
-    	if(DEBUG) System.out.println("JarFileLoader: loadedClass="+loadedClass);
+    	if(DEBUG)
+    		System.out.println("JarFileLoader: loadedClass="+loadedClass);
 		
 		Method mainMethod = null;
 		try { mainMethod = loadedClass.getDeclaredMethod("main", String[].class); } catch (NoSuchMethodException e) { e.printStackTrace(); }
-//		if(DEBUG)
+		if(DEBUG)
 			System.out.println("JarFileLoader: mainMethod="+mainMethod);
 
 		// Invoke the main method with arguments

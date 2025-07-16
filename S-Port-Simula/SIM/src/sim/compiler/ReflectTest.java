@@ -28,9 +28,9 @@ public class ReflectTest {
          frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
          frame.setLocationRelativeTo(null); // center the frame on screen
 
-         Global.oldConsole = new ConsolePanel();
-     	 frame.add(Global.oldConsole);
-     	 Global.oldConsole.write("BEGIN TESTING ConsolePanel\n");
+         Global.consolePanel = new ConsolePanel();
+     	 frame.add(Global.consolePanel);
+     	 Global.consolePanel.write("BEGIN TESTING ConsolePanel\n");
     	 frame.setVisible(true);
     	 
     	 Class<?> class_ConsolePanel = getClass("sim.editor.ConsolePanel");

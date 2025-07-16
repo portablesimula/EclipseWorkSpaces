@@ -541,11 +541,11 @@ public class EditorMenues extends JMenuBar {
 			sCodeFile.getParentFile().mkdirs();
 			sCodeFileName = sCodeFile.toString();
 //			if(Option.verbose)
-				System.out.println("\n\nCALL FEC: Output ==> sCodeFileName = "+sCodeFileName);
-//(			int execCode = SimulaFEC.callSimulaFEC();
-			int execCode = SimulaFEC.invokeSimulaFEC();
+				System.out.println("\n\nEditorMenues.doStartRunning: CALL FEC: Output ==> sCodeFileName = "+sCodeFileName);
+			int execCode = SimulaFEC.callSimulaFEC();
+//			int execCode = SimulaFEC.invokeSimulaFEC();
 //			if(Option.verbose)
-				System.out.println("RETURN FROM FEC: ExitCode = "+execCode);
+				System.out.println("EditorMenues.doStartRunning: RETURN FROM FEC: ExitCode = "+execCode);
 			if(execCode == 0) {
 //				if(Option.verbose)
 					System.out.println("\n\nCALL BEC: Output ==> SVM Code ==> executed");

@@ -201,7 +201,7 @@ public final class Simula {
 			SimulaEditor editor = new SimulaEditor();
 			editor.setVisible(true);
 		} else {
-			for(String fileName:fileNames) {
+	        for(String fileName:fileNames) {
 				// *** STARTING SIMULA COMPILER ***
 				try {
 					if(sourceFileDir != null) fileName = sourceFileDir + '/' + fileName;
@@ -212,6 +212,7 @@ public final class Simula {
 			}
 		}
 	}
+
 
 	/// Set selectors for conditional compilation.
 	/// 

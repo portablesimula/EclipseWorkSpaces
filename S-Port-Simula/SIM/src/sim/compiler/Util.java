@@ -205,7 +205,7 @@ public class Util {
 			return exitCode;
 		} catch(Exception e) {
 			Util.IERR("Process Execution failed: " + line, e);
-			return 0;
+			return -1;
 		}
 	}
 

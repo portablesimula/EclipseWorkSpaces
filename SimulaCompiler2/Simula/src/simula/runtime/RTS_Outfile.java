@@ -11,8 +11,6 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 
-import simula.runtime.RTS_File._CreateAction;
-
 /// System class Outfile.
 /// <pre>
 ///  file class outfile;
@@ -44,9 +42,7 @@ import simula.runtime.RTS_File._CreateAction;
 /// @author Øystein Myhre Andersen
 public class RTS_Outfile extends RTS_Imagefile {
 	
-	/**
 	/// The underlying Writer.
-	 */
 	protected Writer writer;
 
 	// Constructor

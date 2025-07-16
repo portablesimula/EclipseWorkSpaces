@@ -5,7 +5,16 @@
 /// page: https://creativecommons.org/licenses/by/4.0/
 package simula.runtime;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import javax.swing.JOptionPane;
 
@@ -498,6 +507,7 @@ public final class RTS_UTIL {
 				+ "  -gotoTracing          Debug: Trace goto statements\n"
 				+ "  -qpsTracing           Debug: Trace detach, resume and call\n"
 				+ "  -smlTracing           Debug: Trace Simulation events\n"
+				+ "  -sysout <file name>   Specify where a copy of Sysout is written\n"
 				+ "  -userDir <directory>  Specify where Simula files (Outfile, Infile, ...) are written and read\n"
 				+ "                        Default: User working directory. System.property(\"user.dir\")\n"
 		);
@@ -508,6 +518,7 @@ public final class RTS_UTIL {
 	/// Set runtime options.
 	/// @param args argument array
 	public static void setRuntimeOptions(final String[] args) {
+		File sysoutFile = null;
 		RTS_Option.argv = args;
 		// Parse command line arguments.
 		RTS_Option.RUNTIME_USER_DIR = System.getProperty("user.dir", null);
@@ -525,11 +536,23 @@ public final class RTS_UTIL {
 				else if (arg.equalsIgnoreCase("-qpsTracing"))		RTS_Option.QPS_TRACING = true;
 				else if (arg.equalsIgnoreCase("-smlTracing"))		RTS_Option.SML_TRACING = true;
 				else if (arg.equalsIgnoreCase("-userDir"))			RTS_Option.RUNTIME_USER_DIR = args[++i];
+				else if (arg.equalsIgnoreCase("-sysout")) {
+					sysoutFile = new File(args[++i]);
+					try {
+						sysoutFile.getParentFile().mkdirs();
+						RTS_Option.SYSOUT_COPY = new OutputStreamWriter(new FileOutputStream(sysoutFile));
+					} catch (FileNotFoundException e) {
+						RTS_Option.SYSOUT_COPY = null;
+						System.out.println("RTS_UTIL.setRuntimeOptions: -sysout " + sysoutFile + " FAILED.");
+						e.printStackTrace();
+					}
+				}
 			}
 		}
 		if (RTS_Option.VERBOSE) {
 			RTS_UTIL.println("Begin Execution of Simula Program using " + getJavaID());
 			listRuntimeOptions();
+			System.out.println("sysout Copy=" + sysoutFile);
 		}
 	}
 

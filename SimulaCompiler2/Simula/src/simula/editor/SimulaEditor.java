@@ -19,8 +19,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.Reader;
 import java.io.StringReader;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URL;
 import java.nio.file.attribute.FileTime;
@@ -186,7 +189,7 @@ public class SimulaEditor extends JFrame {
         doCheckForNewVersion();
         doSelectWorkspace();
     }
-
+    
     /// Utility: getJavaVersion
     /// @return the JavaVersion
 	private static int getJavaSpecVersion() {

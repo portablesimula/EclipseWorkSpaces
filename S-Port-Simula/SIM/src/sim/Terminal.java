@@ -1,4 +1,4 @@
-package bec.util;
+package sim;
 
 import java.awt.Color;
 import java.awt.TextArea;
@@ -14,7 +14,7 @@ import java.io.Writer;
 import javax.swing.JFrame;
 
 @SuppressWarnings("serial")
-public class AwtConsole extends JFrame {
+public class Terminal extends JFrame {
 
 	/// The text area.
 	private static TextArea textArea;
@@ -33,9 +33,9 @@ public class AwtConsole extends JFrame {
     /// @param args the arguments
     /// @throws IOException 
 	public static void main(String[] args) throws IOException {
-		AwtConsole console = new AwtConsole("TESTING");
+		Terminal console = new Terminal("TESTING");
 		console.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		console.println("BEGIN TESTING AwtConsole");
+		console.println("BEGIN TESTING Terminal");
 		console.print("Input Single Character: ");
 		char c = console.read();  
 
@@ -61,10 +61,10 @@ public class AwtConsole extends JFrame {
 		while(c != '\n') { sb.append(c); c = (char) inpt.read(); }
 		console.println("InputStream GOT: "+sb);
 		oupt.write(sb.toString().getBytes(), 0, 0); oupt.flush();
-		console.println("ENDOF TESTING AwtConsole");
+		console.println("ENDOF TESTING Terminal");
 	}
 	
-	public AwtConsole(String title) {
+	public Terminal(String title) {
 		setTitle(title);
 		setSize(1000, 700);
 		setBackground(Color.WHITE);
@@ -98,7 +98,7 @@ public class AwtConsole extends JFrame {
 	/// Write a string
 	/// @param s a string to write
 	public void write(final String s) {
-		AwtConsole.textArea.append(s);
+		Terminal.textArea.append(s);
 	}
 
 	/// Reads a single character.
@@ -127,7 +127,7 @@ public class AwtConsole extends JFrame {
 		Reader consoleReader = new Reader() {
 			@Override
 			public int read(final char[] cbuf, final int off, final int len) throws IOException {
-				cbuf[off] = AwtConsole.this.read(); return (1);
+				cbuf[off] = Terminal.this.read(); return (1);
 			}
 
 			@Override
@@ -142,7 +142,7 @@ public class AwtConsole extends JFrame {
 		InputStream in = new InputStream() {
 			@Override
 			public int read() throws IOException {
-				return AwtConsole.this.read();
+				return Terminal.this.read();
 			}
 		};
 		return in;
@@ -155,7 +155,7 @@ public class AwtConsole extends JFrame {
 			@Override
 			public void write(int b) throws IOException {
 				String s = "" + (char) b;
-				AwtConsole.this.write(s);
+				Terminal.this.write(s);
 			}
 		};
 		return new PrintStream(out);
@@ -167,11 +167,11 @@ public class AwtConsole extends JFrame {
 		return (new Writer() {
 			@Override
 			public void write(String s) {
-				AwtConsole.this.write(s);
+				Terminal.this.write(s);
 			}
 
 			public void write(char[] cbuf, int off, int len) throws IOException {
-				AwtConsole.this.write(new String(cbuf, off, len));
+				Terminal.this.write(new String(cbuf, off, len));
 			}
 
 			@Override

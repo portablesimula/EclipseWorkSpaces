@@ -4,7 +4,7 @@ import java.util.HashMap;
 import bec.descriptor.Descriptor;
 import bec.segment.Segment;
 import bec.util.Array;
-import bec.util.AwtConsole;
+import bec.util.SimpleConsole;
 import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Type;
@@ -15,7 +15,7 @@ public class BecCompiler {
 	static String scodeSource;
 	
 	public static void main(String[] argv) {
-		Global.console = new AwtConsole();
+		Global.console = new SimpleConsole("Runtime Console");
 
 		// Parse command line arguments.
 		for(int i=0;i<argv.length;i++) {

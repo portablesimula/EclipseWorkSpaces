@@ -69,7 +69,10 @@ import java.util.StringTokenizer;
 /// @author SIMULA Standards Group
 /// @author Øystein Myhre Andersen
 public class RTS_Printfile extends RTS_Outfile {
-	
+
+	/// Indicates this Printfile is Sysout.
+	private boolean isSysout;
+
 	/// The default LINES_PER_PAGE = 66
 	private int _DEFAULT_LINES_PER_PAGE = 66;
 	
@@ -167,12 +170,8 @@ public class RTS_Printfile extends RTS_Outfile {
 		this.image = image;
 		setpos(1);
 		if (FILE_NAME.edText().equalsIgnoreCase("#sysout")) {
+			isSysout = true;
 			// NOTHING - Sysout is opened later
-//		} else if (fileName.toUpperCase().startsWith("CONSOLE: ")) {  // TODO:
-//			RTS_ConsolePanel console = new RTS_ConsolePanel();
-//			String title = fileName.substring(9);
-//			console.popup(title);
-//			writer = console.getWriter();
 		} else {
 			RTS_PageWriter pageWriter = new RTS_PageWriter(fileName);
 			pageWriter.setFont(_FONT, _ORIENTATION, _ASK_PAPER);
@@ -383,6 +382,10 @@ public class RTS_Printfile extends RTS_Outfile {
 					writer.write("\n");
 			}
 			writer.flush();
+			if(RTS_Option.SYSOUT_COPY != null && isSysout) {
+				RTS_Option.SYSOUT_COPY.write(img);
+				RTS_Option.SYSOUT_COPY.flush();
+			}
 		} catch (IOException e) {
 			throw new RTS_SimulaRuntimeError(ident + " failed", e);
 		}

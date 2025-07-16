@@ -17,20 +17,7 @@ public class Global {
 
 	/// Initiate Global variables.
 	public static void initiate() {
-		
-//		PrintStream oupt = console.getOutputStream();
-//		InputStream inpt = console.getInputStream();
-//		System.setOut(oupt);
-//		System.setErr(oupt);
-//		System.setIn(inpt);
-
-//		if(Option.TESTING) {
-//			Console.current = new Console(); // Setter  Console.current  variable
-//		} else {
-//		Global.oldConsole = new REMOVE_ConsolePanel();			
-			Global.oldConsole = new ConsolePanel();			
-//		}
-
+		Global.consolePanel = new ConsolePanel();			
        	Global.loadSPortSetupProperties();
        	Global.loadSPortProperties();
 		String SPORT_HOME = Global.sPortSetupProperties.getProperty("sPort.home","?");
@@ -108,8 +95,8 @@ public class Global {
 	public static String insertName;
 
 	/// The Editor and FEC console
-//	public static REMOVE_ConsolePanel oldConsole;  // Option.TESTING == true
-	public static ConsolePanel oldConsole;  // Option.TESTING == true
+//	public static REMOVE_ConsolePanel consolePanel;  // Option.TESTING == true
+	public static ConsolePanel consolePanel;  // Option.TESTING == true
 
 
 	/// Returns a temp file directory.

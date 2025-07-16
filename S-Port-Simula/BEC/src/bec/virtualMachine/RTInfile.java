@@ -102,16 +102,12 @@ public class RTInfile extends RTImageFile {
 	private static String sysinRest = null;
 	
 	private static String readLine() throws IOException {
-		System.out.println("RTInfile.readLine: Global.consoleReader="+Global.console);
 		StringBuilder sb = new StringBuilder();
 		if(Global.console != null) {
-			System.out.println("RTInfile.readLine: JUST BEFORE: int c = Global.console.read();");
 			int c = Global.console.read();
-			System.out.println("RTInfile.readLine: c="+(char)c+ "  "+c);
 			while(c != '\n') {
 				sb.append((char)c);
 				c = Global.console.read();
-				System.out.println("RTInfile.readLine: c="+(char)c+ "  "+c);
 			}
 		} else {
 			int c = System.in.read();
@@ -120,8 +116,6 @@ public class RTInfile extends RTImageFile {
 				c = System.in.read();
 			}
 		}
-		System.out.println("RTInfile.readLine: "+sb);
-//		Util.IERR("");
 		return sb.toString();
 	}
 

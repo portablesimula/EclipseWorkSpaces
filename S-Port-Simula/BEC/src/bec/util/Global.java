@@ -37,7 +37,7 @@ public class Global {
 	
 //	public static ConsoleNewEdition console;
 //	public static RTS_ConsolePanel console;
-	public static AwtConsole console;
+	public static SimpleConsole console;
 //	public static Writer consoleWriter; // = Reflect.getConsoleWriter();
 //	public static Reader consoleReader; // = Reflect.getConsoleReader();
 	
