@@ -2,7 +2,6 @@ package bec.segment;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Vector;
 
 import bec.AttributeOutputStream;
 import bec.descriptor.Kind;

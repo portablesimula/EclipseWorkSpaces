@@ -1,6 +1,7 @@
 package bec.util;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.TextArea;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -14,7 +15,7 @@ import java.io.Writer;
 import javax.swing.JFrame;
 
 @SuppressWarnings("serial")
-public class SimpleConsole extends JFrame {
+public class Terminal extends JFrame {
 
 	/// The text area.
 	private static TextArea textArea;
@@ -33,38 +34,38 @@ public class SimpleConsole extends JFrame {
     /// @param args the arguments
     /// @throws IOException 
 	public static void main(String[] args) throws IOException {
-		SimpleConsole console = new SimpleConsole("TESTING");
-		console.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		console.println("BEGIN TESTING Terminal");
-		console.print("Input Single Character: ");
-		char c = console.read();  
+		Terminal terminal = new Terminal("TESTING");
+		terminal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		terminal.println("BEGIN TESTING Terminal");
+		terminal.print("Input Single Character: ");
+		char c = terminal.read();  
 
-		console.print("\nInput Text Line terminated by NL: ");
-		String s = console.readLine();
+		terminal.print("\nInput Text Line terminated by NL: ");
+		String s = terminal.readLine();
 
-		console.println("Single Character read was: " + c);
-		console.println("Inputed Text Line was: " + s);
+		terminal.println("Single Character read was: " + c);
+		terminal.println("Inputed Text Line was: " + s);
 
-		console.print("\nTesting Reader -> Writer:\nInput Text Line terminated by NL: ");
-		Reader reader = console.getReader();
-		Writer writer = console.getWriter();
+		terminal.print("\nTesting Reader -> Writer:\nInput Text Line terminated by NL: ");
+		Reader reader = terminal.getReader();
+		Writer writer = terminal.getWriter();
 		StringBuilder sb = new StringBuilder();
 		c = (char) reader.read();
 		while(c != '\n') { sb.append(c); c = (char) reader.read(); }
 		writer.write("Reader GOT: " + sb.toString()+'\n'); writer.flush();
 
-		console.print("\nTesting InputStream -> OutputStream:\nInput Text Line terminated by NL: ");
-		InputStream inpt = console.getInputStream();
-		OutputStream oupt = console.getOutputStream();
+		terminal.print("\nTesting InputStream -> OutputStream:\nInput Text Line terminated by NL: ");
+		InputStream inpt = terminal.getInputStream();
+		OutputStream oupt = terminal.getOutputStream();
 		sb = new StringBuilder();
 		c = (char) inpt.read();
 		while(c != '\n') { sb.append(c); c = (char) inpt.read(); }
-		console.println("InputStream GOT: "+sb);
+		terminal.println("InputStream GOT: "+sb);
 		oupt.write(sb.toString().getBytes(), 0, 0); oupt.flush();
-		console.println("ENDOF TESTING Terminal");
+		terminal.println("ENDOF TESTING Terminal");
 	}
 	
-	public SimpleConsole(String title) {
+	public Terminal(String title) {
 		setTitle(title);
 		setSize(1000, 700);
 		setBackground(Color.WHITE);
@@ -74,13 +75,13 @@ public class SimpleConsole extends JFrame {
 		textArea = new TextArea("", 50, 138, TextArea.SCROLLBARS_BOTH);
 		textArea.addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent event) {
-//				System.out.println("ConsolePanel'keyTyped: "+event.getKeyChar());
 				if (reading) {
 					keyin = event.getKeyChar();
 					reading = false;
 				}
 			}
 		});
+		textArea.setFont(new Font("Monospaced", Font.PLAIN, 14));
 		textArea.setEnabled(true);
 		add(textArea);
 //		validate();
@@ -98,15 +99,14 @@ public class SimpleConsole extends JFrame {
 	/// Write a string
 	/// @param s a string to write
 	public void write(final String s) {
-		SimpleConsole.textArea.append(s);
+		Terminal.textArea.append(s);
 	}
 
 	/// Reads a single character.
 	/// @return The character read
 	public char read() {
-//		textArea.requestFocusInWindow();
 		reading = true; // Enables KeyListener (see below)
-		while (reading) { Thread.yield(); }
+		while (reading) Thread.yield();
 		return (keyin);
 	}
 
@@ -121,57 +121,57 @@ public class SimpleConsole extends JFrame {
 		return sb.toString();
 	}
 
-	/// Get a reader suitable for reading from this console
+	/// Get a reader suitable for reading from this terminal
 	/// @return a reader
 	public Reader getReader() {
-		Reader consoleReader = new Reader() {
+		Reader reader = new Reader() {
 			@Override
 			public int read(final char[] cbuf, final int off, final int len) throws IOException {
-				cbuf[off] = SimpleConsole.this.read(); return (1);
+				cbuf[off] = Terminal.this.read(); return (1);
 			}
 
 			@Override
 			public void close() throws IOException {}
 		};
-		return (consoleReader);
+		return (reader);
 	}
 
-	/// Get a InputStream suitable for reading from this console
+	/// Get a InputStream suitable for reading from this terminal
 	/// @return a OutputStream
 	public InputStream getInputStream() {
-		InputStream in = new InputStream() {
+		InputStream inpt = new InputStream() {
 			@Override
 			public int read() throws IOException {
-				return SimpleConsole.this.read();
+				return Terminal.this.read();
 			}
 		};
-		return in;
+		return inpt;
 	}
 
-	/// Get a PrintStream suitable for writing on this console
+	/// Get a PrintStream suitable for writing on this terminal
 	/// @return a OutputStream
 	public PrintStream getOutputStream() {
 		OutputStream out = new OutputStream() {
 			@Override
 			public void write(int b) throws IOException {
 				String s = "" + (char) b;
-				SimpleConsole.this.write(s);
+				Terminal.this.write(s);
 			}
 		};
 		return new PrintStream(out);
 	}
 
-	/// Get a writer suitable for writing on this console
+	/// Get a writer suitable for writing on this terminal
 	/// @return a writer
 	public Writer getWriter() {
 		return (new Writer() {
 			@Override
 			public void write(String s) {
-				SimpleConsole.this.write(s);
+				Terminal.this.write(s);
 			}
 
 			public void write(char[] cbuf, int off, int len) throws IOException {
-				SimpleConsole.this.write(new String(cbuf, off, len));
+				Terminal.this.write(new String(cbuf, off, len));
 			}
 
 			@Override
@@ -183,20 +183,5 @@ public class SimpleConsole extends JFrame {
 			}
 		});
 	}
-
-
-	// ****************************************************************
-	// *** KeyListener
-	// ****************************************************************
-	/// the KeyListener
-	private KeyAdapter keyListener = new KeyAdapter() {
-		public void keyTyped(KeyEvent event) {
-//			System.out.println("ConsolePanel'keyTyped: "+event.getKeyChar());
-			if (reading) {
-				keyin = event.getKeyChar();
-				reading = false;
-			}
-		}
-	};
 	
 }

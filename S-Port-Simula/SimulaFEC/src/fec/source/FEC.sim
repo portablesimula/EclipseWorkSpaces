@@ -47,7 +47,7 @@ begin
 
 
 FINI:
-	  sysout.outtext("FEC.FINI: currentpass="); sysout.outint(rank(currentpass)-48, 0); outimage;
+%	  sysout.outtext("FEC.FINI: currentpass="); sysout.outint(rank(currentpass)-48, 0); outimage;
       if currentpass = '1' then ClosePass1 !*** will close L2OUPT;
       else begin
            inspect coder when visiblegenerator do begin
@@ -94,7 +94,7 @@ FINI:
       !*** now also signal FEC end to environment ***;
       ENV.giveintinfo(5,numwarnfound);
 
-	  sysout.outtext("FEC.FINI: termstatus="); sysout.outint(rank(termstatus)-48, 0); outimage;
+%	  sysout.outtext("FEC.FINI: termstatus="); sysout.outint(rank(termstatus)-48, 0); outimage;
 	  exit(rank(termstatus)-48);
 	  
 end COMMON-block;

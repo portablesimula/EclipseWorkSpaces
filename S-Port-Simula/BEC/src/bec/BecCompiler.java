@@ -4,7 +4,7 @@ import java.util.HashMap;
 import bec.descriptor.Descriptor;
 import bec.segment.Segment;
 import bec.util.Array;
-import bec.util.SimpleConsole;
+import bec.util.Terminal;
 import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Type;
@@ -15,7 +15,10 @@ public class BecCompiler {
 	static String scodeSource;
 	
 	public static void main(String[] argv) {
-		Global.console = new SimpleConsole("Runtime Console");
+		Global.console = new Terminal("Runtime Console");
+//		Terminal terminal = new Terminal("Runtime Console");
+//		System.setIn(terminal.getInputStream());
+//		System.setOut(terminal.getOutputStream());
 
 		// Parse command line arguments.
 		for(int i=0;i<argv.length;i++) {
@@ -94,6 +97,8 @@ public class BecCompiler {
 		Thread.currentThread().setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
 			public void uncaughtException(Thread thread, Throwable e) {
 				Util.println("BecCompiler.UncaughtExceptionHandler: BEC GOT Exception: " + e.getClass().getSimpleName());
+//				e.printStackTrace();
+				Thread.dumpStack();
 				if(Global.console != null) {
 					while(true) Thread.yield();
 				}
@@ -111,13 +116,14 @@ public class BecCompiler {
 			while(Scode.curinstr == Scode.S_MODULE) {
 				new ModuleDefinition();
 				Scode.inputInstr();
+				Util.println("*** WARNING: SCode file written to " + scodeSource);
 			}
 			if(Scode.curinstr == Scode.S_MAIN) {
 				new MainProgram();
 			}
 		} else Util.IERR("Illegal S-Program");
 		
-		if(Global.verbose) System.out.println("DONE: BecCompiler: " + scodeSource);
+		if(Global.verbose) Util.println("DONE: BecCompiler: " + scodeSource);
 	}
 
 }

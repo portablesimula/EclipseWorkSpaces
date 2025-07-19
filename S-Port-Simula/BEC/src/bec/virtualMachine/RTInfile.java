@@ -122,7 +122,7 @@ public class RTInfile extends RTImageFile {
 	public static int sysinInimage(ObjectAddress chrAddr, int nchr) {
 		try {
 			String line = (sysinRest != null) ? sysinRest : readLine();
-			System.out.println("RTInfile.sysinInimage: line=\"" + line + '"');
+//			System.out.println("RTInfile.sysinInimage: line=\"" + line + '"');
 			sysinRest = null;
 			if(line == null) {
 				RTUtil.set_STATUS(13); // End of file on input";

@@ -242,8 +242,8 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 		String res = sb.toString().stripTrailing();
 //		System.out.println("SVM_CALL.printo: \""+res+'"');
 		if(Global.console != null)
-			Global.console.write(res+'\n');
-		System.out.println(res);
+			 Global.console.write(res+'\n');
+		else System.out.println(res);
 		
 		if(spc != 1) {
 			if(spc < 1) {

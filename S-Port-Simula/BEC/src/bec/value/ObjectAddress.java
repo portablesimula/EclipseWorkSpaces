@@ -135,7 +135,7 @@ public class ObjectAddress extends Value {
 //			case REMOTE_ADDR: return "REMOTE_ADDR[RTStackTop+" + ofst + ']';
 //			case REFER_ADDR:  return "REFER_ADDR[" + ofst + ']';
 			case STACK_ADDR: //  return "STACK_ADR[RTStack(" + ofst + ")]";
-				System.out.println("ObjectAddress.store: "+value+"  "+this);
+//				System.out.println("ObjectAddress.store: "+value+"  "+this);
 //				RTStack.dumpRTStack("ObjectAddress.store: "+this);
 				RTStack.store(ofst + idx, value, comment);
 //				RTStack.dumpRTStack("ObjectAddress.store: "+this);

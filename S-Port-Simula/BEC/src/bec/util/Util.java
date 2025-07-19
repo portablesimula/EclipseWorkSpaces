@@ -145,8 +145,9 @@ public class Util {
 			Process process = processBuilder.start();		
 			InputStream output = process.getInputStream();  // Process' output
 			while (process.isAlive()) {
-				while (output.available() > 0)
+				while (output.available() > 0) {
 					System.out.append((char) output.read());
+				}
 //				System.out.println("ALIVE: "+process.isAlive());
 			}
 //			System.out.println("RETURN: "+process.exitValue());

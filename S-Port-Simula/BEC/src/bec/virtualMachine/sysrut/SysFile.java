@@ -209,7 +209,7 @@ public abstract class SysFile {
 //		System.out.println("SVM_SYSCALL.INIMAG: chrAddr="+chrAddr);
 		int filled = 0;
 		if(key == RTFile.KEY_SYSIN) {
-			System.out.println("SVM_SYSCALL.INIMAG: SYSIN:  nchr="+nchr);
+//			System.out.println("SVM_SYSCALL.INIMAG: SYSIN:  nchr="+nchr);
 			filled = RTInfile.sysinInimage(chrAddr, nchr);
 //			Util.IERR("");
 		} else if(key > 3) {
@@ -281,10 +281,11 @@ public abstract class SysFile {
 //		System.out.println("SVM_SYSCALL.BREAKO: nchr="+nchr);
 //		System.out.println("SVM_SYSCALL.BREAKO: chrAddr="+chrAddr);
 		if(key == RTFile.KEY_SYSOUT || key == RTFile.KEY_SYSTRACE) {
-			System.out.println("SVM_SYSCALL.BREAKO: SYSOUT:  key="+key);
+//			System.out.println("SVM_SYSCALL.BREAKO: SYSOUT:  key="+key);
 			if(Global.console != null)
 				 Global.console.write(image);
-			else System.out.print(image);
+			else
+				System.out.print(image);
 //			Util.IERR("");
 		} else if(key > 3) {
 			RTImageFile spec = (RTImageFile) lookup(key);

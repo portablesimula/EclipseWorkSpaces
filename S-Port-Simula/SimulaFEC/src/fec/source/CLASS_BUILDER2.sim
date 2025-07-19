@@ -874,6 +874,8 @@ restartloop:
             AOF:-new outbytefile(attrfilename);
 %+T		    TRC("BUILDER2",sourceline,"OPEN ATTRIBUTE OUTPUT: " & attrfilename);
             if not AOF.open then openerror(attrfilename);
+		    sysout.outtext("*** WARNING: Seperate compiled class/procedure is not fully implemented. May result in bad S-Code"); sysout.outimage;
+		    sysout.outtext("*** WARNING: Attributes written to " & attrfilename); sysout.outimage;
             AOF.outbyte(rank(layoutindex));
 %+T		    TRC("BUILDER2",sourceline,"sportid=" & sportid);
 %+D         if sportid.length<>12 then internerr('!7!',sourceline);

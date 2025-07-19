@@ -1,5 +1,7 @@
 package sim.compiler;
 
+import static sim.compiler.Global.consolePanel;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -18,7 +20,7 @@ public class Global {
 	/// Initiate Global variables.
 	public static void initiate() {
 		Global.consolePanel = new ConsolePanel();			
-       	Global.loadSPortSetupProperties();
+       	Global.loadSPortSetupProperties(); 
        	Global.loadSPortProperties();
 		String SPORT_HOME = Global.sPortSetupProperties.getProperty("sPort.home","?");
 		if (SPORT_HOME != null) {
@@ -95,7 +97,6 @@ public class Global {
 	public static String insertName;
 
 	/// The Editor and FEC console
-//	public static REMOVE_ConsolePanel consolePanel;  // Option.TESTING == true
 	public static ConsolePanel consolePanel;  // Option.TESTING == true
 
 

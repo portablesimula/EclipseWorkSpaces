@@ -57,7 +57,7 @@ public class SVM_INITO extends SVM_Instruction {
 		if(DEBUG) {
 //			Segment.lookup("POOL_0").dump("SVM_INITO.execute: FINAL POOL_0", 0, 20);
 			System.out.println("SVM_INITO.get: FINISHED !");
-			Util.IERR("");
+//			Util.IERR("");
 		}
 		return null;
 	}
@@ -70,14 +70,27 @@ public class SVM_INITO extends SVM_Instruction {
 	@Override
 	public void execute() {
 //		if(DEBUG) Segment.lookup("POOL_0").dump("SVM_INITO.execute: INITIAL POOL_0", 0, 20);
-		SAVE_OBJECT = RTStack.popOADDR();
-		SAVE_INDEX = 0+6;
-		if(DEBUG) System.out.println("SVM_INITO: " + SAVE_OBJECT.getClass().getSimpleName() + " " + SAVE_OBJECT);
-		IntegerValue sort = (IntegerValue) SAVE_OBJECT.load(1);
-		IntegerValue lng = (IntegerValue) SAVE_OBJECT.load(3);
-		if(DEBUG) System.out.println("SVM_INITO: sort="+sort+", lng="+lng);
-		if(sort.value != 1) Util.IERR("NOT A SAVE OBJECT");
-		SAVE_LENGTH = lng.value;
+		try {
+//			SAVE_OBJECT = RTStack.popOADDR();
+			SAVE_OBJECT = RTStack.popOADDR().addOffset(-7);
+			SAVE_INDEX = 0+6;
+			if(DEBUG) {
+				System.out.println("SVM_INITO: " + SAVE_OBJECT.getClass().getSimpleName() + " " + SAVE_OBJECT);
+				RTUtil.dumpEntity(SAVE_OBJECT);
+			}
+			IntegerValue sort = (IntegerValue) SAVE_OBJECT.load(1);
+//			if(sort.value != 1) Util.IERR("NOT A SAVE OBJECT");
+//			if(sort.value != 9) Util.IERR("NOT A SAVE OBJECT");
+			if(sort.value != RTUtil.S_SAV) Util.IERR("NOT A SAVE OBJECT");
+			IntegerValue lng = (IntegerValue) SAVE_OBJECT.load(3);
+			if(DEBUG) System.out.println("SVM_INITO: sort="+sort+", lng="+lng);
+			SAVE_LENGTH = lng.value;
+		} catch(Exception e) {
+			System.out.println("SVM_INITO: FAILED: " + e);
+			e.printStackTrace();
+//			System.exit(-1);
+		}
+		
 		Global.PSC.addOfst(1);
 	}
 	

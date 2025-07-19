@@ -5,15 +5,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.file.attribute.FileTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Properties;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.Vector;
 import java.util.concurrent.TimeUnit;
@@ -191,48 +195,73 @@ public class Util {
 	}
 
 	public static int exec(String... cmd) throws IOException {
-		String line="";
-		for(int i=0;i<cmd.length;i++) line=line+" "+cmd[i];
-        if(Option.verbose) System.out.println("MakeSIM.execute: command="+line);
+		String cmdLine="";
+		for(int i=0;i<cmd.length;i++) cmdLine=cmdLine+" "+cmd[i];
+        if(Option.verbose) System.out.println("Util.exec: command="+cmdLine);
 		ProcessBuilder processBuilder = new ProcessBuilder(cmd);
-		processBuilder.inheritIO();
+//		processBuilder.inheritIO();
+//		processBuilder.redirectErrorStream();
 		try {
-			Process process = processBuilder.start();		
-			boolean terminated = process.waitFor(1, TimeUnit.HOURS);
-			if(! terminated) Util.IERR("Process Execution didn't terminate: " + line);
+			Process process = processBuilder.start();
+			
+			BufferedReader reader = process.inputReader(); // Process' output
+//			BufferedWriter writer = process.outputWriter();
+
+			String line = null;
+			while((line = reader.readLine()) != null) {
+			    System.out.println(line);
+				if(Global.consolePanel != null) {
+					Global.consolePanel.write(line + '\n');
+				}
+			}
+			
+			boolean terminated = process.waitFor(5, TimeUnit.MINUTES);
+			if(! terminated) Util.IERR("Util.exec: Process Execution didn't terminate: " + cmdLine);
+			if(Option.verbose) System.out.println("Util.exec: RETURN: "+process.exitValue());
+			
 			int exitCode = process.exitValue();
 			if(Option.verbose) System.out.println("Util.exec: exitCode = "+exitCode);
 			return exitCode;
 		} catch(Exception e) {
-			Util.IERR("Process Execution failed: " + line, e);
+			e.printStackTrace();
+			Util.IERR("Util.exec: Process Execution failed: " + cmdLine, e);
 			return -1;
 		}
 	}
 
-//	public static int OLD_exec(String... cmd) throws IOException {
-//		String line="";
-//		for(int i=0;i<cmd.length;i++) line=line+" "+cmd[i];
-//        if(Option.verbose) System.out.println("MakeSIM.execute: command="+line);
-//		ProcessBuilder processBuilder = new ProcessBuilder(cmd);
-//		processBuilder.redirectErrorStream(true);
-//		try {
-//			Process process = processBuilder.start();		
-//			InputStream output = process.getInputStream();  // Process' output
-//			while (process.isAlive()) {
-//				while (output.available() > 0)
-////					System.out.append((char) output.read());
-//					Global.console.write("" + (char) output.read());
-////				System.out.println("ALIVE: "+process.isAlive());
-//			}
-//			if(Option.verbose) System.out.println("RETURN: "+process.exitValue());
-////			Thread.dumpStack();
-//			return (process.exitValue());
-//
-//		} catch(Exception e) {
-//			System.out.println("ERROR: "+e);
-//			throw new RuntimeException("Process Execution failed: " + line, e);
-//		}
-//	}
+	public static int OLD_exec(final Vector<String> cmd) throws IOException {
+		String[] cmds = new String[cmd.size()];
+		cmd.copyInto(cmds);
+		return (OLD_exec(cmds));
+	}
+
+	public static int OLD_exec(String... cmd) throws IOException {
+		String line="";
+		for(int i=0;i<cmd.length;i++) line=line+" "+cmd[i];
+        if(Option.verbose) System.out.println("MakeSIM.execute: command="+line);
+		ProcessBuilder processBuilder = new ProcessBuilder(cmd);
+		processBuilder.redirectErrorStream(true);
+		try {
+			Process process = processBuilder.start();		
+			InputStream output = process.getInputStream();  // Process' output
+			while (process.isAlive()) {
+				while (output.available() > 0) {
+					System.out.append((char) output.read());
+					if(Global.consolePanel != null)
+						Global.consolePanel.write("" + (char) output.read());
+				}
+//				System.out.println("ALIVE: "+process.isAlive());
+			}
+			if(Option.verbose) System.out.println("RETURN: "+process.exitValue());
+//			Thread.dumpStack();
+			return (process.exitValue());
+
+		} catch(Exception e) {
+			System.out.println("ERROR: "+e);
+			e.printStackTrace();
+			throw new RuntimeException("Process Execution failed: " + line, e);
+		}
+	}
 
 	
 	// ***************************************************************

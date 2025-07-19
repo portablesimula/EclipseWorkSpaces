@@ -191,10 +191,10 @@ public class Type {
 			
 			if(tag == Scode.TAG_STRING) ; // OK Predefinert
 			else if(TMAP.get(tag) ==null) {
-				if(tag == 2483) {
-					System.out.println("Type.readRECTYPES: NEW Type: " + type + ", tag=" + tag);
-//					Util.IERR("");
-				}
+//				if(tag == 2483) {
+//					System.out.println("Type.readRECTYPES: NEW Type: " + type + ", tag=" + tag);
+////					Util.IERR("");
+//				}
 				TMAP.put(tag, type);
 				RECTYPES.add(type);
 //				Type.dumpTypes("Type.readRECTYPES: ");

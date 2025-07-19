@@ -2,6 +2,7 @@ package sim.compiler;
 
 import java.io.File;
 
+import sim.Terminal;
 import sim.editor.SPortEditor;
 
 import static sim.compiler.Global.*;

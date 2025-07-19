@@ -1,8 +1,6 @@
 package bec.virtualMachine;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
@@ -84,49 +82,6 @@ public class RTFileAction {
 //	public boolean isopen() {
 //		return (_OPEN);
 //	}
-
-	/// Try to select a file named 'fileName'.
-	/// 
-	/// If no file exists with that fileName it will try several possibilities:
-	/// 
-	/// - First it will search the Option.internal.RUNTIME_USER_DIR
-	/// - Second, system properties "user.dir" and "java.class.path".parent.
-	/// - Finally, a JFileChooser dialog is opened to let the user select the file.
-	/// 
-	/// @param fileName the given fale name
-	/// @return the resulting file or null
-	protected File trySelectFile(final String fileName) {
-		File file = new File(fileName);
-		if (file.exists())
-			return (file);
-//		if (!file.isAbsolute()) {
-//			File tryFile = new File(RTS_Option.RUNTIME_USER_DIR, fileName);
-//			if (tryFile.exists())
-//				return (tryFile);
-//			File dir = new File(System.getProperty("user.dir", null));
-//			tryFile = new File(dir, fileName);
-//			if (tryFile.exists())
-//				return (tryFile);
-//
-//			File javaClassPath = new File(System.getProperty("java.class.path"));
-//			if (javaClassPath.exists())
-//				try {
-//					dir = javaClassPath.getParentFile().getParentFile();
-//					tryFile = new File(dir, fileName);
-//					if (tryFile.exists())
-//						return (tryFile);
-//				} catch (Throwable e) {
-//		    		if(RTS_Option.VERBOSE) e.printStackTrace();
-//				}
-//		}
-		JFileChooser fileChooser = new JFileChooser(file.getParent());
-		fileChooser.setDialogTitle("Can't Open " + fileName + ", select another");
-		int answer = fileChooser.showOpenDialog(null);
-		if (answer == JFileChooser.APPROVE_OPTION) {
-			return (fileChooser.getSelectedFile());
-		}
-		return (null);
-	}
 
 	
 	public RTFileAction(String action) {
@@ -237,8 +192,16 @@ public class RTFileAction {
 			case noCreate -> {
 				// If the value is "nocreate", the associated file must exist at "open".
 				if (!file.exists()) {
-					System.out.println("File access mode=noCreate but File \"" + file + "\" does not exist");
-					RTUtil.set_STATUS(3); // File does not exist
+//					System.out.println("File access mode=noCreate but File \"" + file + "\" does not exist");
+//					RTUtil.set_STATUS(3); // File does not exist
+					
+					File selected = trySelectFile(fileName);
+					if(selected != null) {
+						file = selected;
+					} else {
+						System.out.println("File access mode=noCreate but File \"" + file + "\" does not exist");
+						RTUtil.set_STATUS(3); // File does not exist						
+					}
 				}
 			}
 			case create -> {
@@ -272,6 +235,51 @@ public class RTFileAction {
 		return (file);
 	}
 
+	/// Try to select a file named 'fileName'.
+	/// 
+	/// If no file exists with that fileName it will try several possibilities:
+	/// 
+	/// - First it will search the Option.internal.RUNTIME_USER_DIR
+	/// - Second, system properties "user.dir" and "java.class.path".parent.
+	/// - Finally, a JFileChooser dialog is opened to let the user select the file.
+	/// 
+	/// @param fileName the given file name
+	/// @return the resulting file or null
+	protected File trySelectFile(final String fileName) {
+		File file = new File(fileName);
+		if (file.exists())
+			return (file);
+//		if (!file.isAbsolute()) {
+//			File tryFile = new File(RTS_Option.RUNTIME_USER_DIR, fileName);
+//			if (tryFile.exists())
+//				return (tryFile);
+//			File dir = new File(System.getProperty("user.dir", null));
+//			tryFile = new File(dir, fileName);
+//			if (tryFile.exists())
+//				return (tryFile);
+//
+//			File javaClassPath = new File(System.getProperty("java.class.path"));
+//			if (javaClassPath.exists())
+//				try {
+//					dir = javaClassPath.getParentFile().getParentFile();
+//					tryFile = new File(dir, fileName);
+//					if (tryFile.exists())
+//						return (tryFile);
+//				} catch (Throwable e) {
+//		    		if(RTS_Option.VERBOSE) e.printStackTrace();
+//				}
+//		}
+//		JFileChooser fileChooser = new JFileChooser(file.getParent());
+		JFileChooser fileChooser = new JFileChooser(System.getProperty("user.dir", null));
+		fileChooser.setDialogTitle("Can't Open " + fileName + ", select another");
+		int answer = fileChooser.showOpenDialog(null);
+		if (answer == JFileChooser.APPROVE_OPTION) {
+			return (fileChooser.getSelectedFile());
+		}
+		return (null);
+	}
+
+	
 	/// Do the Purge action
 	public void doPurgeAction(String fileName) {
 		try {

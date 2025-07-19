@@ -177,6 +177,12 @@ public class SPortEditor extends JFrame {
 			}
 		}
 
+//		Terminal terminal = new Terminal("Runtime Console");
+//		System.setIn(terminal.getInputStream());
+//		try {
+//			System.setOut(Global.consolePanel.getOutputStream());
+//		} catch(Exception e) { e.printStackTrace(); }
+
 //        doCheckForNewVersion();
         doSelectWorkspace();
     }

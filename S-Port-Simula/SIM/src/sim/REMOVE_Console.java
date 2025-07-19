@@ -37,9 +37,9 @@ import javax.swing.text.StyledDocument;
 import sim.compiler.Util;
 
 @SuppressWarnings("serial")
-public class Console extends JFrame {
+public class REMOVE_Console extends JFrame {
 	
-	public static Console current;
+	public static REMOVE_Console current;
 	
 	/// The TextPanel
 	private TextPanel textPanel;
@@ -61,7 +61,7 @@ public class Console extends JFrame {
     /// @param args the arguments
     /// @throws IOException 
 	public static void main(String[] args) throws IOException {
-		Console console = new Console();
+		REMOVE_Console console = new REMOVE_Console();
 		console.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		console.println("BEGIN TESTING ConsolePanel");
 		console.print("Input Single Character: ");
@@ -100,7 +100,7 @@ public class Console extends JFrame {
 	}
 
      
-	public Console() {
+	public REMOVE_Console() {
 		this.setSize(1000, 500); // Initial this size
 		this.setTitle("Runtime Console");
 //		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

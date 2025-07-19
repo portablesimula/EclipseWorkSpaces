@@ -21,6 +21,7 @@ public class SVM_INCO extends SVM_Instruction {
 
 	@Override
 	public void execute() {
+//		try {
 		int tos = RTStack.popInt();
 		ObjectAddress sos = RTStack.popOADDR();
 		if(DEBUG) {
@@ -32,6 +33,9 @@ public class SVM_INCO extends SVM_Instruction {
 		ObjectAddress res = (sos == null)? ObjectAddress.ofRelFrameAddr(tos) : sos.addOffset(tos);
 		if(DEBUG) System.out.println("SVM_INCO: " + sos + " + " + tos + " ==> " + res);
 		RTStack.push(res, "SVM_INCO: " + tos + " + " + sos + " = " + res);
+//		} catch(Exception e) {
+//			e.printStackTrace();
+//		}
 		Global.PSC.addOfst(1);
 	}
 

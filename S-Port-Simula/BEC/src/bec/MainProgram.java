@@ -71,6 +71,7 @@ public class MainProgram extends S_Module {
 		}
 		
 //		Segment.dumpAll("MainProgram: ");
+//		Segment.lookup("PSEG_STRG_PASS1:BODY").dump("PSEG_STRG_PASS1:BODY",1100,1200);
 	
 		if(Scode.curinstr != Scode.S_ENDPROGRAM)
 			Util.IERR("Illegal termination of program");
@@ -83,6 +84,7 @@ public class MainProgram extends S_Module {
 				Global.PSC.execute();
 			}
 		} catch(EndProgram eprog) {
+
 			if(Global.verbose) {
 				Util.println("BEC: MainProgram - Exit: " + eprog.exitCode);
 //				Thread.dumpStack();
@@ -92,6 +94,7 @@ public class MainProgram extends S_Module {
 //				Thread.dumpStack();
 //				return;
 //			}
+			Util.println("\nProgram - Exit: " + eprog.exitCode);
 			return;
 		}
 		

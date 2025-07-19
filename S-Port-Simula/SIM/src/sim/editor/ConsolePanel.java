@@ -268,27 +268,27 @@ public final class ConsolePanel extends JPanel {
 			@Override
 			public void write(int b) throws IOException {
 				String s = "" + (char) b;
-		    	System.out.println("ConsolePanel'OutputStream.write: " + s);
+//		    	System.out.println("ConsolePanel'OutputStream.write: " + s);
 				ConsolePanel.this.write(s, styleRegular);
 			}
 		    @Override
 			public void write(byte[] b) throws IOException {
-		    	System.out.print("ConsolePanel'OutputStream.write: b, len="+b.length+" b="); String sep="[";
+//		    	System.out.print("ConsolePanel'OutputStream.write: b, len="+b.length+" b="); String sep="[";
 				for(int i = 0; i < b.length; i++) {
 					write(b[i]);
 //					System.out.print(sep+(char)b[i]); sep=",";
 				}
-				System.out.println("]");
+//				System.out.println("]");
 //		    	Util.IERR("NOT IMPL");
 		    }
 		    @Override
 		    public void write(byte[] b, int off, int len) throws IOException {
-		    	System.out.print("ConsolePanel'OutputStream.write: b, off="+off+", len="+len+" b="); String sep="[";
+//		    	System.out.print("ConsolePanel'OutputStream.write: b, off="+off+", len="+len+" b="); String sep="[";
 				for(int i = 0; i < len; i++) {
 		    		write(b[off+i]);
 //					System.out.print(sep+(char)b[off+i]); sep=",";
 		    	}
-				System.out.println("]");
+//				System.out.println("]");
 //		    	Util.IERR("NOT IMPL");
 		    }
 		    @Override
@@ -452,15 +452,15 @@ public final class ConsolePanel extends JPanel {
 	/// the KeyListener
 	private KeyListener listener = new KeyListener() {
 		public void keyPressed(KeyEvent event) {
-			System.out.println("ConsolePanel'keyTyped: "+event);
+//			System.out.println("ConsolePanel'keyTyped: "+event);
 		}
 
 		public void keyReleased(KeyEvent event) {
-			System.out.println("ConsolePanel'keyTyped: "+event);
+//			System.out.println("ConsolePanel'keyTyped: "+event);
 		}
 
 		public void keyTyped(KeyEvent event) {
-			System.out.println("ConsolePanel'keyTyped: "+event);
+//			System.out.println("ConsolePanel'keyTyped: "+event);
 			if (reading) {
 				keyin = event.getKeyChar();
 				reading = false;

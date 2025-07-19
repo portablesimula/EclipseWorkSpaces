@@ -20,6 +20,7 @@ public abstract class SimulaBEC {
     	 invokeBEC();
      }
 
+ 	/// Called from EditorMenues 'run'
 	public static int invokeBEC() {
 		Vector<String> cmds = new Vector<String>();
 		if(Option.verbose) {
@@ -36,7 +37,7 @@ public abstract class SimulaBEC {
 		cmds.add(sCodeFileName);
 
 		if(Option.verbose) System.out.println("BEGIN SIMULA FEC ==> \"" + sCodeFileName + '"');
-		JarFileLoader loader = new JarFileLoader("C:/SPORT/CommonBEC.jar");
+		JarFileLoader loader = JarFileLoader.of("C:/SPORT/CommonBEC.jar");
 		String[] args = cmds.toArray(new String[0]);
 		
 		loader.invokeMain("bec.BecCompiler", args); // Invoke bec.BecCompiler.main(args)
@@ -52,6 +53,7 @@ public abstract class SimulaBEC {
 		return 0;
 	}
 		
+	/// Called from EditorMenues 'run'
 	public static int callBEC() {
 		Vector<String> cmds = new Vector<String>();
 		cmds.add("java");
