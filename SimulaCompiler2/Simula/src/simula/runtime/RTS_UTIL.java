@@ -536,17 +536,6 @@ public final class RTS_UTIL {
 				else if (arg.equalsIgnoreCase("-qpsTracing"))		RTS_Option.QPS_TRACING = true;
 				else if (arg.equalsIgnoreCase("-smlTracing"))		RTS_Option.SML_TRACING = true;
 				else if (arg.equalsIgnoreCase("-userDir"))			RTS_Option.RUNTIME_USER_DIR = args[++i];
-				else if (arg.equalsIgnoreCase("-sysout")) {
-					sysoutFile = new File(args[++i]);
-					try {
-						sysoutFile.getParentFile().mkdirs();
-						RTS_Option.SYSOUT_COPY = new OutputStreamWriter(new FileOutputStream(sysoutFile));
-					} catch (FileNotFoundException e) {
-						RTS_Option.SYSOUT_COPY = null;
-						System.out.println("RTS_UTIL.setRuntimeOptions: -sysout " + sysoutFile + " FAILED.");
-						e.printStackTrace();
-					}
-				}
 			}
 		}
 		if (RTS_Option.VERBOSE) {

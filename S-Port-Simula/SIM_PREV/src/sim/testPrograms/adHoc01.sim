@@ -1,0 +1,19 @@
+ begin
+ 
+   class A; begin end;
+   A class B; begin end;
+
+   ref (A) gra;
+   
+%   gra :- new A;
+%   gra :- new B;
+
+         outtext (
+                  if gra == none then "notext" else
+                  if gra is A then "object of A" else
+%                  if gra is B then "object of B" else
+                                   "object of C") ;
+         outimage ;
+	
+
+end;

@@ -1,0 +1,27 @@
+ 
+class adHocPRE(n,title); integer n; text title;
+	hidden protected found_error;
+begin
+	boolean found_error;
+	integer nFailed;
+   
+      
+	text procedure trim(t); text t; begin end;
+   
+	text procedure edInt(i); integer i; begin end;
+   
+	text procedure edReal2(r); real r; begin end;
+   
+	text procedure edLReal2(r); long real r; begin end;
+   
+   text procedure edBool(b); boolean b; begin end;
+
+	procedure err(t); text t; begin	end;
+
+	nFailed := 4444;
+	
+	inner;
+	
+	nFailed := 8888;
+	
+end;

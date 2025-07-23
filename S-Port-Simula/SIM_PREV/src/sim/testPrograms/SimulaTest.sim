@@ -1,0 +1,65 @@
+ 
+class SimulaTest(n,title); integer n; text title;
+	hidden protected found_error;
+begin
+	boolean found_error;
+	integer nFailed;
+	boolean verbose=false;
+	boolean noMessage;
+   
+      
+	text procedure trim(t); text t; begin
+   		character c;
+   		t :- t.strip;
+   		t.setpos(1);
+   		c := t.getchar;
+   		while c = ' ' do begin
+   			t :- t.sub(2,t.length-1);
+	   		t.setpos(1);
+   			c := t.getchar;
+   		end;
+   		trim :- t;
+	end;
+   
+	text procedure edInt(i); integer i; begin
+   		text t;
+   		t:-blanks(19); 
+   		t.putint(i);
+   		t :- trim(t);
+   		edInt :- t;
+	end;
+   
+   text procedure edBool(b); boolean b; begin
+   		edBool :- (if b then "true" else "false");
+   end;
+
+	procedure err(t); text t;
+	begin sysout.setpos(1);
+	      outtext("*** error: in test "); outtext(t); outimage;
+	      found_error:=true; nFailed:=nFailed+1;
+	end;
+
+	if verbose then begin
+		outtext ("--- START Simula a.s. TEST"); outint(n,4); outimage;
+		outtext (title);
+		outimage; outimage;
+	end;
+	
+	inner;
+	
+	if noMessage then else begin
+		if found_error then begin
+			outtext("--- "); outint(nFailed,3); outtext(" ERROR(S) FOUND IN TEST"); outint(n,4); outtext("  "); outtext(title);
+			outtext("Test sample has "); outint(nFailed,3);
+%			error(" error(s)");
+			outtext(" error(s)"); outimage;
+		end else begin
+			outtext ("--- NO ERRORS FOUND IN TEST"); outint(n,4); outtext("  "); outtext(title); --outimage;
+		end;
+
+		if verbose then begin
+			outtext ("--- END Simula a.s. TEST"); outint(n,4); outimage;
+		end;
+	end;
+	
+end;

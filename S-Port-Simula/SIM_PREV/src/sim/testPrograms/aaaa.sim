@@ -1,0 +1,505 @@
+EXEC: PSEG_ADHOC00[4]  LINE     1                                        Stack[0]:                           xReg: R1(null)
+EXEC: PSEG_ADHOC00[5]  LOADC    T[8:OADDR] CSEG_ADHOC00[34]              Stack[1]: CSEG_ADHOC00[34]          xReg: R1(null)
+EXEC: PSEG_ADHOC00[6]  PRECALL   B_SUB, nParSlots=1, exportSize=0, importSize=1   Stack[1]: CSEG_ADHOC00[34]          xReg: R1(null)
+EXEC: PSEG_ADHOC00[7]  CALL     PSEG_CENT_B_SUB:BODY[0] Return=REL_ADR[callStackTop+1]   Stack[1]: CSEG_ADHOC00[34]          xReg: R1(null)
+EXEC: PSEG_CENT_B_SUB:BODY[0]  ENTER    nLOCAL=1                         Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], null  Stack[0]: 
+EXEC: PSEG_CENT_B_SUB:BODY[1]  LOAD     REL_ADR[callStackTop+0]          Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], null  Stack[1]: CSEG_ADHOC00[34]
+EXEC: PSEG_CENT_B_SUB:BODY[2]  LOAD     REMOTE_ADDR[RTStackTop+4]        Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], null  Stack[1]: PSEG_ADHOC00[60]
+EXEC: PSEG_CENT_B_SUB:BODY[3]  LOAD     DSEG_RT[0]                       Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], null  Stack[2]: PSEG_ADHOC00[60], DSEG_RT[30]
+EXEC: PSEG_CENT_B_SUB:BODY[4]  STORE    REMOTE_ADDR[RTStackTop+6]        Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], null  Stack[1]: PSEG_ADHOC00[60]
+EXEC: PSEG_CENT_B_SUB:BODY[5]  POPK     1                                Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], null  Stack[0]: 
+EXEC: PSEG_CENT_B_SUB:BODY[6]  LOAD     DSEG_RT[37]                      Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], null  Stack[1]: POOL_1[707]
+EXEC: PSEG_CENT_B_SUB:BODY[7]  STORE    REL_ADR[callStackTop+2]          Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[1]: POOL_1[707]
+EXEC: PSEG_CENT_B_SUB:BODY[8]  POPK     1                                Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[0]: 
+EXEC: PSEG_CENT_B_SUB:BODY[9]  LOAD     DSEG_RT[37]                      Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[1]: POOL_1[707]
+EXEC: PSEG_CENT_B_SUB:BODY[10]  LOAD     REL_ADR[callStackTop+0]         Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[2]: POOL_1[707], CSEG_ADHOC00[34]
+EXEC: PSEG_CENT_B_SUB:BODY[11]  LOAD     REMOTE_ADDR[RTStackTop+3]       Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[2]: POOL_1[707], SIZE:8
+EXEC: PSEG_CENT_B_SUB:BODY[12]  INCO                                     Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[1]: POOL_1[715]
+EXEC: PSEG_CENT_B_SUB:BODY[13]  STORE    DSEG_RT[37]                     Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[1]: POOL_1[715]
+EXEC: PSEG_CENT_B_SUB:BODY[14]  POPK     1                               Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[0]: 
+EXEC: PSEG_CENT_B_SUB:BODY[15]  LOAD     DSEG_RT[37]                     Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[1]: POOL_1[715]
+EXEC: PSEG_CENT_B_SUB:BODY[16]  LOAD     DSEG_RT[38]                     Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[2]: POOL_1[715], POOL_1[149989]
+EXEC: PSEG_CENT_B_SUB:BODY[31]  JUMPIF   LE PSEG_CENT_B_SUB:BODY[32]     Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[0]: 
+EXEC: PSEG_CENT_B_SUB:BODY[32]  NOOP                                     Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[0]: 
+EXEC: PSEG_CENT_B_SUB:BODY[33]  NOOP                                     Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[0]: 
+EXEC: PSEG_CENT_B_SUB:BODY[34]  LINE     82                              Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[0]: 
+EXEC: PSEG_CENT_B_SUB:BODY[35]  LOADC    T[3:INT] INT:1                  Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[1]: INT:1
+EXEC: PSEG_CENT_B_SUB:BODY[36]  LOAD     REL_ADR[callStackTop+2]         Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[2]: INT:1, POOL_1[707]
+EXEC: PSEG_CENT_B_SUB:BODY[37]  STORE    REMOTE_ADDR[RTStackTop+1]       Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[1]: INT:1
+EXEC: PSEG_CENT_B_SUB:BODY[38]  POPK     1                               Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[0]: 
+EXEC: PSEG_CENT_B_SUB:BODY[39]  LOAD     DSEG_RT[0]                      Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[1]: DSEG_RT[30]
+EXEC: PSEG_CENT_B_SUB:BODY[40]  LOAD     REL_ADR[callStackTop+2]         Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[2]: DSEG_RT[30], POOL_1[707]
+EXEC: PSEG_CENT_B_SUB:BODY[41]  STORE    REMOTE_ADDR[RTStackTop+5]       Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[1]: DSEG_RT[30]
+EXEC: PSEG_CENT_B_SUB:BODY[42]  LOAD     REL_ADR[callStackTop+2]         Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[2]: DSEG_RT[30], POOL_1[707]
+EXEC: PSEG_CENT_B_SUB:BODY[43]  STORE    REMOTE_ADDR[RTStackTop+0]       Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[1]: DSEG_RT[30]
+EXEC: PSEG_CENT_B_SUB:BODY[44]  POPK     1                               Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[0]: 
+EXEC: PSEG_CENT_B_SUB:BODY[45]  LOAD     REL_ADR[callStackTop+0]         Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[1]: CSEG_ADHOC00[34]
+EXEC: PSEG_CENT_B_SUB:BODY[46]  LOAD     REL_ADR[callStackTop+2]         Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[2]: CSEG_ADHOC00[34], POOL_1[707]
+EXEC: PSEG_CENT_B_SUB:BODY[47]  STORE    REMOTE_ADDR[RTStackTop+3]       Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[1]: CSEG_ADHOC00[34]
+EXEC: PSEG_CENT_B_SUB:BODY[48]  POPK     1                               Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[0]: 
+EXEC: PSEG_CENT_B_SUB:BODY[49]  LOAD     REL_ADR[callStackTop+2]         Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[1]: POOL_1[707]
+EXEC: PSEG_CENT_B_SUB:BODY[50]  STORE    DSEG_RT[0]                      Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[1]: POOL_1[707]
+EXEC: PSEG_CENT_B_SUB:BODY[51]  POPK     1                               Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[0]: 
+EXEC: PSEG_CENT_B_SUB:BODY[52]  LOAD     DSEG_RT[58]                     Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[1]: null
+EXEC: PSEG_CENT_B_SUB:BODY[53]  LOADC    T[1:BOOL] true                  Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[2]: null, true
+EXEC: PSEG_CENT_B_SUB:BODY[67]  JUMPIF   NE PSEG_CENT_B_SUB:BODY[68]     Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[0]: 
+EXEC: PSEG_CENT_B_SUB:BODY[68]  NOOP                                     Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[0]: 
+EXEC: PSEG_CENT_B_SUB:BODY[69]  NOOP                                     Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[0]: 
+EXEC: PSEG_CENT_B_SUB:BODY[70]  RETURN   B_SUB REL_ADR[callStackTop+1]   Frame[3]: CSEG_ADHOC00[34], PSEG_ADHOC00[8], POOL_1[707]  Stack[0]: 
+EXEC: PSEG_ADHOC00[8]  NOOP                                              Stack[0]:                           xReg: R1(null)
+EXEC: PSEG_ADHOC00[9]  LINE     9                                        Stack[0]:                           xReg: R1(null)
+EXEC: PSEG_ADHOC00[10]  LINE     11                                      Stack[0]:                           xReg: R1(null)
+EXEC: PSEG_ADHOC00[11]  LOAD     DSEG_RT[0]                              Stack[1]: POOL_1[707]               xReg: R1(null)
+EXEC: PSEG_ADHOC00[12]  PRECALL   B_REC, nParSlots=1, exportSize=1, importSize=2   Stack[2]: null, POOL_1[707]         xReg: R1(null)
+EXEC: PSEG_ADHOC00[13]  LOADC    T[8:OADDR] CSEG_ADHOC00[20]             Stack[3]: null, POOL_1[707], CSEG_ADHOC00[20]      xReg: R1(null)
+EXEC: PSEG_ADHOC00[14]  NOOP                                             Stack[3]: null, POOL_1[707], CSEG_ADHOC00[20]      xReg: R1(null)
+EXEC: PSEG_ADHOC00[15]  CALL     PSEG_CENT_B_REC:BODY[0] Return=REL_ADR[callStackTop+3]   Stack[3]: null, POOL_1[707], CSEG_ADHOC00[20]      xReg: R1(null)
+EXEC: PSEG_CENT_B_REC:BODY[0]  ENTER    nLOCAL=0                         Frame[4]: null, POOL_1[707], CSEG_ADHOC00[20], PSEG_ADHOC00[16]  Stack[0]: 
+EXEC: PSEG_CENT_B_REC:BODY[1]  LOAD     DSEG_RT[37]                      Frame[4]: null, POOL_1[707], CSEG_ADHOC00[20], PSEG_ADHOC00[16]  Stack[1]: POOL_1[715]
+EXEC: PSEG_CENT_B_REC:BODY[2]  STORE    REL_ADR[callStackTop+0]          Frame[4]: POOL_1[715], POOL_1[707], CSEG_ADHOC00[20], PSEG_ADHOC00[16]  Stack[1]: POOL_1[715]
+EXEC: PSEG_CENT_B_REC:BODY[3]  POPK     1                                Frame[4]: POOL_1[715], POOL_1[707], CSEG_ADHOC00[20], PSEG_ADHOC00[16]  Stack[0]: 
+EXEC: PSEG_CENT_B_REC:BODY[4]  LOAD     DSEG_RT[37]                      Frame[4]: POOL_1[715], POOL_1[707], CSEG_ADHOC00[20], PSEG_ADHOC00[16]  Stack[1]: POOL_1[715]
+EXEC: PSEG_CENT_B_REC:BODY[5]  LOAD     REL_ADR[callStackTop+2]          Frame[4]: POOL_1[715], POOL_1[707], CSEG_ADHOC00[20], PSEG_ADHOC00[16]  Stack[2]: POOL_1[715], CSEG_ADHOC00[20]
+EXEC: PSEG_CENT_B_REC:BODY[6]  LOAD     REMOTE_ADDR[RTStackTop+3]        Frame[4]: POOL_1[715], POOL_1[707], CSEG_ADHOC00[20], PSEG_ADHOC00[16]  Stack[2]: POOL_1[715], SIZE:9
+EXEC: PSEG_CENT_B_REC:BODY[7]  INCO                                      Frame[4]: POOL_1[715], POOL_1[707], CSEG_ADHOC00[20], PSEG_ADHOC00[16]  Stack[1]: POOL_1[724]
+EXEC: PSEG_CENT_B_REC:BODY[8]  STORE    DSEG_RT[37]                      Frame[4]: POOL_1[715], POOL_1[707], CSEG_ADHOC00[20], PSEG_ADHOC00[16]  Stack[1]: POOL_1[724]
+EXEC: PSEG_CENT_B_REC:BODY[9]  POPK     1                                Frame[4]: POOL_1[715], POOL_1[707], CSEG_ADHOC00[20], PSEG_ADHOC00[16]  Stack[0]: 
+EXEC: PSEG_CENT_B_REC:BODY[10]  LOAD     DSEG_RT[37]                     Frame[4]: POOL_1[715], POOL_1[707], CSEG_ADHOC00[20], PSEG_ADHOC00[16]  Stack[1]: POOL_1[724]
+EXEC: PSEG_CENT_B_REC:BODY[11]  LOAD     DSEG_RT[38]                     Frame[4]: POOL_1[715], POOL_1[707], CSEG_ADHOC00[20], PSEG_ADHOC00[16]  Stack[2]: POOL_1[724], POOL_1[149989]
+EXEC: PSEG_CENT_B_REC:BODY[26]  JUMPIF   LE PSEG_CENT_B_REC:BODY[27]     Frame[4]: POOL_1[715], POOL_1[707], CSEG_ADHOC00[20], PSEG_ADHOC00[16]  Stack[0]: 
+EXEC: PSEG_CENT_B_REC:BODY[27]  NOOP                                     Frame[4]: POOL_1[715], POOL_1[707], CSEG_ADHOC00[20], PSEG_ADHOC00[16]  Stack[0]: 
+EXEC: PSEG_CENT_B_REC:BODY[28]  NOOP                                     Frame[4]: POOL_1[715], POOL_1[707], CSEG_ADHOC00[20], PSEG_ADHOC00[16]  Stack[0]: 
+EXEC: PSEG_CENT_B_REC:BODY[29]  LINE     263                             Frame[4]: POOL_1[715], POOL_1[707], CSEG_ADHOC00[20], PSEG_ADHOC00[16]  Stack[0]: 
+EXEC: PSEG_CENT_B_REC:BODY[30]  LOADC    T[3:INT] INT:6                  Frame[4]: POOL_1[715], POOL_1[707], CSEG_ADHOC00[20], PSEG_ADHOC00[16]  Stack[1]: INT:6
+EXEC: PSEG_CENT_B_REC:BODY[31]  LOAD     REL_ADR[callStackTop+0]         Frame[4]: POOL_1[715], POOL_1[707], CSEG_ADHOC00[20], PSEG_ADHOC00[16]  Stack[2]: INT:6, POOL_1[715]
+EXEC: PSEG_CENT_B_REC:BODY[32]  STORE    REMOTE_ADDR[RTStackTop+1]       Frame[4]: POOL_1[715], POOL_1[707], CSEG_ADHOC00[20], PSEG_ADHOC00[16]  Stack[1]: INT:6
+EXEC: PSEG_CENT_B_REC:BODY[33]  POPK     1                               Frame[4]: POOL_1[715], POOL_1[707], CSEG_ADHOC00[20], PSEG_ADHOC00[16]  Stack[0]: 
+EXEC: PSEG_CENT_B_REC:BODY[34]  LOAD     REL_ADR[callStackTop+1]         Frame[4]: POOL_1[715], POOL_1[707], CSEG_ADHOC00[20], PSEG_ADHOC00[16]  Stack[1]: POOL_1[707]
+EXEC: PSEG_CENT_B_REC:BODY[35]  LOAD     REL_ADR[callStackTop+0]         Frame[4]: POOL_1[715], POOL_1[707], CSEG_ADHOC00[20], PSEG_ADHOC00[16]  Stack[2]: POOL_1[707], POOL_1[715]
+EXEC: PSEG_CENT_B_REC:BODY[36]  STORE    REMOTE_ADDR[RTStackTop+0]       Frame[4]: POOL_1[715], POOL_1[707], CSEG_ADHOC00[20], PSEG_ADHOC00[16]  Stack[1]: POOL_1[707]
+EXEC: PSEG_CENT_B_REC:BODY[37]  POPK     1                               Frame[4]: POOL_1[715], POOL_1[707], CSEG_ADHOC00[20], PSEG_ADHOC00[16]  Stack[0]: 
+EXEC: PSEG_CENT_B_REC:BODY[38]  LOAD     REL_ADR[callStackTop+2]         Frame[4]: POOL_1[715], POOL_1[707], CSEG_ADHOC00[20], PSEG_ADHOC00[16]  Stack[1]: CSEG_ADHOC00[20]
+EXEC: PSEG_CENT_B_REC:BODY[39]  LOAD     REL_ADR[callStackTop+0]         Frame[4]: POOL_1[715], POOL_1[707], CSEG_ADHOC00[20], PSEG_ADHOC00[16]  Stack[2]: CSEG_ADHOC00[20], POOL_1[715]
+EXEC: PSEG_CENT_B_REC:BODY[40]  STORE    REMOTE_ADDR[RTStackTop+3]       Frame[4]: POOL_1[715], POOL_1[707], CSEG_ADHOC00[20], PSEG_ADHOC00[16]  Stack[1]: CSEG_ADHOC00[20]
+EXEC: PSEG_CENT_B_REC:BODY[41]  POPK     1                               Frame[4]: POOL_1[715], POOL_1[707], CSEG_ADHOC00[20], PSEG_ADHOC00[16]  Stack[0]: 
+EXEC: PSEG_CENT_B_REC:BODY[42]  RETURN   B_REC REL_ADR[callStackTop+3]   Frame[4]: POOL_1[715], POOL_1[707], CSEG_ADHOC00[20], PSEG_ADHOC00[16]  Stack[0]: 
+EXEC: PSEG_ADHOC00[16]  NOOP                                             Stack[1]: POOL_1[715]               xReg: R1(null)
+EXEC: PSEG_ADHOC00[17]  DUP                                              Stack[2]: POOL_1[715], POOL_1[715]      xReg: R1(null)
+EXEC: PSEG_ADHOC00[18]  LOADC    T[3:INT] INT:11                         Stack[3]: POOL_1[715], POOL_1[715], INT:11      xReg: R1(null)
+EXEC: PSEG_ADHOC00[19]  ASSIGN   REMOTE_ADDR[RTStackTop+7], size=1       Stack[1]: POOL_1[715]               xReg: R1(null)
+EXEC: PSEG_ADHOC00[20]  LOAD     DSEG_RT[0]                              Stack[2]: POOL_1[715], POOL_1[707]      xReg: R1(null)
+EXEC: PSEG_ADHOC00[21]  STORE    REMOTE_ADDR[RTStackTop+7]               Stack[1]: POOL_1[715]               xReg: R1(null)
+EXEC: PSEG_ADHOC00[22]  POPK     1                                       Stack[0]:                           xReg: R1(null)
+
+
+
+
+EXEC: PSEG_ADHOC00[23]  LINE     12                                      Stack[0]:                           xReg: R1(null)
+EXEC: PSEG_ADHOC00[24]  LOAD     DSEG_RT[0]                              Stack[1]: POOL_1[707]               xReg: R1(null)
+EXEC: PSEG_ADHOC00[25]  LOAD     REMOTE_ADDR[RTStackTop+7]               Stack[1]: POOL_1[715]               xReg: R1(null)
+EXEC: PSEG_ADHOC00[26]  PRECALL   A_VIRT, nParSlots=1, exportSize=1, importSize=3   Stack[2]: null, POOL_1[715]         xReg: R1(null)
+EXEC: PSEG_ADHOC00[27]  LOADC    T[3:INT] null                           Stack[3]: null, POOL_1[715], null      xReg: R1(null)
+EXEC: PSEG_ADHOC00[28]  NOOP                                             Stack[3]: null, POOL_1[715], null      xReg: R1(null)
+EXEC: PSEG_ADHOC00[29]  LOADC    T[3:INT] INT:1                          Stack[4]: null, POOL_1[715], null, INT:1      xReg: R1(null)
+EXEC: PSEG_ADHOC00[30]  NOOP                                             Stack[4]: null, POOL_1[715], null, INT:1      xReg: R1(null)
+EXEC: PSEG_ADHOC00[31]  CALL     PSEG_EDIT_A_VIRT:BODY[0] Return=REL_ADR[callStackTop+4]   Stack[4]: null, POOL_1[715], null, INT:1      xReg: R1(null)
+EXEC: PSEG_EDIT_A_VIRT:BODY[0]  ENTER    nLOCAL=1                        Frame[6]: null, POOL_1[715], null, INT:1, PSEG_ADHOC00[32], null  Stack[0]: 
+EXEC: PSEG_EDIT_A_VIRT:BODY[1]  LOAD     REL_ADR[callStackTop+1]         Frame[6]: null, POOL_1[715], null, INT:1, PSEG_ADHOC00[32], null  Stack[1]: POOL_1[715]
+EXEC: PSEG_EDIT_A_VIRT:BODY[2]  LOAD     REMOTE_ADDR[RTStackTop+3]       Frame[6]: null, POOL_1[715], null, INT:1, PSEG_ADHOC00[32], null  Stack[1]: CSEG_ADHOC00[20]
+EXEC: PSEG_EDIT_A_VIRT:BODY[3]  LOAD     REMOTE_ADDR[RTStackTop+8]       Frame[6]: null, POOL_1[715], null, INT:1, PSEG_ADHOC00[32], null  Stack[1]: CSEG_ADHOC00[17]
+EXEC: PSEG_EDIT_A_VIRT:BODY[4]  LOAD     REL_ADR[callStackTop+2]         Frame[6]: null, POOL_1[715], null, INT:1, PSEG_ADHOC00[32], null  Stack[2]: CSEG_ADHOC00[17], null
+EXEC: PSEG_EDIT_A_VIRT:BODY[5]  LOADC    T[3:INT] INT:2                  Frame[6]: null, POOL_1[715], null, INT:1, PSEG_ADHOC00[32], null  Stack[3]: CSEG_ADHOC00[17], null, INT:2
+EXEC: PSEG_EDIT_A_VIRT:BODY[6]  MULT                                     Frame[6]: null, POOL_1[715], null, INT:1, PSEG_ADHOC00[32], null  Stack[2]: CSEG_ADHOC00[17], null
+EXEC: PSEG_EDIT_A_VIRT:BODY[7]  STORE2REG R1                             Frame[6]: null, POOL_1[715], null, INT:1, PSEG_ADHOC00[32], null  Stack[1]: CSEG_ADHOC00[17]
+EXEC: PSEG_EDIT_A_VIRT:BODY[8]  LOAD     REMOTE_ADDR[RTStackTop+1]+R1(null)   Frame[6]: null, POOL_1[715], null, INT:1, PSEG_ADHOC00[32], null  Stack[1]: CSEG_ADHOC00[7]
+EXEC: PSEG_EDIT_A_VIRT:BODY[9]  STORE    REL_ADR[callStackTop+5]         Frame[6]: null, POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[1]: CSEG_ADHOC00[7]
+EXEC: PSEG_EDIT_A_VIRT:BODY[10]  POPK     1                              Frame[6]: null, POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[0]: 
+EXEC: PSEG_EDIT_A_VIRT:BODY[11]  LOAD     REL_ADR[callStackTop+5]        Frame[6]: null, POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[1]: CSEG_ADHOC00[7]
+EXEC: PSEG_EDIT_A_VIRT:BODY[12]  LINE     74                             Frame[6]: null, POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[1]: CSEG_ADHOC00[7]
+EXEC: PSEG_EDIT_A_VIRT:BODY[13]  LOADC    T[8:OADDR] null                Frame[6]: null, POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[2]: CSEG_ADHOC00[7], null
+EXEC: PSEG_EDIT_A_VIRT:BODY[20]  JUMPIF   NE PSEG_EDIT_A_VIRT:BODY[21]   Frame[6]: null, POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[0]: 
+EXEC: PSEG_EDIT_A_VIRT:BODY[21]  NOOP                                    Frame[6]: null, POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[0]: 
+EXEC: PSEG_EDIT_A_VIRT:BODY[22]  LOAD     REL_ADR[callStackTop+5]        Frame[6]: null, POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[1]: CSEG_ADHOC00[7]
+EXEC: PSEG_EDIT_A_VIRT:BODY[23]  LOAD     REMOTE_ADDR[RTStackTop+5]      Frame[6]: null, POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[1]: CSEG_ADHOC00[5]
+EXEC: PSEG_EDIT_A_VIRT:BODY[24]  LINE     76                             Frame[6]: null, POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[1]: CSEG_ADHOC00[5]
+EXEC: PSEG_EDIT_A_VIRT:BODY[25]  LOADC    T[8:OADDR] null                Frame[6]: null, POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[2]: CSEG_ADHOC00[5], null
+EXEC: PSEG_EDIT_A_VIRT:BODY[33]  JUMPIF   NE PSEG_EDIT_A_VIRT:BODY[34]   Frame[6]: null, POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[0]: 
+EXEC: PSEG_EDIT_A_VIRT:BODY[34]  NOOP                                    Frame[6]: null, POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[0]: 
+EXEC: PSEG_EDIT_A_VIRT:BODY[35]  LOAD     REL_ADR[callStackTop+3]        Frame[6]: null, POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[1]: INT:1
+EXEC: PSEG_EDIT_A_VIRT:BODY[36]  LOAD     REL_ADR[callStackTop+5]        Frame[6]: null, POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[2]: INT:1, CSEG_ADHOC00[7]
+EXEC: PSEG_EDIT_A_VIRT:BODY[37]  LOAD     REMOTE_ADDR[RTStackTop+5]      Frame[6]: null, POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[2]: INT:1, CSEG_ADHOC00[5]
+EXEC: PSEG_EDIT_A_VIRT:BODY[38]  LOAD     REMOTE_ADDR[RTStackTop+0]      Frame[6]: null, POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[2]: INT:1, INT:1
+EXEC: PSEG_EDIT_A_VIRT:BODY[46]  JUMPIF   EQ PSEG_EDIT_A_VIRT:BODY[47]   Frame[6]: null, POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[0]: 
+EXEC: PSEG_EDIT_A_VIRT:BODY[47]  NOOP                                    Frame[6]: null, POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[0]: 
+EXEC: PSEG_EDIT_A_VIRT:BODY[48]  NOOP                                    Frame[6]: null, POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[0]: 
+EXEC: PSEG_EDIT_A_VIRT:BODY[49]  NOOP                                    Frame[6]: null, POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[0]: 
+EXEC: PSEG_EDIT_A_VIRT:BODY[50]  LOAD     DSEG_RT[37]                    Frame[6]: null, POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[1]: POOL_1[724]
+EXEC: PSEG_EDIT_A_VIRT:BODY[51]  STORE    REL_ADR[callStackTop+0]        Frame[6]: POOL_1[724], POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[1]: POOL_1[724]
+EXEC: PSEG_EDIT_A_VIRT:BODY[52]  POPK     1                              Frame[6]: POOL_1[724], POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[0]: 
+EXEC: PSEG_EDIT_A_VIRT:BODY[53]  LOAD     DSEG_RT[37]                    Frame[6]: POOL_1[724], POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[1]: POOL_1[724]
+EXEC: PSEG_EDIT_A_VIRT:BODY[54]  LOAD     REL_ADR[callStackTop+5]        Frame[6]: POOL_1[724], POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[2]: POOL_1[724], CSEG_ADHOC00[7]
+EXEC: PSEG_EDIT_A_VIRT:BODY[55]  LOAD     REMOTE_ADDR[RTStackTop+3]      Frame[6]: POOL_1[724], POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[2]: POOL_1[724], SIZE:8
+EXEC: PSEG_EDIT_A_VIRT:BODY[56]  INCO                                    Frame[6]: POOL_1[724], POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[1]: POOL_1[732]
+EXEC: PSEG_EDIT_A_VIRT:BODY[57]  STORE    DSEG_RT[37]                    Frame[6]: POOL_1[724], POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[1]: POOL_1[732]
+EXEC: PSEG_EDIT_A_VIRT:BODY[58]  POPK     1                              Frame[6]: POOL_1[724], POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[0]: 
+EXEC: PSEG_EDIT_A_VIRT:BODY[59]  LOAD     DSEG_RT[37]                    Frame[6]: POOL_1[724], POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[1]: POOL_1[732]
+EXEC: PSEG_EDIT_A_VIRT:BODY[60]  LOAD     DSEG_RT[38]                    Frame[6]: POOL_1[724], POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[2]: POOL_1[732], POOL_1[149989]
+EXEC: PSEG_EDIT_A_VIRT:BODY[75]  JUMPIF   LE PSEG_EDIT_A_VIRT:BODY[76]   Frame[6]: POOL_1[724], POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[0]: 
+EXEC: PSEG_EDIT_A_VIRT:BODY[76]  NOOP                                    Frame[6]: POOL_1[724], POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[0]: 
+EXEC: PSEG_EDIT_A_VIRT:BODY[77]  NOOP                                    Frame[6]: POOL_1[724], POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[0]: 
+EXEC: PSEG_EDIT_A_VIRT:BODY[78]  LINE     81                             Frame[6]: POOL_1[724], POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[0]: 
+EXEC: PSEG_EDIT_A_VIRT:BODY[79]  LOADC    T[3:INT] INT:2                 Frame[6]: POOL_1[724], POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[1]: INT:2
+EXEC: PSEG_EDIT_A_VIRT:BODY[80]  LOAD     REL_ADR[callStackTop+0]        Frame[6]: POOL_1[724], POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[2]: INT:2, POOL_1[724]
+EXEC: PSEG_EDIT_A_VIRT:BODY[81]  STORE    REMOTE_ADDR[RTStackTop+1]      Frame[6]: POOL_1[724], POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[1]: INT:2
+EXEC: PSEG_EDIT_A_VIRT:BODY[82]  POPK     1                              Frame[6]: POOL_1[724], POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[0]: 
+EXEC: PSEG_EDIT_A_VIRT:BODY[83]  LOAD     REL_ADR[callStackTop+1]        Frame[6]: POOL_1[724], POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[1]: POOL_1[715]
+EXEC: PSEG_EDIT_A_VIRT:BODY[84]  LOAD     REL_ADR[callStackTop+0]        Frame[6]: POOL_1[724], POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[2]: POOL_1[715], POOL_1[724]
+EXEC: PSEG_EDIT_A_VIRT:BODY[85]  STORE    REMOTE_ADDR[RTStackTop+0]      Frame[6]: POOL_1[724], POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[1]: POOL_1[715]
+EXEC: PSEG_EDIT_A_VIRT:BODY[86]  POPK     1                              Frame[6]: POOL_1[724], POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[0]: 
+EXEC: PSEG_EDIT_A_VIRT:BODY[87]  LOAD     REL_ADR[callStackTop+5]        Frame[6]: POOL_1[724], POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[1]: CSEG_ADHOC00[7]
+EXEC: PSEG_EDIT_A_VIRT:BODY[88]  LOAD     REL_ADR[callStackTop+0]        Frame[6]: POOL_1[724], POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[2]: CSEG_ADHOC00[7], POOL_1[724]
+EXEC: PSEG_EDIT_A_VIRT:BODY[89]  STORE    REMOTE_ADDR[RTStackTop+3]      Frame[6]: POOL_1[724], POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[1]: CSEG_ADHOC00[7]
+EXEC: PSEG_EDIT_A_VIRT:BODY[90]  POPK     1                              Frame[6]: POOL_1[724], POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[0]: 
+EXEC: PSEG_EDIT_A_VIRT:BODY[91]  RETURN   A_VIRT REL_ADR[callStackTop+4]   Frame[6]: POOL_1[724], POOL_1[715], null, INT:1, PSEG_ADHOC00[32], CSEG_ADHOC00[7]  Stack[0]: 
+EXEC: PSEG_ADHOC00[32]  NOOP                                             Stack[1]: POOL_1[724]               xReg: R1(null)
+EXEC: PSEG_ADHOC00[33]  PRECALL   B_FPT, nParSlots=1, exportSize=0, importSize=4   Stack[1]: POOL_1[724]               xReg: R1(null)
+EXEC: PSEG_ADHOC00[34]  LOAD     DSEG_RT[0]                              Stack[2]: POOL_1[724], POOL_1[707]      xReg: R1(null)
+EXEC: PSEG_ADHOC00[35]  NOOP                                             Stack[2]: POOL_1[724], POOL_1[707]      xReg: R1(null)
+EXEC: PSEG_ADHOC00[36]  LOADC    T[8:OADDR] CSEG_ADHOC00[13]             Stack[3]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13]      xReg: R1(null)
+EXEC: PSEG_ADHOC00[37]  NOOP                                             Stack[3]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13]      xReg: R1(null)
+EXEC: PSEG_ADHOC00[38]  LOADC    T[3:INT] null                           Stack[4]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null      xReg: R1(null)
+EXEC: PSEG_ADHOC00[39]  NOOP                                             Stack[4]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null      xReg: R1(null)
+EXEC: PSEG_ADHOC00[40]  CALL     PSEG_FORM_B_FPT:BODY[0] Return=REL_ADR[callStackTop+4]   Stack[4]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null      xReg: R1(null)
+EXEC: PSEG_FORM_B_FPT:BODY[0]  ENTER    nLOCAL=1                         Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], null  Stack[0]: 
+EXEC: PSEG_FORM_B_FPT:BODY[1]  LOAD     REL_ADR[callStackTop+0]          Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], null  Stack[1]: POOL_1[724]
+EXEC: PSEG_FORM_B_FPT:BODY[2]  LOAD     REMOTE_ADDR[RTStackTop+3]        Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], null  Stack[1]: CSEG_ADHOC00[7]
+EXEC: PSEG_FORM_B_FPT:BODY[3]  LOAD     REMOTE_ADDR[RTStackTop+5]        Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], null  Stack[1]: CSEG_ADHOC00[5]
+EXEC: PSEG_FORM_B_FPT:BODY[4]  LOAD     REL_ADR[callStackTop+3]          Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], null  Stack[2]: CSEG_ADHOC00[5], null
+EXEC: PSEG_FORM_B_FPT:BODY[5]  STORE2REG R1                              Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], null  Stack[1]: CSEG_ADHOC00[5]
+EXEC: PSEG_FORM_B_FPT:BODY[6]  LOAD     REMOTE_ADDR[RTStackTop+1]+R1(null)   Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], null  Stack[1]: CSEG_ADHOC00[0]
+EXEC: PSEG_FORM_B_FPT:BODY[7]  STORE    REL_ADR[callStackTop+5]          Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[1]: CSEG_ADHOC00[0]
+EXEC: PSEG_FORM_B_FPT:BODY[8]  POPK     1                                Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[0]: 
+EXEC: PSEG_FORM_B_FPT:BODY[9]  LOAD     DSEG_RT[0]                       Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[1]: POOL_1[707]
+EXEC: PSEG_FORM_B_FPT:BODY[10]  LOAD     REMOTE_ADDR[RTStackTop+5]       Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[1]: DSEG_RT[30]
+EXEC: PSEG_FORM_B_FPT:BODY[11]  LOAD     REL_ADR[callStackTop+0]         Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[2]: DSEG_RT[30], POOL_1[724]
+EXEC: PSEG_FORM_B_FPT:BODY[12]  STORE    REMOTE_ADDR[RTStackTop+5]       Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[1]: DSEG_RT[30]
+EXEC: PSEG_FORM_B_FPT:BODY[13]  POPK     1                               Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[0]: 
+EXEC: PSEG_FORM_B_FPT:BODY[14]  LOAD     REL_ADR[callStackTop+0]         Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[1]: POOL_1[724]
+EXEC: PSEG_FORM_B_FPT:BODY[15]  LOAD     DSEG_RT[0]                      Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[2]: POOL_1[724], POOL_1[707]
+EXEC: PSEG_FORM_B_FPT:BODY[16]  STORE    REMOTE_ADDR[RTStackTop+5]       Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[1]: POOL_1[724]
+EXEC: PSEG_FORM_B_FPT:BODY[17]  POPK     1                               Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[0]: 
+EXEC: PSEG_FORM_B_FPT:BODY[18]  LOAD     REL_ADR[callStackTop+5]         Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[1]: CSEG_ADHOC00[0]
+EXEC: PSEG_FORM_B_FPT:BODY[19]  LOAD     REMOTE_ADDR[RTStackTop+2]       Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[1]: null
+EXEC: PSEG_FORM_B_FPT:BODY[20]  LINE     638                             Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[1]: null
+EXEC: PSEG_FORM_B_FPT:BODY[21]  LOADC    T[3:INT] INT:2                  Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[2]: null, INT:2
+EXEC: PSEG_FORM_B_FPT:BODY[22]  COMPARE  NE                              Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[1]: true
+EXEC: PSEG_FORM_B_FPT:BODY[23]  LOAD     REL_ADR[callStackTop+2]         Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[2]: true, CSEG_ADHOC00[13]
+EXEC: PSEG_FORM_B_FPT:BODY[24]  LOAD     REMOTE_ADDR[RTStackTop+0]       Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[2]: true, INT:3
+EXEC: PSEG_FORM_B_FPT:BODY[25]  LINE     639                             Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[2]: true, INT:3
+EXEC: PSEG_FORM_B_FPT:BODY[26]  LOADC    T[3:INT] INT:3                  Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[3]: true, INT:3, INT:3
+EXEC: PSEG_FORM_B_FPT:BODY[27]  COMPARE  EQ                              Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[2]: true, true
+EXEC: PSEG_FORM_B_FPT:BODY[28]  LOAD     REL_ADR[callStackTop+2]         Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[3]: true, true, CSEG_ADHOC00[13]
+EXEC: PSEG_FORM_B_FPT:BODY[29]  LOAD     REMOTE_ADDR[RTStackTop+0]       Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[3]: true, true, INT:3
+EXEC: PSEG_FORM_B_FPT:BODY[30]  LINE     639                             Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[3]: true, true, INT:3
+EXEC: PSEG_FORM_B_FPT:BODY[31]  LOADC    T[3:INT] INT:4                  Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[4]: true, true, INT:3, INT:4
+EXEC: PSEG_FORM_B_FPT:BODY[32]  COMPARE  EQ                              Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[3]: true, true, null
+EXEC: PSEG_FORM_B_FPT:BODY[33]  OR                                       Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[2]: true, true
+EXEC: PSEG_FORM_B_FPT:BODY[34]  AND                                      Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[1]: true
+EXEC: PSEG_FORM_B_FPT:BODY[35]  LOADC    T[1:BOOL] true                  Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[2]: true, true
+EXEC: PSEG_FORM_B_FPT:BODY[36]  JUMPIF   NE PSEG_FORM_B_FPT:BODY[71]     Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[0]: 
+EXEC: PSEG_FORM_B_FPT:BODY[37]  LOAD     REL_ADR[callStackTop+4]         Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[1]: PSEG_ADHOC00[41]
+EXEC: PSEG_FORM_B_FPT:BODY[38]  LOAD     DSEG_RT[0]                      Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[2]: PSEG_ADHOC00[41], POOL_1[707]
+EXEC: PSEG_FORM_B_FPT:BODY[39]  STORE    REMOTE_ADDR[RTStackTop+6]       Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[1]: PSEG_ADHOC00[41]
+EXEC: PSEG_FORM_B_FPT:BODY[40]  POPK     1                               Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[0]: 
+EXEC: PSEG_FORM_B_FPT:BODY[41]  PRECALL   AB_THK, nParSlots=0, exportSize=1, importSize=4   Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[1]: null
+EXEC: PSEG_FORM_B_FPT:BODY[42]  LOAD     REL_ADR[callStackTop+1]         Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[2]: null, POOL_1[707]
+EXEC: PSEG_FORM_B_FPT:BODY[43]  NOOP                                     Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[2]: null, POOL_1[707]
+EXEC: PSEG_FORM_B_FPT:BODY[44]  LINE     641                             Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[2]: null, POOL_1[707]
+EXEC: PSEG_FORM_B_FPT:BODY[45]  LOADC    T[8:OADDR] CSEG_FORM[0]         Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[3]: null, POOL_1[707], CSEG_FORM[0]
+EXEC: PSEG_FORM_B_FPT:BODY[46]  NOOP                                     Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[3]: null, POOL_1[707], CSEG_FORM[0]
+EXEC: PSEG_FORM_B_FPT:BODY[47]  LOAD     REL_ADR[callStackTop+2]         Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[4]: null, POOL_1[707], CSEG_FORM[0], CSEG_ADHOC00[13]
+EXEC: PSEG_FORM_B_FPT:BODY[48]  LOAD     REMOTE_ADDR[RTStackTop+2]       Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[4]: null, POOL_1[707], CSEG_FORM[0], INT:4
+EXEC: PSEG_FORM_B_FPT:BODY[49]  LINE     643                             Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[4]: null, POOL_1[707], CSEG_FORM[0], INT:4
+EXEC: PSEG_FORM_B_FPT:BODY[50]  LOADC    T[3:INT] INT:7                  Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[5]: null, POOL_1[707], CSEG_FORM[0], INT:4, INT:7
+EXEC: PSEG_FORM_B_FPT:BODY[54]  JUMPIF   NE PSEG_FORM_B_FPT:BODY[55]     Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[3]: null, POOL_1[707], CSEG_FORM[0]
+EXEC: PSEG_FORM_B_FPT:BODY[55]  NOOP                                     Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[3]: null, POOL_1[707], CSEG_FORM[0]
+EXEC: PSEG_FORM_B_FPT:BODY[56]  LOAD     REL_ADR[callStackTop+2]         Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[4]: null, POOL_1[707], CSEG_FORM[0], CSEG_ADHOC00[13]
+EXEC: PSEG_FORM_B_FPT:BODY[57]  LOAD     REMOTE_ADDR[RTStackTop+3]       Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[4]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0]
+EXEC: PSEG_FORM_B_FPT:BODY[58]  NOOP                                     Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[4]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0]
+EXEC: PSEG_FORM_B_FPT:BODY[59]  NOOP                                     Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[4]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0]
+EXEC: PSEG_FORM_B_FPT:BODY[60]  LOAD     REL_ADR[callStackTop+5]         Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[5]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], CSEG_ADHOC00[0]
+EXEC: PSEG_FORM_B_FPT:BODY[61]  LOAD     REMOTE_ADDR[RTStackTop+3]       Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[5]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], null
+EXEC: PSEG_FORM_B_FPT:BODY[62]  LINE     644                             Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[5]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], null
+EXEC: PSEG_FORM_B_FPT:BODY[63]  LOADC    T[3:INT] null                   Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[6]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], null, null
+EXEC: PSEG_FORM_B_FPT:BODY[64]  COMPARE  EQ                              Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[5]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true
+EXEC: PSEG_FORM_B_FPT:BODY[65]  NOOP                                     Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[5]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true
+EXEC: PSEG_FORM_B_FPT:BODY[66]  CALL     PSEG_FORM_AB_THK:BODY[0] Return=REL_ADR[callStackTop+5]   Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[5]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true
+EXEC: PSEG_FORM_AB_THK:BODY[0]  ENTER    nLOCAL=1                        Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], null  Stack[0]: 
+EXEC: PSEG_FORM_AB_THK:BODY[1]  LOAD     DSEG_RT[37]                     Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], null  Stack[1]: POOL_1[732]
+EXEC: PSEG_FORM_AB_THK:BODY[2]  LOAD     DSEG_RT[38]                     Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], null  Stack[2]: POOL_1[732], POOL_1[149989]
+EXEC: PSEG_FORM_AB_THK:BODY[16]  JUMPIF   LE PSEG_FORM_AB_THK:BODY[17]   Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], null  Stack[0]: 
+EXEC: PSEG_FORM_AB_THK:BODY[17]  NOOP                                    Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], null  Stack[0]: 
+EXEC: PSEG_FORM_AB_THK:BODY[18]  NOOP                                    Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], null  Stack[0]: 
+EXEC: PSEG_FORM_AB_THK:BODY[19]  LOAD     DSEG_RT[44]                    Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], null  Stack[1]: null
+EXEC: PSEG_FORM_AB_THK:BODY[20]  LINE     56                             Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], null  Stack[1]: null
+EXEC: PSEG_FORM_AB_THK:BODY[21]  LOADC    T[8:OADDR] null                Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], null  Stack[2]: null, null
+EXEC: PSEG_FORM_AB_THK:BODY[54]  JUMPIF   EQ PSEG_FORM_AB_THK:BODY[55]   Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], null  Stack[0]: 
+EXEC: PSEG_FORM_AB_THK:BODY[55]  NOOP                                    Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], null  Stack[0]: 
+EXEC: PSEG_FORM_AB_THK:BODY[56]  LOAD     DSEG_RT[37]                    Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], null  Stack[1]: POOL_1[732]
+EXEC: PSEG_FORM_AB_THK:BODY[57]  STORE    REL_ADR[callStackTop+6]        Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[1]: POOL_1[732]
+EXEC: PSEG_FORM_AB_THK:BODY[58]  POPK     1                              Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[0]: 
+EXEC: PSEG_FORM_AB_THK:BODY[59]  LOAD     DSEG_RT[37]                    Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[1]: POOL_1[732]
+EXEC: PSEG_FORM_AB_THK:BODY[60]  LINE     63                             Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[1]: POOL_1[732]
+EXEC: PSEG_FORM_AB_THK:BODY[61]  LOADC    T[12:SIZE] SIZE:12             Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[2]: POOL_1[732], SIZE:12
+EXEC: PSEG_FORM_AB_THK:BODY[62]  INCO                                    Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[1]: POOL_1[744]
+EXEC: PSEG_FORM_AB_THK:BODY[63]  STORE    DSEG_RT[37]                    Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[1]: POOL_1[744]
+EXEC: PSEG_FORM_AB_THK:BODY[64]  POPK     1                              Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[0]: 
+EXEC: PSEG_FORM_AB_THK:BODY[65]  LOAD     DSEG_RT[37]                    Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[1]: POOL_1[744]
+EXEC: PSEG_FORM_AB_THK:BODY[66]  LOAD     DSEG_RT[38]                    Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[2]: POOL_1[744], POOL_1[149989]
+EXEC: PSEG_FORM_AB_THK:BODY[81]  JUMPIF   LE PSEG_FORM_AB_THK:BODY[82]   Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[0]: 
+EXEC: PSEG_FORM_AB_THK:BODY[82]  NOOP                                    Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[0]: 
+EXEC: PSEG_FORM_AB_THK:BODY[83]  NOOP                                    Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[0]: 
+EXEC: PSEG_FORM_AB_THK:BODY[84]  LINE     63                             Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[0]: 
+EXEC: PSEG_FORM_AB_THK:BODY[85]  LOADC    T[3:INT] INT:8                 Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[1]: INT:8
+EXEC: PSEG_FORM_AB_THK:BODY[86]  LOAD     REL_ADR[callStackTop+6]        Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[2]: INT:8, POOL_1[732]
+EXEC: PSEG_FORM_AB_THK:BODY[87]  STORE    REMOTE_ADDR[RTStackTop+1]      Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[1]: INT:8
+EXEC: PSEG_FORM_AB_THK:BODY[88]  POPK     1                              Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[0]: 
+EXEC: PSEG_FORM_AB_THK:BODY[89]  NOOP                                    Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[0]: 
+EXEC: PSEG_FORM_AB_THK:BODY[90]  NOOP                                    Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[0]: 
+EXEC: PSEG_FORM_AB_THK:BODY[91]  LOAD     REL_ADR[callStackTop+1]        Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[1]: POOL_1[707]
+EXEC: PSEG_FORM_AB_THK:BODY[92]  LOAD     REMOTE_ADDR[RTStackTop+1]      Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[1]: INT:1
+EXEC: PSEG_FORM_AB_THK:BODY[93]  LINE     64                             Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[1]: INT:1
+EXEC: PSEG_FORM_AB_THK:BODY[94]  LOADC    T[3:INT] INT:8                 Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[2]: INT:1, INT:8
+EXEC: PSEG_FORM_AB_THK:BODY[100]  JUMPIF   NE PSEG_FORM_AB_THK:BODY[101]   Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[0]: 
+EXEC: PSEG_FORM_AB_THK:BODY[101]  NOOP                                   Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[0]: 
+EXEC: PSEG_FORM_AB_THK:BODY[102]  LOAD     REL_ADR[callStackTop+1]       Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[1]: POOL_1[707]
+EXEC: PSEG_FORM_AB_THK:BODY[103]  LOAD     REL_ADR[callStackTop+6]       Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[2]: POOL_1[707], POOL_1[732]
+EXEC: PSEG_FORM_AB_THK:BODY[104]  STORE    REMOTE_ADDR[RTStackTop+0]     Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[1]: POOL_1[707]
+EXEC: PSEG_FORM_AB_THK:BODY[105]  POPK     1                             Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[0]: 
+EXEC: PSEG_FORM_AB_THK:BODY[106]  LOAD     REL_ADR[callStackTop+2]       Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[1]: CSEG_FORM[0]
+EXEC: PSEG_FORM_AB_THK:BODY[107]  LOAD     REL_ADR[callStackTop+6]       Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[2]: CSEG_FORM[0], POOL_1[732]
+EXEC: PSEG_FORM_AB_THK:BODY[108]  STORE    REMOTE_ADDR[RTStackTop+3]     Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[1]: CSEG_FORM[0]
+EXEC: PSEG_FORM_AB_THK:BODY[109]  POPK     1                             Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[0]: 
+EXEC: PSEG_FORM_AB_THK:BODY[110]  LOAD     DSEG_RT[0]                    Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[1]: POOL_1[707]
+EXEC: PSEG_FORM_AB_THK:BODY[111]  LOAD     REL_ADR[callStackTop+6]       Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[2]: POOL_1[707], POOL_1[732]
+EXEC: PSEG_FORM_AB_THK:BODY[112]  STORE    REMOTE_ADDR[RTStackTop+5]     Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[1]: POOL_1[707]
+EXEC: PSEG_FORM_AB_THK:BODY[113]  POPK     1                             Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[0]: 
+EXEC: PSEG_FORM_AB_THK:BODY[114]  LOAD     REL_ADR[callStackTop+4]       Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[1]: true
+EXEC: PSEG_FORM_AB_THK:BODY[115]  LOAD     REL_ADR[callStackTop+6]       Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[2]: true, POOL_1[732]
+EXEC: PSEG_FORM_AB_THK:BODY[116]  STORE    REMOTE_ADDR[RTStackTop+7]     Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[1]: true
+EXEC: PSEG_FORM_AB_THK:BODY[117]  POPK     1                             Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[0]: 
+EXEC: PSEG_FORM_AB_THK:BODY[118]  LOAD     REL_ADR[callStackTop+6]       Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[1]: POOL_1[732]
+EXEC: PSEG_FORM_AB_THK:BODY[119]  STORE    DSEG_RT[0]                    Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[1]: POOL_1[732]
+EXEC: PSEG_FORM_AB_THK:BODY[120]  POPK     1                             Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[0]: 
+EXEC: PSEG_FORM_AB_THK:BODY[121]  LOAD     REL_ADR[callStackTop+3]       Frame[7]: null, POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[1]: ADHOC00_BSEG_1[0]
+EXEC: PSEG_FORM_AB_THK:BODY[122]  STORE    REL_ADR[callStackTop+0]       Frame[7]: ADHOC00_BSEG_1[0], POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[1]: ADHOC00_BSEG_1[0]
+EXEC: PSEG_FORM_AB_THK:BODY[123]  POPK     1                             Frame[7]: ADHOC00_BSEG_1[0], POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[0]: 
+EXEC: PSEG_FORM_AB_THK:BODY[124]  RETURN   AB_THK REL_ADR[callStackTop+5]   Frame[7]: ADHOC00_BSEG_1[0], POOL_1[707], CSEG_FORM[0], ADHOC00_BSEG_1[0], true, PSEG_FORM_B_FPT:BODY[67], POOL_1[732]  Stack[0]: 
+EXEC: PSEG_FORM_B_FPT:BODY[67]  NOOP                                     Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, PSEG_ADHOC00[41], CSEG_ADHOC00[0]  Stack[1]: ADHOC00_BSEG_1[0]
+EXEC: PSEG_FORM_B_FPT:BODY[68]  STORE    REL_ADR[callStackTop+4]         Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, ADHOC00_BSEG_1[0], CSEG_ADHOC00[0]  Stack[1]: ADHOC00_BSEG_1[0]
+EXEC: PSEG_FORM_B_FPT:BODY[69]  POPK     1                               Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, ADHOC00_BSEG_1[0], CSEG_ADHOC00[0]  Stack[0]: 
+EXEC: PSEG_FORM_B_FPT:BODY[71]  JUMP     PSEG_FORM_B_FPT:BODY[72]        Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, ADHOC00_BSEG_1[0], CSEG_ADHOC00[0]  Stack[0]: 
+EXEC: PSEG_FORM_B_FPT:BODY[72]  NOOP                                     Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, ADHOC00_BSEG_1[0], CSEG_ADHOC00[0]  Stack[0]: 
+EXEC: PSEG_FORM_B_FPT:BODY[73]  RETURN   B_FPT REL_ADR[callStackTop+4]   Frame[6]: POOL_1[724], POOL_1[707], CSEG_ADHOC00[13], null, ADHOC00_BSEG_1[0], CSEG_ADHOC00[0]  Stack[0]: 
+EXEC: ADHOC00_BSEG_1[0]  NOOP                                            Stack[0]:                           xReg: R1(null)
+EXEC: ADHOC00_BSEG_1[1]  LOADC    T[3:INT] INT:12                        Stack[1]: INT:12                    xReg: R1(null)
+EXEC: ADHOC00_BSEG_1[2]  LOAD     DSEG_RT[0]                             Stack[2]: INT:12, POOL_1[732]       xReg: R1(null)
+EXEC: ADHOC00_BSEG_1[3]  STORE    REMOTE_ADDR[RTStackTop+8]              Stack[1]: INT:12                    xReg: R1(null)
+EXEC: ADHOC00_BSEG_1[4]  POPK     1                                      Stack[0]:                           xReg: R1(null)
+EXEC: ADHOC00_BSEG_1[5]  PRECALL   FP, nParSlots=0, exportSize=0, importSize=0   Stack[0]:                           xReg: R1(null)
+EXEC: ADHOC00_BSEG_1[6]  CALL     PSEG_FORM_E_THK:BODY[0] Return=REL_ADR[callStackTop+0]   Stack[0]:                           xReg: R1(null)
+EXEC: PSEG_FORM_E_THK:BODY[0]  ENTER    nLOCAL=1                         Frame[2]: ADHOC00_BSEG_1[7], null  Stack[0]: 
+EXEC: PSEG_FORM_E_THK:BODY[1]  LOAD     DSEG_RT[0]                       Frame[2]: ADHOC00_BSEG_1[7], null  Stack[1]: POOL_1[732]
+EXEC: PSEG_FORM_E_THK:BODY[2]  STORE    REL_ADR[callStackTop+1]          Frame[2]: ADHOC00_BSEG_1[7], POOL_1[732]  Stack[1]: POOL_1[732]
+EXEC: PSEG_FORM_E_THK:BODY[3]  POPK     1                                Frame[2]: ADHOC00_BSEG_1[7], POOL_1[732]  Stack[0]: 
+EXEC: PSEG_FORM_E_THK:BODY[4]  LOAD     DSEG_RT[0]                       Frame[2]: ADHOC00_BSEG_1[7], POOL_1[732]  Stack[1]: POOL_1[732]
+EXEC: PSEG_FORM_E_THK:BODY[5]  LOAD     REMOTE_ADDR[RTStackTop+5]        Frame[2]: ADHOC00_BSEG_1[7], POOL_1[732]  Stack[1]: POOL_1[707]
+EXEC: PSEG_FORM_E_THK:BODY[6]  STORE    DSEG_RT[0]                       Frame[2]: ADHOC00_BSEG_1[7], POOL_1[732]  Stack[1]: POOL_1[707]
+EXEC: PSEG_FORM_E_THK:BODY[7]  POPK     1                                Frame[2]: ADHOC00_BSEG_1[7], POOL_1[732]  Stack[0]: 
+EXEC: PSEG_FORM_E_THK:BODY[8]  LOAD     REL_ADR[callStackTop+1]          Frame[2]: ADHOC00_BSEG_1[7], POOL_1[732]  Stack[1]: POOL_1[732]
+EXEC: PSEG_FORM_E_THK:BODY[9]  LOAD     REMOTE_ADDR[RTStackTop+3]        Frame[2]: ADHOC00_BSEG_1[7], POOL_1[732]  Stack[1]: CSEG_FORM[0]
+EXEC: PSEG_FORM_E_THK:BODY[10]  LINE     78                              Frame[2]: ADHOC00_BSEG_1[7], POOL_1[732]  Stack[1]: CSEG_FORM[0]
+EXEC: PSEG_FORM_E_THK:BODY[11]  LOADC    T[8:OADDR] CSEG_FORM[4]         Frame[2]: ADHOC00_BSEG_1[7], POOL_1[732]  Stack[2]: CSEG_FORM[0], CSEG_FORM[4]
+EXEC: PSEG_FORM_E_THK:BODY[52]  JUMPIF   NE PSEG_FORM_E_THK:BODY[53]     Frame[2]: ADHOC00_BSEG_1[7], POOL_1[732]  Stack[0]: 
+EXEC: PSEG_FORM_E_THK:BODY[53]  NOOP                                     Frame[2]: ADHOC00_BSEG_1[7], POOL_1[732]  Stack[0]: 
+EXEC: PSEG_FORM_E_THK:BODY[54]  LOAD     DSEG_RT[44]                     Frame[2]: ADHOC00_BSEG_1[7], POOL_1[732]  Stack[1]: null
+EXEC: PSEG_FORM_E_THK:BODY[55]  LOAD     REL_ADR[callStackTop+1]         Frame[2]: ADHOC00_BSEG_1[7], POOL_1[732]  Stack[2]: null, POOL_1[732]
+EXEC: PSEG_FORM_E_THK:BODY[56]  STORE    REMOTE_ADDR[RTStackTop+5]       Frame[2]: ADHOC00_BSEG_1[7], POOL_1[732]  Stack[1]: null
+EXEC: PSEG_FORM_E_THK:BODY[57]  POPK     1                               Frame[2]: ADHOC00_BSEG_1[7], POOL_1[732]  Stack[0]: 
+EXEC: PSEG_FORM_E_THK:BODY[58]  LOAD     REL_ADR[callStackTop+1]         Frame[2]: ADHOC00_BSEG_1[7], POOL_1[732]  Stack[1]: POOL_1[732]
+EXEC: PSEG_FORM_E_THK:BODY[59]  STORE    DSEG_RT[44]                     Frame[2]: ADHOC00_BSEG_1[7], POOL_1[732]  Stack[1]: POOL_1[732]
+EXEC: PSEG_FORM_E_THK:BODY[60]  POPK     1                               Frame[2]: ADHOC00_BSEG_1[7], POOL_1[732]  Stack[0]: 
+EXEC: PSEG_FORM_E_THK:BODY[61]  NOOP                                     Frame[2]: ADHOC00_BSEG_1[7], POOL_1[732]  Stack[0]: 
+EXEC: PSEG_FORM_E_THK:BODY[62]  LOAD     DSEG_RT[0]                      Frame[2]: ADHOC00_BSEG_1[7], POOL_1[732]  Stack[1]: POOL_1[707]
+EXEC: PSEG_FORM_E_THK:BODY[63]  LOAD     REMOTE_ADDR[RTStackTop+6]       Frame[2]: ADHOC00_BSEG_1[7], POOL_1[732]  Stack[1]: PSEG_ADHOC00[41]
+EXEC: PSEG_FORM_E_THK:BODY[64]  STORE    REL_ADR[callStackTop+0]         Frame[2]: PSEG_ADHOC00[41], POOL_1[732]  Stack[1]: PSEG_ADHOC00[41]
+EXEC: PSEG_FORM_E_THK:BODY[65]  POPK     1                               Frame[2]: PSEG_ADHOC00[41], POOL_1[732]  Stack[0]: 
+EXEC: PSEG_FORM_E_THK:BODY[66]  RETURN   E_THK REL_ADR[callStackTop+0]   Frame[2]: PSEG_ADHOC00[41], POOL_1[732]  Stack[0]: 
+EXEC: PSEG_ADHOC00[41]  NOOP                                             Stack[0]:                           xReg: R1(null)
+EXEC: PSEG_ADHOC00[42]  LOADC    T[3:INT] null                           Stack[1]: null                      xReg: R1(null)
+EXEC: PSEG_ADHOC00[43]  PRECALL   E_FPT, nParSlots=1, exportSize=1, importSize=8   Stack[2]: null, null                xReg: R1(null)
+EXEC: PSEG_ADHOC00[44]  LOADC    T[8:OADDR] CSEG_ADHOC00[13]             Stack[3]: null, null, CSEG_ADHOC00[13]      xReg: R1(null)
+EXEC: PSEG_ADHOC00[45]  PRECALL   THK2PQ, nParSlots=1, exportSize=6, importSize=1   Stack[9]: null, null, null, null, null, null, null, null, CSEG_ADHOC00[13]      xReg: R1(null)
+EXEC: PSEG_ADHOC00[46]  CALL     PSEG_FORM_THK2PQ:BODY[0] Return=REL_ADR[callStackTop+7]   Stack[9]: null, null, null, null, null, null, null, null, CSEG_ADHOC00[13]      xReg: R1(null)
+EXEC: PSEG_FORM_THK2PQ:BODY[0]  ENTER    nLOCAL=0                        Frame[8]: null, null, null, null, null, null, CSEG_ADHOC00[13], PSEG_ADHOC00[47]  Stack[0]: 
+EXEC: PSEG_FORM_THK2PQ:BODY[1]  LOAD     REL_ADR[callStackTop+6]         Frame[8]: null, null, null, null, null, null, CSEG_ADHOC00[13], PSEG_ADHOC00[47]  Stack[1]: CSEG_ADHOC00[13]
+EXEC: PSEG_FORM_THK2PQ:BODY[2]  STORE    REL_ADR[callStackTop+1]         Frame[8]: null, CSEG_ADHOC00[13], null, null, null, null, CSEG_ADHOC00[13], PSEG_ADHOC00[47]  Stack[1]: CSEG_ADHOC00[13]
+EXEC: PSEG_FORM_THK2PQ:BODY[3]  POPK     1                               Frame[8]: null, CSEG_ADHOC00[13], null, null, null, null, CSEG_ADHOC00[13], PSEG_ADHOC00[47]  Stack[0]: 
+EXEC: PSEG_FORM_THK2PQ:BODY[4]  LINE     1044                            Frame[8]: null, CSEG_ADHOC00[13], null, null, null, null, CSEG_ADHOC00[13], PSEG_ADHOC00[47]  Stack[0]: 
+EXEC: PSEG_FORM_THK2PQ:BODY[5]  LOADC    T[8:OADDR] null                 Frame[8]: null, CSEG_ADHOC00[13], null, null, null, null, CSEG_ADHOC00[13], PSEG_ADHOC00[47]  Stack[1]: null
+EXEC: PSEG_FORM_THK2PQ:BODY[6]  STORE    REL_ADR[callStackTop+0]         Frame[8]: null, CSEG_ADHOC00[13], null, null, null, null, CSEG_ADHOC00[13], PSEG_ADHOC00[47]  Stack[1]: null
+EXEC: PSEG_FORM_THK2PQ:BODY[7]  POPK     1                               Frame[8]: null, CSEG_ADHOC00[13], null, null, null, null, CSEG_ADHOC00[13], PSEG_ADHOC00[47]  Stack[0]: 
+EXEC: PSEG_FORM_THK2PQ:BODY[8]  LINE     1044                            Frame[8]: null, CSEG_ADHOC00[13], null, null, null, null, CSEG_ADHOC00[13], PSEG_ADHOC00[47]  Stack[0]: 
+EXEC: PSEG_FORM_THK2PQ:BODY[9]  LOADC    T[1:BOOL] null                  Frame[8]: null, CSEG_ADHOC00[13], null, null, null, null, CSEG_ADHOC00[13], PSEG_ADHOC00[47]  Stack[1]: null
+EXEC: PSEG_FORM_THK2PQ:BODY[10]  STORE    REL_ADR[callStackTop+3]        Frame[8]: null, CSEG_ADHOC00[13], null, null, null, null, CSEG_ADHOC00[13], PSEG_ADHOC00[47]  Stack[1]: null
+EXEC: PSEG_FORM_THK2PQ:BODY[11]  POPK     1                              Frame[8]: null, CSEG_ADHOC00[13], null, null, null, null, CSEG_ADHOC00[13], PSEG_ADHOC00[47]  Stack[0]: 
+EXEC: PSEG_FORM_THK2PQ:BODY[12]  LOAD     DSEG_RT[0]                     Frame[8]: null, CSEG_ADHOC00[13], null, null, null, null, CSEG_ADHOC00[13], PSEG_ADHOC00[47]  Stack[1]: POOL_1[707]
+EXEC: PSEG_FORM_THK2PQ:BODY[13]  STORE    REL_ADR[callStackTop+2]        Frame[8]: null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, CSEG_ADHOC00[13], PSEG_ADHOC00[47]  Stack[1]: POOL_1[707]
+EXEC: PSEG_FORM_THK2PQ:BODY[14]  POPK     1                              Frame[8]: null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, CSEG_ADHOC00[13], PSEG_ADHOC00[47]  Stack[0]: 
+EXEC: PSEG_FORM_THK2PQ:BODY[15]  LINE     1048                           Frame[8]: null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, CSEG_ADHOC00[13], PSEG_ADHOC00[47]  Stack[0]: 
+EXEC: PSEG_FORM_THK2PQ:BODY[16]  LOADC    T[8:OADDR] null                Frame[8]: null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, CSEG_ADHOC00[13], PSEG_ADHOC00[47]  Stack[1]: null
+EXEC: PSEG_FORM_THK2PQ:BODY[17]  STORE    REL_ADR[callStackTop+4]        Frame[8]: null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, CSEG_ADHOC00[13], PSEG_ADHOC00[47]  Stack[1]: null
+EXEC: PSEG_FORM_THK2PQ:BODY[18]  POPK     1                              Frame[8]: null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, CSEG_ADHOC00[13], PSEG_ADHOC00[47]  Stack[0]: 
+EXEC: PSEG_FORM_THK2PQ:BODY[19]  LINE     1049                           Frame[8]: null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, CSEG_ADHOC00[13], PSEG_ADHOC00[47]  Stack[0]: 
+EXEC: PSEG_FORM_THK2PQ:BODY[20]  LOADC    T[8:OADDR] null                Frame[8]: null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, CSEG_ADHOC00[13], PSEG_ADHOC00[47]  Stack[1]: null
+EXEC: PSEG_FORM_THK2PQ:BODY[21]  STORE    REL_ADR[callStackTop+5]        Frame[8]: null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, CSEG_ADHOC00[13], PSEG_ADHOC00[47]  Stack[1]: null
+EXEC: PSEG_FORM_THK2PQ:BODY[22]  POPK     1                              Frame[8]: null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, CSEG_ADHOC00[13], PSEG_ADHOC00[47]  Stack[0]: 
+EXEC: PSEG_FORM_THK2PQ:BODY[23]  RETURN   THK2PQ REL_ADR[callStackTop+7]   Frame[8]: null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, CSEG_ADHOC00[13], PSEG_ADHOC00[47]  Stack[0]: 
+EXEC: PSEG_ADHOC00[47]  NOOP                                             Stack[8]: null, null, null, CSEG_ADHOC00[13], POOL_1[707], null, null, null      xReg: R1(null)
+EXEC: PSEG_ADHOC00[48]  NOOP                                             Stack[8]: null, null, null, CSEG_ADHOC00[13], POOL_1[707], null, null, null      xReg: R1(null)
+EXEC: PSEG_ADHOC00[49]  LOADC    T[8:OADDR] null                         Stack[9]: null, null, null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, null      xReg: R1(null)
+EXEC: PSEG_ADHOC00[50]  NOOP                                             Stack[9]: null, null, null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, null      xReg: R1(null)
+EXEC: PSEG_ADHOC00[51]  CALL     PSEG_FORM_E_FPT:BODY[0] Return=REL_ADR[callStackTop+9]   Stack[9]: null, null, null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, null      xReg: R1(null)
+EXEC: PSEG_FORM_E_FPT:BODY[0]  ENTER    nLOCAL=4                         Frame[14]: null, null, null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], null, null, null, null  Stack[0]: 
+EXEC: PSEG_FORM_E_FPT:BODY[1]  LOAD     DSEG_RT[0]                       Frame[14]: null, null, null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], null, null, null, null  Stack[1]: POOL_1[707]
+EXEC: PSEG_FORM_E_FPT:BODY[2]  LOAD     REMOTE_ADDR[RTStackTop+5]        Frame[14]: null, null, null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], null, null, null, null  Stack[1]: POOL_1[724]
+EXEC: PSEG_FORM_E_FPT:BODY[3]  STORE    REL_ADR[callStackTop+0]          Frame[14]: POOL_1[724], null, null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], null, null, null, null  Stack[1]: POOL_1[724]
+EXEC: PSEG_FORM_E_FPT:BODY[4]  POPK     1                                Frame[14]: POOL_1[724], null, null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], null, null, null, null  Stack[0]: 
+EXEC: PSEG_FORM_E_FPT:BODY[5]  LOAD     REL_ADR[callStackTop+0]          Frame[14]: POOL_1[724], null, null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], null, null, null, null  Stack[1]: POOL_1[724]
+EXEC: PSEG_FORM_E_FPT:BODY[6]  LOAD     REMOTE_ADDR[RTStackTop+5]        Frame[14]: POOL_1[724], null, null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], null, null, null, null  Stack[1]: DSEG_RT[30]
+EXEC: PSEG_FORM_E_FPT:BODY[7]  LOAD     DSEG_RT[0]                       Frame[14]: POOL_1[724], null, null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], null, null, null, null  Stack[2]: DSEG_RT[30], POOL_1[707]
+EXEC: PSEG_FORM_E_FPT:BODY[8]  STORE    REMOTE_ADDR[RTStackTop+5]        Frame[14]: POOL_1[724], null, null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], null, null, null, null  Stack[1]: DSEG_RT[30]
+EXEC: PSEG_FORM_E_FPT:BODY[9]  POPK     1                                Frame[14]: POOL_1[724], null, null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], null, null, null, null  Stack[0]: 
+EXEC: PSEG_FORM_E_FPT:BODY[10]  LOAD     REL_ADR[callStackTop+0]         Frame[14]: POOL_1[724], null, null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], null, null, null, null  Stack[1]: POOL_1[724]
+EXEC: PSEG_FORM_E_FPT:BODY[11]  LOAD     REMOTE_ADDR[RTStackTop+3]       Frame[14]: POOL_1[724], null, null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], null, null, null, null  Stack[1]: CSEG_ADHOC00[7]
+EXEC: PSEG_FORM_E_FPT:BODY[12]  LOAD     REMOTE_ADDR[RTStackTop+5]       Frame[14]: POOL_1[724], null, null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], null, null, null, null  Stack[1]: CSEG_ADHOC00[5]
+EXEC: PSEG_FORM_E_FPT:BODY[13]  LOAD     REL_ADR[callStackTop+1]         Frame[14]: POOL_1[724], null, null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], null, null, null, null  Stack[2]: CSEG_ADHOC00[5], null
+EXEC: PSEG_FORM_E_FPT:BODY[14]  STORE2REG R1                             Frame[14]: POOL_1[724], null, null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], null, null, null, null  Stack[1]: CSEG_ADHOC00[5]
+EXEC: PSEG_FORM_E_FPT:BODY[15]  LOAD     REMOTE_ADDR[RTStackTop+1]+R1(null)   Frame[14]: POOL_1[724], null, null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], null, null, null, null  Stack[1]: CSEG_ADHOC00[0]
+EXEC: PSEG_FORM_E_FPT:BODY[16]  STORE    REL_ADR[callStackTop+13]        Frame[14]: POOL_1[724], null, null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], null, null, null, CSEG_ADHOC00[0]  Stack[1]: CSEG_ADHOC00[0]
+EXEC: PSEG_FORM_E_FPT:BODY[17]  POPK     1                               Frame[14]: POOL_1[724], null, null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], null, null, null, CSEG_ADHOC00[0]  Stack[0]: 
+EXEC: PSEG_FORM_E_FPT:BODY[18]  LOAD     REL_ADR[callStackTop+3]         Frame[14]: POOL_1[724], null, null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], null, null, null, CSEG_ADHOC00[0]  Stack[1]: CSEG_ADHOC00[13]
+EXEC: PSEG_FORM_E_FPT:BODY[19]  STORE    REL_ADR[callStackTop+12]        Frame[14]: POOL_1[724], null, null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], null, null, CSEG_ADHOC00[13], CSEG_ADHOC00[0]  Stack[1]: CSEG_ADHOC00[13]
+EXEC: PSEG_FORM_E_FPT:BODY[20]  POPK     1                               Frame[14]: POOL_1[724], null, null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], null, null, CSEG_ADHOC00[13], CSEG_ADHOC00[0]  Stack[0]: 
+EXEC: PSEG_FORM_E_FPT:BODY[21]  LOAD     REL_ADR[callStackTop+0]         Frame[14]: POOL_1[724], null, null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], null, null, CSEG_ADHOC00[13], CSEG_ADHOC00[0]  Stack[1]: POOL_1[724]
+EXEC: PSEG_FORM_E_FPT:BODY[22]  LOAD     REL_ADR[callStackTop+13]        Frame[14]: POOL_1[724], null, null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], null, null, CSEG_ADHOC00[13], CSEG_ADHOC00[0]  Stack[2]: POOL_1[724], CSEG_ADHOC00[0]
+EXEC: PSEG_FORM_E_FPT:BODY[23]  LOAD     REMOTE_ADDR[RTStackTop+1]       Frame[14]: POOL_1[724], null, null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], null, null, CSEG_ADHOC00[13], CSEG_ADHOC00[0]  Stack[2]: POOL_1[724], FIELD:7
+EXEC: PSEG_FORM_E_FPT:BODY[24]  STORE    REL_ADR[callStackTop+10], size=2   Frame[14]: POOL_1[724], null, null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], POOL_1[724], FIELD:7, CSEG_ADHOC00[13], CSEG_ADHOC00[0]  Stack[2]: POOL_1[724], FIELD:7
+EXEC: PSEG_FORM_E_FPT:BODY[25]  POPK     2                               Frame[14]: POOL_1[724], null, null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], POOL_1[724], FIELD:7, CSEG_ADHOC00[13], CSEG_ADHOC00[0]  Stack[0]: 
+EXEC: PSEG_FORM_E_FPT:BODY[26]  LOAD     REL_ADR[callStackTop+13]        Frame[14]: POOL_1[724], null, null, CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], POOL_1[724], FIELD:7, CSEG_ADHOC00[13], CSEG_ADHOC00[0]  Stack[1]: CSEG_ADHOC00[0]
+EXEC: PSEG_FORM_E_FPT:BODY[27]  STORE    REL_ADR[callStackTop+2]         Frame[14]: POOL_1[724], null, CSEG_ADHOC00[0], CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], POOL_1[724], FIELD:7, CSEG_ADHOC00[13], CSEG_ADHOC00[0]  Stack[1]: CSEG_ADHOC00[0]
+EXEC: PSEG_FORM_E_FPT:BODY[28]  POPK     1                               Frame[14]: POOL_1[724], null, CSEG_ADHOC00[0], CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], POOL_1[724], FIELD:7, CSEG_ADHOC00[13], CSEG_ADHOC00[0]  Stack[0]: 
+EXEC: PSEG_FORM_E_FPT:BODY[29]  LOAD     REL_ADR[callStackTop+13]        Frame[14]: POOL_1[724], null, CSEG_ADHOC00[0], CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], POOL_1[724], FIELD:7, CSEG_ADHOC00[13], CSEG_ADHOC00[0]  Stack[1]: CSEG_ADHOC00[0]
+EXEC: PSEG_FORM_E_FPT:BODY[30]  LOAD     REMOTE_ADDR[RTStackTop+2]       Frame[14]: POOL_1[724], null, CSEG_ADHOC00[0], CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], POOL_1[724], FIELD:7, CSEG_ADHOC00[13], CSEG_ADHOC00[0]  Stack[1]: null
+EXEC: PSEG_FORM_E_FPT:BODY[31]  LINE     666                             Frame[14]: POOL_1[724], null, CSEG_ADHOC00[0], CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], POOL_1[724], FIELD:7, CSEG_ADHOC00[13], CSEG_ADHOC00[0]  Stack[1]: null
+EXEC: PSEG_FORM_E_FPT:BODY[32]  LOADC    T[3:INT] INT:2                  Frame[14]: POOL_1[724], null, CSEG_ADHOC00[0], CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], POOL_1[724], FIELD:7, CSEG_ADHOC00[13], CSEG_ADHOC00[0]  Stack[2]: null, INT:2
+EXEC: PSEG_FORM_E_FPT:BODY[50]  JUMPIF   NE PSEG_FORM_E_FPT:BODY[51]     Frame[14]: POOL_1[724], null, CSEG_ADHOC00[0], CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], POOL_1[724], FIELD:7, CSEG_ADHOC00[13], CSEG_ADHOC00[0]  Stack[0]: 
+EXEC: PSEG_FORM_E_FPT:BODY[51]  NOOP                                     Frame[14]: POOL_1[724], null, CSEG_ADHOC00[0], CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], POOL_1[724], FIELD:7, CSEG_ADHOC00[13], CSEG_ADHOC00[0]  Stack[0]: 
+EXEC: PSEG_FORM_E_FPT:BODY[52]  PRECALL   FPT_TO_FRP_CHK, nParSlots=0, exportSize=0, importSize=2   Frame[14]: POOL_1[724], null, CSEG_ADHOC00[0], CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], POOL_1[724], FIELD:7, CSEG_ADHOC00[13], CSEG_ADHOC00[0]  Stack[0]: 
+EXEC: PSEG_FORM_E_FPT:BODY[53]  LOAD     REL_ADR[callStackTop+12]        Frame[14]: POOL_1[724], null, CSEG_ADHOC00[0], CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], POOL_1[724], FIELD:7, CSEG_ADHOC00[13], CSEG_ADHOC00[0]  Stack[1]: CSEG_ADHOC00[13]
+EXEC: PSEG_FORM_E_FPT:BODY[54]  NOOP                                     Frame[14]: POOL_1[724], null, CSEG_ADHOC00[0], CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], POOL_1[724], FIELD:7, CSEG_ADHOC00[13], CSEG_ADHOC00[0]  Stack[1]: CSEG_ADHOC00[13]
+EXEC: PSEG_FORM_E_FPT:BODY[55]  LOAD     REL_ADR[callStackTop+13]        Frame[14]: POOL_1[724], null, CSEG_ADHOC00[0], CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], POOL_1[724], FIELD:7, CSEG_ADHOC00[13], CSEG_ADHOC00[0]  Stack[2]: CSEG_ADHOC00[13], CSEG_ADHOC00[0]
+EXEC: PSEG_FORM_E_FPT:BODY[56]  NOOP                                     Frame[14]: POOL_1[724], null, CSEG_ADHOC00[0], CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], POOL_1[724], FIELD:7, CSEG_ADHOC00[13], CSEG_ADHOC00[0]  Stack[2]: CSEG_ADHOC00[13], CSEG_ADHOC00[0]
+EXEC: PSEG_FORM_E_FPT:BODY[57]  CALL     PSEG_FORM_FPT_TO_FRP_CHK:BODY[0] Return=REL_ADR[callStackTop+2]   Frame[14]: POOL_1[724], null, CSEG_ADHOC00[0], CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], POOL_1[724], FIELD:7, CSEG_ADHOC00[13], CSEG_ADHOC00[0]  Stack[2]: CSEG_ADHOC00[13], CSEG_ADHOC00[0]
+EXEC: PSEG_FORM_FPT_TO_FRP_CHK:BODY[0]  ENTER    nLOCAL=0                Frame[3]: CSEG_ADHOC00[13], CSEG_ADHOC00[0], PSEG_FORM_E_FPT:BODY[58]  Stack[0]: 
+EXEC: PSEG_FORM_FPT_TO_FRP_CHK:BODY[1]  LOAD     REL_ADR[callStackTop+1]   Frame[3]: CSEG_ADHOC00[13], CSEG_ADHOC00[0], PSEG_FORM_E_FPT:BODY[58]  Stack[1]: CSEG_ADHOC00[0]
+EXEC: PSEG_FORM_FPT_TO_FRP_CHK:BODY[2]  LOAD     REMOTE_ADDR[RTStackTop+3]   Frame[3]: CSEG_ADHOC00[13], CSEG_ADHOC00[0], PSEG_FORM_E_FPT:BODY[58]  Stack[1]: null
+EXEC: PSEG_FORM_FPT_TO_FRP_CHK:BODY[3]  SWITCH   8 PSEG_FORM_FPT_TO_FRP_CHK:BODY[4] PSEG_FORM_FPT_TO_FRP_CHK:BODY[100] PSEG_FORM_FPT_TO_FRP_CHK:BODY[48] PSEG_FORM_FPT_TO_FRP_CHK:BODY[158] PSEG_FORM_FPT_TO_FRP_CHK:BODY[174] PSEG_FORM_FPT_TO_FRP_CHK:BODY[189] PSEG_FORM_FPT_TO_FRP_CHK:BODY[190] PSEG_FORM_FPT_TO_FRP_CHK:BODY[191]   Frame[3]: CSEG_ADHOC00[13], CSEG_ADHOC00[0], PSEG_FORM_E_FPT:BODY[58]  Stack[0]: 
+EXEC: PSEG_FORM_FPT_TO_FRP_CHK:BODY[4]  NOOP                             Frame[3]: CSEG_ADHOC00[13], CSEG_ADHOC00[0], PSEG_FORM_E_FPT:BODY[58]  Stack[0]: 
+EXEC: PSEG_FORM_FPT_TO_FRP_CHK:BODY[5]  LOAD     REL_ADR[callStackTop+0]   Frame[3]: CSEG_ADHOC00[13], CSEG_ADHOC00[0], PSEG_FORM_E_FPT:BODY[58]  Stack[1]: CSEG_ADHOC00[13]
+EXEC: PSEG_FORM_FPT_TO_FRP_CHK:BODY[6]  LOAD     REMOTE_ADDR[RTStackTop+1]   Frame[3]: CSEG_ADHOC00[13], CSEG_ADHOC00[0], PSEG_FORM_E_FPT:BODY[58]  Stack[1]: null
+EXEC: PSEG_FORM_FPT_TO_FRP_CHK:BODY[7]  LINE     1011                    Frame[3]: CSEG_ADHOC00[13], CSEG_ADHOC00[0], PSEG_FORM_E_FPT:BODY[58]  Stack[1]: null
+EXEC: PSEG_FORM_FPT_TO_FRP_CHK:BODY[8]  LOADC    T[3:INT] null           Frame[3]: CSEG_ADHOC00[13], CSEG_ADHOC00[0], PSEG_FORM_E_FPT:BODY[58]  Stack[2]: null, null
+EXEC: PSEG_FORM_FPT_TO_FRP_CHK:BODY[9]  COMPARE  NE                      Frame[3]: CSEG_ADHOC00[13], CSEG_ADHOC00[0], PSEG_FORM_E_FPT:BODY[58]  Stack[1]: null
+EXEC: PSEG_FORM_FPT_TO_FRP_CHK:BODY[10]  LOAD     REL_ADR[callStackTop+0]   Frame[3]: CSEG_ADHOC00[13], CSEG_ADHOC00[0], PSEG_FORM_E_FPT:BODY[58]  Stack[2]: null, CSEG_ADHOC00[13]
+EXEC: PSEG_FORM_FPT_TO_FRP_CHK:BODY[11]  LOAD     REMOTE_ADDR[RTStackTop+1]   Frame[3]: CSEG_ADHOC00[13], CSEG_ADHOC00[0], PSEG_FORM_E_FPT:BODY[58]  Stack[2]: null, null
+EXEC: PSEG_FORM_FPT_TO_FRP_CHK:BODY[12]  LINE     1011                   Frame[3]: CSEG_ADHOC00[13], CSEG_ADHOC00[0], PSEG_FORM_E_FPT:BODY[58]  Stack[2]: null, null
+EXEC: PSEG_FORM_FPT_TO_FRP_CHK:BODY[13]  LOADC    T[3:INT] INT:1         Frame[3]: CSEG_ADHOC00[13], CSEG_ADHOC00[0], PSEG_FORM_E_FPT:BODY[58]  Stack[3]: null, null, INT:1
+EXEC: PSEG_FORM_FPT_TO_FRP_CHK:BODY[14]  COMPARE  NE                     Frame[3]: CSEG_ADHOC00[13], CSEG_ADHOC00[0], PSEG_FORM_E_FPT:BODY[58]  Stack[2]: null, true
+EXEC: PSEG_FORM_FPT_TO_FRP_CHK:BODY[15]  AND                             Frame[3]: CSEG_ADHOC00[13], CSEG_ADHOC00[0], PSEG_FORM_E_FPT:BODY[58]  Stack[1]: null
+EXEC: PSEG_FORM_FPT_TO_FRP_CHK:BODY[16]  LOADC    T[1:BOOL] true         Frame[3]: CSEG_ADHOC00[13], CSEG_ADHOC00[0], PSEG_FORM_E_FPT:BODY[58]  Stack[2]: null, true
+EXEC: PSEG_FORM_FPT_TO_FRP_CHK:BODY[24]  JUMPIF   NE PSEG_FORM_FPT_TO_FRP_CHK:BODY[25]   Frame[3]: CSEG_ADHOC00[13], CSEG_ADHOC00[0], PSEG_FORM_E_FPT:BODY[58]  Stack[0]: 
+EXEC: PSEG_FORM_FPT_TO_FRP_CHK:BODY[25]  NOOP                            Frame[3]: CSEG_ADHOC00[13], CSEG_ADHOC00[0], PSEG_FORM_E_FPT:BODY[58]  Stack[0]: 
+EXEC: PSEG_FORM_FPT_TO_FRP_CHK:BODY[26]  NOOP                            Frame[3]: CSEG_ADHOC00[13], CSEG_ADHOC00[0], PSEG_FORM_E_FPT:BODY[58]  Stack[0]: 
+EXEC: PSEG_FORM_FPT_TO_FRP_CHK:BODY[27]  PRECALL   COMPAT, nParSlots=0, exportSize=1, importSize=2   Frame[3]: CSEG_ADHOC00[13], CSEG_ADHOC00[0], PSEG_FORM_E_FPT:BODY[58]  Stack[1]: null
+EXEC: PSEG_FORM_FPT_TO_FRP_CHK:BODY[28]  LOAD     REL_ADR[callStackTop+0]   Frame[3]: CSEG_ADHOC00[13], CSEG_ADHOC00[0], PSEG_FORM_E_FPT:BODY[58]  Stack[2]: null, CSEG_ADHOC00[13]
+EXEC: PSEG_FORM_FPT_TO_FRP_CHK:BODY[29]  LOAD     REMOTE_ADDR[RTStackTop+2]   Frame[3]: CSEG_ADHOC00[13], CSEG_ADHOC00[0], PSEG_FORM_E_FPT:BODY[58]  Stack[2]: null, INT:4
+EXEC: PSEG_FORM_FPT_TO_FRP_CHK:BODY[30]  NOOP                            Frame[3]: CSEG_ADHOC00[13], CSEG_ADHOC00[0], PSEG_FORM_E_FPT:BODY[58]  Stack[2]: null, INT:4
+EXEC: PSEG_FORM_FPT_TO_FRP_CHK:BODY[31]  LOAD     REL_ADR[callStackTop+1]   Frame[3]: CSEG_ADHOC00[13], CSEG_ADHOC00[0], PSEG_FORM_E_FPT:BODY[58]  Stack[3]: null, INT:4, CSEG_ADHOC00[0]
+EXEC: PSEG_FORM_FPT_TO_FRP_CHK:BODY[32]  LOAD     REMOTE_ADDR[RTStackTop+4]   Frame[3]: CSEG_ADHOC00[13], CSEG_ADHOC00[0], PSEG_FORM_E_FPT:BODY[58]  Stack[3]: null, INT:4, INT:4
+EXEC: PSEG_FORM_FPT_TO_FRP_CHK:BODY[33]  NOOP                            Frame[3]: CSEG_ADHOC00[13], CSEG_ADHOC00[0], PSEG_FORM_E_FPT:BODY[58]  Stack[3]: null, INT:4, INT:4
+EXEC: PSEG_FORM_FPT_TO_FRP_CHK:BODY[34]  CALL     PSEG_FORM_COMPAT:BODY[0] Return=REL_ADR[callStackTop+3]   Frame[3]: CSEG_ADHOC00[13], CSEG_ADHOC00[0], PSEG_FORM_E_FPT:BODY[58]  Stack[3]: null, INT:4, INT:4
+EXEC: PSEG_FORM_COMPAT:BODY[0]  ENTER    nLOCAL=0                        Frame[4]: null, INT:4, INT:4, PSEG_FORM_FPT_TO_FRP_CHK:BODY[35]  Stack[0]: 
+EXEC: PSEG_FORM_COMPAT:BODY[1]  LOAD     REL_ADR[callStackTop+2]         Frame[4]: null, INT:4, INT:4, PSEG_FORM_FPT_TO_FRP_CHK:BODY[35]  Stack[1]: INT:4
+EXEC: PSEG_FORM_COMPAT:BODY[9]  SWITCH   10 PSEG_FORM_COMPAT:BODY[3] PSEG_FORM_COMPAT:BODY[36] PSEG_FORM_COMPAT:BODY[37] PSEG_FORM_COMPAT:BODY[9] PSEG_FORM_COMPAT:BODY[10] PSEG_FORM_COMPAT:BODY[11] PSEG_FORM_COMPAT:BODY[12] PSEG_FORM_COMPAT:BODY[38] PSEG_FORM_COMPAT:BODY[39] PSEG_FORM_COMPAT:BODY[40]   Frame[4]: null, INT:4, INT:4, PSEG_FORM_FPT_TO_FRP_CHK:BODY[35]  Stack[0]: 
+EXEC: PSEG_FORM_COMPAT:BODY[10]  NOOP                                    Frame[4]: null, INT:4, INT:4, PSEG_FORM_FPT_TO_FRP_CHK:BODY[35]  Stack[0]: 
+EXEC: PSEG_FORM_COMPAT:BODY[11]  NOOP                                    Frame[4]: null, INT:4, INT:4, PSEG_FORM_FPT_TO_FRP_CHK:BODY[35]  Stack[0]: 
+EXEC: PSEG_FORM_COMPAT:BODY[12]  NOOP                                    Frame[4]: null, INT:4, INT:4, PSEG_FORM_FPT_TO_FRP_CHK:BODY[35]  Stack[0]: 
+EXEC: PSEG_FORM_COMPAT:BODY[13]  LOAD     REL_ADR[callStackTop+1]        Frame[4]: null, INT:4, INT:4, PSEG_FORM_FPT_TO_FRP_CHK:BODY[35]  Stack[1]: INT:4
+EXEC: PSEG_FORM_COMPAT:BODY[14]  SWITCH   10 PSEG_FORM_COMPAT:BODY[24] PSEG_FORM_COMPAT:BODY[25] PSEG_FORM_COMPAT:BODY[26] PSEG_FORM_COMPAT:BODY[16] PSEG_FORM_COMPAT:BODY[15] PSEG_FORM_COMPAT:BODY[17] PSEG_FORM_COMPAT:BODY[18] PSEG_FORM_COMPAT:BODY[27] PSEG_FORM_COMPAT:BODY[28] PSEG_FORM_COMPAT:BODY[29]   Frame[4]: null, INT:4, INT:4, PSEG_FORM_FPT_TO_FRP_CHK:BODY[35]  Stack[0]: 
+EXEC: PSEG_FORM_COMPAT:BODY[15]  NOOP                                    Frame[4]: null, INT:4, INT:4, PSEG_FORM_FPT_TO_FRP_CHK:BODY[35]  Stack[0]: 
+EXEC: PSEG_FORM_COMPAT:BODY[16]  NOOP                                    Frame[4]: null, INT:4, INT:4, PSEG_FORM_FPT_TO_FRP_CHK:BODY[35]  Stack[0]: 
+EXEC: PSEG_FORM_COMPAT:BODY[17]  NOOP                                    Frame[4]: null, INT:4, INT:4, PSEG_FORM_FPT_TO_FRP_CHK:BODY[35]  Stack[0]: 
+EXEC: PSEG_FORM_COMPAT:BODY[18]  NOOP                                    Frame[4]: null, INT:4, INT:4, PSEG_FORM_FPT_TO_FRP_CHK:BODY[35]  Stack[0]: 
+EXEC: PSEG_FORM_COMPAT:BODY[19]  LINE     1061                           Frame[4]: null, INT:4, INT:4, PSEG_FORM_FPT_TO_FRP_CHK:BODY[35]  Stack[0]: 
+EXEC: PSEG_FORM_COMPAT:BODY[20]  LOADC    T[1:BOOL] true                 Frame[4]: null, INT:4, INT:4, PSEG_FORM_FPT_TO_FRP_CHK:BODY[35]  Stack[1]: true
+EXEC: PSEG_FORM_COMPAT:BODY[21]  STORE    REL_ADR[callStackTop+0]        Frame[4]: true, INT:4, INT:4, PSEG_FORM_FPT_TO_FRP_CHK:BODY[35]  Stack[1]: true
+EXEC: PSEG_FORM_COMPAT:BODY[22]  POPK     1                              Frame[4]: true, INT:4, INT:4, PSEG_FORM_FPT_TO_FRP_CHK:BODY[35]  Stack[0]: 
+EXEC: PSEG_FORM_COMPAT:BODY[33]  JUMP     PSEG_FORM_COMPAT:BODY[34]      Frame[4]: true, INT:4, INT:4, PSEG_FORM_FPT_TO_FRP_CHK:BODY[35]  Stack[0]: 
+EXEC: PSEG_FORM_COMPAT:BODY[34]  NOOP                                    Frame[4]: true, INT:4, INT:4, PSEG_FORM_FPT_TO_FRP_CHK:BODY[35]  Stack[0]: 
+EXEC: PSEG_FORM_COMPAT:BODY[45]  JUMP     PSEG_FORM_COMPAT:BODY[46]      Frame[4]: true, INT:4, INT:4, PSEG_FORM_FPT_TO_FRP_CHK:BODY[35]  Stack[0]: 
+EXEC: PSEG_FORM_COMPAT:BODY[46]  NOOP                                    Frame[4]: true, INT:4, INT:4, PSEG_FORM_FPT_TO_FRP_CHK:BODY[35]  Stack[0]: 
+EXEC: PSEG_FORM_COMPAT:BODY[47]  NOOP                                    Frame[4]: true, INT:4, INT:4, PSEG_FORM_FPT_TO_FRP_CHK:BODY[35]  Stack[0]: 
+EXEC: PSEG_FORM_COMPAT:BODY[48]  RETURN   COMPAT REL_ADR[callStackTop+3]   Frame[4]: true, INT:4, INT:4, PSEG_FORM_FPT_TO_FRP_CHK:BODY[35]  Stack[0]: 
+EXEC: PSEG_FORM_FPT_TO_FRP_CHK:BODY[35]  NOOP                            Frame[3]: CSEG_ADHOC00[13], CSEG_ADHOC00[0], PSEG_FORM_E_FPT:BODY[58]  Stack[1]: true
+EXEC: PSEG_FORM_FPT_TO_FRP_CHK:BODY[36]  LOADC    T[1:BOOL] null         Frame[3]: CSEG_ADHOC00[13], CSEG_ADHOC00[0], PSEG_FORM_E_FPT:BODY[58]  Stack[2]: true, null
+EXEC: PSEG_FORM_FPT_TO_FRP_CHK:BODY[44]  JUMPIF   NE PSEG_FORM_FPT_TO_FRP_CHK:BODY[45]   Frame[3]: CSEG_ADHOC00[13], CSEG_ADHOC00[0], PSEG_FORM_E_FPT:BODY[58]  Stack[0]: 
+EXEC: PSEG_FORM_FPT_TO_FRP_CHK:BODY[45]  NOOP                            Frame[3]: CSEG_ADHOC00[13], CSEG_ADHOC00[0], PSEG_FORM_E_FPT:BODY[58]  Stack[0]: 
+EXEC: PSEG_FORM_FPT_TO_FRP_CHK:BODY[46]  NOOP                            Frame[3]: CSEG_ADHOC00[13], CSEG_ADHOC00[0], PSEG_FORM_E_FPT:BODY[58]  Stack[0]: 
+EXEC: PSEG_FORM_FPT_TO_FRP_CHK:BODY[194]  JUMP     PSEG_FORM_FPT_TO_FRP_CHK:BODY[195]   Frame[3]: CSEG_ADHOC00[13], CSEG_ADHOC00[0], PSEG_FORM_E_FPT:BODY[58]  Stack[0]: 
+EXEC: PSEG_FORM_FPT_TO_FRP_CHK:BODY[195]  NOOP                           Frame[3]: CSEG_ADHOC00[13], CSEG_ADHOC00[0], PSEG_FORM_E_FPT:BODY[58]  Stack[0]: 
+EXEC: PSEG_FORM_FPT_TO_FRP_CHK:BODY[196]  RETURN   FPT_TO_FRP_CHK REL_ADR[callStackTop+2]   Frame[3]: CSEG_ADHOC00[13], CSEG_ADHOC00[0], PSEG_FORM_E_FPT:BODY[58]  Stack[0]: 
+EXEC: PSEG_FORM_E_FPT:BODY[58]  NOOP                                     Frame[14]: POOL_1[724], null, CSEG_ADHOC00[0], CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], POOL_1[724], FIELD:7, CSEG_ADHOC00[13], CSEG_ADHOC00[0]  Stack[0]: 
+EXEC: PSEG_FORM_E_FPT:BODY[59]  LOAD     REL_ADR[callStackTop+13]        Frame[14]: POOL_1[724], null, CSEG_ADHOC00[0], CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], POOL_1[724], FIELD:7, CSEG_ADHOC00[13], CSEG_ADHOC00[0]  Stack[1]: CSEG_ADHOC00[0]
+EXEC: PSEG_FORM_E_FPT:BODY[60]  LOAD     REMOTE_ADDR[RTStackTop+3]       Frame[14]: POOL_1[724], null, CSEG_ADHOC00[0], CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], POOL_1[724], FIELD:7, CSEG_ADHOC00[13], CSEG_ADHOC00[0]  Stack[1]: null
+EXEC: PSEG_FORM_E_FPT:BODY[61]  SWITCH   8 PSEG_FORM_E_FPT:BODY[62] PSEG_FORM_E_FPT:BODY[231] PSEG_FORM_E_FPT:BODY[201] PSEG_FORM_E_FPT:BODY[243] PSEG_FORM_E_FPT:BODY[255] PSEG_FORM_E_FPT:BODY[266] PSEG_FORM_E_FPT:BODY[267] PSEG_FORM_E_FPT:BODY[268]   Frame[14]: POOL_1[724], null, CSEG_ADHOC00[0], CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], POOL_1[724], FIELD:7, CSEG_ADHOC00[13], CSEG_ADHOC00[0]  Stack[0]: 
+EXEC: PSEG_FORM_E_FPT:BODY[62]  NOOP                                     Frame[14]: POOL_1[724], null, CSEG_ADHOC00[0], CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], POOL_1[724], FIELD:7, CSEG_ADHOC00[13], CSEG_ADHOC00[0]  Stack[0]: 
+EXEC: PSEG_FORM_E_FPT:BODY[63]  LOAD     REL_ADR[callStackTop+13]        Frame[14]: POOL_1[724], null, CSEG_ADHOC00[0], CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], POOL_1[724], FIELD:7, CSEG_ADHOC00[13], CSEG_ADHOC00[0]  Stack[1]: CSEG_ADHOC00[0]
+EXEC: PSEG_FORM_E_FPT:BODY[64]  LOAD     REMOTE_ADDR[RTStackTop+4]       Frame[14]: POOL_1[724], null, CSEG_ADHOC00[0], CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], POOL_1[724], FIELD:7, CSEG_ADHOC00[13], CSEG_ADHOC00[0]  Stack[1]: INT:4
+EXEC: PSEG_FORM_E_FPT:BODY[101]  SWITCH   10 PSEG_FORM_E_FPT:BODY[191] PSEG_FORM_E_FPT:BODY[66] PSEG_FORM_E_FPT:BODY[78] PSEG_FORM_E_FPT:BODY[90] PSEG_FORM_E_FPT:BODY[102] PSEG_FORM_E_FPT:BODY[114] PSEG_FORM_E_FPT:BODY[126] PSEG_FORM_E_FPT:BODY[138] PSEG_FORM_E_FPT:BODY[162] PSEG_FORM_E_FPT:BODY[150]   Frame[14]: POOL_1[724], null, CSEG_ADHOC00[0], CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], POOL_1[724], FIELD:7, CSEG_ADHOC00[13], CSEG_ADHOC00[0]  Stack[0]: 
+EXEC: PSEG_FORM_E_FPT:BODY[102]  NOOP                                    Frame[14]: POOL_1[724], null, CSEG_ADHOC00[0], CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], POOL_1[724], FIELD:7, CSEG_ADHOC00[13], CSEG_ADHOC00[0]  Stack[0]: 
+EXEC: PSEG_FORM_E_FPT:BODY[103]  PRECALL   ENCINT, nParSlots=0, exportSize=1, importSize=2   Frame[14]: POOL_1[724], null, CSEG_ADHOC00[0], CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], POOL_1[724], FIELD:7, CSEG_ADHOC00[13], CSEG_ADHOC00[0]  Stack[1]: null
+EXEC: PSEG_FORM_E_FPT:BODY[104]  LINE     687                            Frame[14]: POOL_1[724], null, CSEG_ADHOC00[0], CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], POOL_1[724], FIELD:7, CSEG_ADHOC00[13], CSEG_ADHOC00[0]  Stack[1]: null
+EXEC: PSEG_FORM_E_FPT:BODY[105]  LOADC    T[9:GADDR] REL_ADR[callStackTop+2][0]   Frame[14]: POOL_1[724], null, CSEG_ADHOC00[0], CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], POOL_1[724], FIELD:7, CSEG_ADHOC00[13], CSEG_ADHOC00[0]  Stack[3]: null, REL_ADR[callStackTop+2], null
+EXEC: PSEG_FORM_E_FPT:BODY[106]  NOOP                                    Frame[14]: POOL_1[724], null, CSEG_ADHOC00[0], CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], POOL_1[724], FIELD:7, CSEG_ADHOC00[13], CSEG_ADHOC00[0]  Stack[3]: null, REL_ADR[callStackTop+2], null
+EXEC: PSEG_FORM_E_FPT:BODY[107]  CALL     PSEG_FORM_ENCINT:BODY[0] Return=REL_ADR[callStackTop+3]   Frame[14]: POOL_1[724], null, CSEG_ADHOC00[0], CSEG_ADHOC00[13], POOL_1[707], null, null, null, null, PSEG_ADHOC00[52], POOL_1[724], FIELD:7, CSEG_ADHOC00[13], CSEG_ADHOC00[0]  Stack[3]: null, REL_ADR[callStackTop+2], null
+EXEC: PSEG_FORM_ENCINT:BODY[0]  ENTER    nLOCAL=2                        Frame[6]: null, REL_ADR[callStackTop+2], null, PSEG_FORM_E_FPT:BODY[108], null, null  Stack[0]: 
+EXEC: PSEG_FORM_ENCINT:BODY[1]  PRECALL   NPACCA, nParSlots=0, exportSize=2, importSize=2   Frame[6]: null, REL_ADR[callStackTop+2], null, PSEG_FORM_E_FPT:BODY[108], null, null  Stack[2]: null, null
+EXEC: PSEG_FORM_ENCINT:BODY[2]  LOAD     REL_ADR[callStackTop+1], 2      Frame[6]: null, REL_ADR[callStackTop+2], null, PSEG_FORM_E_FPT:BODY[108], null, null  Stack[4]: null, null, REL_ADR[callStackTop+2], null
+EXEC: PSEG_FORM_ENCINT:BODY[3]  NOOP                                     Frame[6]: null, REL_ADR[callStackTop+2], null, PSEG_FORM_E_FPT:BODY[108], null, null  Stack[4]: null, null, REL_ADR[callStackTop+2], null
+EXEC: PSEG_FORM_ENCINT:BODY[4]  CALL     PSEG_FORM_NPACCA:BODY[0] Return=REL_ADR[callStackTop+4]   Frame[6]: null, REL_ADR[callStackTop+2], null, PSEG_FORM_E_FPT:BODY[108], null, null  Stack[4]: null, null, REL_ADR[callStackTop+2], null
+EXEC: PSEG_FORM_NPACCA:BODY[0]  ENTER    nLOCAL=1                        Frame[6]: null, null, REL_ADR[callStackTop+2], null, PSEG_FORM_ENCINT:BODY[5], null  Stack[0]: 
+EXEC: PSEG_FORM_NPACCA:BODY[1]  LOAD     REL_ADR[callStackTop+2], 2      Frame[6]: null, null, REL_ADR[callStackTop+2], null, PSEG_FORM_ENCINT:BODY[5], null  Stack[2]: REL_ADR[callStackTop+2], null
+SVM_REFER.execute: NOTE: REFER    R1 = REL_ADR[callStackTop+2][0]
+EXEC: PSEG_FORM_NPACCA:BODY[2]  REFER    R1                              Frame[6]: null, null, REL_ADR[callStackTop+2], null, PSEG_FORM_ENCINT:BODY[5], null  Stack[0]: 
+EXEC: PSEG_FORM_NPACCA:BODY[3]  LOAD     REFER_ADDR[1]+R1(REL_ADR[callStackTop+2][0])   Frame[6]: null, null, REL_ADR[callStackTop+2], null, PSEG_FORM_ENCINT:BODY[5], null  Stack[1]: null
+EXEC: PSEG_FORM_NPACCA:BODY[4]  STORE    REL_ADR[callStackTop+5]         Frame[6]: null, null, REL_ADR[callStackTop+2], null, PSEG_FORM_ENCINT:BODY[5], null  Stack[1]: null
+EXEC: PSEG_FORM_NPACCA:BODY[5]  POPK     1                               Frame[6]: null, null, REL_ADR[callStackTop+2], null, PSEG_FORM_ENCINT:BODY[5], null  Stack[0]: 
+EXEC: PSEG_FORM_NPACCA:BODY[6]  LOAD     REL_ADR[callStackTop+5]         Frame[6]: null, null, REL_ADR[callStackTop+2], null, PSEG_FORM_ENCINT:BODY[5], null  Stack[1]: null
+Exception in thread "main" java.lang.NullPointerException: Cannot invoke "bec.value.ObjectAddress.addOffset(int)" because "oaddr" is null
+	at bec.virtualMachine.SVM_LOAD.execute(SVM_LOAD.java:45)
+	at bec.value.ProgramAddress.execute(ProgramAddress.java:123)
+	at bec.MainProgram.<init>(MainProgram.java:85)
+	at bec.BecCompiler.<init>(BecCompiler.java:129)
+	at bec.BecCompiler.main(BecCompiler.java:53)
+RETURN: 1

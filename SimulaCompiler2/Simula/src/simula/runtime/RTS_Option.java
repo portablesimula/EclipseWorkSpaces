@@ -34,10 +34,6 @@ public class RTS_Option {
 	/// Default: false.
 	public static boolean SML_TRACING = false;
 	
-	/// Specify where a copy of Sysout is written.
-	/// Default: no copying
-	public static Writer SYSOUT_COPY = null;
-	
 	/// Specify where Simula files (Outfile, Infile, ...) are written and read.
 	/// Default: User working directory. System.property("user.dir")
 	public static String RUNTIME_USER_DIR = "";

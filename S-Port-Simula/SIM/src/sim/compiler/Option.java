@@ -11,8 +11,6 @@ import javax.swing.JLabel;
 
 public class Option {
 
-	public static final boolean TESTING = true;
-
 	public static boolean INLINE_TESTING = false;
 	public static boolean verbose = false;
 	public static boolean CaseSensitive = false;

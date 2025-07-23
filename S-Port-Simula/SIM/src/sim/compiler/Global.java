@@ -1,7 +1,5 @@
 package sim.compiler;
 
-import static sim.compiler.Global.consolePanel;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -97,7 +95,7 @@ public class Global {
 	public static String insertName;
 
 	/// The Editor and FEC console
-	public static ConsolePanel consolePanel;  // Option.TESTING == true
+	public static ConsolePanel consolePanel;
 
 
 	/// Returns a temp file directory.

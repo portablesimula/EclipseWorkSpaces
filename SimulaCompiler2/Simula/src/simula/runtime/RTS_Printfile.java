@@ -382,10 +382,6 @@ public class RTS_Printfile extends RTS_Outfile {
 					writer.write("\n");
 			}
 			writer.flush();
-			if(RTS_Option.SYSOUT_COPY != null && isSysout) {
-				RTS_Option.SYSOUT_COPY.write(img);
-				RTS_Option.SYSOUT_COPY.flush();
-			}
 		} catch (IOException e) {
 			throw new RTS_SimulaRuntimeError(ident + " failed", e);
 		}

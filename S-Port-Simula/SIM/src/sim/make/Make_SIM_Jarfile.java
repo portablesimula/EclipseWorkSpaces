@@ -511,11 +511,8 @@ public class Make_SIM_Jarfile {
 	}
 
 	private static void doCompile() {
-//		int execCode = SimulaFEC.callSimulaFEC();
-		int execCode = SimulaFEC.invokeSimulaFEC();
+		int execCode = SimulaFEC.callSimulaFEC();
 		if(Option.verbose) System.out.println("RETURN FROM FEC: ExitCode = "+execCode+"\n\n");
-//		if(execCode == 0) SimulaBEC.callBEC();
-		if(execCode == 0) SimulaBEC.invokeBEC();
-		
+		if(execCode == 0) SimulaBEC.callBEC();
 	}
 }
