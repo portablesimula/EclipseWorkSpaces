@@ -4,7 +4,6 @@ import bec.compileTimeStack.CTStack;
 import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Util;
-import bec.value.ObjectAddress;
 import bec.value.ProgramAddress;
 import bec.virtualMachine.SVM_JUMP;
 import bec.virtualMachine.SVM_NOOP;

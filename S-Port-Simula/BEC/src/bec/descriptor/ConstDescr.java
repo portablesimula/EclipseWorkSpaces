@@ -5,17 +5,13 @@ import java.util.Vector;
 
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
-import bec.ModuleIO;
-import bec.statement.InsertStatement;
 import bec.util.Global;
 import bec.util.Type;
 import bec.util.Scode;
 import bec.util.Tag;
 import bec.util.Util;
-import bec.value.FixupAddress;
 import bec.value.FixupOADDR;
 import bec.value.ObjectAddress;
-import bec.value.ProgramAddress;
 import bec.value.RepetitionValue;
 import bec.value.Value;
 
@@ -87,6 +83,7 @@ public class ConstDescr extends Descriptor {
 //			System.out.println("DETTE ER EN 'ResolvedType' - HVA NÅ ?");
 		}
 
+		@SuppressWarnings("unused")
 		int repCount = (Scode.accept(Scode.S_REP)) ? Scode.inNumber() : 1;
 
 		if(DEBUG) {
@@ -118,6 +115,7 @@ public class ConstDescr extends Descriptor {
 //			System.out.println("ConstDescr.ofConstDef: FIXREP "+fixrep);
 			RecordDescr rec = (RecordDescr) Global.getMeaning(cnst.type.tag);
 //			System.out.println("ConstDescr.ofConstDef: descr="+rec);
+			@SuppressWarnings("unused")
 			int count = rec.size + rec.nbrep * fixrep;
 			fixrepTail = rec.nbrep * fixrep;
 //			System.out.println("ConstDescr.ofConstDef: count="+count);

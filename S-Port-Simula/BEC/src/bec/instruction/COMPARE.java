@@ -4,7 +4,6 @@ import bec.compileTimeStack.CTStack;
 import bec.util.Global;
 import bec.util.Relation;
 import bec.util.Type;
-import bec.virtualMachine.RTRegister;
 import bec.virtualMachine.SVM_COMPARE;
 
 public abstract class COMPARE extends Instruction {

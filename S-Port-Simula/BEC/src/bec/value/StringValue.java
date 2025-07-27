@@ -7,7 +7,6 @@ import bec.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Type;
-import bec.util.Util;
 
 public class StringValue extends Value {
 	public ObjectAddress addr;

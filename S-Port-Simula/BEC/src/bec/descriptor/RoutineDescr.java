@@ -6,7 +6,6 @@ import java.util.Vector;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.compileTimeStack.CTStack;
-import bec.instruction.CALL;
 import bec.instruction.Instruction;
 import bec.segment.DataSegment;
 import bec.segment.ProgramSegment;

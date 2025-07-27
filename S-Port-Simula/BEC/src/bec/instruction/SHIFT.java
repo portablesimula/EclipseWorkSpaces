@@ -4,8 +4,6 @@ import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.CTStackItem;
 import bec.util.Global;
 import bec.util.Scode;
-import bec.util.Type;
-import bec.util.Util;
 import bec.virtualMachine.SVM_SHIFT;
 
 public abstract class SHIFT extends Instruction {

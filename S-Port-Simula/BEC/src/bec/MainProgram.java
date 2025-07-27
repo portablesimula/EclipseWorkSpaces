@@ -77,7 +77,7 @@ public class MainProgram extends S_Module {
 			Util.IERR("Illegal termination of program");
 		
 		try {
-			if(Global.verbose) Util.println("\n\nBEC: NEW MainProgram: BEGIN EXECUTE: " + mainEntry);
+			if(Global.verbose) Util.println("BEC: NEW MainProgram: BEGIN EXECUTE: " + mainEntry);
 			RTUtil.INIT();
 			Global.PSC = mainEntry;
 			while(true) {
@@ -94,7 +94,7 @@ public class MainProgram extends S_Module {
 //				Thread.dumpStack();
 //				return;
 //			}
-			Util.println("\nProgram - Exit: " + eprog.exitCode);
+//			Util.println("\nProgram - Exit: " + eprog.exitCode);
 			return;
 		}
 		

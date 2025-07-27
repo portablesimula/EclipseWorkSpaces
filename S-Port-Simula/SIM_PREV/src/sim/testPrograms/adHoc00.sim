@@ -1,6 +1,0 @@
-begin
-	text array facit(0:17);
-	
-	facit(0) :- "At START";
-	
- end;

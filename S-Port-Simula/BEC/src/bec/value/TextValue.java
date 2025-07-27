@@ -1,17 +1,13 @@
 package bec.value;
 
 import java.io.IOException;
-import java.util.Vector;
-
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
-import bec.descriptor.Kind;
 import bec.segment.DataSegment;
 import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Type;
 import bec.util.Util;
-import bec.virtualMachine.SVM_LOADC;
 
 public class TextValue extends Value {
 //	private ObjectAddress addr; // Pointer to a sequence of Characters.

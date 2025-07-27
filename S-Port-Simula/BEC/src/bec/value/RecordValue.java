@@ -49,6 +49,7 @@ public class RecordValue extends Value {
 	 * 
 	 * End-Condition: Scode'nextByte = First byte after ENDRECORD
 	 */
+	@SuppressWarnings("unused")
 	public static RecordValue ofScode() {
 		RecordValue recValue = new RecordValue();
 		recValue.tag = Tag.ofScode();
@@ -121,6 +122,7 @@ public class RecordValue extends Value {
 		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 	}
 	
+	@SuppressWarnings("unused")
 	private static int setValue(Vector<Value> target, int idx, Value value) {
 		if(DEBUG) {
 			String qual = (value == null)? "" : " "+value.getClass().getSimpleName();
@@ -156,6 +158,7 @@ public class RecordValue extends Value {
 		return idx+1;
 	}
 	
+	@SuppressWarnings("unused")
 	private int addValue(Value value) {
 //		System.out.println("RecordValue.ofScode: attrValues["+idx+"] = "+value);
 		if(value instanceof GeneralAddress gaddr) {

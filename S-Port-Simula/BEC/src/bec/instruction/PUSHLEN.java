@@ -3,7 +3,6 @@ package bec.instruction;
 import bec.compileTimeStack.CTStack;
 import bec.util.Global;
 import bec.util.Type;
-import bec.util.Util;
 import bec.virtualMachine.SVM_PUSHLEN;
 
 public abstract class PUSHLEN extends Instruction {

@@ -4,7 +4,6 @@ import bec.compileTimeStack.AddressItem;
 import bec.compileTimeStack.CTStack;
 import bec.util.Global;
 import bec.util.Type;
-import bec.virtualMachine.SVM_NOOP;
 import bec.virtualMachine.SVM_LOAD;
 
 public abstract class FETCH extends Instruction {

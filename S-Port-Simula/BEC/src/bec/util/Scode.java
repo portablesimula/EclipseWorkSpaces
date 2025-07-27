@@ -45,15 +45,9 @@ public class Scode {
 //		System.out.println("Open SCode file: " + fileName);
 		try (FileInputStream scode = new FileInputStream(fileName)) {
 			SBUF = scode.readAllBytes();
-//			
-//			for(int i=670;i<680;i++) {
-//				System.out.println("Scode.initScode: SBUF["+i+"] = " + SBUF[i]);
-//			}
-//			Util.IERR("");
-//			
 			SBUF_nxt = 0;
 			if(Global.verbose) {
-				System.out.println("\nOpen SCode file: " + fileName + "   size = " + SBUF.length);
+				System.out.println("Open SCode file: " + fileName + "   size = " + SBUF.length);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -9,8 +9,6 @@ import bec.descriptor.Kind;
 import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Type;
-import bec.util.Util;
-import bec.value.ObjectAddress;
 import bec.value.ProgramAddress;
 import bec.virtualMachine.SVM_Instruction;
 

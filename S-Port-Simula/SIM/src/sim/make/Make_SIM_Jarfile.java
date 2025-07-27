@@ -27,8 +27,8 @@ public class Make_SIM_Jarfile {
 			System.out.println("Make_SIM_Jarfile - DONE: " + RELEASE_HOME + "/CommonSIM.jar");
 			
 //			SINGLE_INLINE_TEST();
-			FULL_INLINE_TEST();
-//			INLINE_TEST_SAMPLES();
+//			FULL_INLINE_TEST();
+			INLINE_TEST_SAMPLES();
 			
 		} catch(Exception e) { e.printStackTrace(); }
 	}
@@ -37,11 +37,11 @@ public class Make_SIM_Jarfile {
 	private static void INLINE_TEST_SAMPLES() {
 		Vector<String> names = new Vector<String>();
 //		names.add("Atkins");
-//		names.add("FittingRoom");
+		names.add("FittingRoom");
 //		names.add("JensensDevice");
 //		names.add("PrimeUnder");  // ERR
 //		names.add("Quine");
-		names.add("Sudoku");
+//		names.add("Sudoku");
 //		names.add("TQueens"); // GARB
 		
 	Option.verbose = true;

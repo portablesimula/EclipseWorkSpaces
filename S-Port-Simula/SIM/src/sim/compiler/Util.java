@@ -17,7 +17,6 @@ import java.util.Locale;
 import java.util.Properties;
 import java.util.Set;
 import java.util.Vector;
-import java.util.concurrent.TimeUnit;
 import java.util.jar.Attributes;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -49,16 +48,16 @@ public class Util {
 	/// Print a string.
 	/// @param s the string
 	public static void println(final String s) {
-//		if (Global.console != null) {
-//			if(s != null) {
-//				String u = s.replace('\r', (char) 0);
-//				u = u.replace('\n', (char) 0);
-//				Global.console.write(u + '\n');
+		if (Global.consolePanel != null) {
+			if(s != null) {
+				String u = s.replace('\r', (char) 0);
+				u = u.replace('\n', (char) 0);
+				Global.consolePanel.write(u + '\n');
 //				Thread.dumpStack();
-//			}
-//		}
+			}
+		}
 //		else
-		System.out.println(s);
+		System.out.println("Util.println: " + s);
 	}  
 
 	/// Print the internal error message: IMPOSSIBLE.
@@ -194,34 +193,37 @@ public class Util {
 	public static int exec(String... cmd) throws IOException {
 		String cmdLine="";
 		for(int i=0;i<cmd.length;i++) cmdLine=cmdLine+" "+cmd[i];
-        if(Option.verbose) System.out.println("Util.exec: command="+cmdLine);
+        if(Option.verbose) System.out.println("SIM.Util.exec: command ="+cmdLine);
 		ProcessBuilder processBuilder = new ProcessBuilder(cmd);
-//		processBuilder.inheritIO();
+		System.out.println("SIM.Util.exec: processBuilder = "+processBuilder);
+		processBuilder.inheritIO();
 //		processBuilder.redirectErrorStream();
 		try {
 			Process process = processBuilder.start();
+			System.out.println("SIM.Util.exec: process = "+process);
 			
 			BufferedReader reader = process.inputReader(); // Process' output
 //			BufferedWriter writer = process.outputWriter();
 
-			String line = null;
-			while((line = reader.readLine()) != null) {
-			    System.out.println(line);
-				if(Global.consolePanel != null) {
-					Global.consolePanel.write(line + '\n');
-				}
-			}
+//			String line = null;
+//			while((line = reader.readLine()) != null) {
+//			    System.out.println(line);
+//				if(Global.consolePanel != null) {
+//					Global.consolePanel.write(line + '\n');
+//				}
+//			}
 			
-			boolean terminated = process.waitFor(5, TimeUnit.MINUTES);
-			if(! terminated) Util.IERR("Util.exec: Process Execution didn't terminate: " + cmdLine);
-			if(Option.verbose) System.out.println("Util.exec: RETURN: "+process.exitValue());
+//			boolean terminated = process.waitFor(5, TimeUnit.MINUTES);
+//			if(! terminated) Util.IERR("SIM.Util.exec: Process Execution didn't terminate: " + cmdLine);
+//			int exitCode = process.exitValue();
 			
-			int exitCode = process.exitValue();
-			if(Option.verbose) System.out.println("Util.exec: exitCode = "+exitCode);
+			int exitCode = process.waitFor();
+			
+			if(Option.verbose) System.out.println("SIM.Util.exec: exitCode = "+exitCode);
 			return exitCode;
 		} catch(Exception e) {
 			e.printStackTrace();
-			Util.IERR("Util.exec: Process Execution failed: " + cmdLine, e);
+			Util.IERR("SIM.Util.exec: Process Execution failed: " + cmdLine, e);
 			return -1;
 		}
 	}

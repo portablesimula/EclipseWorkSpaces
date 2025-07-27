@@ -8,7 +8,6 @@ import bec.segment.DataSegment;
 import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Type;
-import bec.util.Util;
 
 public class LongRealValue extends Value {
 	public double value;

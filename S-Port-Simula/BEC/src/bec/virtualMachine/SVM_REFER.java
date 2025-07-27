@@ -7,7 +7,6 @@ import bec.AttributeOutputStream;
 import bec.util.Global;
 import bec.value.GeneralAddress;
 import bec.value.ObjectAddress;
-import bec.value.Value;
 
 /**
  * 

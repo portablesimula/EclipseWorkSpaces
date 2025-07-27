@@ -11,8 +11,6 @@ import java.util.Vector;
 
 import bec.BecCompiler;
 import bec.util.Global;
-import bec.util.Util;
-import bec.virtualMachine.SVM_CALL_SYS;
 
 public final class RunFull_SML_TestBatch {
 	private static long startTimeMs = System.currentTimeMillis();

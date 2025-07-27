@@ -1,9 +1,6 @@
 package bec.virtualMachine.sysrut;
 
-import bec.segment.DataSegment;
-import bec.segment.Segment;
 import bec.util.Type;
-import bec.util.Util;
 import bec.value.IntegerValue;
 import bec.value.LongRealValue;
 import bec.virtualMachine.RTStack;

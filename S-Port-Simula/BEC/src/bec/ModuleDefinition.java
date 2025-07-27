@@ -18,7 +18,6 @@ import bec.statement.InsertStatement;
 import bec.util.Array;
 import bec.util.Global;
 import bec.util.Scode;
-import bec.util.Tag;
 import bec.util.Util;
 
 public class ModuleDefinition extends S_Module {

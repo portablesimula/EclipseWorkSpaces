@@ -516,7 +516,7 @@ public class EditorMenues extends JMenuBar {
 			// Start compiler ....
 			Util.ASSERT(SPortEditor.current!=null,"EditorMenues.doRunAction: Invariant-1");
 			String text=SPortEditor.current.editTextPane.getText();
-			System.out.println("EditorMenu.doStartRunning: " + text);
+//			System.out.println("EditorMenu.doStartRunning: " + text);
 
 			SourceTextPanel current=(SourceTextPanel)SPortEditor.tabbedPane.getSelectedComponent();
 			String name = "new";
@@ -540,12 +540,10 @@ public class EditorMenues extends JMenuBar {
 			File sCodeFile=new File(Global.getTempFileDir("sim/tmp/"), name + ".scd");
 			sCodeFile.getParentFile().mkdirs();
 			sCodeFileName = sCodeFile.toString();
-//			if(Option.verbose)
-				System.out.println("\n\nEditorMenues.doStartRunning: CALL FEC: Output ==> sCodeFileName = "+sCodeFileName);
+			if(Option.verbose) Util.println("\n\nEditorMenues.doStartRunning: CALL FEC: Output ==> sCodeFileName = "+sCodeFileName);
 			int execCode = SimulaFEC.callSimulaFEC();
 //			int execCode = SimulaFEC.invokeSimulaFEC();
-//			if(Option.verbose)
-				System.out.println("EditorMenues.doStartRunning: RETURN FROM FEC: ExitCode = "+execCode);
+			if(Option.verbose) Util.println("EditorMenues.doStartRunning: RETURN FROM FEC: ExitCode = "+execCode);
 			if(execCode == 0) {
 //				if(Option.verbose)
 					System.out.println("\n\nCALL BEC: Output ==> SVM Code ==> executed");
@@ -588,7 +586,7 @@ public class EditorMenues extends JMenuBar {
 	/// Select ExtLibDir action.
     private void selectExtLibDirAction() {
     	SPortEditor.doSelectExtLibDir();
-    	Global.storeSPortProperties();
+    	Global.storeSPortEditorProperties();
     }	
 
 	// ****************************************************************
@@ -613,7 +611,7 @@ public class EditorMenues extends JMenuBar {
 			for(JCheckBox box:list) {
 				if(box.isSelected()) Global.workspaces.remove(new File(box.getText()));
 			}
-	    	Global.storeSPortProperties();
+	    	Global.storeSPortEditorProperties();
 		}
     }
 	
@@ -628,7 +626,7 @@ public class EditorMenues extends JMenuBar {
 
 		  + "   The system consists of:\n" 
 		  + "      - Simuletta compiler which gererates S-Code\n" 
-		  + "      - Simula runtime system written (RTS) in Simuletta.\n" 
+		  + "      - Simula runtime system (RTS) written in Simuletta.\n" 
 		  + "      - Simula Front-end compiler (FEC) written in Simula\n" 
 		  + "      - S-Code Back-end compiler (BEC) written in Java\n" 
 		  + "      - Simula Virtual Macine (SVM)\n\n" 

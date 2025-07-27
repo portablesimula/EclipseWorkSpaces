@@ -76,6 +76,7 @@ public class InsertStatement {
 		int kind = inpt.readKind();
 		if(kind != Kind.K_Module) Util.IERR("Missing MODULE");
 		String modident = inpt.readString();
+		@SuppressWarnings("unused")
 		String modcheck = inpt.readString();
 //		System.out.println("**************   Begin  -  Input-module  " + modident + "  " + modcheck + "   **************");
 		if(! modident.equalsIgnoreCase(modid)) Util.IERR("WRONG modident");

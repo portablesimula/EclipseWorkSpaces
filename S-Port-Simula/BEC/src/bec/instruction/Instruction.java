@@ -1,7 +1,5 @@
 package bec.instruction;
 
-import java.util.Vector;
-
 import bec.descriptor.ConstDescr;
 import bec.descriptor.RecordDescr;
 import bec.descriptor.RoutineDescr;
@@ -15,24 +13,24 @@ import bec.util.Util;
 public class Instruction { // extends ProgramElement {
 	
 //	%title ***   I n s t r u c t i o n   ***
-	public static Vector<Instruction> inInstructionSet(){
-		Vector<Instruction> instructionSet = new Vector<Instruction>();
-		LOOP:while(true) {
-//			Instruction instr = inInstruction();
-			Object obj = inInstruction();
-			if(obj == null) break LOOP;
-			if(obj instanceof Instruction instr)
-				instructionSet.add(instr);
-			Scode.inputInstr();
-		}
-		
-//		System.out.println("\nNEW InstructionSet");
-//		for(ProgramElement instr:instructionSet)
-//			System.out.println("   " + instr);
-//		System.out.println("END InstructionSet");
-
-		return instructionSet;
-	}
+//	public static Vector<Instruction> inInstructionSet(){
+//		Vector<Instruction> instructionSet = new Vector<Instruction>();
+//		LOOP:while(true) {
+////			Instruction instr = inInstruction();
+//			Object obj = inInstruction();
+//			if(obj == null) break LOOP;
+//			if(obj instanceof Instruction instr)
+//				instructionSet.add(instr);
+//			Scode.inputInstr();
+//		}
+//		
+////		System.out.println("\nNEW InstructionSet");
+////		for(ProgramElement instr:instructionSet)
+////			System.out.println("   " + instr);
+////		System.out.println("END InstructionSet");
+//
+//		return instructionSet;
+//	}
 	public static void inInstructions() {
 		LOOP:while(true) {
 			if(! inInstruction()) break LOOP;

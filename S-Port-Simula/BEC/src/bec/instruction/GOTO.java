@@ -3,13 +3,9 @@ package bec.instruction;
 import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.ConstItem;
 import bec.compileTimeStack.CTStackItem;
-import bec.segment.ProgramSegment;
 import bec.util.Global;
 import bec.util.Type;
-import bec.util.Util;
-import bec.value.ProgramAddress;
 import bec.virtualMachine.SVM_GOTO;
-import bec.virtualMachine.SVM_JUMP;
 
 public abstract class GOTO extends Instruction {
 	
@@ -32,8 +28,7 @@ public abstract class GOTO extends Instruction {
 //		System.out.println("GOTO.ofScode: TOS="+TOS.getClass().getSimpleName()+"  "+TOS);
 		
 		if(TOS instanceof ConstItem citm) {
-			ProgramAddress padr = (ProgramAddress) citm.value;
-			
+//			ProgramAddress padr = (ProgramAddress) citm.value;
 //			System.out.println("GOTO.ofScode: padr="+padr);
 //			if(padr != null) {
 //				ProgramSegment seg = (ProgramSegment) padr.segment();

@@ -79,19 +79,9 @@ public class SPortEditor extends JFrame {
     /// SimulaEditor: Main Entry for TESTING ONLY.
     /// @param args the arguments
      public static void main(String[] args) {
-//		Global.packetName="simprog";
-		String userDir="C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SIM";
-//		Global.simulaRtsLib=new File(userDir,"bin"); // To use Eclipse Project's simula.runtime  Download
-		Option.INIT();
-		Global.sampleSourceDir=new File(userDir+"/src/sim/samplePrograms");
-		Thread.currentThread().setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-			public void uncaughtException(Thread thread, Throwable e) {
-				System.out.print("SimulaEditor.UncaughtExceptionHandler: GOT Exception: " + e);
-				e.printStackTrace();
-		}});
 		Option.INLINE_TESTING=true;
 		SPortEditor editor=new SPortEditor();
-    	editor.setVisible(true);
+		editor.start();
     }
             
 	// ****************************************************************
@@ -99,26 +89,28 @@ public class SPortEditor extends JFrame {
 	// ****************************************************************
     /// Create a new SPortEditor.
     public SPortEditor() {
+		Option.INIT();
 		Global.initiate();
+		Thread.currentThread().setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+			public void uncaughtException(Thread thread, Throwable e) {
+				System.out.print("SimulaEditor.UncaughtExceptionHandler: GOT Exception: " + e);
+				e.printStackTrace();
+		}});
+    }
+    
+    public void start() {
 		try { setIconImage(Global.simIcon.getImage()); } catch (Exception e) {}
-//    	if(Option.verbose)
-    		System.out.println("Start " + Global.sPortVersion);
+    	if(Option.verbose) Util.println("Start " + Global.sPortVersion);
        
-        // Set the initial size of the window
         int frameHeight=800;//500;
         int topHeight=500;//300;
         int frameWidth=1000;
         setSize(frameWidth, frameHeight);
-
-        // Set the title of the window
         setTitle(Global.sPortVersion);
-   	
-        // Set the default close operation (exit when it gets closed)
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-
         setLocationRelativeTo(null); // center the frame on screen
 
-        getContentPane().setLayout(new BorderLayout()); // the BorderLayout bit makes it fill it automatically
+        getContentPane().setLayout(new BorderLayout());
         tabbedPane = new JTabbedPane();
         tabbedPane.addMouseListener(mouseListener);
         tabbedPane.addChangeListener(new ChangeListener() {
@@ -130,8 +122,7 @@ public class SPortEditor extends JFrame {
 				}
 			}});
         boolean continuousLayout = true;
-        JSplitPane splitPane1 = null;
-    	splitPane1 = new JSplitPane(JSplitPane.VERTICAL_SPLIT,continuousLayout, tabbedPane,Global.consolePanel);
+        JSplitPane splitPane1 = new JSplitPane(JSplitPane.VERTICAL_SPLIT,continuousLayout, tabbedPane,Global.consolePanel);
         splitPane1.setOneTouchExpandable(true);
         splitPane1.setDividerLocation(topHeight);
         getContentPane().add(splitPane1);
@@ -140,9 +131,24 @@ public class SPortEditor extends JFrame {
 
         // Set the Menus
         menuBar=new EditorMenues();
-        this.setJMenuBar(menuBar);
-        this.setVisible(true);
+        setJMenuBar(menuBar);
+        setVisible(true);
         
+        checkJavaVerion();
+        doSelectWorkspace();
+    }
+
+    /// Utility: getJavaVersion
+    /// @return the JavaVersion
+	private static int getJavaSpecVersion() {
+		String ver = System.getProperty("java.vm.specification.version");
+		try {
+			return (Integer.parseInt(ver));
+		} catch (Exception e) {}
+		return (0);
+	}
+	
+	private static void checkJavaVerion() {
 		int javaVersion=getJavaSpecVersion();
 		if(javaVersion < 24) {
 			String msg = "You have installed Java "+System.getProperty("java.version")+'.'  // TODO: CHECK DETTE
@@ -174,25 +180,6 @@ public class SPortEditor extends JFrame {
 				}
 			}
 		}
-
-//		Terminal terminal = new Terminal("Runtime Console");
-//		System.setIn(terminal.getInputStream());
-//		try {
-//			System.setOut(Global.consolePanel.getOutputStream());
-//		} catch(Exception e) { e.printStackTrace(); }
-
-//        doCheckForNewVersion();
-        doSelectWorkspace();
-    }
-
-    /// Utility: getJavaVersion
-    /// @return the JavaVersion
-	private static int getJavaSpecVersion() {
-		String ver = System.getProperty("java.vm.specification.version");
-		try {
-			return (Integer.parseInt(ver));
-		} catch (Exception e) {}
-		return (0);
 	}
 
 	// ****************************************************************

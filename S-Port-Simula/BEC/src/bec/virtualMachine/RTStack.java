@@ -11,7 +11,6 @@ import bec.value.IntegerValue;
 import bec.value.ObjectAddress;
 import bec.value.ProgramAddress;
 import bec.value.LongRealValue;
-import bec.value.RealValue;
 import bec.value.Value;
 
 public abstract class RTStack {
@@ -55,7 +54,7 @@ public abstract class RTStack {
 		int n = callStack.size()-1;
 		for(int i=n;i>=0;i--) {
 			CallStackFrame frame = callStack.get(i);
-			String ident = (frame.curAddr == null)? "SYSRUT_" + frame.ident : ""+frame.curAddr;
+//			String ident = (frame.curAddr == null)? "SYSRUT_" + frame.ident : ""+frame.curAddr;
 			if(i == n) {
 //				System.out.println("     " + kind + " "+ident + frame);
 				

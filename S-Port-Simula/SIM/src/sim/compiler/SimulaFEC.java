@@ -7,8 +7,9 @@ import static sim.compiler.Global.*;
 
 public abstract class SimulaFEC {
 	
-	private static boolean fecTerminated;
-	private static int exitCode;
+	private static boolean TESTING = false; // Remove when TESTING = false
+	private static boolean fecTerminated;   // Remove when TESTING = false
+	private static int exitCode;            // Remove when TESTING = false
 
 	// ****************************************************************
 	// *** SimulaEditor: Main Entry for TESTING ONLY
@@ -22,19 +23,26 @@ public abstract class SimulaFEC {
 		sourceFileName = "src/sim/samplePrograms/"+name+".sim";
 		callSimulaFEC();
 	}
-
 	
+//	private static String setSimulaHomeDir() {
+//		if(Option.INLINE_TESTING) {
+//			return "C:\\SPORT\\";
+//		} else {
+//			
+//		}
+//
+//	}
+
 	/// Called from EditorMenues 'run'
 	public static int callSimulaFEC() {
-//		startEcho_FEC_Sysout();
-		
 		Vector<String> cmds = new Vector<String>();
 		cmds.add("java");
 		cmds.add("-jar");
+//		cmds.add("C:\\SPORT\\SimulaFEC.jar");
 		cmds.add("C:\\SPORT\\SimulaFEC.jar");
 		cmds.add("-nopopup");
 		if(Option.verbose) cmds.add("-verbose");
-		if(Option.fecTraceLevel > 0) { cmds.add("-SPORT:trace"); cmds.add(""+Option.fecTraceLevel); }
+//		if(Option.fecTraceLevel > 0) { cmds.add("-SPORT:trace"); cmds.add(""+Option.fecTraceLevel); }
 		if(Option.fecListing) cmds.add("-SPORT:listing");
 		if(Option.fecSCodeTrace) cmds.add("-SPORT:traceScode");
 		if(selectors != null) {	cmds.add("-SPORT:select"); cmds.add(selectors); }
@@ -42,21 +50,33 @@ public abstract class SimulaFEC {
 		cmds.add(sourceFileName);
 
 		if(Option.verbose) System.out.println("BEGIN SIMULA FEC ==> \"" + sCodeFileName + '"');
-		Runnable task = new Runnable() {
-			public void run() {
-				try {
-					exitCode = Util.exec(cmds);
-					fecTerminated = true;
-				} catch (IOException e) {
-					e.printStackTrace();
+		if(TESTING) {
+			Runnable task = new Runnable() {
+				public void run() {
+					try {
+						exitCode = Util.exec(cmds);
+						fecTerminated = true;
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
+			};
+			fecTerminated = false;
+			new Thread(task).start();
+			while(! fecTerminated) Thread.yield();
+			System.out.println("SimulaFEC.callSimulaFEC: exitCode=" + exitCode);
+			return exitCode;
+		} else {
+			try {
+				return Util.exec(cmds);
+			} catch (IOException e) {
+				System.out.println("SimulaFEC.callFEC - Exit: ");
+				e.printStackTrace();
+				System.exit(0);
+				return -1;
 			}
-		};
-		fecTerminated = false;
-		new Thread(task).start();
-		while(! fecTerminated) Thread.yield();
-		System.out.println("SimulaFEC.callSimulaFEC: exitCode=" + exitCode);
-		return exitCode;
+			
+		}
 	}
 
 }

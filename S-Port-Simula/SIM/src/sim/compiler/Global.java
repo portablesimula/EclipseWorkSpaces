@@ -17,15 +17,20 @@ public class Global {
 
 	/// Initiate Global variables.
 	public static void initiate() {
-		Global.consolePanel = new ConsolePanel();			
+		Global.consolePanel = new ConsolePanel();	
+		
+		Option.verbose = true;
+		
        	Global.loadSPortSetupProperties(); 
-       	Global.loadSPortProperties();
+//       	Global.loadSPortEditorProperties();
 		String SPORT_HOME = Global.sPortSetupProperties.getProperty("sPort.home","?");
 		if (SPORT_HOME != null) {
-			if(Option.verbose) System.out.println("Global.initiate: SPORT_HOME="+SPORT_HOME);
+			if(Option.verbose) Util.println("Global.initiate: SPORT_HOME="+SPORT_HOME);
 			String SPORT_VERSION = Global.sPortSetupProperties.getProperty("sPort.version","?");
+			if(Option.verbose) Util.println("Global.initiate: SPORT_VERSION="+SPORT_VERSION);
 			if (SPORT_VERSION != null) {
-				File simdir = new File(SPORT_HOME, SPORT_VERSION);
+				simdir = new File(SPORT_HOME, SPORT_VERSION);
+				if(Option.verbose) Util.println("Global.initiate: simdir="+simdir);
 				simIcon = new ImageIcon(new File(simdir, "icons/sim2.png").toString());
 				sIcon = new ImageIcon(new File(simdir, "icons/sim.png").toString());
 			}
@@ -34,6 +39,7 @@ public class Global {
     	String dated = Global.sPortSetupProperties.getProperty("sPort.setup.dated","?");
     	String releaseID=Global.sPortReleaseID+'R'+revision;
 		Global.sPortVersion = "S-Port Editor ("+releaseID+ " built "+dated+" using "+getJavaID()+")";
+       	Global.loadSPortEditorProperties();
 	}
 	
 	/// Utility: get Java ID
@@ -51,6 +57,8 @@ public class Global {
 	/// 
 	/// NOTE: When updating release id, change version in SimulaExtractor and RuntimeSystem
 	public static final String sPortReleaseID = "S-Port-1.0";
+	
+	public static File simdir; // E.g: ../user/Simula/SPort-1.0
 	
 	/// A Simula icon
 	public static ImageIcon simIcon;
@@ -76,8 +84,8 @@ public class Global {
 	/// The SPort properties
 	public static Properties sPortSetupProperties;
 	
-	/// The sample source directory. Where to find sample SPort files
-	public static File sampleSourceDir;
+//	/// The sample source directory. Where to find sample SPort files
+//	public static File sampleSourceDir;
 	
 	/// Current workspace. Where to find .sim source files
 	public static File currentWorkspace;
@@ -128,41 +136,41 @@ public class Global {
 		}
 	}
 
-	/// Initiate Simula properties.
-	public static void initSimulaProperties() {
-		if (sPortProperties == null)
-			loadProperties();
-	}
-
-	/// Returns a Simula property.
-	/// @param key          property key
-	/// @param defaultValue default value
-	/// @return a Simula property
-	public static String getSPortProperty(String key, String defaultValue) {
-		if (sPortProperties == null)
-			loadProperties();
-		return (sPortProperties.getProperty(key, defaultValue));
-	}
-
-	/// Load Simula properties.
-	private static void loadProperties() {
-		String USER_HOME=System.getProperty("user.home");
-		sPortPropertiesFile=new File(USER_HOME,".simula/sPortProperties.xml");			
-		sPortProperties = new Properties();
-		try {
-			sPortProperties.loadFromXML(new FileInputStream(sPortPropertiesFile));
-		} catch (Exception e) {
-			Util.popUpError("Can't load: " + sPortPropertiesFile + "\nGot error: " + e);
-//			Thread.dumpStack();
-		}
-		sPortHome = new File(sPortProperties.getProperty("s-port.home"));
-		String version = sPortProperties.getProperty("s-port.version");
-		releaseHome = new File(sPortHome, "/"+version);
-		System.out.println("Global.loadProperties: sPortHome="+sPortHome);
-		System.out.println("Global.loadProperties: Version="+version);
-		System.out.println("Global.loadProperties: releaseHome="+releaseHome);
-//		Util.IERR("");
-	}
+//	/// Initiate Simula properties.
+//	public static void initSimulaProperties() {
+//		if (sPortProperties == null)
+//			loadProperties();
+//	}
+//
+//	/// Returns a Simula property.
+//	/// @param key          property key
+//	/// @param defaultValue default value
+//	/// @return a Simula property
+//	public static String getSPortProperty(String key, String defaultValue) {
+//		if (sPortProperties == null)
+//			loadProperties();
+//		return (sPortProperties.getProperty(key, defaultValue));
+//	}
+//
+//	/// Load Simula properties.
+//	private static void loadProperties() {
+//		String USER_HOME=System.getProperty("user.home");
+//		sPortPropertiesFile=new File(USER_HOME,".simula/sPortProperties.xml");			
+//		sPortProperties = new Properties();
+//		try {
+//			sPortProperties.loadFromXML(new FileInputStream(sPortPropertiesFile));
+//		} catch (Exception e) {
+//			Util.popUpError("Can't load: " + sPortPropertiesFile + "\nGot error: " + e);
+////			Thread.dumpStack();
+//		}
+//		sPortHome = new File(sPortProperties.getProperty("s-port.home"));
+//		String version = sPortProperties.getProperty("s-port.version");
+//		releaseHome = new File(sPortHome, "/"+version);
+//		System.out.println("Global.loadProperties: sPortHome="+sPortHome);
+//		System.out.println("Global.loadProperties: Version="+version);
+//		System.out.println("Global.loadProperties: releaseHome="+releaseHome);
+////		Util.IERR("");
+//	}
 
 	// **********************************************************
 	// *** S-PORT PROPERTIES
@@ -184,12 +192,12 @@ public class Global {
 		}
 	}
 
-	/// Load SPort properties.
-	public static void loadSPortProperties() {
+	/// Load SPort Editor properties.
+	public static void loadSPortEditorProperties() {
 		sPortProperties = new Properties();
 		String USER_HOME = System.getProperty("user.home");
 		File simulaPropertiesDir = new File(USER_HOME, ".simula");
-		sPortPropertiesFile = new File(simulaPropertiesDir, "sPortProperties.xml");
+		sPortPropertiesFile = new File(simulaPropertiesDir, "sPortEditor.xml");
 		workspaces = new ArrayDeque<File>();
 		if (sPortPropertiesFile.exists()) {
 			try {
@@ -197,17 +205,14 @@ public class Global {
 				sPortProperties.loadFromXML(new FileInputStream(sPortPropertiesFile));
 				
 				Option.getCompilerOptions(sPortProperties);
-				
-//				String ext = sPortProperties.getProperty("simula.extLib", null);
-//				// Util.println("Global.loadSPortProperties: extLib="+ext);
-//				if (ext != null)
-//					Global.extLib = new File(ext);
 			} catch (Exception e) {
 				Util.popUpError("Can't load: " + sPortPropertiesFile + "\nGot error: " + e);
 			}
 		}
 		if (workspaces.isEmpty()) {
-			workspaces.add(Global.sampleSourceDir);
+			File samples = new File(simdir + "/samples");
+			Util.println("Adding default workspace: " + samples);
+			workspaces.add(samples);
 		}
 		currentWorkspace = workspaces.getFirst();
 	}
@@ -218,12 +223,12 @@ public class Global {
 		if (!workspace.equals(Global.currentWorkspace)) {
 			workspaces.remove(workspace);
 			workspaces.addFirst(workspace);
-			storeSPortProperties();
+			storeSPortEditorProperties();
 		}
 	}
 
 	/// Store Workspace and Options properties.
-	public static void storeSPortProperties() {
+	public static void storeSPortEditorProperties() {
 //		Properties sPortProperties = new Properties();
 		Option.setCompilerOptions(sPortProperties);
 		int i = 1;

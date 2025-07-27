@@ -86,7 +86,7 @@ public class BecCompiler {
 	 * 		::= main <local_quantity>* <program_element>*
 	 */
 	public BecCompiler(String scodeSource) {
-		if(Global.verbose) Util.println("BEC: Start BecCompiler with " + scodeSource);
+		if(Global.verbose) Util.println("\n\nBEC: Start BecCompiler with " + scodeSource);
 		Global.scodeSource = scodeSource;
 		Global.DISPL = new Array<Descriptor>();
 		Global.SEGMAP = new HashMap<String, Segment>();

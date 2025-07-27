@@ -37,6 +37,6 @@ begin integer MAX, SQRT_MAX;
          s := s + 1;  
            
     outint( s, 7 );     outtext( " primes, according to Atkin." ); outimage; outimage;  
-    outtext( "CPU time used :" ); outfix( cputime - t, 4, 7 ); outtext( " sec." );  
+%   outtext( "CPU time used :" ); outfix( cputime - t, 4, 7 ); outtext( " sec." );  
   end;  
 end 

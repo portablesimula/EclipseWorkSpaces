@@ -7,7 +7,7 @@ import java.util.Vector;
 
 public abstract class SimulaBEC {
 
-	private static boolean TESTING = false; // Remove when TESTING = false
+	private static boolean TESTING = true; // Remove when TESTING = false
 	private static boolean becTerminated;  // Remove when TESTING = false
 	private static int exitCode;           // Remove when TESTING = false
 
@@ -28,7 +28,7 @@ public abstract class SimulaBEC {
 		Vector<String> cmds = new Vector<String>();
 		cmds.add("java");
 		cmds.add("-jar");
-		cmds.add("C:\\SPORT\\CommonBEC.jar");
+		cmds.add("C:\\SPORT\\BEC.jar");
 		if(Option.verbose) {
 			cmds.add("-verbose");
 			cmds.add("-execVerbose");
@@ -42,7 +42,8 @@ public abstract class SimulaBEC {
 
 		cmds.add(sCodeFileName);
 
-		if(Option.verbose) System.out.println("BEGIN BEC " + sCodeFileName + " ==> .svm");
+		if(Option.verbose)
+			Util.println("SimulaBEC.callSimulaBEC: BEGIN BEC: " + sCodeFileName + " ==> .svm");
 		if(TESTING) {
 			Runnable task = new Runnable() {
 				public void run() {
@@ -57,18 +58,18 @@ public abstract class SimulaBEC {
 			becTerminated = false;
 			new Thread(task).start();
 			while(! becTerminated) Thread.yield();
-			System.out.println("SimulaFEC.callSimulaFEC: exitCode=" + exitCode);
-			return exitCode;			
 		} else {
 			try {
-				return Util.exec(cmds);
+				exitCode = Util.exec(cmds);
 			} catch (IOException e) {
-				System.out.println("SimulaBEC.callBEC - Exit: ");
 				e.printStackTrace();
-				System.exit(0);
-				return -1;
+//				System.exit(0);
+				exitCode = -1;
 			}
 		}
+		if(Option.verbose)
+			Util.println("SimulaBEC.callSimulaBEC: EXIT BEC: exitCode=" + exitCode);
+		return exitCode;			
 		
 
 	}
