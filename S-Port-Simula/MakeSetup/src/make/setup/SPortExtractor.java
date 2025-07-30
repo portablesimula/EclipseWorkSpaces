@@ -159,7 +159,7 @@ public final class SPortExtractor extends JFrame {
 			     "rem *** Call Simula Editor\r\n" + 
 //				 "java -jar "+INSTALL_DIR+"\\simula.jar\r\n" + 
 				 "cd "+INSTALL_DIR+"\r\n"+
-				 "java -jar simula.jar\r\n" + 
+				 "java -jar SIM.jar\r\n" + 
 				 "pause\r\n";
 		} else {
 			fileName="RunSimulaEditor.sh";

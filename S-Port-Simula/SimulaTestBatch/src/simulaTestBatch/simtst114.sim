@@ -8,6 +8,9 @@
 external class SimulaTest;
 
 SimulaTest(114,"--- Test Switch Statement") begin
+
+%SPORT ON
+
    integer traceCase;
    text array facit(0:5);
    
@@ -15,7 +18,7 @@ SimulaTest(114,"--- Test Switch Statement") begin
    begin
       if verbose then begin outtext(msg); outimage; end;
       if msg <> facit(traceCase) then begin
-         err("Case " & edit(traceCase));
+         err("Case " & edInt(traceCase));
          outtext("Trace: " & msg); outimage;
          outtext("Facit: " & facit(traceCase)); outimage;
       end;
@@ -29,7 +32,7 @@ SimulaTest(114,"--- Test Switch Statement") begin
       integer case1=1;
       integer case2=2;
 
-      switch(lowKey:hiKey) key
+      switch (lowKey:hiKey) key
       begin
          when case1 do begin
               trace(msg & " selected case 1");

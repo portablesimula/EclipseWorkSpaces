@@ -477,13 +477,13 @@ public abstract class BlockDeclaration extends DeclarationScope {
 		ConstantPoolBuilder pool=codeBuilder.constantPool();
 
 		codeBuilder
-				.localVariable(0,"argv",ConstantDescs.CD_String.arrayType(),begScope,endScope)
-				.labelBinding(begScope);
+			.localVariable(0,"argv",ConstantDescs.CD_String.arrayType(),begScope,endScope)
+			.labelBinding(begScope);
 
 		// RTS_UTIL.BPRG(progid, argv);
 		codeBuilder
-				.ldc(pool.stringEntry(this.externalIdent))
-				.aload(0); // argv
+			.ldc(pool.stringEntry(this.externalIdent))
+			.aload(0); // argv
 		RTS.invokestatic_UTIL_BPRG(codeBuilder);
 		
 		codeBuilder

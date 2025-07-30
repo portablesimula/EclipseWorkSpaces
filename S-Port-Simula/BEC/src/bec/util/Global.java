@@ -119,8 +119,8 @@ public class Global {
 	public static String modcheck;		// Check code of module being defined
 	public static String PROGID;		// Ident of program being defined
 	
-	public final static String rtsDir = "C:/SPORT/RTS/";
-	public static String outputDIR = rtsDir; // Attributes and SVM-Code output directory
+	public static String sysInsertDir = "C:/SPORT/RTS/";
+	public static String outputDIR = sysInsertDir; // Attributes and SVM-Code output directory
 	public static int sourceLineNumber;
 	public static int curline;		// Current source line number
 	public static int nTags; // See: INSERT
@@ -153,7 +153,7 @@ public class Global {
 //			Util.IERR(s + ".svm");
 			return s + suffix;
 		} else {
-			return rtsDir + modident + suffix;
+			return sysInsertDir + modident + suffix;
 		}
 	}
 }

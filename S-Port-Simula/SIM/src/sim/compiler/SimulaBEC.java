@@ -28,7 +28,9 @@ public abstract class SimulaBEC {
 		Vector<String> cmds = new Vector<String>();
 		cmds.add("java");
 		cmds.add("-jar");
-		cmds.add("C:\\SPORT\\BEC.jar");
+//		cmds.add("C:\\SPORT\\BEC.jar");
+		cmds.add(Global.simdir + "\\BEC.jar");
+		cmds.add("-sysInsert");	cmds.add(Global.simdir + "\\RTS\\");
 		if(Option.verbose) {
 			cmds.add("-verbose");
 			cmds.add("-execVerbose");

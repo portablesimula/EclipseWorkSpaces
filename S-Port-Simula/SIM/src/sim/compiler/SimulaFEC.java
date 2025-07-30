@@ -23,15 +23,6 @@ public abstract class SimulaFEC {
 		sourceFileName = "src/sim/samplePrograms/"+name+".sim";
 		callSimulaFEC();
 	}
-	
-//	private static String setSimulaHomeDir() {
-//		if(Option.INLINE_TESTING) {
-//			return "C:\\SPORT\\";
-//		} else {
-//			
-//		}
-//
-//	}
 
 	/// Called from EditorMenues 'run'
 	public static int callSimulaFEC() {
@@ -39,7 +30,7 @@ public abstract class SimulaFEC {
 		cmds.add("java");
 		cmds.add("-jar");
 //		cmds.add("C:\\SPORT\\SimulaFEC.jar");
-		cmds.add("C:\\SPORT\\SimulaFEC.jar");
+		cmds.add(Global.simdir + "\\SimulaFEC.jar");
 		cmds.add("-nopopup");
 		if(Option.verbose) cmds.add("-verbose");
 //		if(Option.fecTraceLevel > 0) { cmds.add("-SPORT:trace"); cmds.add(""+Option.fecTraceLevel); }

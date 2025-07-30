@@ -33,6 +33,9 @@ public class BecCompiler {
 				else if (arg.equalsIgnoreCase("-execTrace")) Global.EXEC_TRACE = 1;
 				else if (arg.equalsIgnoreCase("-callTrace")) Global.CALL_TRACE_LEVEL = 2;
 				else if (arg.equalsIgnoreCase("-dumpsAtExit")) Global.DUMPS_AT_EXIT = true;
+				else if (arg.equalsIgnoreCase("-sysInsert")) {
+					Global.sysInsertDir = argv[++i];
+				}
 				else {
 					Util.ERROR("Unknown option " + arg);
 					help();
@@ -58,14 +61,15 @@ public class BecCompiler {
 		System.out.println("Usage: java -jar SportBEC.jar  [options]  ScodeFile ");
 		System.out.println("");
 		System.out.println("possible options include:");
-		System.out.println("  -becVerbose  Output messages about what the compiler is doing");
-		System.out.println("  -execVerbose Output messages about what the executor is doing");
-		System.out.println("  -help        Print this synopsis of standard options");
-		System.out.println("  -inputTrace  Produce input Scode trace");
-		System.out.println("  -listing     Produce pretty Scode listing");
-		System.out.println("  -execTrace   Produce instruction trace during execution");
-		System.out.println("  -callTrace   Produce routine call trace during execution");
-		System.out.println("  -dumpsAtExit Produce certain dumps at en of execution");
+		System.out.println("  -verbose			Output messages about what the compiler is doing");
+		System.out.println("  -execVerbose		Output messages about what the executor is doing");
+		System.out.println("  -help				Print this synopsis of standard options");
+		System.out.println("  -inputTrace		Produce input Scode trace");
+		System.out.println("  -listing			Produce pretty Scode listing");
+		System.out.println("  -execTrace		Produce instruction trace during execution");
+		System.out.println("  -callTrace		Produce routine call trace during execution");
+		System.out.println("  -dumpsAtExit		Produce certain dumps at en of execution");
+		System.out.println("  -sysInsert <dir>  The directory used by the SysInsert Statement");
 		System.out.println("");
 		System.out.println("sourceFile ::= S-Code Source File");
 
@@ -97,7 +101,7 @@ public class BecCompiler {
 		Thread.currentThread().setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
 			public void uncaughtException(Thread thread, Throwable e) {
 				Util.println("BecCompiler.UncaughtExceptionHandler: BEC GOT Exception: " + e.getClass().getSimpleName());
-//				e.printStackTrace();
+				e.printStackTrace();
 				Thread.dumpStack();
 				if(Global.console != null) {
 					while(true) Thread.yield();

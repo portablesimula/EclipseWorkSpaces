@@ -55,7 +55,8 @@ public class InsertStatement {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			Util.IERR("ERROR READING: Input-module  " + modid + "  " + check);
+			Util.IERR("ERROR READING: Input-module  " + modid + "  " + check+" from "+Global.sysInsertDir+modid+".svm");
+			while(true);
 		}
 		if(Global.ATTR_INPUT_TRACE)
 			System.out.println("**************   Endof  -  Input-module  " + modid + "  " + check + "   **************");
@@ -66,7 +67,7 @@ public class InsertStatement {
 	private void readDescriptors(boolean sysmod) throws IOException {
 		String fileName = null;
 		if(sysmod) {
-			fileName = Global.rtsDir+modid+".svm";
+			fileName = Global.sysInsertDir+modid+".svm";
 //			Util.IERR(""+modid+"  "+Global.rtsDir);
 		} else {
 			fileName = Global.getAttrFileName(modid, ".svm");

@@ -11,8 +11,10 @@ public class Single_TestBatch2Scode {
 	static int fecTraceLevel = 0;
 	static String selectors = null;
 
-	static String SOURCE_DIR = "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch_FEC/src/simulaTestBatch/";
-	static String SCODE_DIR  = "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch_FEC/src/simulaTestBatch/scode/";
+//	static String SOURCE_DIR = "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch_FEC/src/simulaTestBatch/";
+//	static String SCODE_DIR  = "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch_FEC/src/simulaTestBatch/scode/";
+	static String SOURCE_DIR = "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/";
+	static String SCODE_DIR  = "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/";
 
 	public static void main(String[] argv) {
 		long startTimeMs = System.currentTimeMillis( );
@@ -21,7 +23,7 @@ public class Single_TestBatch2Scode {
 
 			Vector<String> names=new Vector<String>();
 			names.add("SimulaTest"); // Simula TestBatch Framework
-			names.add("simtst01"); // OK:  Meaningless test of conditional statements
+//			names.add("simtst01"); // OK:  Meaningless test of conditional statements
 //			names.add("simtst02"); // OK:  Test boolean operators/expressions
 //			names.add("simtst03"); // OK:  Test Text Value Relations
 //			names.add("simtst04"); // OK:  To test putint and putreal.
@@ -142,7 +144,7 @@ public class Single_TestBatch2Scode {
 //			names.add("simtst104"); // OK: Procedure parameter 'F' by name.
 //			names.add("simtst105"); // OK: Multiple assignments.
 //			//names.add("simtst106"); // ERR: Test SIMULATION, complex example.
-//			names.add("simtst107"); // OK:  Test Process, activation statements, idle, terminated, time.
+			names.add("simtst107"); // OK:  Test Process, activation statements, idle, terminated, time.
 //			names.add("simtst108"); // OK: Simple Co-Routine Sample 1: detach - call
 //			names.add("simtst109"); // OK: Simple Co-Routine Sample 2: detach - resume
 //			names.add("simtst110"); // OK: Simple Co-Routine Sample 3: detach - resume - chain
@@ -160,21 +162,21 @@ public class Single_TestBatch2Scode {
 //			names.add("simtst120"); // OK: VERY LOCAL GOTO SAMPLE
 //			names.add("simtst121"); // OK: LEGAL GOTO out of an operating Process and the enclosing System.
 //			names.add("simtst122"); // OK: GOTO LABEL IN SUPER CLASS
-//			names.add("simtst123"); // OK: GOTO VIRTUAL LABEL
+//			names.add("simtst123"); // OK: GOTO VIRTUAL LABEL                                         SORRY, switch element requiring thunk IS NOT IMPLEMENTED
 //			names.add("simtst124"); // OK: GOTO VIRTUAL LABEL
 //			names.add("simtst125"); // OK: GOTO LABEL WITHIN NESTED COMPOUND STATEMENTS
-//			names.add("simtst126"); // OK: GOTO SIMPLE SWITCH
+//			names.add("simtst126"); // OK: GOTO SIMPLE SWITCH                                         SORRY, switch element requiring thunk IS NOT IMPLEMENTED
 //			names.add("simtst127"); // OK: Switch (character) Statement
 //			names.add("simtst128"); // OK: Standard Procedure edit and edfix
 //			names.add("Precompiled129"); // OK: Precompile this for Simtst 129.
 //			names.add("simtst129"); // OK: Switch in precompiled class
-//			names.add("simtst130"); // OK: Class SimLib, a set of utility procedures from DEC Handbook.
-//			names.add("simtst131"); // OK: Catching Errors
+//			names.add("simtst130"); // OK: Class SimLib, a set of utility procedures from DEC Handbook.   NOT IMPLEMENTED
+//			names.add("simtst131"); // OK: Catching Errors                                                NOT IMPLEMENTED
 //			names.add("simtst132"); // OK: SPORT Options
 //			names.add("simtst133"); // OK: Test infile reading with inimage and inrecord.
 //			names.add("simtst134"); // OK: Outfile with CREATE, APPEND and PURGE.
 //			names.add("simtst135"); // OK: OutBytefile with CREATE, APPEND and PURGE.
-//			names.add("simtst136"); // OK: Directfile with CREATE, APPEND and PURGE.
+//			names.add("simtst136"); // OK: Directfile with CREATE, APPEND and PURGE.                      NOT IMPLEMENTED
 //			names.add("simtst137"); // OK: DirectBytefile with CREATE, APPEND and PURGE.
 //			names.add("simtst138"); // OK: ref() and Real type Arrays.
 //			names.add("simtst139"); // OK: Test remote Array access.
@@ -237,6 +239,7 @@ public class Single_TestBatch2Scode {
 		cmds.add("-jar");
 		cmds.add("C:\\SPORT\\SimulaFEC.jar");
 		cmds.add("-SPORT:noConsole");
+		cmds.add("-noPopup");
 		if(verbose) cmds.add("-verbose");
 		if(fecTraceLevel > 0) { cmds.add("-SPORT:trace"); cmds.add(""+fecTraceLevel); }
 		if(fecListing) cmds.add("-SPORT:listing");

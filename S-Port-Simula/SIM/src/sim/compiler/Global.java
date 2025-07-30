@@ -18,19 +18,15 @@ public class Global {
 	/// Initiate Global variables.
 	public static void initiate() {
 		Global.consolePanel = new ConsolePanel();	
-		
-		Option.verbose = true;
-		
        	Global.loadSPortSetupProperties(); 
-//       	Global.loadSPortEditorProperties();
 		String SPORT_HOME = Global.sPortSetupProperties.getProperty("sPort.home","?");
 		if (SPORT_HOME != null) {
-			if(Option.verbose) Util.println("Global.initiate: SPORT_HOME="+SPORT_HOME);
+//			if(Option.verbose) Util.println("Global.initiate: SPORT_HOME="+SPORT_HOME);
 			String SPORT_VERSION = Global.sPortSetupProperties.getProperty("sPort.version","?");
-			if(Option.verbose) Util.println("Global.initiate: SPORT_VERSION="+SPORT_VERSION);
+//			if(Option.verbose) Util.println("Global.initiate: SPORT_VERSION="+SPORT_VERSION);
 			if (SPORT_VERSION != null) {
 				simdir = new File(SPORT_HOME, SPORT_VERSION);
-				if(Option.verbose) Util.println("Global.initiate: simdir="+simdir);
+//				if(Option.verbose) Util.println("Global.initiate: simdir="+simdir);
 				simIcon = new ImageIcon(new File(simdir, "icons/sim2.png").toString());
 				sIcon = new ImageIcon(new File(simdir, "icons/sim.png").toString());
 			}
@@ -90,8 +86,8 @@ public class Global {
 	/// Current workspace. Where to find .sim source files
 	public static File currentWorkspace;
 	
-	/// The output directory. Used by Java-Coding to save the generated .jar files.
-	public static File outputDir;
+//	/// The output directory. Used by Java-Coding to save the generated .jar files.
+//	public static File outputDir;
 
 	/// The set of workspaces
 	public static ArrayDeque<File> workspaces;
@@ -125,16 +121,16 @@ public class Global {
 		dir.setExecutable(true, false); // Executable for all users
 	}
 
-	/// Try set Global.outputDir
-	/// @param dir a directory
-	public static void trySetOutputDir(File dir) {
-		dir.mkdirs();
-		if (dir.canWrite())
-			Global.outputDir = dir;
-		else {
-			Global.outputDir = getTempFileDir("simulaEditor/bin");
-		}
-	}
+//	/// Try set Global.outputDir
+//	/// @param dir a directory
+//	public static void trySetOutputDir(File dir) {
+//		dir.mkdirs();
+//		if (dir.canWrite())
+//			Global.outputDir = dir;
+//		else {
+//			Global.outputDir = getTempFileDir("simulaEditor/bin");
+//		}
+//	}
 
 //	/// Initiate Simula properties.
 //	public static void initSimulaProperties() {
@@ -205,6 +201,17 @@ public class Global {
 				sPortProperties.loadFromXML(new FileInputStream(sPortPropertiesFile));
 				
 				Option.getCompilerOptions(sPortProperties);
+				String count = sPortProperties.getProperty("sPort.workspace.count","0");
+				System.out.println("Global.loadSPortEditorProperties: count="+count);
+				int n =  Integer.decode(count).intValue();
+				for(int i=0;i<n;i++) {
+					String ws = sPortProperties.getProperty("sPort.workspace." + (i+1));
+					System.out.println("Global.loadSPortEditorProperties: workspace="+ws);
+					if(ws != null) {
+						File workspace = new File(ws);
+						if(workspace.exists()) workspaces.add(new File(ws));
+					}
+				}
 			} catch (Exception e) {
 				Util.popUpError("Can't load: " + sPortPropertiesFile + "\nGot error: " + e);
 			}
@@ -229,8 +236,9 @@ public class Global {
 
 	/// Store Workspace and Options properties.
 	public static void storeSPortEditorProperties() {
-//		Properties sPortProperties = new Properties();
+		System.out.println("Global.storeSPortEditorProperties: workspaces.size()="+workspaces.size());
 		Option.setCompilerOptions(sPortProperties);
+		sPortProperties.setProperty("sPort.workspace.count", ""+workspaces.size());
 		int i = 1;
 		for (File ws : workspaces) {
 			sPortProperties.setProperty("sPort.workspace." + (i++), ws.toString());

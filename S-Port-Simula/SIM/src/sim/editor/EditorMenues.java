@@ -81,17 +81,10 @@ public class EditorMenues extends JMenuBar {
     
     /** Menu */ private JMenu runMenu=new JMenu("Run");
     /** Menu item */ private JMenuItem run = new JMenuItem("Run");
-    /** Menu item */ private JMenuItem debug = new JMenuItem("Debug");
     
     /** Menu */ private JMenu settings=new JMenu("Settings");
 	/** CheckBox */ private JCheckBox autoRefresh=new JCheckBox("AutoRefresh");
     /** Menu item */ private JMenuItem setWorkSpace = new JMenuItem("Select WorkSpace");
-    /** Menu item */ private JMenuItem setJavaDir = defJMenuItem("Select Java Dir.","Specify where to place generated .java files. \r\n"
-    											+ "Default: Temp directory which is deleted upon exit");
-    /** Menu item */ private JMenuItem setOutputDir = defJMenuItem("Select Output Dir.","Specify where to place generated .jar file. \r\n"
-    											+ "Default: Current workspace/bin");
-    /** Menu item */ private JMenuItem setExtLibDir = defJMenuItem("Select ExtLib Dir.","Specify where to search for precompiled classes and \r\n"
-    																+ "procedures. If not found, output directory is also searched. ");
     /** Menu item */ private JMenuItem workSpaces = new JMenuItem("Remove WorkSpaces");
     /** Menu item */ private JMenuItem EDTOption = new JMenuItem("Options");
 
@@ -115,18 +108,10 @@ public class EditorMenues extends JMenuBar {
 	/** Popup Menu item */ private JMenuItem undo2=new JMenuItem("Undo");
 	///** Popup Menu item */ private JMenuItem redo2=new JMenuItem("Redo");
     /** Popup Menu item */ private JMenuItem run2 = new JMenuItem("Run");
-    /** Popup Menu item */ private JMenuItem debug2 = new JMenuItem("Debug");
 	/** Popup Menu item */ private JCheckBox autoRefresh2=new JCheckBox("AutoRefresh");
     /** Popup Menu item */ private JMenuItem setWorkSpace2 = new JMenuItem("Select WorkSpace");
-    /** Popup Menu item */ private JMenuItem setJavaDir2 = new JMenuItem("Select Java Dir.");
-    /** Popup Menu item */ private JMenuItem setOutputDir2 = new JMenuItem("Select Output Dir.");
-    /** Popup Menu item */ private JMenuItem setExtLibDir2 = new JMenuItem("Select ExtLib Dir.");
     /** Popup Menu item */ private JMenuItem workSpaces2 = new JMenuItem("Remove WorkSpaces");
-    /** Popup Menu item */ private JMenuItem compilerMode2 = new JMenuItem("FEC Compiler Options");
-    /** Popup Menu item */ private JMenuItem EDTOption2 = new JMenuItem("FEC Compiler Options");
-    /** Popup Menu item */ private JMenuItem FECOption2 = new JMenuItem("FEC Compiler Options");
-    /** Popup Menu item */ private JMenuItem BECOption2 = new JMenuItem("BEC Compiler Options");
-    /** Popup Menu item */ private JMenuItem EXEOption2 = new JMenuItem("EXE Options");
+    /** Popup Menu item */ private JMenuItem EDTOption2 = new JMenuItem("Options");
     /** Popup Menu item */ private JMenuItem about2 = new JMenuItem("About S-Port Simula");
     /** Popup Menu item */ private JMenuItem more2 = new JMenuItem("More Info");
 
@@ -158,15 +143,10 @@ public class EditorMenues extends JMenuBar {
         editMenu.add(refresh); refresh.setEnabled(false); refresh.addActionListener(actionListener);
 		this.add(editMenu);
 		runMenu.add(run); run.setEnabled(false); run.addActionListener(actionListener);
-		runMenu.add(debug); debug.setEnabled(false); debug.addActionListener(actionListener);
 		this.add(runMenu);
 		settings.add(autoRefresh); autoRefresh.setEnabled(false); autoRefresh.addActionListener(actionListener);
         settings.add(setWorkSpace); setWorkSpace.addActionListener(actionListener);
         settings.add(workSpaces); workSpaces.addActionListener(actionListener);
-        settings.addSeparator();
-        settings.add(setJavaDir); setJavaDir.addActionListener(actionListener);
-        settings.add(setOutputDir); setOutputDir.addActionListener(actionListener);
-        settings.add(setExtLibDir); setExtLibDir.addActionListener(actionListener);
         settings.addSeparator();
         settings.add(EDTOption); EDTOption.addActionListener(actionListener);
 		this.add(settings);
@@ -221,7 +201,6 @@ public class EditorMenues extends JMenuBar {
 		popupMenu.add(openFile2); openFile2.addActionListener(actionListener);
         popupMenu.addSeparator();
         popupMenu.add(run2); run2.setEnabled(false); run2.addActionListener(actionListener);
-        popupMenu.add(debug2); debug2.setEnabled(false); debug2.addActionListener(actionListener);
         popupMenu.addSeparator();
         popupMenu.add(saveFile2); saveFile2.setEnabled(false); saveFile2.addActionListener(actionListener);
         popupMenu.add(saveAs2); saveAs2.setEnabled(false); saveAs2.addActionListener(actionListener);
@@ -243,16 +222,9 @@ public class EditorMenues extends JMenuBar {
         popupMenu.addSeparator();
         popupMenu.add(autoRefresh2); autoRefresh2.setEnabled(false); autoRefresh2.addActionListener(actionListener);
         popupMenu.addSeparator();
-        popupMenu.add(compilerMode2); compilerMode2.addActionListener(actionListener);
         popupMenu.add(setWorkSpace2); setWorkSpace2.addActionListener(actionListener);
-        popupMenu.add(setJavaDir2); setJavaDir2.addActionListener(actionListener);
-        popupMenu.add(setOutputDir2); setOutputDir2.addActionListener(actionListener);
-        popupMenu.add(setExtLibDir2); setExtLibDir2.addActionListener(actionListener);
         popupMenu.add(workSpaces2); workSpaces2.addActionListener(actionListener);
         popupMenu.add(EDTOption2); EDTOption2.addActionListener(actionListener);
-        popupMenu.add(FECOption2); FECOption2.addActionListener(actionListener);
-        popupMenu.add(BECOption2); BECOption2.addActionListener(actionListener);
-        popupMenu.add(EXEOption2); EXEOption2.addActionListener(actionListener);
         popupMenu.addSeparator();
         popupMenu.add(about2); about2.addActionListener(actionListener);
         popupMenu.add(more2); more2.addActionListener(actionListener);
@@ -291,7 +263,6 @@ public class EditorMenues extends JMenuBar {
 //		search.setEnabled(text);          search2.setEnabled(text);
 		refresh.setEnabled(text);         refresh2.setEnabled(text);
 		run.setEnabled(mayRun);           run2.setEnabled(mayRun);
-		debug.setEnabled(mayRun);         debug2.setEnabled(mayRun);
 		autoRefresh.setSelected(auto);    autoRefresh2.setSelected(auto);
 		autoRefresh.setEnabled(source);   autoRefresh2.setEnabled(source);
 		undo.setEnabled(canUndo);         undo2.setEnabled(canUndo);
@@ -318,13 +289,9 @@ public class EditorMenues extends JMenuBar {
 //			else if(item==redo || item==redo2) redoAction();
 			else if(item==refresh || item==refresh2) current.doRefresh();
 			else if(item==run   || item==run2) doRunAction();
-			else if(item==debug || item==debug2) doDebugAction();
 			else if(item==autoRefresh) current.AUTO_REFRESH=autoRefresh.isSelected();
 			else if(item==autoRefresh2) current.AUTO_REFRESH=autoRefresh2.isSelected();
 			else if(item==setWorkSpace || item==setWorkSpace2) selectWorkspaceAction();
-			else if(item==setJavaDir || item==setJavaDir2) selectJavaDirAction();
-			else if(item==setOutputDir || item==setOutputDir2) selectOutputDirAction();
-			else if(item==setExtLibDir || item==setExtLibDir2) selectExtLibDirAction();
 			else if(item==workSpaces || item==workSpaces2) removeWorkspacesAction();
 			else if(item==EDTOption || item==EDTOption2) Option.selectCompilerOptions();
 			else if(item==about || item==about2) doAboutAction();
@@ -381,7 +348,6 @@ public class EditorMenues extends JMenuBar {
 	        current.fileChanged=true;
 		}
     	if(current.fileChanged)	try {
-//    		Writer writer=new OutputStreamWriter(new FileOutputStream(current.sourceFile.getPath()),Global._CHARSET);
     		Writer writer=new OutputStreamWriter(new FileOutputStream(current.sourceFile.getPath()));
     		BufferedWriter out = new BufferedWriter(writer);
     		String text=current.editTextPane.getText();
@@ -486,17 +452,6 @@ public class EditorMenues extends JMenuBar {
 	}
 	
 	// ****************************************************************
-	// *** doDebugAction
-	// ****************************************************************
-	/// The debug action
-	private void doDebugAction() {
-//		Option.internal.DEBUGGING=true;
-		Option.verbose = true;
-		Option.selectRuntimeOptions();
-		doStartRunning();
-	}
-	
-	// ****************************************************************
 	// *** doStartRunning
 	// ****************************************************************
 	/// Utility: Start running current Simula program.
@@ -536,23 +491,19 @@ public class EditorMenues extends JMenuBar {
 				writer.flush();
 				writer.close();
 			}
-			
 			File sCodeFile=new File(Global.getTempFileDir("sim/tmp/"), name + ".scd");
 			sCodeFile.getParentFile().mkdirs();
 			sCodeFileName = sCodeFile.toString();
 			if(Option.verbose) Util.println("\n\nEditorMenues.doStartRunning: CALL FEC: Output ==> sCodeFileName = "+sCodeFileName);
 			int execCode = SimulaFEC.callSimulaFEC();
-//			int execCode = SimulaFEC.invokeSimulaFEC();
 			if(Option.verbose) Util.println("EditorMenues.doStartRunning: RETURN FROM FEC: ExitCode = "+execCode);
 			if(execCode == 0) {
-//				if(Option.verbose)
+				if(Option.verbose)
 					System.out.println("\n\nCALL BEC: Output ==> SVM Code ==> executed");
 				int execCode2 = SimulaBEC.callBEC();
-//				int execCode2 = SimulaBEC.invokeBEC();
-//				if(Option.verbose)
+				if(Option.verbose)
 					System.out.println("RETURN FROM BEC: ExitCode = "+execCode2);
 			}
-			
 		} catch(Exception e) { Util.popUpError("Can't run: "+e);}
 	}
     
@@ -562,31 +513,6 @@ public class EditorMenues extends JMenuBar {
 	/// Select Workspace action.
 	private void selectWorkspaceAction() {
     	SPortEditor.doSelectWorkspace();
-    }	
-    
-	// ****************************************************************
-	// *** selectJavaDirAction
-	// ****************************************************************
-	/// Select Java directory action.
-    private void selectJavaDirAction() {
-    	SPortEditor.doSelectJavaDir();
-    }	
-    
-	// ****************************************************************
-	// *** selectOutputDirAction
-	// ****************************************************************
-	/// Select output directory action.
-    private void selectOutputDirAction() {
-    	SPortEditor.doSelectOutputDir();
-    }	
-    
-	// ****************************************************************
-	// *** selectExtLibDirAction
-	// ****************************************************************
-	/// Select ExtLibDir action.
-    private void selectExtLibDirAction() {
-    	SPortEditor.doSelectExtLibDir();
-    	Global.storeSPortEditorProperties();
     }	
 
 	// ****************************************************************

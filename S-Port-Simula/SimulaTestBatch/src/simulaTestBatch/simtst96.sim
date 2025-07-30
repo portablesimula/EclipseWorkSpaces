@@ -42,9 +42,9 @@ SimulaTest(96,"--- Test hidden, protected attributes.") begin
       
       procedure check(line,msg,res,facit); text msg; integer line,res,facit;
       begin if res ne facit then
-         err("LINE: " & edit(line) & " ERROR: " & msg & edit(res) & " not equal facit:"  & edit(facit))
+         err("LINE: " & edInt(line) & " ERROR: " & msg & edInt(res) & " not equal facit:"  & edInt(facit))
          else if verbose then begin
-               outtext("LINE: " & edit(line) & " CHECKING: " & msg & edit(res) & " equal " & edit(facit));
+               outtext("LINE: " & edInt(line) & " CHECKING: " & msg & edInt(res) & " equal " & edInt(facit));
                outimage;
          end;
       end; 

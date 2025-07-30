@@ -9,6 +9,63 @@ begin
 	integer nFailed;
 	boolean verbose=false;
 	boolean noMessage;
+     
+	text procedure trim(t); text t; begin
+   		character c;
+   		t :- t.strip;
+   		t.setpos(1);
+   		c := t.getchar;
+   		while c = ' ' do begin
+   			t :- t.sub(2,t.length-1);
+	   		t.setpos(1);
+   			c := t.getchar;
+   		end;
+   		trim :- t;
+	end;
+   
+	text procedure edInt(i); integer i; begin
+   		text t;
+   		t:-blanks(19); 
+   		t.putint(i);
+   		t :- trim(t);
+   		edInt :- t;
+	end;
+   
+   text procedure edBool(b); boolean b; begin
+   		edBool :- (if b then "true" else "false");
+   end;
+
+	text procedure edChar(c); character c; begin
+   		text t;
+   		t:-blanks(1); 
+   		t.putchar(c);
+   		edChar :- t;
+	end;
+
+	text procedure edFix(r, i); real r; integer i; begin
+   		text t;
+   		t:-blanks(19); 
+   		t.putfix(r, i);
+   		t :- trim(t);
+   		edFix :- t;
+	end;
+   
+	text procedure edReal(r); real r; begin
+   		text t;
+   		t:-blanks(19); 
+   		t.putreal(r, 3);
+   		t :- trim(t);
+   		edReal :- t;
+	end;
+   
+	text procedure edLReal(r); long real r; begin
+   		text t;
+   		t:-blanks(19); 
+   		t.putreal(r, 3);
+   		t :- trim(t);
+   		edLReal :- t;
+	end;
+
 
 	procedure err(t); text t;
 	begin sysout.setpos(1);

@@ -101,6 +101,11 @@ public class SPortEditor extends JFrame {
     public void start() {
 		try { setIconImage(Global.simIcon.getImage()); } catch (Exception e) {}
     	if(Option.verbose) Util.println("Start " + Global.sPortVersion);
+    	if(Option.INLINE_TESTING) {
+    		Global.simdir = new File("C:\\SPORT");
+//    		Util.println("INLINE_TESTING " + Global.simdir);
+    	}
+    	if(Option.verbose) Util.println("Global.simdir = \"" + Global.simdir + '"');
        
         int frameHeight=800;//500;
         int topHeight=500;//300;
@@ -217,9 +222,9 @@ public class SPortEditor extends JFrame {
     			   +"\nThe default workspace 'Samples' contains a set of"
     	           +"\nSimula sample programs ready to be compiled."
     	           +"\nYou may open them by the menu item [File][Open]"
-    	           +"\n"
-    			   +"\nExecutable .jar files are normally stored in the"
-    	           +"\nsubdirectory <CurrentWorkspace>/bin"
+//    	           +"\n"
+//    			   +"\nExecutable .jar files are normally stored in the"
+//    	           +"\nsubdirectory <CurrentWorkspace>/bin"
                    +"\n";
     	String browse="Browse for another Workspace Directory";
     	Choice workspaceChooser = new Choice();
@@ -254,67 +259,67 @@ public class SPortEditor extends JFrame {
         UIManager.put("Panel.background",PanelBackground);
         String selected=workspaceChooser.getItem(workspaceChooser.getSelectedIndex());  
     	Global.setCurrentWorkspace(new File(selected));
-	    Global.trySetOutputDir(new File(Global.currentWorkspace,"bin"));
+//	    Global.trySetOutputDir(new File(Global.currentWorkspace,"bin"));
     }
 
-    // ****************************************************************
-    // *** doSelectJavaDir
-    // ****************************************************************
-    /// Select Java directory dialog.
-    static void doSelectJavaDir() {
-//    	if (Option.TRACING) Util.println("SimulaEditor.doSelectJavaDir: ");
-//	    File file=new File(Global.currentWorkspace,"java");
-//	    file.mkdirs();
-//        JFileChooser fileChooser = new JFileChooser(file);
-//        fileChooser.setDialogTitle("Select Java Directory");
+//    // ****************************************************************
+//    // *** doSelectJavaDir
+//    // ****************************************************************
+//    /// Select Java directory dialog.
+//    static void doSelectJavaDir() {
+////    	if (Option.TRACING) Util.println("SimulaEditor.doSelectJavaDir: ");
+////	    File file=new File(Global.currentWorkspace,"java");
+////	    file.mkdirs();
+////        JFileChooser fileChooser = new JFileChooser(file);
+////        fileChooser.setDialogTitle("Select Java Directory");
+////        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+////        int answer = fileChooser.showOpenDialog(null);
+////        if (answer == JFileChooser.APPROVE_OPTION) {
+////        	Option.internal.keepJava=fileChooser.getSelectedFile();
+////        }
+//        Util.IERR("NOT USED ?");
+//    }
+//
+//    // ****************************************************************
+//    // *** doSelectOutputDir
+//    // ****************************************************************
+//    /// Select Output directory dialog.
+//    static void doSelectOutputDir() {
+//        JFileChooser fileChooser = new JFileChooser(Global.outputDir);
+//        fileChooser.setDialogTitle("Select Output Directory");
 //        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 //        int answer = fileChooser.showOpenDialog(null);
 //        if (answer == JFileChooser.APPROVE_OPTION) {
-//        	Option.internal.keepJava=fileChooser.getSelectedFile();
+//        	Global.outputDir=fileChooser.getSelectedFile();
 //        }
-        Util.IERR("NOT USED ?");
-    }
-
-    // ****************************************************************
-    // *** doSelectOutputDir
-    // ****************************************************************
-    /// Select Output directory dialog.
-    static void doSelectOutputDir() {
-        JFileChooser fileChooser = new JFileChooser(Global.outputDir);
-        fileChooser.setDialogTitle("Select Output Directory");
-        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        int answer = fileChooser.showOpenDialog(null);
-        if (answer == JFileChooser.APPROVE_OPTION) {
-        	Global.outputDir=fileChooser.getSelectedFile();
-        }
-    }
-
-    // ****************************************************************
-    // *** doSelectExtLibDir
-    // ****************************************************************
-    /// Select External Search Library dialog.
-    static void doSelectExtLibDir() {
-//    	if (Option.TRACING) Util.println("SimulaEditor.doSelectExtLibDir: ");
-//    	File prev=Global.extLib;
-//    	if(prev==null) prev=Global.outputDir.getParentFile();
-//        JFileChooser fileChooser = new JFileChooser(prev);
-//        fileChooser.setDialogTitle("Select External Search Library");
-//        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-//        int answer = fileChooser.showOpenDialog(null);
-//        if (answer == JFileChooser.APPROVE_OPTION) {
-//        	Global.extLib=fileChooser.getSelectedFile();
-//        }
-        Util.IERR("NOT USED ?");
-    }
-    
-    // ****************************************************************
-    // *** doCheckForNewVersion
-    // ****************************************************************
-    /// Check for new version of the Simula System.
-    /// 
-    /// The Simula site at GitHub is contacted and the current Simula Release ID is checked against this version.
-    /// If not equal question dialog panel is poped up.
-    void doCheckForNewVersion() {
+//    }
+//
+//    // ****************************************************************
+//    // *** doSelectExtLibDir
+//    // ****************************************************************
+//    /// Select External Search Library dialog.
+//    static void doSelectExtLibDir() {
+////    	if (Option.TRACING) Util.println("SimulaEditor.doSelectExtLibDir: ");
+////    	File prev=Global.extLib;
+////    	if(prev==null) prev=Global.outputDir.getParentFile();
+////        JFileChooser fileChooser = new JFileChooser(prev);
+////        fileChooser.setDialogTitle("Select External Search Library");
+////        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+////        int answer = fileChooser.showOpenDialog(null);
+////        if (answer == JFileChooser.APPROVE_OPTION) {
+////        	Global.extLib=fileChooser.getSelectedFile();
+////        }
+//        Util.IERR("NOT USED ?");
+//    }
+//    
+//    // ****************************************************************
+//    // *** doCheckForNewVersion
+//    // ****************************************************************
+//    /// Check for new version of the Simula System.
+//    /// 
+//    /// The Simula site at GitHub is contacted and the current Simula Release ID is checked against this version.
+//    /// If not equal question dialog panel is poped up.
+//    void doCheckForNewVersion() {
 //    	if (Option.TRACING) Util.println("SimulaEditor.doCheckForNewVersion: ");
 //        try {
 //        	String thisRevision=Global.getSPortProperty("simula.revision","?");
@@ -355,8 +360,8 @@ public class SPortEditor extends JFrame {
 //    			}
 //            }
 //        } catch(Exception e) { }
-        Util.IERR("NOT USED ?");
-    }
+//        Util.IERR("NOT USED ?");
+//    }
     
     
     // ****************************************************************

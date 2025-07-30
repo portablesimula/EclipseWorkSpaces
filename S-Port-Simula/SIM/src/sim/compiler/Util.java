@@ -182,88 +182,6 @@ public class Util {
 
 	
 	// ***************************************************************
-	// *** EXECUTE OS COMMAND
-	// ***************************************************************
-	public static int exec(final Vector<String> cmd) throws IOException {
-		String[] cmds = new String[cmd.size()];
-		cmd.copyInto(cmds);
-		return (exec(cmds));
-	}
-
-	public static int exec(String... cmd) throws IOException {
-		String cmdLine="";
-		for(int i=0;i<cmd.length;i++) cmdLine=cmdLine+" "+cmd[i];
-        if(Option.verbose) System.out.println("SIM.Util.exec: command ="+cmdLine);
-		ProcessBuilder processBuilder = new ProcessBuilder(cmd);
-		System.out.println("SIM.Util.exec: processBuilder = "+processBuilder);
-		processBuilder.inheritIO();
-//		processBuilder.redirectErrorStream();
-		try {
-			Process process = processBuilder.start();
-			System.out.println("SIM.Util.exec: process = "+process);
-			
-			BufferedReader reader = process.inputReader(); // Process' output
-//			BufferedWriter writer = process.outputWriter();
-
-//			String line = null;
-//			while((line = reader.readLine()) != null) {
-//			    System.out.println(line);
-//				if(Global.consolePanel != null) {
-//					Global.consolePanel.write(line + '\n');
-//				}
-//			}
-			
-//			boolean terminated = process.waitFor(5, TimeUnit.MINUTES);
-//			if(! terminated) Util.IERR("SIM.Util.exec: Process Execution didn't terminate: " + cmdLine);
-//			int exitCode = process.exitValue();
-			
-			int exitCode = process.waitFor();
-			
-			if(Option.verbose) System.out.println("SIM.Util.exec: exitCode = "+exitCode);
-			return exitCode;
-		} catch(Exception e) {
-			e.printStackTrace();
-			Util.IERR("SIM.Util.exec: Process Execution failed: " + cmdLine, e);
-			return -1;
-		}
-	}
-
-	public static int OLD_exec(final Vector<String> cmd) throws IOException {
-		String[] cmds = new String[cmd.size()];
-		cmd.copyInto(cmds);
-		return (OLD_exec(cmds));
-	}
-
-	public static int OLD_exec(String... cmd) throws IOException {
-		String line="";
-		for(int i=0;i<cmd.length;i++) line=line+" "+cmd[i];
-        if(Option.verbose) System.out.println("MakeSIM.execute: command="+line);
-		ProcessBuilder processBuilder = new ProcessBuilder(cmd);
-		processBuilder.redirectErrorStream(true);
-		try {
-			Process process = processBuilder.start();		
-			InputStream output = process.getInputStream();  // Process' output
-			while (process.isAlive()) {
-				while (output.available() > 0) {
-					System.out.append((char) output.read());
-					if(Global.consolePanel != null)
-						Global.consolePanel.write("" + (char) output.read());
-				}
-//				System.out.println("ALIVE: "+process.isAlive());
-			}
-			if(Option.verbose) System.out.println("RETURN: "+process.exitValue());
-//			Thread.dumpStack();
-			return (process.exitValue());
-
-		} catch(Exception e) {
-			System.out.println("ERROR: "+e);
-			e.printStackTrace();
-			throw new RuntimeException("Process Execution failed: " + line, e);
-		}
-	}
-
-	
-	// ***************************************************************
 	// *** LIST .jar file
 	// ***************************************************************
 	/**
@@ -310,52 +228,47 @@ public class Util {
 		}
 	}
 
+	
+	// ***************************************************************
+	// *** EXECUTE OS COMMAND
+	// ***************************************************************
+	public static int exec(final Vector<String> cmd) throws IOException {
+		String[] cmds = new String[cmd.size()];
+		cmd.copyInto(cmds);
+		return (exec(cmds));
+	}
 
-//	// ***************************************************************
-//	// *** EXECUTE OS COMMAND
-//	// ***************************************************************
-//	/// Execute OS Command
-//	/// @param cmd command vector
-//	/// @return return value from the OS
-//	public static int ZZexecute(final Vector<String> cmd) {
-//		String[] cmds = new String[cmd.size()];
-//		cmd.copyInto(cmds);
-//		return (ZZexecute(cmds));
-//	}
-//
-//	/// Execute an OS command
-//	/// @param cmdarray command array
-//	/// @return exit value
-//	public static int ZZexecute(final String... cmdarray) {
-//		if (Option.verbose) {
-//			String line = "";
-//			for (int i = 0; i < cmdarray.length; i++)
-//				line = line + " " + cmdarray[i];
-//			Util.println("Execute: " + line);
-//		}
-//		ProcessBuilder processBuilder = new ProcessBuilder(cmdarray);
-//		processBuilder.redirectErrorStream(true);
-//		try {
-//			Process process = processBuilder.start();		
-//			InputStream output = process.getInputStream();  // Process' output
-//			if (Global.console != null) {
-//				while (process.isAlive()) {
-//					while (output.available() > 0) {
-//						Global.console.write("" + (char) output.read());
-//					}
-//				}
-//			} else {
-//				while (process.isAlive()) {
-//					while (output.available() > 0) {
-//						System.out.append((char) output.read());
-//					}
-//				}
-//			}
-//			return (process.exitValue());
-//
-//		} catch(Exception e) {
-//			throw new RuntimeException("Process Execution failed: " + cmdarray[0], e);
-//		}
-//	}
+	public static int exec(String... cmd) throws IOException {
+		String cmdLine="";
+		for(int i=0;i<cmd.length;i++) cmdLine=cmdLine+" "+cmd[i];
+        if(Option.verbose) System.out.println("SIM.Util.exec: command ="+cmdLine);
+		ProcessBuilder processBuilder = new ProcessBuilder(cmd);
+//		processBuilder.inheritIO();
+//		processBuilder.redirectErrorStream();
+		try {
+			Process process = processBuilder.start();
+			BufferedReader reader = process.inputReader(); // Process' output
+			String line = null;
+			while((line = reader.readLine()) != null) {
+			    System.out.println(line);
+				if(Global.consolePanel != null) {
+					Global.consolePanel.write(line + '\n');
+				}
+			}
+			
+//			boolean terminated = process.waitFor(5, TimeUnit.MINUTES);
+//			if(! terminated) Util.IERR("SIM.Util.exec: Process Execution didn't terminate: " + cmdLine);
+//			int exitCode = process.exitValue();
+			
+			int exitCode = process.waitFor();
+			
+			if(Option.verbose) System.out.println("SIM.Util.exec: exitCode = "+exitCode);
+			return exitCode;
+		} catch(Exception e) {
+			e.printStackTrace();
+			Util.IERR("SIM.Util.exec: Process Execution failed: " + cmdLine, e);
+			return -1;
+		}
+	}
 
 }

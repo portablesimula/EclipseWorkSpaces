@@ -68,10 +68,10 @@ public class ConstDescr extends Descriptor {
 	public static ConstDescr ofConstSpec() {
 //		Tag tag = Tag.ofScode();
 		Tag tag = Tag.ofScode();
-		ConstDescr cnst = (ConstDescr) Global.DISPL.get(tag.val);
-		if(cnst != null) Util.IERR("New CONSPEC but cnst="+cnst);
+		Descriptor descr = Global.DISPL.get(tag.val);
+		if(descr != null) Util.IERR("New CONSPEC: Descriptor already defined: "+descr);
 		
-		cnst = new ConstDescr(Kind.K_Coonst, tag);
+		ConstDescr cnst = new ConstDescr(Kind.K_Coonst, tag);
 //		System.out.println("NEW ConstDescr.ofConstSpec: "+cnst);
 		
 //		cnst.quant = new QuantityDescriptor();

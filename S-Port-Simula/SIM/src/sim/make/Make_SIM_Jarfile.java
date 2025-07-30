@@ -3,6 +3,7 @@ package sim.make;
 import java.io.File;
 import java.util.Vector;
 
+import sim.compiler.Global;
 import sim.compiler.Option;
 import sim.compiler.SimulaBEC;
 import sim.compiler.SimulaFEC;
@@ -31,6 +32,13 @@ public class Make_SIM_Jarfile {
 			INLINE_TEST_SAMPLES();
 			
 		} catch(Exception e) { e.printStackTrace(); }
+	}
+
+	private static void doCompile() {
+		Global.simdir = new File(RELEASE_HOME);
+		int execCode = SimulaFEC.callSimulaFEC();
+		if(Option.verbose) System.out.println("RETURN FROM FEC: ExitCode = "+execCode+"\n\n");
+		if(execCode == 0) SimulaBEC.callBEC();
 	}
 
 	@SuppressWarnings("unused")
@@ -508,11 +516,5 @@ public class Make_SIM_Jarfile {
 			sCodeFileName  = "C:\\GitHub\\EclipseWorkSpaces/S-Port-Simula\\SIM\\src\\sim\\testPrograms\\scode\\"+name+".scd";
 			doCompile();
 		}
-	}
-
-	private static void doCompile() {
-		int execCode = SimulaFEC.callSimulaFEC();
-		if(Option.verbose) System.out.println("RETURN FROM FEC: ExitCode = "+execCode+"\n\n");
-		if(execCode == 0) SimulaBEC.callBEC();
 	}
 }

@@ -293,6 +293,7 @@ public final class Global {
 				// Util.println("Global.loadWorkspaceProperties: extLib="+ext);
 				if (ext != null)
 					Global.extLib = new File(ext);
+				
 //				for (int i = 1; i <= MAX_WORKSPACE; i++) {
 //					String ws = simulaWorkspaces.getProperty("simula.workspace." + i, null);
 //					if (ws != null) {
@@ -302,6 +303,19 @@ public final class Global {
 //						workspaces.add(new File(ws));
 //					}
 //				}
+				
+				String count = simulaWorkspaces.getProperty("simula.workspace.count","0");
+//				System.out.println("Global.loadSPortEditorProperties: count="+count);
+				int n =  Integer.decode(count).intValue();
+				for(int i=0;i<n;i++) {
+					String ws = simulaWorkspaces.getProperty("simula.workspace." + (i+1));
+//					System.out.println("Global.loadSPortEditorProperties: workspace="+ws);
+					if(ws != null) {
+						File workspace = new File(ws);
+						if(workspace.exists()) workspaces.add(new File(ws));
+					}
+				}
+
 			} catch (Exception e) {
 				Util.popUpError("Can't load: " + simulaWorkspacesFile + "\nGot error: " + e);
 			}
@@ -329,6 +343,7 @@ public final class Global {
 		RTOption.setRuntimeOptions(simulaWorkspaces);
 		if (Global.extLib != null)
 			simulaWorkspaces.setProperty("simula.extLib", Global.extLib.toString());
+		simulaWorkspaces.setProperty("simula.workspace.count", ""+workspaces.size());
 		int i = 1;
 		for (File ws : workspaces) {
 			simulaWorkspaces.setProperty("simula.workspace." + (i++), ws.toString());

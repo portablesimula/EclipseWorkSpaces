@@ -9,7 +9,7 @@
 %  REWRITTEN BY:  BEH   15/07-86
 % ==============================================================================
 begin
-	integer n = 22;
+	integer sequ = 22;
 	text title = "--- Test for-loops with various for-list elements.";
 
 	boolean found_error;
@@ -33,7 +33,7 @@ begin
    integer procedure negStep; negStep := -1;
 
 	if verbose then begin
-		outtext ("--- START Simula a.s. TEST"); outint(n,4); outimage;
+		outtext ("--- START Simula a.s. TEST"); outint(sequ,4); outimage;
 		outtext (title);
 		outimage; outimage;
 	end;
@@ -338,15 +338,15 @@ begin
 	
 	if noMessage then else begin
 		if found_error then begin
-			outtext("--- "); outint(nFailed,3); outtext(" ERROR(S) FOUND IN TEST"); outint(n,4); outtext("  "); outtext(title);
+			outtext("--- "); outint(nFailed,3); outtext(" ERROR(S) FOUND IN TEST"); outint(sequ,4); outtext("  "); outtext(title);
 			outtext("Test sample has "); outint(nFailed,3);
 			error(" error(s)");
 		end else begin
-			outtext ("--- NO ERRORS FOUND IN TEST"); outint(n,4); outtext("  "); outtext(title);
+			outtext ("--- NO ERRORS FOUND IN TEST"); outint(sequ,4); outtext("  "); outtext(title);
 		end;
 
 		if verbose then begin
-			outtext ("--- END Simula a.s. TEST"); outint(n,4); outimage;
+			outtext ("--- END Simula a.s. TEST"); outint(sequ,4); outimage;
 		end;
 	end;
 

@@ -85,7 +85,7 @@ public final class MakeSetup {
 	private static void copyFECandBEC() throws IOException	{
 		printHeading("Copy SIM, FEC and BEC into "+RELEASE_HOME);
 		copyFile("SIM.jar");
-		copyFile("FEC.jar");
+		copyFile("SimulaFEC.jar");
 		copyFile("BEC.jar");
 		copyFile("runSimulaEditor.bat");
 	}

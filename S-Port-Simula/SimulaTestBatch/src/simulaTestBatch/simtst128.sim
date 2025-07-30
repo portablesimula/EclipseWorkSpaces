@@ -15,7 +15,7 @@ SimulaTest(128,"--- Test the new standard procedures  edit and edfix") begin
    begin
       if verbose then begin outtext(msg); outimage; end;
       if msg ne facit(traceCase) then
-      begin err("Case " & edit(traceCase));
+      begin err("Case " & edInt(traceCase));
          outtext("Trace: " & msg); outimage;
          outtext("Facit: " & facit(traceCase)); outimage;
       end;
@@ -28,7 +28,7 @@ SimulaTest(128,"--- Test the new standard procedures  edit and edfix") begin
       c:='B';
       r:=3.14&-15;
       lr:=3.1415&&20;
-      trace("TEST1 " & edit(true) & " " & edit(i) & " " & edit(c) & " " & edit(r) & " " & edit(lr)& " " & edit(b));
+      trace("TEST1 " & edBool(true) & " " & edInt(i) & " " & edChar(c) & " " & edReal(r) & " " & edLReal(lr)& " " & edBool(b));
       lr:=5.23645;
       trace("TEST2 " & edfix(lr,0) & " " & edfix(lr,1) & " " & edfix(lr,2) & " " & edfix(lr,3));
       r:=175.46;

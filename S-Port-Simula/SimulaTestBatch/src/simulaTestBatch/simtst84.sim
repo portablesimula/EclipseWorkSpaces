@@ -19,7 +19,7 @@ SimulaTest(84,"--- Test Directbytefile") begin
    begin
       if verbose then begin outtext(msg); outimage; end;
       if msg <> facit(traceCase) then
-      begin err("Case " & edit(traceCase));
+      begin err("Case " & edInt(traceCase));
          outtext("Trace: " & msg); outimage;
          outtext("Facit: " & facit(traceCase)); outimage;
       end;
@@ -29,27 +29,27 @@ SimulaTest(84,"--- Test Directbytefile") begin
    procedure test1; begin
 		inspect new Directbytefile("TEMP084") do begin
 			integer i;
-			trace("Test1: Before open endfil=" & edit(endfile));
-			trace("Test1: Before open location=" & edit(location));
-			trace("Test1: Before open maxloc=" & edit(maxloc));
+			trace("Test1: Before open endfil=" & edBool(endfile));
+			trace("Test1: Before open location=" & edInt(location));
+			trace("Test1: Before open maxloc=" & edInt(maxloc));
 			setaccess("CREATE");
 			open; 
-			trace("Test1: After open endfil=" & edit(endfile));
-			trace("Test1: After open location=" & edit(location));
-			trace("Test1: After open maxloc=" & edit(maxloc));
-			trace("Test1: After open lastloc=" & edit(lastloc));
+			trace("Test1: After open endfil=" & edBool(endfile));
+			trace("Test1: After open location=" & edInt(location));
+			trace("Test1: After open maxloc=" & edInt(maxloc));
+			trace("Test1: After open lastloc=" & edInt(lastloc));
 			for i:=1 step 1 until 5 do begin
 				outbyte(i);
 			end;
 			for i:=2,3,1,5,4 do begin
-				locate(i); trace("Test1: At loc " & edit(i) & ": " & edit(inbyte));
+				locate(i); trace("Test1: At loc " & edInt(i) & ": " & edInt(inbyte));
 			end;
 			locate(4);
-			trace("Test1: After locate(4) endfil=" & edit(endfile));
-			trace("Test1: After locate(4) location=" & edit(location));
-			trace("Test1: After locate(4) lastloc=" & edit(lastloc));
+			trace("Test1: After locate(4) endfil=" & edBool(endfile));
+			trace("Test1: After locate(4) location=" & edInt(location));
+			trace("Test1: After locate(4) lastloc=" & edInt(lastloc));
 			locate(6);
-			trace("Test1: After locate(6) endfil=" & edit(endfile));
+			trace("Test1: After locate(6) endfil=" & edBool(endfile));
 			setaccess("PURGE");
 			close; 
 		end; 	
@@ -67,7 +67,7 @@ SimulaTest(84,"--- Test Directbytefile") begin
 			locate(1); t:-blanks(5); intext(t); trace("Test2: " & t);
 			
 			for i:=1 step 1 until 5 do begin
-				outtext("Text " & edit(i));
+				outtext("Text " & edInt(i));
 			end;
 
 			locate(1); t:-blanks(35); intext(t);
@@ -78,16 +78,16 @@ SimulaTest(84,"--- Test Directbytefile") begin
 				j := i*6;
 				locate(j);
 				t:-blanks(6); intext(t);
-%				sysout.outtext("Test2: LOC " & edit(j) & ": " & t); outimage;
-				trace("Test2: LOC " & edit(j) & ": " & t);
+%				sysout.outtext("Test2: LOC " & edInt(j) & ": " & t); outimage;
+				trace("Test2: LOC " & edInt(j) & ": " & t);
 			end;
 			
 			for i:=12,27 do begin
-				locate(i); trace("Test2: At loc " & edit(i) & ": " & edit(char(inbyte)));
+				locate(i); trace("Test2: At loc " & edInt(i) & ": " & edInt(char(inbyte)));
 			end;
-			locate(55); trace("Test2: At loc 55: " & edit(inbyte));
+			locate(55); trace("Test2: At loc 55: " & edInt(inbyte));
 			locate(88); outbyte(88);
-			locate(55); trace("Test2: At loc 55: " & edit(inbyte));
+			locate(55); trace("Test2: At loc 55: " & edInt(inbyte));
 
 			setaccess("PURGE");
 			close; 
