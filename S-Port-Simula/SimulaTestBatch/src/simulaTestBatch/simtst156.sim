@@ -13,21 +13,12 @@ external class SimulaTest;
 SimulaTest(156,"--- Test arrays in multiple assignments") begin
 	text array facit(0:15);
 	integer traceCase;
-  
-   text procedure edit(n); integer n; begin
-   end;
-  
-   text procedure edBool(n); boolean n; begin
-   end;
-  
-   text procedure edfix(r,n); real r; integer n; begin
-   end;
    
 	procedure trace(msg); text msg; begin
 		if verbose then
 		begin outtext(msg); outimage; end;
 		if msg ne facit(traceCase) then begin
-			err("Case " & edit(traceCase));
+			err("Case " & edInt(traceCase));
 			outtext("Trace: """ & msg & """"); outimage;
 			outtext("Facit: """ & facit(traceCase) & """"); outimage;
 		end;
@@ -81,20 +72,20 @@ SimulaTest(156,"--- Test arrays in multiple assignments") begin
 %	trace("P1(T)=" & P1("cadabra"));
 	
 	b  := boolARR(4) := true;          trace("b = " & edBool(b));
-	i  := intrARR(4) := 666;           trace("i = " & edit(i));
+	i  := intrARR(4) := 666;           trace("i = " & edInt(i));
 	r  := realARR(4) := 8.21;          trace("r = " & edfix(r,3));
 	lr := lreaARR(4) := 2.98;          trace("lr = " & edfix(lr,4));
 	t  :- textARR(4) :- copy("Cadab"); trace("t = " & t);
-	c  := charARR(4) := 'X';           trace("c = " & edit(c));
-	x  :- refARR(4)  :- new A(333);    trace("x.val = " & edit(x.val));
+	c  := charARR(4) := 'X';           trace("c = " & edChar(c));
+	x  :- refARR(4)  :- new A(333);    trace("x.val = " & edInt(x.val));
 	
 	b  := boolPROC;  trace("b = " & edBool(b));
-	i  := intrPROC;  trace("i = " & edit(i));
+	i  := intrPROC;  trace("i = " & edInt(i));
 	r  := realPROC;  trace("r = " & edfix(r,3));
 	lr := lreaPROC;  trace("lr = " & edfix(lr,4));
 	t  :- textPROC;  trace("t = " & t);
-	c  := charPROC;  trace("c = " & edit(c));
-	x  :- refPROC;   trace("x.val = " & edit(x.val));
+	c  := charPROC;  trace("c = " & edChar(c));
+	x  :- refPROC;   trace("x.val = " & edInt(x.val));
 	
 	
 	trace("At END");

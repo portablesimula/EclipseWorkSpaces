@@ -89,13 +89,15 @@ public class SPortEditor extends JFrame {
 	// ****************************************************************
     /// Create a new SPortEditor.
     public SPortEditor() {
-		Option.INIT();
+//		Option.INIT();
 		Global.initiate();
 		Thread.currentThread().setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
 			public void uncaughtException(Thread thread, Throwable e) {
 				System.out.print("SimulaEditor.UncaughtExceptionHandler: GOT Exception: " + e);
 				e.printStackTrace();
 		}});
+		Global.consolePanel = new ConsolePanel();	
+       	Global.loadSPortEditorProperties();
     }
     
     public void start() {

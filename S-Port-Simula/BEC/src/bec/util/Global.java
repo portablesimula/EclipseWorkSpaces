@@ -16,6 +16,7 @@ public class Global {
 	public static final boolean TESTING_STACK_ADDRESS = true;	
 
 	public static boolean INLINE_TESTING = false;
+	public static boolean nopopup = false;
 	public static boolean verbose = false;
 	public static boolean execVerbose = false;
 	public static int traceMode = 0;

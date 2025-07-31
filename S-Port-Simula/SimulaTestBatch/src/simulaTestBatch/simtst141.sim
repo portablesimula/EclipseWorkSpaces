@@ -11,16 +11,13 @@ external class SimulaTest;
 SimulaTest(141,"--- Test For-Statement with SIMSET and SIMULATION list-processing.") begin
    text array facit(0:25);
    integer traceCase;
-  
-   text procedure edit(n); integer n; begin
-   end;
    
    procedure trace(msg); text msg;
    begin
       if verbose then
       	 begin outtext(msg); outimage; end;
       if msg ne facit(traceCase) then
-      begin err("Case " & edit(traceCase));
+      begin err("Case " & edInt(traceCase));
          outtext("Trace: " & msg); outimage;
          outtext("Facit: " & facit(traceCase)); outimage;
       end;
@@ -69,7 +66,7 @@ SimulaTest(141,"--- Test For-Statement with SIMSET and SIMULATION list-processin
 		for i:=1 step 1 until 10 do new Element(i).into(set);
 		
 		for x :- set.first, x.suc while x =/= none do begin
-			trace("Simset List: i = " & edit(x.i));
+			trace("Simset List: i = " & edInt(x.i));
 		end;
 	
 	end;
@@ -88,7 +85,7 @@ SimulaTest(141,"--- Test For-Statement with SIMSET and SIMULATION list-processin
 		for i:=1 step 1 until 10 do new Person(i).into(queue);
 	
 		for x:-queue.first, x.suc while x =/= none do begin
-			trace("Simulation Queue: i = " & edit(x.i));
+			trace("Simulation Queue: i = " & edInt(x.i));
 		end;
 	
 	end;

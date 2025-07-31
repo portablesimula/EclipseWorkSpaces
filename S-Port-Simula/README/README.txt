@@ -71,9 +71,32 @@ To 'Bootstrap' the old SPORT Simula System, perform following steps:
 			- Run: MiniInlineTest.java
 			- Run: RunMake_RTS.java
 		- Run: RunFull_SML_TestBatch.java
+		- Run: RunFull_Simula_TestBatch
 			
 6) Make S-PORT SIM Compiler
 	- In Project SIM
 		- Run: Make_SIM_Jarfile.java
 		     - Output: C:/SPORT/SIM.jar  and an INLINE test is executed.
-		- Run: C:/SPORT/run_SIM.bat
+		- Run: C:/SPORT/runSimulaEditor.bat
+		
+7) Make SPortSetup.jar
+	- In Project MakeSetup
+		- Run: MakeSetup
+			- Output: SPortSetup.jar   or  SPortSetupEA.jar   in  C:/GitHub/github.io/setup
+			- Output: sPortSetup.xml   in  C:/users/omyhr/.simula
+			- Output: SPort-1.0 folder in  C:/users/omyhr/.simula
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+		

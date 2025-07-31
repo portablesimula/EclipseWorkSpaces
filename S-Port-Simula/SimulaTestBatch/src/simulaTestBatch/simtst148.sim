@@ -13,19 +13,13 @@ external class SimulaTest;
 SimulaTest(148,"--- Test procedure min and max with arguments of all types") begin
    text array facit(0:23);
    integer traceCase;
-  
-   text procedure edit(n); integer n; begin
-   end;
-  
-   text procedure edfix(r,n); real r; integer n; begin
-   end;
    
    procedure trace(msg); text msg;
    begin
       if verbose then
       	 begin outtext(msg); outimage; end;
       if msg ne facit(traceCase) then
-      begin err("Case " & edit(traceCase));
+      begin err("Case " & edInt(traceCase));
          outtext("Trace: " & msg); outimage;
          outtext("Facit: " & facit(traceCase)); outimage;
       end;
@@ -92,7 +86,7 @@ SimulaTest(148,"--- Test procedure min and max with arguments of all types") beg
     x := min(lx,y);  trace("min(lx,y)   => " & edfix(x,4));
     x := min(lx,ly); trace("min(lx,ly)  => " & edfix(x,4));
        
-    c := min('A','B');trace("min(A,B) => " & edit(c));
+    c := min('A','B');trace("min(A,B) => " & edChar(c));
 	t :- min("AAA","BBB"); trace("min(AAA,BBB) => " & t);
 
 % ========================================================
@@ -109,7 +103,7 @@ SimulaTest(148,"--- Test procedure min and max with arguments of all types") beg
     x := max(lx,y);  trace("max(lx,y)   => " & edfix(x,4));
     x := max(lx,ly); trace("max(lx,ly)  => " & edfix(x,4));
        
-    c := max('A','B');trace("max(A,B) => " & edit(c));
+    c := max('A','B');trace("max(A,B) => " & edChar(c));
 	t :- max("AAA","BBB"); trace("max(AAA,BBB) => " & t);
 
 

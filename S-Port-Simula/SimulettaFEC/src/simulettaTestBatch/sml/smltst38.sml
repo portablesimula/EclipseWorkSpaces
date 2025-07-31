@@ -31,7 +31,15 @@ begin
       traceCase:=traceCase+1;
    end;
 
-	Visible record REC:inst; begin
+	Visible record REC1:inst; begin
+		ref(REC) p1;
+		integer   i;
+		ref(REC) p2;
+    	integer   j;
+		ref(REC) p3;
+	end;
+
+	Visible record REC:savent; begin
 		ref(REC) p1;
 		integer   i;
 		ref(REC) p2;
@@ -68,6 +76,7 @@ begin
 		space:=ALLOC(size(inst));
 		r2:=ALLOC(size(REC));
 	
+		r1.sort := 9;
 		r1.p1 := r1;
 		r1.i  := 4444;
 		r1.p2 := r1;
@@ -75,7 +84,7 @@ begin
 		r1.p3 := r1;
 		r1.lng := size(REC);
 		
-		init_pointer(r1);
+		init_pointer(r1+size(savent));
 		repeat y:= get_pointer while y <> none
 			do set_pointer(r2);
 		endrepeat

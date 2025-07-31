@@ -14,6 +14,7 @@ public class Option {
 	public static boolean INLINE_TESTING = false;
 	public static boolean verbose = false;
 	public static boolean CaseSensitive = false;
+	public static boolean nopopup = false;
 
 	public static boolean fecListing;
 	public static boolean fecSCodeTrace;

@@ -15,8 +15,12 @@ SimulaTest(89,"--- Test Inbytefile and Outbytefile.") begin
 
       text src,dst; integer b,bb;
       ref(Inbytefile) inpt,inoupt; ref(Outbytefile) oupt;
-      text inptFileName="C:/GitHub/SimulaCompiler/SimulaTestBatch/src/simulaTestBatch/files/inputByteFile89";
-      text ouptFileName="C:/GitHub/SimulaCompiler/SimulaTestBatch/src/simulaTestBatch/files/outputByteFile89";
+      
+%     text inptFileName="C:/GitHub/SimulaCompiler/SimulaTestBatch/src/simulaTestBatch/files/inputByteFile89";
+%     text ouptFileName="C:/GitHub/SimulaCompiler/SimulaTestBatch/src/simulaTestBatch/files/outputByteFile89";
+      
+      text inptFileName="C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/files/inputByteFile89";
+      text ouptFileName="C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/files/outputByteFile89";
       
       
       inpt:-new Inbytefile(inptFileName);

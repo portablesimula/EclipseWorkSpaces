@@ -11,6 +11,8 @@ import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Util;
 import bec.value.ProgramAddress;
+import bec.virtualMachine.RTRegister;
+import bec.virtualMachine.RTStack;
 import bec.virtualMachine.RTUtil;
 
 public class MainProgram extends S_Module {
@@ -79,6 +81,8 @@ public class MainProgram extends S_Module {
 		try {
 			if(Global.verbose) Util.println("BEC: NEW MainProgram: BEGIN EXECUTE: " + mainEntry);
 			RTUtil.INIT();
+			RTStack.INIT();
+			RTRegister.clearFreeRegs();
 			Global.PSC = mainEntry;
 			while(true) {
 				Global.PSC.execute();

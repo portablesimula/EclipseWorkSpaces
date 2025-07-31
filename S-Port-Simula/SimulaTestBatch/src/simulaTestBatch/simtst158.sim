@@ -13,18 +13,12 @@ external class SimulaTest;
 SimulaTest(158,"--- Test Specified Virtual Boolean Functions as part of an Expression") begin
 	text array facit(0:15);
 	integer traceCase;
-  
-   text procedure edit(n); integer n; begin
-   end;
-  
-   text procedure edBool(n); boolean n; begin
-   end;
    
 	procedure trace(msg); text msg; begin
 		if verbose then
 		begin outtext(msg); outimage; end;
 		if msg ne facit(traceCase) then begin
-			err("Case " & edit(traceCase));
+			err("Case " & edInt(traceCase));
 			outtext("Trace: """ & msg & """"); outimage;
 			outtext("Facit: """ & facit(traceCase) & """"); outimage;
 		end;

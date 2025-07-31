@@ -11,9 +11,9 @@ import bec.value.Value;
 
 public class RTUtil {
 	public static DataSegment DSEG_RT;
-	public static int offset_CURINS = 0;
-	public static int offset_STATUS = 1;
-	public static int offset_ITSIZE = 2;
+	public static final int offset_CURINS = 0;
+	public static final int offset_STATUS = 1;
+	public static final int offset_ITSIZE = 2;
 	
 	public static int CURRENTDECIMALMARK;
 	public static int CURRENTLOWTEN;

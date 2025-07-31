@@ -14,19 +14,13 @@ external class SimulaTest;
 SimulaTest(150,"--- Test all mode/type parameters except name, ... to a Procedure") begin
    text array facit(0:27);
    integer traceCase;
-  
-   text procedure edit(n); integer n; begin
-   end;
-  
-   text procedure edfix(r,n); real r; integer n; begin
-   end;
    
    procedure trace(msg); text msg;
    begin
       if verbose then
       	 begin outtext(msg); outimage; end;
       if msg ne facit(traceCase) then
-      begin err("Case " & edit(traceCase));
+      begin err("Case " & edInt(traceCase));
          outtext("Trace: " & msg); outimage;
          outtext("Facit: " & facit(traceCase)); outimage;
       end;
@@ -34,10 +28,10 @@ SimulaTest(150,"--- Test all mode/type parameters except name, ... to a Procedur
    end;
    
    class AA(i,r,lr,c); integer i; real r; long real lr; character c; begin
-		trace("AA.i = "  & edit(i));
+		trace("AA.i = "  & edInt(i));
 		trace("AA.r = "  & edfix(r,4));
 		trace("AA.lr = " & edfix(lr,4));
-		trace("AA.c = "  & edit(c));
+		trace("AA.c = "  & edChar(c));
 	end;   
 
 
@@ -59,10 +53,10 @@ SimulaTest(150,"--- Test all mode/type parameters except name, ... to a Procedur
 
 %   Value types
 	procedure A(i,r,lr,c); integer i; real r; long real lr; character c; begin
-		trace("A.i = "  & edit(i));
+		trace("A.i = "  & edInt(i));
 		trace("A.r = "  & edfix(r,4));
 		trace("A.lr = " & edfix(lr,4));
-		trace("A.c = "  & edit(c));
+		trace("A.c = "  & edChar(c));
 	end;   
 
 %   Type text
@@ -73,10 +67,10 @@ SimulaTest(150,"--- Test all mode/type parameters except name, ... to a Procedur
 	
 %	Object ref. type
 	procedure C(x); ref(AA) x; begin
-		trace("x.i = "  & edit(x.i));
+		trace("x.i = "  & edInt(x.i));
 		trace("x.r = "  & edfix(x.r,4));
 		trace("x.lr = " & edfix(x.lr,4));
-		trace("x.c = "  & edit(x.c));
+		trace("x.c = "  & edChar(x.c));
 	end;
 	
 %	Value type array
@@ -92,10 +86,10 @@ SimulaTest(150,"--- Test all mode/type parameters except name, ... to a Procedur
 	
 %   ref.type array
 	procedure E(arr); ref(AA) array arr; begin
-		trace("arr(3).i = "  & edit(arr3(3).i));
+		trace("arr(3).i = "  & edInt(arr3(3).i));
 		trace("arr(3).r = "  & edfix(arr3(3).r,4));
 		trace("arr(3).lr = " & edfix(arr3(3).lr,4));
-		trace("arr(3).c = "  & edit(arr3(3).c));
+		trace("arr(3).c = "  & edChar(arr3(3).c));
 	end;		  
 
 	integer i,j; real r; character k;

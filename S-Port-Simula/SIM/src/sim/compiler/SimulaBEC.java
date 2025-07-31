@@ -35,6 +35,7 @@ public abstract class SimulaBEC {
 			cmds.add("-verbose");
 			cmds.add("-execVerbose");
 		}
+		if(Option.nopopup) cmds.add("-nopopup");
 		if(Option.becSCodeTrace) cmds.add("-inputTrace");
 		if(Option.becTraceSVM_CODE) cmds.add("-traceSVM_CODE");
 		if(Option.becTraceSVM_DATA) cmds.add("-traceSVM_DATA");

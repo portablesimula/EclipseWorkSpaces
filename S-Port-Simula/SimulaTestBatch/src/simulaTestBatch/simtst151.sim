@@ -13,22 +13,13 @@ external class SimulaTest;
 SimulaTest(151,"--- Test multiple assignments") begin
    text array facit(0:15);
    integer traceCase;
-  
-   text procedure edit(n); integer n; begin
-   end;
-  
-   text procedure edBool(b); boolean b; begin
-   end;
-  
-   text procedure edfix(r,n); real r; integer n; begin
-   end;
    
    procedure trace(msg); text msg;
    begin
       if verbose then
       	 begin outtext(msg); outimage; end;
       if msg ne facit(traceCase) then
-      begin err("Case " & edit(traceCase));
+      begin err("Case " & edInt(traceCase));
          outtext("Trace: """ & msg & """"); outimage;
          outtext("Facit: """ & facit(traceCase) & """"); outimage;
       end;
@@ -52,13 +43,13 @@ SimulaTest(151,"--- Test multiple assignments") begin
 		character procedure P_CHAR(par_C); character par_C; begin
 			character P_C;
 			P_C := P_CHAR := par_C := A_C := 'Z';
-			trace("P_C=" & edit(P_C) & ", par_C=" & edit(par_C));
+			trace("P_C=" & edChar(P_C) & ", par_C=" & edChar(par_C));
 		end;
  
 		integer procedure P_INT(par_I); integer par_I; begin
 			integer P_I;
 			P_I := P_INT := par_I := A_I := 5632;
-			trace("P_I=" & edit(P_I) & ", par_I=" & edit(par_I));
+			trace("P_I=" & edInt(P_I) & ", par_I=" & edInt(par_I));
 		end;
 
 		real procedure P_REA(par_R); real par_R; begin
@@ -133,10 +124,10 @@ SimulaTest(151,"--- Test multiple assignments") begin
 	trace("x.A_B=" & edBool(x.A_B) & ", b1=" & edBool(b1));
 
 	c1 := x.P_CHAR(c);
-	trace("x.A_C=" & edit(x.A_C) & ", c1=" & edit(c1));
+	trace("x.A_C=" & edChar(x.A_C) & ", c1=" & edChar(c1));
 
 	i1 := x.P_INT(i);
-	trace("x.A_I=" & edit(x.A_I) & ", i1=" & edit(i1));
+	trace("x.A_I=" & edInt(x.A_I) & ", i1=" & edInt(i1));
 
 	r1 := x.P_REA(r);
 	trace("x.A_R=" & edfix(x.A_R,2) & ", r1=" & edfix(r1,2));

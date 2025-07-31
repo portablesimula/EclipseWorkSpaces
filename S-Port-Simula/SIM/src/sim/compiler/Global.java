@@ -17,7 +17,8 @@ public class Global {
 
 	/// Initiate Global variables.
 	public static void initiate() {
-		Global.consolePanel = new ConsolePanel();	
+		Option.INIT();
+//		Global.consolePanel = new ConsolePanel();	
        	Global.loadSPortSetupProperties(); 
 		String SPORT_HOME = Global.sPortSetupProperties.getProperty("sPort.home","?");
 		if (SPORT_HOME != null) {
@@ -35,7 +36,7 @@ public class Global {
     	String dated = Global.sPortSetupProperties.getProperty("sPort.setup.dated","?");
     	String releaseID=Global.sPortReleaseID+'R'+revision;
 		Global.sPortVersion = "S-Port Editor ("+releaseID+ " built "+dated+" using "+getJavaID()+")";
-       	Global.loadSPortEditorProperties();
+//       	Global.loadSPortEditorProperties();
 	}
 	
 	/// Utility: get Java ID

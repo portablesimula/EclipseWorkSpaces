@@ -45,10 +45,11 @@ public class SportSimula {
 				SPortEditor editor=new SPortEditor();
 				editor.start();				
 			} else {
-				System.out.println("RUN SPORT SIM Compiler.jar  argv.length="+argv.length);
-				String cmdLine="";
-				for(int i=0;i<argv.length;i++) cmdLine=cmdLine+" "+argv[i];
-		        System.out.println("SPortSimula.main: command ="+cmdLine);
+				Global.initiate();
+//				System.out.println("RUN SPORT SIM Compiler.jar  argv.length="+argv.length);
+//				String cmdLine="";
+//				for(int i=0;i<argv.length;i++) cmdLine=cmdLine+" "+argv[i];
+//		        System.out.println("SPortSimula.main: command ="+cmdLine);
 		        decodeArgv(argv);
 				
 //				Util.IERR("NOT IMPL");
@@ -81,6 +82,8 @@ public class SportSimula {
 				if (arg.equalsIgnoreCase("-help")) help();
 				else if (arg.equalsIgnoreCase("-verbose")) Option.verbose=true;
 				else if (arg.equalsIgnoreCase("-caseSensitive")) Option.CaseSensitive=true;
+				else if (arg.equalsIgnoreCase("-nopopup")) Option.nopopup=true;
+				else if (arg.equalsIgnoreCase("-simdir")) 	Global.simdir = new File(argv[++i]);
 
 				else if (arg.equalsIgnoreCase("-FEC:Listing")) Option.fecListing = true;
 				else if (arg.equalsIgnoreCase("-FEC:SCodeTrace")) Option.fecSCodeTrace = true;

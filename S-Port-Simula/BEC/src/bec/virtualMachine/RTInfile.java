@@ -18,7 +18,7 @@ public class RTInfile extends RTImageFile {
 	private BufferedReader lineReader;
 	
 	/// Utility variable
-	private String rest = null;
+	private String rest;
 
 
 	public RTInfile(String fileName, int type, String action, int imglng) {

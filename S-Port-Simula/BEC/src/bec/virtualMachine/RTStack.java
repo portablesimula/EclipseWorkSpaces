@@ -15,9 +15,15 @@ import bec.value.Value;
 
 public abstract class RTStack {
 	
-	private static Stack<Value> stack = new Stack<Value>();
-	public static Stack<CallStackFrame> precallStack = new Stack<CallStackFrame>();
-	public static Stack<CallStackFrame> callStack = new Stack<CallStackFrame>();
+	private static Stack<Value> stack;                // = new Stack<Value>();
+	public static Stack<CallStackFrame> precallStack; // = new Stack<CallStackFrame>();
+	public static Stack<CallStackFrame> callStack;    // = new Stack<CallStackFrame>();
+	
+	public static void INIT() {
+		stack = new Stack<Value>();
+		precallStack = new Stack<CallStackFrame>();
+		callStack = new Stack<CallStackFrame>();
+	}
 	
 	public static void checkStackEmpty() {
 		if(curSize() != 0) {

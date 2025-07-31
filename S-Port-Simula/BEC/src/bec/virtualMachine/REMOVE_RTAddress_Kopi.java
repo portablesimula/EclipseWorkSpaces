@@ -14,13 +14,13 @@ import bec.value.IntegerValue;
 import bec.value.ObjectAddress;
 import bec.value.Value;
 
-public class RTAddress_Kopi extends Value {
+public class REMOVE_RTAddress_Kopi extends Value {
 	String segID; // null: RelAddr
 	public int offset;
 	public int xReg; // 0: no index register
 	public int kind;
 
-	public RTAddress_Kopi(AddressItem itm) {
+	public REMOVE_RTAddress_Kopi(AddressItem itm) {
 		if(itm.objadr != null) {
 			this.kind   = itm.objadr.kind;
 			this.segID  = itm.objadr.segID;
@@ -31,14 +31,14 @@ public class RTAddress_Kopi extends Value {
 		if(kind == 0) Util.IERR("");
 	}
 
-	public RTAddress_Kopi(ObjectAddress objadr, int gOfst) {
+	public REMOVE_RTAddress_Kopi(ObjectAddress objadr, int gOfst) {
 		this.kind = objadr.kind;
 		this.segID =  objadr.segID;
 		this.offset = objadr.getOfst() + gOfst;	
 		if(kind == 0) Util.IERR("");
 	}
 
-	public RTAddress_Kopi(RTAddress_Kopi rtadr, int ofst) {
+	public REMOVE_RTAddress_Kopi(REMOVE_RTAddress_Kopi rtadr, int ofst) {
 		this.segID  = rtadr.segID;
 		this.offset = rtadr.offset + ofst;	
 		this.xReg   = rtadr.xReg;
@@ -68,7 +68,7 @@ public class RTAddress_Kopi extends Value {
 		} else {
 			System.out.println("\nRTAddress.dumpArea: BEGIN " + title + " +++++++++++++++++++++++++++++++++++++");
 			for(int i=0;i<lng;i++) {
-				RTAddress_Kopi rtadr = new RTAddress_Kopi(this, i);
+				REMOVE_RTAddress_Kopi rtadr = new REMOVE_RTAddress_Kopi(this, i);
 				System.out.println(""+rtadr+": " + load(offset+i));
 			}
 			System.out.println("RTAddress.dumpArea: ENDOF " + title + " +++++++++++++++++++++++++++++++++++++");
@@ -289,7 +289,7 @@ public class RTAddress_Kopi extends Value {
 	// ***********************************************************************************************
 	// *** Attribute File I/O
 	// ***********************************************************************************************
-	private RTAddress_Kopi(AttributeInputStream inpt) throws IOException {
+	private REMOVE_RTAddress_Kopi(AttributeInputStream inpt) throws IOException {
 		segID = inpt.readString();
 		offset = inpt.readShort();
 		xReg = inpt.readReg();
@@ -303,8 +303,8 @@ public class RTAddress_Kopi extends Value {
 		oupt.writeReg(xReg);
 	}
 
-	public static RTAddress_Kopi read(AttributeInputStream inpt) throws IOException {
-		return new RTAddress_Kopi(inpt);
+	public static REMOVE_RTAddress_Kopi read(AttributeInputStream inpt) throws IOException {
+		return new REMOVE_RTAddress_Kopi(inpt);
 	}
 
 
