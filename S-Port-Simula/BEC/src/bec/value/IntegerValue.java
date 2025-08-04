@@ -17,7 +17,6 @@ public class IntegerValue extends Value {
 	public int value;
 	
 	private IntegerValue(Type type, int value) {
-//		this.type = Type.T_INT;
 		this.type = type;
 		this.value = value;
 	}

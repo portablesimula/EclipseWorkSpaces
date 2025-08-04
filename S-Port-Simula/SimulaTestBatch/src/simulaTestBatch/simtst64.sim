@@ -43,11 +43,8 @@ SimulaTest(64,"--- Test parameter transmission by value to classes.") begin
          outimage;
          for i := 1 step 1 until n do
          begin
-            outtext("            ");
-            outchar('"');
-            outtext(lines(i));
-            outchar('"');
-            outimage;
+            outtext("            Line  " & edInt(i) & ": """ & lines(i) & """"); outimage;
+            outtext("            Facit " & edInt(i) & ": """ & facit(i) & """"); outimage;
          end;
          outimage;
       end;
@@ -350,7 +347,8 @@ SimulaTest(64,"--- Test parameter transmission by value to classes.") begin
             5,12);
    SaveLine;
 
-   facit(13) :- "  true  2   3   5  4.0000&+00 9.0000&+000";
+%  facit(13) :- "  true  2   3   5  4.0000&+00 9.0000&+000";
+   facit(13) :- "  true  2   3   5  4.0000&+00  9.0000&+00";
 
    CheckLines(13, 10);
 

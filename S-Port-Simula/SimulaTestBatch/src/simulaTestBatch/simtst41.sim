@@ -9,7 +9,11 @@
 %  WRITTEN BY:  BEH   23/07-86
 % ==============================================================================
 begin
+
 	external procedure p41 ;
+%	procedure p41 (A,i); name i; integer array A; integer i; begin A(i):= i; end;
+	
+	
 	integer testCase = 41;
 	text title = "--- Test labels and switches as parameters to procedures";
 

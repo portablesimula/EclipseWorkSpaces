@@ -12,9 +12,6 @@ SimulaTest(135,"--- Test Outbytefile with CREATE, APPEND and PURGE.") begin
 
 	integer i,byte;
 	ref(Outbytefile) f1,f2;
-  
-   text procedure edit(n); integer n; begin
-   end;
 	
 	procedure trace(byte); integer byte; begin
 		sysout.outtext("Inbyte: "); sysout.outint(byte,0); sysout.outimage;
@@ -38,6 +35,7 @@ SimulaTest(135,"--- Test Outbytefile with CREATE, APPEND and PURGE.") begin
 	for i:=1 step 1 until 20 do begin
 		f2.outbyte(i+20); 
 	end;
+	f2.close;
 	
 %	outtext("===================  PASS 3  ================"); outimage;
 	inspect new Inbytefile("TEMP004") do begin
@@ -45,7 +43,7 @@ SimulaTest(135,"--- Test Outbytefile with CREATE, APPEND and PURGE.") begin
 		for i:=1 step 1 until 40 do begin
 			byte := inbyte;
 			if verbose then trace(byte);
-			if byte ne i then err("Byte(" & edit(i) & ") = " & edit(byte));
+			if byte ne i then err("Byte(" & edInt(i) & ") = " & edInt(byte));
 		end;
 		close;
 	end;	

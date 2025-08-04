@@ -130,7 +130,7 @@ public class RTFileAction {
 	///  PURGE        nopurge    nopurge     nopurge      close
 	///
 	private void decodeActions(String action) {
-		if(action.length() != 10) Util.IERR("NOT IMPL");
+		if(action.length() != 10) Util.IERR("RTFileAction.decodeActions: NOT IMPL");
 		int chr = getActionChar(action, 0);
 		if(DEBUG) System.out.println("RTFileAction.decodeActions: shared/noshared = " + chr);
 		

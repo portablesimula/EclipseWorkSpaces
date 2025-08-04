@@ -139,7 +139,7 @@ Module strg("RTS");
        ref(area) current_pool;      -- Pointer to current pool
        size minsize;                -- Minimum size of a pool
 
-       record area;                 -- Definition of storage pool
+       record area; info "TYPE";    -- Definition of storage pool
        begin ref(area) suc;         -- Used to organize the pool list
              ref(entity) nxt,lim;   -- Boundary pointers within the pool
              ref(entity) startgc;   -- "freeze-address" for the pool

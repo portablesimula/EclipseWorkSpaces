@@ -1,25 +1,30 @@
-begin
 
-   text t;
-
-   class A;
-   begin
-      integer         i, j, k;
-   end of class A;
-
-   A class B;;
-
-   ref(A)            ra;
-   integer            l;
-
-   ra :- new A;
-
-
-
-   inspect ra
-%   when A do outtext("Case A")
-   when B do outtext("Case B")
-   otherwise outtext("Case Otherwise");
-
-
-end;
+Simulation begin 
+   
+   procedure printSQS; begin
+      ref(Process) x;
+      x :- current;
+      outtext("BEGIN PRINT SQS:"); outimage;
+      while x =/= none do begin
+           inspect x
+           when Prime do begin
+%               outtext("x is Prime("); outint(id,0); outtext(") at "); outreal(evtime, 4, 10); outimage;
+               outtext("x is Prime "); outint(id,0); outimage;
+           end
+           otherwise begin
+               outtext("x is MAIN_PROGRAM at "); outreal(x.evtime, 4, 10); outimage;
+           end;
+      	x :- x.nextev;
+      end;
+   end;
+     
+   Process class Prime(id); integer id; begin
+   end;  
+    
+           printSQS;
+   activate new Prime(2) at 2; -- printSQS;
+%   activate new Prime(3) at 3; -- printSQS;
+   activate new Prime(4) at 4; -- printSQS;
+   activate new Prime(3) at 3; -- printSQS;
+   activate new Prime(1) at 1; printSQS;
+end

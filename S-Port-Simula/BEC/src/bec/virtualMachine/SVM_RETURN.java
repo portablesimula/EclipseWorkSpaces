@@ -34,8 +34,8 @@ public class SVM_RETURN extends SVM_Instruction {
 		if(Global.CALL_TRACE_LEVEL > 0) {
 			System.out.println("SVM_RETURN.execute: RETURN From "+ rutID + " and Continue at " + padr);
 			RTStack.printCallTrace("SVM_RETURN.execute: RETURN From "+ rutID + " and Continue at " + padr);
-//			if(rutID.equals("CONCAT")) {
-//				RTStack.dumpRTStack("SVM_RETURN.execute: ");
+			if(rutID.equals("EVTIME")) {
+				RTStack.dumpRTStack("SVM_RETURN.execute: ");
 //				int idx = 0;
 //				Value txtent = RTStack.load(idx);
 //				System.out.println("SVM_RETURN.execute: TOS="+txtent);
@@ -43,7 +43,7 @@ public class SVM_RETURN extends SVM_Instruction {
 //				System.out.println("SVM_RETURN.execute: obj="+obj);
 //				RTUtil.dumpEntity(obj);
 //				Util.IERR("");
-//			}
+			}
 		}
 		RTStack.checkStackEmpty();
 		CallStackFrame callStackTop = RTStack.callStack_TOP();

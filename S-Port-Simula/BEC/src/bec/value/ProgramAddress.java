@@ -47,7 +47,7 @@ public class ProgramAddress extends Value {
 //		System.out.println("ProgramAddress.ofScode: descr="+descr.getClass().getSimpleName()+"  "+descr);
 		if(type == Type.T_RADDR) return ((RoutineDescr)descr).getAddress();
 		if(type == Type.T_PADDR) return ((LabelDescr)descr).getAddress();
-		Util.IERR("NOT IMPL");
+		Util.IERR("ProgramAddress: NOT IMPL "+type);
 		return null;
 	}
 	

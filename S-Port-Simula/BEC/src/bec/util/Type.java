@@ -79,26 +79,6 @@ public class Type {
 		return type;
 	}
 
-	public static void newRecType(RecordDescr rec) {
-//		System.out.println("DataType.newRecType: " + Scode.edTag(rec.tag.val) + ", size="+rec.size);
-		Type type = new Type(rec.tag.val, rec.size);
-		type.rep0size = rec.nbrep;
-		type.comment = "From " + rec;
-		Type old = TMAP.get(rec.tag.val);
-		if(old != null) {
-//			System.out.println("DataType.newRecType: old=" + old);
-			if(rec.tag.val != Scode.TAG_STRING)	Util.IERR("Already defined: " + type);
-		} else {
-//			if(rec.tag.val == 2483) Util.IERR("");
-			TMAP.put(rec.tag.val, type);
-			RECTYPES.add(type);
-		}
-	}
-	
-	public static void removeFromTMAP(int tag) {
-		TMAP.remove(tag);
-	}
-
 	public boolean isSimple() {
 		return tag <= Scode.TAG_SIZE;
 	}
@@ -169,34 +149,85 @@ public class Type {
 	// *** Attribute File I/O
 	// ***********************************************************************************************
 
+	public static void newRecType(RecordDescr rec) {
+//		System.out.println("DataType.newRecType: " + Scode.edTag(rec.tag.val) + ", size="+rec.size);
+		Type type = new Type(rec.tag.val, rec.size);
+		type.rep0size = rec.nbrep;
+		type.comment = "From " + rec;
+		Type old = TMAP.get(rec.tag.val);
+		if(old != null) {
+//			System.out.println("DataType.newRecType: old=" + old);
+			if(rec.tag.val != Scode.TAG_STRING) {
+//				Util.IERR("Already defined: " + type);
+				System.out.println("ERROR: Already defined: " + type);
+				System.out.println("ERROR: Already defined: " + old);
+				if(type.size != old.size)
+					Util.IERR("Already defined: " + type);
+			}
+		} else {
+			TMAP.put(rec.tag.val, type);
+			RECTYPES.add(type);
+		}
+	}
+	
+	public static void removeFromTMAP(int tag) {
+		TMAP.remove(tag);
+	}
+
 	public static void writeRECTYPES(AttributeOutputStream oupt) throws IOException {
 		if(Global.ATTR_OUTPUT_TRACE) System.out.println("writeRECTYPES: ");
-		oupt.writeKind(Kind.K_RECTYPES);
-		oupt.writeShort(RECTYPES.size());
-		for(Type type:RECTYPES) {
-//			System.out.println("Type.writeRECTYPES: " + type.tag );
-			oupt.writeTagID(type.tag);
-			oupt.writeShort(type.size);
-			type.comment = "From " + Global.currentModule;
+		if(Global.TESTING_RECTYPES) {
+			int count = 0;
+			for(Type type:RECTYPES) {
+				Integer xTag = Global.xTAGTAB.get(type.tag);
+//				System.out.println("Type.writeRECTYPES: " + type.tag + ", type=" + type + ", xTAG=" + xTag );
+				if(xTag != null) count++;
+			}
+			if(count > 0) {
+				oupt.writeKind(Kind.K_RECTYPES);
+				oupt.writeShort(count);
+				for(Type type:RECTYPES) {
+					Integer xTag = Global.xTAGTAB.get(type.tag);
+//					System.out.println("Type.writeRECTYPES: " + type.tag + ", type=" + type + ", xTAG=" + xTag);
+					if(xTag != null) {
+						oupt.writeTagID(type.tag);
+						oupt.writeShort(type.size);
+						type.comment = "From " + Global.currentModule;
+					}
+				}	
+			}
+		} else {
+			oupt.writeKind(Kind.K_RECTYPES);
+			oupt.writeShort(RECTYPES.size());
+			for(Type type:RECTYPES) {
+				System.out.println("Type.writeRECTYPES: " + type.tag + ", type=" + type + ", xTAG=" + Global.xTAGTAB.get(type.tag) );
+				oupt.writeTagID(type.tag);
+				oupt.writeShort(type.size);
+				type.comment = "From " + Global.currentModule;
+			}
 		}
 //		Util.IERR("");
 	}
 
 	public static void readRECTYPES(AttributeInputStream inpt) throws IOException {
+//		System.out.println("Type.readRECTYPES: xBEGIN");
+		
 		int n = inpt.readShort();
 		for(int i=0;i<n;i++) {
 			int tag = inpt.readTagID();
 			int size = inpt.readShort();
 			Type type = new Type(tag, size);
 			
+//			System.out.println("Type.readRECTYPES: ");
+//			Tag.dumpITAGTABLE("Type.readRECTYPES: ");
+			
 			if(tag == Scode.TAG_STRING) ; // OK Predefinert
 			else if(TMAP.get(tag) ==null) {
-//				if(tag == 2483) {
-//					System.out.println("Type.readRECTYPES: NEW Type: " + type + ", tag=" + tag);
-////					Util.IERR("");
-//				}
+//				System.out.println("Type.readRECTYPES: NEW Type: " + type + ", tag=" + tag);
 				TMAP.put(tag, type);
-				RECTYPES.add(type);
+				if(! Global.TESTING_RECTYPES) {
+					RECTYPES.add(type);
+				}
 //				Type.dumpTypes("Type.readRECTYPES: ");
 			}
 //			System.out.println("Type.readRECTYPES: NEW Type: " + type);

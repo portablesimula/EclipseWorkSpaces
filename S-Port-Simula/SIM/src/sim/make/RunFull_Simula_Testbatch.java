@@ -29,7 +29,8 @@ public class RunFull_Simula_Testbatch {
 //		Option.verbose = true;
 		
 //		if(Option.verbose)
-			System.out.println("BEGIN SIMULA SIM: \"" + sourceFileName + '"');
+//			System.out.println("BEGIN SIMULA SIM: \"" + sourceFileName + '"');
+		
 		try {
 			int exitCode = Util.exec(cmds);
 			if(exitCode != 0) {
@@ -105,8 +106,8 @@ public class RunFull_Simula_Testbatch {
 //		names.add("p40c");     // OK:  Precompile this for Simtst 40.
 //		names.add("simtst40"); // OK:  Test separate compilation of procedures.
 
-//		names.add("p41");      // ERR:  Precompile this for Simtst 41.
-//		names.add("simtst41"); // OK:  Name parameter in external procedure.
+		names.add("p41");      // OK:  Precompile this for Simtst 41.
+		names.add("simtst41"); // OK:  Name parameter in external procedure.
 		names.add("simtst42"); // OK:  Compute "n-fac", using iteration within the procedure.
 		names.add("simtst43"); // OK:  Compute "n-fac", using recursion.
 		names.add("simtst44"); // OK:  Test text procedure.
@@ -132,7 +133,7 @@ public class RunFull_Simula_Testbatch {
 		names.add("simtst62"); // OK:  Test complex use of detach and resume.  Re-trow
 		names.add("simtst63"); // OK:  Transmission by name of reference types. 
 		names.add("simtst64"); // OK:  Parameter transmission by value to classes.
-//		names.add("simtst65"); // ERR:  Parameter transmission by reference to classes.
+		names.add("simtst65"); // OK:  Parameter transmission by reference to classes.
 		names.add("simtst66"); // OK:  Test coroutines and two infiles which read from the same file.
 		names.add("simtst67"); // OK:  Simple test of detach, call and resume.
 		names.add("simtst68"); // OK:  Test of coroutines.
@@ -163,7 +164,7 @@ public class RunFull_Simula_Testbatch {
 //		names.add("simtst90"); // ERR:  Test getfrac/putfrac.
 
 		names.add("simtst91"); // OK:  Test virtual procedures, simple case.
-//		names.add("simtst92"); // ERR:  Test 1-dim Array by value.
+		names.add("simtst92"); // OK:  Test 1-dim Array by value.
 		names.add("simtst93"); // OK:  Test Simset - linkage, head, link, into, out, follow and precede
 		names.add("simtst94"); // OK:  Test Simset - first, last, empty, cardinal and clear.
 //		names.add("simtst95"); // ERR:  Test Environment Interface.
@@ -187,7 +188,7 @@ public class RunFull_Simula_Testbatch {
 		names.add("simtst111"); // OK: Virtual Label Sample 1
 		names.add("simtst112"); // OK: Virtual Label Sample 2
 //		names.add("simtst113"); // ERR: Virtual Switch Sample 1
-//		names.add("simtst114"); // ERR: Switch Statement
+		names.add("simtst114"); // OK: Switch Statement
 		names.add("simtst115"); // OK: Simple QPS-Sample 1
 		names.add("simtst116"); // OK: Simple QPS-Sample 2
 		names.add("simtst117"); // OK: Simple QPS-Sample 3
@@ -203,10 +204,10 @@ public class RunFull_Simula_Testbatch {
 		names.add("simtst124"); // OK: GOTO VIRTUAL LABEL
 		names.add("simtst125"); // OK: GOTO LABEL WITHIN NESTED COMPOUND STATEMENTS
 //		names.add("simtst126"); // ERR: GOTO SIMPLE SWITCH   // SORRY, switch element requiring thunk IS NOT IMPLEMENTED
-//		names.add("simtst127"); // ERR: Switch (character) Statement
+		names.add("simtst127"); // OK: Switch (character) Statement
 		names.add("simtst128"); // OK: Standard Procedure edit and edfix
-//		names.add("Precompiled129"); // ERR: Precompile this for Simtst 129.
-//		names.add("simtst129"); // ERR: Switch in precompiled class
+		names.add("Precompiled129"); // ERR: Precompile this for Simtst 129.
+		names.add("simtst129"); // OK: Switch in precompiled class
 //		names.add("simtst130"); // ERR: Class SimLib, a set of utility procedures from DEC Handbook.  // NOT IMPLEMENTED
 
 //		names.add("simtst131"); // ERR: Catching Errors     // NOT IMPLEMENTED
@@ -214,17 +215,17 @@ public class RunFull_Simula_Testbatch {
 		names.add("simtst133"); // OK: Test infile reading with inimage and inrecord.
 		names.add("simtst134"); // OK: Outfile with CREATE, APPEND, SYNCHRONOUS and PURGE.
 		names.add("simtst135"); // OK: OutBytefile with CREATE, APPEND, SYNCHRONOUS and PURGE.
-		names.add("simtst136"); // OK: Directfile with CREATE, APPEND, SYNCHRONOUS and PURGE.
-		names.add("simtst137"); // OK: DirectBytefile with CREATE, APPEND, SYNCHRONOUS and PURGE.
+//		names.add("simtst136"); // OK: Directfile with CREATE, APPEND, SYNCHRONOUS and PURGE.
+//		names.add("simtst137"); // OK: DirectBytefile with CREATE, APPEND, SYNCHRONOUS and PURGE.
 		names.add("simtst138"); // OK: ref() and Real type Arrays.
 		names.add("simtst139"); // OK: Test remote Array access.
 //		names.add("simtst140"); // ERR: Test For-Statement with ControlVariable with Type Conversion.
 		
 		names.add("simtst141"); // OK: Test For-Statement with SIMSET and SIMULATION list-processing.
-//		names.add("simtst142"); // ERR: Simple test of Random drawing procedures.
+		names.add("simtst142"); // OK: Simple test of Random drawing procedures.
 		names.add("simtst143"); // OK: Simple test of utility procedure accum.
-//		names.add("Precompiled144"); // ERR: Precompile this for Simtst 144.
-//		names.add("simtst144"); // ERR: Test 'is', 'in', 'qua' and 'this' in precompiled attribute file
+		names.add("Precompiled144"); // ERR: Precompile this for Simtst 144.
+		names.add("simtst144"); // ERR: Test 'is', 'in', 'qua' and 'this' in precompiled attribute file
 		names.add("simtst145"); // OK: Test Label parameter to normal and formal procedure
 		names.add("simtst146"); // OK: Test text by value to formal and virtual procedure
 		names.add("simtst147"); // OK: Test virtual procedure by name
@@ -235,8 +236,8 @@ public class RunFull_Simula_Testbatch {
 		names.add("simtst152"); // OK: Test nested connection statements
 		names.add("simtst153"); // OK: Test GOTO ConditionalExpression
 		names.add("simtst154"); // OK: Test function result assignment
-//		names.add("Pre155");    // ERR: Precompile this for Simtst 155.
-//		names.add("simtst155"); // ERR: Test inspection in SubBlock in Precompiled inner class
+		names.add("Pre155");    // ERR: Precompile this for Simtst 155.
+		names.add("simtst155"); // ERR: Test inspection in SubBlock in Precompiled inner class
 		names.add("simtst156"); // OK: Test arrays in multiple assignments
 		names.add("simtst157"); // OK: Test identifier access
 		names.add("simtst158"); // OK: Test Specified Virtual Boolean Functions as part of an Expression

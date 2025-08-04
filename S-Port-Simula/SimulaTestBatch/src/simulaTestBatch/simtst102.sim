@@ -13,17 +13,14 @@ SimulaTest(102,"--- LEGAL GOTO out of an operating process and the enclosing Sys
    integer traceCase;
    text array facit(0:5);
    
-   text procedure edit(n); integer n; begin
-   end;
-   
    procedure trace(line,msg); integer line; text msg;
    begin
       text case1;
-      case1:-"LINE " & edit(line) & ": " & msg;
+      case1:-"LINE " & edInt(line) & ": " & msg;
       if verbose then begin outtext(case1); outimage; end;
       if case1 <> facit(traceCase) then
       begin
-         err("Trace Case " & edit(traceCase) & " at line " & edit(line));
+         err("Trace Case " & edInt(traceCase) & " at line " & edInt(line));
          outtext("Trace Case: " & case1); outimage;
          outtext("     Facit: " & facit(traceCase)); outimage;
       end;

@@ -35,7 +35,7 @@ const infix(modinf) SMLMOD=record:modinf
  Visible record simltn1:linkag;
  begin ref(rankin) sqs; ref(proces) cur,main end;
 
- Visible record simltn:simltn1; begin end;
+ Visible record simltn:simltn1; info "TYPE"; begin end;
 
  Visible const infix(claptp:3) SMLPTP=record:claptp
        ( plv=1,lng=size(simltn),refVec=ref(SML_refVec),
@@ -67,7 +67,7 @@ const infix(modinf) SMLMOD=record:modinf
  Visible record rankin1:linkag;
  begin ref(rankin) bl,ll,rl; long real rnk end;
 
- Visible record rankin:rankin1; begin end;
+ Visible record rankin:rankin1; info "TYPE"; begin end;
 
  Visible const infix(claptp:4) rnkPtp=record:claptp
        ( plv=2,lng=size(rankin),refVec=ref(RNK_refVec),
@@ -95,7 +95,7 @@ const infix(modinf) SMLMOD=record:modinf
 
 %tag (proces,prcPtp,PCSINR)
 
- Visible record proces:rankin;     begin end;
+ Visible record proces:rankin; info "TYPE";    begin end;
 
  Visible const infix(claptp:5) prcPtp=record:claptp
        ( plv=3,lng=size(proces),refVec=none,
@@ -120,7 +120,7 @@ const infix(modinf) SMLMOD=record:modinf
 
 ---------   C l a s s    M A I N P R O G R A M   ---------
 
- Record mainprog:proces;            begin end;
+ Record mainprog:proces; info "TYPE";  begin end;
 
  const infix(claptp:6) MAINPTP=record:claptp
        ( plv=4,lng=size(mainprog),refVec=none,
@@ -578,21 +578,27 @@ E:end;
  end;
 %page
 
-% Visible routine OLD_EVTIME;
+% Dette skulle vært Process.evtime men den mangler i FEC
+% Visible routine EVTIME;
 % import ref(proces) prcs; export long real time;
 % begin if prcs.bl = none then ERROR(ENO_PRC_1) endif;
+%	   ED_STR("SML.EVTIME: process="); ED_OADDR(prcs); ED_STR(", time="); ED_LRL(prcs.rnk,3); ED_OUT;
 %       time:=prcs.rnk;
 % end;
 
- Visible routine EVTIME;
- import ref(simltn) sim; export long real time;
- begin ref(proces) prcs;
+% Dette er Simulation.time -- IKKE EVTIME !!!
+  Visible routine EVTIME;
+  import ref(simltn) sim; export long real time;
+  begin ref(proces) prcs;
+	   ED_STR("SML.EVTIME: sim="); ED_OADDR(sim); ED_OUT;
  	   prcs:=sim.cur;
+	   ED_STR("SML.EVTIME: process="); ED_OADDR(prcs); ED_OUT;
+	   ED_STR("SML.EVTIME: process="); ED_OADDR(prcs); ED_STR(", time="); ED_LRL(prcs.rnk,3); ED_OUT;
  	   if prcs.bl = none then ERROR(ENO_PRC_1) endif;
 % 	   DMPENT(prcs);
 % 	   DMPOOL(1);
        time:=prcs.rnk;
- end;
+  end;
 
 
  Visible routine IDLE;

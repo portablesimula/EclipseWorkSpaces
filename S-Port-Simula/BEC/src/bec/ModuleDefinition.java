@@ -73,6 +73,7 @@ public class ModuleDefinition extends S_Module {
 			Scode.inputInstr();
 			if(xtag > nXtag) nXtag = xtag;
 		}
+		System.out.println("ModuleDefinition: TAGTAB Read");
 
 		if(Scode.curinstr != Scode.S_BODY) Util.IERR("Illegal termination of module head");
 		Scode.inputInstr();

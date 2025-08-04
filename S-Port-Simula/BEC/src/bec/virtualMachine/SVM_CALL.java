@@ -5,6 +5,7 @@ import java.io.IOException;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
+import bec.util.Util;
 import bec.value.ObjectAddress;
 import bec.value.ProgramAddress;
 import bec.value.Value;
@@ -66,7 +67,8 @@ public class SVM_CALL extends SVM_Instruction {
 		}
 		RTStack.push(retur, "RETUR");
 
-//		if(rutAddr != null && rutAddr.toString().equals("PSEG_KNWN_AR1IND:BODY[0]")) {
+//		System.out.println("SVM_CALL: ROUTINE: "+rutAddr);
+//		if(rutAddr != null && rutAddr.toString().equals("PSEG_SML_RANK_INTO:BODY[0]")) {
 ////			int idx = RTStack.size() - 2;
 ////			System.out.println("SVM_CALL.execute: idx="+idx);
 //			RTStack.dumpRTStack("");

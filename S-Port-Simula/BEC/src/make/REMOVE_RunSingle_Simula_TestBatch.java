@@ -12,7 +12,7 @@ import java.util.Vector;
 import bec.BecCompiler;
 import bec.util.Global;
 
-public final class RunSingle_Simula_TestBatch {
+public final class REMOVE_RunSingle_Simula_TestBatch {
 	private static long startTimeMs = System.currentTimeMillis();
 	
 	private static final String smlSCodeDir = "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/";

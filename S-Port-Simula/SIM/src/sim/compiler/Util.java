@@ -248,8 +248,15 @@ public class Util {
 		try {
 			Process process = processBuilder.start();
 			BufferedReader reader = process.inputReader(); // Process' output
+			BufferedReader errOut = process.errorReader(); // Process' error output
 			String line = null;
 			while((line = reader.readLine()) != null) {
+			    System.out.println(line);
+				if(Global.consolePanel != null) {
+					Global.consolePanel.write(line + '\n');
+				}
+			}
+			while((line = errOut.readLine()) != null) {
 			    System.out.println(line);
 				if(Global.consolePanel != null) {
 					Global.consolePanel.write(line + '\n');

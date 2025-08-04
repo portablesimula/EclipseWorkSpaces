@@ -9,13 +9,13 @@ external class Precompiled144;
 
 Precompiled144(144,"--- Test constants and 'is', 'in', 'qua' and 'this' in precompiled attribute file") begin
 
-	trace("Check iConst = " & edit(iConst));
+	trace("Check iConst = " & edInt(iConst));
 	trace("Check rConst = " & edfix(rConst,3));
 	trace("Check lrConst = " & edfix(lrConst,3));
-	trace("Check cConst = " & edit(cConst));
+	trace("Check cConst = " & edChar(cConst));
 	trace("Check tConst = " & tConst);
-	trace("Check bConst = " & edit(bConst));
+	trace("Check bConst = " & edBool(bConst));
 
-	trace("At Main'END with K = " & edit(K));
+	trace("At Main'END with K = " & edInt(K));
       
 end;

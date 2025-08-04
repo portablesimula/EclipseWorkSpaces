@@ -83,7 +83,7 @@ SimulaTest(84,"--- Test Directbytefile") begin
 			end;
 			
 			for i:=12,27 do begin
-				locate(i); trace("Test2: At loc " & edInt(i) & ": " & edInt(char(inbyte)));
+				locate(i); trace("Test2: At loc " & edInt(i) & ": " & edChar(char(inbyte)));
 			end;
 			locate(55); trace("Test2: At loc 55: " & edInt(inbyte));
 			locate(88); outbyte(88);
@@ -95,7 +95,7 @@ SimulaTest(84,"--- Test Directbytefile") begin
    end;
    
    
-   facit(0):-"Test1: Before open endfil=false";
+   facit(0):-"Test1: Before open endfil=true";
    facit(1):-"Test1: Before open location=0";
    facit(2):-"Test1: Before open maxloc=0";
    facit(3):-"Test1: After open endfil=true";

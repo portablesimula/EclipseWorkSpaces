@@ -55,7 +55,7 @@ public class MainProgram extends S_Module {
 
 		while(Scode.nextByte() == Scode.S_LOCAL) {
 			Scode.inputInstr(); 
-			Util.IERR("NOT IMPL");
+			Util.IERR("MainProgram: S_LOCAL - NOT IMPL");
 //			Minut.inGlobal();
 		}
 		Scode.inputInstr(); 

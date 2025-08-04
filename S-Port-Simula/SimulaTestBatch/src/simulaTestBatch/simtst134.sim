@@ -13,9 +13,6 @@ SimulaTest(134,"--- Test Outfile with CREATE, APPEND and PURGE.") begin
 	integer i,byte;
 	ref(Outfile) f1,f2;
 	text expected;
-  
-   text procedure edit(n); integer n; begin
-   end;
 	
 	procedure trace(image); text image; begin
 		sysout.outtext("Inimage: "); sysout.outtext(image); sysout.outimage;
@@ -50,7 +47,7 @@ SimulaTest(134,"--- Test Outfile with CREATE, APPEND and PURGE.") begin
 			inimage;
 %			sysout.outtext(image); sysout.outimage;
 			if verbose then trace(image);
-			expected :- "Pass 1, line " & edit(i);
+			expected :- "Pass 1, line " & edInt(i);
 			if image.strip ne expected then err(image & " ne " & expected);
 		end;
 		
@@ -58,7 +55,7 @@ SimulaTest(134,"--- Test Outfile with CREATE, APPEND and PURGE.") begin
 			inimage;
 %			sysout.outtext(image); sysout.outimage;
 			if verbose then trace(image);
-			expected :- "Pass 2, line " & edit(i);
+			expected :- "Pass 2, line " & edInt(i);
 			if image.strip ne expected then err(image & " ne " & expected);
 		end;
 		close;

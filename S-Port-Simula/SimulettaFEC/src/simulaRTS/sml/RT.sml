@@ -234,29 +234,29 @@ Visible define
                                -- special treatment in GARB
 
 %title ******   P r o t o t y p e s   ******
- Visible record ptp;
+ Visible record ptp; info "TYPE";
  begin ref(pntvec) refVec; -- pnt_vec
        ref(rptvec) repVec;
        ref(ptpExt) xpp;
        size lng;
  end;
 
- Visible record subptp:ptp; -- sub_ptp
+ Visible record subptp:ptp; info "TYPE"; -- sub_ptp
  begin label cnt end;
 
- Visible record proptp:ptp; -- pro_ptp
+ Visible record proptp:ptp; info "TYPE"; -- pro_ptp
  begin label       start;
        ref(atrvec) parVec;  -- par_vec
  end;
 
- Visible record claptp:ptp; -- cla_pre_ptp
+ Visible record claptp:ptp; info "TYPE"; -- cla_pre_ptp
  begin range(0:MAX_PLV) plv;
        label            dcl,stm,cntInr; -- cnt_inr
        ref(virvec)      virts;          -- vir_vec
        ref(claptp)      prefix(0);
  end;
 
- Visible record pntvec;
+ Visible record pntvec; info "TYPE";
  begin range(0:MAX_CLV)    ncon;
        range(0:MAX_PNT)    npnt;
        field()             pnt(0);
@@ -286,12 +286,12 @@ Visible define
        variant ref(swtdes)     des; --  switch
  end;
 
- Visible record atrvec;
+ Visible record atrvec; info "TYPE";
  begin range(0:MAX_ATR)   natr;
        ref(atrdes)        atr(0);
  end;
 
- Visible record atrdes;
+ Visible record atrdes; info "TYPE";
  ---   NOTE: named constant has fld=nofield and mode=M_LIT
  begin ref(idfier)           ident;
        field()               fld;
@@ -332,7 +332,7 @@ Visible define
        variant size             lng;  -- used for other entities
  end;
 
- Visible record inst:entity;
+ Visible record inst:entity; info "TYPE";
  begin ref(entity)              gcl;
        variant ref(inst)        dl;
                label            lsc;
@@ -359,15 +359,15 @@ Visible define
  Visible record txtPro:inst; begin variant infix(txtqnt) val; variant infix(quant) qnt end;
  Visible record ptrPro:inst; begin variant ref()         val; variant infix(quant) qnt end;
 
- Visible record thunk:inst;
+ Visible record thunk:inst; info "TYPE";
  begin boolean      simple;
        infix(quant) val;
  end;
 
- Visible record savent:inst;
+ Visible record savent:inst; info "TYPE";
  begin  end;
 
- Visible record filent:inst;
+ Visible record filent:inst; info "TYPE";
  begin ref(filent)        prd;
        ref(filent)        suc;
        infix(txtqnt)      nam;
@@ -382,7 +382,7 @@ Visible define
        infix(txtqnt)      action;
  end;
 
- Visible record prtent:filent;
+ Visible record prtent:filent; info "TYPE";
  begin integer            spc;
        integer            lpp;
        integer            lin;
@@ -391,7 +391,7 @@ Visible define
 
  --- when bioIns is changed, remember also bioPtp in MNTR !!!!!
 
- Visible record bioIns:inst;
+ Visible record bioIns:inst; info "TYPE";
  begin ref(entity)            nxtAdr;   -- NOT in bioptp'refvec
        ref(entity)            lstAdr;   -- NOT in bioptp'refvec
        ref(prtEnt)            sysout;
@@ -428,7 +428,7 @@ Visible define
        infix(string)          errmsg;   -- NOT in bioptp'refvec
  end;
 
- Visible record arbody:entity;
+ Visible record arbody:entity; info "TYPE";
  begin
        ref(arhead) head;
  end;
@@ -456,7 +456,7 @@ Visible define
        variant   integer   negbas;
  end;
 
- Visible record arent2:entity;
+ Visible record arent2:entity; info "TYPE";
  begin integer lb_1;
        integer ub_1;
        integer dope;
@@ -475,7 +475,7 @@ Visible define
  Visible record txtAr2:arent2 begin infix(txtqnt) elt(0) end;
  Visible record ptrAr2:arent2 begin ref()         elt(0) end;
 
- Visible record arent1:entity;
+ Visible record arent1:entity; info "TYPE";
  begin integer lb;
        integer ub;
  end;
@@ -497,7 +497,7 @@ Visible define
        range(0:MAX_TXT)   lp;
  end;
 
- Visible record txtent:entity;
+ Visible record txtent:entity; info "TYPE";
  begin character cha(0); end;
 
  Visible record nonObj:inst;
@@ -583,19 +583,19 @@ Visible define
 
 %title ***   M o d u l e   a n d   S i m o b   I  n f o   ***
 
- Visible record ptpExt;  --- Prototype extension
+ Visible record ptpExt; info "TYPE";  --- Prototype extension
  begin ref(idfier)          idt;
        ref(modinf)       modulI;
        ref(atrvec)        attrV; -- List of attributes (or none).
        range(0:MAX_BLK)  blkTyp; -- Block type (SUB/PRO/FNC/CLA/PRE)
  end;
 
- Visible record idfier;   -- identifier
+ Visible record idfier; info "TYPE";  -- identifier
  begin range(0:MAX_BYT)   ncha;
        character          cha(0);
  end;
 
- Visible record modinf;
+ Visible record modinf; info "TYPE";
  begin ref(modvec)    modulV;   -- reference to list of all modules used
                                 -- by this module, =ONONE if no modules
        ref(idfier)    simIdt;   -- Class/procedure identifier,
@@ -619,7 +619,7 @@ Visible define
        infix(moddes) mod(0);
  end;
 
- Visible record moddes;
+ Visible record moddes; info "TYPE";
  begin ref(ptp) pp;               -- prototype of ext. proc or class.
        integer check;             -- expected checkcode
  end;

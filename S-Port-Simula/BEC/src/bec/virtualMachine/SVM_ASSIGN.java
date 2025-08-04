@@ -55,6 +55,7 @@ public class SVM_ASSIGN extends SVM_Instruction {
 		if(DEBUG) for(int i=0;i<size;i++) System.out.println("SVM_ASSIGN: values["+i+"] = " + values.get(i));
 		
 		ObjectAddress addr = this.rtAddr;
+//		System.out.println("SVM_ASSIGN: TARGET="+addr);
 		switch(rtAddr.kind) {
 			case ObjectAddress.SEGMNT_ADDR: doAssign(addr, xReg, values); break;
 			case ObjectAddress.REL_ADDR:    doAssign(addr, xReg, values); break;
@@ -63,6 +64,7 @@ public class SVM_ASSIGN extends SVM_Instruction {
 				// this.addr is Stack Relative Address
 				ObjectAddress oaddr = RTStack.popOADDR();
 				addr = oaddr.addOffset(addr.getOfst());
+//				System.out.println("SVM_ASSIGN: REMOTE_ADDR, TARGET="+addr);
 				doAssign(addr, xReg, values);
 				break;
 				

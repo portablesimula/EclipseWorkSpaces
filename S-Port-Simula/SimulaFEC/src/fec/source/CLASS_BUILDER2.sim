@@ -874,7 +874,7 @@ restartloop:
             AOF:-new outbytefile(attrfilename);
 %+T		    TRC("BUILDER2",sourceline,"OPEN ATTRIBUTE OUTPUT: " & attrfilename);
             if not AOF.open then openerror(attrfilename);
-		    sysout.outtext("*** WARNING: Seperate compiled class/procedure is not fully implemented. May result in bad S-Code"); sysout.outimage;
+%		    sysout.outtext("*** WARNING: Seperate compiled class/procedure is not fully implemented. May result in bad S-Code"); sysout.outimage;
 		    sysout.outtext("*** WARNING: Attributes written to " & attrfilename); sysout.outimage;
             AOF.outbyte(rank(layoutindex));
 %+T		    TRC("BUILDER2",sourceline,"sportid=" & sportid);
@@ -1750,7 +1750,7 @@ begin
 %		 				   sysout.outtext("BUILDER2-LINE "); sysout.outint(sourceline,0);
 %							      sysout.outtext(": ALLOCATE-EXTERNAL: fTag="); sysout.outint(lastusedtag+1, 0); 
 %						  		  sysout.outtext("  count="); sysout.outint(q.descr qua extbrecord.exttagnum, 0); sysout.outimage;
-						   sysout.outtext("*** WARNING: Seperate compiled class/procedure is not fully implemented. May result in bad S-Code"); sysout.outimage;
+%						   sysout.outtext("*** WARNING: Seperate compiled class/procedure is not fully implemented. May result in bad S-Code"); sysout.outimage;
 
                            q.descr qua extbrecord.ftag:=lastusedtag+1;
                            newTags(q.descr qua extbrecord.exttagnum);

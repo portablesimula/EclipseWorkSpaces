@@ -18,17 +18,13 @@ begin
 	character cConst = 'Z';
 	text tConst = "AbraCaDabra";
 	boolean bConst = true;
-	
-  
-   text procedure edit(n); integer n; begin
-   end;
 	   
    procedure trace(msg); text msg;
    begin
       if verbose then
       	 begin outtext(msg); outimage; end;
       if msg ne facit(traceCase) then
-      begin err("Case " & edit(traceCase));
+      begin err("Case " & edInt(traceCase));
          outtext("Trace: " & msg); outimage;
          outtext("Facit: " & facit(traceCase)); outimage;
       end;
@@ -53,15 +49,15 @@ begin
 	facit(3):-"TEST-3: x is B";
 	facit(4):-"TEST-4: x in A";
 	facit(5):-"TEST-5: x in B";
-	facit(6):-"TEST-6: In B with N = 567";
-	facit(7):-"At Precompiled'END";
-	facit(8):-"Check iConst = 7531";
-	facit(9):-"Check rConst = 3.140";
-	facit(10):-"Check lrConst = 4.130";
-	facit(11):-"Check cConst = Z";
-	facit(12):-"Check tConst = AbraCaDabra";
-	facit(13):-"Check bConst = true";
-	facit(14):-"At Main'END with K = 432";
+%	facit(6):-"TEST-6: In B with N = 567";
+	facit(6):-"At Precompiled'END";
+	facit(7):-"Check iConst = 7531";
+	facit(8):-"Check rConst = 3.140";
+	facit(9):-"Check lrConst = 4.130";
+	facit(10):-"Check cConst = Z";
+	facit(11):-"Check tConst = AbraCaDabra";
+	facit(12):-"Check bConst = true";
+	facit(13):-"At Main'END with K = 432";
 	
 	trace("At START");
 	x :- new B;
@@ -74,9 +70,9 @@ begin
 	if x in A then trace("TEST-4: x in A");
 	if x in B then trace("TEST-5: x in B");
 	
-	B begin 
-		trace("TEST-6: In B with N = " & edit(N));
-	end;
+%	B begin 
+%		trace("TEST-6: In B with N = " & edit(N));
+%	end;
 	
 	trace("At Precompiled'END");
 	

@@ -12,18 +12,18 @@ SimulaTest(44,"--- Test text procedure.") begin
 
    text               t1, t2;
 
-   text procedure mysub(t, i1, i2); value t; text t; integer i1, i2;
+   text procedure mysubr(t, i1, i2); value t; text t; integer i1, i2;
    if  i2 < i1 or t.length < i2 then else begin
       text         th;
       integer      j;
       th :- blanks(i2 - i1 + 1);
       t.setpos(i1);
       for  j := i1  step 1 until i2 do  th.putchar(t.getchar);
-      mysub :- th
-   end of procedure Mysub;
+      mysubr :- th
+   end of procedure mysubr;
 
    t1 :- copy("test one");
-   t2 :- mysub(t1, 6, 8);
+   t2 :- mysubr(t1, 6, 8);
    t1 :- t1.sub(6, 3);
    if  t1 = t2  then else begin
       err("text values.");

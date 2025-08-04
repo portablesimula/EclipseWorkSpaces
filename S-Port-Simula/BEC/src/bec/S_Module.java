@@ -51,7 +51,7 @@ public abstract class S_Module {
 	}
 
 	public static void setSwitch() {
-		Util.IERR("NOT IMPL");
+		Util.IERR("S_Module.setSwitch: NOT IMPL");
 	}
 
 	public static void setLine(int type) {

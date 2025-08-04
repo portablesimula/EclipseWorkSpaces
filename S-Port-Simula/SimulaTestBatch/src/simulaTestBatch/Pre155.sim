@@ -10,16 +10,13 @@ SimulaTest class Pre155;
 begin
 	text array facit(0:14);
 	integer traceCase;
-  
-   text procedure edit(n); integer n; begin
-   end;
 	   
 	procedure trace(msg); text msg;
 	begin
 		if verbose then
 		begin outtext(msg); outimage; end;
 		if msg ne facit(traceCase) then
-		begin err("Case " & edit(traceCase));
+		begin err("Case " & edInt(traceCase));
 			outtext("Trace: " & msg); outimage;
 			outtext("Facit: " & facit(traceCase)); outimage;
 		end;
@@ -43,7 +40,7 @@ begin
 			inspect new XXXX do begin
 				trace("PAS2INIT.main:");
 				x:- this XXXX;
-				trace("x.iiii=" & edit(x.iiii) );
+				trace("x.iiii=" & edInt(x.iiii) );
 			end;
 		end;
 		
