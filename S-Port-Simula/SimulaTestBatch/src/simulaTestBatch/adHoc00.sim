@@ -18,7 +18,7 @@ Simulation begin
   
 %   outtext( "Show all primes less than " ); 
 %   breakoutimage; limit:=inint;  
-   limit := 313; --50000; 
+   limit := 5000; 
     
    startTime:=cputime; 
     

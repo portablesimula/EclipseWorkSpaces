@@ -578,7 +578,9 @@ E:end;
  end;
 %page
 
+% =============================================================
 % Dette skulle vært Process.evtime men den mangler i FEC
+% =============================================================
 % Visible routine EVTIME;
 % import ref(proces) prcs; export long real time;
 % begin if prcs.bl = none then ERROR(ENO_PRC_1) endif;
@@ -586,14 +588,44 @@ E:end;
 %       time:=prcs.rnk;
 % end;
 
-% Dette er Simulation.time -- IKKE EVTIME !!!
+% =================================================================
+% Dette var Simulation.time -- IKKE EVTIME !!!
+% Process.evtime blir også ledet hit pga. en feil i FEC.
+% Må sjekke om parameter 'sim' er Simlation eller Process instance.
+% =================================================================
   Visible routine EVTIME;
   import ref(simltn) sim; export long real time;
   begin ref(proces) prcs;
-	   ED_STR("SML.EVTIME: sim="); ED_OADDR(sim); ED_OUT;
- 	   prcs:=sim.cur;
-	   ED_STR("SML.EVTIME: process="); ED_OADDR(prcs); ED_OUT;
-	   ED_STR("SML.EVTIME: process="); ED_OADDR(prcs); ED_STR(", time="); ED_LRL(prcs.rnk,3); ED_OUT;
+  		ref(claptp) pp;
+  		ref(claptp) prefix;
+  		integer i;
+  		boolean isProcess;
+  		
+  		pp := sim.pp;  -- CSEG_ADHOC02[20]
+%		ED_STR("SML.EVTIME: sim="); ED_OADDR(sim); ED_STR(", pp="); ED_OADDR(pp); ED_OUT;
+		
+		isProcess := false;
+		i:=0; prefix := pp.prefix(0);
+		repeat while prefix ne NONE do
+%			ED_STR("SML.EVTIME: prefix("); ED_INT(i); ED_STR(")="); ED_OADDR(prefix); ED_OUT;
+			
+			if prefix = ref(prcPtp) then
+				isProcess := true;
+%				ED_STR("SML.EVTIME: isProcess := true"); ED_OUT;
+			endif;
+			
+			prefix := pp.prefix(i); i:=i+1;
+		endrepeat;
+
+%		ED_STR("SML.EVTIME: Process pp="); ED_OADDR(ref(prcPtp)); ED_OUT;
+	   
+		if isProcess then 
+			 prcs := sim;
+		else prcs:=sim.cur; endif;
+ 	   
+ 	   
+%	   ED_STR("SML.EVTIME: process="); ED_OADDR(prcs); ED_OUT;
+%	   ED_STR("SML.EVTIME: process="); ED_OADDR(prcs); ED_STR(", time="); ED_LRL(prcs.rnk,3); ED_OUT;
  	   if prcs.bl = none then ERROR(ENO_PRC_1) endif;
 % 	   DMPENT(prcs);
 % 	   DMPOOL(1);

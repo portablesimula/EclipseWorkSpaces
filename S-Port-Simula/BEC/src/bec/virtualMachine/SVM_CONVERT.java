@@ -48,7 +48,7 @@ public class SVM_CONVERT extends SVM_Instruction {
 
 		Value toValue = convValue(fromValue, fromType, toType);
 
-//		if(DEBUG)
+		if(DEBUG)
 			System.out.println("SVM_CONVERT.execute: fromValue="+fromValue+"  ==> toValue="+toValue);
 
 		RTStack.push(toValue, "SVM_CONVERT: ");

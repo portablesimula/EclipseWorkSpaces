@@ -1,65 +1,18 @@
 Simulation begin 
          
-   integer limit,acc;  
-   integer startTime,timeUsed; 
-
-   procedure printSQS; begin
-      ref(Process) x;
-      x :- current;
-      outtext("BEGIN PRINT SQS:"); outimage;
-      while x =/= none do begin
-           inspect x
-           when Prime do begin
-%               outtext("x is Prime("); outint(id,0); outtext(") at "); outreal(evtime, 4, 10); outimage;
-               outtext("x is Prime "); outint(id,0); outimage;
-           end
-           otherwise begin
-               outtext("x is MAIN_PROGRAM at "); outreal(x.evtime, 4, 10); outimage;
-           end;
-      	x :- x.nextev;
-      end;
-   end;
+	ref(Prime) x;      
+	integer tm;  
      
-   Process class Prime(id); integer id;  
-   begin integer which;  
-         acc   := acc + 1;  
-         which := time;  
-         outint( which, 7 ); outimage; 
-         while true do begin  
-%          if nextev.evtime > time + 1 then activate new Prime delay 1; 
-
-		   printSQS;
-		   outtext("Time "); outint(which,0); outtext(": Nextev=");
-		   inspect nextev
-		   when Prime do begin outtext("Prime("); outint(id,0); outchar(')'); end
-		   otherwise begin outtext("MAIN_PROGRAM"); end;
-		   outtext(" with evtime="); outint(nextev.evtime,0);
-		   outtext(", time+1="); outint(time+1,0);
-		   outimage;
-		   
-%          if nextev.evtime > time + 1 then activate new Prime(time+1) at time + 1;  
-           if nextev.evtime > which + 1 then begin
-              outtext("Try activate new Prime("); outint(which+1,0); outtext(") at "); outint(which+1,0); outimage;
-           	  activate new Prime(which+1) at which + 1; 
-           end;	   
-           hold(which);  
-         end;  
-   end;  
-  
-%   outtext( "Show all primes less than " ); 
-%   breakoutimage; limit:=inint;  
-   limit := 13; 
+	Process class Prime(id); integer id;  
+	begin integer tm;  
+	end; 
+   
+	x :- new Prime(444);
+	activate x at 313;  
+	
+	tm := time;  
+	outtext("Time="); outint(tm,0); outimage; 
+	tm := x.evtime;  
+	outtext("EvTime="); outint(tm,0); outimage; 
     
-   startTime:=cputime; 
-    
-   activate new Prime(2) at 2;  
-   activate new Prime(limit) at limit;  
-   hold(limit+1);  
-  
-   outimage; outimage;  
-   outint( acc, 7 ); outtext( " primes found" );  
-    
-   outimage; outimage;  
-   timeUsed := cputime - startTime; 
-   outtext("Elapsed Time: Approximately "); outint(timeUsed, 0); outtext(" sec."); 
 end
