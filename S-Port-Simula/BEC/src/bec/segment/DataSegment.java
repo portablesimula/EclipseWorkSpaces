@@ -49,7 +49,6 @@ public class DataSegment extends Segment {
 	}
 	
 	public void store(int index, Value value) {
-//		System.out.println("DataSegment.store: " + this + "["+index+"] = "+value);
 		if(index == guard) Util.IERR("FATAL ERROR: Attempt to change Guarded location: "+ObjectAddress.ofSegAddr(this, index)+" from "+values.get(index)+" to "+value);
 		values.set(index, value);
 	}

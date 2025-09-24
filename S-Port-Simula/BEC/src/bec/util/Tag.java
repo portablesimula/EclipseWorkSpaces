@@ -33,17 +33,13 @@ public class Tag {
 	}
 	
 	public static void dumpITAGTABLE(String title) {
-		if(Global.iTAGTAB == null) {
-//			System.out.println("============ "+title+" iTAGTABLE==null ================");			
-		} else {
-			System.out.println("============ "+title+" BEGIN Dump iTAGTABLE ================");
-			for(int i=0;i<Global.iTAGTAB.size();i++) {
-				Integer tx = Global.iTAGTAB.get(i);
-				int xx = (tx==null)? 0 : tx;
-				System.out.println("iTAGTABLE["+i+"]  iTag:" + Scode.edTag(xx) + "  ==> xTag:" + i);
-			}
-			System.out.println("============ "+title+" ENDOF Dump iTAGTABLE ================");
+		System.out.println("============ "+title+" BEGIN Dump iTAGTABLE ================");
+		for(int i=0;i<Global.iTAGTAB.size();i++) {
+			Integer tx = Global.iTAGTAB.get(i);
+			int xx = (tx==null)? 0 : tx;
+			System.out.println("iTAGTABLE["+i+"]  iTag:" + Scode.edTag(xx) + "  ==> xTag:" + i);
 		}
+		System.out.println("============ "+title+" ENDOF Dump iTAGTABLE ================");
 	}
 	
 	public static void dumpXTAGTABLE(String title) {

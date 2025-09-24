@@ -3,7 +3,10 @@ package bec.instruction;
 import bec.compileTimeStack.CTStack;
 import bec.util.Global;
 import bec.util.Scode;
+import bec.util.Tag;
 import bec.util.Type;
+import bec.util.Util;
+import bec.virtualMachine.SVM_NOOP;
 import bec.virtualMachine.SVM_POPK;
 
 public abstract class DINITAREA extends Instruction {
@@ -21,7 +24,6 @@ public abstract class DINITAREA extends Instruction {
 	 * 
 	 * NOTE: In this implementation  DINITAREA == NOOP
 	 */
-	@SuppressWarnings("unused")
 	public static void ofScode() {
 //		Line 116: sCode.Output: LABEL T1186:L2 
 //		Line 117: sCode.Output: PUSHC C_INT "4" 

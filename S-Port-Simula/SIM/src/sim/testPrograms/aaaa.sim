@@ -496,7 +496,7 @@ EXEC: PSEG_FORM_NPACCA:BODY[3]  LOAD     REFER_ADDR[1]+R1(REL_ADR[callStackTop+2
 EXEC: PSEG_FORM_NPACCA:BODY[4]  STORE    REL_ADR[callStackTop+5]         Frame[6]: null, null, REL_ADR[callStackTop+2], null, PSEG_FORM_ENCINT:BODY[5], null  Stack[1]: null
 EXEC: PSEG_FORM_NPACCA:BODY[5]  POPK     1                               Frame[6]: null, null, REL_ADR[callStackTop+2], null, PSEG_FORM_ENCINT:BODY[5], null  Stack[0]: 
 EXEC: PSEG_FORM_NPACCA:BODY[6]  LOAD     REL_ADR[callStackTop+5]         Frame[6]: null, null, REL_ADR[callStackTop+2], null, PSEG_FORM_ENCINT:BODY[5], null  Stack[1]: null
-Exception in thread "main" java.lang.NullPointerException: Cannot invoke "bec.value.ObjectAddress.addOffset(int)" because "oaddr" is null
+Exception in thread "main" java.lang.NullPointerException: Cannot invoke "bec.value.DataAddress.addOffset(int)" because "oaddr" is null
 	at bec.virtualMachine.SVM_LOAD.execute(SVM_LOAD.java:45)
 	at bec.value.ProgramAddress.execute(ProgramAddress.java:123)
 	at bec.MainProgram.<init>(MainProgram.java:85)

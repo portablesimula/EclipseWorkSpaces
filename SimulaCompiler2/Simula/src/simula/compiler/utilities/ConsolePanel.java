@@ -265,7 +265,7 @@ public final class ConsolePanel extends JPanel {
 	/// @param msg error message
 	/// @param e   the underlying cause
 	private static void IERR(final String msg, final Throwable e) {
-		System.out.println("IERR: " + msg + "  " + e);
+		IO.println("IERR: " + msg + "  " + e);
 		e.printStackTrace();
 	}
 

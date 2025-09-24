@@ -111,7 +111,7 @@ public class AttributeInputStream {
 	/// @throws IOException if an I/O error occurs.
     public int readKind() throws IOException {
     	int kind = inpt.readByte();
-    	if(TRACE) System.out.println("AttributeInputStream.readKind: "+kind+':'+ObjectKind.edit(kind));
+    	if(TRACE) IO.println("AttributeInputStream.readKind: "+kind+':'+ObjectKind.edit(kind));
     	return kind;
 	}
 	
@@ -121,12 +121,12 @@ public class AttributeInputStream {
     public Type readType() throws IOException {
 		int keyWord = inpt.readUnsignedByte();
 		if(keyWord == 0) {
-	    	if(TRACE) System.out.println("AttributeInputStream.readType: null");
+	    	if(TRACE) IO.println("AttributeInputStream.readType: null");
 			return null;
 		}
 		String classIdent = readString();
 		Type type = new Type(keyWord,classIdent);			
-    	if(TRACE) System.out.println("AttributeInputStream.readType: "+type);
+    	if(TRACE) IO.println("AttributeInputStream.readType: "+type);
     	return type;
     }
 	
@@ -135,7 +135,7 @@ public class AttributeInputStream {
     /// @throws IOException if an I/O error occurs.
     public boolean readBoolean() throws IOException {
     	boolean b = inpt.readBoolean();
-    	if(TRACE) System.out.println("AttributeInputStream.readBoolean: "+b);
+    	if(TRACE) IO.println("AttributeInputStream.readBoolean: "+b);
     	return b;
     }
 	
@@ -144,7 +144,7 @@ public class AttributeInputStream {
     /// @throws IOException if an I/O error occurs.
     public int readShort() throws IOException {
     	short i = inpt.readShort();
-    	if(TRACE) System.out.println("AttributeInputStream.readInt: "+i);
+    	if(TRACE) IO.println("AttributeInputStream.readInt: "+i);
     	return i;
 	}
 
@@ -153,7 +153,7 @@ public class AttributeInputStream {
     /// @throws IOException if an I/O error occurs.
     public Object readConstant() throws IOException {
     	int key = inpt.readByte();
-    	if(TRACE) System.out.println("AttributeInputStream.readConstant: key=" + (int)key + " \"" + key +"\"");
+    	if(TRACE) IO.println("AttributeInputStream.readConstant: key=" + (int)key + " \"" + key +"\"");
     	Object res = null;
 		switch(key) {
 			case Type.T_UNDEF:		res = null; break;
@@ -165,7 +165,7 @@ public class AttributeInputStream {
 			case Type.T_TEXT:		res = readString(); break;
 			default: throw new RuntimeException("key = "+key);
 		}
-    	if(TRACE) System.out.println("AttributeInputStream.readDouble: "+res);
+    	if(TRACE) IO.println("AttributeInputStream.readDouble: "+res);
     	return res;
 	}
 
@@ -175,13 +175,13 @@ public class AttributeInputStream {
     public String readString() throws IOException {
     	int lng = inpt.readShort()-1;
     	if(lng < 0) {
-        	if(TRACE) System.out.println("AttributeInputStream.readString: null");
+        	if(TRACE) IO.println("AttributeInputStream.readString: null");
     		return null;
     	}
     	StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < lng; i++) sb.append(inpt.readChar());
     	String s = sb.toString();
-    	if(TRACE) System.out.println("AttributeInputStream.readString: \""+s+'"');
+    	if(TRACE) IO.println("AttributeInputStream.readString: \""+s+'"');
     	return s;
     }
 
@@ -198,7 +198,7 @@ public class AttributeInputStream {
 	/// @throws IOException if an I/O error occurs.
     public int readSEQU(SyntaxClass obj) throws IOException {
     	int OBJECT_SEQU = inpt.readShort();
-    	if(TRACE) System.out.println("AttributeInputStream.readSEQU: " + OBJECT_SEQU + "  ====>  " + obj.getClass().getSimpleName());
+    	if(TRACE) IO.println("AttributeInputStream.readSEQU: " + OBJECT_SEQU + "  ====>  " + obj.getClass().getSimpleName());
 		objectReference.put(OBJECT_SEQU, obj);
     	return OBJECT_SEQU;
 	}
@@ -210,14 +210,14 @@ public class AttributeInputStream {
 		int kind = readKind();
 		switch(kind) {
 		case ObjectKind.NULL:
-			if(TRACE) System.out.println("AttributeInputStream.readObj: null");
+			if(TRACE) IO.println("AttributeInputStream.readObj: null");
 			return null;
 		case ObjectKind.ObjectReference:
 			int OBJECT_SEQU = inpt.readShort();
-			if(TRACE) System.out.println("AttributeInputStream.readObj: OBJECT_SEQU="+OBJECT_SEQU);
+			if(TRACE) IO.println("AttributeInputStream.readObj: OBJECT_SEQU="+OBJECT_SEQU);
 			SyntaxClass obj = objectReference.get(OBJECT_SEQU);
 			Util.ASSERT(obj != null, "Invariant: OBJECT_SEQU="+moduleID+"#"+OBJECT_SEQU);
-			if(TRACE) System.out.println("AttributeInputStream.readObj: "+obj);
+			if(TRACE) IO.println("AttributeInputStream.readObj: "+obj);
 			return(obj);
 		default:
 			obj = readObj(kind,this);
@@ -225,7 +225,7 @@ public class AttributeInputStream {
 			objectReference.put(obj.OBJECT_SEQU, obj);
 			obj.OBJECT_SEQU = 0;
 			if(TRACE)
-				System.out.println("AttributeInputStream.readObj: "+moduleID+"#"+obj.OBJECT_SEQU+" obj="+obj);
+				IO.println("AttributeInputStream.readObj: "+moduleID+"#"+obj.OBJECT_SEQU+" obj="+obj);
 			return(obj);
 		}	
 	}

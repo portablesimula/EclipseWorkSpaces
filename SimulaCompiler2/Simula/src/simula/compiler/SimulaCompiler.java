@@ -232,7 +232,7 @@ public final class SimulaCompiler {
 		Parse.close();
 		Global.duringParsing = false;
 		if(Option.internal.PRINT_SYNTAX_TREE > 1) {
-			System.out.println("\nSimulaCompiler.doCompile: =========== Resulting Syntax Tree after Parsing ================");
+			IO.println("\nSimulaCompiler.doCompile: =========== Resulting Syntax Tree after Parsing ================");
 			programModule.printTree(1,this);
 		}
 		if (Util.nError > 0) {
@@ -278,7 +278,7 @@ public final class SimulaCompiler {
 		if(Option.verbose) Util.println("SimulaCompiler.doCompile: " + Global.sourceName + ": Semantic Checker completed");
 		Global.duringChecking = false;
 		if(Option.internal.PRINT_SYNTAX_TREE > 0) {
-			System.out.println("\nSimulaCompiler.doCompile: =========== Resulting Syntax Tree after Checking ================");
+			IO.println("\nSimulaCompiler.doCompile: =========== Resulting Syntax Tree after Checking ================");
 			programModule.printTree(1,this);
 		}
 		
@@ -411,7 +411,7 @@ public final class SimulaCompiler {
 			if (Option.verbose)
 				Util.println("END Execute .jar File. Exit value=" + exitValue3);
 			if(exitValue3 != 0) {
-				System.out.println("SimulaCompiler.doCompile: Exit value = " + exitValue3);
+				IO.println("SimulaCompiler.doCompile: Exit value = " + exitValue3);
 				throw new RuntimeException("Execution of "+jarFile+" failed. ExitValue = "+exitValue3);
 			}
 		}

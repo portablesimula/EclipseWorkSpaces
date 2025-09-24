@@ -2,6 +2,7 @@ package bec.virtualMachine.sysrut;
 
 import bec.segment.DataSegment;
 import bec.util.Type;
+import bec.util.Util;
 import bec.value.IntegerValue;
 import bec.value.ObjectAddress;
 import bec.value.Value;
@@ -39,7 +40,7 @@ public abstract class SysKnown {
 		int dstIdx = dstAddr.getOfst();
 
 //		boolean DEBUG = rst > 0;
-//		int idxTo = dstIdx+dstNchr;
+		int idxTo = dstIdx+dstNchr;
 		if(DEBUG) {
 			System.out.println("SVM_SYSCALL.CMOVE: srcAddr="+srcAddr+", srcNchr="+srcNchr);
 			System.out.println("SVM_SYSCALL.CMOVE: dstAddr="+dstAddr+", dstNchr="+dstNchr);

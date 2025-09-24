@@ -11,8 +11,6 @@ import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Util;
 import bec.value.ProgramAddress;
-import bec.virtualMachine.RTRegister;
-import bec.virtualMachine.RTStack;
 import bec.virtualMachine.RTUtil;
 
 public class MainProgram extends S_Module {
@@ -55,7 +53,7 @@ public class MainProgram extends S_Module {
 
 		while(Scode.nextByte() == Scode.S_LOCAL) {
 			Scode.inputInstr(); 
-			Util.IERR("MainProgram: S_LOCAL - NOT IMPL");
+			Util.IERR("NOT IMPL");
 //			Minut.inGlobal();
 		}
 		Scode.inputInstr(); 
@@ -79,10 +77,8 @@ public class MainProgram extends S_Module {
 			Util.IERR("Illegal termination of program");
 		
 		try {
-			if(Global.verbose) Util.println("BEC: NEW MainProgram: BEGIN EXECUTE: " + mainEntry);
+			if(Global.verbose) Util.println("\n\nBEC: NEW MainProgram: BEGIN EXECUTE: " + mainEntry);
 			RTUtil.INIT();
-			RTStack.INIT();
-			RTRegister.clearFreeRegs();
 			Global.PSC = mainEntry;
 			while(true) {
 				Global.PSC.execute();
@@ -98,7 +94,7 @@ public class MainProgram extends S_Module {
 //				Thread.dumpStack();
 //				return;
 //			}
-//			Util.println("\nProgram - Exit: " + eprog.exitCode);
+			Util.println("\nProgram - Exit: " + eprog.exitCode);
 			return;
 		}
 		

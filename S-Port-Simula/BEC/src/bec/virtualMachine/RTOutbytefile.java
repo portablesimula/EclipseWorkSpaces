@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import bec.util.Util;
+
 public class RTOutbytefile extends RTByteFile {
 	
 	/// The OutputStream used.

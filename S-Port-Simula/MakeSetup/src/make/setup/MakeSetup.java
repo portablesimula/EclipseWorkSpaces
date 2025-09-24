@@ -8,11 +8,20 @@
 package make.setup;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Date;
+import java.util.Properties;
+import java.util.jar.Attributes;
+import java.util.jar.Manifest;
+
 import static java.nio.file.StandardCopyOption.*;
 
 //import simula.compiler.utilities.Global;
@@ -28,10 +37,10 @@ import static java.nio.file.StandardCopyOption.*;
  */
 public final class MakeSetup {
 	public static final String RELEASE_ID = "SPort-1.0";
-	private final static int REVISION = 0;
+	private final static int REVISION = 1;
 	
-	private final static boolean EARLY_ACCESS = true;   // Used to produce an Early Access
-//	private final static boolean EARLY_ACCESS = false;  // Used to produce a Release
+//	private final static boolean EARLY_ACCESS = true;   // Used to produce an Early Access
+	private final static boolean EARLY_ACCESS = false;  // Used to produce a Release
 	
 	private final static String SETUP_TEMPS="C:/GitHub/MakeSetup_Temps";
 	private final static String RELEASE_HOME=SETUP_TEMPS+"/"+RELEASE_ID;
@@ -56,6 +65,7 @@ public final class MakeSetup {
 		try {
 			setSetupIdent();
 			deleteFiles(SETUP_TEMPS);
+			updateSetupProperties();
 			copySimulaRuntimeSystem();
 			copyFECandBEC();
 			copySimulaIconFiles();
@@ -66,7 +76,68 @@ public final class MakeSetup {
 			executeSPortSetup();
 		} catch(Exception e) { e.printStackTrace(); }
 	}
-		
+
+	// ***************************************************************
+	// *** UPDATE SETUP PROPERTIES
+	// ***************************************************************
+	private static void updateSetupProperties() {
+		String setupDated=""+new Date();
+		setProperty("sPort.setup.dated",setupDated);
+		setProperty("sPort.version",""+RELEASE_ID);
+		setProperty("sPort.revision",""+REVISION);
+		try { // also update 'sPort-Revision' and 'sPort-Setup-Dated' in InstallerManifest.MF
+//		   String SETUP_SRC=SIMULA_ROOT+"\\src\\make\\setup";
+		   String SETUP_SRC=SETUP_ROOT+"\\src\\make\\setup";
+		   File installerManifestFile=new File(SETUP_SRC+"\\InstallerManifest.MF");
+		   System.out.println("installerManifestFile: "+installerManifestFile);
+		   Manifest manifest=new Manifest();
+		   InputStream inputStream=new FileInputStream(installerManifestFile);
+		   manifest.read(inputStream);
+		   Attributes main=manifest.getMainAttributes();
+		   System.out.println("Main-Class: "+main.getValue("Main-Class"));
+		   System.out.println("sPort-Revision: "+main.getValue("sPort-Revision"));
+		   main.putValue("sPort-Revision",""+REVISION);
+		   main.putValue("sPort-Setup-Dated",""+setupDated);
+		   System.out.println("sPort-Revision: "+main.getValue("sPort-Revision"));
+		   System.out.println("sPort-Setup-Dated: "+main.getValue("sPort-Setup-Dated"));
+		   OutputStream outputStream=new FileOutputStream(installerManifestFile);
+		   manifest.write(outputStream);
+		} catch(Exception e) { e.printStackTrace(); }
+	}
+    private static File setupPropertiesFile;
+    private static Properties setupProperties;
+	public static String getProperty(String key,String defaultValue) {
+		if(setupPropertiesFile==null) loadProperties();
+		return(setupProperties.getProperty(key,defaultValue));
+	}
+	
+	public static void setProperty(String key,String value) {
+		if(setupPropertiesFile==null) loadProperties();
+		setupProperties.setProperty(key,value);
+		storeProperties();
+	}
+	
+	private static void loadProperties() {
+		String USER_HOME=System.getProperty("user.home");
+		System.out.println("USER_HOME="+USER_HOME);
+//		File setupPropertiesDir=new File(USER_HOME+File.separatorChar+".simula");
+		File setupPropertiesDir=new File(GITHUB_ROOT+"\\github.io\\setup");
+		System.out.println("setupPropertiesDir="+setupPropertiesDir);
+		setupPropertiesDir.mkdirs();
+		setupPropertiesFile=new File(setupPropertiesDir,"setupProperties.xml");
+		setupProperties = new Properties();
+		try { setupProperties.loadFromXML(new FileInputStream(setupPropertiesFile));
+		} catch(Exception e) {} // e.printStackTrace(); }
+	}
+	
+	private static void storeProperties() {
+		if(! EARLY_ACCESS) {
+			setupProperties.list(System.out);
+			try { setupProperties.storeToXML(new FileOutputStream(setupPropertiesFile),"Setup Properties");
+			} catch(Exception e) { e.printStackTrace(); }
+		}
+	}
+
 	// ***************************************************************
 	// *** COPY SIMULA RUNTIME SYSTEM
 	// ***************************************************************

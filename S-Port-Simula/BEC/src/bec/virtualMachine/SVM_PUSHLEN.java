@@ -6,6 +6,7 @@ import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Type;
+import bec.util.Util;
 import bec.value.IntegerValue;
 
 //The value is pushed onto the operand stack.

@@ -42,7 +42,7 @@ To 'Bootstrap' the old SPORT Simula System, perform following steps:
 	- In Project SimulettaFEC
 		- Run: Make_SimulettaFEC_Jarfile.java
 			- Output:  SimulettaFEC.jar   ===>   RELEASE_HOME: C:/SPORT
-		- Run: FECmpTESTS.java
+		- Run: FECmpTESTS.java ???
 		- Run: FECmpTBatch.java
 		- And finally run: FECmpRTS.java   to produce
 			- SCode of the Simula Runtime System in C:/GitHub/EclipseWorkSpaces/S-Port-Simula/FILES/simulaRTS/SCode
@@ -68,7 +68,7 @@ To 'Bootstrap' the old SPORT Simula System, perform following steps:
 		- Run: Make_BEC_Jarfile.java
 			- Output: BEC.jar   ===>   RELEASE_HOME: C:/SPORT
 		- Open bec.inlineTest in Project BEC
-			- Run: MiniInlineTest.java
+			- Run: MiniInlineTest.java ???
 			- Run: RunMake_RTS.java
 		- Run: RunFull_SML_TestBatch.java
 		- Run: RunFull_Simula_TestBatch

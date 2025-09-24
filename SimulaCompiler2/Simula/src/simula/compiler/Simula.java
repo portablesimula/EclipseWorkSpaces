@@ -185,7 +185,7 @@ public final class Simula {
 				else if (arg.equalsIgnoreCase("-sourceFileDir")) sourceFileDir=argv[++i];
 				else if (arg.equalsIgnoreCase("-runtimeUserDir")) Option.internal.RUNTIME_USER_DIR=argv[++i];
 				else {
-					System.out.println("Simula ERROR: Unknown option " + arg);
+					IO.println("Simula ERROR: Unknown option " + arg);
 					help();
 				}
 			} else fileNames.add(arg);

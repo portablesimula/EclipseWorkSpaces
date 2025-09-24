@@ -1,0 +1,1000 @@
+package bec_109;
+
+import java.util.Map;
+
+import iAPX.BSEG;
+import iAPX.DataType;
+import iAPX.buffer.ICodeBuffer;
+import iAPX.buffer.RelocBuffer;
+import iAPX.buffer.SCodeBuffer;
+import iAPX.ctStack.StackItem;
+import iAPX.descriptor.Descriptor;
+import iAPX.dictionary.Dictionary;
+import iAPX.dictionary.FixBlock;
+import iAPX.dictionary.WordBlock;
+import iAPX.qPkt.Qpkt;
+import iAPX.segment.DataSegment;
+import iAPX.segment.Segment;
+import iAPX.value.dataAddress.MemAddr;
+
+public class Global {
+//	public final static int MxpSymb=64;  // I.e. 16384 Symbols
+//	public final static int MxpSegm=16;  // I.e.  4096 Segments Names
+//	public final static int MxpPubl=32;  // I.e.  8192 Public Definitions
+//	public final static int MxpExtr=32;  // I.e.  8192 External References
+//	public final static int MxpModl=8;   // I.e.  2048 Module Names
+//	public final static int MxpTag=64;   // I.e. 16384 Tags
+//	public final static int MxpFix=64;   // I.e. 16384 Fixups
+//	public final static int MxpSdest=32; // I.e.  8192 SDEST per S-Code Switch
+//	public final static int MxpXtag=64;  // I.e. 16384 Tags in Attribute file
+//	public final static int MxpXtyp=1;   // I.e.   256 Types in Attribute file
+//	public final static int MxpXsmb=64;  // I.e. 16384 Symbols in Attribute file
+//
+//	 public final static int MaxPnt=63;       // Max number of 'pointers' per SAVE-Object
+//	 public final static int MaxHash=255;     // Max no.of Hash keys-1  DO NOT CHANGE IT !!!
+//	 public final static int MaxPar=63;       // Max number of routine-parameters
+//	 public final static int MaxParbyte=200;  // Max byte size of routine-call-stack
+
+	 public final static int MinTag=32;       // First user tag
+	 public final static int MaxKey=255;      // Max number of file keys
+	 public final static int MaxType=63;      // Max number of data types
+	 public final static int MaxByte=255;     // Max value of 8-bit byte  (2**8-1)
+	 public final static int MaxWord=65535;   // Max value of 16-bit word (2**16-1)
+	 public final static int MaxSint=32767;   // Max value of SINT        (2**15-1)
+	 public final static int MaxSdest=8192;   // Max number of dest-in-switch
+	 public final static int MaxString=32000; // Max number of chars in a string
+	 public final static int MaxLine=32000;   // Max number of source lines
+	 public final static int MaxPool=63;   // Max number of pools in trace version
+
+//	 public final static int BufLng=1024;     // Max body size of :OBJ file records
+
+	 public final static int  TAG_BOOL    = 1,  TAG_CHAR    = 2,  TAG_INT     = 3;
+	 public final static int  TAG_SINT    = 4,  TAG_REAL    = 5,  TAG_LREAL   = 6;
+	 public final static int  TAG_AADDR   = 7,  TAG_OADDR   = 8,  TAG_GADDR   = 9;
+	 public final static int  TAG_PADDR   = 10, TAG_RADDR   = 11, TAG_SIZE    = 12;
+
+//	 public final static int T_VOID=0,T_WRD4=1,T_WRD2=2,T_BYT2=3,T_BYT1=4;
+//	 public final static int T_REAL=5,T_LREAL=6,T_TREAL=7,T_BOOL=8,T_CHAR=9;
+//	 public final static int T_SIZE=10,T_OADDR=11,T_AADDR=12,T_GADDR=13,T_PADDR=14,T_RADDR=15;
+//	 public final static int T_NPADR=16,T_NOINF=17;
+//	 public final static int T_max=17;  // Max value of predefined type
+	 public final static int T_VOID=0,T_INT=1,T_REAL=2,T_LREAL=3,T_TREAL=4,T_BOOL=5,T_CHAR=6,T_SIZE=7;
+	 public final static int T_OADDR=8,T_AADDR=9,T_GADDR=10,T_PADDR=11,T_RADDR=12,T_NPADR=13,T_NOINF=14;
+	 public final static int T_max=14;  // Max value of predefined type
+
+	 public final static int FMF_REAL  = 0; // 00 0B
+	 public final static int FMF_LREAL = 4; // 10 0B
+	 public final static int FMF_INT   = 2; // 01 0B
+	 public final static int FMF_SINT  = 6; // 11 0B
+	 public final static int FMF_TEMP  = 3; // 01 1B  // Special Case
+
+	 public final static int O_SSEG=1,O_IDATA=2,O_LDATA=3;
+	 public final static int O_AEXT=4,O_ASEG=5,O_AFIX=6;
+	 public final static int O_LINE=7,O_TRC=8,O_END=9;
+	 public final static int O_max=9;
+
+//		%-E public final static int F_POINTER=3,F_BASE=2,F_OFFSET=1,F_HIBYTE=4,F_LOBYTE=0;
+		 public final static int aDGRP=0,aDATA=1,aCODE=2,aLINE=3;
+
+		 public final static int iAPX86=1,iAPX186=2,iAPX286=3,iAPX386=4;
+		 public final static int NoNPX=0,iAPX87=1,iAPX287=2,iAPX387=3,WTLx167=4;
+
+		 public final static int oMSDOS     = 0; // DOS    without numeric coprocessor
+		 public final static int oMSDOS87   = 1; // DOS       with 8087 or higher
+		 public final static int oMSOS2     = 2; // OS/2      with 8087 or higher
+		 public final static int oXENIX286  = 3; // XENIX/286 with 80287 (or emulator) or higher
+		 public final static int oXENIX386  = 4; // XENIX/386 with 80287 (or emulator) or higher
+		 public final static int oXENIX386W = 5; // XENIX/386 with Weitek 1167 or higher
+		 public final static int oUNIX386   = 6; // UNIX/386  with 80287 (or emulator) or higher
+		 public final static int oUNIX386W  = 7; // UNIX/386  with Weitek 1167 or higher
+		 public final static int oSINTRAN   = 8; // SINTRAN/ND500
+
+		 public final static int cNONE=0;        // No C-Binding defined
+		 public final static int cMS=1;          // Simula used together with MicroSoft C
+		 public final static int cTURBO=2;       // Simula used together with TURBO C
+
+		 public final static int xGOTO=0,xCALL=1;
+
+//		 ------ Symbol Class Codes ------
+		 public final static int sSYMB=0,sEXTR=1,sPUBL=2,sSEGM=3,sMODL=4;
+		 public final static int sMAX=4;
+
+//		%-E ------ SBI-register packing in Operand ------
+//		%-E
+//		%-E public final static int oES=128;    // 80H=1000 0000  ES:
+//		%-E public final static int oCS=144;    // 90H=1001 0000  CS:
+//		%-E public final static int oSS=160;    // A0H=1010 0000  SS:
+//		%-E public final static int oDS=176;    // B0H=1011 0000  DS:
+//		%-E public final static int oSREG=240;  // F0H=1111 0000
+//		%-E public final static int biBXSI=0,rmBXSI=8;     // 08H=0000 1000  [BX]+[SI]
+//		%-E public final static int biBXDI=1,rmBXDI=9;     // 09H=0000 1001  [BX]+[DI]
+//		%-E public final static int biBPSI=2,rmBPSI=10;    // 0AH=0000 1010  [BP]+[SI]
+//		%-E public final static int biBPDI=3,rmBPDI=11;    // 0BH=0000 1011  [BP]+[DI]
+//		%-E public final static int biSI=4,rmSI=12;        // 0CH=0000 1100  [SI]
+//		%-E public final static int biDI=5,rmDI=13;        // 0DH=0000 1101  [DI]
+//		%-E public final static int biBP=6,rmBP=14;        // 0EH=0000 1110  [BP]
+//		%-E public final static int biBX=7,rmBX=15;        // 0FH=0000 1111  [BX]
+//		%-E public final static int biBIREG=7,rmBIREG=15;  // 0FH=0000 1111
+
+			//------ SIB-register packing in Operand ------
+			//
+			//     ireg=iESP                 ==>  no index register
+			//     breg=ireg & breg <> bESP  ==>  no base register
+			//     It is impossible to specify same base and index register.
+			public final static int iEAX=0, bEAX=0;        //   0=00 000 000   0=00 000 000
+			public final static int iECX=8, bECX=1;        //   8=00 001 000   1=00 000 001
+			public final static int iEDX=16,bEDX=2;        //  16=00 010 000   2=00 000 010
+			public final static int iEBX=24,bEBX=3;        //  24=00 011 000   3=00 000 011
+			public final static int iESP=32,bESP=4;        //  32=00 100 000   4=00 000 100
+			public final static int iEBP=40,bEBP=5;        //  40=00 101 000   5=00 000 101
+			public final static int iESI=48,bESI=6;        //  48=00 110 000   6=00 000 110
+			public final static int iEDI=56,bEDI=7;        //  56=00 111 000   7=00 000 111
+			public final static int ssMASK=192;            // 192=11 000 000
+			public final static int IndxREG=56,BaseREG=7;  //  56=00 111 000   7=00 000 111
+			public final static int NoIBREG=228;           // 228=11 100 100   IS RULED OUT.
+			public final static int NoIREG=32;             //  32=00 100 000   IS RULED OUT.
+
+//			// ------   S  -  I  N  S  T  R  U  C  T  I  O  N  S   ------
+//
+//			  public final static int S_LSHIFTL=2;   // Extension to S-Code:  Left shift logical
+//			  public final static int S_LSHIFTA=5;   // Extension to S-Code:  Left shift arithmetical
+//			  public final static int S_RSHIFTL=66;  // Extension to S-Code:  Right shift logical
+//			  public final static int S_RSHIFTA=129; // Extension to S-Code:  Right shift arithmetical
+//
+//			  public final static int S_RECORD=1, S_PREFIX=3, S_ATTR=4, S_REP=6, S_ALT=7,
+//			         S_FIXREP=8, S_ENDRECORD=9, S_C_RECORD=10, S_TEXT=11,
+//			         S_C_CHAR=12, S_C_INT=13, S_C_SIZE=14, S_C_REAL=15,
+//			         S_C_LREAL=16, S_C_AADDR=17, S_C_OADDR=18, S_C_GADDR=19,
+//			         S_C_PADDR=20, S_C_DOT=21, S_C_RADDR=22, S_NOBODY=23,
+//			         S_ANONE=24, S_ONONE=25, S_GNONE=26, S_NOWHERE=27, S_TRUE=28,
+//			         S_FALSE=29, S_PROFILE=30, S_KNOWN=31, S_SYSTEM=32,
+//			         S_EXTERNAL=33, S_IMPORT=34, S_EXPORT=35, S_EXIT=36,
+//			         S_ENDPROFILE=37, S_ROUTINESPEC=38, S_ROUTINE=39, S_LOCAL=40,
+//			         S_ENDROUTINE=41, S_MODULE=42, S_EXISTING=43, S_TAG=44,
+//			         S_BODY=45, S_ENDMODULE=46, S_LABELSPEC=47, S_LABEL=48,
+//			         S_RANGE=49, S_GLOBAL=50, S_INIT=51, S_CONSTSPEC=52,
+//			         S_CONST=53, S_DELETE=54, S_FDEST=55, S_BDEST=56,
+//			         S_SAVE=57, S_RESTORE=58, S_BSEG=59, S_ESEG=60,
+//			         S_SKIPIF=61, S_ENDSKIP=62, S_IF=63, S_ELSE=64,
+//			         S_ENDIF=65, S_PRECALL=67, S_ASSPAR=68,
+//			         S_ASSREP=69, S_CALL=70, S_FETCH=71, S_REFER=72,
+//			         S_DEREF=73, S_SELECT=74, S_REMOTE=75, S_LOCATE=76,
+//			         S_INDEX=77, S_INCO=78, S_DECO=79, S_PUSH=80, S_PUSHC=81,
+//			         S_PUSHLEN=82, S_DUP=83, S_POP=84, S_EMPTY=85,
+//			         S_SETOBJ=86, S_GETOBJ=87, S_ACCESS=88, S_FJUMP=89,
+//			         S_BJUMP=90, S_FJUMPIF=91, S_BJUMPIF=92, S_SWITCH=93,
+//			         S_GOTO=94, S_T_INITO=95, S_T_GETO=96, S_T_SETO=97,
+//			         S_ADD=98, S_SUB=99, S_MULT=100, S_DIV=101, S_REM=102,
+//			         S_NEG=103, S_AND=104, S_OR =105, S_XOR=106, S_IMP=107,
+//			         S_EQV=108, S_NOT=109, S_DIST=110, S_ASSIGN=111,
+//			         S_UPDATE=112, S_CONVERT=113, S_SYSINSERT=114, S_INSERT=115,
+//			         S_ZEROAREA=116, S_INITAREA=117, S_COMPARE=118, S_LT=119,
+//			         S_LE=120, S_EQ=121, S_GE=122, S_GT=123, S_NE=124,
+//			         S_EVAL=125, S_INFO=126, S_LINE=127, S_SETSWITCH=128,
+//			         S_PROGRAM=130, S_MAIN=131, S_ENDPROGRAM=132,
+//			         S_DSIZE=133, S_SDEST=134, S_RUPDATE=135, S_ASSCALL=136,
+//			         S_CALL_TOS=137, S_DINITAREA=138, S_NOSIZE=139, S_POPALL=140,
+//			         S_REPCALL=141, S_INTERFACE=142, S_MACRO=143, S_MARK=144,
+//			         S_MPAR=145, S_ENDMACRO=146, S_MCALL=147, S_PUSHV=148,
+//			         S_SELECTV=149, S_REMOTEV=150, S_INDEXV=151, S_ACCESSV=152,
+//			         S_DECL=153, S_STMT=154;
+//
+//			       public final static int S_max=154;  // Max value of S-Instruction codes
+//
+////			   	---------     O b j e c t   K i n d   C o d e s      ---------
+//
+//			   	 public final static int K_Qfrm1=1,K_Qfrm2=2,K_Qfrm2b=3,K_Qfrm3=4;
+//			   	 public final static int K_Qfrm4=5,K_Qfrm4b=6,K_Qfrm4c=7,K_Qfrm5=8,K_Qfrm6=9;
+//			   	 //--- Descriptors ---
+//			   	 public final static int K_RecordDescr=10,K_TypeRecord=11,K_Attribute=12;
+//			   	 public final static int K_Parameter=13,K_Export=14,K_LocalVar=15;
+//			   	 public final static int K_GlobalVar=16,K_ExternVar=17, K_Constant  = 18;
+//			   	 public final static int K_ProfileDescr=19,K_IntRoutine=20,K_ExtRoutine=21;
+//			   	 public final static int K_IntLabel=22,K_ExtLabel=23,K_SwitchDescr=24;
+//			   	 //--- Stack Items ---
+//			   	 public final static int K_ProfileItem=25,K_Address=26,K_Temp=27,K_Coonst=28;
+//			   	 public final static int K_Result=29;
+//			   	 //--- Others ---
+//			 	 public final static int K_SEG_DATA  = 30;
+//				 public final static int K_SEG_CONST = 31;
+//				 public final static int K_SEG_CODE  = 32;
+//			   	 public final static int K_BSEG=33;
+//			   	 public final static int K_Module=34;
+//			   	 public final static int K_EndModule=35;
+//			   	 //--- Arrays etc. ---
+//			   	 public final static int K_RefBlock=34,K_WordBlock=35,K_AddrBlock=36;
+//				 
+//				 public static String edObjectKind(int kind) {
+//					 switch(kind) {
+//						 case K_Qfrm1:  return("Qfrm1"); case K_Qfrm2:  return("Qfrm2");  case K_Qfrm2b: return("Qfrm2b"); case K_Qfrm3:  return("Qfrm3");
+//						 case K_Qfrm4:  return("Qfrm4"); case K_Qfrm4b: return("Qfrm4b"); case K_Qfrm4c: return("Qfrm4c"); case K_Qfrm5:  return("Qfrm5");
+//						 case K_Qfrm6:  return("Qfrm6");
+//					   	 //--- Descriptors ---
+//						 case K_RecordDescr:  return("K_RecordDescr"); case K_TypeRecord:  return("K_TypeRecord");  case K_Attribute:    return("K_Attribute");
+//						 case K_Parameter:    return("K_Parameter");   case K_Export:      return("K_Export");	    case K_LocalVar:     return("K_LocalVar");
+//						 case K_GlobalVar:    return("K_GlobalVar");   case K_ExternVar:   return("K_ExternVar");   case K_ProfileDescr: return("K_ProfileDescr");
+//						 case K_IntRoutine:   return("K_IntRoutine");  case K_ExtRoutine:  return("K_ExtRoutine");  case K_IntLabel:     return("K_IntLabel");
+//						 case K_ExtLabel:     return("K_ExtLabel");	   case K_SwitchDescr: return("K_SwitchDescr"); case K_Constant:     return("K_Constant");
+//					   	 //--- Stack Items ---
+//						 case K_ProfileItem:  return("K_ProfileItem"); case K_Address:     return("K_Address");     case K_Temp:         return("K_Temp");
+//						 case K_Coonst:       return("K_Coonst");	   case K_Result:      return("K_Result");
+//					   	 //--- Others ---
+//						 case K_SEG_DATA:     return("K_SEG_DATA");    case K_SEG_CONST:   return("K_SEG_CONST");   case K_SEG_CODE:     return("K_SEG_CODE");
+//						 case K_BSEG:         return("K_BSEG");		   case K_Module:      return("K_Module");		case K_EndModule:    return("K_EndModule");
+//					 }
+//					 return("ObjectKind:"+kind);
+//				 }
+//
+//			   	 public final static int K_Max=37;  // Max value of object kind codes  + 1
+
+////			 	---------     P r o f i l e    K i n d    C o d e s      ---------
+//
+//			 	 public final static int P_ROUTINE=0;      // Normal local routine profile
+//			 	 public final static int P_VISIBLE=1;      // Normal visible routine profile
+//			 	 public final static int P_INTERFACE=2;    // Interface profile
+//			 	 public final static int P_SYSTEM=3;       // System routine (not inline)
+//			 	 public final static int P_KNOWN=4;        // Known routine (not inline)
+//			 	 public final static int P_OS2=5;          // MS-OS2 routine (partially inline)
+//			 	 public final static int P_XNX=6;          // UNIX/XENIX C-lib routine (partially inline)
+//			 	 public final static int P_KNL=7;          // UNIX/XENIX Kernel routine (partially inline)
+//			 	 public final static int P_EXTERNAL=8;     // External <unknown> routine
+//			 	 public final static int P_SIMULETTA=9;    // External SIMULETTA routine
+//			 	 public final static int P_ASM=10;         // External ASSEMBLY routine
+//			 	 public final static int P_C=11;           // External C routine
+//			 	 public final static int P_FTN=12;         // External FORTRAN routine
+//			 	 public final static int P_PASCAL=13;      // External PASCAL routine
+//			 	 //     14 .. 19         // Reserved
+//
+//			 	 public final static int P_GTOUTM=20;      // Sysroutine("GTOUTM")
+//			 	 public final static int P_MOVEIN=21;      // Sysroutine("MOVEIN")
+//
+//			 	 public final static int P_RSQROO=22;      // Sysroutine ("RSQROO")
+//			 	 public final static int P_SQROOT=23;      // Sysroutine("SQROOT")
+//			 	 public final static int P_RLOGAR=24;      // Sysroutine ("RLOGAR")
+//			 	 public final static int P_LOGARI=25;      // Sysroutine("LOGARI")
+//			 	 public final static int P_REXPON=26;      // Sysroutine ("REXPON")
+//			 	 public final static int P_EXPONE=27;      // Sysroutine("EXPONE")
+//			 	 public final static int P_RSINUS=28;      // Sysroutine("RSINUS")
+//			 	 public final static int P_SINUSR=29;      // Sysroutine("SINUSR")
+//			 	 public final static int P_RARTAN=30;      // Sysroutine("RARTAN")
+//			 	 public final static int P_ARCTAN=31;      // Sysroutine("ARCTAN")
+//
+//			 	 public final static int P_RLOG10=32;      // Known("RLOG10")
+//			 	 public final static int P_DLOG10=33;      // Known("DLOG10")
+//			 	 public final static int P_RCOSIN=34;      // Known("RCOSIN")
+//			 	 public final static int P_COSINU=35;      // Known("COSINU")
+//			 	 public final static int P_RTANGN=36;      // Known("RTANGN")
+//			 	 public final static int P_TANGEN=37;      // Known("TANGEN")
+//			 	 public final static int P_RARCOS=38;      // Known("RARCOS")
+//			 	 public final static int P_ARCCOS=39;      // Known("ARCCOS")
+//			 	 public final static int P_RARSIN=40;      // Known("RARSIN")
+//			 	 public final static int P_ARCSIN=41;      // Known("ARCSIN")
+//
+//				 public final static int P_ERRNON=42;      // Known("ERRNON")
+//				 public final static int P_ERRQUA=43;      // Known("ERRQUA")
+//				 public final static int P_ERRSWT=44;      // Known("ERRSWT")
+//				 public final static int P_ERROR=45;       // Known("ERROR")
+//
+//				 public final static int P_CBLNK=46;       // Known("CBLNK")
+//				 public final static int P_CMOVE=47;       // Known("CMOVE")
+//				 public final static int P_STRIP=48;       // Known("STRIP")
+//				 public final static int P_TXTREL=49;      // Known("TXTREL")
+//				 public final static int P_TRFREL=50;      // Known("TRFREL")
+//
+//				 public final static int P_AR1IND=51;      // Known("AR1IND")
+//				 public final static int P_AR2IND=52;      // Known("AR2IND")
+//				 public final static int P_ARGIND=53;      // Known("ARGIND")
+//
+//				 public final static int P_IABS=54;        // Known("IABS")
+//				 public final static int P_RABS=55;        // Known("RABS")
+//				 public final static int P_DABS=56;        // Known("DABS")
+//				 public final static int P_RSIGN=57;       // Known("RSIGN")
+//				 public final static int P_DSIGN=58;       // Known("DSIGN")
+//				 public final static int P_MODULO=59;      // Known("MODULO")
+//				 public final static int P_RENTI=60;       // Known("RENTI")
+//				 public final static int P_DENTI=61;       // Known("DENTI")
+//				 public final static int P_DIGIT=62;       // Known("DIGIT")
+//				 public final static int P_LETTER=63;      // Known("LETTER")
+//
+//				 public final static int P_RIPOWR=64;      // Known("RIPOWR")
+//				 public final static int P_RRPOWR=65;      // Known("RRPOWR")
+//				 public final static int P_RDPOWR=66;      // Known("RDPOWR")
+//				 public final static int P_DIPOWR=67;      // Known("DIPOWR")
+//				 public final static int P_DRPOWR=68;      // Known("DRPOWR")
+//				 public final static int P_DDPOWR=69;      // Known("DDPOWR")
+//
+//				 public final static int P_DOS_CREF=70;    // Sysroutine("M?CREF")
+//				 public final static int P_DOS_OPEN=71;    // Sysroutine("M?OPEN")
+//				 public final static int P_DOS_CLOSE=72;   // Sysroutine("M?CLOSE")
+//				 public final static int P_DOS_READ=73;    // Sysroutine("M?READ")
+//				 public final static int P_DOS_WRITE=74;   // Sysroutine("M?WRITE")
+//				 public final static int P_DOS_DELF=75;    // Sysroutine("M?DELF")
+//				 public final static int P_DOS_FPTR=76;    // Sysroutine("M?FPTR")
+//				 public final static int P_DOS_CDIR=77;    // Sysroutine("M?CDIR")
+//				 public final static int P_DOS_ALOC=78;    // Sysroutine("M?ALOC")
+//				 public final static int P_DOS_TERM=79;    // Sysroutine("M?TERM")
+//				 public final static int P_DOS_TIME=80;    // Sysroutine("M?TIME")
+//				 public final static int P_DOS_DATE=81;    // Sysroutine("M?DATE")
+//				 public final static int P_DOS_VERS=82;    // Sysroutine("M?VERS")
+//				 public final static int P_DOS_EXEC=83;    // Sysroutine("M?EXEC")
+//				 public final static int P_DOS_IOCTL=84;   // Sysroutine("M?IOCTL")
+//				 public final static int P_DOS_LOCK=85;    // Sysroutine("M?LOCK")
+//				 public final static int P_DOS_GDRV=86;    // Sysroutine("M?GDRV")
+//				 public final static int P_DOS_GDIR=87;    // Sysroutine("M?GDIR")
+//
+//				 public final static int P_APX_SCMPEQ=88;  // Sysroutine("S?SCMPEQ")
+//				 public final static int P_APX_SMOVEI=89;  // Sysroutine("S?MOVEI")
+//				 public final static int P_APX_SMOVED=90;  // Sysroutine("S?MOVED")
+//				 public final static int P_APX_SSKIP=91;   // Sysroutine("S?SKIP")
+//				 public final static int P_APX_STRIP=92;   // Sysroutine("S?TRIP")
+//				 public final static int P_APX_SFINDI=93;  // Sysroutine("S?FINDI")
+//				 public final static int P_APX_SFINDD=94;  // Sysroutine("S?FINDD")
+//				 public final static int P_APX_SFILL=95;   // Sysroutine("S?FILL")
+//
+//				 public final static int P_APX_BOBY=96;    // Sysroutine("S?BOBY")
+//				 public final static int P_APX_BYBO=97;    // Sysroutine("S?BYBO")
+//				 public final static int P_APX_SZ2W=98;    // Sysroutine("S?SZ2W")
+//				 public final static int P_APX_W2SZ=99;    // Sysroutine("S?W2SZ")
+//				 public final static int P_APX_RF2N=100;   // Sysroutine("S?RF2N")
+//				 public final static int P_APX_N2RF=101;   // Sysroutine("S?N2RF")
+//				 public final static int P_APX_BNOT=102;   // Sysroutine("S?BNOT")
+//				 public final static int P_APX_BAND=103;   // Sysroutine("S?BAND")
+//				 public final static int P_APX_BOR=104;    // Sysroutine("S?BOR")
+//				 public final static int P_APX_BXOR=105;   // Sysroutine("S?BXOR")
+//				 public final static int P_APX_WNOT=106;   // Sysroutine("S?WNOT")
+//				 public final static int P_APX_WAND=107;   // Sysroutine("S?WAND")
+//				 public final static int P_APX_WOR=108;    // Sysroutine("S?WOR")
+//				 public final static int P_APX_WXOR=109;   // Sysroutine("S?WXOR")
+//				 public final static int P_APX_BSHL=110;   // Sysroutine("S?BSHL")
+//				 public final static int P_APX_WSHL=111;   // Sysroutine("S?WSHL")
+//				 public final static int P_APX_BSHR=112;   // Sysroutine("S?BSHR")
+//				 public final static int P_APX_WSHR=113;   // Sysroutine("S?WSHR")
+//
+//				 public final static int P_DOS_SDMODE=114; // Sysroutine("M?SVDM")
+//				 public final static int P_DOS_UPDPOS=115; // Sysroutine("M?UPOS") 
+//				 public final static int P_DOS_CURSOR=116; // Sysroutine("M?CURS") 
+//				 public final static int P_DOS_SDPAGE=117; // Sysroutine("M?SDPG") 
+//				 public final static int P_DOS_SROLUP=118; // Sysroutine("M?SRUP") 
+//				 public final static int P_DOS_SROLDW=119; // Sysroutine("M?SRDW") 
+//				 public final static int P_DOS_GETCEL=120; // Sysroutine("M?GETC") 
+//				 public final static int P_DOS_PUTCHR=121; // Sysroutine("M?PUTC") 
+//				 public final static int P_DOS_GDMODE=122; // Sysroutine("M?GVDM") 
+//				 public final static int P_DOS_SETPAL=123; // Sysroutine("M?SPAL") 
+//
+//				 public final static int P_DOS_RDCHK=124;  // Sysroutine("M?RCHK") 
+//				 public final static int P_DOS_KEYIN=125;  // Sysroutine("M?KEYI") 
+//
+//				 public final static int P_max=125;
+//
+//				 //%title ***  Routine Statistics  ***
+//				//------  SBASE  ------
+//				public final static int R_DefType=1,R_DICREF=2,R_DICSMB=3,R_DefSymb=4;
+//				public final static int R_DefSegm=5,R_PutSegx=6,R_GetSegx=7,R_DefExtr=8;
+//				public final static int R_PutExtern=9,R_DefPubl=10,R_PutPublic=11,R_NewPubl=12;
+//				public final static int R_DefModl=13,R_PutModule=14,R_GetDefaultSreg=15;
+//				public final static int R_OverrideSreg=16,R_MakeRegmap=17,R_SamePart=18;
+//				public final static int R_RegDies=19,R_RegxAvailable=20,R_IntoDisplay=21,R_GetRec=22;
+//				public final static int R_GetAtr=23,R_GetPrf=24,R_GetRut=25,R_GetLab=26;
+//				public final static int R_NEWOBX=27,R_NEWOBJ=28,R_DELETE=29;
+//				//------  COASM  ------
+//				public final static int R_iCodeSize=30,R_ShrtJMP=31,R_EmitSOP=32;
+//				public final static int R_EmitCall=33,R_EmitAddr=34,R_EncodeEA=35;
+//				public final static int R_ModifySP=36,R_LoadCnst=37,R_EmitJMP=38,R_QtoI=39;
+//				//------  MASSAGE  ------
+//				public final static int R_Massage=40,R_PrevQinstr=41;
+//				public final static int R_AppendQinstr=42,R_InsertQinstr=43,R_DeleteQinstr=44;
+//				public final static int R_DeleteQPosibJ=45,R_MoveFdest=46,R_QinstrEqual=47;
+//				public final static int R_OprEqual=48,R_ForwJMP=49,R_DefFDEST=50,R_DefBDEST=51;
+//				public final static int R_RegsWrittenDies=52,R_RegLastused=53,R_RegLastWrite=54;
+//				public final static int R_RegOneshot=55,R_StackModification=56,R_FindPush2=57;
+//				public final static int R_FindPush=58,R_StackEqual=59,R_RegsReadUnmodified=60;
+//				public final static int R_RegUnused=61,R_OperandregsModified=62,R_MemoryUse=63;
+//				public final static int R_MemoryUnused=64,R_MemoryLastused=65,R_mOPR=66;
+//				public final static int R_mPUSHR=67,R_mPUSHM=68,R_mPOPK=69,R_mPOPR=70;
+//				public final static int R_mPOPR2=71,R_mPOPM=72,R_mLOADC=73,R_mLOADSC=74,R_mLOAD=75;
+//				public final static int R_mLDS=76,R_mLES=77,R_mLOADA=78;
+//				public final static int R_mMOV=79,R_mSTORE=80,R_mMONADR=81,R_QinstrBefore=82;
+//				public final static int R_TryReverse=83,R_mDYADR=84,R_mDYADC=85,R_mTRIADR=86;
+//				public final static int R_mTRIADM=87,R_mFDYAD=89,R_mFDYADrev=90;
+//				public final static int R_mCondition=91,R_mJMP=92,R_mFDEST=93;
+//				//------  CODER  ------
+//				public final static int R_Push=94,R_Precede=95,R_Pop=96,R_TakeTOS=97,R_TakeRef=98;
+//				public final static int R_CopyBSEG=99,R_AssertObjStacked=100;
+//				public final static int R_AssertAtrStacked=101,R_PresaveOprRegs=102,R_GetTosAddr=103;
+//				public final static int R_GetSosAddr=104,R_GetTosValueIn86R3=105;
+//				public final static int R_GetTosValueIn86=106,R_GetTosAdjustedIn86=107;
+//				public final static int R_GetTosAsBYT1=108,R_GetTosAsBYT2=109,R_GetTosAsBYT4=110;
+//				public final static int R_GQfetch=111,R_GQdup=112,R_DupIn86=113,R_GQpop=114;
+//				public final static int R_GetOprAddr=115,R_ArithType=116;
+//				//------  PARSE  ------
+//				public final static int R_SpecLab=117,R_DefLab=118,R_Viisible=119;
+//				public final static int R_ProgramElement=120,R_Instruction=121,R_CallInstruction=122;
+//				public final static int R_WordsOnStack=123,R_MoveOnStack=124,R_CallDefault=125;
+//				public final static int R_PopExport=126,R_PushExport=127,R_PutPar=128,R_ParType=129;
+//				public final static int R_ConvRepWRD2=130,R_ConvRepWRD4=131,R_IfConstruction=132;
+//				public final static int R_SkipifConstruction=133,R_ProtectConstruction=134;
+//				public final static int R_Max=135;
+				
+
+				
+//				%title ******   R e g i s t e r    U s a g e   ******
+//				------------  For  MS-DOS   OS/2   and   XENIX   ------------
+			//
+//				%-E Visible public final static int qAL=0,qCL=1,qDL=2,qBL=3,qAH=4,qCH=5,qDH=6,qBH=7,qAX=8,
+//				%-E                qCX=9,qDX=10,qBX=11,qSP=12,qBP=13,qSI=14,qDI=15,
+//				%-E                qES=16,qCS=17,qSS=18,qDS=19,qF=20,qM=21,
+//				%-E                nregs=22;
+			//
+//				%-E Visible public final static int qw_B=0, qw_W=8;  // Instruksjons-"bredde"
+			//
+//				%-E ---                                  MFDE DSBS BBDD CCAA
+//				%-E ---                                    SS IIPP HLHL HLHL
+			//
+//				%-E Visible public final static int uAL=1,     // 0001H = 0000 0000 0000 0001B
+//				%-E                uAH=2,     // 0002H = 0000 0000 0000 0010B
+//				%-E                uAX=3,     // 0003H = 0000 0000 0000 0011B
+//				%-E                uCL=4,     // 0004H = 0000 0000 0000 0100B
+//				%-E                uCH=8,     // 0008H = 0000 0000 0000 1000B
+//				%-E                uCX=12,    // 000CH = 0000 0000 0000 1100B
+//				%-E                uDL=16,    // 0010H = 0000 0000 0001 0000B
+//				%-E                uDH=32,    // 0020H = 0000 0000 0010 0000B
+//				%-E                uDX=48,    // 0030H = 0000 0000 0011 0000B
+//				%-E                uBL=64,    // 0040H = 0000 0000 0100 0000B
+//				%-E                uBH=128,   // 0080H = 0000 0000 1000 0000B
+//				%-E                uBX=192,   // 00C0H = 0000 0000 1100 0000B
+//				%-E                uSP=256,   // 0100H = 0000 0001 0000 0000B
+//				%-E                uBP=512,   // 0200H = 0000 0010 0000 0000B
+//				%-E                uSI=1024,  // 0400H = 0000 0100 0000 0000B
+//				%-E                uDI=2048,  // 0800H = 0000 1000 0000 0000B
+//				%-E                uES=4096,  // 1000H = 0001 0000 0000 0000B
+//				%-E                uDS=8192,  // 2000H = 0010 0000 0000 0000B
+//				%-E                uF =16384, // 4000H = 0100 0000 0000 0000B
+//				%-E                uM =32768, // 8000H = 1000 0000 0000 0000B
+//				%-E             uSPBPM=33536, // 8300H = 1000 0011 0000 0000B
+//				%-E               uALL=65535, // FFFFH = 1111 1111 1111 1111B
+//				%-E          uALLbutBP=65023; // FDFFH = 1111 1101 1111 1111B
+			//
+//				%-E Visible Const public static int uMask(nregs) = (
+//				%-E uAL,uCL,uDL,uBL,uAH,uCH,uDH,uBH,uAX,uCX,uDX,uBX,
+//				%-E uSP,uBP,uSI,uDI,uES,0  ,0  ,uDS,uF,uM )
+//				---                      CS  SS
+			//
+//				%-E Visible Const Range(0:nregs) WordReg(nregs) = (
+//				%-E qAX,qCX,qDX,qBX,qAX,qCX,qDX,qBX,qAX,qCX,qDX,qBX,
+//				%-E qSP,qBP,qSI,qDI,qES,qCS,qSS,qDS,qF,qM )
+			//
+//				%-E Visible Const Range(0:nregs) WholeReg(nregs) = (
+//				%-E qAX,qCX,qDX,qBX,qAX,qCX,qDX,qBX,qAX,qCX,qDX,qBX,
+//				%-E qSP,qBP,qSI,qDI,qES,qCS,qSS,qDS,qF,qM )
+			//
+//				%-E Visible Const Range(0:2) RegSize(nregs) =
+//				%-E  ( 1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,0,0 )
+			//
+//				%-E Visible Const Range(0:1) wBIT(nregs) =
+//				%-E  ( 0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0 )
+			//
+//				%-E Visible Const Boolean RegParts(nregs) =
+//				%-E  ( false,false,false,false,false,false,false,false,
+//				%-E    true, true, true, true, false,false,false,false,
+//				%-E    false,false,false,false,false,false )
+
+//				%title ******   R e g i s t e r    U s a g e   ******
+//				------------   For  R e a l    U N I X    3 8 6   ------------
+				
+				public final static int
+				    qAL=0,qCL=1,qDL=2,qBL=3,qAH=4,qCH=5,qDH=6,qBH=7,
+				    qAX=8,qCX=9,qDX=10,qBX=11, //  qSP=12,qBP=13,qSI=14,qDI=15,
+				    qEAX=16,qECX=17,qEDX=18,qEBX=19,qESP=20,qEBP=21,qESI=22,qEDI=23,
+				    qF=24,qM=25,
+				    nregs=26;
+
+				public final static int qw_B=0,qw_W=8,qw_D=16;  // Instruksjons-"bredde"
+
+				public final static int uAL=1,     // 0001H = 0000 0000 0000 0001B
+				               uAH=2,     // 0002H = 0000 0000 0000 0010B
+				        uAX=3, uEAX=3,    // 0003H = 0000 0000 0000 0011B
+				               uCL=4,     // 0004H = 0000 0000 0000 0100B
+				               uCH=8,     // 0008H = 0000 0000 0000 1000B
+				        uCX=12,uECX=12,   // 000CH = 0000 0000 0000 1100B
+				               uDL=16,    // 0010H = 0000 0000 0001 0000B
+				               uDH=32,    // 0020H = 0000 0000 0010 0000B
+				        uDX=48,uEDX=48,   // 0030H = 0000 0000 0011 0000B
+				               uBL=64,    // 0040H = 0000 0000 0100 0000B
+				               uBH=128,   // 0080H = 0000 0000 1000 0000B
+				       uBX=192,uEBX=192,  // 00C0H = 0000 0000 1100 0000B
+				       uSP=256,uESP=256,  // 0100H = 0000 0001 0000 0000B
+				       uBP=512,uEBP=512,  // 0200H = 0000 0010 0000 0000B
+				      uSI=1024,uESI=1024, // 0400H = 0000 0100 0000 0000B
+				      uDI=2048,uEDI=2048, // 0800H = 0000 1000 0000 0000B
+				               uF =16384, // 4000H = 0100 0000 0000 0000B
+				               uM =32768, // 8000H = 1000 0000 0000 0000B
+				            uSPBPM=33536, // 8300H = 1000 0011 0000 0000B
+				              uALL=65535, // FFFFH = 1111 1111 1111 1111B
+				         uALLbutBP=65023; // FDFFH = 1111 1101 1111 1111B
+				
+				
+//				Visible Const public static int uMask(nregs) = (
+//						uAL,uCL,uDL,uBL,uAH,uCH,uDH,uBH,uEAX,uECX,uEDX,uEBX,
+//						uESP,uEBP,uESI,uEDI,uEAX,uECX,uEDX,uEBX,uESP,uEBP,uESI,uEDI,uF,uM )
+				public static int uMask[] = {
+				uAL,uCL,uDL,uBL,uAH,uCH,uDH,uBH,uEAX,uECX,uEDX,uEBX,
+				uESP,uEBP,uESI,uEDI,uEAX,uECX,uEDX,uEBX,uESP,uEBP,uESI,uEDI,uF,uM };
+				
+//				Visible Const Range(0:nregs) WordReg(nregs) = (
+//						qAX,qCX,qDX,qBX,qAX,qCX,qDX,qBX,qAX,qCX,qDX,qBX,
+//						  0,  0,  0,  0,qAX,qCX,qDX,qBX,  0,  0,  0,  0,qF,qM )
+				public static int WordReg[] = {
+				qAX,qCX,qDX,qBX,qAX,qCX,qDX,qBX,qAX,qCX,qDX,qBX,
+				0,  0,  0,  0,qAX,qCX,qDX,qBX,  0,  0,  0,  0,qF,qM };
+
+				// Visible Const Range(0:nregs) WholeReg(nregs) = (
+				//		qEAX,qECX,qEDX,qEBX,qEAX,qECX,qEDX,qEBX,qEAX,qECX,qEDX,qEBX,
+				//		qESP,qEBP,qESI,qEDI,qEAX,qECX,qEDX,qEBX,qESP,qEBP,qESI,qEDI,qF,qM )
+				public static int WholeReg[] = {
+				qEAX,qECX,qEDX,qEBX,qEAX,qECX,qEDX,qEBX,qEAX,qECX,qEDX,qEBX,
+				qESP,qEBP,qESI,qEDI,qEAX,qECX,qEDX,qEBX,qESP,qEBP,qESI,qEDI,qF,qM };
+
+				// Visible Const Range(0:2) RegSize(nregs) =
+				//		 ( 1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,4,4,4,4,4,4,4,4,0,0 )
+				public static int RegSize[] = { 1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,4,4,4,4,4,4,4,4,0,0 };
+
+				// Visible Const Range(0:1) wBIT(nregs) =
+				// ( 0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0 )
+				public static int wBIT[] = { 0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0 };
+
+				// Visible Const Boolean RegParts(nregs) =
+				//		 ( false,false,false,false,false,false,false,false,
+				//		   true ,true ,true ,true ,false,false,false,false,
+				//		   true ,true ,true ,true ,false,false,false,false,false,false )
+				static boolean RegParts[] = {
+				   false,false,false,false,false,false,false,false,
+				   true ,true ,true ,true ,false,false,false,false,
+				   true ,true ,true ,true ,false,false,false,false,false,false };
+				 
+				 
+				// %title ***    Q  -  I  N  S  T  R  U  C  T  I  O  N  S    ***
+
+				//-- Instruction value classification codes ---
+				    public final static int cANY=0; // Don't know
+				    public final static int cVAL=1; // Value // integer, character, boolean, real etc.
+				    public final static int cOBJ=2; // Pure Object Address (segment and/or base)
+				    public final static int cSTP=3; // Address into Stack (SP etc.)
+				    public final static int cADR=4; // Address otherwise (NOT pure object)
+				    public final static int cMAX=4;
+
+				// Visible const range(0:cMAX) cTYPE(18) = // T_MAX+1
+				// (  cANY,cVAL,cVAL,cVAL,cVAL,cVAL,cVAL, cVAL, cVAL,cVAL,cVAL,cOBJ, cVAL, cADR,
+				// // VOID,WRD4,WRD2,BYT2,BYT1,REAL,LREAL,TREAL,BOOL,CHAR,SIZE,OADDR,AADDR,GADDR,
+				//    cANY, cVAL, cVAL, cANY );
+				// // PADDR,RADDR,NPADR,NOINF;
+				public static int cTYPE[] = {
+				   cANY,cVAL,cVAL,cVAL,cVAL,cVAL,cVAL, cVAL, cVAL,cVAL,cVAL,cOBJ, cVAL, cADR,
+				// VOID,WRD4,WRD2,BYT2,BYT1,REAL,LREAL,TREAL,BOOL,CHAR,SIZE,OADDR,AADDR,GADDR,
+				   cANY, cVAL, cVAL, cANY };
+				// PADDR,RADDR,NPADR,NOINF;
+
+
+//				%title ***   T h e   E n v i r o n m e n t   I n t e r f a c e   ***
+				public static int status; // system "STATUS";
+
+//				Record string; info "TYPE";
+//				begin name(character) chradr; integer nchr; end;
+//
+//				---   E r r o r   H a n d l i n g   ---
+//
+//				global profile Perhandl;
+//				import range(0:13) code;
+//				       infix(string) msg;
+//				       label addr;
+//				export label cont end;
+//
+//				global profile Perror;
+//				import infix(string) msg end;
+//
+//				Entry(Perror) Erroutine;
+				
+				
+//				%title ***    G l o b a l   V a r i a b l e s    ***
+				public static boolean verbose;
+				public static boolean SCODE_INPUT_TRACE;
+				public static boolean PRINT_GENERATED_SVM_DATA = false;
+				public static boolean PRINT_GENERATED_SVM_CODE = false;
+				public static boolean DISPL_TRACE = false;
+				public static boolean GENERATE_DEBUG_CODE = false;
+				public static boolean ATTR_INPUT_TRACE = false;
+				public static boolean ATTR_OUTPUT_TRACE = false;
+				public static boolean ATTR_INPUT_DUMP = false;
+				public static boolean ATTR_OUTPUT_DUMP = false;
+				public static boolean SEGMENT_INPUT_DUMP = false;
+				public static boolean SEGMENT_OUTPUT_DUMP = false;
+				public static int EXEC_TRACE = 0;
+				public static int CALL_TRACE_LEVEL = 0;
+				public static boolean DUMPS_AT_EXIT = false;
+				//%-E Visible Define AllignFac=2;
+				//public static final int AllignFac=4;
+
+
+				// Range(0:MaxKey) scode;      // File key for S-Code input
+				// Range(0:MaxKey) modoupt;    // File key for module output file
+				// Range(0:MaxKey) modinpt;    // File key for module input file
+				// Range(0:MaxKey) scrfile;    // File key for relocatable scratch file
+				// Range(0:MaxKey) objfile;    // File key for relocatable object file
+				// Ref(File) sysin;            // Main input's file-object
+				// Ref(File) sysout;           // Prpoblic static int output's file-object
+				// Ref(File) inptrace;         // Input Trace's file-object
+				// Ref(File) ouptrace;         // Output Trace's file-object
+				// Ref(File) sysedit;          // Text editing's file-object
+				// Ref(File) errmsg;           // Error message editing's file-object
+
+				public static int CPUID;          // 1=iAPX86,2=iAPX88,3=iAPX186,4=iAPX286
+				// 5=iAPX386,6=iAPX486
+				public static int NUMID;          // 1=iAPX87,2=iAPX287,3=iAPX387
+				public static int OSID;           // 0=DOS,1=OS2,2=XENIX/286,3=XENIX/386,4=UNIX/386
+				public static int CBIND;          // cNONE=0,cMS=1,cTURBO=2
+				public static int CombAtr;   // 0:Normal, 1:Combined Sysinsert
+
+				boolean TSTOFL;             // True:Insert test-on-overflow
+				// %-E Boolean CHKSTK;             // True:Produce Call on E.CHKSTK
+
+				public static int ntype;     // Number of data types defined
+				//public static int T_INT,T_SINT; // Integer type mapping
+				
+				//Infix(DataType) TTAB(MaxType); // Type specification table
+				public static DataType[] TTAB = new DataType[MaxType];
+
+				//%+S Range(0:P_max) PsysKind; --
+				public static int TypeLength; // Nbytes of last nonstandard InType
+				public static int TagIdent;        // Tag-Ident from InXtag
+
+				public static int nerr;        // Number of error messages until now
+				public static int curline;   // Current source line number
+				public static int curinstr;  // Current instr-byte read from scode
+				public static int InputTrace;     // Input trace switch
+				public static int listq1;         // Output Q-code 1 listing switch
+				public static int listq2;         // Output Q-code 2 listing switch
+				public static int listsw;         // Output I-code listing switch
+				public static int traceMode;      // Processing trace switch
+				public static int ModuleTrace;    // Module I/O trace switch
+				public static int MASSLV;        // Massage depth level
+				public static int MASSDP;        // Massage max recursion depth
+				// %-E Range(0:255) BNKLNK;        // >0: Prepare Produced code for BANKING
+				public static float InitTime;              // Initiation CPU-time
+				// %+S Boolean envpar;             // True: Parameters from environment
+				public static boolean errormode;          // Treating an Error
+				//%+A Boolean asmgen;             // ASM-output generating mode
+				public static boolean InsideRoutine;      // Inside Routine Body indicator
+
+				//    --- Dictionary ---
+				public static Dictionary DIC;
+				public static String PRFXID;     // Prefix to entry popoblic static int symbols
+				public static String PROGID;     // Ident of program being defined
+				
+				public static Map<String, Segment> SEGMAP;
+				public static String CSEGID;     // Index of program's current code Segment
+				//public static String DSEGID;     // Index of program's data Segment
+				public static String LSEGID;     // Index of program's LineTable Segment
+				public static String DumSEG;     // Index of the dummy Segment
+				//public static String DGROUP;     // Index of the _DATA Segment
+				public static String EnvCSEG;    // Index of environment's code Segment
+
+				//public static DataSegment CSEGID;     // Index of program's current code Segment
+				public static DataSegment DSEGID;     // Index of program's data Segment
+				//public static DataSegment LSEGID;     // Index of program's LineTable Segment
+				//public static DataSegment DumSEG;     // Index of the dummy Segment
+				public static DataSegment DGROUP;     // Index of the _DATA Segment
+				//public static DataSegment EnvCSEG;    // Index of environment's code Segment
+
+				// SLIK ER DET I BEC:
+//				Global.CSEG = new DataSegment("CSEG_" + sourceID, Kind.K_SEG_CONST);
+//				Global.TSEG = new DataSegment("TSEG_" + sourceID, Kind.K_SEG_CONST);
+//				Global.DSEG = new DataSegment("DSEG_" + sourceID, Kind.K_SEG_DATA);
+//				Global.PSEG = new ProgramSegment("PSEG_" + sourceID, Kind.K_SEG_CODE);
+				
+				public static String SCODID;     // Name of Scode input file
+				public static String ATTRID;     // Prefix to attribute file
+				public static String RELID;      // Name of RELocatable object Output file
+				public static String SCRID;      // Name of rel/asm scratch file
+				public static String ASMID;      // Name of assembly source output file
+				public static String ProgIdent;  // S-Code PROG String
+				public static String modident;   // Ident of module being defined
+				public static String modcheck;   // Check code of module being defined
+				public static String DsegEntry;  // Data Segment start symbol
+				
+				public static String sysInsertDir = "C:/SPORT/RTS/";
+				public static String outputDIR = sysInsertDir; // Attributes and SVM-Code output directory
+				
+				public static String CSEGNAM,DSEGNAM;
+				public static int IfDepth;
+
+				//    ---   Entry Points ---
+				public static MemAddr MainEntry; // Main program's entry-point
+				public static MemAddr LtabEntry; // Line-no-table's entry-point
+				public static MemAddr X_OSSTAT;  // Entry-popoblic static int of G.OSSTAT
+				public static MemAddr X_KNLAUX;  // Entry-popoblic static int of G.KNLAUX
+				public static MemAddr X_STATUS;  // Entry-popoblic static int of G.STATUS
+				public static MemAddr X_STMFLG;  // Entry-popoblic static int of G.STMFLG
+				// %-E MemAddr X_IMUL;    // Entry-popoblic static int of E.IMUL
+				// %-E MemAddr X_IDIV;    // Entry-popoblic static int of E.IDIV
+				// %-E MemAddr X_IREM;    // Entry-popoblic static int of E.IREM
+				// %-E MemAddr X_RENEG;   // Entry-popoblic static int of E.RENEG
+				// %-E MemAddr X_READD;   // Entry-popoblic static int of E.READD
+				// %-E MemAddr X_RESUB;   // Entry-popoblic static int of E.RESUB
+				// %-E MemAddr X_REMUL;   // Entry-popoblic static int of E.REMUL
+				// %-E MemAddr X_REDIV;   // Entry-popoblic static int of E.REDIV
+				// %-E MemAddr X_RECMP;   // Entry-popoblic static int of E.RECMP
+				// %-E MemAddr X_LRNEG;   // Entry-popoblic static int of E.LRNEG
+				// %-E MemAddr X_LRADD;   // Entry-popoblic static int of E.LRADD
+				// %-E MemAddr X_LRSUB;   // Entry-popoblic static int of E.LRSUB
+				// %-E MemAddr X_LRMUL;   // Entry-popoblic static int of E.LRMUL
+				// %-E MemAddr X_LRDIV;   // Entry-popoblic static int of E.LRDIV
+				// %-E MemAddr X_LRCMP;   // Entry-popoblic static int of E.LRCMP
+				// %-E MemAddr X_IN2RE;   // Entry-popoblic static int of E.IN2RE
+				// %-E MemAddr X_IN2LR;   // Entry-popoblic static int of E.IN2LR
+				// %-E MemAddr X_RE2IN;   // Entry-popoblic static int of E.RE2IN
+				// %-E MemAddr X_RE2LR;   // Entry-popoblic static int of E.RE2LR
+				// %-E MemAddr X_LR2IN;   // Entry-popoblic static int of E.LR2IN
+				// %-E MemAddr X_LR2RE;   // Entry-popoblic static int of E.LR2RE
+
+				// %-E MemAddr X_GOTO;    // Entry-popoblic static int of E.GOTO
+				// %-E MemAddr X_CALL;    // Entry-popoblic static int of E.CALL
+				public static MemAddr X_ECASE;   // Entry-popoblic static int of ECASE routine
+				// %+S MemAddr X_INITO;   // Entry-popoblic static int of INITO routine
+				// %+S MemAddr X_GETO;    // Entry-popoblic static int of GETO routine
+				// %+S MemAddr X_SETO;    // Entry-popoblic static int of SETO routine
+				// %-E MemAddr X_CHKSTK;  // Entry-popoblic static int of CHKSTK routine
+				// %-E %+SC MemAddr X_STKBEG; // Entry-popoblic static int of start-of-stack
+				// %-E %+SC MemAddr X_STKOFL; // Entry-popoblic static int of STKOFL routine
+				public static MemAddr X_SSTAT;   // Entry-popoblic static int of XENIX get errno rut.
+
+				public static MemAddr TMPAREA;   // Temp area
+				public static MemAddr TMPQNT;    // Temp quant area (of RTS)
+				public static MemAddr X_INITSP;  // Entry-popoblic static int of G.INITSP
+
+				// --- Current Stack ---
+				public static int StackDepth87; // initial(0)
+				public static StackItem TOS;      // Top of Compile-time stack
+				public static StackItem BOS;      // Bot of Compile-time stack
+				public static StackItem SAV;   // Last Compile-time stack-item for which
+				                          // the corresponding Runtime-item is saved.
+				                          // NOTE: SAV =/= none implies TOS =/= none
+
+				BSEG curseg;           // Current program BSEG
+				BSEG FreeSeg;          // Free program BSEG list
+				public static int nSubSeg;   // No.of sub-segments gen. by BSEG
+
+				// Ref() PoolTop;              // Storage boundary pointer
+				// Ref() PoolNxt;              // Storage boundary pointer
+				// Ref() PoolBot;              // Storage boundary pointer
+				// Range(0:MaxByte) npool;     // No.of data pools allocated
+				// Ref(FreeArea) FreePool;     // Head of Free Pool list
+				// Infix(PoolSpec) PoolTab(MaxPool); // Storage pool statistics
+				// Ref(Object) FreeObj(K_Max); // Free Object lists
+				// public static int ObjCount(K_Max); // No.of Objects generated
+				// Integer CalCount(R_Max);    // No.of Routine calls
+
+				public static int BECDEB;      // Debugging level   (Debugging purposes)
+				public static int TLIST;       // Option D - Major Event Trace Level
+				public static int MXXERR;   // Max number of errors
+				// %+S Range(0:10) SYSGEN;   //  System generation
+				                             //      0: User program
+				                             //      1: Generation of Runtime System
+				                             //      2: Generation of S-Compiler
+				                             //      3: Generation of Environment
+				                             //      4: Generation of Library
+
+				public static int SEGLIM; // Max seg-size befor segment-split
+				public static int QBFLIM;   // No.of Q-instr in buf before Exhaust Half
+				public static int RNGCHK;      // >0: produce Range --> char range check
+				public static int IDXCHK;      // >0: produce array index check
+				public static int LINTAB;      // 0:No-LineTab, else:Generate LineTab
+				public static int DEBMOD;      // >2:Generate line breaks, else: do not!
+
+				public static int LabelSequ; // No.of labels  created by 'NewLabno'
+				public static int SymbSequ;  // No.of symbols created by 'NewPubl'
+
+				public static int SK1LIN;    //  S-Compiler-Trace - Pass 1 starting line
+				public static int SK1TRC;    //  Pass 1 Trace level=SEOMTI (one digit each)
+				public static int SK2LIN;    //  S-Compiler-Trace - Pass 2 starting line
+				public static int SK2TRC;    //  Pass 2 Trace level=SEOMTI (one digit each)
+				                                 //   I = 0..9 Input trace level
+				                                 //   T = 0..9 Trace-mode level
+				                                 //   M = 0..9 Module IO trace level
+				                                 //   O = 0..9 Output trace level
+				                                 //   E = 0..9 Output trace level listq1
+				                                 //   S = 0..9 Output trace level listq2
+
+				public static int nTag;         // No.of tags defined
+				public static int nFix;         // No.of Fixups defined
+				public static int nXtag;        // Size of TAGTAB
+				public static int nXtyp;        // Size of TYPMAP
+				public static int nXsmb;        // Size of SMBMAP
+				public static Qpkt[] DESTAB = new Qpkt[255];         // Jump Destination table
+				public static Qpkt DESTAB256;           // ???? TEMP ????
+				public static Qpkt[] FWRTAB = new Qpkt[255];         // Extra Jump Destination table
+				public static Qpkt FWRTAB256;           // ???? TEMP ????
+				public static Qpkt xFJUMP;              //--- see parse/coder (gqrelation)
+				
+				//public static RefBlock[]  DISPL = new RefBlock[MxpTag];  // Descriptor Display Table
+				public static WordBlock[] TIDTAB; // = new WordBlock[MxpTag]; // Tag-Identifier table
+				public static FixBlock[] FIXTAB;// = new FixBlock[MxpFix];  // FIXUP table
+				//public static WordBlock[] TAGTAB = new WordBlock[MxpXtag]; // Tag Table (during Module I/O)
+				//public static WordBlock[] TYPMAP = new WordBlock[MxpXtyp]; // Type-mapping (during Module I/O)
+				public static WordBlock[] SMBMAP;// = new WordBlock[MxpXsmb]; // Symbol-mapping (during Module I/O)
+
+				public static Array<Descriptor> DISPL;  // Descriptor Display Table
+//				public static WordBlock[] TIDTAB = new WordBlock[MxpTag]; // Tag-Identifier table
+//				public static FixBlock[] FIXTAB = new FixBlock[MxpFix];  // FIXUP table
+				public static Array<Integer> TAGTAB; // Tag Table (during Module I/O)
+				public static Array<Integer> TYPMAP; // Type-mapping (during Module I/O)
+//				public static WordBlock[] SMBMAP = new WordBlock[MxpXsmb]; // Symbol-mapping (during Module I/O)
+
+				public static int NXTYPE; // Type of First/Next buffer
+				public static int NXTLNG;      // Length of First/Next buffer
+				public static SCodeBuffer SBUF; // S-Code Buffer
+				public static ICodeBuffer CBUF; // Code Buffer
+				public static RelocBuffer CREL; // Code Relocations
+				public static ICodeBuffer DBUF; // Data Buffer
+				public static RelocBuffer DREL; // Data Relocations
+
+
+
+
+				//%title ***   S t r u c t u r e d    T y p e s   ***
+
+				//------   W O R D  /  D W O R D  /  Q W O R D   ------
+
+//				Record WORD; info "TYPE";
+//				begin variant public static int val;
+//				      variant range(0:MaxByte) LO,HI;
+//				end;
+//
+//				Record DWORD; info "TYPE";
+//				begin variant integer          val;
+//				      variant range(0:MaxByte) LO,LOHI,HILO,HI;
+//				      variant infix(WORD) LowWord;
+//				              infix(WORD) HighWord;
+//				end;
+//
+//				Record wWORD; info "TYPE";
+//				begin
+//				%-E   variant public static int val;
+//				  variant integer          val;
+//				%-E   variant range(0:MaxByte) LO,HI;
+//				  variant range(0:MaxByte) LO,LOHI,HILO,HI;
+//				      variant infix(WORD) LowWord;
+//				          infix(WORD) HighWord;
+//				end;
+
+				//------   V  a  l  u  e     I  t  e  m   ------
+
+
+
+				// Record File;
+				// begin range(0:MaxKey) key;     --- File key
+				//       range(0:132) pos;        --- Posision indicatior (0..nchr-1)
+				//       range(0:MaxByte) nchr;
+				//    //   character chr(0);        --- File buffer
+				// end;
+
+				//------  R e l o c a t i o n    P a c k e t s  ------
+
+				// mrk = <0>1<FieldType>3<RelType>2<Offset>10
+				// FieldType:
+				public final static int fPOINTER=3,  mfPOINTER=12288;  // 3000H Segm-relative
+				public final static int fSEGMENT=2,  mfSEGMENT=8192;   // 2000H Segm-relative
+				public final static int fOFFSET=1,   mfOFFSET=4096;    // 1000H Segm-relative
+				public final static int fOFST32=5,   mfOFST32=20480;   // 5000H Segm-relative
+				public final static int fFULLDISP=4, mfFULLDISP=16384; // 4000H Self-relative
+				public final static int fBYTEDISP=0, mfBYTEDISP=0;     // 0000H Self-relative
+				// RelType:
+				public final static int rSEG=0,mrSEG=0;                // 0000H Segment base
+				public final static int rEXT=1,mrEXT=1024;             // 0400H External
+				public final static int rFIX=2,mrFIX=2048;             // 0800H Fixup
+
+
+
+				// %+F Record CoffRelocPkt;
+				// %+F begin integer vAddr;
+				// %+F       integer SymNdx;
+				// %+F       public static int Type;  // Relocation Type
+				// %+F end;
+
+				// %+F     public final static int R_ABS=0;       // No Relocation
+				// %+F %-E public final static int R_REL16=1;     // Self-relative 16-bit Relocation
+				// %+F %-E public final static int R_OFF8=7;      // Segment relative 8-bit Offset
+				// %+F %-E public final static int R_OFF16=8;     // Segment relative 16-bit Offset
+				// %+F %-E public final static int R_SEG12=9;     // Segment relative 16-bit Selector
+				// %+FE    public final static int R_DIR32=6;     // Segment relative 32-bit Relocation
+				// %+FE    public final static int R_PCRLONG=20;  // Self-relative 32-bit Relocation
+
+				// %+F Record RelocObj;
+				// %+F begin ref(RelocObj) next;
+				// %+F       infix(CoffRelocPkt) Cpkt;
+				// %+F end;
+
+
+				// %title ***   D y n a m i c     O b j e c t s    ***
+
+				// Record Object;
+				// begin range(0:MaxByte) kind;   --- Object kind code
+				//       range(0:MaxType) type; 
+				// end;
+
+				// Record FreeObject:Object;
+				// begin ref(Object) next end;    --- Free list pointer
+
+				// Record FreeArea;
+				// begin ref(FreeArea) next;      --- Free list pointer
+				//       size PoolSize;
+				// end;
+
+				// Record PoolSpec; info "TYPE";
+				// begin ref() PoolTop;
+				//       size PoolSize;
+				// end;
+
+				// ---------------------------------------------------------
+				// ---       M  o  d  u  l  e     H  e  a  d  e  r       ---
+				// ---------------------------------------------------------
+
+				// Record ModuleHeader;
+				// begin public static int Magic;  // Magic number
+				//       range(0:MaxByte) Layout; // File Layout number
+				//       range(0:MaxByte) Comb;   // 0:Normal, 1:Combined
+				//       Infix(WORD) modid;       // Module's identification
+				//       Infix(WORD) check;       // Module's check code
+				//       public static int nXtag;  // No.of external tags
+				//       public static int nType;  // No.of Types
+				//       public static int nSymb;  // No.of Symboles
+				//       public static int sDesc;  // Size of Descriptor area
+				//       public static int sFeca;  // Size of FEC-Attribute area
+				//       public static int nTmap;  // 0:No TAGMAP, no.of tags in TAGMAP
+				//       integer DescLoc;         // Fileloc: Descriptor area
+				//       integer TypeLoc;         // Fileloc: Type table
+				//       integer TgidLoc;         // Fileloc: Tagid table
+				//       integer SymbLoc;         // Fileloc: Symbol Table
+				//       integer FecaLoc;         // Fileloc: FEC-Attributes
+				//       integer TmapLoc;         // Fileloc: TAGMAP table
+				// end;
+
+
+				//--- Current Location Counter Data ---
+				public static Qpkt qfirst,qlast;   // initial(none) q-list of CSEG
+				public static int qcount;    // initial(0), No.of Qpkt's in q-list
+				//------------------------------------------------------------------------
+
+				public static boolean reversed;          // whether compare exchanged operands
+				public static boolean InMassage;         // True while in massage
+				public static boolean DeadCode;          // inital(false)
+				public static boolean Changeable;        // Changereg in massage
+				public static int RecDepth;     // Current Masseur recursion depth left
+				public static int stackMod1, stackMod2; // see massage
+				public static boolean deleteOK;          // see massage'peepExhaust
+
+				public static int MindMask; // Registers 'mind' after last qi
+				public static int PreReadMask;  // Do 'read'  opposite normal
+				public static int PreWriteMask; // Do 'write' opposite normal
+				public static int PreMindMask;  // Do 'mind'  opposite normal
+				public static int NotMindMask;  // Not 'mind' opposite normal
+
+//				%-E Const Range(0:nregs) accreg(3)=(0,qAL,qAX);
+//				Const Range(0:nregs) accreg(5)=(0,qAL,qAX,0,qEAX);
+				public static int[] accreg = {0,qAL,qAX,0,qEAX};
+				
+//				%-E Const Range(0:nregs) extreg(3)=(0,qAH,qDX);
+//				Const Range(0:nregs) extreg(5)=(0,qAH,qDX,0,qEDX);
+				public static int[] extreg = {0,qAH,qDX,0,qEDX};
+				
+//				%-E Const Range(0:nregs) countreg(3)=(0,qCL,qCX);
+//				Const Range(0:nregs) countreg(5)=(0,qCL,qCX,0,qECX);
+				public static int[] countreg = {0,qCL,qCX,0,qECX};
+				
+//				%-E Const Range(0:nregs) datareg(3)=(0,qDL,qDX);
+//				Const Range(0:nregs) datareg(5)=(0,qDL,qDX,0,qEDX);
+				public static int[] datareg = {0,qDL,qDX,0,qEDX};
+
+//
+//
+//				end;
+
+}

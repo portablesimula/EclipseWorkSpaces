@@ -39,8 +39,8 @@ public final class MakeSetup {
 	public static final String RELEASE_ID = "Simula-2.0";
 	private final static int REVISION = 30;
 	
-	private final static boolean EARLY_ACCESS = true;   // Used to produce an Early Access
-//	private final static boolean EARLY_ACCESS = false;  // Used to produce a Release
+//	private final static boolean EARLY_ACCESS = true;   // Used to produce an Early Access
+	private final static boolean EARLY_ACCESS = false;  // Used to produce a Release
 	
 	private final static String SETUP_TEMPS="C:\\GitHub\\MakeSetup_Temps";
 	private final static String RELEASE_HOME=SETUP_TEMPS+"\\"+RELEASE_ID;
@@ -119,7 +119,7 @@ public final class MakeSetup {
 		String target=RELEASE_HOME+"\\rts\\simula\\runtime";
 //		String target=RELEASE_HOME+"\\rts";
 		printHeading("Copy Simula RuntimeSystem "+source+" ===> "+target);
-        System.out.println("MakeCompiler.copySimulaRuntimeSystem: target="+target);
+        IO.println("MakeCompiler.copySimulaRuntimeSystem: target="+target);
 		copyFolder(source,new File(target),true);
 		list(source);
 	}
@@ -138,8 +138,8 @@ public final class MakeSetup {
 		File source=new File(SIMULA_ROOT+"\\src\\icons\\"+fileName);
 		File target=new File(RELEASE_HOME+"\\icons\\"+fileName);
 		target.mkdirs();
-		System.out.println("source="+source);
-		System.out.println("target="+target);
+		IO.println("source="+source);
+		IO.println("target="+target);
 		Files.copy(source.toPath(), target.toPath(), REPLACE_EXISTING);
 	}
 	
@@ -154,8 +154,8 @@ public final class MakeSetup {
 //		File source=new File(SIMULA_ROOT+"\\src\\make\\setup\\"+batName);
 //		File target=new File(RELEASE_HOME+"\\"+batName);
 //		target.mkdirs();
-//		System.out.println("source="+source);
-//		System.out.println("target="+target);
+//		IO.println("source="+source);
+//		IO.println("target="+target);
 //		Files.copy(source.toPath(), target.toPath(), REPLACE_EXISTING);
 //	}
 	
@@ -189,11 +189,11 @@ public final class MakeSetup {
 	// *** COPY FOLDER
 	// ***************************************************************
 	static private void copyFolder(File source, File target,boolean copySubFolders) throws IOException {
-		System.out.println("COPY: "+source+" ==> "+target);
+		IO.println("COPY: "+source+" ==> "+target);
 		target.mkdirs();
 	    for(File file: source.listFiles()) {
 	        File fileDest = new File(target, file.getName());
-	        //System.out.println(fileDest.getAbsolutePath());
+	        //IO.println(fileDest.getAbsolutePath());
 	        if(file.isDirectory()) {
 	            if(copySubFolders) copyFolder(file, fileDest, copySubFolders);
 	        } else {
@@ -279,15 +279,15 @@ public final class MakeSetup {
 		File source=new File(SETUP_SRC+"\\sim.png");
 		File target=new File(INSTALLER_BIN+"\\make\\setup\\sim.png");
 		target.mkdirs();
-		System.out.println("source="+source);
-		System.out.println("target="+target);
+		IO.println("source="+source);
+		IO.println("target="+target);
 		Files.copy(source.toPath(), target.toPath(), REPLACE_EXISTING);
 			
 		String installerManifest=SETUP_SRC+"\\InstallerManifest.MF";
 		
 		String files=" -C "+RELEASE_HOME+"."  // Complete Simula Release
 				    +" -C "+INSTALLER_BIN+" ./make/setup";
-		System.out.println("jar cmf "+installerManifest+" "+SETUP_TEMPS+"\\"+SETUP_IDENT+".jar"+files);
+		IO.println("jar cmf "+installerManifest+" "+SETUP_TEMPS+"\\"+SETUP_IDENT+".jar"+files);
 		
 		execute("jar", "cmf", installerManifest, SETUP_TEMPS+"\\"+SETUP_IDENT+".jar",
 				"-C",RELEASE_HOME, ".",  // Complete Simula Release
@@ -304,13 +304,13 @@ public final class MakeSetup {
 	private static void copySetupJAR() throws IOException	{
 		File source=new File(SETUP_TEMPS+"\\"+SETUP_IDENT+".jar");
 		File target2=new File(GITHUB_ROOT+"\\github.io\\setup\\"+SETUP_IDENT+".jar");
-		System.out.println("source="+source);
-		System.out.println("target2="+target2);
+		IO.println("source="+source);
+		IO.println("target2="+target2);
 		Files.copy(source.toPath(), target2.toPath(), REPLACE_EXISTING);
 		if(! EARLY_ACCESS) {
 			String SETUP_IDENT_WITH_REVISION=SETUP_IDENT+"-R"+REVISION+".jar"; // E.g: simula-setup-r28.jar
 			File target1=new File(GITHUB_ROOT+"\\github.io\\setup\\"+SETUP_IDENT_WITH_REVISION);
-			System.out.println("target1="+target1);
+			IO.println("target1="+target1);
 			Files.copy(source.toPath(), target1.toPath(), REPLACE_EXISTING);
 
 		}
@@ -334,7 +334,7 @@ public final class MakeSetup {
 		Runtime runtime = Runtime.getRuntime();
 		String line="";
 		for(int i=0;i<cmd.length;i++) line=line+" "+cmd[i];
-        System.out.println("MakeCompiler.execute: command="+line);
+        IO.println("MakeCompiler.execute: command="+line);
 //	    String cmd=command.trim()+'\n';
 		Process process = runtime.exec(cmd);
 		//try
@@ -351,9 +351,9 @@ public final class MakeSetup {
 	}
 
 	private static void printHeading(String heading) {
-		System.out.println("************************************************************************************************************************************");
-		System.out.println("*** "+heading);
-		System.out.println("************************************************************************************************************************************");
+		IO.println("************************************************************************************************************************************");
+		IO.println("*** "+heading);
+		IO.println("************************************************************************************************************************************");
 	}
 	
 	
@@ -370,17 +370,17 @@ public final class MakeSetup {
 //		   String SETUP_SRC=SIMULA_ROOT+"\\src\\make\\setup";
 		   String SETUP_SRC=SETUP_ROOT+"\\src\\make\\setup";
 		   File installerManifestFile=new File(SETUP_SRC+"\\InstallerManifest.MF");
-		   System.out.println("installerManifestFile: "+installerManifestFile);
+		   IO.println("installerManifestFile: "+installerManifestFile);
 		   Manifest manifest=new Manifest();
 		   InputStream inputStream=new FileInputStream(installerManifestFile);
 		   manifest.read(inputStream);
 		   Attributes main=manifest.getMainAttributes();
-		   System.out.println("Main-Class: "+main.getValue("Main-Class"));
-		   System.out.println("Simula-Revision: "+main.getValue("Simula-Revision"));
+		   IO.println("Main-Class: "+main.getValue("Main-Class"));
+		   IO.println("Simula-Revision: "+main.getValue("Simula-Revision"));
 		   main.putValue("Simula-Revision",""+REVISION);
 		   main.putValue("Simula-Setup-Dated",""+setupDated);
-		   System.out.println("Simula-Revision: "+main.getValue("Simula-Revision"));
-		   System.out.println("Simula-Setup-Dated: "+main.getValue("Simula-Setup-Dated"));
+		   IO.println("Simula-Revision: "+main.getValue("Simula-Revision"));
+		   IO.println("Simula-Setup-Dated: "+main.getValue("Simula-Setup-Dated"));
 		   OutputStream outputStream=new FileOutputStream(installerManifestFile);
 		   manifest.write(outputStream);
 		} catch(Exception e) { e.printStackTrace(); }
@@ -400,10 +400,10 @@ public final class MakeSetup {
 	
 	private static void loadProperties() {
 		String USER_HOME=System.getProperty("user.home");
-		System.out.println("USER_HOME="+USER_HOME);
+		IO.println("USER_HOME="+USER_HOME);
 //		File setupPropertiesDir=new File(USER_HOME+File.separatorChar+".simula");
 		File setupPropertiesDir=new File(GITHUB_ROOT+"\\github.io\\setup");
-		System.out.println("setupPropertiesDir="+setupPropertiesDir);
+		IO.println("setupPropertiesDir="+setupPropertiesDir);
 		setupPropertiesDir.mkdirs();
 		setupPropertiesFile=new File(setupPropertiesDir,"setupProperties.xml");
 		setupProperties = new Properties();
@@ -424,7 +424,7 @@ public final class MakeSetup {
 //		Properties prop = System.getProperties();
 //		Set<Object> keySet = prop.keySet();
 //		for (Object obj : keySet) {
-//			System.out.println("System Property: {" 
+//			IO.println("System Property: {" 
 //					+ obj.toString() + " = " 
 //					+ System.getProperty(obj.toString()) + "}");
 //		}

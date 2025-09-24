@@ -3,6 +3,7 @@ package bec.instruction;
 import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.CTStackItem;
 import bec.util.Global;
+import bec.util.Scode;
 import bec.util.Type;
 import bec.virtualMachine.SVM_ADD;
 

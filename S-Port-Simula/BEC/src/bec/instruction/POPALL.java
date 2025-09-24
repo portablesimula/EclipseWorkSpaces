@@ -1,31 +1,14 @@
 package bec.instruction;
 
-import bec.compileTimeStack.CTStack;
-import bec.util.Scode;
+import bec.util.Util;
 
 public abstract class POPALL extends Instruction {
-
-	private static final boolean DEBUG = false;
-
+	
 	/**
-	 * stack_instruction ::= popall N:byte
-	 * 
-	 * * perform pop n times;
-	 * * check stack empty;
-	 * 
-	 * Pop N items off the stack. The stack should then be empty, otherwise: error.
-	 * This instruction gives a short way of emptying the stack, together with the control of the
-	 * number of elements that was on the stack. Profiles cannot be deleted from the stack by pop,
-	 * only by deleting the complete stack through popall.
+	 * stack_instruction ::= pop
 	 */
 	public static void ofScode() {
-		int n = Scode.inByte();	
-		if(DEBUG) {
-			CTStack.dumpStack("POPALL: "+n);
-			System.out.println("POPALL: " + n + ", CTStack.size=" + CTStack.size());
-		}
-		for(int i=0;i<n;i++) CTStack.pop();
-		CTStack.checkStackEmpty();
+		Util.IERR("NOT IMPL");
 	}
 
 }

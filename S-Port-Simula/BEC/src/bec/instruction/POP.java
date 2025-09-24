@@ -4,6 +4,7 @@ import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.ProfileItem;
 import bec.util.Global;
 import bec.util.Util;
+import bec.virtualMachine.RTRegister;
 import bec.virtualMachine.SVM_POPK;
 
 public abstract class POP extends Instruction {

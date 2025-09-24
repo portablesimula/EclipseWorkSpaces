@@ -4,7 +4,10 @@ import java.io.IOException;
 
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
+import bec.segment.DataSegment;
+import bec.segment.Segment;
 import bec.util.Global;
+import bec.util.Util;
 import bec.value.ProgramAddress;
 
 /**

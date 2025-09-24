@@ -136,7 +136,7 @@ public abstract class SyntaxClass {
 	/// Assert that semantic checking done.
 	protected void ASSERT_SEMANTICS_CHECKED() {
 		if (!CHECKED) {
-			System.out.println("FATAL error - THE Semantic checker not called: " + this.getClass().getName() + ", " + this);
+			IO.println("FATAL error - THE Semantic checker not called: " + this.getClass().getName() + ", " + this);
 			System.exit(-1);
 		}
 		if (this instanceof Declaration decl) {

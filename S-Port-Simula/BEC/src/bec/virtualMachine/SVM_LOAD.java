@@ -8,7 +8,6 @@ import bec.descriptor.Variable;
 import bec.util.Global;
 import bec.util.Util;
 import bec.value.GeneralAddress;
-import bec.value.IntegerValue;
 import bec.value.ObjectAddress;
 import bec.value.Value;
 

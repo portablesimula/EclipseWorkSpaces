@@ -5,18 +5,22 @@ import java.io.IOException;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.descriptor.Attribute;
+import bec.descriptor.Variable;
 import bec.segment.DataSegment;
+import bec.segment.Segment;
 import bec.util.Global;
 import bec.util.Relation;
 import bec.util.Scode;
 import bec.util.Tag;
 import bec.util.Type;
 import bec.util.Util;
+import bec.virtualMachine.RTUtil;
 
 public class IntegerValue extends Value {
 	public int value;
 	
 	private IntegerValue(Type type, int value) {
+//		this.type = Type.T_INT;
 		this.type = type;
 		this.value = value;
 	}
@@ -200,7 +204,7 @@ public class IntegerValue extends Value {
 		}
 //		System.out.println("IntegerValue.shift: " + LHS + " " + Scode.edInstr(instr) + " " + RHS + " ==> " + res);
 //		Util.IERR("");
-		return IntegerValue.of(Type.T_INT, res);
+		return IntegerValue.of(type.T_INT, res);
 	}
 
 	public String toString() {

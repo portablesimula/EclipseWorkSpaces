@@ -899,7 +899,7 @@ public final class VariableExpression extends Expression {
 
 	@Override
 	public void printTree(final int indent, final Object head) {
-		System.out.println(edTreeIndent(indent)+this);
+		IO.println(edTreeIndent(indent)+this);
 	}
 
 	// ***********************************************************************

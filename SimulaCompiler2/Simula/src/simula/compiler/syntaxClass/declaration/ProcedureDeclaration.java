@@ -362,7 +362,7 @@ public class ProcedureDeclaration extends BlockDeclaration {
 	public void doJavaCoding() {
 		ASSERT_SEMANTICS_CHECKED();
 		if (this.isPreCompiledFromFile != null) {
-			if(Option.verbose) System.out.println("Skip  doJavaCoding: "+this.identifier+" -- It is read from "+isPreCompiledFromFile);		
+			if(Option.verbose) IO.println("Skip  doJavaCoding: "+this.identifier+" -- It is read from "+isPreCompiledFromFile);		
 		} else {
 			switch (declarationKind) {
 				case ObjectKind.Procedure -> doProcedureCoding();
@@ -407,7 +407,7 @@ public class ProcedureDeclaration extends BlockDeclaration {
 		Global.sourceLineNumber = lineNumber;
 		ASSERT_SEMANTICS_CHECKED();
 		if (this.isPreCompiledFromFile != null) {
-			if(Option.verbose) System.out.println("Skip  doProcedureCoding: "+this.identifier+" -- It is read from "+isPreCompiledFromFile);		
+			if(Option.verbose) IO.println("Skip  doProcedureCoding: "+this.identifier+" -- It is read from "+isPreCompiledFromFile);		
 			return;
 		}
 		JavaSourceFileCoder javaCoder = new JavaSourceFileCoder(this);
@@ -1033,7 +1033,7 @@ public class ProcedureDeclaration extends BlockDeclaration {
 		String typeID = (type == null) ? "" : type.toString() + " ";
 		String tail = (IS_SEMANTICS_CHECKED()) ? "  BL=" + getRTBlockLevel() : "";
 		if(isPreCompiledFromFile != null) tail = tail + " From: " + isPreCompiledFromFile;
-		System.out.println(edTreeIndent(indent) + typeID + "PROCEDURE " + identifier + '[' + externalIdent + "]" + tail);
+		IO.println(edTreeIndent(indent) + typeID + "PROCEDURE " + identifier + '[' + externalIdent + "]" + tail);
 		if (labelList != null) labelList.printTree(indent + 1, this);
 		for (Parameter p : parameterList) p.printTree(indent + 1, this);
 		printDeclarationList(indent + 1);

@@ -1500,7 +1500,7 @@ public class RTS_ENVIRONMENT extends RTS_RTObject {
 //			console.write("EXIT: ");  // TODO:
 //			console.read();
 //		}
-//		System.out.println("RTS_ENVIRONMENT.exit: Just before 'System.exit(status)'  status="+status);
+//		IO.println("RTS_ENVIRONMENT.exit: Just before 'System.exit(status)'  status="+status);
 		System.exit(status);
 	}
 

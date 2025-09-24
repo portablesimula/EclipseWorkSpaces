@@ -1,5 +1,8 @@
 package bec.virtualMachine;
 
+import bec.util.Util;
+import bec.value.ObjectAddress;
+
 public class RTByteFile extends RTFile {
 
 	public RTByteFile(String spec, int type, String action) {

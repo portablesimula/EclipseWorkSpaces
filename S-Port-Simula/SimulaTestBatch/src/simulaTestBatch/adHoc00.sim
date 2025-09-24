@@ -1,34 +1,10 @@
-Simulation begin 
+begin
+	integer i, j;
+      integer array A, B (-3:+3);
+
+%      for i := 3 step -1 until -3 do
+%         A (-i) := B (i) := i;
+          B (i) := i;
+
          
-   integer limit,acc;  
-   integer startTime,timeUsed; 
-     
-   Process class Prime;  
-   begin integer which;  
-   		 integer SEQU; SEQU := 9999;
-         acc   := acc + 1;  
-         which := time;  
-         outint( which, 7 );  
-         while true do begin  
-           if nextev.evtime > time + 1 then   
-              activate new Prime delay 1;  
-           hold(which);  
-         end;  
-   end;  
-  
-%   outtext( "Show all primes less than " ); 
-%   breakoutimage; limit:=inint;  
-   limit := 5000; 
-    
-   startTime:=cputime; 
-    
-   activate new Prime at 2;  
-   hold(limit);  
-  
-   outimage; outimage;  
-   outint( acc, 7 ); outtext( " primes found" );  
-    
-   outimage; outimage;  
-   timeUsed := cputime - startTime; 
-   outtext("Elapsed Time: Approximately "); outint(timeUsed, 0); outtext(" sec."); 
-end
+end         

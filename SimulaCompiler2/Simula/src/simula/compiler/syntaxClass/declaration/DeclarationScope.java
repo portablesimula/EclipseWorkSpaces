@@ -326,14 +326,14 @@ public abstract class DeclarationScope extends Declaration  {
 	/// @param title title String
 	/// @param details level of details
 	public void printStaticChain(String title,int details) {
-		System.out.println("\nDeclarationScope.printStaticChain: **************** "+title+" ****************");
+		IO.println("\nDeclarationScope.printStaticChain: **************** "+title+" ****************");
 		DeclarationScope scope=this;//.declaredIn;
 		int lim = 5;//7;
 		for(int i=1;i<lim;i++) {
-			System.out.println("DeclarationScope.printStaticChain: " + scope.edScope());
+			IO.println("DeclarationScope.printStaticChain: " + scope.edScope());
 			if(details > 0) {
 				for(Declaration decl:scope.declarationList) {
-					System.out.println("DeclarationScope.printStaticChain:                  "+decl);			
+					IO.println("DeclarationScope.printStaticChain:                  "+decl);			
 				}
 			}
 			scope=scope.declaredIn;
@@ -372,9 +372,9 @@ public abstract class DeclarationScope extends Declaration  {
 	/// @throws IOException  if something went wrong.
     public void createJavaClassFile() throws IOException {
     	if (this.isPreCompiledFromFile != null) {
-			if(Option.verbose) System.out.println("Skip  buildClassFile: "+this.identifier+" -- It is read from "+isPreCompiledFromFile);			
+			if(Option.verbose) IO.println("Skip  buildClassFile: "+this.identifier+" -- It is read from "+isPreCompiledFromFile);			
     	} else if (CLASSFILE_ALREADY_GENERATED) {
-			if(Option.verbose) System.out.println("Skip  buildClassFile: "+this.identifier+" -- It is already generated");			
+			if(Option.verbose) IO.println("Skip  buildClassFile: "+this.identifier+" -- It is already generated");			
     	} else {
     		CLASSFILE_ALREADY_GENERATED = true;
     		buildAndLoadOrAddClassFile();
@@ -386,7 +386,7 @@ public abstract class DeclarationScope extends Declaration  {
     /// @throws IOException if something went wrong.
     protected void buildAndLoadOrAddClassFile() throws IOException {
 		if (this.isPreCompiledFromFile != null) {
-			if(Option.verbose) System.out.println("Skip  buildClassFile: "+this.identifier);
+			if(Option.verbose) IO.println("Skip  buildClassFile: "+this.identifier);
 		} else {
 	    	byte[] bytes = doBuildClassFile();
 	    	loadOrAddClassFile(bytes);
@@ -411,7 +411,7 @@ public abstract class DeclarationScope extends Declaration  {
     /// Get ClassFile bytes from file.
     /// @return ClassFile bytes from file.
     protected byte[] getBytesFromFile() {
-    	System.out.println("DeclarationScope.getBytesFromFile: ");
+    	IO.println("DeclarationScope.getBytesFromFile: ");
     	Util.IERR("NOT IMPLEMENTED");
     	return null;
     }
@@ -449,7 +449,7 @@ public abstract class DeclarationScope extends Declaration  {
         outputFile.getParentFile().mkdirs();
         FileOutputStream oupt = new FileOutputStream(outputFile);
         oupt.write(bytes); oupt.flush(); oupt.close();
-        if(Option.verbose) System.out.println("ClassFile written to: " + outputFile + "  nBytes="+bytes.length);
+        if(Option.verbose) IO.println("ClassFile written to: " + outputFile + "  nBytes="+bytes.length);
 
         Util.doListClassFile("" + outputFile); // List generated .class file
         outputFile.delete();

@@ -46,9 +46,9 @@ begin
 	
 	k := TEST(r1).j;
 	
-	nam := "ABRA";
-	r1.str := nam;
-	nux := r1.str;
-	nuy := TEST2(nam);
+%	nam := "ABRA";
+%	r1.str := nam;
+%	nux := r1.str;
+%	nuy := TEST2(nam);
 	
  end;

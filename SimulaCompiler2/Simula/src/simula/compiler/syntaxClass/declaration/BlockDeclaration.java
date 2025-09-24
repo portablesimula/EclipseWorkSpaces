@@ -518,7 +518,7 @@ public abstract class BlockDeclaration extends DeclarationScope {
 		if(Option.internal.PRINT_SYNTAX_TREE > 2) {
 			for(Statement s:statements) s.printTree(indent, this);
 		} else {
-			System.out.println(edTreeIndent(indent) + ' ' + this.identifier + ' ' + (statements.size()) + " Statements ...");
+			IO.println(edTreeIndent(indent) + ' ' + this.identifier + ' ' + (statements.size()) + " Statements ...");
 		}
 	}
 	

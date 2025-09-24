@@ -344,7 +344,7 @@ public abstract class SysFile {
 		SVM_CALL_SYS.ENTER("NEWPAG: ", 0, 1); // exportSize, importSize
 		int key = RTStack.popInt();
 		if(key > 3) {
-			Util.IERR("SysFile.newpag: NOT IMPL");
+			Util.IERR("NOT IMPL");
 		}
 		SVM_CALL_SYS.EXIT("NEWPAG: ");
 	}

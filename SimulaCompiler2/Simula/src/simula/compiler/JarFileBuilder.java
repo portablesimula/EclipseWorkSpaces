@@ -58,7 +58,7 @@ public class JarFileBuilder {
 	
 	/// Construct a new JarFileBuilder.
 	public JarFileBuilder() {
-		if(TESTING) System.out.println("\nNEW JarFileBuilder");
+		if(TESTING) IO.println("\nNEW JarFileBuilder");
 		this.classFileMap = new HashMap<String,byte[]>();
 	}
 	
@@ -66,7 +66,7 @@ public class JarFileBuilder {
 	/// @param program the relevant ProgramModule
 	/// @throws IOException if something went wrong
 	public void open(final ProgramModule program) throws IOException {
-		if(TESTING) System.out.println("JarFileBuilder.open: " + program);
+		if(TESTING) IO.println("JarFileBuilder.open: " + program);
 		if(jarOutputStream != null) Util.IERR();
 		this.programModule = program;
 		if (Option.internal.TRACING)
@@ -100,7 +100,7 @@ public class JarFileBuilder {
 	/// @param entryName the entry name
 	/// @param bytes the bytes, may be null
 	public void putMapEntry(String entryName, byte[] bytes) {
-		if(TESTING)	System.out.println("JarOutputSet.putMapEntry: "+entryName);
+		if(TESTING)	IO.println("JarOutputSet.putMapEntry: "+entryName);
 		byte[] prev = classFileMap.put(entryName,bytes);
 		if(prev != null) {
 			if(Option.verbose)
@@ -113,7 +113,7 @@ public class JarFileBuilder {
 	/// @param bytes the bytes, may be null
 	/// @throws IOException if something went wrong
 	public void writeJarEntry(String entryName, byte[] bytes) throws IOException {
-		if(TESTING) System.out.println("JarFileBuilder.writeJarEntry: "+entryName);
+		if(TESTING) IO.println("JarFileBuilder.writeJarEntry: "+entryName);
 		JarEntry entry = new JarEntry(entryName);
 		jarOutputStream.putNextEntry(entry);
 		if(bytes != null) jarOutputStream.write(bytes);
@@ -133,7 +133,7 @@ public class JarFileBuilder {
         }
        
 		if (programModule.isExecutable()) {
-			if(TESTING) System.out.println("JarFileBuilder.close: Executable "+programModule);
+			if(TESTING) IO.println("JarFileBuilder.close: Executable "+programModule);
 			// Add the Runtime System
 			File rtsHome = new File(Global.simulaRtsLib, "simula/runtime");
 			add(false, rtsHome, Global.simulaRtsLib.toString().length());
@@ -147,7 +147,7 @@ public class JarFileBuilder {
 		if(Option.verbose) Util.println("JarFileBuilder.close: " + Global.sourceName + ": JarFile " + outputJarFile);
 		
 		if(TESTING) {
-			System.out.println("JarFileBuilder.close: ");
+			IO.println("JarFileBuilder.close: ");
 			listJarFile(outputJarFile);
 		}
 
@@ -207,7 +207,7 @@ public class JarFileBuilder {
 	/// @param jarFile the .jar file to read
 	/// @throws IOException if something went wrong
 	public void expandJarFile(final JarFile jarFile) throws IOException {
-		if(TESTING) System.out.println("JarFileBuilder.expandJarFile: JarFileName="+jarFile.getName());
+		if(TESTING) IO.println("JarFileBuilder.expandJarFile: JarFileName="+jarFile.getName());
 		if (Option.verbose)
 			Util.println("---------  INCLUDE .jar File: " + jarFile.getName() + "  ---------");
 		Enumeration<JarEntry> entries = jarFile.entries();
@@ -231,13 +231,13 @@ public class JarFileBuilder {
 	/// Debug utility: printClassFileMap.
 	/// @param title the title String.
 	private void printClassFileMap(String title) {
-		System.out.println("============================== printClassFileMap: "+title+" ==============================");
+		IO.println("============================== printClassFileMap: "+title+" ==============================");
         for (Entry<String, byte[]> entry : classFileMap.entrySet()) {
             String entryName = entry.getKey();
             byte[] bytes = entry.getValue();
-            System.out.println("JarFileBuilder.printClassFileMap: "+entryName+"   Size="+((bytes==null)?0:bytes.length));
+            IO.println("JarFileBuilder.printClassFileMap: "+entryName+"   Size="+((bytes==null)?0:bytes.length));
         }		
-		System.out.println("END ========================== printClassFileMap: "+title+" ==============================");
+		IO.println("END ========================== printClassFileMap: "+title+" ==============================");
 	}
 
 
@@ -284,7 +284,7 @@ public class JarFileBuilder {
 		if(Global.includeQueue != null) {
 			for(JarFile jarFile:Global.includeQueue) {
 				if(TESTING)
-					System.out.println("JarFileBuilder.addIncludeQueue: expandJarFile: "+jarFile.getName());
+					IO.println("JarFileBuilder.addIncludeQueue: expandJarFile: "+jarFile.getName());
 				expandJarFile(jarFile);	
 			}
 		}
@@ -296,7 +296,7 @@ public class JarFileBuilder {
 		if(Global.includeQueue != null) {
 			for(JarFile jarFile:Global.includeQueue) {
 				if(TESTING)
-					System.out.println("JarFileBuilder.loadIncludeQueue: loadJarEntries: "+jarFile.getName());
+					IO.println("JarFileBuilder.loadIncludeQueue: loadJarEntries: "+jarFile.getName());
 				loadJarEntries(jarFile, Global.packetName, Global.simulaClassLoader);	
 			}
 		}
@@ -305,9 +305,9 @@ public class JarFileBuilder {
 	/// Load the Runtime System using simulaClassLoader.
 	/// @throws IOException if something went wrong
 	public static void loadRuntimeSystem() throws IOException {
-		if(TESTING) System.out.println("JarFileBuilder.loadRuntimeSystem: "+Global.simulaRtsLib);
+		if(TESTING) IO.println("JarFileBuilder.loadRuntimeSystem: "+Global.simulaRtsLib);
 		File rtsLib = new File(Global.simulaRtsLib.getParentFile(), "RTS.jar");
-		if(TESTING) System.out.println("JarFileBuilder.loadRuntimeSystem: rtsLib="+rtsLib);
+		if(TESTING) IO.println("JarFileBuilder.loadRuntimeSystem: rtsLib="+rtsLib);
 		JarFile jarFile = new JarFile(rtsLib);
 
 		loadJarEntries(jarFile, "simula/runtime/", Global.simulaClassLoader);
@@ -319,7 +319,7 @@ public class JarFileBuilder {
 	/// @param loader the SimulaClassLoader to use.
 	/// @throws IOException if something went wrong.
 	private static void loadJarEntries(final JarFile jarFile, final String packetName, final SimulaClassLoader loader) throws IOException {
-		if(TESTING) System.out.println("\nJarFileBuilder.loadJarEntries: JarFileName="+jarFile.getName());
+		if(TESTING) IO.println("\nJarFileBuilder.loadJarEntries: JarFileName="+jarFile.getName());
 		if (Option.verbose)
 			Util.println("---------  INCLUDE .jar File: " + jarFile.getName() + "  ---------");
 		Enumeration<JarEntry> entries = jarFile.entries();
@@ -329,7 +329,7 @@ public class JarFileBuilder {
 			JarEntry inputEntry = entries.nextElement();
 
 			String entryName = inputEntry.getName();
-			if(TESTING) System.out.println("JarFileBuilder.loadJarEntries: entryName="+entryName);
+			if(TESTING) IO.println("JarFileBuilder.loadJarEntries: entryName="+entryName);
 			if (!entryName.startsWith(packetName))	continue LOOP;
 			if (!entryName.endsWith(".class"))		continue LOOP;
 
@@ -341,7 +341,7 @@ public class JarFileBuilder {
 			boolean readyToLoad = true;
 			if(supClassName != null) {
 				boolean prefixLoaded = loader.isClassLoaded(supClassName);
-				if(TESTING) System.out.println("JarFileBuilder.loadJarEntries: supClassName="+supClassName+", prefixLoaded="+prefixLoaded);
+				if(TESTING) IO.println("JarFileBuilder.loadJarEntries: supClassName="+supClassName+", prefixLoaded="+prefixLoaded);
 				if(! prefixLoaded) {
 					readyToLoad = false;
 					if(delayedLoadings == null) delayedLoadings = new HashMap<String,byte[]>();
@@ -362,7 +362,7 @@ public class JarFileBuilder {
 		while(delayedLoadings != null) {
 			if(--NNN < 0) Util.IERR();
 			if(TESTING)
-				System.out.println("\nJarFileBuilder.loadJarEntries: delayedLoadings +++++++++++++++++++");
+				IO.println("\nJarFileBuilder.loadJarEntries: delayedLoadings +++++++++++++++++++");
 			Vector<String> loaded = new Vector<String>();
 
 			for (Entry<String, byte[]> entry : delayedLoadings.entrySet()) {
@@ -370,7 +370,7 @@ public class JarFileBuilder {
 				byte[] bytes = entry.getValue();
 				String supClassName = ClassHierarchy.getRealPrefix(name);
 				if(TESTING)
-					System.out.println("JarFileBuilder.loadJarEntries: Check Class: "+name+" extends "+supClassName);
+					IO.println("JarFileBuilder.loadJarEntries: Check Class: "+name+" extends "+supClassName);
 				boolean readyToLoad = true;
 				if(supClassName != null) {
 					boolean prefixLoaded = loader.isClassLoaded(supClassName);
@@ -378,7 +378,7 @@ public class JarFileBuilder {
 				}
 				if(readyToLoad) {
 					if(TESTING)
-						System.out.println("JarFileBuilder.loadJarEntries: Load Class: "+name);
+						IO.println("JarFileBuilder.loadJarEntries: Load Class: "+name);
 					try {	
 						loader.loadClass(name, bytes);
 						loaded.add(name);
@@ -389,7 +389,7 @@ public class JarFileBuilder {
 			if(loaded.size() == 0) Util.IERR();
 			for(String name:loaded) {
 				if(TESTING)
-					System.out.println("JarFileBuilder.loadJarEntries: Remove: "+name);
+					IO.println("JarFileBuilder.loadJarEntries: Remove: "+name);
 				delayedLoadings.remove(name);
 				if(delayedLoadings.size() == 0) delayedLoadings = null;
 			}

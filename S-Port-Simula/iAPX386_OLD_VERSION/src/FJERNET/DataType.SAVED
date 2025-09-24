@@ -1,0 +1,73 @@
+package FJERNET;
+
+import static iAPX.util.Global.*;
+
+import java.util.BitSet;
+
+import iAPX.enums.Scode;
+import iAPX.enums.BaseType;    
+
+public class DataType {
+//	------   D a t a   T y p e s   ------
+
+	public final static int tUnsigned=0,tSigned=1,tFloat=2;
+
+//	Record DataType; info "TYPE";
+//	begin range(0:MaxByte) nbyte;    // Size of type in bytes
+//	      range(0:2) kind;           // tUnsigned,tSigned,tFloat
+//	      infix(WORD) pntmap;        // 0:no pointers,
+//	end;                             // else: Reladdr of pointers
+
+	public int nbyte;  // Size of type in bytes
+	int kind;   // tUnsigned,tSigned,tFloat
+	public BitSet pntmap; // null:no pointers,
+	
+	//Infix(DataType) TTAB(MaxType); // Type specification table
+	public static DataType[] TTAB = new DataType[MaxType];
+	
+	public DataType(int nbyte, int kind) {
+		this.nbyte = nbyte;
+		this.kind = kind;
+	}
+
+	public static void initBaseTypes() {
+	      //---------     type        size    kind     pnt  )
+	      newBasType(  BaseType.T_VOID    ,0     ,0             ); 
+	      newBasType(  BaseType.T_INT     ,1     ,tSigned       );
+	      newBasType(  BaseType.T_REAL    ,1     ,tFloat        );
+	      newBasType(  BaseType.T_LREAL   ,1     ,tFloat        );
+	      newBasType(  BaseType.T_TREAL   ,1     ,tFloat        );
+	      newBasType(  BaseType.T_BOOL    ,1     ,tUnsigned     );
+	      newBasType(  BaseType.T_CHAR    ,1     ,tUnsigned     );
+	      newBasType(  BaseType.T_SIZE    ,1     ,tUnsigned     );
+	      newPntType(  BaseType.T_OADDR   ,1     ,tUnsigned ,0  );
+	      newBasType(  BaseType.T_AADDR   ,1     ,tUnsigned     );
+	      newPntType(  BaseType.T_GADDR   ,2     ,tUnsigned ,0  );
+	      newBasType(  BaseType.T_PADDR   ,1     ,tUnsigned     );
+	      newBasType(  BaseType.T_RADDR   ,1     ,tUnsigned     );
+	      newBasType(  BaseType.T_NOINF   ,0     ,tUnsigned     );
+	}
+	
+
+	private static void newBasType(BaseType type, int nbyte, int kind) {
+		DataType x = new DataType(nbyte, kind);
+		TTAB[type.ordinal()] = x;
+	}
+
+	private static void newPntType(BaseType type, int nbyte, int kind, int rela) {
+		DataType x = new DataType(nbyte, kind);
+//		edchar(sysedit,rela qua character);
+//		x.pntmap = DefSymb(pickup(sysedit));
+		x.pntmap = new BitSet();
+		x.pntmap.set(rela);
+		IO.println("DataType.newPntType: " + type + ", pntmap="+x.pntmap);
+		TTAB[type.ordinal()] = x;
+	}
+
+	public String toString() {
+		String s = "DataType: size=" + nbyte;
+		if(pntmap != null) s = s + ", pntmap=" + pntmap;
+		return s;
+	}
+	
+}

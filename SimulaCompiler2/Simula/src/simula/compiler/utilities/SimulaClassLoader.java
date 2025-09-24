@@ -31,12 +31,12 @@ public class SimulaClassLoader extends ClassLoader {
 	public void loadClass(String name, byte[] bytes) {
 		Class<?> clazz = Global.simulaClassLoader.findLoadedClass(name);
 		if(clazz != null) {
-			if(TESTING) System.out.println("SimulaClassLoader.loadClass: " + name + " FAILED: " + clazz);
+			if(TESTING) IO.println("SimulaClassLoader.loadClass: " + name + " FAILED: " + clazz);
 		} else {
-			if(TESTING) System.out.println("SimulaClassLoader.loadClass: TRY " + name);
+			if(TESTING) IO.println("SimulaClassLoader.loadClass: TRY " + name);
 			clazz = Global.simulaClassLoader.defineClass(name, bytes, 0, bytes.length);
 			Global.simulaClassLoader.resolveClass(clazz);
-			if(TESTING) System.out.println("SimulaClassLoader.loadClass: " + name + " SUCCESS");
+			if(TESTING) IO.println("SimulaClassLoader.loadClass: " + name + " SUCCESS");
 		}
 	}
 	
@@ -64,20 +64,20 @@ public class SimulaClassLoader extends ClassLoader {
 		}
 		Object[] arg = { cmds };
 			
-		if(TESTING) System.out.println("SimulaClassLoader.runClass: BEFORE INVOKE clazz = " + clazz);
+		if(TESTING) IO.println("SimulaClassLoader.runClass: BEFORE INVOKE clazz = " + clazz);
 		try {
 			main.invoke(null, arg);
 		} catch (IllegalAccessException e) {
-			if(TESTING)	System.out.println("SimulaClassLoader.runClass: EXCEPTION-1 AFTER INVOKE clazz = " + clazz);
+			if(TESTING)	IO.println("SimulaClassLoader.runClass: EXCEPTION-1 AFTER INVOKE clazz = " + clazz);
 			Util.IERR();
 		} catch (InvocationTargetException e) {
 			Throwable cause = e.getCause();
-			if(TESTING)	System.out.println("SimulaClassLoader.runClass: EXCEPTION-2 AFTER INVOKE cause = " + cause + ", clazz = " + clazz);
+			if(TESTING)	IO.println("SimulaClassLoader.runClass: EXCEPTION-2 AFTER INVOKE cause = " + cause + ", clazz = " + clazz);
 			if(cause instanceof RTS_EndProgram) ; // OK
 			else if(cause instanceof RuntimeException err) throw err;
 			else Util.IERR("SimulaClassLoader.runClass: EXCEPTION AFTER INVOKE cause = "+cause);
 		}
-		if(TESTING) System.out.println("SimulaClassLoader.runClass: AFTER INVOKE clazz = " + clazz);
+		if(TESTING) IO.println("SimulaClassLoader.runClass: AFTER INVOKE clazz = " + clazz);
 	}
 
 }

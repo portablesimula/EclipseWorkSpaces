@@ -44,7 +44,6 @@ public class InlineTest {
 	}
 
 
-	@SuppressWarnings("unused")
 	private static String Pick_FEC_Source() {
 		Global.outputDIR = "C:/SPORT/TEST_BATCH/";
 		return "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst01.scd";

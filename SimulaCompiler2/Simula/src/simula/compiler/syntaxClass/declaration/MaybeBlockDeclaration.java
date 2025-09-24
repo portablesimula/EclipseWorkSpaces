@@ -208,7 +208,7 @@ public final class MaybeBlockDeclaration extends BlockDeclaration {
 		if (declarationKind == ObjectKind.CompoundStatement)
 			doCompoundStatementCoding();
 		else if (this.isPreCompiledFromFile != null) {
-			if(Option.verbose) System.out.println("Skip  doJavaCoding: "+this.identifier+" -- It is read from "+isPreCompiledFromFile);		
+			if(Option.verbose) IO.println("Skip  doJavaCoding: "+this.identifier+" -- It is read from "+isPreCompiledFromFile);		
 		} else doSubBlockCoding();
 	}
 
@@ -413,7 +413,7 @@ public final class MaybeBlockDeclaration extends BlockDeclaration {
 		}
 		Global.enterScope(this);
 		if (this.isPreCompiledFromFile != null) {
-			if(Option.verbose) System.out.println("Skip  buildClassFile: "+this.identifier);			
+			if(Option.verbose) IO.println("Skip  buildClassFile: "+this.identifier);			
 		} else {
 			try { createJavaClassFile(); } catch (IOException e) { e.printStackTrace();	}
 		}
@@ -491,7 +491,7 @@ public final class MaybeBlockDeclaration extends BlockDeclaration {
 		String block = ObjectKind.edit(declarationKind);
 		String tail = (IS_SEMANTICS_CHECKED()) ? "  BL=" + getRTBlockLevel() : "";
 		if(isPreCompiledFromFile != null) tail = tail + " From: " + isPreCompiledFromFile;
-		System.out.println(edTreeIndent(indent) + block + " " + identifier + tail + "  declaredIn="+this.declaredIn);
+		IO.println(edTreeIndent(indent) + block + " " + identifier + tail + "  declaredIn="+this.declaredIn);
 		if(labelList != null) labelList.printTree(indent+1,this);
 		printDeclarationList(indent+1);
 		printStatementList(indent+1);

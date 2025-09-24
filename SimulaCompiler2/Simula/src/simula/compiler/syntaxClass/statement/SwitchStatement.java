@@ -288,7 +288,7 @@ public final class SwitchStatement extends Statement {
     	/// @param indent the indentation.
     	/// @param head the head of the tree.
     	public void printTree(final int indent, final Object head) {
-    		System.out.println(edTreeIndent(indent)+edWhen());
+    		IO.println(edTreeIndent(indent)+edWhen());
     		statement.printTree(indent+1,this);
     	}
 	
@@ -391,7 +391,7 @@ public final class SwitchStatement extends Statement {
 	
 	@Override
 	public void printTree(final int indent, final Object head) {
-		System.out.println(edTreeIndent(indent)+"SWITCH("+lowKey+':'+hiKey+") "+switchKey);
+		IO.println(edTreeIndent(indent)+"SWITCH("+lowKey+':'+hiKey+") "+switchKey);
 		for (SwitchWhenPart when : switchCases) when.printTree(indent+1,this);
 	}
 

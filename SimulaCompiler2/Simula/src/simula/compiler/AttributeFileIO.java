@@ -121,7 +121,7 @@ public final class AttributeFileIO {
 			} else {
 				declarationList.add(module);
 				if (Option.verbose)
-					System.out.println("***       Read External " + ObjectKind.edit(module.declarationKind) + ' ' + module.identifier
+					IO.println("***       Read External " + ObjectKind.edit(module.declarationKind) + ' ' + module.identifier
 							+ '[' + module.externalIdent + ']' +"  ==>  "+declarationList.identifier);
 			}
     			

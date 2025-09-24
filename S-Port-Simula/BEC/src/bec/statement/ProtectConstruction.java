@@ -8,6 +8,7 @@ import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Type;
 import bec.util.Util;
+import bec.virtualMachine.SVM_PUSHLEN;
 import bec.virtualMachine.SVM_RESTORE;
 import bec.virtualMachine.SVM_SAVE;
 

@@ -6,6 +6,7 @@ import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Scode;
+import bec.util.Util;
 import bec.value.Value;
 
 /**

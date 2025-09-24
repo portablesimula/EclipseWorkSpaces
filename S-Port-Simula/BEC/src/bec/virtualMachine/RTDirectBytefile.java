@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+import bec.util.Util;
 import bec.virtualMachine.RTFileAction._CreateAction;
 
 public class RTDirectBytefile extends RTByteFile {
@@ -19,7 +20,6 @@ public class RTDirectBytefile extends RTByteFile {
 	public int MAXLOC;
 
 	/// The initial value of LAST_LOC.
-	@SuppressWarnings("unused")
 	private int INITIAL_LAST_LOC;
 
 	public RTDirectBytefile(String fileName, int type, String action, int imglng) {

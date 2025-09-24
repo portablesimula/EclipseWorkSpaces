@@ -3,6 +3,7 @@ package bec.instruction;
 import bec.compileTimeStack.CTStack;
 import bec.util.Global;
 import bec.util.Type;
+import bec.util.Util;
 import bec.virtualMachine.SVM_NOOP;
 
 public abstract class INITAREA extends Instruction {
@@ -21,7 +22,6 @@ public abstract class INITAREA extends Instruction {
 	public static void ofScode() {
 		CTStack.forceTosValue();			
 		CTStack.checkTosType(Type.T_OADDR);
-		@SuppressWarnings("unused")
 		Type type = Type.ofScode();
 //		CTStack.pop();
 		Global.PSEG.emit(new SVM_NOOP(), "INITAREA: ");

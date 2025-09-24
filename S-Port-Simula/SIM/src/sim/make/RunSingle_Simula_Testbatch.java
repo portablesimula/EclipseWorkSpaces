@@ -26,10 +26,10 @@ public class RunSingle_Simula_Testbatch {
 		
 //		cmds.add("-FEC:Listing");
 //		cmds.add("-FEC:SCodeTrace");
-//		cmds.add("-BEC:SCodeTrace");
-//		cmds.add("-BEC:TraceSVM_CODE");
+		cmds.add("-BEC:SCodeTrace");
+		cmds.add("-BEC:TraceSVM_CODE");
 //		cmds.add("-BEC:TraceSVM_DATA");
-//		cmds.add("-execTrace");
+		cmds.add("-execTrace");
 //		cmds.add("-callTrace");
 //		cmds.add("-dumpsAtExit");
 

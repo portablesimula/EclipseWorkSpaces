@@ -67,7 +67,7 @@ public class Terminal extends JFrame {
 	
 	public Terminal(String title) {
 		setTitle(title);
-		setSize(1000, 800);
+		setSize(1000, 700);
 		setBackground(Color.WHITE);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

@@ -15,7 +15,7 @@ public class BecCompiler {
 	static String scodeSource;
 	
 	public static void main(String[] argv) {
-//		Global.console = new Terminal("Runtime Console");
+		Global.console = new Terminal("Runtime Console");
 //		Terminal terminal = new Terminal("Runtime Console");
 //		System.setIn(terminal.getInputStream());
 //		System.setOut(terminal.getOutputStream());
@@ -25,16 +25,14 @@ public class BecCompiler {
 			String arg=argv[i];
 			if (arg.charAt(0) == '-') { // command line option
 				if (arg.equalsIgnoreCase("-help")) help();
-				else if (arg.equalsIgnoreCase("-nopopup"))       Global.nopopup = true;
-				else if (arg.equalsIgnoreCase("-inputTrace"))    Global.SCODE_INPUT_TRACE = true;
+				else if (arg.equalsIgnoreCase("-inputTrace")) Global.SCODE_INPUT_TRACE = true;
 				else if (arg.equalsIgnoreCase("-traceSVM_CODE")) Global.PRINT_GENERATED_SVM_CODE = true;
 				else if (arg.equalsIgnoreCase("-traceSVM_DATA")) Global.PRINT_GENERATED_SVM_DATA = true;
-				else if (arg.equalsIgnoreCase("-verbose"))       Global.verbose = true;
-				else if (arg.equalsIgnoreCase("-execVerbose"))   Global.execVerbose = true;
-				else if (arg.equalsIgnoreCase("-execTrace"))     Global.EXEC_TRACE = 1;
-				else if (arg.equalsIgnoreCase("-callTrace"))     Global.CALL_TRACE_LEVEL = 2;
-				else if (arg.equalsIgnoreCase("-dumpsAtExit"))   Global.DUMPS_AT_EXIT = true;
-				else if (arg.equalsIgnoreCase("-sysInsert"))     Global.sysInsertDir = argv[++i];
+				else if (arg.equalsIgnoreCase("-verbose")) Global.verbose = true;
+				else if (arg.equalsIgnoreCase("-execVerbose")) Global.execVerbose = true;
+				else if (arg.equalsIgnoreCase("-execTrace")) Global.EXEC_TRACE = 1;
+				else if (arg.equalsIgnoreCase("-callTrace")) Global.CALL_TRACE_LEVEL = 2;
+				else if (arg.equalsIgnoreCase("-dumpsAtExit")) Global.DUMPS_AT_EXIT = true;
 				else {
 					Util.ERROR("Unknown option " + arg);
 					help();
@@ -48,7 +46,6 @@ public class BecCompiler {
 			help();
 		}
 		
-		if(! Global.nopopup) Global.console = new Terminal("Runtime Console");
 		new BecCompiler(scodeSource);
 	}
 
@@ -61,15 +58,14 @@ public class BecCompiler {
 		System.out.println("Usage: java -jar SportBEC.jar  [options]  ScodeFile ");
 		System.out.println("");
 		System.out.println("possible options include:");
-		System.out.println("  -verbose			Output messages about what the compiler is doing");
-		System.out.println("  -execVerbose		Output messages about what the executor is doing");
-		System.out.println("  -help				Print this synopsis of standard options");
-		System.out.println("  -inputTrace		Produce input Scode trace");
-		System.out.println("  -listing			Produce pretty Scode listing");
-		System.out.println("  -execTrace		Produce instruction trace during execution");
-		System.out.println("  -callTrace		Produce routine call trace during execution");
-		System.out.println("  -dumpsAtExit		Produce certain dumps at en of execution");
-		System.out.println("  -sysInsert <dir>  The directory used by the SysInsert Statement");
+		System.out.println("  -becVerbose  Output messages about what the compiler is doing");
+		System.out.println("  -execVerbose Output messages about what the executor is doing");
+		System.out.println("  -help        Print this synopsis of standard options");
+		System.out.println("  -inputTrace  Produce input Scode trace");
+		System.out.println("  -listing     Produce pretty Scode listing");
+		System.out.println("  -execTrace   Produce instruction trace during execution");
+		System.out.println("  -callTrace   Produce routine call trace during execution");
+		System.out.println("  -dumpsAtExit Produce certain dumps at en of execution");
 		System.out.println("");
 		System.out.println("sourceFile ::= S-Code Source File");
 
@@ -90,7 +86,7 @@ public class BecCompiler {
 	 * 		::= main <local_quantity>* <program_element>*
 	 */
 	public BecCompiler(String scodeSource) {
-		if(Global.verbose) Util.println("\n\nBEC: Start BecCompiler with " + scodeSource);
+		if(Global.verbose) Util.println("BEC: Start BecCompiler with " + scodeSource);
 		Global.scodeSource = scodeSource;
 		Global.DISPL = new Array<Descriptor>();
 		Global.SEGMAP = new HashMap<String, Segment>();
@@ -101,7 +97,7 @@ public class BecCompiler {
 		Thread.currentThread().setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
 			public void uncaughtException(Thread thread, Throwable e) {
 				Util.println("BecCompiler.UncaughtExceptionHandler: BEC GOT Exception: " + e.getClass().getSimpleName());
-				e.printStackTrace();
+//				e.printStackTrace();
 				Thread.dumpStack();
 				if(Global.console != null) {
 					while(true) Thread.yield();

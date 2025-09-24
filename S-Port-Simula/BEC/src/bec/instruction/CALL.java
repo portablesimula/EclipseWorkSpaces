@@ -11,11 +11,14 @@ import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Type;
 import bec.util.Util;
+import bec.value.ObjectAddress;
 import bec.virtualMachine.SVM_CALL;
 import bec.virtualMachine.SVM_NOOP;
+import bec.virtualMachine.SVM_STORE;
 import bec.virtualMachine.SVM_PRECALL;
 import bec.virtualMachine.SVM_LOADC;
 import bec.virtualMachine.SVM_CALL_SYS;
+import bec.virtualMachine.SVM_CALL_TOS;
 
 public abstract class CALL extends Instruction {
 	private static final boolean DEBUG = false;

@@ -348,14 +348,14 @@ public final class RTS_UTIL {
 						e.printStackTrace();
 					
 					if (RTS_Option.GOTO_TRACING) {
-						System.out.println("RTS_UTIL.treatException: Return after 'Illege GOTO' message");
+						IO.println("RTS_UTIL.treatException: Return after 'Illege GOTO' message");
 					}
 					RTS_ENVIRONMENT.exit(-1);
 				}
 			}
 		} else if (e instanceof RTS_EndProgram) {
 			if (RTS_Option.GOTO_TRACING) {
-				System.out.println("RTS_UTIL.treatException: RTS_EndProgram EXIT");
+				IO.println("RTS_UTIL.treatException: RTS_EndProgram EXIT");
 			}
 			// NOTHING
 		} else if (e instanceof RuntimeException) {
@@ -400,7 +400,7 @@ public final class RTS_UTIL {
 			erh.CPF().setPar(new RTS_TXT(msg))._ENT();
 		} catch (RTS_EndProgram e) {
 			if(RTS_Option.GOTO_TRACING) {
-				System.out.println("RTS_UTIL.callExceptionHandler: callExceptionHandler returned with exception: "+e);
+				IO.println("RTS_UTIL.callExceptionHandler: callExceptionHandler returned with exception: "+e);
 			}
 			// NOTHING
 		} catch (Throwable t) {
@@ -448,7 +448,7 @@ public final class RTS_UTIL {
 			RTS_UTIL.println("End program: WARNING " + RTS_UTIL.numberOfEditOverflows + " EditOverflows");
 		if (RTS_UTIL.console == null) {
 			if(RTS_Option.GOTO_TRACING) {
-				System.out.println("RTS_UTIL.endProgram: "+exitValue);
+				IO.println("RTS_UTIL.endProgram: "+exitValue);
 			}
 
 			throw new RTS_EndProgram("Simula - endProgram");				
@@ -541,7 +541,7 @@ public final class RTS_UTIL {
 		if (RTS_Option.VERBOSE) {
 			RTS_UTIL.println("Begin Execution of Simula Program using " + getJavaID());
 			listRuntimeOptions();
-			System.out.println("sysout Copy=" + sysoutFile);
+			IO.println("sysout Copy=" + sysoutFile);
 		}
 	}
 
@@ -568,21 +568,21 @@ public final class RTS_UTIL {
 
 	/// List runtime options.
 	static void listRuntimeOptions() {
-		System.out.println("file.encoding=" + System.getProperty("file.encoding"));
-		System.out.println("defaultCharset=" + Charset.defaultCharset());
-		System.out.println("verbose=" + RTS_Option.VERBOSE);
-		System.out.println("blockTracing=" + RTS_Option.BLOCK_TRACING);
-		System.out.println("gotoTracing=" + RTS_Option.GOTO_TRACING);
-		System.out.println("qpsTracing=" + RTS_Option.QPS_TRACING);
-		System.out.println("smlTracing=" + RTS_Option.SML_TRACING);
-		System.out.println("userDir=" + RTS_Option.RUNTIME_USER_DIR);
+		IO.println("file.encoding=" + System.getProperty("file.encoding"));
+		IO.println("defaultCharset=" + Charset.defaultCharset());
+		IO.println("verbose=" + RTS_Option.VERBOSE);
+		IO.println("blockTracing=" + RTS_Option.BLOCK_TRACING);
+		IO.println("gotoTracing=" + RTS_Option.GOTO_TRACING);
+		IO.println("qpsTracing=" + RTS_Option.QPS_TRACING);
+		IO.println("smlTracing=" + RTS_Option.SML_TRACING);
+		IO.println("userDir=" + RTS_Option.RUNTIME_USER_DIR);
 	}
 
 	/// Print a line on the runtime console if present, otherwise on System.out
 	/// @param msg the message to print
 	static void println(final String msg) {
 		if(RTS_Option.noPopup) {
-			System.out.println(msg);
+			IO.println(msg);
 		} else {
 			ensureOpenRuntimeConsole();
 			console.write(msg + '\n');
@@ -593,7 +593,7 @@ public final class RTS_UTIL {
 	/// @param msg the message to print
 	static void printError(final String msg) {
 		if(RTS_Option.noPopup) {
-			System.out.println(msg);
+			IO.println(msg);
 		} else {
 			ensureOpenRuntimeConsole();
 			console.writeError(msg + '\n');
@@ -604,7 +604,7 @@ public final class RTS_UTIL {
 	/// @param msg the message to print
 	static void printWarning(final String msg) {
 		if(RTS_Option.noPopup) {
-			System.out.println(msg);
+			IO.println(msg);
 		} else {
 			ensureOpenRuntimeConsole();
 			console.writeWarning(msg + '\n');
@@ -782,7 +782,7 @@ public final class RTS_UTIL {
 		Thread[] t = new Thread[50];
 		int i = Thread.enumerate(t);
 		RTS_UTIL.println("ACTIVE THREAD LIST:");
-		System.out.println("ACTIVE THREAD LIST:");
+		IO.println("ACTIVE THREAD LIST:");
 		for (int j = 0; j < i; j++) {
 			Thread T = t[j];
 			String msg = "  - " + T;

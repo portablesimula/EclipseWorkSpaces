@@ -1,10 +1,7 @@
 package bec.instruction;
 
-import bec.compileTimeStack.AddressItem;
 import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.CTStackItem;
-import bec.util.Global;
-import bec.virtualMachine.SVM_EVAL;
 
 public abstract class EVAL extends Instruction {
 
@@ -29,13 +26,6 @@ public abstract class EVAL extends Instruction {
 		
 //		tos.mode = CTStackItem.Mode.VAL;
 //		CTStack.forceTosValue();
-		if(tos instanceof AddressItem addr) {
-			if(addr.xReg > 0) {
-				Global.PSEG.emit(new SVM_EVAL(addr.xReg), "EVAL: ");
-				addr.xReg = 0;
-			}
-		}
-		
 	}
 
 }

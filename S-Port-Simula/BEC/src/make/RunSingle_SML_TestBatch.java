@@ -38,7 +38,7 @@ public final class RunSingle_SML_TestBatch {
 
 		Vector<String> names = new Vector<String>();
 		
-//		names.add("adHoc00.scd");
+		names.add("adHoc00.scd");
 //		names.add("adHoc01.scd");
 //		names.add("adHoc02.scd");
 //		names.add("adHoc03.scd");
@@ -54,7 +54,7 @@ public final class RunSingle_SML_TestBatch {
 //			names.add("adHoc13.scd");
 //			names.add("adHoc14.scd");
 		
-		names.add("smltst00.scd"); // Standard layout of test programs
+//		names.add("smltst00.scd"); // Standard layout of test programs
 //			names.add("smltst01.scd"); // Simple Assignments
 //		names.add("smltst02.scd"); // Test Case Statement
 //		names.add("smltst03.scd"); // Test Assert Statement
@@ -92,7 +92,7 @@ public final class RunSingle_SML_TestBatch {
 //		names.add("smltst35.scd"); // RT'sizes: string, ptp, ...
 //		names.add("smltst36.scd"); // RT'sizes: entity, ...
 //		names.add("smltst37.scd"); // RT'sizes: quantities and simob
-		names.add("smltst38.scd"); // INITO, GETO, SETO
+//		names.add("smltst38.scd"); // INITO, GETO, SETO
 //		names.add("smltst39.scd"); // Boolean Operators IMP and EQV
 //		names.add("smltst40.scd"); // Fixup Object Address
 //		names.add("smltst41.scd"); // Shift opr: LSHIFTL, RSHIFTL, LSHIFTA, RSHIFTA

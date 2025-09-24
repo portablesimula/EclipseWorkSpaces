@@ -1,6 +1,8 @@
 package bec.util;
 
 import java.io.File;
+import java.io.Reader;
+import java.io.Writer;
 import java.util.Map;
 import java.util.Vector;
 
@@ -14,10 +16,8 @@ import bec.value.ProgramAddress;
 public class Global {
 	
 	public static final boolean TESTING_STACK_ADDRESS = true;	
-	public static final boolean TESTING_RECTYPES = true;
 
 	public static boolean INLINE_TESTING = false;
-	public static boolean nopopup = false;
 	public static boolean verbose = false;
 	public static boolean execVerbose = false;
 	public static int traceMode = 0;
@@ -35,7 +35,11 @@ public class Global {
 	public static int CALL_TRACE_LEVEL = 0;
 	public static boolean DUMPS_AT_EXIT = false;
 	
+//	public static ConsoleNewEdition console;
+//	public static RTS_ConsolePanel console;
 	public static Terminal console;
+//	public static Writer consoleWriter; // = Reflect.getConsoleWriter();
+//	public static Reader consoleReader; // = Reflect.getConsoleReader();
 	
 	public static Vector<Segment> routineSegments;
 	
@@ -121,8 +125,8 @@ public class Global {
 	public static String modcheck;		// Check code of module being defined
 	public static String PROGID;		// Ident of program being defined
 	
-	public static String sysInsertDir = "C:/SPORT/RTS/";
-	public static String outputDIR = sysInsertDir; // Attributes and SVM-Code output directory
+	public final static String rtsDir = "C:/SPORT/RTS/";
+	public static String outputDIR = rtsDir; // Attributes and SVM-Code output directory
 	public static int sourceLineNumber;
 	public static int curline;		// Current source line number
 	public static int nTags; // See: INSERT
@@ -155,7 +159,7 @@ public class Global {
 //			Util.IERR(s + ".svm");
 			return s + suffix;
 		} else {
-			return sysInsertDir + modident + suffix;
+			return rtsDir + modident + suffix;
 		}
 	}
 }

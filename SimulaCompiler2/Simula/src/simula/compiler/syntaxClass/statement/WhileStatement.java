@@ -100,7 +100,7 @@ public final class WhileStatement extends Statement {
 
 	@Override
 	public void printTree(final int indent, final Object head) {
-		System.out.println(edTreeIndent(indent)+"WHILE " + condition + " DO");
+		IO.println(edTreeIndent(indent)+"WHILE " + condition + " DO");
 		doStatement.printTree(indent+1,this);
 	}
 

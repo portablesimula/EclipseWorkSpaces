@@ -132,7 +132,7 @@ public abstract class ClassHierarchy {
 		for (Map.Entry<ClassDesc, ClassDesc> entry : classToSuperClass.entrySet()) {
 			String key = entry.getKey().descriptorString();
 			String val = entry.getValue().descriptorString();
-		     System.out.println(key + " extends " +val);
+		     IO.println(key + " extends " +val);
 		}
 	}
 	
@@ -149,9 +149,9 @@ public abstract class ClassHierarchy {
     		Node subNode = lookup(sub.packageName() + '.' + sub.displayName());
     		supNode.children.add(subNode);
         }
-		System.out.println("\n================= ClassHierarchy.print =================");
+		IO.println("\n================= ClassHierarchy.print =================");
 		lookup("simula.runtime.RTS_CLASS").print(1);
-		System.out.println("\n================= Procedure List =================");
+		IO.println("\n================= Procedure List =================");
 		lookup("simula.runtime.RTS_PROCEDURE").print(1);
 	}
 	
@@ -167,7 +167,7 @@ public abstract class ClassHierarchy {
 		/// Utility method: print.
 		/// @param indent the indentation.
 		void print(int indent) {
-			System.out.println(SyntaxClass.edIndent(indent) + this.name);
+			IO.println(SyntaxClass.edIndent(indent) + this.name);
 			for(Node child:children) child.print(indent + 1);
 		}
 

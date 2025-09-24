@@ -373,7 +373,7 @@ public abstract class RTS_RTObject {
 	public static void TRACE_GOTO(final String msg, final RTS_LABEL label) {
 		RTS_UTIL.TRACE(msg + " GOTO " + label);
 		
-		System.out.println("\nRTS_RTObject.TRACE_GOTO: "+label.identifier + ", CUR="+_CUR);
+		IO.println("\nRTS_RTObject.TRACE_GOTO: "+label.identifier + ", CUR="+_CUR);
         new Exception("With Operating Chain:").printStackTrace(System.out);
 		
 	}

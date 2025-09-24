@@ -82,9 +82,9 @@ public final class RunSimulaSample {
 		deleteFiles(testBatchJarDir);
 //		list(testBatchJarDir);
 		
-		System.out.println("\n--- END OF SIMULA TESTBATCH");
+		IO.println("\n--- END OF SIMULA TESTBATCH");
 		long timeUsed  = System.currentTimeMillis( ) - startTimeMs;
-		System.out.println("\nElapsed Time: Approximately " + timeUsed/1000 + " sec.");
+		IO.println("\nElapsed Time: Approximately " + timeUsed/1000 + " sec.");
 	}
 
 	// ***************************************************************************

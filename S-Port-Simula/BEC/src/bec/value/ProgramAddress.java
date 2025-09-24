@@ -18,6 +18,7 @@ import bec.util.Type;
 import bec.util.Util;
 import bec.virtualMachine.CallStackFrame;
 import bec.virtualMachine.RTStack;
+import bec.virtualMachine.RTUtil;
 import bec.virtualMachine.SVM_CALL;
 import bec.virtualMachine.SVM_CALL_SYS;
 import bec.virtualMachine.SVM_Instruction;
@@ -47,7 +48,7 @@ public class ProgramAddress extends Value {
 //		System.out.println("ProgramAddress.ofScode: descr="+descr.getClass().getSimpleName()+"  "+descr);
 		if(type == Type.T_RADDR) return ((RoutineDescr)descr).getAddress();
 		if(type == Type.T_PADDR) return ((LabelDescr)descr).getAddress();
-		Util.IERR("ProgramAddress: NOT IMPL "+type);
+		Util.IERR("NOT IMPL");
 		return null;
 	}
 	

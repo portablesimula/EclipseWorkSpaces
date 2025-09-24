@@ -18,6 +18,7 @@ import bec.statement.InsertStatement;
 import bec.util.Array;
 import bec.util.Global;
 import bec.util.Scode;
+import bec.util.Tag;
 import bec.util.Util;
 
 public class ModuleDefinition extends S_Module {
@@ -73,7 +74,6 @@ public class ModuleDefinition extends S_Module {
 			Scode.inputInstr();
 			if(xtag > nXtag) nXtag = xtag;
 		}
-		System.out.println("ModuleDefinition: TAGTAB Read");
 
 		if(Scode.curinstr != Scode.S_BODY) Util.IERR("Illegal termination of module head");
 		Scode.inputInstr();

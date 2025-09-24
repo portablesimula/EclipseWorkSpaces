@@ -4,6 +4,7 @@ import java.io.IOException;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
+import bec.util.Util;
 
 public class SVM_PRECALL extends SVM_Instruction {
 	String rutIdent;

@@ -346,7 +346,7 @@ public class EditorMenues extends JMenuBar {
             	Global.setCurrentWorkspace(fileChooser.getCurrentDirectory());
     		}
     		else if(lowName.endsWith(".jar")) {
-    			System.out.println("EditorMenues.doOpenFileAction: "+file);
+    			IO.println("EditorMenues.doOpenFileAction: "+file);
     				int res = Util.optionDialog("Executable Jarfile\nDo you want to execute ?",
     						"Execute or List Jarfile", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, "Yes", "No");
     				if (res == JOptionPane.YES_OPTION)

@@ -224,10 +224,10 @@ public final class ConnectionBlock extends DeclarationScope {
 		verifyTree(head);
 		String tail = (IS_SEMANTICS_CHECKED()) ? "  BL=" + getRTBlockLevel() : "";
 		if(isPreCompiledFromFile != null) tail = tail + " From: " + isPreCompiledFromFile;
-		System.out.println(edTreeIndent(indent) + "CONNECTION " + identifier + tail + "  PrefixLevel=" + prefixLevel() + "  declaredIn="+this.declaredIn);
+		IO.println(edTreeIndent(indent) + "CONNECTION " + identifier + tail + "  PrefixLevel=" + prefixLevel() + "  declaredIn="+this.declaredIn);
 		printDeclarationList(indent+1);
 		statement.printTree(indent + 1, this);
-		System.out.println(edTreeIndent(indent)+"END CONNECTION "+identifier);
+		IO.println(edTreeIndent(indent)+"END CONNECTION "+identifier);
 	}
 
 	@Override

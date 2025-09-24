@@ -6,6 +6,7 @@ import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.segment.DataSegment;
 import bec.util.Global;
+import bec.util.Relation;
 import bec.util.Scode;
 import bec.util.Type;
 import bec.util.Util;

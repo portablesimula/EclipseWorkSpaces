@@ -103,7 +103,7 @@ public class UndefinedDeclaration extends Declaration {
 	@Override
 	public void printTree(final int indent, final Object head) {
 		verifyTree(head);
-		System.out.println(edTreeIndent(indent)+this);
+		IO.println(edTreeIndent(indent)+this);
 	}
 
 	@Override

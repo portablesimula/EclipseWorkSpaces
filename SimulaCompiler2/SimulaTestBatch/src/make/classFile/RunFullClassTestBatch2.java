@@ -65,7 +65,7 @@ public final class RunFullClassTestBatch2 {
 		Global.packetName="simulaTestBatch";
 		Global.simulaRtsLib=new File(simulaDir,"bin"); // To use Eclipse Project's simula.runtime
 
-		System.out.println("RunFullClassTestBatch2.main: BEGIN Compiler Mode: " + Option.compilerMode);
+		IO.println("RunFullClassTestBatch2.main: BEGIN Compiler Mode: " + Option.compilerMode);
 		Vector<String> names=new Vector<String>();
 		names.add("SimulaTest.sim"); // Simula TestBatch Framework
 		names.add("simtst01.sim"); // OK:  Meaningless test of conditional statements
@@ -285,9 +285,9 @@ public final class RunFullClassTestBatch2 {
 		deleteFiles(testBatchJarDir);
 //		list(testBatchJarDir);
 		
-		System.out.println("\n--- END OF SIMULA TESTBATCH - Compiler Mode: " + Option.compilerMode);
+		IO.println("\n--- END OF SIMULA TESTBATCH - Compiler Mode: " + Option.compilerMode);
 		long timeUsed  = System.currentTimeMillis( ) - startTimeMs;
-		System.out.println("\nElapsed Time: Approximately " + timeUsed/1000 + " sec.");
+		IO.println("\nElapsed Time: Approximately " + timeUsed/1000 + " sec.");
 	}
 
 	// ***************************************************************
@@ -309,22 +309,22 @@ public final class RunFullClassTestBatch2 {
 	// ***************************************************************
 //	private static void list(final String dirName) { list(new File(dirName)); }
 //	private static void list(final File dir) {
-//		try { System.out.println("------------  LIST "+dir+"  ------------");
+//		try { IO.println("------------  LIST "+dir+"  ------------");
 //		list("",dir);
 //		} catch (Exception e) { e.printStackTrace(); }
 //	}
 //
 //	private static void list(String indent,final File dir) {
 //		try {
-//			//System.out.println("tmpClass: "+dir);
+//			//IO.println("tmpClass: "+dir);
 //			File[] elt = dir.listFiles();
 //			if(elt==null || elt.length==0) {
-//				System.out.println("Empty Directory: "+dir);
+//				IO.println("Empty Directory: "+dir);
 //				return; 
 //			}
-//			System.out.println("Elements: "+elt.length);
+//			IO.println("Elements: "+elt.length);
 //			for (File f : elt) {
-//				System.out.println(indent+"- "+getModifiedTime(f)+"  "+f);
+//				IO.println(indent+"- "+getModifiedTime(f)+"  "+f);
 //				if(f.isDirectory()) list(indent+"   ",f);
 //			}
 //		} catch (Exception e) { e.printStackTrace(); }

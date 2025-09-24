@@ -263,7 +263,7 @@ public final class RTS_ConsolePanel extends JPanel {
 	/// @param msg the error message
 	/// @param e an Throwable
 	private static void IERR(final String msg, final Throwable e) {
-		System.out.println("IERR: " + msg + "  " + e);
+		IO.println("IERR: " + msg + "  " + e);
 		e.printStackTrace();
 	}
 	

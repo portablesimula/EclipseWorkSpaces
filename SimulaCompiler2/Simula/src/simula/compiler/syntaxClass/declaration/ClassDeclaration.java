@@ -805,7 +805,7 @@ public class ClassDeclaration extends BlockDeclaration {
 	public void doJavaCoding() {
 		ASSERT_SEMANTICS_CHECKED();
 		if (this.isPreCompiledFromFile != null) {
-			if(Option.verbose) System.out.println("Skip  doJavaCoding: "+this.identifier+" -- It is read from "+isPreCompiledFromFile);	
+			if(Option.verbose) IO.println("Skip  doJavaCoding: "+this.identifier+" -- It is read from "+isPreCompiledFromFile);	
 			return;
 		}
 		Global.sourceLineNumber = lineNumber;
@@ -1371,7 +1371,7 @@ public class ClassDeclaration extends BlockDeclaration {
 		if(isPreCompiledFromFile != null) tail = tail + " From: " + isPreCompiledFromFile;
 		String prfx = (prefix==null) ? "" : "  extends " + prefix;
 		String declIn = " declaredIn " + this.declaredIn.identifier;
-		System.out.println(edTreeIndent(indent) + "CLASS " + identifier + tail + "  PrefixLevel=" + prefixLevel() + prfx + declIn);
+		IO.println(edTreeIndent(indent) + "CLASS " + identifier + tail + "  PrefixLevel=" + prefixLevel() + prfx + declIn);
 		if(labelList != null) labelList.printTree(indent+1,this);
 		for(Parameter p:parameterList) p.printTree(indent+1,this);
 		if (!virtualSpecList.isEmpty())

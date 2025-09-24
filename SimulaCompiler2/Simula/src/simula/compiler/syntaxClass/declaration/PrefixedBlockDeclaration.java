@@ -141,7 +141,7 @@ public final class PrefixedBlockDeclaration extends ClassDeclaration {
 		Global.sourceLineNumber = lineNumber;
 		ASSERT_SEMANTICS_CHECKED();
 		if (this.isPreCompiledFromFile != null) {
-			if(Option.verbose) System.out.println("Skip  doJavaCoding: "+this.identifier+" -- It is read from "+isPreCompiledFromFile);	
+			if(Option.verbose) IO.println("Skip  doJavaCoding: "+this.identifier+" -- It is read from "+isPreCompiledFromFile);	
 			return;
 		}
 		JavaSourceFileCoder javaCoder = new JavaSourceFileCoder(this);
@@ -215,7 +215,7 @@ public final class PrefixedBlockDeclaration extends ClassDeclaration {
 		ASSERT_SEMANTICS_CHECKED();
 		if (this.isPreCompiledFromFile != null) {
 			if(Option.verbose)
-				System.out.println("Skip  buildClassFile: "+this.identifier+" extends "+this.prefix+" -- It is read from "+isPreCompiledFromFile);		
+				IO.println("Skip  buildClassFile: "+this.identifier+" extends "+this.prefix+" -- It is read from "+isPreCompiledFromFile);		
 		} else {
 			try { createJavaClassFile(); } catch (IOException e) { e.printStackTrace(); }
 		}
@@ -335,7 +335,7 @@ public final class PrefixedBlockDeclaration extends ClassDeclaration {
 		verifyTree(head);
 		String tail = (IS_SEMANTICS_CHECKED()) ? "  BL=" + getRTBlockLevel() : "";
 		if(isPreCompiledFromFile != null) tail = tail + " From: " + isPreCompiledFromFile;
-		System.out.println(edTreeIndent(indent) + blockPrefix + " begin" + tail);
+		IO.println(edTreeIndent(indent) + blockPrefix + " begin" + tail);
 		if(labelList != null) labelList.printTree(indent+1,this);
 		for(Parameter p : parameterList) p.printTree(indent+1,this);
 		printDeclarationList(indent+1);

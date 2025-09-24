@@ -11,19 +11,14 @@ import bec.value.IntegerValue;
 import bec.value.ObjectAddress;
 import bec.value.ProgramAddress;
 import bec.value.LongRealValue;
+import bec.value.RealValue;
 import bec.value.Value;
 
 public abstract class RTStack {
 	
-	private static Stack<Value> stack;                // = new Stack<Value>();
-	public static Stack<CallStackFrame> precallStack; // = new Stack<CallStackFrame>();
-	public static Stack<CallStackFrame> callStack;    // = new Stack<CallStackFrame>();
-	
-	public static void INIT() {
-		stack = new Stack<Value>();
-		precallStack = new Stack<CallStackFrame>();
-		callStack = new Stack<CallStackFrame>();
-	}
+	private static Stack<Value> stack = new Stack<Value>();
+	public static Stack<CallStackFrame> precallStack = new Stack<CallStackFrame>();
+	public static Stack<CallStackFrame> callStack = new Stack<CallStackFrame>();
 	
 	public static void checkStackEmpty() {
 		if(curSize() != 0) {
@@ -60,7 +55,7 @@ public abstract class RTStack {
 		int n = callStack.size()-1;
 		for(int i=n;i>=0;i--) {
 			CallStackFrame frame = callStack.get(i);
-//			String ident = (frame.curAddr == null)? "SYSRUT_" + frame.ident : ""+frame.curAddr;
+			String ident = (frame.curAddr == null)? "SYSRUT_" + frame.ident : ""+frame.curAddr;
 			if(i == n) {
 //				System.out.println("     " + kind + " "+ident + frame);
 				

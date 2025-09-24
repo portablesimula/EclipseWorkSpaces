@@ -1,0 +1,274 @@
+package bec.value;
+
+import java.io.IOException;
+import java.util.Vector;
+
+import bec.AttributeInputStream;
+import bec.AttributeOutputStream;
+import bec.descriptor.Attribute;
+import bec.descriptor.ConstDescr;
+import bec.descriptor.RecordDescr;
+import bec.segment.DataSegment;
+import bec.util.Global;
+import bec.util.Scode;
+import bec.util.Tag;
+import bec.util.Type;
+import bec.util.Util;
+import bec.value.dataAddress.GeneralAddress;
+import bec.value.dataAddress.DataAddress;
+
+public class RecordValue extends Value {
+	public Tag tag;
+	public Vector<Value> attrValues;
+	
+	private static final boolean DEBUG = false;
+	
+	private RecordValue() {
+		attrValues = new Vector<Value>();
+	}
+	
+	public static RecordValue ofString(DataAddress addr, IntegerValue lng) {
+		RecordValue recValue = new RecordValue();
+		recValue.type = Type.T_STRING;
+		recValue.tag = new Tag(Scode.TAG_STRING);
+		recValue.attrValues.add(addr);
+		recValue.attrValues.add(null);
+//		recValue.attrValues.add(IntegerValue.of(Type.T_INT, 0));
+		recValue.attrValues.add(lng);
+//		Util.IERR("");
+		return recValue;
+	}
+
+	/**
+	 * record_value
+	 * 		::= c-record structured_type
+	 * 			<attribute_value>+ endrecord
+	 * 
+	 * 		structured_type ::= record_tag:tag
+	 * 
+	 * 		attribute_value
+	 * 			::= attr attribute:tag type repetition_value
+	 * 
+	 * End-Condition: Scode'nextByte = First byte after ENDRECORD
+	 */
+	@SuppressWarnings("unused")
+	public static RecordValue ofScode() {
+		RecordValue recValue = new RecordValue();
+		recValue.tag = Tag.ofScode();
+		RecordDescr rec = (RecordDescr) Global.getMeaning(recValue.tag);
+		if(DEBUG) IO.println("RecordValue.ofScode: rec.size="+rec.size);
+		
+		for(int i=0;i<rec.size;i++)
+			 recValue.attrValues.add(null);
+		
+		while(Scode.accept(Scode.S_ATTR)) {
+			Tag tag = Tag.ofScode();
+			Type type = Type.ofScode();
+			RepetitionValue atrvalue = RepetitionValue.ofScode();
+			Attribute attr = (Attribute) Global.getMeaning(tag);
+			if(DEBUG) IO.println("RecordValue.ofScode: "+attr);
+			
+			if(attr.repCount == 0) {
+				if(DEBUG) IO.println("RecordValue.ofScode: FIXREP = " + ConstDescr.fixrepTail);
+				int n = 0;
+				for(Value val:atrvalue.values) {
+//					IO.println("RecordValue.ofScode: FIXREP = " + ConstDescr.fixrepTail + " VALUE: "+ val);
+					if(val != null && val.type == Type.T_TEXT && attr.type == Type.T_CHAR) {
+						n += recValue.addChars((TextValue) val);
+					} else n += recValue.addValue(val);
+				}
+				if(ConstDescr.fixrepTail > 0 && ConstDescr.fixrepTail < n) Util.IERR("Too many elements in repetition: " + n + " > " + ConstDescr.fixrepTail);
+				for(int i=n;i<ConstDescr.fixrepTail;i++)
+					recValue.addValue(null);
+			} else {
+				int idx = attr.rela;
+				for(Value val:atrvalue.values) {
+//					IO.println("RecordValue.ofScode: SET VALUE: rela=" + attr.rela + ", idx=" + idx + ", val="+val);
+					idx = setValue(recValue.attrValues, idx, val);
+				}
+//				if(idx > (attr.repCount * attr.size)) Util.IERR("idx="+idx+" > repCount="+attr.repCount+"  attr.size="+attr.size);
+			}
+		}
+		
+		if(DEBUG) {
+			recValue.dump("RecordValue.ofScode: FIRST");
+			recValue.print("RecordValue.ofScode: ");
+//			Util.IERR("");
+		}
+		
+		Scode.expect(Scode.S_ENDRECORD);
+		
+//		if(Scode.inputTrace > 3) printTree(0);
+		RecordDescr recordDescr = (RecordDescr) Global.DISPL.get(recValue.tag.val);
+		recValue.type = Type.lookupType(recordDescr);
+//		IO.println("RecordValue.ofScode: type = " + recValue.type);
+		return recValue;
+	}
+
+	public boolean compare(int relation, Value other) {
+//		int LHS = this.value;
+//		int RHS = (other == null)? 0 : ((IntegerValue)other).value;
+//		return Relation.compare(LHS, relation, RHS);
+		IO.println("RecordValue.compare: " + this + " " + Scode.edInstr(relation) + " " + other);
+////		Util.IERR("");
+//		return res;
+		Util.IERR("Method 'compare' need a redefinition in " + this.getClass().getSimpleName());
+		return false;
+	}
+	
+	private void dump(String title) {
+		IO.println("RecordValue.ofScode: " + title);
+		for(int i=0;i<attrValues.size();i++) {
+			IO.println("RecordValue.ofScode: attrValues["+i+"] = "+attrValues.get(i));
+		}
+		IO.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+	}
+	
+	@SuppressWarnings("unused")
+	private static int setValue(Vector<Value> target, int idx, Value value) {
+		if(DEBUG) {
+			String qual = (value == null)? "" : " "+value.getClass().getSimpleName();
+			IO.println("RecordValue.ofScode: attrValues["+idx+"] ="+qual+" "+value);
+		}
+		if(value instanceof GeneralAddress gaddr) {
+			Util.IERR("");
+		} else if(value instanceof StringValue str) {
+			Util.IERR("");
+		} else if(value instanceof TextValue txt) {
+			idx = setValue(target, idx, txt.emitChars(Global.TSEG));
+			idx = setValue(target, idx, null);
+			idx = setValue(target, idx, IntegerValue.of(Type.T_INT, txt.textValue.length()));
+//			IO.println("RecordValue.ofScode: return(1) "+idx);
+			return idx;
+		} else if(value instanceof RecordValue recval) {
+			if(DEBUG) {
+				IO.println("RecordValue.ofScode: INNER:");
+				recval.dump("RecordValue.ofScode: INNER-1: ");
+			}
+			for(Value atrval:recval.attrValues) {
+				idx = setValue(target, idx, atrval);
+			}
+//			IO.println("RecordValue.ofScode: return(2) "+idx);
+			return idx;
+		} else if(value instanceof RepetitionValue repval) {
+			Util.IERR("");
+		}
+//		IO.println("RecordValue.ofScode: attrValues["+idx+"] = "+value);
+		target.set(idx, value);
+//		IO.println("RecordValue.ofScode: return(3) "+(idx+1));
+//		Thread.dumpStack();
+		return idx+1;
+	}
+	
+	@SuppressWarnings("unused")
+	private int addValue(Value value) {
+//		IO.println("RecordValue.ofScode: attrValues["+idx+"] = "+value);
+		if(value instanceof GeneralAddress gaddr) {
+			Util.IERR("");
+		} else if(value instanceof StringValue str) {
+			Util.IERR("");
+		} else if(value instanceof TextValue txt) {
+//			IO.println("RecordValue.ofScode: attrValue: txt.typee="+txt.type);
+			addValue(txt.emitChars(Global.TSEG));
+			addValue(null);
+			addValue(IntegerValue.of(Type.T_INT, txt.textValue.length()));
+			return 3;
+		} else if(value instanceof RecordValue rval) {
+//			IO.println("RecordValue.addValue: "+rval);
+			int n = 0;
+			for(Value val:rval.attrValues) {
+				n = n + addValue(val);
+			}
+//			Util.IERR(""+rval);
+			return n;
+		} else if(value instanceof RepetitionValue rval) {
+			Util.IERR("");
+//			return rval.size ???
+		}
+		attrValues.add(value);
+		return 1;
+	}
+
+	private int addChars(TextValue txt) {
+		int n = txt.textValue.length();
+		for(int i=0;i<n;i++) {
+			addValue(IntegerValue.of(Type.T_CHAR, txt.textValue.charAt(i)));			
+		}
+		return n;
+	}
+	
+	@Override
+	public void emit(DataSegment dseg, String comment) {
+		for(Value value:attrValues) {
+			if(value == null)
+				 dseg.emit(null, comment);
+			else value.emit(dseg, comment);
+		}
+	}
+
+	@Override
+	public void print(final String indent) {
+		IO.println(indent + "C-RECORD " + tag);
+		for(Value value:attrValues) {
+//			IO.println(indent + "   ATTR " + value);
+			IO.println(indent + "   "+value);
+		}
+		IO.println(indent + "ENDRECORD");
+	}
+	
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("C-RECORD " + tag);
+		for(Value value:attrValues) {
+			sb.append(" ATTR " + value);
+		}
+		sb.append(" ENDRECORD");
+		return sb.toString();
+	}
+
+	// ***********************************************************************************************
+	// *** Attribute File I/O
+	// ***********************************************************************************************
+	private RecordValue(AttributeInputStream inpt) throws IOException {
+		int expectedSize = inpt.readShort();
+		tag = Tag.read(inpt);
+		attrValues = new Vector<Value>();
+//		IO.println("\nBEGIN READ RecordValue: ");
+		int kind = inpt.readKind();
+		while(kind != Scode.S_ENDRECORD) {
+//			IO.println("READ RecordValue: kind="+Scode.edInstr(kind));
+			Value value = Value.read(kind, inpt);
+//			IO.println("READ RecordValue: add "+value);
+			attrValues.add(value);
+			kind = inpt.readKind();
+		}
+//		IO.println("NEW RECORD VALUE: "+attrValues.size());
+//		printTree(2);
+		if(attrValues.size() != expectedSize) Util.IERR("TRAP: expected size="+expectedSize+"  read size="+attrValues.size());
+	}
+
+	public void write(AttributeOutputStream oupt) throws IOException {
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
+		oupt.writeKind(Scode.S_C_RECORD);
+		oupt.writeShort(attrValues.size());
+		tag.write(oupt);
+//		IO.println("\nWRITE RECORD VALUE: "+attrValues.size());
+		for(Value value:attrValues) {
+			if(value != null) {
+//				IO.println("WRITE RECORD VALUE: "+value);
+				value.write(oupt);
+			} else {
+//				IO.println("WRITE RECORD VALUE: Scode.S_NULL");
+				oupt.writeKind(Scode.S_NULL);
+			}
+		}
+//		IO.println("WRITE RECORD VALUE: ENDRECORD: "+Scode.S_ENDRECORD);
+		oupt.writeInstr(Scode.S_ENDRECORD);
+	}
+
+	public static RecordValue read(AttributeInputStream inpt) throws IOException {
+		return new RecordValue(inpt);
+	}
+
+	
+}

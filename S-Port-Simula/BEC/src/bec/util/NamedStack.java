@@ -2,6 +2,8 @@ package bec.util;
 
 import java.util.Stack;
 
+import bec.compileTimeStack.CTStackItem;
+
 @SuppressWarnings("serial")
 public class NamedStack<E> extends Stack<E> {
 	private String ident;

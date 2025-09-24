@@ -47,10 +47,10 @@ public class ObjectReferenceMap {
 	
 	/// Utility method: print
 	public void print() {
-		System.out.println("ObjectReferenceMap.print: BEGIN Print OBJECT REFERENCE TABLE:");
+		IO.println("ObjectReferenceMap.print: BEGIN Print OBJECT REFERENCE TABLE:");
 		Map<Integer, SyntaxClass> map = objectReference;
-		map.forEach((key, value) -> System.out.println("   " + key + "  <==>  " + value));
-		System.out.println("ObjectReferenceMap.print: ENDOF Print OBJECT REFERENCE TABLE:");
+		map.forEach((key, value) -> IO.println("   " + key + "  <==>  " + value));
+		IO.println("ObjectReferenceMap.print: ENDOF Print OBJECT REFERENCE TABLE:");
 	}
 
 }

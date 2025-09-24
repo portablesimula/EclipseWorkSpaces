@@ -39,7 +39,7 @@ import javax.swing.JTextField;
 //import javax.swing.ProgressMonitor;
 import javax.swing.UIManager;
 
-/* Self-extractor for installing a Simula System.
+/* Self-extractor for installing a sPort Simula System.
  * 
  * Based on http://www.javaworld.com/javaworld/javatips/jw-javatip120.html
  * 
@@ -56,18 +56,18 @@ public final class SPortExtractor extends JFrame {
 	private static final boolean DEBUG=true;
 	private static final boolean USE_CONSOLE=true;//false;
 	
-	// NOTE: When updating release id, change version in Global.simulaReleaseID and in simula.runtime._ENVIRONMENT
-    public static final String simulaReleaseID="SPort-1.0";
-    public static String simulaRevisionID="?";
+	// NOTE: When updating release id, change version in Global.sPortReleaseID and in simula.runtime._ENVIRONMENT
+    public static final String sPortReleaseID="SPort-1.0";
+    public static String sPortRevisionID="?";
 
-    private static final String simulaInstallSubdirectory = "Simula"+File.separatorChar+simulaReleaseID;
+    private static final String simulaInstallSubdirectory = "Simula"+File.separatorChar+sPortReleaseID;
 	private static final String programAndVersion = "SPort 1.0";
-	private static File INSTALL_DIR; // e.g. C:\Users\Øystein\Simula\Simula-1.0
+	private static File INSTALL_DIR; // e.g. C:\Users\omyhr\Simula\SPort-1.0
 	private static File BATCH_FILE;
 	private static String setupDated;
 	private static ImageIcon simulaIcon;
 	
-	private static String simulaJarFileName;
+	private static String sPortJarFileName;
 	private static String targetDir;
 	private static int nExtractedFiles;
 	private static boolean compilerBatWasWritten;
@@ -79,11 +79,11 @@ public final class SPortExtractor extends JFrame {
 	private static JFrame mainFrame;
 
 	// ****************************************************************
-	// *** SimulaExtractor: Main Entry
+	// *** SPortExtractor: Main Entry
 	// ****************************************************************
 	public static void main(String[] args) {
-		if(DEBUG) System.out.println("SimulaExtractor: user.home="+System.getProperty("user.home"));
-		if(DEBUG) System.out.println("SimulaExtractor: user.dir="+System.getProperty("user.dir"));
+		if(DEBUG) System.out.println("SPortExtractor: user.home="+System.getProperty("user.home"));
+		if(DEBUG) System.out.println("SPortExtractor: user.dir="+System.getProperty("user.dir"));
 		// List UIManager keys: https://thebadprogrammer.com/swing-uimanager-keys/
 		UIManager.put("OptionPane.background", Color.WHITE);
         UIManager.put("OptionPane.messagebackground", Color.WHITE);
@@ -102,7 +102,7 @@ public final class SPortExtractor extends JFrame {
 		if(console!=null) {
 			if(ok) {
 			    console.write("=====================================================\n");
-			    console.write("Simula was successfully installed in\n\n");
+			    console.write("S-Port Simula was successfully installed in\n\n");
 			    console.write("       "+INSTALL_DIR+"\n\n");
 			    
 //			    if(compilerBatWasWritten) {
@@ -124,7 +124,7 @@ public final class SPortExtractor extends JFrame {
 	}
 	
 	// ***************************************************************
-	// *** Constructor: SimulaExtractor
+	// *** Constructor: SPortExtractor
 	// ***************************************************************
 	SPortExtractor() {
 		URL url=getClass().getResource("sim.png");
@@ -140,7 +140,7 @@ public final class SPortExtractor extends JFrame {
 			setLocationRelativeTo(null); // center the frame on screen
 			if(DEBUG) System.out.println("Open ConsolePanel");
 			console=new Console();
-			mainFrame.setTitle("Installing Simula");
+			mainFrame.setTitle("Installing S-Port Simula");
 			mainFrame.add(console);
 //			mainFrame.setVisible(true);
 		}
@@ -156,7 +156,7 @@ public final class SPortExtractor extends JFrame {
 		if(windows) {
 			fileName="RunSimulaEditor.bat";
 			text="CHCP 65001\r\n" +  // Let Windows recognize UTF-8
-			     "rem *** Call Simula Editor\r\n" + 
+			     "rem *** Call S-Port Simula Editor\r\n" + 
 //				 "java -jar "+INSTALL_DIR+"\\simula.jar\r\n" + 
 				 "cd "+INSTALL_DIR+"\r\n"+
 				 "java -jar SIM.jar\r\n" + 
@@ -169,7 +169,7 @@ public final class SPortExtractor extends JFrame {
 //                 "popd\n"+
 //				 "read -p \"Press enter to continue\"\n";
 			
-			text = "echo Call Simula Editor;\n"
+			text = "echo Call S-Port Simula Editor;\n"
 //					+ "cd /home/myhre/Simula/Simula-2.0\n"
 					+ "cd "+INSTALL_DIR+"\n"
 					+ "java -jar simula.jar\n"
@@ -317,8 +317,8 @@ public final class SPortExtractor extends JFrame {
 		simulaPropertiesFile=new File(dotSimula,"sPortSetup.xml");			
 		simulaProperties.put("sPort.setup.dated",setupDated);
 		simulaProperties.put("sPort.installed",new Date().toString());
-		simulaProperties.put("sPort.version",simulaReleaseID);
-		simulaProperties.put("sPort.revision",simulaRevisionID);
+		simulaProperties.put("sPort.version",sPortReleaseID);
+		simulaProperties.put("sPort.revision",sPortRevisionID);
 		simulaProperties.put("sPort.home",INSTALL_DIR.getParentFile().toString());
 
 		if(DEBUG) simulaProperties.list(System.out);
@@ -330,9 +330,9 @@ public final class SPortExtractor extends JFrame {
 				simulaPropertiesFile.setWritable(true,false); // Sets everybody's write permission 
 			} catch(SecurityException e) {}
 			out=new FileOutputStream(simulaPropertiesFile);
-//			if(TESTING) System.out.println("SimulaExtractor.updateProperties: Write "+simulaPropertiesFile);
+//			if(TESTING) System.out.println("SPortExtractor.updateProperties: Write "+simulaPropertiesFile);
 			simulaProperties.storeToXML(out,"S-Port Setup Properties");
-//			if(TESTING) System.out.println("SimulaExtractor.updateProperties: Write "+simulaPropertiesFile+" DONE");
+//			if(TESTING) System.out.println("SPortExtractor.updateProperties: Write "+simulaPropertiesFile+" DONE");
 			if(console!=null) console.write("Write: "+simulaPropertiesFile+'\n');
 		} catch(Exception e) { e.printStackTrace(); }
 		finally { if(out!=null) try {out.close(); } catch(IOException e){}   }
@@ -343,7 +343,7 @@ public final class SPortExtractor extends JFrame {
 	// ***************************************************************
 	private String getJarFileName() {
 		myClassName = this.getClass().getName().replace('.', '/') + ".class";
-		if(DEBUG) System.out.println("SimulaExtractor.getJarFileName: myClassName="+myClassName); // TODO: MYH
+		if(DEBUG) System.out.println("SPortExtractor.getJarFileName: myClassName="+myClassName); // TODO: MYH
 		URL urlJar = ClassLoader.getSystemResource(myClassName);
 		String urlEncStr = urlJar.toString();
 		try {
@@ -354,10 +354,10 @@ public final class SPortExtractor extends JFrame {
 			int to = urlStr.indexOf("!/");
 			String jarFileName = urlStr.substring(from, to);
 			if(DEBUG) {
-				System.out.println("SimulaExtractor.getJarFileName: myClassName=" + myClassName);
-				System.out.println("SimulaExtractor.getJarFileName: urlEncStr=" + urlEncStr);
-				System.out.println("SimulaExtractor.getJarFileName: urlStr=" + urlStr);
-				System.out.println("SimulaExtractor.getJarFileName: jarFileName=" + jarFileName);
+				System.out.println("SPortExtractor.getJarFileName: myClassName=" + myClassName);
+				System.out.println("SPortExtractor.getJarFileName: urlEncStr=" + urlEncStr);
+				System.out.println("SPortExtractor.getJarFileName: urlStr=" + urlStr);
+				System.out.println("SPortExtractor.getJarFileName: jarFileName=" + jarFileName);
 			}
 			return jarFileName;
 		} catch (Exception e) { return(null); }
@@ -371,9 +371,9 @@ public final class SPortExtractor extends JFrame {
 	File getInstallDir(String filename) {
 		String installParentDirectory;
 		installParentDirectory = System.getProperty("user.home");
-		if(DEBUG) System.out.println("SimulaExtractor.getInstallDir: installParentDirectory="+installParentDirectory); // TODO: MYH
+		if(DEBUG) System.out.println("SPortExtractor.getInstallDir: installParentDirectory="+installParentDirectory); // TODO: MYH
 
-		String msg = "You are about to install a new Simula System on your computer.\n"+"This installer will create the directory  '" + simulaInstallSubdirectory + "'\n"
+		String msg = "You are about to install a new S-Port System on your computer.\n"+"This installer will create the directory  '" + simulaInstallSubdirectory + "'\n"
 				+ "within the Install Directory you select below:\n ";
 
 		// Create a panel with all of the install options
@@ -423,7 +423,7 @@ public final class SPortExtractor extends JFrame {
 		INSTALL_DIR = new File(installDirectory);
 		if(INSTALL_DIR.exists()) {
 			Object[] options2 = { "Exit", "Continue" };
-			String msg2 = "It looks like the Simula System is already installed.\n"
+			String msg2 = "It looks like the S-Port System is already installed.\n"
 					   + "The selected install directory:\n"
 					   + "      "+installDirectory+"\n"
 					   + "does already exists and may contain important stuff.\n\n"
@@ -433,11 +433,11 @@ public final class SPortExtractor extends JFrame {
 			if (result != 1) System.exit(-1); // Stop the install
 			
 			File rts=new File(INSTALL_DIR+"/rts");
-			System.out.println("SimulaExtractor.extract: rts="+rts);
+			System.out.println("SPortExtractor.extract: rts="+rts);
 			if(rts.exists()) {
 				// Delete existing rts
 				boolean success=delete(rts);
-				System.out.println("SimulaExtractor.extract: rts="+rts+", deleted="+success);
+				System.out.println("SPortExtractor.extract: rts="+rts+", deleted="+success);
 			}
 			
 		}
@@ -450,7 +450,7 @@ public final class SPortExtractor extends JFrame {
 			}
 		}
 		if(console!=null) console.write("Installing "+programAndVersion+"\n"
-		                               +"Simula-Directory:   "+INSTALL_DIR+'\n');
+		                               +"S-Port-Directory:   "+INSTALL_DIR+'\n');
 		return(INSTALL_DIR);
 	}
 	
@@ -467,10 +467,10 @@ public final class SPortExtractor extends JFrame {
 	// the result back into the main dialog
 	private String browseForInstallDirectory(String defaultInstallDir) {
 		JFileChooser fc = new JFileChooser();
-		if(DEBUG) System.out.println("SimulaExtractor.browseForInstallDirectory: defaultInstallDir="+defaultInstallDir); // TODO: MYH
+		if(DEBUG) System.out.println("SPortExtractor.browseForInstallDirectory: defaultInstallDir="+defaultInstallDir); // TODO: MYH
 		fc.setCurrentDirectory(new File(defaultInstallDir));
 		fc.setDialogType(JFileChooser.SAVE_DIALOG);
-		fc.setDialogTitle("Select destination directory for extracting Simula");
+		fc.setDialogTitle("Select destination directory for extracting S-Port Simula");
 		fc.setMultiSelectionEnabled(false);
 		fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		if (fc.showDialog(SPortExtractor.this, "Select") != JFileChooser.APPROVE_OPTION) {
@@ -544,21 +544,21 @@ public final class SPortExtractor extends JFrame {
 			}
 			zf.close();
 			targetDir = outputDir.getPath();
-			simulaJarFileName = targetDir + File.separator + "sim.jar";
+			sPortJarFileName = targetDir + File.separator + "sim.jar";
 			String title = "Installed " + programAndVersion;
 			String msg = "Extracted " + nExtractedFiles + " file" + ((nExtractedFiles != 1) ? "s" : "")
 					   + " from setup.jar\nInto: " + targetDir;
-			File jarFile = new File(simulaJarFileName);
+			File jarFile = new File(sPortJarFileName);
 //			if (jarFile.exists()) {
-//				msg += "\n\n" + "The Simula executable JAR file is installed at\n" + simulaJarFileName;
+//				msg += "\n\n" + "The Simula executable JAR file is installed at\n" + sPortJarFileName;
 //				msg +="\n\nDo you want to start it now ?\n\n";
 //				Object[] options = { "Start Simula", "Exit" };
-//		        int answer = JOptionPane.showOptionDialog(SimulaExtractor.this, msg, title, JOptionPane.DEFAULT_OPTION,
+//		        int answer = JOptionPane.showOptionDialog(SPortExtractor.this, msg, title, JOptionPane.DEFAULT_OPTION,
 //						JOptionPane.QUESTION_MESSAGE, simulaIcon, options, options[0]);
-//				if(DEBUG) System.out.println("SimulaExtractor.extract: answer="+answer); // TODO: MYH
+//				if(DEBUG) System.out.println("SPortExtractor.extract: answer="+answer); // TODO: MYH
 //				if(answer==0) {
 //					new Thread() {
-//						public void run() {	startJar(simulaJarFileName); }
+//						public void run() {	startJar(sPortJarFileName); }
 //					}.start();
 //				}
 //			} else {
@@ -585,7 +585,7 @@ public final class SPortExtractor extends JFrame {
 		//String msg="";
 		String msg = "Extracted " + nExtractedFiles + " file" + ((nExtractedFiles != 1) ? "s" : "")
 				   + " from setup.jar\nInto: " + targetDir;
-		msg += "\n\n" + "The Simula executable JAR file is installed at\n" + simulaJarFileName;
+		msg += "\n\n" + "The S-Port executable JAR file is installed at\n" + sPortJarFileName;
 		if(compilerBatWasWritten) {
 			boolean windows=(File.separatorChar)=='\\';
 			if(windows) {
@@ -594,16 +594,16 @@ public final class SPortExtractor extends JFrame {
 				msg += "\n\n" + "The file RunSimulaEditor.sh is placed in\n" + INSTALL_DIR;				
 			}
 			msg += "\nYou can copy or move it wherever you want\n";
-			msg += "and later use it to start the Simula Editor.\n";
+			msg += "and later use it to start the S-Port Editor.\n";
 		}
-		msg +="\n\nDo you want to start Simula Editor now ?\n\n";
-		int answer=optionDialog(msg,title,JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, "Start Simula", "Exit");
+		msg +="\n\nDo you want to start S-Port Simula Editor now ?\n\n";
+		int answer=optionDialog(msg,title,JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, "Start Editor", "Exit");
 
 		if(DEBUG)
-			System.out.println("SimulaExtractor.extract: answer="+answer); // TODO: MYH
+			System.out.println("SPortExtractor.extract: answer="+answer); // TODO: MYH
 		if(answer==0) {
 			new Thread() {
-				public void run() {	startJar(simulaJarFileName); }
+				public void run() {	startJar(sPortJarFileName); }
 			}.start();
 		}		
 	}
@@ -614,14 +614,14 @@ public final class SPortExtractor extends JFrame {
 	private static void loadManifest(ZipFile zipFile,ZipEntry entry) throws IOException  {
 		Manifest manifest = new Manifest(zipFile.getInputStream(entry));
 		Attributes main=manifest.getMainAttributes();
-		if(DEBUG) System.out.println("SimulaExtractor.loadManifest: Main-Class="+main.getValue("Main-Class"));
-		simulaRevisionID=main.getValue("Simula-Revision");
-		setupDated=main.getValue("Simula-Setup-Dated");
-		if(DEBUG) System.out.println("SimulaExtractor.loadManifest: This Simula-Revision: "+simulaRevisionID);
-		if(DEBUG) System.out.println("SimulaExtractor.loadManifest: This Simula-Setup-Dated: "+setupDated);
+		if(DEBUG) System.out.println("SPortExtractor.loadManifest: Main-Class="+main.getValue("Main-Class"));
+		sPortRevisionID=main.getValue("sPort-Revision");
+		setupDated=main.getValue("sPort-Setup-Dated");
+		if(DEBUG) System.out.println("SPortExtractor.loadManifest: This sPort-Revision: "+sPortRevisionID);
+		if(DEBUG) System.out.println("SPortExtractor.loadManifest: This sPort-Setup-Dated: "+setupDated);
 		if(console!=null) {
-			console.write("Simula-Release ID:  "+simulaReleaseID+'R'+simulaRevisionID+'\n');
-			console.write("Simula-Setup-Dated: "+setupDated+'\n');
+			console.write("SPort-Release ID:  "+sPortReleaseID+'R'+sPortRevisionID+'\n');
+			console.write("SPort-Setup-Dated: "+setupDated+'\n');
 		}
 	}
 
@@ -632,7 +632,7 @@ public final class SPortExtractor extends JFrame {
 		Runtime rt = Runtime.getRuntime();
 //		String cmd = getJavaProg() + " -jar " + jar;
 		String[] cmd = { getJavaProg(), "-jar", jar };
-//		if(TESTING) System.out.println("SimulaExtractor.startJar: "+ getJavaProg() + " -jar " + jar);
+//		if(TESTING) System.out.println("SPortExtractor.startJar: "+ getJavaProg() + " -jar " + jar);
 		try { rt.exec(cmd);
 		} catch (IOException ex) {
 			JOptionPane.showMessageDialog(null, "Can't run " + cmd, "Error Running Java", JOptionPane.ERROR_MESSAGE);

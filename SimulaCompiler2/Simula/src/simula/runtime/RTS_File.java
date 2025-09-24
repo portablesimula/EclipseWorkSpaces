@@ -314,13 +314,13 @@ public class RTS_File extends RTS_CLASS {
 			if (!file.isAbsolute() && RTS_Option.RUNTIME_USER_DIR.length() > 0) {
 				file = new File(RTS_Option.RUNTIME_USER_DIR + '/' + FILE_NAME.edText());
 			}
-			if(RTS_Option.VERBOSE) System.out.println("FILE.doCreateAction: " + _CREATE + " on "+file+", file.exists="+file.exists());
+			if(RTS_Option.VERBOSE) IO.println("FILE.doCreateAction: " + _CREATE + " on "+file+", file.exists="+file.exists());
 			switch (_CREATE) {
 				case NA -> {
 				}
 				case noCreate -> {
 					// If the value is "nocreate", the associated file must exist at "open".
-					if(RTS_Option.VERBOSE) System.out.println("FILE.doCreateAction: noCreate on "+file+", success="+file.exists());
+					if(RTS_Option.VERBOSE) IO.println("FILE.doCreateAction: noCreate on "+file+", success="+file.exists());
 					if (!file.exists())
 						throw new RTS_SimulaRuntimeError("File access mode=noCreate but File \"" + file + "\" does not exist");
 				}
@@ -331,7 +331,7 @@ public class RTS_File extends RTS_CLASS {
 					if (!file.exists()) {
 						file.getParentFile().mkdirs();
 						boolean success = file.createNewFile();
-						if(RTS_Option.VERBOSE) System.out.println("FILE.doCreateAction: Create on "+file+", success="+success);
+						if(RTS_Option.VERBOSE) IO.println("FILE.doCreateAction: Create on "+file+", success="+success);
 						if (!success)
 							throw new RTS_SimulaRuntimeError(
 									"File access mode=Create but couldn't create a new empty file: " + file);
@@ -343,7 +343,7 @@ public class RTS_File extends RTS_CLASS {
 					if (!file.exists()) {
 						file.getParentFile().mkdirs();
 						boolean success = file.createNewFile();
-						if(RTS_Option.VERBOSE) System.out.println("FILE.doCreateAction: anyCreate on "+file+", success="+success);
+						if(RTS_Option.VERBOSE) IO.println("FILE.doCreateAction: anyCreate on "+file+", success="+success);
 						if (!success)
 							throw new RTS_SimulaRuntimeError(
 									"File access mode=anyCreate but couldn't create a new empty file: " + file);
@@ -374,6 +374,6 @@ public class RTS_File extends RTS_CLASS {
 	/// Utility: Trace file open.
 	/// @param mss a trace message
 	protected void TRACE_OPEN(String mss) {
-		System.out.println(mss + ": " + FILE_NAME.edText());
+		IO.println(mss + ": " + FILE_NAME.edText());
 	}
 }

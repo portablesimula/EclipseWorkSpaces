@@ -70,7 +70,7 @@ public class CallStackFrame {
 	}
 
 	public void print(String title) {
-//		CallStackFrame callStackTop = RTStack.callStack_TOP();
+		CallStackFrame callStackTop = RTStack.callStack_TOP();
 //		System.out.println("==================== " + title + " RTFrame'DUMP ====================");
 		String indent = "            ";
 		try {

@@ -22,7 +22,20 @@ public class Single_TestBatch2Scode {
 			System.out.println("Compile SimulaTestbatch_FEC to SCode in " + SCODE_DIR);
 
 			Vector<String> names=new Vector<String>();
-			names.add("SimulaTest"); // Simula TestBatch Framework
+			
+			names.add("adHoc00");
+//			names.add("adHoc01");
+//			names.add("adHoc02");
+//			names.add("adHoc03");
+//			names.add("adHoc04");
+//			names.add("adHoc05");
+//			names.add("adHoc06"); 
+//			names.add("adHoc07");
+//			names.add("adHoc08");
+//			names.add("adHoc09");
+//			names.add("adHoc10");
+
+//			names.add("SimulaTest"); // Simula TestBatch Framework
 //			names.add("simtst01"); // OK:  Meaningless test of conditional statements
 //			names.add("simtst02"); // OK:  Test boolean operators/expressions
 //			names.add("simtst03"); // OK:  Test Text Value Relations

@@ -50,7 +50,7 @@ public final class Util {
 		UIManager.put("OptionPane.background", Color.WHITE);
 		UIManager.put("Panel.background", Color.WHITE);
 		int answer = JOptionPane.showOptionDialog(null, msg, title, optionType, messageType, Global.sIcon, option, option[0]);
-		// System.out.println("doClose.saveDialog: answer="+answer);
+		// IO.println("doClose.saveDialog: answer="+answer);
 		UIManager.put("OptionPane.background", OptionPaneBackground);
 		UIManager.put("Panel.background", PanelBackground);
 		return (answer);
@@ -84,7 +84,7 @@ public final class Util {
 
 	/// Perform FORCED EXIT.
 	private static void FORCED_EXIT() {
-		System.out.println("FORCED EXIT");
+		IO.println("FORCED EXIT");
 		if (Global.console == null) System.exit(-1);
 	}
 
@@ -169,7 +169,7 @@ public final class Util {
 			u = u.replace('\n', (char) 0);
 			Global.console.write(u + '\n');
 		}
-		else System.out.println(s);
+		else IO.println(s);
 	}  
 
 	/// Print a error message.
@@ -270,13 +270,13 @@ public final class Util {
 	/// Print a .class file listing.
 	/// @param classFileName the .class file name
 	public static void doListClassFile(final String classFileName) {
-		System.out.println("\n\n******** BEGIN List ClassFile: "+classFileName + " *****************************************************");
+		IO.println("\n\n******** BEGIN List ClassFile: "+classFileName + " *****************************************************");
 		try {
 			execute("javap", "-c", "-l", "-p", "-s", "-verbose", classFileName);
 		} catch (Exception e) {
 			Util.IERR("Impossible", e);
 		}
-		System.out.println("******** ENDOF List ClassFile: "+classFileName + " *****************************************************\n\n");
+		IO.println("******** ENDOF List ClassFile: "+classFileName + " *****************************************************\n\n");
 	}
 
 	// ***************************************************************

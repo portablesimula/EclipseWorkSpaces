@@ -108,7 +108,7 @@ public final class HiddenSpecification extends SyntaxClass {
 
 	@Override
 	public void printTree(final int indent, final Object head) {
-		System.out.println(SyntaxClass.edIndent(indent)+this.getClass().getSimpleName()+"    "+this);
+		IO.println(SyntaxClass.edIndent(indent)+this.getClass().getSimpleName()+"    "+this);
 	}
 
 	@Override

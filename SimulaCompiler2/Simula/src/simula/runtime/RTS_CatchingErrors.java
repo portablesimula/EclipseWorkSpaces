@@ -89,7 +89,7 @@ public abstract class RTS_CatchingErrors extends RTS_CLASS {
 		} catch (RTS_LABEL q) {
 			throw (q);
 		} catch (RuntimeException x) {
-			System.out.println("RuntimeException within onError: " + RTS_UTIL.getErrorMessage(e));
+			IO.println("RuntimeException within onError: " + RTS_UTIL.getErrorMessage(e));
 			e.printStackTrace(System.out);
 			RTS_ENVIRONMENT.exit(-1);
 		}

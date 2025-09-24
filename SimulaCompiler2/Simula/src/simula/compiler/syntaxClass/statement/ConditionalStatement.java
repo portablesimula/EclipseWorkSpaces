@@ -87,7 +87,7 @@ public final class ConditionalStatement extends Statement {
 	@Override
 	public void doChecking() {
 		if (IS_SEMANTICS_CHECKED())	return;
-//		System.out.println("ConditionalStatement.doChecking: " + condition.getClass().getSimpleName() + "  " + this);
+//		IO.println("ConditionalStatement.doChecking: " + condition.getClass().getSimpleName() + "  " + this);
 		condition.doChecking();
 		condition.backLink=this; // To ensure _RESULT from functions
 		if (condition.type == null || condition.type.keyWord != Type.T_BOOLEAN)
@@ -131,10 +131,10 @@ public final class ConditionalStatement extends Statement {
 	
 	@Override
 	public void printTree(final int indent, final Object head) {
-		System.out.println(edTreeIndent(indent)+"IF " + condition + " THEN");
+		IO.println(edTreeIndent(indent)+"IF " + condition + " THEN");
 		thenStatement.printTree(indent+1,this);
 		if(elseStatement != null) {
-			System.out.println(edTreeIndent(indent)+"ELSE");
+			IO.println(edTreeIndent(indent)+"ELSE");
 			elseStatement.printTree(indent+1,this);
 		}
 	}

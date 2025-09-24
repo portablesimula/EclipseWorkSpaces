@@ -260,9 +260,9 @@ public final class Global {
 		simulaHome = new File(simulaProperties.getProperty("simula.home"));
 		String version = simulaProperties.getProperty("simula.version");
 		releaseHome = new File(simulaHome, "/"+version);
-//		System.out.println("Global.loadProperties: simulaHome="+simulaHome);
-//		System.out.println("Global.loadProperties: Version="+version);
-//		System.out.println("Global.loadProperties: releaseHome="+releaseHome);
+//		IO.println("Global.loadProperties: simulaHome="+simulaHome);
+//		IO.println("Global.loadProperties: Version="+version);
+//		IO.println("Global.loadProperties: releaseHome="+releaseHome);
 	}
 
 	// **********************************************************
@@ -305,11 +305,11 @@ public final class Global {
 //				}
 				
 				String count = simulaWorkspaces.getProperty("simula.workspace.count","0");
-//				System.out.println("Global.loadSPortEditorProperties: count="+count);
+//				IO.println("Global.loadSPortEditorProperties: count="+count);
 				int n =  Integer.decode(count).intValue();
 				for(int i=0;i<n;i++) {
 					String ws = simulaWorkspaces.getProperty("simula.workspace." + (i+1));
-//					System.out.println("Global.loadSPortEditorProperties: workspace="+ws);
+//					IO.println("Global.loadSPortEditorProperties: workspace="+ws);
 					if(ws != null) {
 						File workspace = new File(ws);
 						if(workspace.exists()) workspaces.add(new File(ws));

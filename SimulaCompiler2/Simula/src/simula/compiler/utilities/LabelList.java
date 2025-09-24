@@ -64,7 +64,7 @@ public class LabelList {
 		this.sequ = (LABEL_SEQU++);
 		this.declaredIn = declaredIn;
 		this.declaredLabels = new Vector<LabelDeclaration>();
-		if(TRACING) System.out.println("NEW " + this);
+		if(TRACING) IO.println("NEW " + this);
 	}
 	
 	/// Clears this list.
@@ -120,10 +120,10 @@ public class LabelList {
 	/// Add a label to the local label list. 
 	/// @param lab the label to add.
 	public void add(LabelDeclaration lab) {
-		if(TRACING) System.out.println(ident()+".add: "+lab.identifier+'['+lab.externalIdent+']');
+		if(TRACING) IO.println(ident()+".add: "+lab.identifier+'['+lab.externalIdent+']');
 		if(READY_FOR_CODING) Util.IERR("Can't add a new Label when LabelLisit is marked READY_FOR_CODING");
 		declaredLabels.add(lab);
-		if(TRACING) System.out.println(ident()+".add: DONE: LabelList = "+this);
+		if(TRACING) IO.println(ident()+".add: DONE: LabelList = "+this);
 	}
 	
 	/// Accumulate the label list for the given block. 
@@ -157,8 +157,8 @@ public class LabelList {
 	/// @return a List of SwitchCase
 	public List<SwitchCase> getTableSwitchCases(CodeBuilder codeBuilder) {
 		if(!READY_FOR_CODING) MAKE_READY_FOR_CODING(codeBuilder);
-		if(TRACING) System.out.println(ident()+".getTableSwitchCases: "+this);
-		if(TRACING) System.out.println("LabelList.getTableSwitchCases: "+this);
+		if(TRACING) IO.println(ident()+".getTableSwitchCases: "+this);
+		if(TRACING) IO.println("LabelList.getTableSwitchCases: "+this);
 		if(tableSwitchCases == null) Util.IERR();
 		return tableSwitchCases;
 	}
@@ -177,11 +177,11 @@ public class LabelList {
 	/// @param codeBuilder the codeBuilder to use
 	private void MAKE_READY_FOR_CODING(CodeBuilder codeBuilder) {
 		if(READY_FOR_CODING) return;
-		if(TRACING) System.out.println("\n" + ident() +".MAKE_READY_FOR_CODING: "+this);
+		if(TRACING) IO.println("\n" + ident() +".MAKE_READY_FOR_CODING: "+this);
 		if(accumLabelSize() > 0) {
 			defaultTarget = codeBuilder.newLabel();
 			tableSwitchCases = new Vector<SwitchCase>();
-			if(TRACING) System.out.println(ident()+".MAKE_READY_FOR_CODING: nLabels="+accumLabels.size());
+			if(TRACING) IO.println(ident()+".MAKE_READY_FOR_CODING: nLabels="+accumLabels.size());
 			for (int i = 1; i <= accumLabels.size(); i++) {
 				Label lab = codeBuilder.newLabel();
 				tableSwitchCases.add(SwitchCase.of(i, lab));
@@ -194,7 +194,7 @@ public class LabelList {
 	/// @param codeBuilder the codeBuilder to use
 	public void build_JUMPTABLE(BlockCodeBuilder codeBuilder) {
 		if(!READY_FOR_CODING) MAKE_READY_FOR_CODING(codeBuilder);
-		if(TRACING) System.out.println(ident()+".build_JUMPTABLE: "+this);
+		if(TRACING) IO.println(ident()+".build_JUMPTABLE: "+this);
 		// *******************************************************************************
 		// *** JUMPTABLE Case
 		// *******************************************************************************
@@ -224,10 +224,10 @@ public class LabelList {
 		if(!READY_FOR_CODING) MAKE_READY_FOR_CODING(codeBuilder);
 		BlockDeclaration labelContext = BlockDeclaration.labelContext;
 		LabelList currentList = labelContext.labelList;
-		if(TRACING) System.out.println(ident()+".labelBinding: labelContext="+labelContext+", codeBuilder="+codeBuilder);
-		if(TRACING) System.out.println(ident()+".labelBinding: currentList="+currentList);
+		if(TRACING) IO.println(ident()+".labelBinding: labelContext="+labelContext+", codeBuilder="+codeBuilder);
+		if(TRACING) IO.println(ident()+".labelBinding: currentList="+currentList);
 		SwitchCase switchCase=currentList.tableSwitchCases.get(label.index-1);
-		if(TRACING) System.out.println(ident()+".labelBinding: "+label+"   SwitchCase="+switchCase);
+		if(TRACING) IO.println(ident()+".labelBinding: "+label+"   SwitchCase="+switchCase);
 		codeBuilder.labelBinding(switchCase.target());
 	}
 
@@ -236,38 +236,38 @@ public class LabelList {
 	/// @param owner the BlockDeclaration owning this LabelList
 	public void printTree(final int indent, final BlockDeclaration owner) {
 		if(Option.internal.PRINT_SYNTAX_TREE > 2) {
-			System.out.println(SyntaxClass.edIndent(indent)+this);
+			IO.println(SyntaxClass.edIndent(indent)+this);
 		} else {
-			System.out.println(SyntaxClass.edIndent(indent) + "LabelList with " + (declaredLabels.size()) + " DeclaredLabels ...");
+			IO.println(SyntaxClass.edIndent(indent) + "LabelList with " + (declaredLabels.size()) + " DeclaredLabels ...");
 		}
 	}
 	
 	/// Debug utility: print the LabelList
 	/// @param title title String
 	public void print(String title) {
-		System.out.println("\n************ BEGIN LabelList[" +sequ + "]: "+title+" ************");
-		System.out.println("*** DeclaredIn: "+declaredIn.identifier+"  READY_FOR_CODING="+READY_FOR_CODING);
+		IO.println("\n************ BEGIN LabelList[" +sequ + "]: "+title+" ************");
+		IO.println("*** DeclaredIn: "+declaredIn.identifier+"  READY_FOR_CODING="+READY_FOR_CODING);
 		System.out.print("*** DeclaredLabels:");
 		if(declaredLabelSize() > 0) {
 			for(LabelDeclaration lab:getDeclaredLabels()) {
 				System.out.print(" " + lab.identifier + '[' + lab.declaredIn.externalIdent + ':' + lab.index + ']' + "atLine:" + lab.lineNumber);
 			}
-			System.out.println("");
-		} else System.out.println(" NONE");
+			IO.println("");
+		} else IO.println(" NONE");
 		System.out.print("*** AccumLabels:   ");
 		if(accumLabelSize() > 0) {
 			for(LabelDeclaration lab:getAccumLabels()) {
 				System.out.print(" " + lab.identifier + '[' + lab.declaredIn.externalIdent + ':' + lab.index + ']' + "atLine:" + lab.lineNumber);
 			}
-			System.out.println("");
-		} else System.out.println(" NONE");
-		System.out.println("*** DefaultTarget:  "+defaultTarget);
+			IO.println("");
+		} else IO.println(" NONE");
+		IO.println("*** DefaultTarget:  "+defaultTarget);
 		if(tableSwitchCases != null) {
 			for(SwitchCase swc:tableSwitchCases) {
-				System.out.println("*** SwitchCase:     "+swc);
+				IO.println("*** SwitchCase:     "+swc);
 			}
 		}
-		System.out.println("************ ENDOF LabelList[" +sequ + "]: "+title+" ************\n");
+		IO.println("************ ENDOF LabelList[" +sequ + "]: "+title+" ************\n");
 	}
 	
 	public String toString() {
@@ -318,7 +318,7 @@ public class LabelList {
 			labelList = new LabelList(declaredIn);
 			int n = inpt.readShort();
 			if(TRACING)
-				System.out.println("LabelList.readLabelList: Read Label List: "+n);
+				IO.println("LabelList.readLabelList: Read Label List: "+n);
 			for(int i=0;i<n;i++) {
 				LabelDeclaration lab = (LabelDeclaration) inpt.readObj();
 				labelList.add(lab);

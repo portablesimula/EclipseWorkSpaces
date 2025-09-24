@@ -55,7 +55,7 @@ public class SVM_RESTORE extends SVM_Instruction {
 	
 			if(DEBUG) {
 				RTStack.dumpRTStack("RTStack.restoreStack: ");
-//				Util.IERR("");
+				Util.IERR("");
 			}
 		}
 	}

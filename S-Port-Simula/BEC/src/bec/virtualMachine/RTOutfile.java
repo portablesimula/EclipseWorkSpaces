@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import bec.util.Util;
+
 public class RTOutfile extends RTImageFile {
 	
 	FileWriter writer;

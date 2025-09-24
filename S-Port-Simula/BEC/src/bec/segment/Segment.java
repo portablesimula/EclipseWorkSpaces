@@ -131,7 +131,7 @@ public class Segment { // extends Descriptor {
 		ProgramAddress seg1Low  = new ProgramAddress(Type.T_PADDR, "DSEG", 12);
 		ProgramAddress seg1High = new ProgramAddress(Type.T_PADDR, "DSEG", 99);
 		ProgramAddress seg2Low  = new ProgramAddress(Type.T_PADDR, "CSEG", 12);
-//		ProgramAddress seg2High = new ProgramAddress(Type.T_PADDR, "CSEG", 99);
+		ProgramAddress seg2High = new ProgramAddress(Type.T_PADDR, "CSEG", 99);
 		int nErr = 0;
 
 		nErr += TEST(seg1Low, Scode.S_LT, seg1High, true);

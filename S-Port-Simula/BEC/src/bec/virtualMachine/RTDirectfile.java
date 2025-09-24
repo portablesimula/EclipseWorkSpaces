@@ -2,6 +2,7 @@ package bec.virtualMachine;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
@@ -26,7 +27,6 @@ public class RTDirectfile extends RTImageFile {
 	public int MAXLOC;
 
 	/// The initial value of LAST_LOC
-	@SuppressWarnings("unused")
 	private int INITIAL_LAST_LOC;
 
 	public RTDirectfile(String fileName, int type, String action, int imglng) {

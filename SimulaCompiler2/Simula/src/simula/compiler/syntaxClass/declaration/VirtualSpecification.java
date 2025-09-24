@@ -199,8 +199,8 @@ public final class VirtualSpecification extends Declaration {
 		
 		
 		if(scope.prefix.equals("ERRMSG")) {
-			System.out.println("VirtualSpecification.getVirtualSpecification: decl="+decl);
-			System.out.println("VirtualSpecification.getVirtualSpecification: scope="+scope+"   PREFIX="+scope.prefix);
+			IO.println("VirtualSpecification.getVirtualSpecification: decl="+decl);
+			IO.println("VirtualSpecification.getVirtualSpecification: scope="+scope+"   PREFIX="+scope.prefix);
 			
 		}
 		
@@ -254,7 +254,7 @@ public final class VirtualSpecification extends Declaration {
 
 	@Override
 	public void printTree(int indent, final Object head) {
-		System.out.println(SyntaxClass.edIndent(indent)+this.getClass().getSimpleName()+"    "+this);
+		IO.println(SyntaxClass.edIndent(indent)+this.getClass().getSimpleName()+"    "+this);
 	}
 
 	@Override

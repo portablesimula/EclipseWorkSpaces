@@ -94,7 +94,7 @@ public final class LabeledStatement extends Statement {
 		System.out.print(edTreeIndent(indent)+"LABELED_STATEMENT ");
 		for (LabelDeclaration lab:labels)
 			System.out.print(" "+lab+":");
-		System.out.println("");
+		IO.println("");
 		statement.printTree(indent+1,this);
 	}
 

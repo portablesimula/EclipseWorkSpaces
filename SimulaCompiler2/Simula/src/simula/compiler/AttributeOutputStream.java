@@ -43,7 +43,7 @@ public class AttributeOutputStream {
 	/// @param i a kind code to be written.
 	/// @throws IOException if an I/O error occurs.
     public void writeKind(int i) throws IOException {
-		if(TRACE) System.out.println("AttributeOutputStream.writeKind: "+i+':'+ObjectKind.edit(i));
+		if(TRACE) IO.println("AttributeOutputStream.writeKind: "+i+':'+ObjectKind.edit(i));
 		if(i > ObjectKind.MAX_VALUE || i < 0) throw new IllegalArgumentException("Argument = "+i);
 		oupt.writeByte(i);
 	}
@@ -52,7 +52,7 @@ public class AttributeOutputStream {
     /// @param type a type to be written.
     /// @throws IOException if an I/O error occurs.
     public void writeType(Type type) throws IOException {
-		if(TRACE) System.out.println("AttributeOutputStream.writeType: "+type);
+		if(TRACE) IO.println("AttributeOutputStream.writeType: "+type);
 		if(type == null)
 			oupt.writeByte(0);
 		else {
@@ -65,7 +65,7 @@ public class AttributeOutputStream {
     /// @param b a boolean to be written.
     /// @throws IOException if an I/O error occurs.
     public void writeBoolean(boolean b) throws IOException {
-		if(TRACE) System.out.println("AttributeOutputStream.writeBoolean: "+b);
+		if(TRACE) IO.println("AttributeOutputStream.writeBoolean: "+b);
 		oupt.writeBoolean(b);
 	}
 
@@ -73,7 +73,7 @@ public class AttributeOutputStream {
     /// @param i a short to be written.
     /// @throws IOException if an I/O error occurs.
     public void writeShort(int i) throws IOException {
-		if(TRACE) System.out.println("AttributeOutputStream.writeInt: "+i);
+		if(TRACE) IO.println("AttributeOutputStream.writeInt: "+i);
 		if(i > Short.MAX_VALUE || i < Short.MIN_VALUE) throw new IllegalArgumentException("Argument = "+i);
 		oupt.writeShort(i);			
 	}
@@ -82,7 +82,7 @@ public class AttributeOutputStream {
     /// @param c a typed constant to be written.
     /// @throws IOException if an I/O error occurs.
     public void writeConstant(Object c) throws IOException {
-		if(TRACE) System.out.println("AttributeOutputStream.writeConstant: "+c);
+		if(TRACE) IO.println("AttributeOutputStream.writeConstant: "+c);
 		if(c == null)						{ oupt.writeByte(Type.T_UNDEF); }
 		else if(c instanceof Boolean b)		{ oupt.writeByte(Type.T_BOOLEAN);   oupt.writeBoolean(b);	}
 		else if(c instanceof Integer i)		{ oupt.writeByte(Type.T_INTEGER);   oupt.writeShort(i);	}
@@ -98,7 +98,7 @@ public class AttributeOutputStream {
     /// @param s a String to be written.
     /// @throws IOException if an I/O error occurs.
     public void writeString(String s) throws IOException {
-		if(TRACE) System.out.println("AttributeOutputStream.writeString: "+s);
+		if(TRACE) IO.println("AttributeOutputStream.writeString: "+s);
 		if(s == null) oupt.writeShort(0);
 		else {
 			int lng = s.length();
@@ -119,15 +119,15 @@ public class AttributeOutputStream {
 	/// @throws IOException if an I/O error occurs.
     public void writeObj(SyntaxClass obj) throws IOException {
 		if(obj == null) {
-			if(TRACE) System.out.println("AttributeOutputStream.writeObj: null");
+			if(TRACE) IO.println("AttributeOutputStream.writeObj: null");
 			writeKind(ObjectKind.NULL);
 		} else if(obj.OBJECT_SEQU != 0) {
-			if(TRACE) System.out.println("AttributeOutputStream.writeObj: ObjectReference "+(obj.OBJECT_SEQU));
+			if(TRACE) IO.println("AttributeOutputStream.writeObj: ObjectReference "+(obj.OBJECT_SEQU));
 			writeKind(ObjectKind.ObjectReference);
 			oupt.writeShort(obj.OBJECT_SEQU);
 		} else {
 			obj.OBJECT_SEQU = Global.Object_SEQU++;
-			if(TRACE) System.out.println("AttributeOutputStream.writeObj: OBJECT_SEQU="+obj.OBJECT_SEQU+": "+obj.getClass().getSimpleName()+"  "+obj);
+			if(TRACE) IO.println("AttributeOutputStream.writeObj: OBJECT_SEQU="+obj.OBJECT_SEQU+": "+obj.getClass().getSimpleName()+"  "+obj);
 			obj.writeObject(this);
 		}
     }

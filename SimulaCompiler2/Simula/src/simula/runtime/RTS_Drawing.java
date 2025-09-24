@@ -207,7 +207,7 @@ public class RTS_Drawing extends RTS_Simset {
 	/// @param size the font size.
 	public void setFontSize(final float size) {
 		if (DEBUG)
-			System.out.println("SetFontSize: size=" + size + ", OldFont=" + currentFont);
+			IO.println("SetFontSize: size=" + size + ", OldFont=" + currentFont);
 		currentFont = currentFont.deriveFont(size);
 	}
 
@@ -409,10 +409,10 @@ public class RTS_Drawing extends RTS_Simset {
 		canvas.setSize(width, height);
 		currentFont = new Font(Font.SERIF, 12, Font.PLAIN);
 		if (DEBUG)
-			System.out.println("Init: Current Font=" + currentFont);
+			IO.println("Init: Current Font=" + currentFont);
 		setFontSize(12);
 		if (DEBUG)
-			System.out.println("Init: Current Font=" + currentFont);
+			IO.println("Init: Current Font=" + currentFont);
 		frame.add(canvas);
 		frame.pack();
 		frame.setVisible(true);
@@ -424,7 +424,7 @@ public class RTS_Drawing extends RTS_Simset {
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
 				if (DEBUG)
-					System.out.println("KEY " + c + " TYPED");
+					IO.println("KEY " + c + " TYPED");
 				if (c == 'x')
 					throw new RTS_EndProgram("Simula - endProgram");
 			}
@@ -432,13 +432,13 @@ public class RTS_Drawing extends RTS_Simset {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (DEBUG)
-					System.out.println("KEY " + e.getKeyChar() + " PRESSED");
+					IO.println("KEY " + e.getKeyChar() + " PRESSED");
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
 				if (DEBUG)
-					System.out.println("KEY " + e.getKeyChar() + " RELEASE");
+					IO.println("KEY " + e.getKeyChar() + " RELEASE");
 			}
 		});
 	}

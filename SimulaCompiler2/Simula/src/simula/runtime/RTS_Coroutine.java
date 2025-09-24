@@ -218,7 +218,7 @@ public class RTS_Coroutine implements Runnable {
 			}
 			throw t;
 			
-//			System.out.println("RTS_Coroutine.suspend: "+coroutine);
+//			IO.println("RTS_Coroutine.suspend: "+coroutine);
 //			Thread.UncaughtExceptionHandler handler = Thread.currentThread().getUncaughtExceptionHandler();
 //			handler.uncaughtException(Thread.currentThread(), t);
 		}
