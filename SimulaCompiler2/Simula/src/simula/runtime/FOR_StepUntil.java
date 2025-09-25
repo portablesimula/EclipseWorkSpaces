@@ -15,6 +15,11 @@ package simula.runtime;
 ///          end while;
 ///          ... next for list element
 /// </pre>
+/// 
+/// Link to GitHub: <a href=
+/// "https://github.com/portablesimula/EclipseWorkSpaces/blob/main/SimulaCompiler2/Simula/src/simula/runtime/FOR_StepUntil.java"><b>Source File</b></a>.
+/// 
+/// @author Øystein Myhre Andersen
 public final class FOR_StepUntil extends FOR_Element {
 	/// The for-statement control variable.
 	final RTS_NAME<Number> cvar;

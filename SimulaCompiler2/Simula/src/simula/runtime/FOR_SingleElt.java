@@ -10,6 +10,11 @@ package simula.runtime;
 /// <pre>
 /// 		For i:= <Expr>
 /// </pre>
+/// 
+/// Link to GitHub: <a href=
+/// "https://github.com/portablesimula/EclipseWorkSpaces/blob/main/SimulaCompiler2/Simula/src/simula/runtime/FOR_SingleElt.java"><b>Source File</b></a>.
+/// 
+/// @author Øystein Myhre Andersen
 /// @param <T> the type of this element
 public final class FOR_SingleElt<T> extends FOR_Element {
 	/// The for-statement control variable.

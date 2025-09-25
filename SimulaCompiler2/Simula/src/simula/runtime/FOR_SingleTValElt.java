@@ -10,6 +10,11 @@ package simula.runtime;
 /// <pre>
 /// 		For t:= <TextExpr> // Text Value Assignment
 /// </pre>
+/// 
+/// Link to GitHub: <a href=
+/// "https://github.com/portablesimula/EclipseWorkSpaces/blob/main/SimulaCompiler2/Simula/src/simula/runtime/FOR_SingleTValElt.java"><b>Source File</b></a>.
+/// 
+/// @author Øystein Myhre Andersen
 public final class FOR_SingleTValElt extends FOR_Element {
 	/// The for-statement control variable.
 	final RTS_NAME<RTS_TXT> cvar;
