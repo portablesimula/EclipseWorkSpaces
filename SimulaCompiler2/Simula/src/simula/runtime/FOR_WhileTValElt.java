@@ -10,6 +10,11 @@ package simula.runtime;
 /// <pre>
 /// 		For t:= <TextExpr> while <Cond> // Text Value Assignment
 /// </pre>
+/// 
+/// Link to GitHub: <a href=
+/// "https://github.com/portablesimula/EclipseWorkSpaces/blob/main/SimulaCompiler2/Simula/src/simula/runtime/FOR_Element.java"><b>Source File</b></a>.
+/// 
+/// @author Øystein Myhre Andersen
 public final class FOR_WhileTValElt extends FOR_Element {
 	// For t:= <TextExpr> while <Cond> // Text Value Assignment
 	/// The for-statement control variable.
