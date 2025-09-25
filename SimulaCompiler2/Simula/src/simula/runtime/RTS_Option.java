@@ -2,7 +2,12 @@ package simula.runtime;
 
 import java.io.Writer;
 
-///  Runtime Options
+/// Utility class Runtime Options.
+/// 
+/// Link to GitHub: <a href=
+/// "https://github.com/portablesimula/EclipseWorkSpaces/blob/main/SimulaCompiler2/Simula/src/simula/compiler/utilities/Token.java"><b>Source File</b></a>.
+/// 
+/// @author Øystein Myhre Andersen
 public class RTS_Option {
 	
 	/// Default constructor.
