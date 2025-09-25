@@ -9,6 +9,11 @@ package simula.runtime;
 // *** FRAMEWORK for Label-Variable in Java Coding
 // ************************************************************
 /// This class represent a Simula Label quantity
+/// 
+/// Link to GitHub: <a href=
+/// "https://github.com/portablesimula/EclipseWorkSpaces/blob/main/SimulaCompiler2/Simula/src/simula/runtime/RTS_LABEL.java"><b>Source File</b></a>.
+/// 
+/// @author Øystein Myhre Andersen
 @SuppressWarnings("serial")
 public final class RTS_LABEL extends RuntimeException {
 	/// Static link, i.e. the block in which the label is defined.
