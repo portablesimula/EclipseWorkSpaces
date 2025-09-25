@@ -6,6 +6,11 @@
 package simula.runtime;
 
 /// The RTS End Program Exception
+/// 
+/// Link to GitHub: <a href=
+/// "https://github.com/portablesimula/EclipseWorkSpaces/blob/main/SimulaCompiler2/Simula/src/simula/runtime/RTS_EndProgram.java"><b>Source File</b></a>.
+/// 
+/// @author Øystein Myhre Andersen
 @SuppressWarnings("serial")
 public final class RTS_EndProgram extends RuntimeException {
 
