@@ -155,9 +155,9 @@ public class SimulaEditor extends JFrame {
         this.setVisible(true);
         
 		int javaVersion=getJavaSpecVersion();
-		if(javaVersion < 24) {
+		if(javaVersion < 25) {
 			String msg = "You have installed Java "+System.getProperty("java.version")+'.'  // TODO: CHECK DETTE
-					+"\nWe recommend at least Java 24."
+					+"\nWe recommend at least Java 25."
 					+"\nCheck the settings and consider"
 					+"\ninstalling a newer version.\n"
 //					+"\nRemember to set Environment Variables:"
@@ -165,7 +165,7 @@ public class SimulaEditor extends JFrame {
 					+"\nDo you want to continue ?\n\n"
 				;
 			int result=Util.optionDialog(msg,"Java version Notification",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,"Yes","No","Get Java");
-			System.out.println("result="+result);
+			IO.println("result="+result);
 			
 			if(result == 1) System.exit(0);
 			if(result == 2) {
