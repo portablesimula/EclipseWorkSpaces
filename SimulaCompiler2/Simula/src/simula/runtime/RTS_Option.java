@@ -1,7 +1,5 @@
 package simula.runtime;
 
-import java.io.Writer;
-
 /// Utility class Runtime Options.
 /// 
 /// Link to GitHub: <a href=
