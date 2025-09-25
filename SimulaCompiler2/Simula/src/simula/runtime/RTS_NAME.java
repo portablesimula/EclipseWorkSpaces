@@ -75,6 +75,11 @@ package simula.runtime;
 /// Here we see that the 'put' method is not redefined so that any attempt to
 /// assign a new value to this name parameter will result in an error message.
 /// 
+/// Link to GitHub: <a href=
+/// "https://github.com/portablesimula/EclipseWorkSpaces/blob/main/SimulaCompiler2/Simula/src/simula/runtime/RTS_NAME.java"><b>Source File</b></a>.
+/// 
+/// @author Øystein Myhre Andersen
+///
 /// @param <T> the type of the parameter
 public abstract class RTS_NAME<T> {
 	/// The environment in which evaluations of get'parameters will take place.
