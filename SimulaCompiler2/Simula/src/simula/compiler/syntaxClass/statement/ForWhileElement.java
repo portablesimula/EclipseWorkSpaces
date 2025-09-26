@@ -31,6 +31,12 @@ import simula.compiler.utilities.Util;
 // *** ForListElement -- While Element
 // ************************************************************************************
 /// Utility class: For-list While element.
+///
+/// Link to GitHub: <a href=
+/// "https://github.com/portablesimula/EclipseWorkSpaces/blob/main/SimulaCompiler2/Simula/src/simula/compiler/syntaxClass/statement/ForWhileElement.java">
+/// <b>Source File</b></a>.
+/// 
+/// @author Øystein Myhre Andersen
 public class ForWhileElement extends ForListElement {
 	
 	/// The second expression.

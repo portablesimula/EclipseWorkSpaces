@@ -31,6 +31,12 @@ import simula.compiler.utilities.Util;
 // *** ForListElement -- Single Value
 // ************************************************************************************
 /// Utility class ForListElement implementing a single value element.
+///
+/// Link to GitHub: <a href=
+/// "https://github.com/portablesimula/EclipseWorkSpaces/blob/main/SimulaCompiler2/Simula/src/simula/compiler/syntaxClass/statement/ForListElement.java">
+/// <b>Source File</b></a>.
+/// 
+/// @author Øystein Myhre Andersen
 public class ForListElement extends SyntaxClass {
 	/// The For-statement.
 	ForStatement forStatement;
