@@ -28,6 +28,12 @@ import simula.compiler.utilities.Util;
 // *** ForListElement -- Step Until Element
 // ************************************************************************************
 /// Utility class: For-list Step until element.
+///
+/// Link to GitHub: <a href=
+/// "https://github.com/portablesimula/EclipseWorkSpaces/blob/main/SimulaCompiler2/Simula/src/simula/compiler/syntaxClass/statement/StepUntilElement.java">
+/// <b>Source File</b></a>.
+/// 
+/// @author Øystein Myhre Andersen
 public class StepUntilElement extends ForListElement {
 	/// The second expression.
 	Expression expr2;
