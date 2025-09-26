@@ -30,6 +30,12 @@ import simula.compiler.utilities.Option;
 import simula.compiler.utilities.Util;
 
 /// Thunk Declaration.
+/// 
+/// Link to GitHub: <a href=
+/// "https://github.com/portablesimula/EclipseWorkSpaces/blob/main/SimulaCompiler2/Simula/src/simula/compiler/syntaxClass/declaration/Thunk.java">
+/// <b>Source File</b></a>.
+/// 
+/// @author Øystein Myhre Andersen
 public final class Thunk extends DeclarationScope {
 
 	/** Local variable */ private static int OBJECT_SEQU = 0;
