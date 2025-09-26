@@ -53,6 +53,17 @@ import java.util.Vector;
 /// 
 /// `ClassHierarchyResolver.defaultResolver().orElse(classDesc -> isInterface ? :
 /// ClassHierarchyInfo.ofInterface() : ClassHierarchyInfo.ofClass(ClassDesc superClass))`
+///
+/// ----------------------------------------------------------------------------------
+///
+/// This class 'ClassHierarchy' is used to establish a complete map of all generated classes.
+/// It is used by the class file builders of Simula classes, procedures, blocks, prefixed blocks and thunks.
+///
+/// 
+/// Link to GitHub: <a href=
+/// "https://github.com/portablesimula/EclipseWorkSpaces/blob/main/SimulaCompiler2/Simula/src/simula/compiler/utilities/ClassHierarchy.java"><b>Source File</b></a>.
+/// 
+/// @author Øystein Myhre Andersen
 public abstract class ClassHierarchy {
 	/// The classToSuperClass Map.
 	private static Map<ClassDesc, ClassDesc> classToSuperClass;
