@@ -15,7 +15,6 @@ import simula.runtime.RTS_EndProgram;
 /// 
 /// Link to GitHub: <a href=
 /// "https://github.com/portablesimula/EclipseWorkSpaces/blob/main/SimulaCompiler2/Simula/src/simula/compiler/utilities/SimulaClassLoader.java"><b>Source File</b></a>.
-/// <b>Source File</b></a>.
 /// 
 /// @author Øystein Myhre Andersen
 public class SimulaClassLoader extends ClassLoader {
