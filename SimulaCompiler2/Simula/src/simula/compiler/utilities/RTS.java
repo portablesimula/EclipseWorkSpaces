@@ -14,6 +14,11 @@ import java.lang.constant.MethodTypeDesc;
 import simula.compiler.syntaxClass.Type;
 
 /// Predefined values for common constants, including descriptors for class types etc. 
+/// 
+/// Link to GitHub: <a href=
+/// "https://github.com/portablesimula/EclipseWorkSpaces/blob/main/SimulaCompiler2/Simula/src/simula/compiler/utilities/RTS.java"><b>Source File</b></a>.
+/// 
+/// @author Øystein Myhre Andersen
 public final class RTS {
 	
 	/** Default Constructor. NOT USED */ private RTS() {} 
