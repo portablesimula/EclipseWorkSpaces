@@ -18,6 +18,12 @@ import simula.compiler.utilities.Option;
 import simula.compiler.utilities.Util;
 
 /// Utility class to hold the single Connection do-part.
+///
+/// Link to GitHub: <a href=
+/// "https://github.com/portablesimula/EclipseWorkSpaces/blob/main/SimulaCompiler2/Simula/src/simula/compiler/syntaxClass/statement/ConnectionDoPart.java">
+/// <b>Source File</b></a>.
+/// 
+/// @author Øystein Myhre Andersen
 public class ConnectionDoPart extends SyntaxClass {
 	
 	/// The associated connection statement.
