@@ -102,16 +102,16 @@ public class RecordDescr extends Descriptor {
 		String head = "RECORD " + tag + " Size=" + size;
 		if(infoType)  head = head + " INFO TYPE";
 		if(prefixTag > 0) head = head + " PREFIX " + Scode.edTag(prefixTag);
-		System.out.println(indent + head);
+		IO.println(indent + head);
 		if(attributes != null) for(Attribute attr:attributes) {
-			System.out.println(indent + "   " + attr.toString());
+			IO.println(indent + "   " + attr.toString());
 		}
 		if(alternateParts != null) {
 			for(AlternatePart alt:alternateParts) {
 				alt.print(indent + "   ");
 			}
 		}
-		System.out.println("   " + "ENDRECORD");
+		IO.println("   " + "ENDRECORD");
 	}
 		
 	@Override
@@ -150,10 +150,10 @@ public class RecordDescr extends Descriptor {
 			boolean first = true;
 			for(Attribute attr:attributes) {
 				if(first) {
-					System.out.println(indent + "ALT " + attr);
+					IO.println(indent + "ALT " + attr);
 					first = false;
 				}
-				else System.out.println(indent + "    " + attr);
+				else IO.println(indent + "    " + attr);
 
 			}
 		}
@@ -164,7 +164,7 @@ public class RecordDescr extends Descriptor {
 	// ***********************************************************************************************
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("RecordDescr.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("RecordDescr.Write: " + this);
 		oupt.writeKind(kind);
 		tag.write(oupt);
 		oupt.writeShort(size);
@@ -178,7 +178,7 @@ public class RecordDescr extends Descriptor {
 		rec.size = inpt.readShort();
 		rec.nbrep = inpt.readShort();
 		rec.infoType = inpt.readBoolean();
-		if(Global.ATTR_INPUT_TRACE) System.out.println("RecordDescr.Read: " + rec);
+		if(Global.ATTR_INPUT_TRACE) IO.println("RecordDescr.Read: " + rec);
 		return rec;
 	}
 

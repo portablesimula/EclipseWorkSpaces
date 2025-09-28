@@ -76,7 +76,7 @@ public class Variable extends SimpleDesignator {
 		
 		Declaration meaning;
 		if(prevType!=null) {
-//			System.out.println("Variable.doSCodingDirect: prevType="+prevType);
+//			IO.println("Variable.doSCodingDirect: prevType="+prevType);
 			Record remote=prevType.getQualifyingRecord();
 			Util.TRACE("remote="+remote+", QUAL="+remote.getClass().getSimpleName());
 			meaning=remote.findAttribute(var.identifier);
@@ -127,16 +127,16 @@ public class Variable extends SimpleDesignator {
     		
             Util.TRACE("Variable type: "+vartype);
             boolean valueMode=vmode && argset==null;
-//            System.out.println("Variable.doSCodingDirect: "+var+", prefType="+prevType+", valueMode="+valueMode+", vartype="+vartype);
+//            IO.println("Variable.doSCodingDirect: "+var+", prefType="+prevType+", valueMode="+valueMode+", vartype="+vartype);
             
             boolean pushc_done=false;
             
 			if(prevType!=null) {
-//	            System.out.println("Variable.doSCodingDirect: "+var+", prefType="+prevType+", valueMode="+valueMode+", vartype="+vartype);
-//	            System.out.println("Variable.doSCodingDirect: prefType="+prevType+", islaste="+isLast);
+//	            IO.println("Variable.doSCodingDirect: "+var+", prefType="+prevType+", valueMode="+valueMode+", vartype="+vartype);
+//	            IO.println("Variable.doSCodingDirect: prefType="+prevType+", islaste="+isLast);
 				
 				if(prevType.isInfixType() && !isLast) {
-//		            System.out.println("Variable.doSCodingDirect: prefType="+prevType+", islaste="+isLast+", valueMode="+valueMode);
+//		            IO.println("Variable.doSCodingDirect: prefType="+prevType+", islaste="+isLast+", valueMode="+valueMode);
 //		            valueMode=true;
 				}
 				
@@ -160,7 +160,7 @@ public class Variable extends SimpleDesignator {
 //						quant.type.toDefaultSCode();
 //					} else {
 //						Value val=quant.initval.firstElement();
-//						//System.out.println("Variable.doSCodingDirect: "+val);
+//						//IO.println("Variable.doSCodingDirect: "+val);
 //						val.doOutConst();
 //					}
 //					//Util.FORCED_EXIT();

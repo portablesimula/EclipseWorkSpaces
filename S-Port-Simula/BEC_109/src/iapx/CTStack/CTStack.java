@@ -184,10 +184,10 @@ public class CTStack {
 		}
 		String lead = indent + title + ": Current Stack ";
 		if(TOS == null) {
-			System.out.println(lead + ": **Empty**");				
+			IO.println(lead + ": **Empty**");				
 		} else {
 			StackItem s = TOS;
-			System.out.println(lead);
+			IO.println(lead);
 			lead = indent + "        TOS: ";
 			do {
 				IO.print(lead);

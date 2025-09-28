@@ -24,13 +24,13 @@ public class SVM_DECO extends SVM_Instruction {
 		int tos = RTStack.popInt();
 		ObjectAddress sos = RTStack.popOADDR();
 		if(DEBUG) {
-			System.out.println("SVM_DECO: TOS: " + tos);
-			System.out.println("SVM_DECO: SOS: " + sos);
-			System.out.println("SVM_DECO: " + sos + " - " + tos);
+			IO.println("SVM_DECO: TOS: " + tos);
+			IO.println("SVM_DECO: SOS: " + sos);
+			IO.println("SVM_DECO: " + sos + " - " + tos);
 		}
 //		ObjectAddress res = (sos == null)? new ObjectAddress(null, -tos) : sos.addOffset(-tos);
 		ObjectAddress res = (sos == null)? ObjectAddress.ofRelFrameAddr( -tos) : sos.addOffset(-tos);
-		if(DEBUG) System.out.println("SVM_DECO: " + sos + " - " + tos + " ==> " + res);
+		if(DEBUG) IO.println("SVM_DECO: " + sos + " - " + tos + " ==> " + res);
 		RTStack.push(res, "SVM_DECO: " + tos + " - " + sos + " = " + res);
 		Global.PSC.addOfst(1);
 	}
@@ -45,13 +45,13 @@ public class SVM_DECO extends SVM_Instruction {
 	// ***********************************************************************************************
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 	}
 
 	public static SVM_DECO read(AttributeInputStream inpt) throws IOException {
 		SVM_DECO instr = new SVM_DECO();
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + instr);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
 		return instr;
 	}
 

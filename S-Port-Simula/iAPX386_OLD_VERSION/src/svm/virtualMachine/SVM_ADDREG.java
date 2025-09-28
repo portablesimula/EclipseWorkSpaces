@@ -41,12 +41,12 @@ public class SVM_ADDREG extends SVM_Instruction {
 		Value rval = RTRegister.getValue(xReg);
 		
 		if(DEBUG) {
-			if(tos != null)	System.out.println("SVM_ADDEG: TOS: " + tos.getClass().getSimpleName() + "  " + tos);
-			if(rval != null)	System.out.println("SVM_ADDEG: SOS: " + rval.getClass().getSimpleName() + "  " + rval);
-			System.out.println("SVM_ADD: " + rval + " + " + tos);
+			if(tos != null)	IO.println("SVM_ADDEG: TOS: " + tos.getClass().getSimpleName() + "  " + tos);
+			if(rval != null)	IO.println("SVM_ADDEG: SOS: " + rval.getClass().getSimpleName() + "  " + rval);
+			IO.println("SVM_ADD: " + rval + " + " + tos);
 		}
 		Value res = (rval == null)? tos : rval.add(tos);
-		if(DEBUG) System.out.println("SVM_ADD: " + rval + " + " + tos + " ==> " + res);
+		if(DEBUG) IO.println("SVM_ADD: " + rval + " + " + tos + " ==> " + res);
 		RTRegister.putValue(xReg, res);
 		Global.PSC.addOfst(1);
 	}
@@ -61,14 +61,14 @@ public class SVM_ADDREG extends SVM_Instruction {
 	// ***********************************************************************************************
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		oupt.writeReg(xReg);
 	}
 
 	public static SVM_ADDREG read(AttributeInputStream inpt) throws IOException {
 		SVM_ADDREG instr = new SVM_ADDREG(inpt.readReg());
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + instr);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
 		return instr;
 	}
 

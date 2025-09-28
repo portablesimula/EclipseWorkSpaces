@@ -166,7 +166,7 @@ public class SCodeFile {
     public void outcode() {
     	if(Option.TRACE_CODING > 0) {
     		if(TRCBUFF.length() > 0) {
-    			System.out.println("Line "+Global.sourceLineNumber+": "+ident+".Output: "+Util.edIndent(indent)+TRCBUFF.toString());
+    			IO.println("Line "+Global.sourceLineNumber+": "+ident+".Output: "+Util.edIndent(indent)+TRCBUFF.toString());
     		}
     	}
 		TRCBUFF=new StringBuilder();
@@ -177,7 +177,7 @@ public class SCodeFile {
 
     public void TRC(String m, String v) {
     	if(Option.TRACE_CODING > 1) {
-             System.out.println("SCode.Line "+Global.sourceLineNumber+": "+m+":  "+v);
+             IO.println("SCode.Line "+Global.sourceLineNumber+": "+m+":  "+v);
     	}
     	else if(Option.TRACE_CODING > 0) {
     		TRCBUFF.append(v).append(' ');

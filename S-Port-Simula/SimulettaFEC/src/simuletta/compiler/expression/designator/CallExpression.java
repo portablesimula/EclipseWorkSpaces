@@ -80,7 +80,7 @@ public class CallExpression extends SimpleDesignator {
 		CallExpression var=this;//(Varcall)v;
 		Util.TRACE("CallExpression.doSCoding: S_VARCALL  simple="+simple+", v="+this);
     	Profile prf=findProfile();
-//    	System.out.println("CallExpression.doSCodingDirect: prf="+prf);
+//    	IO.println("CallExpression.doSCodingDirect: prf="+prf);
     	sCode.outinst(S_PRECALL); sCode.outtag(prf.getTag());
         sCode.outcode(+1);
         	Type vartype=rutcall(prf.signatur,var.argset);

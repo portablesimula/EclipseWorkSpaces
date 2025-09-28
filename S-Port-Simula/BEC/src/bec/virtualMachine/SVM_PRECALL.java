@@ -18,6 +18,7 @@ public class SVM_PRECALL extends SVM_Instruction {
 		this.nParSlots = nParSlots;
 		this.exportSize = exportSize;
 		this.importSize = importSize;
+		RTRegister.checkMindMaskEmpty();
 	}
 
 	@Override
@@ -48,7 +49,7 @@ public class SVM_PRECALL extends SVM_Instruction {
 	// ***********************************************************************************************
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		oupt.writeString(rutIdent);
 		oupt.writeShort(nParSlots);
@@ -62,7 +63,7 @@ public class SVM_PRECALL extends SVM_Instruction {
 		int exportSize = inpt.readShort();
 		int importSize = inpt.readShort();
 		SVM_PRECALL instr = new SVM_PRECALL(rutIdent, nParSlots, exportSize, importSize);
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + instr);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
 		return instr;
 	}
 

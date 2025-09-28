@@ -1,8 +1,6 @@
 package bec.util;
 
 import java.io.File;
-import java.io.Reader;
-import java.io.Writer;
 import java.util.Map;
 import java.util.Vector;
 
@@ -20,6 +18,7 @@ public class Global {
 	public static boolean INLINE_TESTING = false;
 	public static boolean verbose = false;
 	public static boolean execVerbose = false;
+	public static boolean nopopup = false;
 	public static int traceMode = 0;
 	public static boolean SCODE_INPUT_TRACE = false;
 	public static boolean TRACE_ALLOC_FRAME = false;
@@ -81,41 +80,41 @@ public class Global {
 				Util.IERR("Display-entry is already defined: " + Scode.edTag(tag) + "  " + prev);
 			}
 			DISPL.set(tag, d);
-			if(Global.traceMode != 0) System.out.println("Display(" + Scode.edTag(tag) + ") = " +d);
+			if(Global.traceMode != 0) IO.println("Display(" + Scode.edTag(tag) + ") = " +d);
 		}
 		if(d == null) Util.IERR("");
 //		if(tag == 313) {
-//			System.out.println("Global.intoDisplay: "+Scode.edTag(tag) + "  " + d);
+//			IO.println("Global.intoDisplay: "+Scode.edTag(tag) + "  " + d);
 //		}
 	}
 
 	public static void dumpDISPL(String title) {
-//		System.out.println("============ "+title+" BEGIN Dump DISPL ================");
+//		IO.println("============ "+title+" BEGIN Dump DISPL ================");
 //		for(int i=32;i<DISPL.size();i++) {
 //			Descriptor elt =DISPL.get(i);
-//			System.out.println("  " + i + ": " + elt);
+//			IO.println("  " + i + ": " + elt);
 //		}
-//		System.out.println("============ "+title+"ENDOF Dump DISPL ================");
+//		IO.println("============ "+title+"ENDOF Dump DISPL ================");
 		dumpDISPL(title, 32);
 	}
 
 	public static void dumpDISPL(String title, int startTag) {
-		System.out.println("============ "+title+" BEGIN Dump DISPL ================");
+		IO.println("============ "+title+" BEGIN Dump DISPL ================");
 		for(int i=startTag;i<DISPL.size();i++) {
 			Descriptor elt =DISPL.get(i);
-			System.out.println("  " + i + ": " + elt);
+			IO.println("  " + i + ": " + elt);
 		}
-		System.out.println("============ "+title+"ENDOF Dump DISPL ================");
+		IO.println("============ "+title+"ENDOF Dump DISPL ================");
 	}
 
 	public static void dumpDisplay(String title) {
-		System.out.println("============ "+title+" BEGIN Dump Display ================");
+		IO.println("============ "+title+" BEGIN Dump Display ================");
 //		for(int i=0;i<Display.size();i++) {
 //			SyntaxClass elt =Display.get(i);
-//			System.out.println("  " + i + ": " + elt);
+//			IO.println("  " + i + ": " + elt);
 //		}
 		Util.IERR("");
-		System.out.println("============ "+title+"ENDOF Dump Display ================");
+		IO.println("============ "+title+"ENDOF Dump Display ================");
 	}
 	
 	public static String scodeSource;	// S-Code source file name

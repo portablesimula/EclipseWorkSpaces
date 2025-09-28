@@ -29,21 +29,21 @@ public class StringValue extends Value {
 	// ***********************************************************************************************
 	private StringValue(AttributeInputStream inpt) throws IOException {
 		this.type = Type.T_STRING;
-//		System.out.println("NEW StringValue: ");
+//		IO.println("NEW StringValue: ");
 //		addr = DataAddress.read(inpt);
 		String segID = inpt.readString();
 		int ofst = inpt.readShort();
 //		addr = new DataAddress(segID,	ofst);
 //		addr = DataAddress.ofSegAddr(segID,	ofst);
 		addr = new SegmentAddress(segID,	ofst);
-//		System.out.println("NEW StringValue: addr="+addr);
+//		IO.println("NEW StringValue: addr="+addr);
 		lng = inpt.readShort();
-//		System.out.println("NEW StringValue: " + this);
+//		IO.println("NEW StringValue: " + this);
 //		Util.IERR("SJEKK DETTE");
 	}
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("Value.write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
 		oupt.writeKind(Scode.S_STRING);
 //		addr.write(oupt);
 		oupt.writeString(addr.segID);

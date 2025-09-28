@@ -13,7 +13,7 @@ public class Make_SimulettaFEC_Jarfile {
 
 	public static void main(String[] args) {
 		try {
-			System.out.println("Make SIMULETTA FEC Compiler.jar in "+RELEASE_HOME);
+			IO.println("Make SIMULETTA FEC Compiler.jar in "+RELEASE_HOME);
 			File releaseHome=new File(RELEASE_HOME);
 			releaseHome.mkdirs();
 			String compilerManifest=Simuletta_FEC_ROOT+"/src/make/SML_Manifest.MF";
@@ -21,7 +21,7 @@ public class Make_SimulettaFEC_Jarfile {
 			exec("jar", "cmf", compilerManifest, RELEASE_HOME+"/SimulettaFEC.jar", "-C", COMPILER_BIN, "./simuletta");
 			exec("jar", "-tvf", RELEASE_HOME+"/SimulettaFEC.jar");
 			
-			System.out.println("Make_SimulettaFEC_Jarfile - DONE: " + RELEASE_HOME + "/SimulettaFEC.jar");
+			IO.println("Make_SimulettaFEC_Jarfile - DONE: " + RELEASE_HOME + "/SimulettaFEC.jar");
 		} catch(Exception e) { e.printStackTrace(); }
 	}
 
@@ -29,7 +29,7 @@ public class Make_SimulettaFEC_Jarfile {
 	public static int exec(String... cmd) throws IOException {
 		String line="";
 		for(int i=0;i<cmd.length;i++) line=line+" "+cmd[i];
-        System.out.println("MakeSIM.execute: command="+line);
+        IO.println("MakeSIM.execute: command="+line);
 		ProcessBuilder processBuilder = new ProcessBuilder(cmd);
 		processBuilder.redirectErrorStream(true);
 		try {
@@ -39,11 +39,11 @@ public class Make_SimulettaFEC_Jarfile {
 				while (output.available() > 0)
 					System.out.append((char) output.read());
 			}
-			System.out.println("RETURN: "+process.exitValue());
+			IO.println("RETURN: "+process.exitValue());
 			return (process.exitValue());
 
 		} catch(Exception e) {
-			System.out.println("ERROR: "+e);
+			IO.println("ERROR: "+e);
 			throw new RuntimeException("Process Execution failed: " + line, e);
 		}
 	}

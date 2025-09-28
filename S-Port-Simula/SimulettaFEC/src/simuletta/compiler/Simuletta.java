@@ -65,10 +65,10 @@ public final class Simuletta {
 			} else if(fileName==null) fileName = arg;
 			else error("multiple input files specified");
 		}	
-		//System.out.println("FILE: "+fileName);
+		//IO.println("FILE: "+fileName);
 //	    Global.simulaRtsLib=new File(Global.simulaHome,"rts");
 		if (fileName == null) {
-		    if(Option.verbose) System.out.println("*** STARTING SIMULETTA EDITOR ***");
+		    if(Option.verbose) IO.println("*** STARTING SIMULETTA EDITOR ***");
 //			Global.sampleSourceDir=new File(Global.simulaHome,"samples");
 //			RTOption.InitRuntimeOptions();
 //	    	Option.InitCompilerOptions();
@@ -76,7 +76,7 @@ public final class Simuletta {
 //	    	editor.setVisible(true);
 			Util.NOT_IMPLEMENTED("Simuletta Editor");
 		} else {
-			if(Option.verbose) System.out.println("*** STARTING SIMULA COMPILER ***");
+			if(Option.verbose) IO.println("*** STARTING SIMULA COMPILER ***");
 		    new SimulettaCompiler(fileName,outputFile).doCompile();
 		}
 	}
@@ -97,7 +97,7 @@ public final class Simuletta {
 //    	for(int j=0;j<chars.length();j++) {
 //    		char c=chars.charAt(j);
 //    		if(c!=' ' && c!='\n') {
-//    			//System.out.println("Simula.setSelectors: "+ c + " ON");
+//    			//IO.println("Simula.setSelectors: "+ c + " ON");
 //    			SimulaScanner.selector[c]=true;
 //    		}
 //    	}

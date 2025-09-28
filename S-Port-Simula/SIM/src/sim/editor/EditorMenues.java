@@ -37,7 +37,7 @@ import javax.swing.undo.UndoManager;
 
 import sim.compiler.Global;
 import sim.compiler.Option;
-import sim.compiler.SimulaBEC;
+import sim.compiler.CommonBEC;
 import sim.compiler.SimulaFEC;
 import sim.compiler.Util;
 
@@ -380,7 +380,7 @@ public class EditorMenues extends JMenuBar {
 	/// Exit action.
 	void doExitAction() {
 		doCloseAllAction();
-		System.out.println("EditorMenues.doExitAction - Exit: ");
+		IO.println("EditorMenues.doExitAction - Exit: ");
 		System.exit(0);
 	}
 
@@ -471,7 +471,7 @@ public class EditorMenues extends JMenuBar {
 			// Start compiler ....
 			Util.ASSERT(SPortEditor.current!=null,"EditorMenues.doRunAction: Invariant-1");
 			String text=SPortEditor.current.editTextPane.getText();
-//			System.out.println("EditorMenu.doStartRunning: " + text);
+//			IO.println("EditorMenu.doStartRunning: " + text);
 
 			SourceTextPanel current=(SourceTextPanel)SPortEditor.tabbedPane.getSelectedComponent();
 			String name = "new";
@@ -484,7 +484,7 @@ public class EditorMenues extends JMenuBar {
 			File sourceFile=new File(Global.getTempFileDir("sim/tmp/"), name + ".sim");
 			sourceFile.getParentFile().mkdirs();
 			sourceFileName = sourceFile.toString();
-			if(Option.verbose) System.out.println("EditorMenues.doStartRunning: name=" + name + ", sourceFileName="+sourceFileName);
+			if(Option.verbose) IO.println("EditorMenues.doStartRunning: name=" + name + ", sourceFileName="+sourceFileName);
 			FileOutputStream out = new FileOutputStream(sourceFile);
 			try (Writer writer = new BufferedWriter(new OutputStreamWriter(out))) {
 				writer.write(text);
@@ -499,10 +499,10 @@ public class EditorMenues extends JMenuBar {
 			if(Option.verbose) Util.println("EditorMenues.doStartRunning: RETURN FROM FEC: ExitCode = "+execCode);
 			if(execCode == 0) {
 				if(Option.verbose)
-					System.out.println("\n\nCALL BEC: Output ==> SVM Code ==> executed");
-				int execCode2 = SimulaBEC.callBEC();
+					IO.println("\n\nCALL BEC: Output ==> SVM Code ==> executed");
+				int execCode2 = CommonBEC.callBEC();
 				if(Option.verbose)
-					System.out.println("RETURN FROM BEC: ExitCode = "+execCode2);
+					IO.println("RETURN FROM BEC: ExitCode = "+execCode2);
 			}
 		} catch(Exception e) { Util.popUpError("Can't run: "+e);}
 	}

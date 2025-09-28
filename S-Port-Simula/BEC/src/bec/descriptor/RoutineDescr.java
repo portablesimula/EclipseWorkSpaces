@@ -76,7 +76,7 @@ public class RoutineDescr extends Descriptor {
 		Tag tag = Tag.ofScode();
 		Tag prftag = Tag.ofScode();
 //		Global.dumpDISPL("RoutineDescr.ofRoutineDef: ");
-//		System.out.println("RoutineDescr.ofRoutineDef: tag="+tag + "  prfTag="+prftag);
+//		IO.println("RoutineDescr.ofRoutineDef: tag="+tag + "  prfTag="+prftag);
 		
 		RoutineDescr rut = (RoutineDescr) Global.DISPL.get(tag.val);
 		if(rut == null) rut = new RoutineDescr(Kind.K_IntRoutine, tag, prftag);
@@ -98,21 +98,21 @@ public class RoutineDescr extends Descriptor {
 		}
 		rut.adr = rutAddr;
 		
-//		System.out.println("RoutineDescr.ofRoutineDef: "+Global.DISPL.get(prftag.val));
+//		IO.println("RoutineDescr.ofRoutineDef: "+Global.DISPL.get(prftag.val));
 		ProfileDescr prf = (ProfileDescr) Global.DISPL.get(prftag.val);
 		if(prf == null) Util.IERR("Missing Profile " + Scode.edTag(prftag.val));
 
 		Scode.inputInstr();
 		int rela = prf.frameSize;
 		if(Global.TRACE_ALLOC_FRAME) {
-			System.out.println("\nRoutineDescr.ofRoutineDef: ALLOC LOCALS for "+rutAddr+" First rela="+rela);
+			IO.println("\nRoutineDescr.ofRoutineDef: ALLOC LOCALS for "+rutAddr+" First rela="+rela);
 			prf.print("RoutineDescr.ofRoutineDef: ");			
 		}
 		
 		while(Scode.curinstr == Scode.S_LOCAL) {
 			Variable local = Variable.ofLocal(rela);
 			if(Global.TRACE_ALLOC_FRAME) {
-				System.out.println("RoutineDescr.ofRoutineDef:    LOCAL " + local);
+				IO.println("RoutineDescr.ofRoutineDef:    LOCAL " + local);
 			}
 			if(local.repCount == 0) Util.IERR("");
 			rela = rela + (local.type.size() * local.repCount);
@@ -121,12 +121,12 @@ public class RoutineDescr extends Descriptor {
 		}
 		rut.localFrameSize = rela - prf.frameSize;
 		if(Global.TRACE_ALLOC_FRAME) {
-			System.out.println("RoutineDescr.ofRoutineDef: ALLOC LOCALS DONE: localFrameSize="+rut.localFrameSize);
+			IO.println("RoutineDescr.ofRoutineDef: ALLOC LOCALS DONE: localFrameSize="+rut.localFrameSize);
 		}
 		Global.PSEG.emit(new SVM_ENTER(prf.getSimpleName(), rut.localFrameSize), ""+rut);
 	
 //		if(DEBUG) {
-//			System.out.println("RoutineDescr.ofRoutineDef: " + rut + "??????????????????????????????????????????????????????????????????????????????????????");
+//			IO.println("RoutineDescr.ofRoutineDef: " + rut + "??????????????????????????????????????????????????????????????????????????????????????");
 //		}
 		while(Instruction.inInstruction()) { Scode.inputInstr(); }
 	
@@ -145,7 +145,7 @@ public class RoutineDescr extends Descriptor {
 		}
 		
 //		if(rut.PSEG != null && rut.PSEG.ident.equalsIgnoreCase("PSEG_SYSR_SYSPRI:BODY")) {
-//			System.out.println("RoutineDescr.ofRoutineDef: ADD PSEG_SYSR_SYSPRI:BODY ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+//			IO.println("RoutineDescr.ofRoutineDef: ADD PSEG_SYSR_SYSPRI:BODY ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 //		}
 
 		if(rut.DSEG != null) Global.routineSegments.add(rut.DSEG);
@@ -160,7 +160,7 @@ public class RoutineDescr extends Descriptor {
 	// ***********************************************************************************************
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("RoutineDescr.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("RoutineDescr.Write: " + this);
 //		if(DSEG != null) DSEG.write(oupt);
 //		if(PSEG != null) PSEG.write(oupt);
 		oupt.writeKind(kind);
@@ -181,7 +181,7 @@ public class RoutineDescr extends Descriptor {
 	}
 
 	public static RoutineDescr read(AttributeInputStream inpt) throws IOException {
-//		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  BEGIN RoutineDescr.Read");
+//		IO.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  BEGIN RoutineDescr.Read");
 		Tag prftag = null;
 		boolean present = inpt.readBoolean();
 		if(present) prftag = Tag.read(inpt);
@@ -197,7 +197,7 @@ public class RoutineDescr extends Descriptor {
 		
 		int n = inpt.readShort();
 		for(int i=0;i<n;i++) rut.locals.add(Tag.read(inpt));
-		if(Global.ATTR_INPUT_TRACE) System.out.println("RoutineDescr.Read: " + rut);
+		if(Global.ATTR_INPUT_TRACE) IO.println("RoutineDescr.Read: " + rut);
 		
 		return(rut);
 	}

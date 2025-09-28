@@ -53,7 +53,7 @@ public final class SourceFileReader {
 			  lineNo++;
 			  Global.sourceLineNumber=lineNo;
 			  Global.currentSourceLine=line.toString();//.replace('\r',' ');
-			  if(Option.SOURCE_LISTING) System.out.println(sourceName+":Line "+lineNo+": "+Global.currentSourceLine);
+			  if(Option.SOURCE_LISTING) IO.println(sourceName+":Line "+lineNo+": "+Global.currentSourceLine);
 			  line=new StringBuilder();
 		  } else if(!Character.isISOControl(c)) line.append((char)c);
 		return (c);

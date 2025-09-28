@@ -33,21 +33,21 @@ public class Tag {
 	}
 	
 	public static void dumpITAGTABLE(String title) {
-		System.out.println("============ "+title+" BEGIN Dump iTAGTABLE ================");
+		IO.println("============ "+title+" BEGIN Dump iTAGTABLE ================");
 		for(int i=0;i<Global.iTAGTAB.size();i++) {
 			Integer tx = Global.iTAGTAB.get(i);
 			int xx = (tx==null)? 0 : tx;
-			System.out.println("iTAGTABLE["+i+"]  iTag:" + Scode.edTag(xx) + "  ==> xTag:" + i);
+			IO.println("iTAGTABLE["+i+"]  iTag:" + Scode.edTag(xx) + "  ==> xTag:" + i);
 		}
-		System.out.println("============ "+title+" ENDOF Dump iTAGTABLE ================");
+		IO.println("============ "+title+" ENDOF Dump iTAGTABLE ================");
 	}
 	
 	public static void dumpXTAGTABLE(String title) {
-		System.out.println("============ "+title+" BEGIN Dump xTAGTABLE ================");
+		IO.println("============ "+title+" BEGIN Dump xTAGTABLE ================");
 		for(int i=32;i<Global.xTAGTAB.size();i++) {
-			System.out.println("xTAGTABLE["+i+"]  xTag:" + xTag(i) + "  ==> iTag:" + Scode.edTag(i));
+			IO.println("xTAGTABLE["+i+"]  xTag:" + xTag(i) + "  ==> iTag:" + Scode.edTag(i));
 		}
-		System.out.println("============ "+title+" ENDOF Dump xTAGTABLE ================");
+		IO.println("============ "+title+" ENDOF Dump xTAGTABLE ================");
 	}
 	
 	private static int chgInType(int tx) { // Used by Tag.read
@@ -57,7 +57,7 @@ public class Tag {
 			t = tx - Scode.T_max + InsertStatement.current.bias - 1;
 		}
 		if(Global.ATTR_INPUT_TRACE)
-			System.out.println("chgInType xTag:" + tx + " ==> " + Scode.edTag(t));
+			IO.println("chgInType xTag:" + tx + " ==> " + Scode.edTag(t));
 //		Util.IERR("SJEKK DETTE");
 		return t;
 	}

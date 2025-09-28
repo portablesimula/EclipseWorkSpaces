@@ -15,12 +15,12 @@ public abstract class EVAL extends Instruction {
 	 */
 	public static void ofScode() {
 //		Util.IERR("NOT IMPL");
-//		System.out.println("EVAL.ofScode: SJEKK DETTE SEINERE EN GANG");
+//		IO.println("EVAL.ofScode: SJEKK DETTE SEINERE EN GANG");
 		CTStackItem tos = CTStack.TOS();
 
 		if(DEBUG) {
-			if(tos != null)	System.out.println("EVAL: TOS: " + tos.getClass().getSimpleName() + "  " + tos);
-			System.out.println("EVAL: " + tos + ", mode="+tos.edMode());
+			if(tos != null)	IO.println("EVAL: TOS: " + tos.getClass().getSimpleName() + "  " + tos);
+			IO.println("EVAL: " + tos + ", mode="+tos.edMode());
 //			Util.IERR("");
 		}
 		

@@ -59,15 +59,15 @@ public class InputFile {
 //                checkcode   in attrckhi,lo ;
 		String relativeAttributeFileName="Attrs/FEC/"+PredefGlobal.sourceName+".atr";
 		PredefGlobal.attributeFile = new File(PredefGlobal.outputDir,relativeAttributeFileName);
-		if (RTS_FEC_Interface_Option.verbose) System.out.println("************************** BEGIN READ ATTRIBUTE FILE: "+PredefGlobal.attributeFile+" **************************");
+		if (RTS_FEC_Interface_Option.verbose) IO.println("************************** BEGIN READ ATTRIBUTE FILE: "+PredefGlobal.attributeFile+" **************************");
 		if (RTS_FEC_Interface_Option.verbose)	Util.println("AttrFile.open: \"" + PredefGlobal.attributeFile+"\"");
 		CURF = new FileInputStream(PredefGlobal.attributeFile);
 		int layout=CURF.read();
-		if(TESTING) System.out.println("InputFile.openattributefile: LAYOUT="+layout); // TESTING
+		if(TESTING) IO.println("InputFile.openattributefile: LAYOUT="+layout); // TESTING
 		if(layout != layoutindex) Util.IERR("Wrong Layout");
            
 		int firstbufsize=in2byte();
-		if(TESTING) System.out.println("InputFile.openattributefile: firstbufsize="+firstbufsize); // TESTING
+		if(TESTING) IO.println("InputFile.openattributefile: firstbufsize="+firstbufsize); // TESTING
         bufferBytes = new byte[bufsize];
         attrbuffer = ByteBuffer.wrap(bufferBytes);
         CURF.read(bufferBytes, 0, firstbufsize);
@@ -93,7 +93,7 @@ public class InputFile {
     	byte[] bytes=new byte[n];
     	attrbuffer.get(bytes, 0, n);
     	String symbol=new String(bytes); p=p+n;
-		if(TESTING) System.out.println("InputFile.readChars: n="+n+", symbol=\""+symbol+'"'); // TESTING
+		if(TESTING) IO.println("InputFile.readChars: n="+n+", symbol=\""+symbol+'"'); // TESTING
 		return(symbol);
 	}
 	
@@ -112,7 +112,7 @@ public class InputFile {
         if(key < Key.lowKey) {
 //           simsymbol:-attrbuffer.sub(p+1,rank(key)); p:=p+rank(key);
         	String simsymbol=readChars(key);
-    		if(TESTING) System.out.println("InputFile.gettext(Verifier.key<lowKey): key="+key+", simsymbol=\""+simsymbol+'"'); // TESTING
+    		if(TESTING) IO.println("InputFile.gettext(Verifier.key<lowKey): key="+key+", simsymbol=\""+simsymbol+'"'); // TESTING
         	if(RTS_FEC_Interface_Option.TRACE_CODING>1) INPUT_TRACE("gettext="+simsymbol);
 //    		Util.STOP();
         	return(simsymbol);
@@ -145,7 +145,7 @@ public class InputFile {
 		int key;
     REP:while(true) {
     		key=inByte();
-			if(TESTING) System.out.println("InputFile.nextKey: key="+key); // TESTING
+			if(TESTING) IO.println("InputFile.nextKey: key="+key); // TESTING
 			if(key == Key.bufSwap) { swapIbuffer(); continue REP; }
 			break REP;
 		}
@@ -161,7 +161,7 @@ public class InputFile {
 	
 	public int getByte(String where) {
 		int b=inByte();
-		if(TESTING) System.out.println("InputFile.getByte: byte="+b); // TESTING
+		if(TESTING) IO.println("InputFile.getByte: byte="+b); // TESTING
     	if(RTS_FEC_Interface_Option.TRACE_CODING>1) INPUT_TRACE("getByte="+b+'['+where+']');
     	return(b);
 	}

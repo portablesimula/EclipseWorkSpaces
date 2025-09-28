@@ -20,13 +20,13 @@ public abstract class PUSH extends Instruction {
 	 */
 	public static void ofScode(int instr) {
 		Tag tag = Tag.ofScode();
-		if(DEBUG) System.out.println("PUSH.doCode: tag="+Scode.edTag(tag.val)+"  "+tag);
+		if(DEBUG) IO.println("PUSH.doCode: tag="+Scode.edTag(tag.val)+"  "+tag);
 		Descriptor x = tag.getMeaning();
 		if(x instanceof Variable var) {
 			AddressItem addr = new AddressItem(var.type,0,var.address);
 			if(DEBUG) {
-				System.out.println("PUSH.doCode: var="+var);
-				System.out.println("PUSH.doCode: addr="+addr);				
+				IO.println("PUSH.doCode: var="+var);
+				IO.println("PUSH.doCode: addr="+addr);				
 			}
 			CTStack.push(addr);
 		} else if(x instanceof ConstDescr cns) {

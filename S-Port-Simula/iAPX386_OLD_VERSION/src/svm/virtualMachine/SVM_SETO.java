@@ -36,13 +36,13 @@ public class SVM_SETO extends SVM_Instruction {
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 	}
 
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {
 		SVM_SETO instr = new SVM_SETO();
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + instr);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
 		return instr;
 	}
 

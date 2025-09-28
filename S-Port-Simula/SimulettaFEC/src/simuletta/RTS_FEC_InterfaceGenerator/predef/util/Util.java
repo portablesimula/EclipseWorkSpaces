@@ -129,7 +129,7 @@ public final class Util {
 	}
 
 	public static void FORCED_EXIT() {
-		System.out.println("FORCED EXIT");	Thread.dumpStack();
+		IO.println("FORCED EXIT");	Thread.dumpStack();
 		System.exit(-1);
 	}
 
@@ -146,7 +146,7 @@ public final class Util {
 //
 //	public static void BREAK(final String id, final String title) {
 //		if (Option.BREAKING) {
-//			try { System.out.println(edLine(" "+id + " " + Global.sourceLineNumber + ": " +edMiniStack() + ": " + title + ": <",null));
+//			try { IO.println(edLine(" "+id + " " + Global.sourceLineNumber + ": " +edMiniStack() + ": " + title + ": <",null));
 //				  char c=(char) System.in.read();
 //				  if (c == 'Q' || c == 'q') { println("STACK-TRACE");	Thread.dumpStack(); }
 //				  while (System.in.available() > 0) System.in.read();
@@ -159,7 +159,7 @@ public final class Util {
 //	}
 
 	public static void println(final String s) {
-		System.out.println(s);
+		IO.println(s);
 	}  
 
 	private static void printError(final String s) {

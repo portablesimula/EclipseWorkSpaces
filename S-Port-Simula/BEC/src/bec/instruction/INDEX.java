@@ -44,9 +44,9 @@ public abstract class INDEX extends Instruction {
 		AddressItem adr = (AddressItem) CTStack.TOS();
 		int size = adr.size;
 		
-//		System.out.println("INDEX.ofScode: adr.offset="+adr.offset);
-//		System.out.println("INDEX.ofScode: adr.size="+adr.size);
-//		System.out.println("INDEX.ofScode: adr="+adr+"                 R"+adr.xReg);
+//		IO.println("INDEX.ofScode: adr.offset="+adr.offset);
+//		IO.println("INDEX.ofScode: adr.size="+adr.size);
+//		IO.println("INDEX.ofScode: adr="+adr+"                 R"+adr.xReg);
 		
 		if(adr.xReg > 0) {
 			if(size > 1) {
@@ -74,7 +74,7 @@ public abstract class INDEX extends Instruction {
 
 	@Override
 	public void print(final String indent) {
-		System.out.println(indent + toString());
+		IO.println(indent + toString());
 	}
 	
 	public String toString() {

@@ -143,9 +143,9 @@ public class PredefCompiler {
 			if(nError != 0) { s.append(" , "); s.append(nError); }
 			else s.append(" no");
 			s.append(" errors.");
-			System.out.println(s.toString()); // symboltable.close;
+			IO.println(s.toString()); // symboltable.close;
 		}
-		if(nError > 0) System.out.println("Program Terminated due to " + nError + " Errors");	            
+		if(nError > 0) IO.println("Program Terminated due to " + nError + " Errors");	            
 	}
 
 	private InputStreamReader getReader() {
@@ -183,11 +183,11 @@ public class PredefCompiler {
         
 		if (RTS_FEC_Interface_Option.verbose)	Util.TRACE("***       Write External " + predefModule.identifier);
         oupt.storeText(sysSportid);
-//        System.out.println("writePredefAttrFile: AFTER:  \""+oupt.edBuffer());
+//        IO.println("writePredefAttrFile: AFTER:  \""+oupt.edBuffer());
         oupt.putText("_predefmodule"); // CheckCode
-//        System.out.println("writePredefAttrFile: AFTER:  \""+oupt.edBuffer());
+//        IO.println("writePredefAttrFile: AFTER:  \""+oupt.edBuffer());
         oupt.putText("_predefmodule");
-//        System.out.println("writePredefAttrFile: AFTER:  \""+oupt.edBuffer());
+//        IO.println("writePredefAttrFile: AFTER:  \""+oupt.edBuffer());
                 
         //!***********  output main w/locals and tag count  ****;
         oupt.putKey(Key.mainKey);

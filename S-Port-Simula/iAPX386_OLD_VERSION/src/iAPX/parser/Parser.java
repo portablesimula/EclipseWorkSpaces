@@ -296,7 +296,7 @@ public class Parser {
 
 	public static void programElements() {
 		LOOP: while(true) {
-//			System.out.println("S_Module.programElements: CurInstr="+Scode.curinstr);
+//			IO.println("S_Module.programElements: CurInstr="+Scode.curinstr);
 			switch(Scode.curinstr) {
 				case S_LABELSPEC ->   Util.IERR("NOT IMPL"); //  SpecLab; goto L1;
 				case S_LABEL ->       Util.IERR("NOT IMPL"); //      DefLab; goto L2;
@@ -312,7 +312,7 @@ public class Parser {
 			}
 			Scode.inputInstr();
 		}
-//		System.out.println("S_Module.programElements: Terminated by: " + Scode.curinstr);
+//		IO.println("S_Module.programElements: Terminated by: " + Scode.curinstr);
 //		Util.IERR("");
 	}
 

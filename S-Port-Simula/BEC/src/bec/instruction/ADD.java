@@ -37,9 +37,9 @@ public abstract class ADD extends Instruction {
 		CTStackItem sos = CTStack.SOS();
 
 		if(DEBUG) {
-			if(tos != null)	System.out.println("ADD: TOS: " + tos.getClass().getSimpleName() + "  " + tos);
-			if(sos != null)	System.out.println("ADD: SOS: " + sos.getClass().getSimpleName() + "  " + sos);
-			System.out.println("ADD: " + sos + " + " + tos);
+			if(tos != null)	IO.println("ADD: TOS: " + tos.getClass().getSimpleName() + "  " + tos);
+			if(sos != null)	IO.println("ADD: SOS: " + sos.getClass().getSimpleName() + "  " + sos);
+			IO.println("ADD: " + sos + " + " + tos);
 //			Util.IERR("");
 		}
 

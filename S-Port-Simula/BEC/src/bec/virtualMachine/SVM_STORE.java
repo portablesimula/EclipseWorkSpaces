@@ -32,7 +32,9 @@ public class SVM_STORE extends SVM_Instruction {
 		this.rtAddr = rtAddr;
 		this.xReg = xReg;
 		this.size = size;
-//		System.out.println("NEW SVM_STORE: " + this);
+//		IO.println("NEW SVM_STORE: " + this);
+		RTRegister.reads("SVM_STORE", rtAddr);
+		RTRegister.reads("SVM_STORE", xReg);
 	}
 	
 	@Override
@@ -60,7 +62,7 @@ public class SVM_STORE extends SVM_Instruction {
 		
 		if(DEBUG) {
 //			addr.segment().dump("STORE.execute: ", addr.offset, addr.offset+size);
-//			System.out.println("STORE: size="+size);
+//			IO.println("STORE: size="+size);
 			addr.dumpArea("STORE.execute: ", size);
 		}
 		
@@ -73,7 +75,7 @@ public class SVM_STORE extends SVM_Instruction {
 		if(xReg > 0) idx = idx + RTRegister.getIntValue(xReg);
 		for(int i=0;i<size;i++) {
 			Value item = RTStack.load(n-i);
-			if(DEBUG) System.out.println("STORE: "+item+" ==> "+addr + "["+idx+"]");
+			if(DEBUG) IO.println("STORE: "+item+" ==> "+addr + "["+idx+"]");
 			addr.store(idx--, item, "");
 //			RTStack.printCallTrace("STORE.execute: ");
 		}
@@ -82,7 +84,7 @@ public class SVM_STORE extends SVM_Instruction {
 	
 	public String toString() {
 		String s = "";
-		if(xReg != 0) s = s + "+R" + xReg + "(" + RTRegister.getValue(xReg) + ')';
+		if(xReg != 0) s = s + RTRegister.edRegValue(xReg);
 		if(size > 1) s = ", size=" + size;
 		return "STORE    " + rtAddr + s;
 	}
@@ -95,12 +97,12 @@ public class SVM_STORE extends SVM_Instruction {
 		this.rtAddr = ObjectAddress.read(inpt);
 		this.xReg = inpt.readReg();
 		this.size = inpt.readShort();
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + this);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		rtAddr.writeBody(oupt);
 		oupt.writeReg(xReg);

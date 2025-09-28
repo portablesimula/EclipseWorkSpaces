@@ -2,10 +2,11 @@ package sim.compiler;
 
 import static sim.compiler.Global.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
 
-public abstract class SimulaBEC {
+public abstract class CommonBEC {
 
 	private static boolean TESTING = true; // Remove when TESTING = false
 	private static boolean becTerminated;  // Remove when TESTING = false
@@ -19,7 +20,11 @@ public abstract class SimulaBEC {
     	 Option.fecListing = true;
 //    	 String name = "HelloWorld";
     	 String name = "Sudoku";
-    	 sCodeFileName = "src/sim/samplePrograms/scode/"+name+".scd";
+//    	 sCodeFileName = "src/sim/samplePrograms/scode/"+name+".scd";
+    	 sCodeFileName = "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/scode/simtst01.scd";
+    	 
+    	 Global.simdir = new File("C:\\SPORT");
+    	 Option.becSCodeTrace = true;
     	 callBEC();
      }
 		
@@ -29,13 +34,15 @@ public abstract class SimulaBEC {
 		cmds.add("java");
 		cmds.add("-jar");
 //		cmds.add("C:\\SPORT\\BEC.jar");
-		cmds.add(Global.simdir + "\\BEC.jar");
-		cmds.add("-sysInsert");	cmds.add(Global.simdir + "\\RTS\\");
+//		cmds.add(Global.simdir + "\\BEC.jar");
+		cmds.add(Global.simdir + "\\CommonBEC.jar");
+//		cmds.add("-sysInsert");	cmds.add(Global.simdir + "\\RTS\\");
 		if(Option.verbose) {
 			cmds.add("-verbose");
 			cmds.add("-execVerbose");
 		}
-		if(Option.nopopup) cmds.add("-nopopup");
+//		if(Option.nopopup)
+			cmds.add("-nopopup");
 		if(Option.becSCodeTrace) cmds.add("-inputTrace");
 		if(Option.becTraceSVM_CODE) cmds.add("-traceSVM_CODE");
 		if(Option.becTraceSVM_DATA) cmds.add("-traceSVM_DATA");
@@ -45,8 +52,14 @@ public abstract class SimulaBEC {
 
 		cmds.add(sCodeFileName);
 
-		if(Option.verbose)
-			Util.println("SimulaBEC.callSimulaBEC: BEGIN BEC: " + sCodeFileName + " ==> .svm");
+		if(Option.verbose) {
+			IO.println("SimulaBEC.callSimulaBEC: zzzzzzzzz BEGIN BEC: " + sCodeFileName + " ==> .svm");
+			String cmdLine="";
+			for(String cmd:cmds) cmdLine=cmdLine+" "+cmd;
+	        IO.println("SimulaBEC.callBEC: command ="+cmdLine);
+		}
+			
+			
 		if(TESTING) {
 			Runnable task = new Runnable() {
 				public void run() {

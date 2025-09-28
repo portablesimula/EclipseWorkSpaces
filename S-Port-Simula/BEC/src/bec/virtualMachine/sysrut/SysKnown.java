@@ -42,9 +42,9 @@ public abstract class SysKnown {
 //		boolean DEBUG = rst > 0;
 		int idxTo = dstIdx+dstNchr;
 		if(DEBUG) {
-			System.out.println("SVM_SYSCALL.CMOVE: srcAddr="+srcAddr+", srcNchr="+srcNchr);
-			System.out.println("SVM_SYSCALL.CMOVE: dstAddr="+dstAddr+", dstNchr="+dstNchr);
-			System.out.println("SVM_SYSCALL.CMOVE: rst="+rst);
+			IO.println("SVM_SYSCALL.CMOVE: srcAddr="+srcAddr+", srcNchr="+srcNchr);
+			IO.println("SVM_SYSCALL.CMOVE: dstAddr="+dstAddr+", dstNchr="+dstNchr);
+			IO.println("SVM_SYSCALL.CMOVE: rst="+rst);
 			prtStr("TESTING CMOVE: dst: ", dstAddr.addOffset(-2), dstNchr+4);
 //			dstSeg.dump("SVM_SYSCALL.cmove: ", dstIdx-1, idxTo+1);
 		}
@@ -56,7 +56,7 @@ public abstract class SysKnown {
 			// Move characters
 			for(int i=0;i<n;i++) {
 				Value val = srcSeg.load(srcIdx + i);
-//				System.out.println("SVM_SYSCALL.CMOVE: srcSeg[" + (srcIdx + i) + "]=" + val + " ==> dstSeg[" + (dstIdx + i) + "]=");
+//				IO.println("SVM_SYSCALL.CMOVE: srcSeg[" + (srcIdx + i) + "]=" + val + " ==> dstSeg[" + (dstIdx + i) + "]=");
 				dstSeg.store(dstIdx + i, val);
 			}
 		}
@@ -89,7 +89,7 @@ public abstract class SysKnown {
 			if(val != null) System.out.print((char)val.value);
 			else System.out.print(".");
 		}
-		System.out.println("\"");
+		IO.println("\"");
 //		Util.IERR("");
 	}
 
@@ -110,7 +110,7 @@ public abstract class SysKnown {
 		DataSegment dseg = addr.segment();
 		int idx = addr.getOfst();
 //		int idxTo = idx+nchr;
-//		System.out.println("SVM_SYSCALL.cblnk: ");
+//		IO.println("SVM_SYSCALL.cblnk: ");
 //		dseg.dump("SVM_SYSCALL.cblnk: ", idx-1, idxTo+1);
 
 		IntegerValue blnk = IntegerValue.of(Type.T_CHAR, ' ');

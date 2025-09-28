@@ -17,7 +17,7 @@ public class Value {
 	 * @param indent number of spaces leading the lines
 	 */
 	public void print(final String indent) {
-		System.out.println(this.getClass().getSimpleName() + ".print: " +  toString());
+		IO.println(this.getClass().getSimpleName() + ".print: " +  toString());
 //		Util.IERR("Method 'print' need a redefinition in " + this.getClass().getSimpleName());
 //		Thread.dumpStack();
 	}
@@ -117,13 +117,13 @@ public class Value {
 
 	public static Value read(AttributeInputStream inpt) throws IOException {
 		Value val = read1(inpt);
-//		System.out.println("Value.read: " + val);
+//		IO.println("Value.read: " + val);
 		return val;
 	}
 	
 	private static Value read1(AttributeInputStream inpt) throws IOException {
 //		int kind = inpt.readKind();
-////		System.out.println("Value.read: kind="+Scode.edInstr(kind));
+////		IO.println("Value.read: kind="+Scode.edInstr(kind));
 //		switch(kind) {
 //			case Scode.S_NULL:		return null;
 //			case Scode.S_TRUE:		return BooleanValue.of(true);
@@ -145,7 +145,7 @@ public class Value {
 	}
 	
 	public static Value read(int kind, AttributeInputStream inpt) throws IOException {
-////		System.out.println("Value.read: kind="+Scode.edInstr(kind));
+////		IO.println("Value.read: kind="+Scode.edInstr(kind));
 //		switch(kind) {
 //			case Scode.S_NULL:		return null;
 //			case Scode.S_TRUE:		return BooleanValue.of(true);

@@ -52,13 +52,13 @@ public class ObjectAddress extends Value {
 		enterLine();
 			if(ident==null) {
 				sCode.outinst(S_ONONE);	sCode.outcode();
-//				System.out.println("ObjectAddress.doOutConst: ONONE");
+//				IO.println("ObjectAddress.doOutConst: ONONE");
 				return(Type.Ref);
 			}
 			VariableDeclaration q=(VariableDeclaration) Declaration.findMeaning(ident);
 			if(q==null) Util.IERR("Missing declaration of "+ident);
 			sCode.outinst(S_C_OADDR); sCode.outtag(q.getTag()); sCode.outcode();
-//			System.out.println("ObjectAddress.doOutConst: q="+q);
+//			IO.println("ObjectAddress.doOutConst: q="+q);
 		exitLine();
 		return(Type.Ref(q.identifier));
 	}

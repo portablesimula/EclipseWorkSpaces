@@ -39,14 +39,14 @@ public class SVM_INCO extends SVM_Instruction {
 //		SegmentAddress sos = (SegmentAddress) RTStack.popOADDR();
 		DataAddress sos = (DataAddress) RTStack.popOADDR();
 		if(DEBUG) {
-			System.out.println("SVM_INCO: TOS: " + tos);
-			System.out.println("SVM_INCO: SOS: " + sos);
-			System.out.println("SVM_INCO: " + sos + " + " + tos);
+			IO.println("SVM_INCO: TOS: " + tos);
+			IO.println("SVM_INCO: SOS: " + sos);
+			IO.println("SVM_INCO: " + sos + " + " + tos);
 		}
 //		DataAddress res = (sos == null)? new DataAddress(null, tos) : sos.addOffset(tos);
 //		DataAddress res = (sos == null)? DataAddress.ofRelFrameAddr(tos) : sos.addOffset(tos);
 		DataAddress res = (sos == null)? (new FrameAddress(tos)) : sos.addOffset(tos);
-		if(DEBUG) System.out.println("SVM_INCO: " + sos + " + " + tos + " ==> " + res);
+		if(DEBUG) IO.println("SVM_INCO: " + sos + " + " + tos + " ==> " + res);
 		RTStack.push(res, "SVM_INCO: " + tos + " + " + sos + " = " + res);
 //		} catch(Exception e) {
 //			e.printStackTrace();
@@ -64,13 +64,13 @@ public class SVM_INCO extends SVM_Instruction {
 	// ***********************************************************************************************
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 	}
 
 	public static SVM_INCO read(AttributeInputStream inpt) throws IOException {
 		SVM_INCO instr = new SVM_INCO();
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + instr);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
 		return instr;
 	}
 

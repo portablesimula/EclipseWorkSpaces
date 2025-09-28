@@ -18,7 +18,7 @@ public class ModuleIO {
 //		for(int i=0;i<nXtag;i++) {
 //			int tx = Global.TAGTAB.get(i);
 //			Descriptor d = Global.DISPL.get(tx);
-//			System.out.println("XTAGIDENT: " + i + ": " + Scode.TAGIDENT.get(d.tag.val));
+//			IO.println("XTAGIDENT: " + i + ": " + Scode.TAGIDENT.get(d.tag.val));
 //		}
 //		Util.IERR("");
 		
@@ -29,14 +29,14 @@ public class ModuleIO {
 			Descriptor d = Global.DISPL.get(tx);
 			if(d == null) Util.IERR("External tag " + i + " = Tag " + tx + " is not defined (OutModule)");
 //			if(Global.ATTR_OUTPUT_TRACE)
-//				System.out.println("iTAGTAB["+i+"] " + d);
+//				IO.println("iTAGTAB["+i+"] " + d);
 			d.write(modoupt);
 		}
 	}
 
 	public static void outputModule(int nXtag) throws IOException {
 		if(Global.ATTR_OUTPUT_TRACE)
-			System.out.println("**************   Begin  -  Output-module  " + Global.modident + "  " + Global.modcheck + "   **************");
+			IO.println("**************   Begin  -  Output-module  " + Global.modident + "  " + Global.modcheck + "   **************");
 		if(Global.outputDIR==null || Global.outputDIR.isEmpty()) Util.IERR("No Output Directory Specified");
 //		AttributeOutputStream modoupt = new AttributeOutputStream(new FileOutputStream(Global.getAttrFileName(Global.modident, ".svm")));
 		AttributeOutputStream modoupt = new AttributeOutputStream(new FileOutputStream(Global.outputDIR+Global.modident+".svm"));
@@ -61,7 +61,7 @@ public class ModuleIO {
 		modoupt.writeKind(Kind.K_EndModule);
 		
 		if(Global.ATTR_OUTPUT_TRACE)
-			System.out.println("**************   Endof  -  Output-module  " + Global.modident + "  " + Global.modcheck + "   **************");
+			IO.println("**************   Endof  -  Output-module  " + Global.modident + "  " + Global.modcheck + "   **************");
 	}
 
 }

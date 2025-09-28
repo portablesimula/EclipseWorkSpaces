@@ -146,7 +146,7 @@ public class SourceTextPanel extends JPanel {
 				    }
 				    lastText=lastText.replace("\n","\\n");
 				} catch (Exception ex) { Util.IERR("Impossible",ex); }			
-				System.out.println("DocumentListener: "+id + '[' + ofst + ',' + lng + "]="+styleName+"\"" + lastText + '"');
+				IO.println("DocumentListener: "+id + '[' + ofst + ',' + lng + "]="+styleName+"\"" + lastText + '"');
 			}
 		}	
 	};

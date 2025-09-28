@@ -39,7 +39,7 @@ public class ProgramSegment extends Segment {
 		comment.add(cmnt);
 //		String s = value.toString();
 //		while(s.length() < 30) s += ' ';
-//		System.out.println("          " + s + " " + cmnt);
+//		IO.println("          " + s + " " + cmnt);
 	}
 	
 	private int lastListed;
@@ -55,7 +55,7 @@ public class ProgramSegment extends Segment {
 		while(line.length() < 8) line = " " +line;
 		String value = ""+instructions.get(idx);
 		while(value.length() < 50) value = value + ' ';
-		System.out.println(indent + line + value + "   " + comment.get(idx));
+		IO.println(indent + line + value + "   " + comment.get(idx));
 		
 	}
 	
@@ -66,16 +66,16 @@ public class ProgramSegment extends Segment {
 	
 	@Override
 	public void dump(String title,int from,int to) {
-		System.out.println("========================== " + title + ident + " DUMP ==========================");
+		IO.println("========================== " + title + ident + " DUMP ==========================");
 		for(int i=from;i<to;i++) {
 //			String line = "" + i + ": ";
 //			while(line.length() < 8) line = " " +line;
 //			String value = ""+instructions.get(i);
 //			while(value.length() < 50) value = value + ' ';
-//			System.out.println(line + value + "   " + comment.get(i));
+//			IO.println(line + value + "   " + comment.get(i));
 			listIntruction("",i);
 		}
-		System.out.println("========================== " + title + ident + " END  ==========================");
+		IO.println("========================== " + title + ident + " END  ==========================");
 	}
 
 	public String toString() {
@@ -99,7 +99,7 @@ public class ProgramSegment extends Segment {
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Global.ATTR_OUTPUT_TRACE)
-			System.out.println("ProgramSegment.Write: " + this + ", Size=" + instructions.size());
+			IO.println("ProgramSegment.Write: " + this + ", Size=" + instructions.size());
 //		oupt.writeInstr(Scode.S_BSEG);
 		oupt.writeKind(segmentKind);
 		oupt.writeString(ident);
@@ -118,9 +118,9 @@ public class ProgramSegment extends Segment {
 //		int segmentKind = inpt.readKind();
 		int segmentKind = Kind.K_SEG_CODE;
 		String ident = inpt.readString();
-//		System.out.println("ProgramSegment.readObject: ident="+ident+", segmentKind="+segmentKind);
+//		IO.println("ProgramSegment.readObject: ident="+ident+", segmentKind="+segmentKind);
 		ProgramSegment seg = new ProgramSegment(ident, segmentKind, inpt);
-		if(Global.ATTR_INPUT_TRACE) System.out.println("ProgramSegment.Read: " + seg);
+		if(Global.ATTR_INPUT_TRACE) IO.println("ProgramSegment.Read: " + seg);
 		if(Global.ATTR_INPUT_DUMP) seg.dump("ProgramSegment.readObject: ");
 //		Util.IERR("");
 		return seg;

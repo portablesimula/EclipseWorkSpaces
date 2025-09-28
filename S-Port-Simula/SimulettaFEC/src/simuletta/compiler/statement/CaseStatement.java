@@ -95,7 +95,7 @@ public class CaseStatement extends Statement {
     		
     	public void print(final String lead,final int indent) {
         	String spc=Util.edIndent(indent);
-    		System.out.println(spc+edWhen()+statements);
+    		IO.println(spc+edWhen()+statements);
     	}
     	
     	private String edWhen() {
@@ -119,7 +119,7 @@ public class CaseStatement extends Statement {
 			    		
     	public void print(final String lead,final int indent) {
         	String spc=Util.edIndent(indent);
-    		System.out.println(spc+edOtherwise());
+    		IO.println(spc+edOtherwise());
     	}
     	
     	private String edOtherwise() {

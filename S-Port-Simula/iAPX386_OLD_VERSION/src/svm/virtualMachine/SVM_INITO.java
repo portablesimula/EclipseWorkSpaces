@@ -52,19 +52,19 @@ public class SVM_INITO extends SVM_Instruction {
 	static SegmentAddress get() {
 		while(SAVE_INDEX < SAVE_LENGTH) {
 			Value value = SAVE_OBJECT.addOffset(SAVE_INDEX++).load();
-			if(DEBUG) System.out.println("SVM_INITO.get: SAVE_OBJECT["+(SAVE_INDEX-1)+"] = "+value);
+			if(DEBUG) IO.println("SVM_INITO.get: SAVE_OBJECT["+(SAVE_INDEX-1)+"] = "+value);
 			if(value instanceof SegmentAddress oaddr) return oaddr;
 		}
 		if(DEBUG) {
 //			Segment.lookup("POOL_0").dump("SVM_INITO.execute: FINAL POOL_0", 0, 20);
-			System.out.println("SVM_INITO.get: FINISHED !");
+			IO.println("SVM_INITO.get: FINISHED !");
 //			Util.IERR("");
 		}
 		return null;
 	}
 	
 	static void set(DataAddress oaddr) {
-		if(DEBUG) System.out.println("SVM_INITO.set: SAVE_OBJECT["+(SAVE_INDEX-1)+"] = "+oaddr);
+		if(DEBUG) IO.println("SVM_INITO.set: SAVE_OBJECT["+(SAVE_INDEX-1)+"] = "+oaddr);
 		SAVE_OBJECT.store(SAVE_INDEX - 1, oaddr, "SETO");
 	}
 
@@ -76,7 +76,7 @@ public class SVM_INITO extends SVM_Instruction {
 			SAVE_OBJECT = (SegmentAddress) RTStack.popOADDR().addOffset(-7);
 			SAVE_INDEX = 0+6;
 			if(DEBUG) {
-				System.out.println("SVM_INITO: " + SAVE_OBJECT.getClass().getSimpleName() + " " + SAVE_OBJECT);
+				IO.println("SVM_INITO: " + SAVE_OBJECT.getClass().getSimpleName() + " " + SAVE_OBJECT);
 				RTUtil.dumpEntity(SAVE_OBJECT);
 			}
 			IntegerValue sort = (IntegerValue) SAVE_OBJECT.load(1);
@@ -84,10 +84,10 @@ public class SVM_INITO extends SVM_Instruction {
 //			if(sort.value != 9) Util.IERR("NOT A SAVE OBJECT");
 			if(sort.value != RTUtil.S_SAV) Util.IERR("NOT A SAVE OBJECT");
 			IntegerValue lng = (IntegerValue) SAVE_OBJECT.load(3);
-			if(DEBUG) System.out.println("SVM_INITO: sort="+sort+", lng="+lng);
+			if(DEBUG) IO.println("SVM_INITO: sort="+sort+", lng="+lng);
 			SAVE_LENGTH = lng.value;
 		} catch(Exception e) {
-			System.out.println("SVM_INITO: FAILED: " + e);
+			IO.println("SVM_INITO: FAILED: " + e);
 			e.printStackTrace();
 //			System.exit(-1);
 		}
@@ -106,13 +106,13 @@ public class SVM_INITO extends SVM_Instruction {
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 	}
 
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {
 		SVM_INITO instr = new SVM_INITO();
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + instr);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
 		return instr;
 	}
 

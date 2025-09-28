@@ -48,7 +48,7 @@ public class InsertStatement {
 		limit = Scode.ofScode();
 
 		if(Global.ATTR_INPUT_TRACE)
-			System.out.println("**************   Begin  -  Input-module  " + modid + "  " + check + "   **************");
+			IO.println("**************   Begin  -  Input-module  " + modid + "  " + check + "   **************");
 		try {
 			current = this;
 			readDescriptors(sysmod);
@@ -58,7 +58,7 @@ public class InsertStatement {
 			Util.IERR("ERROR READING: Input-module  " + modid + "  " + check);
 		}
 		if(Global.ATTR_INPUT_TRACE)
-			System.out.println("**************   Endof  -  Input-module  " + modid + "  " + check + "   **************");
+			IO.println("**************   Endof  -  Input-module  " + modid + "  " + check + "   **************");
 //		Global.dumpDISPL("END INSERT: ");
 //		Util.IERR("");
 	}
@@ -71,20 +71,22 @@ public class InsertStatement {
 		} else {
 			fileName = Global.getAttrFileName(modid, ".svm");
 		}
-		if(Global.ATTR_INPUT_TRACE) System.out.println("ATTRIBUTE INPUT: " + fileName);
+		if(Global.verbose) IO.println("INSERT " + fileName);
+		if(Global.ATTR_INPUT_TRACE) IO.println("ATTRIBUTE INPUT: " + fileName);
 		AttributeInputStream inpt = new AttributeInputStream(new FileInputStream(fileName));
 		int kind = inpt.readKind();
 		if(kind != Kind.K_Module) Util.IERR("Missing MODULE");
 		String modident = inpt.readString();
 		String modcheck = inpt.readString();
-//		System.out.println("**************   Begin  -  Input-module  " + modident + "  " + modcheck + "   **************");
+//		IO.println("**************   Begin  -  Input-module  " + modident + "  " + modcheck + "   **************");
 		if(! modident.equalsIgnoreCase(modid)) Util.IERR("WRONG modident");
 		
 //	       ------ Read Descriptors ------
 		LOOP:while(true) {
 			int prevKind = kind;
 			kind = inpt.readKind();
-//			System.out.println("InsertStatement.readDescriptors'LOOP: " + Kind.edKind(kind));
+//			IO.println("InsertStatement.readDescriptors'LOOP: " + Kind.edKind(kind));
+			
 			if(kind == Kind.K_EndModule) break LOOP;
 			switch(kind) {
 				case Kind.K_RECTYPES:		Type.readRECTYPES(inpt); break;

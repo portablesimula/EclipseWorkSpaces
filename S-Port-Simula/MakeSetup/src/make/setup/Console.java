@@ -70,11 +70,11 @@ public final class Console extends JPanel {
 //	}
 	
 	public char read() {
-		//System.out.println("Try Read");
+		//IO.println("Try Read");
 		textPane.requestFocus();
 		reading=true; // Enables KeyListener (see below)
 		while(reading) Thread.yield();
-		//System.out.println("Read: code="+(int)keyin+", CHAR='"+keyin+"'");
+		//IO.println("Read: code="+(int)keyin+", CHAR='"+keyin+"'");
 		return(keyin);
 	}
 
@@ -156,7 +156,7 @@ public final class Console extends JPanel {
 		}
 		textPane.setCaretPosition(textPane.getDocument().getLength());
         //Util.BREAK("ConsolePanel.write: done s="+s);
-//        System.out.println("ConsolePanel.write: done s=\""+s+"\"");
+//        IO.println("ConsolePanel.write: done s=\""+s+"\"");
 //	    textPane.repaint();
 //		textPane.update(textPane.getGraphics());
 	}
@@ -258,13 +258,13 @@ public final class Console extends JPanel {
 	ActionListener actionListener = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			Object item=e.getSource();
-			//System.out.println("ConsolePanel.ActionListener: "+item);
+			//IO.println("ConsolePanel.ActionListener: "+item);
 			if(item==clearItem) clear();
 			else if(item==copyItem) {
 				String text=textPane.getSelectedText();
-				//System.out.println("ConsolePanel.ActionListener: SelectedText=\""+text+"\"");
+				//IO.println("ConsolePanel.ActionListener: SelectedText=\""+text+"\"");
 				if(text==null) text=textPane.getText();
-				//System.out.println("ConsolePanel.ActionListener: Text=\""+text+"\"");
+				//IO.println("ConsolePanel.ActionListener: Text=\""+text+"\"");
 				StringSelection stringSelection = new StringSelection(text);
 				Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 				clipboard.setContents(stringSelection, null);

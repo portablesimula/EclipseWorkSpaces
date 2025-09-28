@@ -19,17 +19,17 @@ public abstract class DELETE extends Instruction {
 	public static void ofScode() {
 //		Scode.dumpBytes(10);
 		Tag tag = Tag.ofScode();
-//		System.out.println("DELETE.ofScode: " + tag);
+//		IO.println("DELETE.ofScode: " + tag);
 		
 		// check stacks empty;
 		CTStack.checkStackEmpty();
-//		System.out.println("DELETE.ofScode: SJEKK DETTE SEINERE EN GANG: check stacks empty;");
+//		IO.println("DELETE.ofScode: SJEKK DETTE SEINERE EN GANG: check stacks empty;");
 
 		int startTag = tag.val;
 //		Global.dumpDISPL("DELETE.ofScode: ", startTag -2);
 
 		for(int t=startTag;t<Global.DISPL.size();t++) {
-//			System.out.println("DELETE.ofScode: DELETE: " + t + ": " + Global.DISPL.get(t));
+//			IO.println("DELETE.ofScode: DELETE: " + t + ": " + Global.DISPL.get(t));
 			Global.DISPL.set(t, null);
 			Type.removeFromTMAP(t);
 		}

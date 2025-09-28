@@ -51,24 +51,24 @@ public abstract class Quantity {
     public static void doParse(Vector<Quantity> declset) {        
         LOOP: while(true) {
     		if(Parser.accept(KeyWord.PROCEDURE)) {
-        		//System.out.println("Declaration.doParse:======================================  Case: PROCEDURE  procedure'identifier ...");
+        		//IO.println("Declaration.doParse:======================================  Case: PROCEDURE  procedure'identifier ...");
         		declset.add(Procedure.doParse(Type.noType));
     			continue LOOP;
     		}
         	if(Parser.accept(KeyWord.CLASS)) {
-        		//System.out.println("Declaration.doParse:======================================  Case: CLASS  class'identifier ...");
+        		//IO.println("Declaration.doParse:======================================  Case: CLASS  class'identifier ...");
         		declset.add(ClassQuant.doParseClass(null));
         		continue LOOP;
         	}
         	Type type=Parser.acceptType();
         	if(type!=null) {
         		if(Parser.accept(KeyWord.PROCEDURE)) {
-            		//System.out.println("Declaration.doParse:======================================  Case: Type  PROCEDURE  procedure'identifier ...");
+            		//IO.println("Declaration.doParse:======================================  Case: Type  PROCEDURE  procedure'identifier ...");
             		declset.add(Procedure.doParse(type));
         			continue LOOP;
         		} else {
         	    	String identifier=Parser.expectIdentifier();
-        	    	//System.out.println("Declaration.doParse:======================================  Case: Type identifier ...");
+        	    	//IO.println("Declaration.doParse:======================================  Case: Type identifier ...");
         	    	declset.add(Variable.doParse(type,identifier,false));
         	    	continue LOOP;
          		}
@@ -78,7 +78,7 @@ public abstract class Quantity {
 	    	if(identifier!=null) {
 	    		// Parse prefixed class
 	    		if(Parser.accept(KeyWord.CLASS)) {
-	    			//System.out.println("Declaration.doParse:======================================  Case: prefix'identifier CLASS  class'identifier ...");
+	    			//IO.println("Declaration.doParse:======================================  Case: prefix'identifier CLASS  class'identifier ...");
 	    			declset.add(ClassQuant.doParseClass(identifier));
 	    			continue LOOP;
 	    		} else {
@@ -86,7 +86,7 @@ public abstract class Quantity {
 	    		}
 	    	}
         	
-    		//System.out.println("Declaration.doParse:====================================== NO MORE DECLARATIONS");
+    		//IO.println("Declaration.doParse:====================================== NO MORE DECLARATIONS");
         	Parser.TRACE("Declaration.doParse: NO MORE DECLARATIONS");
         	break LOOP;
         }
@@ -119,14 +119,14 @@ public abstract class Quantity {
 	public void writeQuantHead(String indent,AttrFile oupt) throws IOException {
     	//*** basic quantity descriptor, size computed above ***;
     	// - assume that categ <8 and kind < 16  ALWAYS ***;
-    	if(RTS_FEC_Interface_Option.INTERFACE_TRACE_LEVEL > 0) System.out.println("writeQuant: "+indent+identifier+", type="+type
+    	if(RTS_FEC_Interface_Option.INTERFACE_TRACE_LEVEL > 0) IO.println("writeQuant: "+indent+identifier+", type="+type
     			+", kind="+Kind.edKind(kind)+", categ="+Category.edCateg(categ)+", clf="+clf);
     	int xtag=quantInfo.getXtag(0);
-//    	System.out.println("writeQuant: "+indent+identifier+", exttag="+xtag+", type="+type+", kind="+Kind.edKind(kind)+", categ="+Category.edCateg(categ)+", clf="+clf);
+//    	IO.println("writeQuant: "+indent+identifier+", exttag="+xtag+", type="+type+", kind="+Kind.edKind(kind)+", categ="+Category.edCateg(categ)+", clf="+clf);
     	if(RTS_FEC_Interface_Option.TRACE_CODING>1) AttrFile.OUPUT_TRACE(Kind.edKind(kind)+": "+identifier+", exttag="+xtag+", type="+type
     			+", kind="+Kind.edKind(kind)+", categ="+Category.edCateg(categ)+", clf="+clf+", "+quantInfo);
     	oupt.putByte((kind*8) + categ);
-//    	System.out.println("writeQuant: PACKED="+((kind*8) + categ)+", kind="+kind+", categ="+categ);
+//    	IO.println("writeQuant: PACKED="+((kind*8) + categ)+", kind="+kind+", categ="+categ);
 
     	// - assume that type < 128 ALWAYS ***;
     	String prefqual=this.type.prefqual;
@@ -154,15 +154,15 @@ public abstract class Quantity {
     		clf=10;
     		quantInfo=new QuantInfo(info.substring(2,info.length()));
     	} else quantInfo=new QuantInfo(info.substring(1,info.length()));
-//    	System.out.println("BEFORE: "+quantInfo);
-//    	System.out.println("AFTER: "+s);
+//    	IO.println("BEFORE: "+quantInfo);
+//    	IO.println("AFTER: "+s);
 //    	Util.STOP();    	
     }
     
     public String edQuantInfo() {
     	String s="\"!"+clf+"!"+quantInfo+'\"';
-//    	System.out.println("BEFORE: "+quantInfo);
-//    	System.out.println("AFTER: "+s);
+//    	IO.println("BEFORE: "+quantInfo);
+//    	IO.println("AFTER: "+s);
 //    	Util.STOP();
     	return(s);
     }

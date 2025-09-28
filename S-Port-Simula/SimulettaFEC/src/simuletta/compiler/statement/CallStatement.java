@@ -67,13 +67,13 @@ public class CallStatement extends Statement {
 		enterLine();
 		designator.doSCodingDirect();
 
-//		System.out.println("CallStatement.doSCodeStatement: designator="+designator.getClass().getSimpleName()+"  "+designator);
+//		IO.println("CallStatement.doSCodeStatement: designator="+designator.getClass().getSimpleName()+"  "+designator);
 		Util.ASSERT(designator.varset.size()==1,"designator.varset.size()==1");
 		DesignatorElement elt=designator.varset.firstElement();
 		if(elt instanceof Variable var) {
 //			Declaration meaning=getMeaning(var.identifier);
 			Declaration meaning=Declaration.findMeaning(var.identifier);
-//			System.out.println("CallStatement.doSCodeStatement: meaning="+meaning.getClass().getSimpleName()+"  "+meaning);
+//			IO.println("CallStatement.doSCodeStatement: meaning="+meaning.getClass().getSimpleName()+"  "+meaning);
 			if(meaning instanceof RoutineDeclaration rut) {
 				if(rut.signatur.export!=null) {
 					sCode.outinst(S_POP); sCode.outcode(); // POP off export value
@@ -85,7 +85,7 @@ public class CallStatement extends Statement {
 			}
 		} else if(elt instanceof CallExpression call) {
 			Profile prf=call.findProfile();
-//			System.out.println("CallStatement.doSCodeStatement: elt="+elt.getClass().getSimpleName()+"  "+elt);
+//			IO.println("CallStatement.doSCodeStatement: elt="+elt.getClass().getSimpleName()+"  "+elt);
 			if(prf.signatur.export!=null) {
 				sCode.outinst(S_POP); sCode.outcode(); // POP off export value
 			}

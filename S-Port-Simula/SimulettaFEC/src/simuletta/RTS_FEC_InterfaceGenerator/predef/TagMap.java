@@ -371,20 +371,20 @@ public class TagMap {
 		String attribute=null;
     	int p=identifier.indexOf('.');
     	if(p>0) {
-    		//System.out.println("TagMap.find: identifier\""+identifier+"\"");
+    		//IO.println("TagMap.find: identifier\""+identifier+"\"");
     		attribute=identifier.substring(p+1);
     		identifier=identifier.substring(0, p);
-    		//System.out.println("TagMap.find: identifier\""+identifier+"\"");
-    		//System.out.println("TagMap.find: attribute\""+attribute+"\"");
+    		//IO.println("TagMap.find: identifier\""+identifier+"\"");
+    		//IO.println("TagMap.find: attribute\""+attribute+"\"");
     		//Util.IERR();
     	}
     		
     	for(InsertedModule m:modset) {
-    		//System.out.println("TagMap.findGlobalMeaning: SEARCHING"+identifier+"in"+m.identifier);
+    		//IO.println("TagMap.findGlobalMeaning: SEARCHING"+identifier+"in"+m.identifier);
     		for(Declaration d:m.declarationList) {
-    			//if(!(d instanceof Record)) System.out.println("TagMap.findGlobalMeaning: CHECKING"+d);
+    			//if(!(d instanceof Record)) IO.println("TagMap.findGlobalMeaning: CHECKING"+d);
     			if(d.identifier.equalsIgnoreCase(identifier)) {
-    				//System.out.println("TagMap.findGlobalMeaning:"+identifier+" FOUND in"+m.identifier+":"+d);
+    				//IO.println("TagMap.findGlobalMeaning:"+identifier+" FOUND in"+m.identifier+":"+d);
     				if(attribute==null) return(d.getTag().getCode());
     				return(find((Record) d,attribute));
     			}
@@ -400,11 +400,11 @@ public class TagMap {
     }
     
     public static void print() {
-		System.out.println("*************** TAGMAP ***************");
+		IO.println("*************** TAGMAP ***************");
     	Set<String> keys=tagMap.keySet();
     	for(String key:keys) {
     		int xtag=tagMap.get(key);
-    		System.out.println(key+" = "+xtag);
+    		IO.println(key+" = "+xtag);
     	}
     }
 }

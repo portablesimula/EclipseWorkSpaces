@@ -66,7 +66,7 @@ public class RoutineBody extends DeclarationScope implements Externalizable {
 //	String routineID;
 //	public RoutineDeclaration getRoutine() {
 //		RoutineDeclaration rut=(RoutineDeclaration) Global.currentModule.lookup(routineID);
-//		//System.out.println("RoutineBody.getRoutine: "+routineID+"  ==>  "+rut);
+//		//IO.println("RoutineBody.getRoutine: "+routineID+"  ==>  "+rut);
 //		return(rut);
 //	}
 	
@@ -86,7 +86,7 @@ public class RoutineBody extends DeclarationScope implements Externalizable {
 
     public static RoutineBody doParse(boolean visibleflag,RoutineDeclaration routine) {
 		Parser.TRACE("Grammar.declarations: ROUTINE-BODY");
-		//System.out.println("Grammar.declarations: BODY");
+		//IO.println("Grammar.declarations: BODY");
 //    	RoutineBody body=new RoutineBody(visibleflag,routine);
     	RoutineBody body=new RoutineBody(visibleflag,routine,routine.bodyTag); // TESTING BODYTAG
 		enterScope(body);
@@ -167,7 +167,7 @@ public class RoutineBody extends DeclarationScope implements Externalizable {
 		if(visible) s.append("visible ");
 		s.append("body ");
 		s.append(identifier).append(';');
-		System.out.println(s.toString());
+		IO.println(s.toString());
 		//	spec.prt(pos);
 		for(Declaration d:declarationList) d.print("",indent);
 	}

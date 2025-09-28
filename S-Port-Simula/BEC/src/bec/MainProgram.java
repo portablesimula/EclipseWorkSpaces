@@ -90,7 +90,7 @@ public class MainProgram extends S_Module {
 //				Thread.dumpStack();
 			}
 //			if(Global.INLINE_TESTING) {
-//				System.out.println("BecCompiler.UncaughtExceptionHandler: INLINE_TESTING: return");
+//				IO.println("BecCompiler.UncaughtExceptionHandler: INLINE_TESTING: return");
 //				Thread.dumpStack();
 //				return;
 //			}

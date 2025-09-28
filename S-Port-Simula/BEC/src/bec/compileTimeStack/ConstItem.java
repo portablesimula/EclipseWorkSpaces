@@ -36,12 +36,12 @@ public class ConstItem extends Temp {
 //		%+C   if TOS.type > T_max then IERR("CODER.ConvConst-1") endif;
 //		%+C   if totype > T_max then IERR("CODER.ConvConst-2") endif;
 //		      itm:=TOS qua Coonst.itm;
-		System.out.println("ConstItem.convert: " + value.type + " ==> " + totype);
+		IO.println("ConstItem.convert: " + value.type + " ==> " + totype);
 		boolean ILL = false;
 		switch(value.type.tag) {
 			case Scode.TAG_TEXT:
-				System.out.println("ConstItem.convert: totype="+totype+" HASH:"+totype.hashCode());
-				System.out.println("ConstItem.convert: String="+Type.T_STRING+" HASH:"+Type.T_STRING.hashCode());
+				IO.println("ConstItem.convert: totype="+totype+" HASH:"+totype.hashCode());
+				IO.println("ConstItem.convert: String="+Type.T_STRING+" HASH:"+Type.T_STRING.hashCode());
 				if(totype != Type.T_STRING) ILL = true; break;
 			default: Util.IERR("FYLL PÅ FLERE CASER: " + value.type);
 		}

@@ -132,11 +132,11 @@ public class RTFileAction {
 	private void decodeActions(String action) {
 		if(action.length() != 10) Util.IERR("NOT IMPL");
 		int chr = getActionChar(action, 0);
-		if(DEBUG) System.out.println("RTFileAction.decodeActions: shared/noshared = " + chr);
+		if(DEBUG) IO.println("RTFileAction.decodeActions: shared/noshared = " + chr);
 		
 		chr = getActionChar(action, 1);
 		_APPEND = chr != 1;
-		if(DEBUG) System.out.println("RTFileAction.decodeActions: append/noappend = " + chr + "              ===> APPEND = " + _APPEND);
+		if(DEBUG) IO.println("RTFileAction.decodeActions: append/noappend = " + chr + "              ===> APPEND = " + _APPEND);
 		
 		chr = getActionChar(action, 2);
 		switch(chr) {
@@ -144,7 +144,7 @@ public class RTFileAction {
 			case 1: _CREATE = _CreateAction.noCreate; break;
 			case 2: _CREATE = _CreateAction.anyCreate;
 		}
-		if(DEBUG) System.out.println("RTFileAction.decodeActions: create/nocreate/anycreate = " + chr + "    ===> CREATE = " + _CREATE);
+		if(DEBUG) IO.println("RTFileAction.decodeActions: create/nocreate/anycreate = " + chr + "    ===> CREATE = " + _CREATE);
 		
 		chr = getActionChar(action, 3);
 		switch(chr) {
@@ -152,22 +152,22 @@ public class RTFileAction {
 			case 1: _CANWRITE = true;  _CANREAD = false; break;
 			case 2: _CANWRITE = true;  _CANREAD = true;
 		}
-		if(DEBUG) System.out.println("RTFileAction.decodeActions: readonly/writeonly/readwrite = " + chr + " ===> CANREAD = " + _CANREAD + ", CANWRITE= " + _CANWRITE);
+		if(DEBUG) IO.println("RTFileAction.decodeActions: readonly/writeonly/readwrite = " + chr + " ===> CANREAD = " + _CANREAD + ", CANWRITE= " + _CANWRITE);
 		
 		chr = getActionChar(action, 4);
 		_PURGE = chr != 1;
-		if(DEBUG) System.out.println("RTFileAction.decodeActions: purge/nopurge = " + chr + "                ===> PURGE = " + _PURGE);
+		if(DEBUG) IO.println("RTFileAction.decodeActions: purge/nopurge = " + chr + "                ===> PURGE = " + _PURGE);
 
 //		chr = getActionChar(5);
-//		System.out.println("RTFileAction.decodeActions: rewind/norewind/next/previous/repeat/release = " + chr);
+//		IO.println("RTFileAction.decodeActions: rewind/norewind/next/previous/repeat/release = " + chr);
 //		chr = getActionChar(6);
-//		System.out.println("RTFileAction.decodeActions: append/noappend = " + chr);
+//		IO.println("RTFileAction.decodeActions: append/noappend = " + chr);
 //		chr = getActionChar(7);
-//		System.out.println("RTFileAction.decodeActions: append/noappend = " + chr);
+//		IO.println("RTFileAction.decodeActions: append/noappend = " + chr);
 //		chr = getActionChar(8);
-//		System.out.println("RTFileAction.decodeActions: append/noappend = " + chr);
+//		IO.println("RTFileAction.decodeActions: append/noappend = " + chr);
 //		chr = getActionChar(9);
-//		System.out.println("RTFileAction.decodeActions: append/noappend = " + chr);
+//		IO.println("RTFileAction.decodeActions: append/noappend = " + chr);
 //		Util.IERR("");
 	}
 
@@ -192,14 +192,14 @@ public class RTFileAction {
 			case noCreate -> {
 				// If the value is "nocreate", the associated file must exist at "open".
 				if (!file.exists()) {
-//					System.out.println("File access mode=noCreate but File \"" + file + "\" does not exist");
+//					IO.println("File access mode=noCreate but File \"" + file + "\" does not exist");
 //					RTUtil.set_STATUS(3); // File does not exist
 					
 					File selected = trySelectFile(fileName);
 					if(selected != null) {
 						file = selected;
 					} else {
-						System.out.println("File access mode=noCreate but File \"" + file + "\" does not exist");
+						IO.println("File access mode=noCreate but File \"" + file + "\" does not exist");
 						RTUtil.set_STATUS(3); // File does not exist						
 					}
 				}
@@ -211,7 +211,7 @@ public class RTFileAction {
 				if (!file.exists()) {
 					boolean success = file.createNewFile();
 					if (!success) {
-						System.out.println("File access mode=Create but couldn't create a new empty file: " + file);
+						IO.println("File access mode=Create but couldn't create a new empty file: " + file);
 						RTUtil.set_STATUS(18); // Specified action cannot be performed
 					}
 				}
@@ -221,10 +221,10 @@ public class RTFileAction {
 				// at "open" the file is opened, otherwise a new file is created.
 				if (!file.exists()) {
 					boolean success = file.createNewFile();
-					// System.out.println("FILE.doCreateAction: Create on "+file+",
+					// IO.println("FILE.doCreateAction: Create on "+file+",
 					// success="+success);
 					if (!success) {
-						System.out.println("File access mode=anyCreate but couldn't create a new empty file: " + file);
+						IO.println("File access mode=anyCreate but couldn't create a new empty file: " + file);
 					}
 				}
 			}
@@ -286,7 +286,7 @@ public class RTFileAction {
 			File file = new File(fileName.trim());
 			if (_PURGE) {
 				if (!file.delete()) {
-					System.out.println("Purge " + this.getClass().getSimpleName() + " \"" + file.getName() 
+					IO.println("Purge " + this.getClass().getSimpleName() + " \"" + file.getName() 
 									   + "\" failed - the underlying OS was unable to perform the delete operation");
 					RTUtil.set_STATUS(18); // Specified action cannot be performed
 				}

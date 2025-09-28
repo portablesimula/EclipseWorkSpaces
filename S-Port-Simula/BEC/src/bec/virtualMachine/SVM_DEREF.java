@@ -39,15 +39,17 @@ public class SVM_DEREF extends SVM_Instruction {
 	private final boolean DEBUG = false;
 
 	public SVM_DEREF(ObjectAddress objadr, int offset, int xReg) {
+		this.opcode = SVM_Instruction.iDEREF;
 		this.objadr = objadr;
 		this.offset = offset;
 		this.xReg = xReg;
-		this.opcode = SVM_Instruction.iDEREF;
+		RTRegister.reads("SVM_DEREF", objadr);
+		RTRegister.reads("SVM_DEREF", xReg);
 	}
 
 	@Override
 	public void execute() {
-		if(DEBUG) System.out.println("SVM_DEREF.execute: " + this);
+		if(DEBUG) IO.println("SVM_DEREF.execute: " + this);
 		switch(objadr.kind) {
 			case ObjectAddress.SEGMNT_ADDR: RTStack.push(objadr, "SVM_DEREF"); break;
 			case ObjectAddress.REMOTE_ADDR: break; // Nothing
@@ -81,7 +83,7 @@ public class SVM_DEREF extends SVM_Instruction {
 	public String toString() {
 		String tail = "";
 	    if(objadr.kind == ObjectAddress.REMOTE_ADDR) tail = tail +" withRemoteBase";
-		if(xReg > 0) tail = tail + " R" + xReg + '(' + RTRegister.getValue(xReg) + ')';
+		if(xReg > 0) tail = tail + RTRegister.edRegValue(xReg);
 		return "DEREF      " + objadr + tail;
 	}
 
@@ -89,8 +91,12 @@ public class SVM_DEREF extends SVM_Instruction {
 	// *** Attribute File I/O
 	// ***********************************************************************************************
 
+	private SVM_DEREF() {
+		this.opcode = SVM_Instruction.iDEREF;
+	}
+
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		objadr.writeBody(oupt);
 		oupt.writeShort(offset);
@@ -98,12 +104,11 @@ public class SVM_DEREF extends SVM_Instruction {
 	}
 
 	public static SVM_DEREF read(AttributeInputStream inpt) throws IOException {
-		ObjectAddress objadr = null;
-		objadr = ObjectAddress.read(inpt);
-		int offset = inpt.readShort();
-		int xReg = inpt.readReg();
-		SVM_DEREF instr = new SVM_DEREF(objadr, offset, xReg);
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + instr);
+		SVM_DEREF instr = new SVM_DEREF();
+		instr.objadr = ObjectAddress.read(inpt);
+		instr.offset = inpt.readShort();
+		instr.xReg = inpt.readReg();
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
 		return instr;
 	}
 

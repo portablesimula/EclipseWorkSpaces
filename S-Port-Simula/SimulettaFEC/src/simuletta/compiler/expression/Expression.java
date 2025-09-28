@@ -194,7 +194,7 @@ public class Expression extends SyntaxClass {
 
 	public static Value parseValue(boolean constflag) {
 		Expression e=getprim(constflag);
-//    	System.out.println("Expression.parseValue: "+e);
+//    	IO.println("Expression.parseValue: "+e);
 	    if(e instanceof Value) return((Value)e);
 	    if(e instanceof Designator) {
 	    	Designator designator=(Designator)e;
@@ -206,9 +206,9 @@ public class Expression extends SyntaxClass {
 	        	return(new ProgramAddress(var.identifier));
 	        } else ERROR("Illegal label");
 	    } else if(e instanceof UnaryOperation unopr) {
-//	    	System.out.println("Expression.parseValue: "+unopr);
+//	    	IO.println("Expression.parseValue: "+unopr);
 	    	if(unopr.opr==S_NAME && (unopr.x instanceof Designator des)) {
-//		    	System.out.println("Expression.parseValue: des="+des);
+//		    	IO.println("Expression.parseValue: des="+des);
 	        	GeneralAddress gaddr=new GeneralAddress((Designator)des);
 		    	return(gaddr);
 	    	}

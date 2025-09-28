@@ -42,17 +42,19 @@ public class SVM_ASSIGN extends SVM_Instruction {
 		this.rtAddr = rtAddr;
 		this.xReg = xReg;
 		this.size = size;
+		RTRegister.reads("SVM_ASSIGN", rtAddr);
+		RTRegister.reads("SVM_ASSIGN", xReg);
 	}
 
 	@Override
 	public void execute() {
 		if(DEBUG) {
-			System.out.println("\nSVM_ASSIGN: BEGIN DEBUG INFO ++++++++++++++++++++++øø++++++++++++++++++++++++++++++++++++++++++++++");
+			IO.println("\nSVM_ASSIGN: BEGIN DEBUG INFO ++++++++++++++++++++++øø++++++++++++++++++++++++++++++++++++++++++++++");
 			RTUtil.printCurins();
 			RTStack.dumpRTStack("SVM_ASSIGN: ");
 		}
 		Vector<Value> values = RTStack.pop(size);
-		if(DEBUG) for(int i=0;i<size;i++) System.out.println("SVM_ASSIGN: values["+i+"] = " + values.get(i));
+		if(DEBUG) for(int i=0;i<size;i++) IO.println("SVM_ASSIGN: values["+i+"] = " + values.get(i));
 		
 		ObjectAddress addr = this.rtAddr;
 		switch(rtAddr.kind) {
@@ -79,13 +81,13 @@ public class SVM_ASSIGN extends SVM_Instruction {
 	}
 	
 	private void doAssign(ObjectAddress addr, int xReg, Vector<Value> values) {
-		if(DEBUG) for(int i=0;i<size;i++) System.out.println("SVM_ASSIGN: BEFORE: sos.store: " + i + " " + values.get(i));
+		if(DEBUG) for(int i=0;i<size;i++) IO.println("SVM_ASSIGN: BEFORE: sos.store: " + i + " " + values.get(i));
 		int idx = size;
 		int rx = (xReg == 0)? 0 : RTRegister.getIntValue(xReg);
 		for(int i=0;i<size;i++) {
 			addr.store(rx + i, values.get((--idx)), "");
 		}
-		if(DEBUG) for(int i=0;i<size;i++) System.out.println("SVM_ASSIGN: AFTER: sos.store: " + i + " " + values.get(i));
+		if(DEBUG) for(int i=0;i<size;i++) IO.println("SVM_ASSIGN: AFTER: sos.store: " + i + " " + values.get(i));
 		
 		if(update) {
 			for(int i=0;i<size;i++) {
@@ -94,7 +96,7 @@ public class SVM_ASSIGN extends SVM_Instruction {
 			if(DEBUG) {
 				RTUtil.printCurins();
 				RTStack.dumpRTStack("SVM_ASSIGN: ");
-				System.out.println("SVM_ASSIGN: END DEBUG INFO\n");
+				IO.println("SVM_ASSIGN: END DEBUG INFO\n");
 			}
 		}		
 	}
@@ -114,11 +116,11 @@ public class SVM_ASSIGN extends SVM_Instruction {
 		this.rtAddr = ObjectAddress.read(inpt);
 		this.xReg = inpt.readReg();
 		this.size = inpt.readShort();
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + this);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		if(rtAddr == null) Util.IERR("");
 		oupt.writeOpcode(opcode);
 		oupt.writeBoolean(update);

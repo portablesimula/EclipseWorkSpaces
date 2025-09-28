@@ -30,7 +30,7 @@ public class AttrFile {
 	protected void open() throws IOException {
 		String relativeAttributeFileName="Attrs/FEC/"+PredefGlobal.sourceName+".atr";
 		PredefGlobal.attributeFile = new File(PredefGlobal.outputDir,relativeAttributeFileName);
-		if (RTS_FEC_Interface_Option.verbose) System.out.println("************************** BEGIN WRITE ATTRIBUTE FILE: "+PredefGlobal.attributeFile+" **************************");
+		if (RTS_FEC_Interface_Option.verbose) IO.println("************************** BEGIN WRITE ATTRIBUTE FILE: "+PredefGlobal.attributeFile+" **************************");
 		if (RTS_FEC_Interface_Option.verbose)	Util.println("AttrFile.open: \"" + PredefGlobal.attributeFile+"\"");
     	Util.createFile(PredefGlobal.attributeFile);
 		FileOutputStream fileOutputStream = new FileOutputStream(PredefGlobal.attributeFile);
@@ -46,7 +46,7 @@ public class AttrFile {
         attrbuffer = ByteBuffer.wrap(bufferBytes);
         attrbuffer.put(NUL); attrbuffer.put(NUL); p=2;
         //        attrbuffer.replace(0, 12, "S-port 108.1"); p=12;
-//        System.out.println("writeCombinedAttrFile: HEAD: \""+edBuffer());
+//        IO.println("writeCombinedAttrFile: HEAD: \""+edBuffer());
 	
 	}
 	
@@ -57,7 +57,7 @@ public class AttrFile {
     protected void close() throws IOException {
         swapObuffer(); //!output last buffer;
     	oupt.flush(); oupt.close(); oupt = null;
-    	if (RTS_FEC_Interface_Option.verbose)	System.out.println("************************** END WRITE ATTRIBUTE FILE: "+PredefGlobal.attributeFile+" **************************");
+    	if (RTS_FEC_Interface_Option.verbose)	IO.println("************************** END WRITE ATTRIBUTE FILE: "+PredefGlobal.attributeFile+" **************************");
     }
     
     private void storebyte(int ch) {

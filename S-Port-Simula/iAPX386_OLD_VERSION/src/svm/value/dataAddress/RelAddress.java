@@ -28,7 +28,7 @@ public class RelAddress extends DataAddress {
 	
 	@Override
 	public void store(int idx, Value value, String comment) {
-//		System.out.println("RelAddr.store: idx="+idx+", value="+value+", xReg="+RTRegister.edRegVal(xReg));
+//		IO.println("RelAddr.store: idx="+idx+", value="+value+", xReg="+RTRegister.edRegVal(xReg));
 		getOADDR().store(idx, value, comment);
 //		Segment.lookup("DSEG_ADHOC02").dump("RelAddr.store: ");
 //		Util.IERR("");
@@ -37,15 +37,15 @@ public class RelAddress extends DataAddress {
 	private DataAddress getOADDR() {
 		GeneralAddress gaddr = (GeneralAddress) RTRegister.getValue(xReg);
 		DataAddress oaddr = gaddr.base.addOffset(gaddr.ofst + ofst);
-//		System.out.println("RelAddr.getOADDR: oaddr="+oaddr);
+//		IO.println("RelAddr.getOADDR: oaddr="+oaddr);
 		return oaddr;
 	}
 	
 	@Override
 	public Value load(int idx) {
-//		System.out.println("RelAddr.load: idx="+idx+", xReg="+RTRegister.edRegVal(xReg));
+//		IO.println("RelAddr.load: idx="+idx+", xReg="+RTRegister.edRegVal(xReg));
 		Value val = getOADDR().load(idx);
-//		System.out.println("RelAddr.load: idx="+idx+", xReg="+RTRegister.edRegVal(xReg)+" ===> "+val);
+//		IO.println("RelAddr.load: idx="+idx+", xReg="+RTRegister.edRegVal(xReg)+" ===> "+val);
 		return val;
 	}
 
@@ -62,17 +62,17 @@ public class RelAddress extends DataAddress {
 		this.kind = DataAddress.REFER_ADDR;
 		this.type = Type.T_OADDR;
 		ofst = inpt.readShort();
-//		System.out.println("DataAddress.read: " + this);
+//		IO.println("DataAddress.read: " + this);
 	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("RTReferAddress.write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("RTReferAddress.write: " + this);
 		oupt.writeKind(Scode.S_C_OADDR);
 		oupt.writeKind(kind);
 		this.type = Type.T_OADDR;
 		oupt.writeShort(ofst);
-//		System.out.println("DataAddress.write: " + this + "   segID="+segID+", ofst="+ofst);
+//		IO.println("DataAddress.write: " + this + "   segID="+segID+", ofst="+ofst);
 	}
 
 //	public void writeBody(AttributeOutputStream oupt) throws IOException {

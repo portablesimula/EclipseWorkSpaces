@@ -74,7 +74,7 @@ public class MacroDefinition extends Mnemonic implements Externalizable {
 		lastLineNumber = Global.sourceLineNumber;
 		if (Option.TRACE_PARSE)	Util.TRACE("NEW MacroDefinition: " + this);
 		Util.BREAK("NEW MacroDefinition: " + this);
-		if(Option.TRACE_MACRO_SCAN) System.out.println("NEW MacroDefinition: " + this);
+		if(Option.TRACE_MACRO_SCAN) IO.println("NEW MacroDefinition: " + this);
 		duringMacroDefinition=false;
 	}
 	

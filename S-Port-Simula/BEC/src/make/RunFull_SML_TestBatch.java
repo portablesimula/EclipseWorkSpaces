@@ -11,8 +11,6 @@ import java.util.Vector;
 
 import bec.BecCompiler;
 import bec.util.Global;
-import bec.util.Util;
-import bec.virtualMachine.SVM_CALL_SYS;
 
 public final class RunFull_SML_TestBatch {
 	private static long startTimeMs = System.currentTimeMillis();
@@ -101,13 +99,13 @@ public final class RunFull_SML_TestBatch {
 			String fileName = smlSCodeDir + name;
 //			try {
 				new BecCompiler(fileName);
-//				System.out.println("RETURN FROM: BecCompiler");
+//				IO.println("RETURN FROM: BecCompiler");
 //			} catch (Exception e) { Util.IERR("Compiler Error: " + e); }
 		}
 
-		System.out.println("\n--- END OF SportBEC TESTBATCH.scd");
+		IO.println("\n--- END OF SportBEC TESTBATCH.scd");
 		long timeUsed = System.currentTimeMillis() - startTimeMs;
-		System.out.println("\nElapsed Time: Approximately " + timeUsed / 1000 + " sec.");
+		IO.println("\nElapsed Time: Approximately " + timeUsed / 1000 + " sec.");
 	}
 
 }

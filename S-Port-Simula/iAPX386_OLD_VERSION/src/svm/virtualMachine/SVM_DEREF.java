@@ -47,7 +47,7 @@ public class SVM_DEREF extends SVM_Instruction {
 
 	@Override
 	public void execute() {
-		if(DEBUG) System.out.println("SVM_DEREF.execute: " + this);
+		if(DEBUG) IO.println("SVM_DEREF.execute: " + this);
 		switch(objadr.kind) {
 			case DataAddress.SEGMNT_ADDR: RTStack.push(objadr, "RTAddress.SEGMNT_ADDR"); break;
 			case DataAddress.REMOTE_ADDR:
@@ -95,7 +95,7 @@ public class SVM_DEREF extends SVM_Instruction {
 	// ***********************************************************************************************
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		objadr.write(oupt);
 		oupt.writeShort(offset);
@@ -108,7 +108,7 @@ public class SVM_DEREF extends SVM_Instruction {
 		int offset = inpt.readShort();
 		int xReg = inpt.readReg();
 		SVM_DEREF instr = new SVM_DEREF(objadr, offset, xReg);
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + instr);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
 		return instr;
 	}
 

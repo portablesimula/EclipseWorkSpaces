@@ -43,7 +43,7 @@ public class ObjectAddress_Kopi extends Value {
 		Tag tag = Tag.ofScode();
 		Descriptor descr = tag.getMeaning();
 		if(descr == null) Util.IERR("IMPOSSIBLE: TESTING FAILED");
-//		System.out.println("OADDR_Value.ofScode: descr="+descr.getClass().getSimpleName()+"  "+descr);
+//		IO.println("OADDR_Value.ofScode: descr="+descr.getClass().getSimpleName()+"  "+descr);
 		if(descr instanceof Variable var) return var.address;
 		if(descr instanceof ConstDescr cns) return cns.getAddress();
 		Util.IERR("MISSING: " + descr);
@@ -102,7 +102,7 @@ public class ObjectAddress_Kopi extends Value {
 	public void store(int idx, Value value, String comment) {
 		if(segID == null) {
 			// store rel-addr  callStackTop + ofst
-//			System.out.println("ObjectAddress.store: callStackTop="+RTStack.callStackTop.rtStackIndex);
+//			IO.println("ObjectAddress.store: callStackTop="+RTStack.callStackTop.rtStackIndex);
 			RTStack.store(RTStack.callStack_TOP().rtStackIndex + ofst + idx, value, comment);
 //			Util.IERR("");
 			
@@ -117,11 +117,11 @@ public class ObjectAddress_Kopi extends Value {
 	public Value load(int idx) {
 		if(segID == null) {
 			// load from rel-addr  callStackTop + ofst
-//			System.out.println("ObjectAddress.load: callStackTop="+RTStack.callStackTop.rtStackIndex);
+//			IO.println("ObjectAddress.load: callStackTop="+RTStack.callStackTop.rtStackIndex);
 			CallStackFrame callStackTop = RTStack.callStack_TOP();
 			int bias = (callStackTop == null)? 0 : callStackTop.rtStackIndex;
 			Value item = RTStack.load(bias + ofst + idx);
-//			System.out.println("ObjectAddress.load: value="+value);
+//			IO.println("ObjectAddress.load: value="+value);
 //			Util.IERR("");
 			return item;
 		} else {
@@ -136,11 +136,11 @@ public class ObjectAddress_Kopi extends Value {
 	public Value load() {
 		if(segID == null) {
 			// load from rel-addr  callStackTop + ofst
-//			System.out.println("ObjectAddress.load: callStackTop="+RTStack.callStackTop.rtStackIndex);
+//			IO.println("ObjectAddress.load: callStackTop="+RTStack.callStackTop.rtStackIndex);
 			CallStackFrame callStackTop = RTStack.callStack_TOP();
 			int bias = (callStackTop == null)? 0 : callStackTop.rtStackIndex;
 			Value item = RTStack.load(bias + ofst);
-//			System.out.println("ObjectAddress.load: value="+value);
+//			IO.println("ObjectAddress.load: value="+value);
 //			Util.IERR("");
 			return item;
 		} else {
@@ -159,8 +159,8 @@ public class ObjectAddress_Kopi extends Value {
 		if(other instanceof IntegerValue ival) {
 			return new ObjectAddress_Kopi(this.kind, this.segID, this.ofst + ival.value);
 		} else if(other instanceof ObjectAddress_Kopi oaddr) {
-			System.out.println("ObjectAddress.add: this="+this);
-			System.out.println("ObjectAddress.add: other="+other);
+			IO.println("ObjectAddress.add: this="+this);
+			IO.println("ObjectAddress.add: other="+other);
 			if(!oaddr.segID.equals(segID))
 				Util.IERR("Illegal ObjectAddress'add operation: "+oaddr.segID+" != "+segID);
 			return new ObjectAddress_Kopi(this.kind, this.segID, this.ofst + oaddr.ofst);
@@ -176,8 +176,8 @@ public class ObjectAddress_Kopi extends Value {
 		if(other instanceof IntegerValue ival) {
 			return new ObjectAddress_Kopi(this.kind, this.segID, this.ofst - ival.value);
 		} else if(other instanceof ObjectAddress_Kopi oaddr) {
-//			System.out.println("ObjectAddress.sub: this="+this);
-//			System.out.println("ObjectAddress.sub: other="+other);
+//			IO.println("ObjectAddress.sub: this="+this);
+//			IO.println("ObjectAddress.sub: other="+other);
 			if(!oaddr.segID.equals(segID)) {
 				RTStack.dumpRTStack("ObjectAddress.sub: ");
 //				Segment.lookup("CSEG_ADHOC02").dump("ProgramAddress.execute: FINAL ", 0, 20);
@@ -211,7 +211,7 @@ public class ObjectAddress_Kopi extends Value {
 //			case Scode.S_GT: res = LHS >  RHS; break;
 //			case Scode.S_NE: res = LHS != RHS; break;
 //		}
-////		System.out.println("IntegerValue.compare: " + LHS + " " + Scode.edInstr(relation) + " " + RHS + " ==> " + res);
+////		IO.println("IntegerValue.compare: " + LHS + " " + Scode.edInstr(relation) + " " + RHS + " ==> " + res);
 ////		Util.IERR("");
 //		return res;
 //	}
@@ -241,16 +241,16 @@ public class ObjectAddress_Kopi extends Value {
 		kind = inpt.readKind();
 		segID = inpt.readString();
 		ofst = inpt.readShort();
-//		System.out.println("ObjectAddress.read: " + this);
+//		IO.println("ObjectAddress.read: " + this);
 	}
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("Value.write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
 		oupt.writeKind(Scode.S_C_OADDR);
 		oupt.writeKind(kind);
 		oupt.writeString(segID);
 		oupt.writeShort(ofst);
-//		System.out.println("ObjectAddress.write: " + this + "   segID="+segID+", ofst="+ofst);
+//		IO.println("ObjectAddress.write: " + this + "   segID="+segID+", ofst="+ofst);
 	}
 
 	public static ObjectAddress_Kopi read(AttributeInputStream inpt) throws IOException {

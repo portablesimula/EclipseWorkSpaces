@@ -12,7 +12,7 @@ public class FixupAddress extends ProgramAddress {
 	}
 
 	public void setAddress(ProgramAddress paddr) {
-//		System.out.println("FixupAddress.setAddress: "+paddr+"  "+paddr.segID);
+//		IO.println("FixupAddress.setAddress: "+paddr+"  "+paddr.segID);
 		this.segID = paddr.segID;
 //		this.ofst = paddr.ofst;
 		this.setOfst(paddr.getOfst());

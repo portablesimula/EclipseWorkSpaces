@@ -26,10 +26,10 @@ public class Instruction { // extends ProgramElement {
 			Scode.inputInstr();
 		}
 		
-//		System.out.println("\nNEW InstructionSet");
+//		IO.println("\nNEW InstructionSet");
 //		for(ProgramElement instr:instructionSet)
-//			System.out.println("   " + instr);
-//		System.out.println("END InstructionSet");
+//			IO.println("   " + instr);
+//		IO.println("END InstructionSet");
 
 		return instructionSet;
 	}
@@ -69,7 +69,7 @@ public class Instruction { // extends ProgramElement {
 	 * 		::= info_setting | macro_call
 	 */
 	public static boolean inInstruction() {
-//		System.out.println("Parse.instruction: "+Scode.edInstr(Scode.curinstr));
+//		IO.println("Parse.instruction: "+Scode.edInstr(Scode.curinstr));
 		switch(Scode.curinstr) {
 			case Scode.S_CONSTSPEC ->   ConstDescr.ofConstSpec();
 			case Scode.S_CONST ->	    ConstDescr.ofConstDef();

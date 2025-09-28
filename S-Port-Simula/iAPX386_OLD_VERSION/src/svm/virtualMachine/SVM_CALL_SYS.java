@@ -176,7 +176,7 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 	private void initia() {
 		ENTER("INITIA: ", 0, 1); // exportSize, importSize
 		ProgramAddress exchdl = (ProgramAddress) RTStack.pop();
-		if(Global.verbose) System.out.println("SVM_SYSCALL.initia: "+exchdl);
+		if(Global.verbose) IO.println("SVM_SYSCALL.initia: "+exchdl);
 		EXIT("INITIA: ");
 	}
 	
@@ -188,7 +188,7 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 		ENTER("TERMIN: ", 0, 4); // exportSize, importSize
 		String str = RTStack.popString();
 		int code = RTStack.popInt();
-//		System.out.println("SVM_SYSCALL.terminate: "+str+" with exit code " + code);
+//		IO.println("SVM_SYSCALL.terminate: "+str+" with exit code " + code);
 //		System.exit(code);
 		if(Global.DUMPS_AT_EXIT) {
 //			Segment.lookup("DSEG_ADHOC02").dump("SVM_SYSCALL.terminate: ");
@@ -213,7 +213,7 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 		String str1 = RTStack.popString();
 		String str2 = RTStack.popString();
 		boolean result = str1.equals(str2);
-//		System.out.println("SVM_CALLSYS.stringEqual: " + str1 + " equals " + str2 + " ==> " + result);
+//		IO.println("SVM_CALLSYS.stringEqual: " + str1 + " equals " + str2 + " ==> " + result);
 		RTStack.push(BooleanValue.of(result), "EXPORT");
 		EXIT("STREQL: " + result);
 	}
@@ -241,16 +241,16 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 			sb.append(c);
 		}
 		String res = sb.toString().stripTrailing();
-//		System.out.println("SVM_CALL.printo: \""+res+'"');
+//		IO.println("SVM_CALL.printo: \""+res+'"');
 		if(Global.console != null)
 			 Global.console.write(res+'\n');
-		else System.out.println(res);
+		else IO.println(res);
 		
 		if(spc != 1) {
 			if(spc < 1) {
 				RTUtil.set_STATUS(19);
 			} else {
-				for(int i=1;i<spc;i++) System.out.println();
+				for(int i=1;i<spc;i++) IO.println();
 			}
 		}
 		
@@ -266,13 +266,13 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 		int lng = RTStack.popInt();
 		DataAddress to = RTStack.popOADDR();
 		DataAddress from = RTStack.popOADDR();
-//		System.out.println("SVM_CALL.movein: from="+from);
-//		System.out.println("SVM_CALL.movein: to="+to);
-//		System.out.println("SVM_CALL.movein: lng="+lng);
+//		IO.println("SVM_CALL.movein: from="+from);
+//		IO.println("SVM_CALL.movein: to="+to);
+//		IO.println("SVM_CALL.movein: lng="+lng);
 
 		for(int i=0;i<lng;i++) {
 			Value val = from.load(i);
-//			System.out.println("SVM_CALL.movein: idx="+i+", value="+val);
+//			IO.println("SVM_CALL.movein: idx="+i+", value="+val);
 			to.store(i, val, "MOVEIN: ");
 		}
 		EXIT("MOVEIN: ");
@@ -314,7 +314,7 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 		ENTER("DWAREA: ", 1, 2); // exportSize, importSize
 		int warea = RTStack.popInt();
 		int lng = RTStack.popInt();
-//		System.out.println("SVM_SYSCALL.dwarea: lng=" + lng + ", warea=" + warea);
+//		IO.println("SVM_SYSCALL.dwarea: lng=" + lng + ", warea=" + warea);
 		
 		DataSegment pool = new DataSegment("POOL_" + warea, Kind.K_SEG_DATA);
 		pool.emitDefaultValue(1, lng, pool.ident);
@@ -364,7 +364,7 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 
 
 	public static int getSysKind(String s) {
-//		System.out.println("ProfileDescr.getSysKind: "+s);
+//		IO.println("ProfileDescr.getSysKind: "+s);
 //		Thread.dumpStack();
 		
 		//--- Search for inline index ---
@@ -508,7 +508,7 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 
 
 	public static int getKnownKind(String s) {
-//		System.out.println("ProfileDescr.getKnownKind: "+s);
+//		IO.println("ProfileDescr.getKnownKind: "+s);
 //		Thread.dumpStack();
 		
 		//--- Search for inline index ---
@@ -943,14 +943,14 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		oupt.writeKind(kind);
 	}
 
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {
 		SVM_CALL_SYS instr = new SVM_CALL_SYS(inpt.readKind());
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + instr);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
 		return instr;
 	}
 

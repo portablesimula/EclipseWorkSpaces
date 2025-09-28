@@ -70,7 +70,7 @@ public class Segment { // extends Descriptor {
 				case Scode.S_NE: res = LHS != RHS; break;
 				//default: Util.IERR("");
 			}
-//			System.out.println("Segment.compare: " + LHS + " " + Scode.edInstr(relation) + " " + RHS + " ==> " + res);
+//			IO.println("Segment.compare: " + LHS + " " + Scode.edInstr(relation) + " " + RHS + " ==> " + res);
 //			Util.IERR("");
 			return res;		
 		}
@@ -97,7 +97,7 @@ public class Segment { // extends Descriptor {
 	
 	public static void listAll() {
 		for(Segment seg:Global.SEGMAP.values()) {
-			System.out.println("   " + seg);
+			IO.println("   " + seg);
 		}
 	}
 
@@ -123,7 +123,7 @@ public class Segment { // extends Descriptor {
 	// ***********************************************************************************************
 
 	public static void main(String[] args) {
-		System.out.println("BEGIN TEST Segment.compare: ");
+		IO.println("BEGIN TEST Segment.compare: ");
 		Global.SEGMAP = new HashMap<String, Segment>();
 		Global.CSEG = new DataSegment("CSEG", Kind.K_SEG_CONST);
 		Global.DSEG = new DataSegment("DSEG", Kind.K_SEG_DATA);
@@ -157,7 +157,7 @@ public class Segment { // extends Descriptor {
 		nErr += TEST(seg2Low, Scode.S_EQ, seg1High, false);
 		nErr += TEST(seg2Low, Scode.S_NE, seg1High, true);
 		
-		System.out.println("ENDOF TEST Segment.compare: nErr = " + nErr);		
+		IO.println("ENDOF TEST Segment.compare: nErr = " + nErr);		
 	}
 	
 	private static int TEST(ProgramAddress LHS, int relation, ProgramAddress RHS, boolean expected) {
@@ -166,7 +166,7 @@ public class Segment { // extends Descriptor {
 		String RHSegID = (RHS == null)? null : ((ProgramAddress)RHS).segID;
 		int rhs = (RHS == null)? 0 : ((ProgramAddress)RHS).getOfst();
 		if(Segment.compare(LHSegID, lhs, relation, RHSegID, rhs) != expected) {
-			System.out.println("ERROR: " + LHS + " " + Scode.edInstr(relation) + " " + RHS + " ==> " + (! expected));
+			IO.println("ERROR: " + LHS + " " + Scode.edInstr(relation) + " " + RHS + " ==> " + (! expected));
 			return 1;
 		}
 		return 0;

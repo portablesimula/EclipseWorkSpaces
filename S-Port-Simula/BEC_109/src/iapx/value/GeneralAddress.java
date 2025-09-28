@@ -108,7 +108,7 @@ public class GeneralAddress extends Value {
 	}
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Option.ATTR_OUTPUT_TRACE) System.out.println("Value.write: " + this);
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
 		oupt.writeKind(Scode.S_C_GADDR);
 		base.write(oupt);
 		oupt.writeShort(ofst);

@@ -35,12 +35,12 @@ public class SVM_EVAL extends SVM_Instruction {
 
 	@Override
 	public void execute() {
-		if(DEBUG) System.out.println("SVM_EVAL.execute: "+this);
+		if(DEBUG) IO.println("SVM_EVAL.execute: "+this);
 		SegmentAddress tos = (SegmentAddress) RTStack.pop();
 		IntegerValue reg = (IntegerValue) RTRegister.getValue(xReg);
 		if(DEBUG) {
-			System.out.println("SVM_EVAL.execute: tos="+tos);
-			System.out.println("SVM_EVAL.execute: reg="+reg);
+			IO.println("SVM_EVAL.execute: tos="+tos);
+			IO.println("SVM_EVAL.execute: reg="+reg);
 		}
 		int ofst = (reg == null)? 0 : reg.value;
 		SegmentAddress upd = tos.addOffset(ofst);
@@ -59,14 +59,14 @@ public class SVM_EVAL extends SVM_Instruction {
 	// ***********************************************************************************************
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		oupt.writeReg(xReg);
 	}
 
 	public static SVM_EVAL read(AttributeInputStream inpt) throws IOException {
 		SVM_EVAL instr = new SVM_EVAL(inpt.readReg());
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + instr);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
 		return instr;
 	}
 

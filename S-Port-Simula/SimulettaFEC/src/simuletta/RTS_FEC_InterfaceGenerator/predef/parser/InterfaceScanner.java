@@ -85,7 +85,7 @@ public final class InterfaceScanner {
 		    token=tokenQueue.remove();
 		} else token = scanToken();
 		if (RTS_FEC_Interface_Option.TRACE_SCAN) Util.TRACE("Item.nextToken, " + edcurrent());
-//		System.out.println("Scanner.nextToken - TOKEN: "+token);
+//		IO.println("Scanner.nextToken - TOKEN: "+token);
 		return (token);
 	}
 	

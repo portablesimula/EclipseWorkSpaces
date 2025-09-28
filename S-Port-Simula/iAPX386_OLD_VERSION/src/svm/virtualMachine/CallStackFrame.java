@@ -28,8 +28,8 @@ public class CallStackFrame {
 		this.rtStackIndex = rtStackIndex;
 		this.exportSize = exportSize;
 		this.importSize = importSize;
-//		System.out.println("NEW CallStackFrame: " + toLine());
-//		System.out.println("NEW CallStackFrame: " + ident + " rtStackIndex="+rtStackIndex + ", exportSize="+exportSize + ", importSize="+importSize);
+//		IO.println("NEW CallStackFrame: " + toLine());
+//		IO.println("NEW CallStackFrame: " + ident + " rtStackIndex="+rtStackIndex + ", exportSize="+exportSize + ", importSize="+importSize);
 	}
 
 	public int headSize() {
@@ -73,33 +73,33 @@ public class CallStackFrame {
 		String indent = "            ";
 		try {
 			int idx = rtStackIndex;
-			System.out.println("    "+ident + ": callStackTop.rtStackIndex=" + idx);
+			IO.println("    "+ident + ": callStackTop.rtStackIndex=" + idx);
 			if(exportSize > 0) {
 				for(int i=0;i<exportSize;i++) {
 					Value item = RTStack.load(idx);
-					System.out.println(indent+"EXPORT: " + idx + ": " + item); idx++;
+					IO.println(indent+"EXPORT: " + idx + ": " + item); idx++;
 				}
 			}
 			for(int i=0;i<importSize;i++) {
 				Value item = RTStack.load(idx);
-				System.out.println(indent+"IMPORT: " + idx + ": " + item); idx++;
+				IO.println(indent+"IMPORT: " + idx + ": " + item); idx++;
 			}
-			System.out.println(indent+"RETURN: " + idx + ": " + RTStack.load(idx)); idx++;
+			IO.println(indent+"RETURN: " + idx + ": " + RTStack.load(idx)); idx++;
 			for(int i=0;i<localSize;i++) {
 				Value item = RTStack.load(idx);
-				System.out.println(indent+"LOCAL:  " + idx + ": " + item); idx++;
+				IO.println(indent+"LOCAL:  " + idx + ": " + item); idx++;
 			}
 		} catch(Exception e) {}
 	}
 
 	public void dump(String title) {
 		CallStackFrame callStackTop = RTStack.callStack_TOP();
-		System.out.println("==================== " + title + " RTFrame'DUMP ====================");
-		System.out.println("   ROUTINE: " + curAddr + " callStackTop.rtStackIndex=" + callStackTop.rtStackIndex);
+		IO.println("==================== " + title + " RTFrame'DUMP ====================");
+		IO.println("   ROUTINE: " + curAddr + " callStackTop.rtStackIndex=" + callStackTop.rtStackIndex);
 		
 		print(title);
 		
-		System.out.println("==================== " + title + " RTFrame' END  ====================");
+		IO.println("==================== " + title + " RTFrame' END  ====================");
 		if(curAddr != null) curAddr.segment().dump(title);
 	}
 

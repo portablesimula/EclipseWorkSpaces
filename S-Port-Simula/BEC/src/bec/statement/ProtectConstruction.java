@@ -29,7 +29,7 @@ public class ProtectConstruction { // extends ProgramElement {
 		
 		Scode.inputInstr();
 		S_Module.programElements();
-//		System.out.println("ProtectConstruction.ofStatement: " + Scode.edInstr(Scode.curinstr));
+//		IO.println("ProtectConstruction.ofStatement: " + Scode.edInstr(Scode.curinstr));
 		if(Scode.curinstr != Scode.S_RESTORE)
 			Util.IERR("Improper termination of protect-construction");
 		doRESTORE();

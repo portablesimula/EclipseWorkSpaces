@@ -159,7 +159,7 @@ public class Variable extends Descriptor {
 		var.address = seg.nextAddress();
 		if(Scode.accept(Scode.S_SYSTEM)) {
 			String system = Scode.inString();
-//			System.out.println("NEW Global Variable: " + Scode.edTag(var.tag) + " " + var.quant + " SYSTEM " + system);
+//			IO.println("NEW Global Variable: " + Scode.edTag(var.tag) + " " + var.quant + " SYSTEM " + system);
 			Value value = null;
 			if(system.equalsIgnoreCase("CURINS")) value = null;//new ObjectAddress(true);
 			else if(system.equalsIgnoreCase("STATUS")) value = null;//IntegerValue.of(0);
@@ -183,19 +183,19 @@ public class Variable extends Descriptor {
 			else Util.IERR("MISSING: " + system);
 			Global.DSEG.emit(value, var.toString());
 		} else {
-//			System.out.println("Variable.ofGlobal: "+var);
-//			System.out.println("Variable.ofGlobal: size="+var.type.size());
-//			System.out.println("Variable.ofGlobal: repCount="+var.repCount);
+//			IO.println("Variable.ofGlobal: "+var);
+//			IO.println("Variable.ofGlobal: size="+var.type.size());
+//			IO.println("Variable.ofGlobal: repCount="+var.repCount);
 			int count = var.type.size();
 			if(Scode.accept(Scode.S_FIXREP)) {
 				int fixrep = Scode.inNumber();
-//				System.out.println("Variable.ofGlobal: "+var);
-//				System.out.println("Variable.ofGlobal: "+var.type);
-//				System.out.println("Variable.ofGlobal: FIXREP "+fixrep);
+//				IO.println("Variable.ofGlobal: "+var);
+//				IO.println("Variable.ofGlobal: "+var.type);
+//				IO.println("Variable.ofGlobal: FIXREP "+fixrep);
 				RecordDescr rec = (RecordDescr) Global.getMeaning(var.type.tag);
-//				System.out.println("Variable.ofGlobal: descr="+rec);
+//				IO.println("Variable.ofGlobal: descr="+rec);
 				count = count + rec.nbrep * fixrep;
-//				System.out.println("Variable.ofGlobal: count="+count);
+//				IO.println("Variable.ofGlobal: count="+count);
 //				Util.IERR("");
 			}
 			if(count == 0) Util.IERR("");
@@ -218,7 +218,7 @@ public class Variable extends Descriptor {
 
 	@Override
 	public void print(final String indent) {
-		System.out.println(indent + this);
+		IO.println(indent + this);
 	}
 	
 	public String toString() {
@@ -232,7 +232,7 @@ public class Variable extends Descriptor {
 	// ***********************************************************************************************
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("Variable.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("Variable.Write: " + this);
 		oupt.writeKind(kind); // K_GLOBAL, K_LOCAL, K_IMPORT, K_EXPORT, K_EXIT, K_RETUR
 		tag.write(oupt);
 		type.write(oupt);
@@ -254,7 +254,7 @@ public class Variable extends Descriptor {
 		if(present) {
 			var.address = (ObjectAddress) Value.read(inpt);
 		}
-		if(Global.ATTR_INPUT_TRACE) System.out.println("Variable.Read: " + var);
+		if(Global.ATTR_INPUT_TRACE) IO.println("Variable.Read: " + var);
 		return var;
 	}
 

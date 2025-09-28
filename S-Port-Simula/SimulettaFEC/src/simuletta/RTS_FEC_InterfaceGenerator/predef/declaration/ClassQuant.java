@@ -77,24 +77,24 @@ public class ClassQuant extends Quantity {
     }
 
 	public static ClassQuant doParseClass(String prefixIdentifier) {
-		if(TESTING) System.out.println("ClassQuant.doParse: BEGIN");
+		if(TESTING) IO.println("ClassQuant.doParse: BEGIN");
 		String ident=Parser.expectIdentifier();
-		if(TESTING) System.out.println("ClassQuant.doParse: rec.identifier="+ident);
+		if(TESTING) IO.println("ClassQuant.doParse: rec.identifier="+ident);
 		ClassQuant rec=new ClassQuant(ident);
 		if(prefixIdentifier!=null) {
 			rec.prefixIdentifier=prefixIdentifier;
 			rec.type=new Type(Type.INOTY,prefixIdentifier);
 		}
-		if(TESTING) System.out.println("ClassQuant.doParse: rec.identifier="+rec.identifier);
+		if(TESTING) IO.println("ClassQuant.doParse: rec.identifier="+rec.identifier);
 		Parser.expect(KeyWord.DEFINE);
 		rec.putQuantInfo(Parser.expectString());
 		if(Parser.accept(KeyWord.BEGPAR)) {
 			rec.parameterList=ParameterList.parseParameters();
-			if(TESTING) System.out.println("procedure.doParse: params="+rec.parameterList);
+			if(TESTING) IO.println("procedure.doParse: params="+rec.parameterList);
 		} else {
 			Parser.expect(KeyWord.SEMICOLON); // SKIP IT
 		}
-		if(TESTING) System.out.println("ClassQuant.doParse: "+rec);
+		if(TESTING) IO.println("ClassQuant.doParse: "+rec);
 		if(Parser.accept(KeyWord.SEMICOLON)) {} // Nothing
 		else {
 			Parser.expect(KeyWord.BEGIN);
@@ -126,7 +126,7 @@ public class ClassQuant extends Quantity {
         boolean inrflag=quantInfo.nIdent==3;
         
 		if( (clf==Clf004 || clf==Clf009) && inrflag) { //!set inrtag for sys class;
-			System.out.println("thisMark=" + Key.thisMark);
+			IO.println("thisMark=" + Key.thisMark);
             oupt.putKey(Key.thisMark); oupt.putByte(2); }
 
 //        if(parameterList!=null) parameterList.writeQuantList(indent,oupt);
@@ -177,7 +177,7 @@ public class ClassQuant extends Quantity {
     	s.append("Line "+lineNumber+": ");
     	if(prefixIdentifier!=null) s.append(prefixIdentifier).append(" ");
     	s.append("CLASS ").append(identifier).append(" == ").append(edQuantInfo());
-    	if(TESTING) System.out.println(s.toString()); s=new StringBuilder();
+    	if(TESTING) IO.println(s.toString()); s=new StringBuilder();
     	if(QuantityList!=null) {
     		for(Quantity d:QuantityList) d.print("",indent+1);
     	}

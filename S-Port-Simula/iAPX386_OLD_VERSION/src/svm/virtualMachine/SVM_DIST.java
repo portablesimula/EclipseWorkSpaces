@@ -40,14 +40,14 @@ public class SVM_DIST extends SVM_Instruction {
 		DataAddress tos = (SegmentAddress) RTStack.popOADDR();
 		DataAddress sos = RTStack.popOADDR();
 		if(DEBUG) {
-			System.out.println("SVM_DIST: TOS: " + tos);
-			System.out.println("SVM_DIST: SOS: " + sos);
-			System.out.println("SVM_DIST: " + sos + " - " + tos);
+			IO.println("SVM_DIST: TOS: " + tos);
+			IO.println("SVM_DIST: SOS: " + sos);
+			IO.println("SVM_DIST: " + sos + " - " + tos);
 		}
 		int tval = (tos == null)? 0 : tos.ofst;
 		int sval = (sos == null)? 0 : sos.ofst;
 		IntegerValue res = IntegerValue.of(Type.T_SIZE, sval - tval);
-		if(DEBUG) System.out.println("SVM_DIST: " + sos + " - " + tos + " ==> " + res);
+		if(DEBUG) IO.println("SVM_DIST: " + sos + " - " + tos + " ==> " + res);
 		RTStack.push(res, "SVM_DIST: " + sos + " - " + tos + " = " + res);
 		Global.PSC.addOfst(1);
 	}
@@ -62,13 +62,13 @@ public class SVM_DIST extends SVM_Instruction {
 	// ***********************************************************************************************
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 	}
 
 	public static SVM_DIST read(AttributeInputStream inpt) throws IOException {
 		SVM_DIST instr = new SVM_DIST();
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + instr);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
 		return instr;
 	}
 

@@ -43,7 +43,7 @@ public class SVM_DUP extends SVM_Instruction {
 			if(xReg != 0) Util.IERR("NOT IMPL: xReg="+xReg);
 		} else {
 			Value tos = RTStack.pop();
-//			if(tos != null)	System.out.println("SVM_DUP: TOS: " + tos.getClass().getSimpleName() + "  " + tos);
+//			if(tos != null)	IO.println("SVM_DUP: TOS: " + tos.getClass().getSimpleName() + "  " + tos);
 			RTStack.push(tos, "SVM_DUP: ");
 			if(rtAddr.kind == DataAddress.REMOTE_ADDR) {
 				
@@ -52,7 +52,7 @@ public class SVM_DUP extends SVM_Instruction {
 				
 				// this.addr is Stack Relative Address
 				SegmentAddress oaddr = (SegmentAddress) RTStack.popOADDR();
-//				System.out.println("SVM_DUP.execute: oaddr="+oaddr+", rtAddr="+rtAddr);
+//				IO.println("SVM_DUP.execute: oaddr="+oaddr+", rtAddr="+rtAddr);
 				RTStack.push(oaddr, "SVM_DUP: ");
 				
 //				oaddr = oaddr.addOffset(rtAddr.getOfst()); // TODO: CHECK DETTE
@@ -85,7 +85,7 @@ public class SVM_DUP extends SVM_Instruction {
 	// ***********************************************************************************************
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		if(rtAddr == null) {
 			oupt.writeBoolean(false);
@@ -104,7 +104,7 @@ public class SVM_DUP extends SVM_Instruction {
 		int xReg = inpt.readReg();
 		int size = inpt.readShort();
 		SVM_DUP instr = new SVM_DUP(rtAddr, xReg, size);
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + instr);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
 		return instr;
 	}
 

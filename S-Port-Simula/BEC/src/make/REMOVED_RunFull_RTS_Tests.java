@@ -54,9 +54,9 @@ public final class REMOVED_RunFull_RTS_Tests {
 //			} catch (IOException e) { Util.IERR("Compiler Error: " + e); }
 		}
 
-		System.out.println("\n--- END OF SportBEC TESTBATCH");
+		IO.println("\n--- END OF SportBEC TESTBATCH");
 		long timeUsed = System.currentTimeMillis() - startTimeMs;
-		System.out.println("\nElapsed Time: Approximately " + timeUsed / 1000 + " sec.");
+		IO.println("\nElapsed Time: Approximately " + timeUsed / 1000 + " sec.");
 	}
 
 }

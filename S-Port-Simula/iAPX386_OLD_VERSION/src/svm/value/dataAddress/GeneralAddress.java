@@ -112,7 +112,7 @@ public class GeneralAddress extends DataAddress {
 	}
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("Value.write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
 		oupt.writeKind(Scode.S_C_GADDR);
 		base.write(oupt);
 		oupt.writeShort(ofst);

@@ -34,7 +34,7 @@ public class SVM_LINE extends SVM_Instruction {
 	// ***********************************************************************************************
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeKind(iLINE);
 		oupt.writeKind(type+1);
 		oupt.writeShort(sourceLine);
@@ -44,7 +44,7 @@ public class SVM_LINE extends SVM_Instruction {
 		int type = inpt.readKind() - 1;
 		int sourceline = inpt.readShort();
 		SVM_LINE instr = new SVM_LINE(type, sourceline);
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + instr);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
 		return instr;
 	}
 

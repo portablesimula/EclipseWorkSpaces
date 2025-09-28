@@ -125,11 +125,11 @@ public class Signatur implements Externalizable {
     	if(imports != null) {
     		String prfx="   IMPORT ";
     		for(Declaration d:imports) {
-    			System.out.println(spc+prfx+d);	prfx="          ";
+    			IO.println(spc+prfx+d);	prfx="          ";
     		}
     	}
-    	if(export != null) System.out.println(spc+"   EXPORT "+export);
-    	if(exit != null) System.out.println(spc+"   EXIT "+exit);
+    	if(export != null) IO.println(spc+"   EXPORT "+export);
+    	if(exit != null) IO.println(spc+"   EXIT "+exit);
     }
     
     public String toString() {

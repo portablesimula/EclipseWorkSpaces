@@ -40,7 +40,7 @@ public abstract class SimulaFEC {
 		cmds.add("-SPORT:SCodeFile"); cmds.add(sCodeFileName);
 		cmds.add(sourceFileName);
 
-		if(Option.verbose) System.out.println("BEGIN SIMULA FEC ==> \"" + sCodeFileName + '"');
+		if(Option.verbose) IO.println("BEGIN SIMULA FEC ==> \"" + sCodeFileName + '"');
 		if(TESTING) {
 			Runnable task = new Runnable() {
 				public void run() {
@@ -55,13 +55,13 @@ public abstract class SimulaFEC {
 			fecTerminated = false;
 			new Thread(task).start();
 			while(! fecTerminated) Thread.yield();
-			System.out.println("SimulaFEC.callSimulaFEC: exitCode=" + exitCode);
+			IO.println("SimulaFEC.callSimulaFEC: exitCode=" + exitCode);
 			return exitCode;
 		} else {
 			try {
 				return Util.exec(cmds);
 			} catch (IOException e) {
-				System.out.println("SimulaFEC.callFEC - Exit: ");
+				IO.println("SimulaFEC.callFEC - Exit: ");
 				e.printStackTrace();
 				System.exit(0);
 				return -1;

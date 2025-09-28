@@ -26,13 +26,13 @@ public abstract class SysFile {
 	private static Vector<RTFile> rtFiles = new Vector<RTFile>();
 	
 	private static int addRTFile(RTFile spec) {
-//		System.out.println("SysFile.addRTFile: "+spec);
+//		IO.println("SysFile.addRTFile: "+spec);
 		rtFiles.add(spec);
 		return(rtFiles.size()+3);
 	}
 	
 	private static RTFile lookup(int key) {
-//		System.out.println("SysFile.lookup: key="+key);
+//		IO.println("SysFile.lookup: key="+key);
 		return rtFiles.get(key-4);
 	}
 	
@@ -55,7 +55,7 @@ public abstract class SysFile {
 				result = "SYSTRACE"; break;
 			default: Util.IERR("");
 		}
-//		System.out.println("SVM_SYSCALL.gdspec: index=" + index + ", result=" +result);
+//		IO.println("SVM_SYSCALL.gdspec: index=" + index + ", result=" +result);
 		RTUtil.move(result, itemAddr, result.length());
 
 		RTStack.push(IntegerValue.of(Type.T_INT, result.length()), "EXPORT");
@@ -113,14 +113,14 @@ public abstract class SysFile {
 		SVM_CALL_SYS.ENTER("OPFILE: ", 1, 8); // exportSize, importSize
 //		RTStack.dumpRTStack("SVM_SYSCALL.opfile: ");
 		int imglng = RTStack.popInt();
-//		System.out.println("SVM_SYSCALL.opfile: imglng="+imglng);
+//		IO.println("SVM_SYSCALL.opfile: imglng="+imglng);
 		String action = RTStack.popString();
 		int type = RTStack.popInt();
 		String spec = RTStack.popString();
-//		System.out.println("SVM_SYSCALL.opfile: spec="+spec);
-//		System.out.println("SVM_SYSCALL.opfile: type="+type);
-//		System.out.println("SVM_SYSCALL.opfile: action="+action);
-//		System.out.println("SVM_SYSCALL.opfile: imglng="+imglng);
+//		IO.println("SVM_SYSCALL.opfile: spec="+spec);
+//		IO.println("SVM_SYSCALL.opfile: type="+type);
+//		IO.println("SVM_SYSCALL.opfile: action="+action);
+//		IO.println("SVM_SYSCALL.opfile: imglng="+imglng);
 		int key = 0;
 		if(spec.equalsIgnoreCase("SYSIN"))         key = RTFile.KEY_SYSIN;
 		else if(spec.equalsIgnoreCase("SYSOUT"))   key = RTFile.KEY_SYSOUT;
@@ -141,7 +141,7 @@ public abstract class SysFile {
 				default -> Util.IERR(""+RTFile.edFileType(type));
 			}
 			key = addRTFile(fileSpec);
-			if(Global.execVerbose) System.out.println("SVM_SYSCALL.opfile: key=" + key + ", spec="+spec);
+			if(Global.execVerbose) IO.println("SVM_SYSCALL.opfile: key=" + key + ", spec="+spec);
 //			Util.IERR("NOT IMPL");
 		}
 		RTStack.push(IntegerValue.of(Type.T_INT, key), "OPFILE");
@@ -160,10 +160,10 @@ public abstract class SysFile {
 		String action = RTStack.popString();
 		int key = RTStack.popInt();
 		if(key > 3) {
-//			System.out.println("SVM_SYSCALL.clfile: key="+key);
-//			System.out.println("SVM_SYSCALL.clfile: action="+action);
+//			IO.println("SVM_SYSCALL.clfile: key="+key);
+//			IO.println("SVM_SYSCALL.clfile: action="+action);
 			RTFile fileSpec = lookup(key);
-//			System.out.println("SVM_SYSCALL.clfile: spec="+spec);
+//			IO.println("SVM_SYSCALL.clfile: spec="+spec);
 			fileSpec.clfile();
 			
 			RTFileAction fileAction = new RTFileAction(action);
@@ -204,17 +204,17 @@ public abstract class SysFile {
 		int nchr = RTStack.popInt();
 		ObjectAddress chrAddr = RTStack.popGADDRasOADDR();
 		int key = RTStack.popInt();
-//		System.out.println("SVM_SYSCALL.INIMAG: key="+key);
-//		System.out.println("SVM_SYSCALL.INIMAG: nchr="+nchr);
-//		System.out.println("SVM_SYSCALL.INIMAG: chrAddr="+chrAddr);
+//		IO.println("SVM_SYSCALL.INIMAG: key="+key);
+//		IO.println("SVM_SYSCALL.INIMAG: nchr="+nchr);
+//		IO.println("SVM_SYSCALL.INIMAG: chrAddr="+chrAddr);
 		int filled = 0;
 		if(key == RTFile.KEY_SYSIN) {
-//			System.out.println("SVM_SYSCALL.INIMAG: SYSIN:  nchr="+nchr);
+//			IO.println("SVM_SYSCALL.INIMAG: SYSIN:  nchr="+nchr);
 			filled = RTInfile.sysinInimage(chrAddr, nchr);
 //			Util.IERR("");
 		} else if(key > 3) {
 			RTImageFile spec = (RTImageFile) lookup(key);
-//			System.out.println("SVM_SYSCALL.INIMAG: spec="+spec);
+//			IO.println("SVM_SYSCALL.INIMAG: spec="+spec);
 			filled = spec.inimage(chrAddr, nchr);
 //			Util.IERR("NOT IMPL");
 		} else {
@@ -241,14 +241,14 @@ public abstract class SysFile {
 		SVM_CALL_SYS.ENTER("OUTIMA: ", 0, 4); // exportSize, importSize
 		String image = RTStack.popString();
 		int key = RTStack.popInt();
-//		System.out.println("SVM_SYSCALL.OUTIMA: key="+key);
-//		System.out.println("SVM_SYSCALL.OUTIMA: nchr="+nchr);
-//		System.out.println("SVM_SYSCALL.OUTIMA: chrAddr="+chrAddr);
+//		IO.println("SVM_SYSCALL.OUTIMA: key="+key);
+//		IO.println("SVM_SYSCALL.OUTIMA: nchr="+nchr);
+//		IO.println("SVM_SYSCALL.OUTIMA: chrAddr="+chrAddr);
 		if(key == RTFile.KEY_SYSOUT || key == RTFile.KEY_SYSTRACE) {
 			Util.IERR("");
 		} else if(key > 3) {
 			RTImageFile spec = (RTImageFile) lookup(key);
-//			System.out.println("SVM_SYSCALL.OUTIMA: spec="+spec);
+//			IO.println("SVM_SYSCALL.OUTIMA: spec="+spec);
 			spec.outimage(image);
 //			Util.IERR("NOT IMPL");
 		} else {
@@ -277,11 +277,11 @@ public abstract class SysFile {
 		SVM_CALL_SYS.ENTER("BREAKO: ", 0, 4); // exportSize, importSize
 		String image = RTStack.popString();
 		int key = RTStack.popInt();
-//		System.out.println("SVM_SYSCALL.BREAKO: key="+key);
-//		System.out.println("SVM_SYSCALL.BREAKO: nchr="+nchr);
-//		System.out.println("SVM_SYSCALL.BREAKO: chrAddr="+chrAddr);
+//		IO.println("SVM_SYSCALL.BREAKO: key="+key);
+//		IO.println("SVM_SYSCALL.BREAKO: nchr="+nchr);
+//		IO.println("SVM_SYSCALL.BREAKO: chrAddr="+chrAddr);
 		if(key == RTFile.KEY_SYSOUT || key == RTFile.KEY_SYSTRACE) {
-//			System.out.println("SVM_SYSCALL.BREAKO: SYSOUT:  key="+key);
+//			IO.println("SVM_SYSCALL.BREAKO: SYSOUT:  key="+key);
 			if(Global.console != null)
 				 Global.console.write(image);
 			else
@@ -289,7 +289,7 @@ public abstract class SysFile {
 //			Util.IERR("");
 		} else if(key > 3) {
 			RTImageFile spec = (RTImageFile) lookup(key);
-//			System.out.println("SVM_SYSCALL.BREAKO: spec="+spec);
+//			IO.println("SVM_SYSCALL.BREAKO: spec="+spec);
 			spec.breakOutimage(image);
 //			Util.IERR("NOT IMPL");
 		} else {
@@ -303,7 +303,7 @@ public abstract class SysFile {
 	public static void INBYTE() {
 		SVM_CALL_SYS.ENTER("INBYTE: ", 1, 1); // exportSize, importSize
 		int key = RTStack.popInt();
-//		System.out.println("SVM_SYSCALL.INBYTE: key="+key);
+//		IO.println("SVM_SYSCALL.INBYTE: key="+key);
 		RTFile spec = lookup(key);
 		int byt = 0;
 		if(spec instanceof RTInbytefile ifile) {
@@ -324,8 +324,8 @@ public abstract class SysFile {
 		SVM_CALL_SYS.ENTER("OUTBYT: ", 0, 2); // exportSize, importSize
 		int byt = RTStack.popInt();
 		int key = RTStack.popInt();
-//		System.out.println("SVM_SYSCALL.OUTBYT: key="+key);
-//		System.out.println("SVM_SYSCALL.OUTBYT: byt="+byt);
+//		IO.println("SVM_SYSCALL.OUTBYT: key="+key);
+//		IO.println("SVM_SYSCALL.OUTBYT: byt="+byt);
 		RTFile spec = lookup(key);
 		if(spec instanceof RTOutbytefile ofile) {
 			ofile.outbyte(byt);
@@ -356,8 +356,8 @@ public abstract class SysFile {
 		SVM_CALL_SYS.ENTER("LOCATE: ", 0, 2); // exportSize, importSize
 		int loc = RTStack.popInt();
 		int key = RTStack.popInt();
-//		System.out.println("SVM_SYSCALL.LOCATE: key="+key);
-//		System.out.println("SVM_SYSCALL.LOCATE: loc="+loc);
+//		IO.println("SVM_SYSCALL.LOCATE: key="+key);
+//		IO.println("SVM_SYSCALL.LOCATE: loc="+loc);
 		if(key > 3) {
 			RTFile spec = lookup(key);
 			if(spec instanceof RTDirectfile dfile) {
@@ -377,7 +377,7 @@ public abstract class SysFile {
 	public static void MXLOC() {
 		SVM_CALL_SYS.ENTER("MXLOC: ", 1, 1); // exportSize, importSize
 		int key = RTStack.popInt();
-//		System.out.println("SVM_SYSCALL.MXLOC: key="+key);
+//		IO.println("SVM_SYSCALL.MXLOC: key="+key);
 		int maxloc = 0;
 		if(key > 3) {
 			RTFile spec = lookup(key);
@@ -399,7 +399,7 @@ public abstract class SysFile {
 	public static void LSTLOC() {
 		SVM_CALL_SYS.ENTER("LSTLOC: ", 1, 1); // exportSize, importSize
 		int key = RTStack.popInt();
-//		System.out.println("SVM_SYSCALL.LSTLOC: key="+key);
+//		IO.println("SVM_SYSCALL.LSTLOC: key="+key);
 		int maxloc = 0;
 		if(key > 3) {
 			RTFile spec = lookup(key);

@@ -32,7 +32,7 @@ public class ParameterList {
 //		par.symbval=Parser.expectString();
 		par.putQuantInfo(Parser.expectString());
 		params.add(par);
-		//System.out.println("ParameterList.readParameter: "+par);
+		//IO.println("ParameterList.readParameter: "+par);
 		//	Util.STOP();
 	}
 	
@@ -46,7 +46,7 @@ public class ParameterList {
 			Parser.expect(KeyWord.SEMICOLON);
 			Parameter spc=lookup(ident);
 			spc.categ=categ;
-			//System.out.println("ParameterList.readModes: "+mode+"  ==>  "+spc);
+			//IO.println("ParameterList.readModes: "+mode+"  ==>  "+spc);
 		}
 	}
 	
@@ -58,7 +58,7 @@ public class ParameterList {
 			Parser.expect(KeyWord.SEMICOLON);
 			Parameter spc=lookup(ident);
 			spc.type=type;
-			//System.out.println("ParameterList.readTypes: "+type+"  ==>  "+spc);
+			//IO.println("ParameterList.readTypes: "+type+"  ==>  "+spc);
 		}
 	}
 	

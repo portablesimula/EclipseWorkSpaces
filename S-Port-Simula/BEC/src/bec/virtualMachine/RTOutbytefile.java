@@ -24,7 +24,7 @@ public class RTOutbytefile extends RTByteFile {
 			return;
 		}
 		try {
-//			System.out.println("NEW RTOutbytefile: fileName=" + fileName);
+//			IO.println("NEW RTOutbytefile: fileName=" + fileName);
 			outputStream = new FileOutputStream(file, fileAction. _APPEND);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -50,7 +50,7 @@ public class RTOutbytefile extends RTByteFile {
 			if (fileAction._SYNCHRONOUS)
 				outputStream.flush();
 		} catch (IOException e) {
-			System.out.println("Outbyte failed" + e);
+			IO.println("Outbyte failed" + e);
 			RTUtil.set_STATUS(17);
 		}
 //		Util.IERR("");

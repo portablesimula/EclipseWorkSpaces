@@ -14,7 +14,7 @@ public class FixupOADDR extends SegmentAddress {
 	}
 
 	public void setAddress(SegmentAddress oaddr) {
-//		System.out.println("FixupAddress.setAddress: "+oaddr+"  "+oaddr.segID);
+//		IO.println("FixupAddress.setAddress: "+oaddr+"  "+oaddr.segID);
 		this.segID = oaddr.segID;
 		this.ofst = oaddr.ofst;
 	}

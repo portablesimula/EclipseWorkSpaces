@@ -7,7 +7,7 @@ import java.util.Vector;
 public class Single_TestBatch2Scode {
 	static boolean verbose = false;//true;
 	static boolean fecListing = false;//true;
-	static boolean fecSCodeTrace = false;//true;
+	static boolean fecSCodeTrace = true;//false;//true;
 	static int fecTraceLevel = 0;
 	static String selectors = null;
 
@@ -19,11 +19,11 @@ public class Single_TestBatch2Scode {
 	public static void main(String[] argv) {
 		long startTimeMs = System.currentTimeMillis( );
 		try {
-			System.out.println("Compile SimulaTestbatch_FEC to SCode in " + SCODE_DIR);
+			IO.println("Compile SimulaTestbatch_FEC to SCode in " + SCODE_DIR);
 
 			Vector<String> names=new Vector<String>();
 			
-			names.add("adHoc00");
+//			names.add("adHoc00");
 //			names.add("adHoc01");
 //			names.add("adHoc02");
 //			names.add("adHoc03");
@@ -36,7 +36,7 @@ public class Single_TestBatch2Scode {
 //			names.add("adHoc10");
 
 //			names.add("SimulaTest"); // Simula TestBatch Framework
-//			names.add("simtst01"); // OK:  Meaningless test of conditional statements
+			names.add("simtst01"); // OK:  Meaningless test of conditional statements
 //			names.add("simtst02"); // OK:  Test boolean operators/expressions
 //			names.add("simtst03"); // OK:  Test Text Value Relations
 //			names.add("simtst04"); // OK:  To test putint and putreal.
@@ -157,7 +157,7 @@ public class Single_TestBatch2Scode {
 //			names.add("simtst104"); // OK: Procedure parameter 'F' by name.
 //			names.add("simtst105"); // OK: Multiple assignments.
 //			//names.add("simtst106"); // ERR: Test SIMULATION, complex example.
-			names.add("simtst107"); // OK:  Test Process, activation statements, idle, terminated, time.
+//			names.add("simtst107"); // OK:  Test Process, activation statements, idle, terminated, time.
 //			names.add("simtst108"); // OK: Simple Co-Routine Sample 1: detach - call
 //			names.add("simtst109"); // OK: Simple Co-Routine Sample 2: detach - resume
 //			names.add("simtst110"); // OK: Simple Co-Routine Sample 3: detach - resume - chain
@@ -236,9 +236,9 @@ public class Single_TestBatch2Scode {
 //			deleteFiles(testBatchJarDir);
 //			list(testBatchJarDir);
 			
-			System.out.println("\n--- END OF SIMULA TESTBATCH");
+			IO.println("\n--- END OF SIMULA TESTBATCH");
 			long timeUsed  = System.currentTimeMillis( ) - startTimeMs;
-			System.out.println("\nElapsed Time: Approximately " + timeUsed/1000 + " sec.");
+			IO.println("\nElapsed Time: Approximately " + timeUsed/1000 + " sec.");
 		
 		} catch(Exception e) { e.printStackTrace(); }
 	}
@@ -262,7 +262,7 @@ public class Single_TestBatch2Scode {
 		cmds.add("-SPORT:SCodeFile"); cmds.add(sCodeFileName);
 		cmds.add(sourceFileName);
 
-		if(verbose) System.out.println("BEGIN SIMULA FEC ==> " + sCodeFileName);
+		if(verbose) IO.println("BEGIN SIMULA FEC ==> " + sCodeFileName);
 		try {
 			return exec(cmds);
 		} catch (IOException e) {
@@ -286,7 +286,7 @@ public class Single_TestBatch2Scode {
 	public static int exec(String... cmd) throws IOException {
 		String line="";
 		for(int i=0;i<cmd.length;i++) line=line+" "+cmd[i];
-        System.out.println("MakeSIM.execute: command="+line);
+        IO.println("MakeSIM.execute: command="+line);
 		ProcessBuilder processBuilder = new ProcessBuilder(cmd);
 		processBuilder.redirectErrorStream(true);
 		try {
@@ -295,14 +295,14 @@ public class Single_TestBatch2Scode {
 			while (process.isAlive()) {
 				while (output.available() > 0)
 					System.out.append((char) output.read());
-//				System.out.println("ALIVE: "+process.isAlive());
+//				IO.println("ALIVE: "+process.isAlive());
 			}
-			System.out.println("RETURN: "+process.exitValue());
+			IO.println("RETURN: "+process.exitValue());
 //			Thread.dumpStack();
 			return (process.exitValue());
 
 		} catch(Exception e) {
-			System.out.println("ERROR: "+e);
+			IO.println("ERROR: "+e);
 			throw new RuntimeException("Process Execution failed: " + line, e);
 		}
 	}

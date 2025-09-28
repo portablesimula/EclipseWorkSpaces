@@ -36,18 +36,18 @@ public abstract class SysDeEdit {
 			if (c != ' ') break LOOP1;
 			pos++;
 		}
-		if(DEBUG) System.out.println("SysDeEdit.getIntegerItem(1): \""+T+"\"  pos="+pos);
+		if(DEBUG) IO.println("SysDeEdit.getIntegerItem(1): \""+T+"\"  pos="+pos);
 		c = T.charAt(pos);
 		if (c == '+' || c == '-') {
 			sb.append(c);
-			if(DEBUG) System.out.println("SysDeEdit.getIntegerItem(2): \""+T+"\"  res=\""+sb+"\"  pos="+pos);
+			if(DEBUG) IO.println("SysDeEdit.getIntegerItem(2): \""+T+"\"  res=\""+sb+"\"  pos="+pos);
 			pos++;
 			LOOP2:while(pos < T.length()) { // SKIP BLANKS
 				c = T.charAt(pos);
 				if (c != ' ') break LOOP2;
 				pos++;
 			}
-			if(DEBUG) System.out.println("SysDeEdit.getIntegerItem(3): "+T+"  res=\""+sb+"\"  pos="+pos);
+			if(DEBUG) IO.println("SysDeEdit.getIntegerItem(3): "+T+"  res=\""+sb+"\"  pos="+pos);
 		}
 		LOOP3:while(pos < T.length()) { // KEEP DIGITS
 			c = T.charAt(pos);
@@ -55,7 +55,7 @@ public abstract class SysDeEdit {
 			sb.append(c);
 			pos++;
 		}
-		if(DEBUG) System.out.println("SysDeEdit.getIntegerItem: \""+T+"\", ITEMSIZE="+(pos)+" ===> \""+sb+'"');
+		if(DEBUG) IO.println("SysDeEdit.getIntegerItem: \""+T+"\", ITEMSIZE="+(pos)+" ===> \""+sb+'"');
 		RTUtil.set_ITEM_SIZE(pos);
 		return (sb.toString());
 	}
@@ -82,7 +82,7 @@ public abstract class SysDeEdit {
 		String arg = RTStack.popString();
 		String item = getIntegerItem(arg);
 		int res = Integer.parseInt(item);
-//		System.out.println("SysEdit.GETINT: item="+item+"  ===>  "+res);
+//		IO.println("SysEdit.GETINT: item="+item+"  ===>  "+res);
 		RTStack.push(IntegerValue.of(Type.T_INT, res), "EXPORT");
 		SVM_CALL_SYS.EXIT("GETINT: ");
 	}
@@ -126,7 +126,7 @@ public abstract class SysDeEdit {
 			if (c != ' ') break LOOP1;
 			pos++;
 		}
-		if(DEBUG) System.out.println("SysDeEdit.getFracItem(1): \""+T+"\"  pos="+pos);
+		if(DEBUG) IO.println("SysDeEdit.getFracItem(1): \""+T+"\"  pos="+pos);
 
 		if (c == '+' || c == '-') {
 			sb.append(c);
@@ -136,7 +136,7 @@ public abstract class SysDeEdit {
 				if (c != ' ') break LOOP2;
 				pos++;
 			}
-			if(DEBUG) System.out.println("SysDeEdit.getIntegerItem(3): "+T+"  res=\""+sb+"\"  pos="+pos);
+			if(DEBUG) IO.println("SysDeEdit.getIntegerItem(3): "+T+"  res=\""+sb+"\"  pos="+pos);
 		}
 		int lastDigPos = pos;
 		LOOP3:while(pos < T.length()) { // KEEP DIGITS
@@ -151,7 +151,7 @@ public abstract class SysDeEdit {
 			lastDigPos = pos;
 			pos++;
 		}
-		if(DEBUG) System.out.println("SysDeEdit.getFracItem: \""+T+"\", ITEMSIZE="+(lastDigPos)+" ===> \""+sb+'"');
+		if(DEBUG) IO.println("SysDeEdit.getFracItem: \""+T+"\", ITEMSIZE="+(lastDigPos)+" ===> \""+sb+'"');
 		RTUtil.set_ITEM_SIZE(lastDigPos);
 		return (sb.toString());
 	}
@@ -194,7 +194,7 @@ public abstract class SysDeEdit {
 		String arg = RTStack.popString();
 		String item = getRealItem(arg);
 		double res = Double.parseDouble(item);
-//		System.out.println("SysEdit.GTREAL: item="+item+"  ===>  "+res);
+//		IO.println("SysEdit.GTREAL: item="+item+"  ===>  "+res);
 		RTStack.push(LongRealValue.of(res), "EXPORT");
 		SVM_CALL_SYS.EXIT("GTREAL: ");
 	}
@@ -224,18 +224,18 @@ public abstract class SysDeEdit {
 			if (c != ' ') break LOOP1;
 			pos++;
 		}
-		if(DEBUG) System.out.println("SysDeEdit.getFracItem(1): \""+T+"\"  pos="+pos);
+		if(DEBUG) IO.println("SysDeEdit.getFracItem(1): \""+T+"\"  pos="+pos);
 		
 		if (c == '+' || c == '-') {
 			sb.append(c);
-			if(DEBUG) System.out.println("SysDeEdit.getFracItem(2): \""+T+"\"  res=\""+sb+"\"  pos="+pos);
+			if(DEBUG) IO.println("SysDeEdit.getFracItem(2): \""+T+"\"  res=\""+sb+"\"  pos="+pos);
 			pos++;
 			LOOP2:while(pos < T.length()) { // SKIP BLANKS
 				c = T.charAt(pos);
 				if (c != ' ') break LOOP2;
 				pos++;
 			}
-			if(DEBUG) System.out.println("SysDeEdit.getFracItem(3): "+T+"  res=\""+sb+"\"  pos="+pos);
+			if(DEBUG) IO.println("SysDeEdit.getFracItem(3): "+T+"  res=\""+sb+"\"  pos="+pos);
 		}
 		int lastDigPos = pos;
 		LOOP3:while(pos < T.length()) { // KEEP DIGITS
@@ -249,7 +249,7 @@ public abstract class SysDeEdit {
 			else break LOOP3;
 			pos++;
 		}
-		if(DEBUG) System.out.println("SysDeEdit.getFracItem: \""+T+"\", ITEMSIZE="+(lastDigPos)+" ===> \""+sb+'"');
+		if(DEBUG) IO.println("SysDeEdit.getFracItem: \""+T+"\", ITEMSIZE="+(lastDigPos)+" ===> \""+sb+'"');
 		RTUtil.set_ITEM_SIZE(lastDigPos);
 		return (sb.toString());
 	}
@@ -279,7 +279,7 @@ public abstract class SysDeEdit {
 		String arg = RTStack.popString();
 		String item = getFracItem(arg);
 		int res = Integer.parseInt(item);
-//		System.out.println("SysEdit.GTFRAC: item="+item+"  ===>  "+res);
+//		IO.println("SysEdit.GTFRAC: item="+item+"  ===>  "+res);
 		RTStack.push(IntegerValue.of(Type.T_INT, res), "EXPORT");
 		SVM_CALL_SYS.EXIT("GTFRAC: ");
 	}

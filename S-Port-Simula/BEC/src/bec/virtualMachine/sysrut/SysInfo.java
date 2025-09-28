@@ -21,7 +21,7 @@ public abstract class SysInfo {
 		SVM_CALL_SYS.ENTER("DMPENT: ", 0, 1); // exportSize, importSize
 //		int index = RTStack.popInt();
 		ObjectAddress oaddr = RTStack.popOADDR();
-		System.out.println("SVM_SYSCALL.dmpent: "+oaddr);
+		IO.println("SVM_SYSCALL.dmpent: "+oaddr);
 		RTUtil.dumpEntity(oaddr);
 //		Util.IERR("");
 		SVM_CALL_SYS.EXIT("DMPENT: ");
@@ -37,7 +37,7 @@ public abstract class SysInfo {
 	public static void getIntinfo() {
 		SVM_CALL_SYS.ENTER("GINTIN: ", 1, 1); // exportSize, importSize
 		int index = RTStack.popInt();
-//		System.out.println("SVM_SYSCALL.getIntinfo: "+index);
+//		IO.println("SVM_SYSCALL.getIntinfo: "+index);
 		int result=0;
 		switch(index) {
 			case 19: result = 0; break; // 19 Should the symbolic debugger SIMOB be entered prior to the execution of the
@@ -74,7 +74,7 @@ public abstract class SysInfo {
 				break;
 			default: Util.IERR("");
 		}
-		if(Global.verbose) System.out.println("SVM_SYSCALL.sizein: index=" + index + ", warea=" + warea + ", result=" +result);
+		if(Global.verbose) IO.println("SVM_SYSCALL.sizein: index=" + index + ", warea=" + warea + ", result=" +result);
 		RTStack.push(IntegerValue.of(Type.T_SIZE, result), "EXPORT");
 		SVM_CALL_SYS.EXIT("SIZEIN: ");
 	}
@@ -85,13 +85,13 @@ public abstract class SysInfo {
 		SVM_CALL_SYS.ENTER("GVIINF: ", 0, 2); // exportSize, importSize
 		int inform = RTStack.popInt();
 		int index = RTStack.popInt();
-//		System.out.println("SVM_SYSCALL.gviinf: index=" + index + ", inform=" + inform);
+//		IO.println("SVM_SYSCALL.gviinf: index=" + index + ", inform=" + inform);
 		switch(index) {
 			case 6: // Garbage collection information. Info=0 signals the start of a garbage collection,
 				    // Info=1 signals termination of g.c. (see 5.2).
 				if(Global.execVerbose) {
 					String more = (inform == 0)? " Begin" : " Endof";
-					System.out.println("SVM_SYSCALL.gviinf: index=" + index + ", inform=" + inform + more + " Garbage Collection");
+					IO.println("SVM_SYSCALL.gviinf: index=" + index + ", inform=" + inform + more + " Garbage Collection");
 				}
 				break;
 			default: Util.IERR(""+index);

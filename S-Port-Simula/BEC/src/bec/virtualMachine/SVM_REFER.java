@@ -7,7 +7,6 @@ import bec.AttributeOutputStream;
 import bec.util.Global;
 import bec.value.GeneralAddress;
 import bec.value.ObjectAddress;
-import bec.value.Value;
 
 /**
  * 
@@ -40,6 +39,7 @@ public class SVM_REFER extends SVM_Instruction {
 	public SVM_REFER(int xReg) {
 		this.opcode = SVM_Instruction.iREFER;
 		this.xReg=xReg;
+		RTRegister.writes("SVM_REFER", xReg);
 	}
 
 	@Override
@@ -63,12 +63,12 @@ public class SVM_REFER extends SVM_Instruction {
 	private SVM_REFER(AttributeInputStream inpt) throws IOException {
 		this.opcode = SVM_Instruction.iREFER;
 		this.xReg = inpt.readReg();
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + this);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		oupt.writeReg(xReg);
 	}

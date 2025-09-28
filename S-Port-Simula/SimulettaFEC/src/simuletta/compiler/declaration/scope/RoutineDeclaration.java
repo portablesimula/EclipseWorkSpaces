@@ -206,7 +206,7 @@ public class RoutineDeclaration extends DeclarationScope implements Externalizab
     	}
     	s.append(identifier).append("; tag="+this.getTag());
     	if(bodyTag!=null) s.append(", bodyTag="+bodyTag);
-    	System.out.println(s.toString());
+    	IO.println(s.toString());
     	signatur.print(lead,indent);
     	if(declarationList!=null) for(Declaration d:declarationList) d.print("",indent);
     }

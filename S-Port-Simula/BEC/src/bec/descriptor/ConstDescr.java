@@ -76,7 +76,7 @@ public class ConstDescr extends Descriptor {
 		if(cnst != null) Util.IERR("New CONSPEC but cnst="+cnst);
 		
 		cnst = new ConstDescr(Kind.K_Coonst, tag);
-//		System.out.println("NEW ConstDescr.ofConstSpec: "+cnst);
+//		IO.println("NEW ConstDescr.ofConstSpec: "+cnst);
 		
 //		cnst.quant = new QuantityDescriptor();
 		cnst.type = Type.ofScode();
@@ -84,13 +84,13 @@ public class ConstDescr extends Descriptor {
 		if(Scode.accept(Scode.S_FIXREP)) {
 			Scode.inNumber();
 //			Util.IERR("DETTE ER EN 'ResolvedType' - HVA NÅ ?");
-//			System.out.println("DETTE ER EN 'ResolvedType' - HVA NÅ ?");
+//			IO.println("DETTE ER EN 'ResolvedType' - HVA NÅ ?");
 		}
 
 		int repCount = (Scode.accept(Scode.S_REP)) ? Scode.inNumber() : 1;
 
 		if(DEBUG) {
-			System.out.println("CONST.inConstant: " + cnst);
+			IO.println("CONST.inConstant: " + cnst);
 //			if(Global.traceMode > 3)
 				cnst.print("   ");
 //			Util.IERR("");
@@ -106,23 +106,23 @@ public class ConstDescr extends Descriptor {
 		if(cnst == null) {
 			cnst = new ConstDescr(Kind.K_Coonst, tag);
 		}
-		if(DEBUG) System.out.println("NEW ConstDescr.ofConstDef: "+cnst);
+		if(DEBUG) IO.println("NEW ConstDescr.ofConstDef: "+cnst);
 //		cnst.quant = new QuantityDescriptor();
 		cnst.type = Type.ofScode();
 		
 		fixrepTail = 0;
 		if(Scode.accept(Scode.S_FIXREP)) {
 			int fixrep = Scode.inNumber();
-//			System.out.println("ConstDescr.ofConstDef: "+cnst);
-//			System.out.println("ConstDescr.ofConstDef: "+cnst.type);
-//			System.out.println("ConstDescr.ofConstDef: FIXREP "+fixrep);
+//			IO.println("ConstDescr.ofConstDef: "+cnst);
+//			IO.println("ConstDescr.ofConstDef: "+cnst.type);
+//			IO.println("ConstDescr.ofConstDef: FIXREP "+fixrep);
 			RecordDescr rec = (RecordDescr) Global.getMeaning(cnst.type.tag);
-//			System.out.println("ConstDescr.ofConstDef: descr="+rec);
+//			IO.println("ConstDescr.ofConstDef: descr="+rec);
 			int count = rec.size + rec.nbrep * fixrep;
 			fixrepTail = rec.nbrep * fixrep;
-//			System.out.println("ConstDescr.ofConstDef: count="+count);
+//			IO.println("ConstDescr.ofConstDef: count="+count);
 //			Util.IERR("DETTE ER EN 'ResolvedType' - HVA NÅ ?");
-//			System.out.println("DETTE ER EN 'ResolvedType' - HVA NÅ ?");
+//			IO.println("DETTE ER EN 'ResolvedType' - HVA NÅ ?");
 		}
 
 		int repCount = (Scode.accept(Scode.S_REP)) ? Scode.inNumber() : 1;
@@ -136,7 +136,7 @@ public class ConstDescr extends Descriptor {
 			RepetitionValue value = RepetitionValue.ofScode();
 			cnst.values.add(value);
 			if(DEBUG) {
-				System.out.println("NEW ConstDescr.ofConstDef: "+value.getClass().getSimpleName());
+				IO.println("NEW ConstDescr.ofConstDef: "+value.getClass().getSimpleName());
 				value.print("NEW ConstDescr.ofConstDef: ");
 			}
 			
@@ -145,7 +145,7 @@ public class ConstDescr extends Descriptor {
 		}
 		
 		if(DEBUG) {
-			System.out.println("CONST.inConstant: " + cnst);
+			IO.println("CONST.inConstant: " + cnst);
 //			if(Global.traceMode > 3) cnst.print("   ");
 			Global.CSEG.dump("ConstDescr.ofConstDef: ");
 			Global.DSEG.dump("ConstDescr.ofConstDef: ");
@@ -169,13 +169,13 @@ public class ConstDescr extends Descriptor {
 				if(vector instanceof Vector<?> elts) {
 					boolean first = true;
 					for(Object rVal:elts) {
-						if(first) System.out.println(indent + "CONST " + tag);
+						if(first) IO.println(indent + "CONST " + tag);
 						first = false;
 						((Value)rVal).print(indent + "   ");							
 					} done = true;
 				}
 			}
-			if(! done) System.out.println(indent + "   " + toString());
+			if(! done) IO.println(indent + "   " + toString());
 		}
 	}
 	
@@ -192,7 +192,7 @@ public class ConstDescr extends Descriptor {
 	// ***********************************************************************************************
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("CONST.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("CONST.Write: " + this);
 		oupt.writeKind(kind);
 //		oupt.writeShort(ModuleIO.chgType(tag));
 		tag.write(oupt);
@@ -202,15 +202,15 @@ public class ConstDescr extends Descriptor {
 	}
 
 	public static ConstDescr read(AttributeInputStream inpt) throws IOException {
-//		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  BEGIN CONST.Read");
+//		IO.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  BEGIN CONST.Read");
 		Tag tag = Tag.read(inpt);
 		ConstDescr cns = new ConstDescr(Kind.K_Coonst, tag);
-//		System.out.println("AFTER NEW CONST: "+cns);
+//		IO.println("AFTER NEW CONST: "+cns);
 		cns.type = Type.read(inpt);
 		cns.address = (ObjectAddress) Value.read(inpt);
-//		System.out.println("AFTER NEW MEMADDR: "+cns);
+//		IO.println("AFTER NEW MEMADDR: "+cns);
 //		Util.IERR("Static Method 'readObject' needs a redefiniton");
-//		if(Global.ATTR_INPUT_TRACE) System.out.println("ConstDescr.Read: " + cns);
+//		if(Global.ATTR_INPUT_TRACE) IO.println("ConstDescr.Read: " + cns);
 		return(cns);
 	}
 

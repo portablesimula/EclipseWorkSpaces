@@ -32,15 +32,15 @@ public abstract class SysEdit {
 		ObjectAddress valAddr = RTStack.popGADDRasOADDR();
 		if(DEBUG) {
 			valAddr.segment().dump("SVM_SYSCALL.putstr:");
-			System.out.println("SVM_SYSCALL.putstr: valAddr="+valAddr);
-			System.out.println("SVM_SYSCALL.putstr: valNchr="+valNchr);
+			IO.println("SVM_SYSCALL.putstr: valAddr="+valAddr);
+			IO.println("SVM_SYSCALL.putstr: valNchr="+valNchr);
 		}
 		int itemNchr = RTStack.popInt();
 		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
 		if(DEBUG) {
 //			itemAddr.segment().dump("SVM_SYSCALL.putstr:");
-			System.out.println("SVM_SYSCALL.putstr: itemAddr="+itemAddr);
-			System.out.println("SVM_SYSCALL.putstr: itemNchr="+itemNchr);
+			IO.println("SVM_SYSCALL.putstr: itemAddr="+itemAddr);
+			IO.println("SVM_SYSCALL.putstr: itemNchr="+itemNchr);
 		}
 		if(valNchr > 0) RTUtil.move(valAddr, itemAddr, valNchr);
 
@@ -63,16 +63,16 @@ public abstract class SysEdit {
 		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
 		String sval = ""+val;
 		int nchr = sval.length();
-//		System.out.println("SysEdit.PUTINT: "+val+" ===> "+sval);
-//		System.out.println("SysEdit.PUTINT: itemAddr="+itemAddr);
-//		System.out.println("SysEdit.PUTINT: itemNchr="+itemNchr);
-//		System.out.println("SysEdit.PUTINT: nchr="+nchr);
+//		IO.println("SysEdit.PUTINT: "+val+" ===> "+sval);
+//		IO.println("SysEdit.PUTINT: itemAddr="+itemAddr);
+//		IO.println("SysEdit.PUTINT: itemNchr="+itemNchr);
+//		IO.println("SysEdit.PUTINT: nchr="+nchr);
 		if(nchr > itemNchr) {
 			RTUtil.set_STATUS(24); // Text string too short
 		} else {
 			int diff = itemNchr - nchr;
 			RTUtil.move(sval, itemAddr.addOffset(diff), nchr);
-//			System.out.println("SysEdit.PUTINT: diff="+diff);
+//			IO.println("SysEdit.PUTINT: diff="+diff);
 			IntegerValue blnk = IntegerValue.of(Type.T_CHAR, ' ');
 			for(int i=diff-1;i>=0;i--) itemAddr.store(i, blnk, "");
 		}
@@ -112,18 +112,18 @@ public abstract class SysEdit {
 		
 //		String sval = ""+val;
 		String sval = putfrac(itemNchr, val, n);
-//		System.out.println("SysEdit.putfrac: "+val+", n="+n +" ===> "+sval);
+//		IO.println("SysEdit.putfrac: "+val+", n="+n +" ===> "+sval);
 		
 		int nchr = sval.length();
-//		System.out.println("SysEdit.PTFRAC: itemAddr="+itemAddr);
-//		System.out.println("SysEdit.PTFRAC: itemNchr="+itemNchr);
-//		System.out.println("SysEdit.PTFRAC: nchr="+nchr);
+//		IO.println("SysEdit.PTFRAC: itemAddr="+itemAddr);
+//		IO.println("SysEdit.PTFRAC: itemNchr="+itemNchr);
+//		IO.println("SysEdit.PTFRAC: nchr="+nchr);
 		if(nchr > itemNchr) {
 			RTUtil.set_STATUS(24); // Text string too short
 		} else {
 			int diff = itemNchr - nchr;
 			RTUtil.move(sval, itemAddr.addOffset(diff), nchr);
-//			System.out.println("SysEdit.PTFRAC: diff="+diff);
+//			IO.println("SysEdit.PTFRAC: diff="+diff);
 			IntegerValue blnk = IntegerValue.of(Type.T_CHAR, ' ');
 			for(int i=diff-1;i>=0;i--) itemAddr.store(i, blnk, "");
 		}
@@ -176,7 +176,7 @@ public abstract class SysEdit {
 						chars.add(' ');
 					}
 				}
-//				System.out.println("SysEdit.putfrac: item["+p+"] <== "+(char) (c + '0'));
+//				IO.println("SysEdit.putfrac: item["+p+"] <== "+(char) (c + '0'));
 				item[p--] = (char) (c + '0');
 				chars.add((char) (c + '0'));
 				r = r - 1;
@@ -204,13 +204,13 @@ public abstract class SysEdit {
 //			T.OBJ.MAIN[T.START + i] = item[i];
 			res = res + item[i];
 		}
-//		System.out.println("SysEdit.putfrac: res="+res);
+//		IO.println("SysEdit.putfrac: res="+res);
 
 		String res2 = "";
 		for (Character cc:chars) {
 			res2 = res2 + cc;
 		}
-//		System.out.println("SysEdit.putfrac: res2="+res2);
+//		IO.println("SysEdit.putfrac: res2="+res2);
 
 		res = res.trim();
 		return res;
@@ -229,7 +229,7 @@ public abstract class SysEdit {
 		float val = RTStack.popReal();
 		int itemNchr = RTStack.popInt();
 		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
-//		System.out.println("SysEdit.putreal: "+val);
+//		IO.println("SysEdit.putreal: "+val);
 		
 		String sval = SysEdit.putreal(val,frac);
 		sval = sval.replace(',', '.').replace('E', '&');
@@ -538,7 +538,7 @@ public abstract class SysEdit {
 		SVM_CALL_SYS.ENTER("PTGADR2	: ", 1, 5); // exportSize, importSize
 //		RTStack.dumpRTStack("SysEdit.ptgadr2: ");
 		GeneralAddress val = RTStack.popGADDR();
-//		System.out.println("SysEdit.ptgadr2: val="+val);
+//		IO.println("SysEdit.ptgadr2: val="+val);
 		int itemNchr = RTStack.popInt();
 		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
 		String sval = (val == null)? "GNONE" : ""+val;

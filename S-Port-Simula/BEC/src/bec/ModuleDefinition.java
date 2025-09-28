@@ -70,7 +70,7 @@ public class ModuleDefinition extends S_Module {
 			int xtag = Scode.inNumber();
 			Global.iTAGTAB.set(xtag, itag); // Index xTag --> value iTag
 			Global.xTAGTAB.set(itag, xtag); // Index iTag --> value xTag
-//			System.out.println("MONITOR: xtag="+xtag+"  itag="+itag);
+//			IO.println("MONITOR: xtag="+xtag+"  itag="+itag);
 			Scode.inputInstr();
 			if(xtag > nXtag) nXtag = xtag;
 		}
@@ -83,7 +83,7 @@ public class ModuleDefinition extends S_Module {
 			Util.IERR("InterfaceModule: Init values is not supported");
 		}
 
-//		System.out.println("ModuleDefinition: curinstr="+Scode.edInstr(Scode.curinstr));
+//		IO.println("ModuleDefinition: curinstr="+Scode.edInstr(Scode.curinstr));
 		LOOP: while(true) {
 			switch(Scode.curinstr) {
 				case Scode.S_CONST: ConstDescr.ofConstDef(); break;
@@ -93,11 +93,11 @@ public class ModuleDefinition extends S_Module {
 //					Util.IERR("SJEKK DETTE");
 					break;
 				default:
-//					System.out.println("ModuleDefinition'LOOP: Terminated by: " + Scode.edInstr(Scode.curinstr));
+//					IO.println("ModuleDefinition'LOOP: Terminated by: " + Scode.edInstr(Scode.curinstr));
 					break LOOP;
 			}
 			Scode.inputInstr();
-//			System.out.println("ModuleDefinition: +++++++++++++ REPEAT: "+Scode.edInstr(Scode.curinstr));
+//			IO.println("ModuleDefinition: +++++++++++++ REPEAT: "+Scode.edInstr(Scode.curinstr));
 		}
 
 		programElements();
@@ -125,7 +125,7 @@ public class ModuleDefinition extends S_Module {
 	 * 		::= info_setting
 	 */
 	private static boolean viisible() {
-//		System.out.println("MONITOR.viisible: CurInstr="+Scode.edInstr(Scode.curinstr));
+//		IO.println("MONITOR.viisible: CurInstr="+Scode.edInstr(Scode.curinstr));
 		switch(Scode.curinstr) {
 			case Scode.S_CONSTSPEC:		ConstDescr.ofConstSpec(); break;
 			case Scode.S_CONST:			ConstDescr.ofConstDef(); break;
@@ -141,7 +141,7 @@ public class ModuleDefinition extends S_Module {
 			case Scode.S_SETSWITCH:		setSwitch(); break;
 			case Scode.S_INFO:			Util.WARNING("Unknown info: " + Scode.inString());
 			default:
-//				System.out.println("MONITOR.viisible: CurInstr="+Scode.edInstr(Scode.curinstr) + " TERMINATES VIISIBLE");
+//				IO.println("MONITOR.viisible: CurInstr="+Scode.edInstr(Scode.curinstr) + " TERMINATES VIISIBLE");
 				return false;
 		}
 		return true;

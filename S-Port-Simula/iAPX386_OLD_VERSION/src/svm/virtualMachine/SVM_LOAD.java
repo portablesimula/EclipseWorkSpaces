@@ -55,7 +55,7 @@ public class SVM_LOAD extends SVM_Instruction {
 //			case DataAddress.STACK_ADDR:  Util.IERR(""); doLoad(addr, xReg); break;
 //			case DataAddress.REMOTE_ADDR:
 //				if(Global.TESTING_REMOTE) {
-//					System.out.println("SVM_LOAD.execute: "+addr+", xReg="+addr.xReg);
+//					IO.println("SVM_LOAD.execute: "+addr+", xReg="+addr.xReg);
 //					doLoad(addr, xReg);
 ////					Util.IERR("NOT IMPL");
 //				} else {
@@ -68,23 +68,23 @@ public class SVM_LOAD extends SVM_Instruction {
 //			case DataAddress.REFER_ADDR:
 //				GeneralAddress gaddr = (GeneralAddress) RTRegister.getValue(xReg);
 //				addr = gaddr.base.addOffset(rtAddr.getOfst() + gaddr.ofst);
-//				System.out.println("SVM_LOAD.execute: REFER_ADDR: rtAddr="+rtAddr);
-//				System.out.println("SVM_LOAD.execute: REFER_ADDR: gaddr="+gaddr);
-//				System.out.println("SVM_LOAD.execute: REFER_ADDR: base="+gaddr.base.getClass().getSimpleName()+"  "+gaddr.base);
-//				System.out.println("SVM_LOAD.execute: REFER_ADDR: addr="+addr);
+//				IO.println("SVM_LOAD.execute: REFER_ADDR: rtAddr="+rtAddr);
+//				IO.println("SVM_LOAD.execute: REFER_ADDR: gaddr="+gaddr);
+//				IO.println("SVM_LOAD.execute: REFER_ADDR: base="+gaddr.base.getClass().getSimpleName()+"  "+gaddr.base);
+//				IO.println("SVM_LOAD.execute: REFER_ADDR: addr="+addr);
 //				doLoad(addr, 0); break;
 //	
 //			default: Util.IERR("");
 //		}
 //
 //		if(DEBUG) {
-////			System.out.println("LOAD.execute: "+addr);
+////			IO.println("LOAD.execute: "+addr);
 ////			addr.segment().dump("LOAD.execute: ", addr.offset, addr.offset+size);
 //			addr.dumpArea("LOAD.execute: ", size);
 //		}
 		
 		
-//		System.out.println("LOAD.execute: "+addr.getClass().getSimpleName()+"  "+addr);
+//		IO.println("LOAD.execute: "+addr.getClass().getSimpleName()+"  "+addr);
 		
 		addr.doLoad(xReg, size);
 		
@@ -115,12 +115,12 @@ public class SVM_LOAD extends SVM_Instruction {
 		this.rtAddr = (DataAddress) Value.read(inpt);
 		this.xReg = inpt.readReg();
 		this.size = inpt.readShort();
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + this);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		rtAddr.write(oupt);
 		oupt.writeReg(xReg);

@@ -19,6 +19,7 @@ public class SVM_STORE2REG extends SVM_Instruction {
 		this.opcode = SVM_Instruction.iSTORE2REG;
 		this.reg = reg;
 		this.count = count;
+		RTRegister.writes("SVM_STORE2REG", reg);
 	}
 	
 	public SVM_STORE2REG(int reg) {
@@ -60,12 +61,12 @@ public class SVM_STORE2REG extends SVM_Instruction {
 		this.opcode = SVM_Instruction.iSTORE2REG;
 		this.reg = inpt.readShort();
 		this.count = inpt.readShort();
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + this);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		oupt.writeShort(reg);
 		oupt.writeShort(count);

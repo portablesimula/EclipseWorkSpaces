@@ -24,7 +24,7 @@ public class DataSegment extends Segment {
 
 	public DataSegment(String ident, int segmentKind) {
 		super(ident, segmentKind);
-//		System.out.println("NEW DataSegment: " + this);
+//		IO.println("NEW DataSegment: " + this);
 //		Thread.dumpStack();
 		this.ident = ident.toUpperCase();
 		this.segmentKind = segmentKind;
@@ -54,12 +54,12 @@ public class DataSegment extends Segment {
 	}
 	
 	public Value load(int index) {
-//		System.out.println("DataSegment.load: "+this+", index="+index);
+//		IO.println("DataSegment.load: "+this+", index="+index);
 		try {
 			return values.get(index);
 		} catch(Exception e) {
 			e.printStackTrace();
-			System.out.println("DataSegment.load: FAILED - SE PÅ DETTE SEINERE !! e="+e);
+			IO.println("DataSegment.load: FAILED - SE PÅ DETTE SEINERE !! e="+e);
 //			this.dump("DataSegment.load: FAILED: " + e + " ");
 //			Util.IERR("DataSegment.load: FAILED");
 			return null;
@@ -80,19 +80,19 @@ public class DataSegment extends Segment {
 		while(line.length() < 8) line = " " +line;
 		String val = ""+value;
 		while(val.length() < 50) val = val + ' ';
-		System.out.println(indent + line + val + "   " + cmnt);
+		IO.println(indent + line + val + "   " + cmnt);
 		
 	}
 
 	public void emitDefaultValue(int size, int repCount, String cmnt) {
-//		System.out.println("DataSegment.emitDefaultValue: size="+size);
+//		IO.println("DataSegment.emitDefaultValue: size="+size);
 		if(repCount < 1) Util.IERR("");
 		boolean option = Global.PRINT_GENERATED_SVM_DATA;
 		int LIMIT = 30;
 		int n = size * repCount;
 		for(int i=0;i<n;i++) {
 			if(Global.PRINT_GENERATED_SVM_DATA && i == LIMIT) {
-				System.out.println("                                 ==> ... " + (n-LIMIT) + " more truncated");
+				IO.println("                                 ==> ... " + (n-LIMIT) + " more truncated");
 				Global.PRINT_GENERATED_SVM_DATA = false;
 			}
 			emit(null, cmnt);
@@ -117,7 +117,7 @@ public class DataSegment extends Segment {
 		int n = texts.size();
 		for(int i=0;i<n;i++) {
 			TextValue tval = texts.get(i);
-			if(DEBUG) System.out.println("DataSegment.emitRepText["+i+"]: "+tval);
+			if(DEBUG) IO.println("DataSegment.emitRepText["+i+"]: "+tval);
 			
 //			emit(tval.addr,"CHRADR");
 //			emit(IntegerValue.of(Type.T_INT,0),"OFST");
@@ -137,15 +137,15 @@ public class DataSegment extends Segment {
 	@Override
 	public void dump(String title,int from,int to) {
 		if(values.size() == 0) return;
-		System.out.println("==================== " + title + ident + " DUMP ====================" + this.hashCode());
+		IO.println("==================== " + title + ident + " DUMP ====================" + this.hashCode());
 		for(int i=from;i<to;i++) {
 			String line = "" + i + ": ";
 			while(line.length() < 8) line = " " +line;
 			String value = ""+values.get(i);
 			while(value.length() < 25) value = value + ' ';
-			System.out.println(line + value + "   " + comment.get(i));
+			IO.println(line + value + "   " + comment.get(i));
 		}
-		System.out.println("==================== " + title + ident + " END  ====================");
+		IO.println("==================== " + title + ident + " END  ====================");
 //		Util.IERR("");
 	}
 	
@@ -167,12 +167,12 @@ public class DataSegment extends Segment {
 			comment.add(inpt.readString());
 			values.add(Value.read(inpt));
 		}
-//		System.out.println("NEW IMPORT: " + this);
+//		IO.println("NEW IMPORT: " + this);
 	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("DataSegment.Write: " + this + ", Size=" + values.size());
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("DataSegment.Write: " + this + ", Size=" + values.size());
 //		oupt.writeInstr(Scode.S_BSEG);
 		oupt.writeKind(segmentKind);
 		oupt.writeString(ident);
@@ -180,7 +180,7 @@ public class DataSegment extends Segment {
 		for(int i=0;i<values.size();i++) {
 			oupt.writeString(comment.get(i));
 			Value val = values.get(i);
-//			System.out.println("DataSegment.Write: "+val);
+//			IO.println("DataSegment.Write: "+val);
 			if(val == null)
 				 oupt.writeInstr(Scode.S_NULL);
 			else val.write(oupt);
@@ -190,9 +190,9 @@ public class DataSegment extends Segment {
 	public static DataSegment readObject(AttributeInputStream inpt, int segmentKind) throws IOException {
 //		int segmentKind = inpt.readKind();
 		String ident = inpt.readString();
-//		System.out.println("DataSegment.readObject: ident="+ident+", segmentKind="+segmentKind);
+//		IO.println("DataSegment.readObject: ident="+ident+", segmentKind="+segmentKind);
 		DataSegment seg = new DataSegment(ident, segmentKind, inpt);
-		if(Global.ATTR_INPUT_TRACE) System.out.println("DataSegment.Read: " + seg);
+		if(Global.ATTR_INPUT_TRACE) IO.println("DataSegment.Read: " + seg);
 		if(Global.ATTR_INPUT_DUMP) seg.dump("DataSegment.readObject: ");
 //		Util.IERR("");
 		return seg;

@@ -27,8 +27,8 @@ public abstract class RUPDATE extends Instruction {
 		AddressItem adr = (AddressItem) CTStack.pop();
 		CTStack.forceTosValue();			
 		if(DEBUG) {
-			System.out.println("RUPDATE.ofScode: adr="+adr);
-			System.out.println("RUPDATE.ofScode: sos="+CTStack.TOS());
+			IO.println("RUPDATE.ofScode: adr="+adr);
+			IO.println("RUPDATE.ofScode: sos="+CTStack.TOS());
 //			Util.IERR("");
 //			CTStack.dumpStack("RUPDATE-2: ");
 		}

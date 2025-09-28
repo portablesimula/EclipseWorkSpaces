@@ -53,10 +53,10 @@ public abstract class SELECT extends Instruction {
 		CTStack.TOS().type = attr.type;
 		AddressItem adr = (AddressItem) CTStack.TOS();
 		adr.offset = adr.offset + attr.rela;
-		if(DEBUG) System.out.println("SELECT.ofScode: ofst="+adr.offset + ", rela=" + attr.rela);
+		if(DEBUG) IO.println("SELECT.ofScode: ofst="+adr.offset + ", rela=" + attr.rela);
 		adr.type = attr.type;
 		adr.size = attr.size;
-		if(DEBUG) System.out.println("SELECT.ofScode: TOS="+adr);
+		if(DEBUG) IO.println("SELECT.ofScode: TOS="+adr);
 		if(instr == Scode.S_SELECTV) FETCH.doFetch("SELECTV " + tag + ": ");
 //		CTStack.dumpStack();
 //		Util.IERR("");

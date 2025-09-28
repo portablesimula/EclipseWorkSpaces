@@ -46,16 +46,16 @@ public class Type {
 		}
 //		if(Scode.accept(Scode.S_FIXREP)) {
 //			int fixrep = Scode.inNumber();
-//			System.out.println("Type.ofScode: "+Scode.edTag(tag)+" FIXREP "+fixrep);
+//			IO.println("Type.ofScode: "+Scode.edTag(tag)+" FIXREP "+fixrep);
 ////			Descriptor descr = tag.getMeaning();
 //			dumpTypes("Type.ofScode: ");
 //			Type type = TMAP.get(tag);
-//			System.out.println("Type.ofScode: type="+type);
+//			IO.println("Type.ofScode: type="+type);
 //
 //			Util.IERR("DETTE ER EN 'ResolvedType' - HVA NÅ ?");
-//			System.out.println("DETTE ER EN 'ResolvedType' - HVA NÅ ?");
+//			IO.println("DETTE ER EN 'ResolvedType' - HVA NÅ ?");
 //		}
-//		System.out.println("NEW Type.ofScode: " + Scode.edTag(tag));
+//		IO.println("NEW Type.ofScode: " + Scode.edTag(tag));
 		Type type = TMAP.get(tag);
 //		Util.IERR("SJEKK DETTE: " + type);
 		if(type == null) {
@@ -74,19 +74,19 @@ public class Type {
 		if(type == null) Util.IERR("Type.recType: UNKNOWN: " + rec);
 		
 //		rec.print("Type.lookupType: ");
-//		System.out.println("Type.lookupType: type=" + type);
+//		IO.println("Type.lookupType: type=" + type);
 		
 		return type;
 	}
 
 	public static void newRecType(RecordDescr rec) {
-//		System.out.println("DataType.newRecType: " + Scode.edTag(rec.tag.val) + ", size="+rec.size);
+//		IO.println("DataType.newRecType: " + Scode.edTag(rec.tag.val) + ", size="+rec.size);
 		Type type = new Type(rec.tag.val, rec.size);
 		type.rep0size = rec.nbrep;
 		type.comment = "From " + rec;
 		Type old = TMAP.get(rec.tag.val);
 		if(old != null) {
-//			System.out.println("DataType.newRecType: old=" + old);
+//			IO.println("DataType.newRecType: old=" + old);
 			if(rec.tag.val != Scode.TAG_STRING)	Util.IERR("Already defined: " + type);
 		} else {
 //			if(rec.tag.val == 2483) Util.IERR("");
@@ -150,15 +150,15 @@ public class Type {
 	}
 
 	public static void dumpTypes(String title) {
-		System.out.println("============ "+title+" BEGIN Dump Types ================");
+		IO.println("============ "+title+" BEGIN Dump Types ================");
 		for(Integer type:TMAP.keySet()) {
-			System.out.println("TTAB["+type+"] = " + TMAP.get(type));
+			IO.println("TTAB["+type+"] = " + TMAP.get(type));
 		}
 		for(Type type:RECTYPES) {
-			System.out.println("Record TYPE = " + type);
+			IO.println("Record TYPE = " + type);
 			
 		}
-		System.out.println("============ "+title+" ENDOF Dump Types ================");
+		IO.println("============ "+title+" ENDOF Dump Types ================");
 	}
 	
 	public String toString() {
@@ -170,11 +170,11 @@ public class Type {
 	// ***********************************************************************************************
 
 	public static void writeRECTYPES(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("writeRECTYPES: ");
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("writeRECTYPES: ");
 		oupt.writeKind(Kind.K_RECTYPES);
 		oupt.writeShort(RECTYPES.size());
 		for(Type type:RECTYPES) {
-//			System.out.println("Type.writeRECTYPES: " + type.tag );
+//			IO.println("Type.writeRECTYPES: " + type.tag );
 			oupt.writeTagID(type.tag);
 			oupt.writeShort(type.size);
 			type.comment = "From " + Global.currentModule;
@@ -192,14 +192,14 @@ public class Type {
 			if(tag == Scode.TAG_STRING) ; // OK Predefinert
 			else if(TMAP.get(tag) ==null) {
 //				if(tag == 2483) {
-//					System.out.println("Type.readRECTYPES: NEW Type: " + type + ", tag=" + tag);
+//					IO.println("Type.readRECTYPES: NEW Type: " + type + ", tag=" + tag);
 ////					Util.IERR("");
 //				}
 				TMAP.put(tag, type);
 				RECTYPES.add(type);
 //				Type.dumpTypes("Type.readRECTYPES: ");
 			}
-//			System.out.println("Type.readRECTYPES: NEW Type: " + type);
+//			IO.println("Type.readRECTYPES: NEW Type: " + type);
 //			Util.IERR("");
 		}
 //		Type.dumpTypes("Type.readRECTYPES: ");
@@ -211,7 +211,7 @@ public class Type {
 
 	public static Type read(AttributeInputStream inpt) throws IOException {
 		int tag = inpt.readTag();
-//		System.out.println("NEW Type(inpt): " + Scode.edInstr(tag));
+//		IO.println("NEW Type(inpt): " + Scode.edInstr(tag));
 		Type type = TMAP.get(tag);
 		if(type == null) Util.IERR("SJEKK DETTE");
 		return type;

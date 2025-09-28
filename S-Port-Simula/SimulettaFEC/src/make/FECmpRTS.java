@@ -129,7 +129,7 @@ public final class FECmpRTS {
 //		RTOption.USE_VIRTUAL_THREAD=true;
 
 		//if(Option.verbose)
-			System.out.println("\nBEGIN COMPILE RTS TO S-CODE");
+			IO.println("\nBEGIN COMPILE RTS TO S-CODE");
 		for(String name:names) {
 			String fileName = userDir+"/src/"+Global.packetName+"/sml/"+name+".sml";
 //			File outputFile=new File(userDir+"/src/"+Global.packetName+"/scd/"+name+".scd");
@@ -137,22 +137,22 @@ public final class FECmpRTS {
 			File outputFile=new File(Global.outputDir+"/"+Global.packetName+"/SCode/"+name+".scd");
 
 			//outputFile.getParentFile().mkdirs();
-			System.out.println("    COMPILE "+fileName);
-			System.out.println("    OUTPUT  "+outputFile);
+			IO.println("    COMPILE "+fileName);
+			IO.println("    OUTPUT  "+outputFile);
 			try { outputFile.createNewFile(); } catch (IOException e) { e.printStackTrace(); }
 
 
 			SimulettaCompiler compiler = new SimulettaCompiler(fileName,outputFile);
 			compiler.doCompile();
 			if(Option.verbose) {
-				System.out.println("    SCode Output: "+outputFile);
-				System.out.println("    Attrs Output: "+Global.outputAttributeFile);
+				IO.println("    SCode Output: "+outputFile);
+				IO.println("    Attrs Output: "+Global.outputAttributeFile);
 			}
 		}
 		//if(Option.verbose) {
-			System.out.println("--- END COMPILE RTS TO S-CODE");
+			IO.println("--- END COMPILE RTS TO S-CODE");
 			long timeUsed  = System.currentTimeMillis( ) - startTimeMs;
-			System.out.println("\nElapsed Time: Approximately " + timeUsed/1000 + " sec.");
+			IO.println("\nElapsed Time: Approximately " + timeUsed/1000 + " sec.");
 		//}
 	}
 

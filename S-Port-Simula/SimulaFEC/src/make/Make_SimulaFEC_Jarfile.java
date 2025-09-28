@@ -54,8 +54,8 @@ public class Make_SimulaFEC_Jarfile {
 		File source=new File("C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/bin/FEC.jar");
 		File target=new File("C:/SPORT/SimulaFEC.jar");
 		target.mkdirs();
-		System.out.println("source="+source);
-		System.out.println("target="+target);
+		IO.println("source="+source);
+		IO.println("target="+target);
 		try {
 			Files.copy(source.toPath(), target.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException e) {
@@ -83,7 +83,7 @@ public class Make_SimulaFEC_Jarfile {
 		try {
 			exec(cmds);
 		} catch (IOException e) {
-			System.out.println("Make_SimulaFEC_Jarfile.compile - Exit: ");
+			IO.println("Make_SimulaFEC_Jarfile.compile - Exit: ");
 			e.printStackTrace();
 			System.exit(0);
 		}
@@ -101,7 +101,7 @@ public class Make_SimulaFEC_Jarfile {
 	public static int exec(String... cmd) throws IOException {
 		String line="";
 		for(int i=0;i<cmd.length;i++) line=line+" "+cmd[i];
-        System.out.println("MakeCompiler.execute: command="+line);
+        IO.println("MakeCompiler.execute: command="+line);
 		ProcessBuilder processBuilder = new ProcessBuilder(cmd);
 		processBuilder.redirectErrorStream(true);
 		try {
@@ -114,7 +114,7 @@ public class Make_SimulaFEC_Jarfile {
 			return (process.exitValue());
 
 		} catch(Exception e) {
-			System.out.println("ERROR: "+e);
+			IO.println("ERROR: "+e);
 			throw new RuntimeException("Process Execution failed: " + line, e);
 		}
 	}
@@ -128,9 +128,9 @@ public class Make_SimulaFEC_Jarfile {
 	 * @param file the .jar file
 	 */
 	public static void listJarFile(final File file) {
-		System.out.println("---------  LIST .jar File: " + file + "  ---------");
+		IO.println("---------  LIST .jar File: " + file + "  ---------");
 		if (!(file.exists() && file.canRead())) {
-			System.out.println("ERROR: Can't read .jar file: " + file);
+			IO.println("ERROR: Can't read .jar file: " + file);
 			return;
 		}
 		JarFile jarFile = null;
@@ -141,7 +141,7 @@ public class Make_SimulaFEC_Jarfile {
 			Set<Object> keys = mainAttributes.keySet();
 			for (Object key : keys) {
 				String val = mainAttributes.getValue(key.toString());
-				System.out.println(key.toString() + "=\"" + val + "\"");
+				IO.println(key.toString() + "=\"" + val + "\"");
 			}
 
 			Enumeration<JarEntry> entries = jarFile.entries();
@@ -153,10 +153,10 @@ public class Make_SimulaFEC_Jarfile {
 				FileTime fileTime = entry.getLastModifiedTime();
 				String date = DateTimeFormatter.ofPattern("uuuu-MMM-dd HH:mm:ss", Locale.getDefault())
 						.withZone(ZoneId.systemDefault()).format(fileTime.toInstant());
-				System.out.println("Jar-Entry: " + size + "  " + date + "  \"" + entry + "\"");
+				IO.println("Jar-Entry: " + size + "  " + date + "  \"" + entry + "\"");
 			}
 		} catch (IOException e) {
-			System.out.println("IERR: Caused by: " + e);
+			IO.println("IERR: Caused by: " + e);
 		} finally {
 			if (jarFile != null)
 				try {

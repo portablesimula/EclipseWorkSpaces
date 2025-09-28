@@ -16,7 +16,7 @@ public class RunFull_Simula_Testbatch {
 		sourceFileName = "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/"+name+".sim";
 
 		File file = new File(sourceFileName);
-		if(! file.exists()) { System.out.println("Sourcefile does not exist: "+file); return; }
+		if(! file.exists()) { IO.println("Sourcefile does not exist: "+file); return; }
 		
 		Vector<String> cmds = new Vector<String>();
 		cmds.add("java");
@@ -29,16 +29,16 @@ public class RunFull_Simula_Testbatch {
 //		Option.verbose = true;
 		
 //		if(Option.verbose)
-//			System.out.println("BEGIN SIMULA SIM: \"" + sourceFileName + '"');
+//			IO.println("BEGIN SIMULA SIM: \"" + sourceFileName + '"');
 		
 		try {
 			int exitCode = Util.exec(cmds);
 			if(exitCode != 0) {
-				System.out.println("SIM exitCode = "+exitCode);
+				IO.println("SIM exitCode = "+exitCode);
 				System.exit(-1);;
 			}
 		} catch (IOException e) {
-			System.out.println("SimulaFEC.callFEC - Exit: ");
+			IO.println("SimulaFEC.callFEC - Exit: ");
 			e.printStackTrace();
 			System.exit(0);
 		}
@@ -264,9 +264,9 @@ public class RunFull_Simula_Testbatch {
 			doCompile(name);
 		}
 		
-		System.out.println("\n--- END OF SIMULA TESTBATCH");
+		IO.println("\n--- END OF SIMULA TESTBATCH");
 		long timeUsed  = System.currentTimeMillis( ) - startTimeMs;
-		System.out.println("\nElapsed Time: Approximately " + timeUsed/1000 + " sec.");
+		IO.println("\nElapsed Time: Approximately " + timeUsed/1000 + " sec.");
 	}
 
 }

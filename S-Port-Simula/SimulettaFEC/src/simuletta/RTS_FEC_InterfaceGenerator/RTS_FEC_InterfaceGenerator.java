@@ -50,7 +50,7 @@ public class RTS_FEC_InterfaceGenerator {
 	}
 
 	private static void doGenerateTagTable(FileWriter oupt) throws IOException {
-		if (RTS_FEC_Interface_Option.verbose) System.out.println("************************** BEGIN WRITE RTS-FEC-TAGTABLE **************************");
+		if (RTS_FEC_Interface_Option.verbose) IO.println("************************** BEGIN WRITE RTS-FEC-TAGTABLE **************************");
 		int taglimit=0;
 		for(InsertedModule m:modset) {
 			if(RTS_FEC_Interface_Option.INTERFACE_TRACE_LEVEL > 2) Util.println(m.identifier+" "+m.tagbase+" "+m.taglimit);
@@ -133,10 +133,10 @@ public class RTS_FEC_InterfaceGenerator {
 			LOOP:while(true) {
 				String line=reader.readLine();
 				if(line==null) break LOOP;
-				if(RTS_FEC_Interface_Option.TRACE_ATTRIBUTE_INPUT) System.out.println("Line "+reader.getLineNumber()+": "+line);
+				if(RTS_FEC_Interface_Option.TRACE_ATTRIBUTE_INPUT) IO.println("Line "+reader.getLineNumber()+": "+line);
 				if(line.length()>0 && line.charAt(0)!='%') {
 					String outputLine=treatLine(line);
-					if(RTS_FEC_Interface_Option.TRACE_ATTRIBUTE_OUTPUT) System.out.println("OUTPUT:  "+outputLine);
+					if(RTS_FEC_Interface_Option.TRACE_ATTRIBUTE_OUTPUT) IO.println("OUTPUT:  "+outputLine);
 					oupt.write(outputLine+"\n");
 				}
 			}
@@ -169,15 +169,15 @@ public class RTS_FEC_InterfaceGenerator {
 			String sep=st.nextToken();
 			if(sep.equalsIgnoreCase(".")) {
 				String attrIdent=st.nextToken();
-//				System.out.println("RTS_FEC_InterfaceGenerator.treatLine: attrIdent="+attrIdent);
-//				System.out.println("RTS_FEC_InterfaceGenerator.treatLine: meaning="+meaning.getClass().getSimpleName());
+//				IO.println("RTS_FEC_InterfaceGenerator.treatLine: attrIdent="+attrIdent);
+//				IO.println("RTS_FEC_InterfaceGenerator.treatLine: meaning="+meaning.getClass().getSimpleName());
 				if(meaning instanceof VariableDeclaration var) {
 					Record rec=var.type.getQualifyingRecord();
 					tag=rec.findAttribute(attrIdent).getTag();
 					xcode=tag.getCode();
-//					System.out.println("RTS_FEC_InterfaceGenerator.treatLine: var="+var);
-//					System.out.println("RTS_FEC_InterfaceGenerator.treatLine: tag="+tag);
-//					System.out.println("RTS_FEC_InterfaceGenerator.treatLine: xcode="+xcode);
+//					IO.println("RTS_FEC_InterfaceGenerator.treatLine: var="+var);
+//					IO.println("RTS_FEC_InterfaceGenerator.treatLine: tag="+tag);
+//					IO.println("RTS_FEC_InterfaceGenerator.treatLine: xcode="+xcode);
 				} else if(meaning instanceof Record rec) {
 					tag=rec.findAttribute(attrIdent).getTag();
 					xcode=tag.getCode();
@@ -202,7 +202,7 @@ public class RTS_FEC_InterfaceGenerator {
 	}
 
 	private static void doGenerateRTSInit(String moduleident) throws IOException {
-		if (RTS_FEC_Interface_Option.verbose) System.out.println("************************** BEGIN WRITE RTSINIT FILE: "+moduleident+" **************************");
+		if (RTS_FEC_Interface_Option.verbose) IO.println("************************** BEGIN WRITE RTSINIT FILE: "+moduleident+" **************************");
 		String fileName="C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/RTSINIT.ini";
 		FileWriter oupt=new FileWriter(fileName);
 //		if (Option.verbose)
@@ -222,7 +222,7 @@ public class RTS_FEC_InterfaceGenerator {
 	}
 
 	private static void doGenerateInserts(String moduleident) throws IOException {
-		if (RTS_FEC_Interface_Option.verbose) System.out.println("************************** BEGIN WRITE COMBINED RTS LIST: "+moduleident+" **************************");
+		if (RTS_FEC_Interface_Option.verbose) IO.println("************************** BEGIN WRITE COMBINED RTS LIST: "+moduleident+" **************************");
 		String relativeAttributeFileName="Attrs/BEC/"+Global.packetName+"/"+Global.sourceName+".dat";
 		File attributeFile = new File(Global.outputDir,relativeAttributeFileName);
 //		if (Option.verbose)
@@ -242,7 +242,7 @@ public class RTS_FEC_InterfaceGenerator {
 		
 	// C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/PREDEF.ATR
 	public static void doGeneratePredefAttrFile() {
-		System.out.println("\nBEGIN COMPILE _PREDEF TO .ATTR FILE");
+		IO.println("\nBEGIN COMPILE _PREDEF TO .ATTR FILE");
 //		String fileName = "C:/WorkSpaces/SimulettaFECinJava/SimulettaFEC/src/simuletta/RTS_FEC_InterfaceGenerator/predef/PREDEF.DEF";
 		String fileName = "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulettaFEC/src/simuletta/RTS_FEC_InterfaceGenerator/predef/PREDEF.DEF";
 		File outputFile=new File("C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaFEC/src/fec/source/PREDEF.ATR");
@@ -257,9 +257,9 @@ public class RTS_FEC_InterfaceGenerator {
 		try { outputFile.createNewFile(); } catch (IOException e) { e.printStackTrace(); }
 		PredefCompiler compiler = new PredefCompiler(fileName,outputFile);
 		compiler.doCompile();
-		System.out.println("    Attrs Output: "+PredefGlobal.attributeFile+"   Length="+PredefGlobal.attributeFile.length());
+		IO.println("    Attrs Output: "+PredefGlobal.attributeFile+"   Length="+PredefGlobal.attributeFile.length());
 
-		System.out.println("--- END COMPILE _PREDEF TO .ATTR FILE");
+		IO.println("--- END COMPILE _PREDEF TO .ATTR FILE");
 	}
 	
 }

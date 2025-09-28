@@ -17,10 +17,10 @@ public abstract class POP extends Instruction {
 //		CTStack.dumpStack();
 		if(CTStack.TOS instanceof ProfileItem) Util.IERR("Illegal pop of profileItem ");
 		
-//		System.out.println("POP.ofScode: TOS="+CTStack.TOS().getClass().getSimpleName()+"  "+CTStack.TOS());
-//		System.out.println("POP.ofScode: TOS.type="+CTStack.TOS().type);
+//		IO.println("POP.ofScode: TOS="+CTStack.TOS().getClass().getSimpleName()+"  "+CTStack.TOS());
+//		IO.println("POP.ofScode: TOS.type="+CTStack.TOS().type);
 		int size = CTStack.TOS.type.size;
-//		System.out.println("POP.ofScode: TOS.type.size="+size);
+//		IO.println("POP.ofScode: TOS.type.size="+size);
 		CTStack.pop();
 //		CTStack.dumpStack("POP: ");
 		qPOPKill(size);

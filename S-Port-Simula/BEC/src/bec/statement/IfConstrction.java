@@ -69,7 +69,7 @@ public abstract class IfConstrction {
 //		Global.PSEG.dump();
 
 //		Relation relation = Relation.ofScode();
-//		System.out.println("IfConstruction.ofScode: CurInstr="+Scode.edInstr(Scode.curinstr));
+//		IO.println("IfConstruction.ofScode: CurInstr="+Scode.edInstr(Scode.curinstr));
 		
 		NamedStack<CTStackItem> ELSE_Stack = null;
 		

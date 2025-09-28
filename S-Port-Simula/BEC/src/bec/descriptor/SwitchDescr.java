@@ -35,7 +35,7 @@ public class SwitchDescr extends Descriptor {
 	
 	@Override
 	public void print(final String indent) {
-		System.out.println(indent + toString());
+		IO.println(indent + toString());
 	}
 	
 	public String toString() {

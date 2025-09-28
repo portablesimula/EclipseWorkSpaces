@@ -65,9 +65,9 @@ public abstract class SysDraw {
 //		RTStack.dumpRTStack("DRAWRP: ");
 		ObjectAddress U = RTStack.popGADDRasOADDR();
 		
-//		System.out.println("SysDraw.drawrp: "+U.getClass().getSimpleName()+"  "+U);
+//		IO.println("SysDraw.drawrp: "+U.getClass().getSimpleName()+"  "+U);
 		IntegerValue uVal = (IntegerValue) U.load();
-//		System.out.println("SysDraw.drawrp: seed="+uVal);
+//		IO.println("SysDraw.drawrp: seed="+uVal);
 				
 //		long seed = U.get();
 		long seed = uVal.value;
@@ -77,7 +77,7 @@ public abstract class SysDraw {
 			seed = ((seed | 1) * MULTIPLIER) % TWO_POW_31;
 //			U.put((int) seed);
 			uVal.value = (int) seed;
-//			System.out.println("SysDraw.drawrp: seed="+uVal);
+//			IO.println("SysDraw.drawrp: seed="+uVal);
 			U.store(0, uVal, "SEED: ");
 			
 //			return (((double) seed) / TWO_POW_31M1D);

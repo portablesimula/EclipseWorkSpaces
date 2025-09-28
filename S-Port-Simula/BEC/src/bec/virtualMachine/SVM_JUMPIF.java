@@ -30,11 +30,11 @@ public class SVM_JUMPIF extends SVM_JUMP {
 		if(typeSize == 1) {
 			Value tos = RTStack.pop();
 			Value sos = RTStack.pop();
-//			System.out.println("SVM_JUMPIF: " + tos + "  " + relation + "  " + sos);
+//			IO.println("SVM_JUMPIF: " + tos + "  " + relation + "  " + sos);
 			doJump = relation.compare(sos, tos);
 			if(DEBUG) {
 				String jmp = (doJump)? "DO JUMP" : "NOT JUMP";
-				System.out.println("SVM_JUMPIF: " + tos + "  " + relation + "  " + sos + " = " + doJump + "  " + jmp);
+				IO.println("SVM_JUMPIF: " + tos + "  " + relation + "  " + sos + " = " + doJump + "  " + jmp);
 			}
 		} else {
 			Value[] TOS = new Value[typeSize];
@@ -72,12 +72,12 @@ public class SVM_JUMPIF extends SVM_JUMP {
 		this.opcode = SVM_Instruction.iJUMPIF;
 		this.relation = Relation.read(inpt);
 		this.typeSize = inpt.readKind();
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + this);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		destination.write(oupt);
 		relation.write(oupt);

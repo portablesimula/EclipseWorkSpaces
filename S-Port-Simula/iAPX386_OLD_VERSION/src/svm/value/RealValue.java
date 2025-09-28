@@ -79,7 +79,7 @@ public class RealValue extends Value {
 			float val2 = other.toFloat();
 			res = this.value - val2;
 		} else res = this.value;
-//		System.out.println("IntegerValue.sub: " + this.value + " - " + other + " = " + res);
+//		IO.println("IntegerValue.sub: " + this.value + " - " + other + " = " + res);
 		if(res == 0) return null;
 		return RealValue.of(res);
 	}
@@ -96,14 +96,14 @@ public class RealValue extends Value {
 
 	@Override
 	public Value div(Value other) {
-//		System.out.println("RealValue.div: " + other + " / " + this.value);
+//		IO.println("RealValue.div: " + other + " / " + this.value);
 		float res = 0;
 		if(other != null) {
 //			RealValue val2 = (RealValue) other;
 			float val2 = other.toFloat();
 			res = val2 / this.value;
 		} else res = 0;
-//		System.out.println("RealValue.div: " + other + " / " + this.value + " = " + res);
+//		IO.println("RealValue.div: " + other + " / " + this.value + " = " + res);
 		if(res == 0) return null;
 		return RealValue.of(res);
 	}
@@ -133,7 +133,7 @@ public class RealValue extends Value {
 
 //	@Override
 //	public void print(final String indent) {
-//		System.out.println(indent + toString());
+//		IO.println(indent + toString());
 //	}
 	
 	public String toString() {
@@ -147,11 +147,11 @@ public class RealValue extends Value {
 	private RealValue(AttributeInputStream inpt) throws IOException {
 		this.type = Type.T_REAL;
 		value = inpt.readFloat();
-//		System.out.println("NEW IMPORT: " + this);
+//		IO.println("NEW IMPORT: " + this);
 	}
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("Value.write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
 		oupt.writeKind(Scode.S_C_REAL);
 		oupt.writeFloat(value);
 	}

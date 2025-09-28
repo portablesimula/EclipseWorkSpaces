@@ -102,7 +102,7 @@ public class VariableDeclaration extends Declaration implements Externalizable {
     		if(Parser.accept(KeyWord.BEGPAR)) {
     			do {
     				Value val=parseValue(constflag);
-    				//System.out.println("VariableDeclaration.doParse: val="+val);
+    				//IO.println("VariableDeclaration.doParse: val="+val);
     				quant.initval.add(val);
     				if(quant.initval.size() > quant.count) ERROR("Too many elts in repetition");
     			} while(Parser.accept(KeyWord.COMMA));
@@ -162,7 +162,7 @@ public class VariableDeclaration extends Declaration implements Externalizable {
 	// *** Coding: prepareSCodeOutput
 	// ***********************************************************************************************
 	public void prepareSCodeOutput() {
-//		System.out.println("VariableDeclaration.prepareSCodeOutput: "+this);
+//		IO.println("VariableDeclaration.prepareSCodeOutput: "+this);
 		if(type.isInfixType()) {
 			Record rec=type.getQualifyingRecord();
 			rec.doSCodeDeclaration();
@@ -238,7 +238,7 @@ public class VariableDeclaration extends Declaration implements Externalizable {
 					break;
 			}
 //			if(kind==VarKind.GlobalConstant) {
-//				System.out.println("VariableDeclaration.doSCodeDeclaration: kind="+kind+"   "+this);
+//				IO.println("VariableDeclaration.doSCodeDeclaration: kind="+kind+"   "+this);
 //				Util.BREAK("");
 //				Option.BREAKING=false;
 //			}
@@ -267,8 +267,8 @@ public class VariableDeclaration extends Declaration implements Externalizable {
 	public void doOutput(int instr) {
 		enterLine();
 			sCode.outinst(instr); sCode.outtagid(getTag());
-//			System.out.println("Type="+type);
-//			System.out.println("VariableDeclaration: "+this+"    sysid="+sysid);
+//			IO.println("Type="+type);
+//			IO.println("VariableDeclaration: "+this+"    sysid="+sysid);
 			this.type.toSCode();
 			if(this.count != 1)  { sCode.outinst(S_REP); sCode.outnumber(this.count); }
 			if(sysid != null && instr != S_CONSTSPEC) { sCode.outinst(S_SYSTEM); sCode.outstring(sysid); }
@@ -334,7 +334,7 @@ public class VariableDeclaration extends Declaration implements Externalizable {
 		out.writeObject(identifier);
 //		out.writeTag(getTag());
 		getTag().writeTag(out);
-//		System.out.println("VariableDeclaration.writeExternal: "+this);
+//		IO.println("VariableDeclaration.writeExternal: "+this);
 		out.writeObject(type);
 		out.writeBoolean(read_only);
 		out.writeShort(count);

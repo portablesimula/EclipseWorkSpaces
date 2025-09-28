@@ -69,7 +69,7 @@ public abstract class REMOTE extends Instruction {
 //        } else {
 //			Type type = adr.type;
 //			RTAddress rtAddr = new RTAddress(adr); 
-//			if(DEBUG) System.out.println("FETCH.doFetch: rtAddr="+rtAddr);
+//			if(DEBUG) IO.println("FETCH.doFetch: rtAddr="+rtAddr);
 //			Global.PSEG.emit(new SVM_LOAD(rtAddr, type.size()), "REMOTE " +type);
         }
         if(DEBUG) {

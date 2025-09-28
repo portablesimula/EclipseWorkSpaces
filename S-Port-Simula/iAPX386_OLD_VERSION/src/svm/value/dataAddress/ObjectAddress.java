@@ -65,13 +65,13 @@ public abstract class DataAddress extends DataAddress {
 		int n = RTStack.size()-1;
 		int idx = size - 1;
 		if(xReg > 0) {
-//			System.out.println("DataAddress.doStore: idx="+idx+", xReg="+RTRegister.edRegVal(xReg));
+//			IO.println("DataAddress.doStore: idx="+idx+", xReg="+RTRegister.edRegVal(xReg));
 			idx = idx + RTRegister.getIntValue(xReg);
-//			System.out.println("DataAddress.doStore: idx="+idx+", xReg="+RTRegister.edRegVal(xReg));
+//			IO.println("DataAddress.doStore: idx="+idx+", xReg="+RTRegister.edRegVal(xReg));
 		}
 		for(int i=0;i<size;i++) {
 			Value item = RTStack.load(n-i);
-//			System.out.println("DataAddress.doStore: "+item+" ==> "+this + "["+idx+"]");
+//			IO.println("DataAddress.doStore: "+item+" ==> "+this + "["+idx+"]");
 			this.store(idx--, item, "");
 //			RTStack.printCallTrace("STORE.execute: ");
 		}
@@ -81,16 +81,16 @@ public abstract class DataAddress extends DataAddress {
 		DataAddress res = this;
 //		if(this.kind == DataAddress.REL_ADDR) {
 		if(this instanceof FrameAddress relAddr) {
-//			System.out.println("DataAddress.toStackAddress: OADDR: "+this);
+//			IO.println("DataAddress.toStackAddress: OADDR: "+this);
 //			RTStack.dumpRTStack("DataAddress.toStackAddress: NOTE: ");
-//			System.out.println("DataAddress.toStackAddress: VALUE: "+this.load());
+//			IO.println("DataAddress.toStackAddress: VALUE: "+this.load());
 			
 			CallStackFrame callStackTop = RTStack.callStack_TOP();
 			int bias = (callStackTop == null)? 0 : callStackTop.rtStackIndex;
 //			oaddr = new DataAddress(STACK_ADDR, segID, xReg, bias + ofst);
 			res = new StackAddress(bias + relAddr.ofst);
 			
-//			System.out.println("DataAddress.toStackAddress: VALUE: "+oaddr.load());
+//			IO.println("DataAddress.toStackAddress: VALUE: "+oaddr.load());
 		}
 //		Util.IERR("");
 		return res;
@@ -102,7 +102,7 @@ public abstract class DataAddress extends DataAddress {
 	
 	public static DataAddress read(AttributeInputStream inpt) throws IOException {
 		int kind = inpt.readKind();
-//		System.out.println("RTAddress.read: kind="+kind);
+//		IO.println("RTAddress.read: kind="+kind);
 		switch(kind) {
 			case SEGMNT_ADDR: return SegmentAddress.read(inpt);
 			case REMOTE_ADDR: return RemoteAddress.read(inpt);

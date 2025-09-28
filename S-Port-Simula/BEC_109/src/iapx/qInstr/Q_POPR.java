@@ -20,14 +20,14 @@ public class Q_POPR extends Qpkt {
 //	@Override
 //	public void execute() {
 //		if(DEBUG) {
-//			System.out.println("SVM_STORE2REG: "+RTRegister.edReg(reg));
+//			IO.println("SVM_STORE2REG: "+RTRegister.edReg(reg));
 //			RTStack.dumpRTStack("SVM_STORE2REG: ");
 //		}
 //		Value value = RTStack.pop();
-////		if(value != null) System.out.println("SVM_STORE2REG: "+RTRegister.edReg(reg)+" value="+value.getClass().getSimpleName()+"  "+value);
+////		if(value != null) IO.println("SVM_STORE2REG: "+RTRegister.edReg(reg)+" value="+value.getClass().getSimpleName()+"  "+value);
 //		RTRegister.putValue(reg, value);
 //		if(DEBUG) {
-//			System.out.println("SVM_STORE2REG: "+RTRegister.toLine());
+//			IO.println("SVM_STORE2REG: "+RTRegister.toLine());
 //		}
 //		
 //		Global.PSC.addOfst(1);

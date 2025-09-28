@@ -33,7 +33,7 @@ public abstract class FETCH extends Instruction {
 	
 	public static void doFetch(String comment) {
 		if(CTStack.TOS() instanceof AddressItem addr) {
-			if(DEBUG) System.out.println("FETCH.doFetch: addr="+addr);
+			if(DEBUG) IO.println("FETCH.doFetch: addr="+addr);
 			Type type = addr.type;
 			Global.PSEG.emit(new SVM_LOAD(addr.objadr.addOffset(addr.offset), addr.xReg, type.size()), comment + " " +type);
 			CTStack.pop(); CTStack.pushTempVAL(type, 1, "GQFetch: ");

@@ -25,6 +25,7 @@ public class SVM_DUP extends SVM_Instruction {
 		this.rtAddr = rtAddr;
 		this.xReg = xReg;
 		this.size = size;
+//		RTRegister.writes("SVM_DUP", xReg);
 	}
 
 	@Override
@@ -42,12 +43,12 @@ public class SVM_DUP extends SVM_Instruction {
 			if(xReg != 0) Util.IERR("NOT IMPL: xReg="+xReg);
 		} else {
 			Value tos = RTStack.pop();
-//			if(tos != null)	System.out.println("SVM_DUP: TOS: " + tos.getClass().getSimpleName() + "  " + tos);
+//			if(tos != null)	IO.println("SVM_DUP: TOS: " + tos.getClass().getSimpleName() + "  " + tos);
 			RTStack.push(tos, "SVM_DUP: ");
 			if(rtAddr.kind == ObjectAddress.REMOTE_ADDR) {
 				// this.addr is Stack Relative Address
 				ObjectAddress oaddr = RTStack.popOADDR();
-//				System.out.println("SVM_DUP.execute: oaddr="+oaddr+", rtAddr="+rtAddr);
+//				IO.println("SVM_DUP.execute: oaddr="+oaddr+", rtAddr="+rtAddr);
 				RTStack.push(oaddr, "SVM_DUP: ");
 				oaddr = oaddr.addOffset(rtAddr.getOfst());
 				
@@ -65,7 +66,7 @@ public class SVM_DUP extends SVM_Instruction {
 
 	public void OLD_execute() {
 		Value tos = RTStack.pop();
-//		if(tos != null)	System.out.println("SVM_DUP: TOS: " + tos.getClass().getSimpleName() + "  " + tos);
+//		if(tos != null)	IO.println("SVM_DUP: TOS: " + tos.getClass().getSimpleName() + "  " + tos);
 		RTStack.push(tos, "SVM_DUP: ");
 		if(rtAddr == null) {
 			// DUP VALUE
@@ -77,7 +78,7 @@ public class SVM_DUP extends SVM_Instruction {
 			if(rtAddr.kind == ObjectAddress.REMOTE_ADDR) {
 				// this.addr is Stack Relative Address
 				ObjectAddress oaddr = RTStack.popOADDR();
-//				System.out.println("SVM_DUP.execute: oaddr="+oaddr+", rtAddr="+rtAddr);
+//				IO.println("SVM_DUP.execute: oaddr="+oaddr+", rtAddr="+rtAddr);
 				RTStack.push(oaddr, "SVM_DUP: ");
 				oaddr = oaddr.addOffset(rtAddr.getOfst());
 				
@@ -108,7 +109,7 @@ public class SVM_DUP extends SVM_Instruction {
 	// ***********************************************************************************************
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		if(rtAddr == null) {
 			oupt.writeBoolean(false);
@@ -128,7 +129,7 @@ public class SVM_DUP extends SVM_Instruction {
 		int xReg = inpt.readReg();
 		int size = inpt.readShort();
 		SVM_DUP instr = new SVM_DUP(rtAddr, xReg, size);
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + instr);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
 		return instr;
 	}
 

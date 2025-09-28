@@ -30,9 +30,9 @@ public class SVM_IMP extends SVM_Instruction {
 	public void execute() {
 		Value tos = RTStack.pop();
 		Value sos = RTStack.pop();
-//		System.out.println("SVM_IMP.execute: " + sos + " imp " + tos);
+//		IO.println("SVM_IMP.execute: " + sos + " imp " + tos);
 		Value res = (sos == null)? BooleanValue.of(true) : sos.imp(tos);
-//		System.out.println("SVM_IMP.execute: " + sos + " imp " + tos + " ==> " + res);
+//		IO.println("SVM_IMP.execute: " + sos + " imp " + tos + " ==> " + res);
 		RTStack.push(res, "SVM_IMP: " + sos + " imp " + tos + " = " + res);
 		Global.PSC.addOfst(1);
 	}

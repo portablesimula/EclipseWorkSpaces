@@ -2,6 +2,7 @@ package bec.util;
 
 import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.CTStackItem;
+import bec.virtualMachine.RTRegister;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -42,18 +43,18 @@ public class Scode {
         Scode.TAGIDENT.set(13, "TEXT");
 
 		String fileName = Global.scodeSource;
-//		System.out.println("Open SCode file: " + fileName);
+//		IO.println("Open SCode file: " + fileName);
 		try (FileInputStream scode = new FileInputStream(fileName)) {
 			SBUF = scode.readAllBytes();
 //			
 //			for(int i=670;i<680;i++) {
-//				System.out.println("Scode.initScode: SBUF["+i+"] = " + SBUF[i]);
+//				IO.println("Scode.initScode: SBUF["+i+"] = " + SBUF[i]);
 //			}
 //			Util.IERR("");
 //			
 			SBUF_nxt = 0;
 			if(Global.verbose) {
-				System.out.println("\nOpen SCode file: " + fileName + "   size = " + SBUF.length);
+				IO.println("\nOpen SCode file: " + fileName + "   size = " + SBUF.length);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -61,31 +62,58 @@ public class Scode {
 	}
 
 	public static void dumpTAGIDENTS(String title) {
-		System.out.println("============ "+title+" BEGIN Dump TAGIDENT ================");
+		IO.println("============ "+title+" BEGIN Dump TAGIDENT ================");
 		for(int i=32;i<TAGIDENT.size();i++) {
 			String elt =TAGIDENT.get(i);
-			System.out.println("  " + i + ": " + elt);
+			IO.println("  " + i + ": " + elt);
 		}
-		System.out.println("============ "+title+"ENDOF Dump TAGIDENT ================");
+		IO.println("============ "+title+"ENDOF Dump TAGIDENT ================");
 	}
 
 	public static void initTraceBuff(String head) {
 		Scode.traceBuff = new StringBuilder(head);		
 	}
 	
+//	public static void flushTraceBuff() {
+//		if(Global.SCODE_INPUT_TRACE) {
+////			String ctstk = (CTStack.size() == 0)? "" : " STACK["+CTStack.size()+"]: "+CTStack.TOS();
+//			String ctstk = (CTStack.size() == 0)? "" : " "+CTStack.ident()+"-STACK"+"["+CTStack.size()+"]: "+CTStack.TOS();
+//			String line = traceBuff.toString();
+//			while(line.length() < 60) line = line + " ";
+//			IO.println(line + ctstk);
+//			if(CTStack.size() > 1) {
+//				line = "";
+//				while(line.length() < 71) line = line + " ";
+//				for(int i=CTStack.size()-2;i>=0;i--) {
+//					CTStackItem item = CTStack.getItem(i);
+//					IO.println(line + item);
+//				}
+////				CTStack.dumpStack("Scode.flushTraceBuff");
+//			}
+//		}
+//		if(Global.PRINT_GENERATED_SVM_CODE) {
+//			if(Global.PSEG != null) Global.PSEG.listInstructions();
+//		}
+//	}
+
 	public static void flushTraceBuff() {
 		if(Global.SCODE_INPUT_TRACE) {
-//			String ctstk = (CTStack.size() == 0)? "" : " STACK["+CTStack.size()+"]: "+CTStack.TOS();
-			String ctstk = (CTStack.size() == 0)? "" : " "+CTStack.ident()+"-STACK"+"["+CTStack.size()+"]: "+CTStack.TOS();
+//			String ctstk = (CTStack.size() == 0)? "" : " "+CTStack.ident()+"-STACK"+"["+CTStack.size()+"]: "+CTStack.TOS();
+			String ctstk = (CTStack.size() == 0)? "" : " "+CTStack.ident()+"-STACK"+"["+CTStack.size()+"]:";
+//			if(RTRegister.CTregused.cardinality() != 0) ctstk += " Regused="+RTRegister.edCTRegused();
+//			if(RTRegister.nRegUsed() != 0) ctstk += " Regused="+RTRegister.edRegused();
+			if(! RTRegister.isMindMaskEmpty()) ctstk += " Regused="+RTRegister.edRegused();
+			
 			String line = traceBuff.toString();
 			while(line.length() < 60) line = line + " ";
-			System.out.println(line + ctstk);
-			if(CTStack.size() > 1) {
+			IO.println(line + ctstk);
+			if(CTStack.size() > 0) {
 				line = "";
 				while(line.length() < 71) line = line + " ";
-				for(int i=CTStack.size()-2;i>=0;i--) {
+//				for(int i=CTStack.size()-2;i>=0;i--) {
+				for(int i=CTStack.size()-1;i>=0;i--) {
 					CTStackItem item = CTStack.getItem(i);
-					System.out.println(line + item);
+					IO.println(line + item);
 				}
 //				CTStack.dumpStack("Scode.flushTraceBuff");
 			}
@@ -96,7 +124,7 @@ public class Scode {
 	}
 
 	public static void close() {
-//		if(Global.SCODE_INPUT_TRACE) System.out.println(traceBuff);	
+//		if(Global.SCODE_INPUT_TRACE) IO.println(traceBuff);	
 		flushTraceBuff();
 		traceBuff = null;
 	}
@@ -121,33 +149,33 @@ public class Scode {
 
 	public static void inputInstr() {
 		Scode.curinstr = getByte();
-//		System.out.println("Scode.inputInstr: " + (SBUF_nxt-1) + ": " + Scode.curinstr + " " + Scode.edInstr(Scode.curinstr));
+//		IO.println("Scode.inputInstr: " + (SBUF_nxt-1) + ": " + Scode.curinstr + " " + Scode.edInstr(Scode.curinstr));
 //		%+D       if SBUF.nxt >= sBufLen then InSbuffer endif;
 		if(Scode.curinstr < 1 || Scode.curinstr > S_max) {
-			if(traceBuff != null) System.out.println(traceBuff);
+			if(traceBuff != null) IO.println(traceBuff);
 			dumpBytes(4);
 			Util.IERR("Illegal instruction["+(SBUF_nxt -1)+"]: " + Scode.curinstr);
 		}
 		if(Global.SCODE_INPUT_TRACE) {
 			if(traceBuff != null) {
-//				System.out.println(traceBuff);
+//				IO.println(traceBuff);
 				flushTraceBuff();
 			}
 			String instr = edInstr(Scode.curinstr);
 			while(instr.length() < 10) instr = instr + ' ';
 			Util.ITRC("Ininstr["+(SBUF_nxt-1)+",CTStack="+CTStack.size()+']', instr);
-//			System.out.println("Scode.inputInstr: " + edInstr(Scode.curinstr)+":"+Scode.curinstr);
+//			IO.println("Scode.inputInstr: " + edInstr(Scode.curinstr)+":"+Scode.curinstr);
 		}
 	}
 	
 	public static void dumpBytes(int n) {
 		try {
-			System.out.println("Scode.dumpBytes around byte " + SBUF_nxt);
+			IO.println("Scode.dumpBytes around byte " + SBUF_nxt);
 			int lim = n + n;
 			for(int i=0;i<lim;i++) {
 				int x = SBUF_nxt -n + i;
 				int val = SBUF[x] & 0xff;
-				System.out.println("Byte["+x+"] = " + val + ':' + edInstr(val));
+				IO.println("Byte["+x+"] = " + val + ':' + edInstr(val));
 			}
 		} catch(Throwable t) {}
 		Thread.dumpStack();
@@ -176,7 +204,7 @@ public class Scode {
 		StringBuilder sb = new StringBuilder();
 		int n = getByte();
 		for(int i=0;i<n;i++) sb.append((char)getByte());
-//		System.out.println("Scode.getString: n="+n+", \""+sb+'"');
+//		IO.println("Scode.getString: n="+n+", \""+sb+'"');
 //		Thread.dumpStack();
 		return sb.toString();
 	}
@@ -240,7 +268,7 @@ public class Scode {
 	
 	public static int ofScode() {
 		int t = get2Bytes();
-//		System.out.println("Scode'INTAG: "+t);
+//		IO.println("Scode'INTAG: "+t);
 		if(t == 0) {
 			t = get2Bytes();
 			String id = getString();
@@ -250,7 +278,7 @@ public class Scode {
 		if(Global.SCODE_INPUT_TRACE) {
 			traceBuff.append(" "+edTag(t));
 		}
-//		System.out.println("Scode.ofScode: " + t);
+//		IO.println("Scode.ofScode: " + t);
 		return t;
 	}
 	
@@ -439,7 +467,7 @@ public class Scode {
 //						if(nextIsChar(scanner,':')) {
 //							ident = ident + ':' + (String)scanner.nextToken();
 //						}
-////						System.out.println("GOT Index="+index+", ident="+ident);
+////						IO.println("GOT Index="+index+", ident="+ident);
 //						Scode.TAGTABLE[index] = ident;
 //						return true;
 //					}

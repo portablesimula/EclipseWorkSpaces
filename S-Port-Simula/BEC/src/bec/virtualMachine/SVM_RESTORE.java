@@ -36,19 +36,19 @@ public class SVM_RESTORE extends SVM_Instruction {
 			int size = entitySize.value - SVM_SAVE.saveEntityHead;
 			
 			if(DEBUG) {
-				System.out.println("RTStack.restoreStack: BEGIN RESTORE ++++++++++++++++++++++++++++++++++++++++");
+				IO.println("RTStack.restoreStack: BEGIN RESTORE ++++++++++++++++++++++++++++++++++++++++");
 				RTUtil.dumpEntity(saveObj);
-				System.out.println("RTStack.restoreStack: RESTORE  entitySize = " + entitySize);
-				System.out.println("RTStack.restoreStack: RESTORE  Size = " + size);
+				IO.println("RTStack.restoreStack: RESTORE  entitySize = " + entitySize);
+				IO.println("RTStack.restoreStack: RESTORE  Size = " + size);
 			}
 	
 			for(int i=size-1;i>=0;i--) {
 //			for(int i=0;i<size;i++) {
 //				Value item = saveObj.addOffset(SVM_SAVE.saveEntityHead + i).load();
 				Value item = saveObj.load(SVM_SAVE.saveEntityHead + i);
-//				System.out.println("RTStack.restoreStack: RESTORE  item = " + item);
+//				IO.println("RTStack.restoreStack: RESTORE  item = " + item);
 				if(DEBUG) {
-					System.out.println("RTStack.saveStack:    SAVE-RESTORE " + item + " <=== saveObj("+(SVM_SAVE.saveEntityHead + i)+")");
+					IO.println("RTStack.saveStack:    SAVE-RESTORE " + item + " <=== saveObj("+(SVM_SAVE.saveEntityHead + i)+")");
 				}
 				RTStack.push(item, "RESTORE: ");
 			}
@@ -71,12 +71,12 @@ public class SVM_RESTORE extends SVM_Instruction {
 	// ***********************************************************************************************
 	private SVM_RESTORE(AttributeInputStream inpt) throws IOException {
 		this.opcode = SVM_Instruction.iRESTORE;
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + this);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 	}
 

@@ -37,17 +37,17 @@ public class Tag {
 	
 	public static void preDefine(String ident) {
 		Tag tag=new Tag(true,ident,"");
-//		System.out.println("Tag.preDefine: "+ident+"'tag="+tag);
+//		IO.println("Tag.preDefine: "+ident+"'tag="+tag);
 		predefined.put(ident.toUpperCase(),tag);
 	}
 	
 	public static void checkPredefinedEmpty() {
 		int size=predefined.size();
 		if(size!=0) {
-			System.out.println("\n\nTag.checkPredefinedEmpty: FAILED: size="+size);
+			IO.println("\n\nTag.checkPredefinedEmpty: FAILED: size="+size);
 			Set<String> keys=predefined.keySet();
 			for(String key:keys) {
-				System.out.println("Tag.checkPredefinedEmpty: predefined("+key+")="+predefined.get(key));
+				IO.println("Tag.checkPredefinedEmpty: predefined("+key+")="+predefined.get(key));
 			}
 			Util.IERR("Tag.checkPredefinedEmpty: FAILED: size="+size);
 		}
@@ -58,7 +58,7 @@ public class Tag {
 //    	Tag pretag=predefined.get(key);
     	Tag pretag=predefined.remove(key);
     	if(pretag!=null) {
-//    		System.out.println("Tag.preDefined: "+identifier+subid+"'tag="+pretag+", predefined.size="+predefined.size());
+//    		IO.println("Tag.preDefined: "+identifier+subid+"'tag="+pretag+", predefined.size="+predefined.size());
     		if(pretag.xtag<0) Util.STOP();
     		return(pretag);
     	}
@@ -92,7 +92,7 @@ public class Tag {
 	}
 	
 	public static void outputTAGTAB() {
-		//System.out.println("Tag.outputTAGTAB: nxtag="+nxtag+", xTAGTAB.size="+xTAGTAB.size());
+		//IO.println("Tag.outputTAGTAB: nxtag="+nxtag+", xTAGTAB.size="+xTAGTAB.size());
 		//printTagTable();
 		for(int i=0;i<nxtag;i++) {
 			Tag tag=xTAGTAB.elementAt(i);
@@ -104,14 +104,14 @@ public class Tag {
 	}
 
     public static void printTagTable() {
-    	System.out.println("****** BEGIN LISTING OF xTAGTABLE: nxtag= "+nxtag+" ******");
+    	IO.println("****** BEGIN LISTING OF xTAGTABLE: nxtag= "+nxtag+" ******");
     	for(int i=0;i<nxtag;i++) {
     		Tag d=xTAGTAB.elementAt(i);
     		if(d!=null) {
-    			System.out.println("xTAGTAB["+i+"] = "+"  "+d);
+    			IO.println("xTAGTAB["+i+"] = "+"  "+d);
     		}
     	}
-    	System.out.println("****** ENDOF LISTING OF xTAGTABLE ******");
+    	IO.println("****** ENDOF LISTING OF xTAGTABLE ******");
     }
 
 	

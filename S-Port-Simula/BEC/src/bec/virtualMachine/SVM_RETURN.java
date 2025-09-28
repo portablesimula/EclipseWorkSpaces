@@ -20,6 +20,7 @@ public class SVM_RETURN extends SVM_Instruction {
 		this.returAddr = returAddr;
 		if(rutID == null) Util.IERR("");
 		if(returAddr == null) Util.IERR("");
+		RTRegister.checkMindMaskEmpty();
 	}
 	
 	@Override	
@@ -32,15 +33,15 @@ public class SVM_RETURN extends SVM_Instruction {
 //		RTStack.printCallTrace("SVM_RETURN.execute: RETURN From "+ rutID);
 		ProgramAddress padr = (ProgramAddress) returAddr.load();
 		if(Global.CALL_TRACE_LEVEL > 0) {
-			System.out.println("SVM_RETURN.execute: RETURN From "+ rutID + " and Continue at " + padr);
+			IO.println("SVM_RETURN.execute: RETURN From "+ rutID + " and Continue at " + padr);
 			RTStack.printCallTrace("SVM_RETURN.execute: RETURN From "+ rutID + " and Continue at " + padr);
 //			if(rutID.equals("CONCAT")) {
 //				RTStack.dumpRTStack("SVM_RETURN.execute: ");
 //				int idx = 0;
 //				Value txtent = RTStack.load(idx);
-//				System.out.println("SVM_RETURN.execute: TOS="+txtent);
+//				IO.println("SVM_RETURN.execute: TOS="+txtent);
 //				ObjectAddress obj = (ObjectAddress) txtent.value();
-//				System.out.println("SVM_RETURN.execute: obj="+obj);
+//				IO.println("SVM_RETURN.execute: obj="+obj);
 //				RTUtil.dumpEntity(obj);
 //				Util.IERR("");
 //			}
@@ -62,7 +63,7 @@ public class SVM_RETURN extends SVM_Instruction {
 //				RTUtil.dumpCurins();
 //				Util.IERR("");
 //			}
-//			System.out.println("SVM_RETURN.execute: RETURN From "+ rutID + " and Continue at " + padr);
+//			IO.println("SVM_RETURN.execute: RETURN From "+ rutID + " and Continue at " + padr);
 			if(Global.EXEC_TRACE > 1) {
 				callStackTop = RTStack.callStack_TOP();
 				if(callStackTop == null) {
@@ -83,12 +84,12 @@ public class SVM_RETURN extends SVM_Instruction {
 		this.opcode = SVM_Instruction.iRETURN;
 		this.rutID = inpt.readString();
 		this.returAddr = (ObjectAddress) Value.read(inpt);
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + this);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		oupt.writeString(rutID);
 		returAddr.write(oupt);

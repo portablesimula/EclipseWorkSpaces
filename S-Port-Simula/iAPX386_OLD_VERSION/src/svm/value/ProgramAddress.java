@@ -42,7 +42,7 @@ public class ProgramAddress extends Value {
 		Tag tag = Tag.inTag();
 		Descriptor descr = Display.lookup(tag);
 		if(descr == null) Util.IERR("IMPOSSIBLE: TESTING FAILED");
-//		System.out.println("ProgramAddress.ofScode: descr="+descr.getClass().getSimpleName()+"  "+descr);
+//		IO.println("ProgramAddress.ofScode: descr="+descr.getClass().getSimpleName()+"  "+descr);
 		if(type == Type.T_RADDR) return ((RoutineDescr)descr).getAddress();
 		if(type == Type.T_PADDR) return ((LabelDescr)descr).getAddress();
 		Util.IERR("ProgramAddress: NOT IMPL "+type);
@@ -56,7 +56,7 @@ public class ProgramAddress extends Value {
 	public void setOfst(int ofst) {
 //		if(segID.equalsIgnoreCase("PSEG_ADHOC00")) {
 //			if(this.ofst == 51) {
-//				System.out.println("ProgramAddress.setOfst: NEW OFFSET: "+this.ofst+" ===> "+ofst);
+//				IO.println("ProgramAddress.setOfst: NEW OFFSET: "+this.ofst+" ===> "+ofst);
 //				Util.IERR("");
 //			}
 //		}
@@ -66,7 +66,7 @@ public class ProgramAddress extends Value {
 	public void addOfst(int incr) {
 //		if(segID.equalsIgnoreCase("PSEG_ADHOC00")) {
 //			if(this.ofst == 51) {
-//				System.out.println("ProgramAddress.addOfst: NEW OFFSET: "+this.ofst+" ===> "+(this.ofst + incr));
+//				IO.println("ProgramAddress.addOfst: NEW OFFSET: "+this.ofst+" ===> "+(this.ofst + incr));
 //				Util.IERR("");
 //			}
 //		}
@@ -116,11 +116,11 @@ public class ProgramAddress extends Value {
 			throw new EndProgram(0,"ProgramAddress.execute: " + seg.ident + " IS FINALIZED -- NOTHING MORE TO EXECUTE");
 		} else {
 			SVM_Instruction cur = seg.instructions.get(ofst);
-//			System.out.println("ProgramAddress.execute: " + cur);
+//			IO.println("ProgramAddress.execute: " + cur);
 			cur.execute();
 
 			if(Global.EXEC_TRACE > 0) {
-//				System.out.println("ProgramAddress.execute: "+cur.getClass().getSimpleName());
+//				IO.println("ProgramAddress.execute: "+cur.getClass().getSimpleName());
 				if(cur instanceof SVM_CALL)        ; // NOTHING
 				else if(cur instanceof SVM_RETURN) ; // NOTHING
 				else if(cur instanceof SVM_CALL_SYS) ; // NOTHING
@@ -140,7 +140,7 @@ public class ProgramAddress extends Value {
 		if(decr) paddr.ofst--;
 		String line = "EXEC: "+paddr+"  "+cur;
 		while(line.length()<70) line=line+' ';
-		System.out.println(line+"   "+tail);
+		IO.println(line+"   "+tail);
 //		RTStack.dumpRTStack("ProgramAddress.execute:");
 //		Util.IERR("");
 		
@@ -161,7 +161,7 @@ public class ProgramAddress extends Value {
 	}
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("Value.write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
 		oupt.writeKind(Scode.S_C_PADDR);
 		type.write(oupt);
 		oupt.writeString(segID);

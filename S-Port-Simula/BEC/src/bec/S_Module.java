@@ -30,7 +30,7 @@ public abstract class S_Module {
 	 */
 	public static void programElements() {
 		LOOP: while(true) {
-//			System.out.println("S_Module.programElements: CurInstr="+Scode.edInstr(Scode.curinstr));
+//			IO.println("S_Module.programElements: CurInstr="+Scode.edInstr(Scode.curinstr));
 			switch(Scode.curinstr) {
 				case Scode.S_LABELSPEC ->	LabelDescr.ofLabelSpec();
 				case Scode.S_LABEL ->		LabelDescr.ofLabelDef(Tag.ofScode());
@@ -46,7 +46,7 @@ public abstract class S_Module {
 			}
 			Scode.inputInstr();
 		}
-//		System.out.println("S_Module.programElements: Terminated by: " + Scode.edInstr(Scode.curinstr));
+//		IO.println("S_Module.programElements: Terminated by: " + Scode.edInstr(Scode.curinstr));
 //		Util.IERR("");
 	}
 

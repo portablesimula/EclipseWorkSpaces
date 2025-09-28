@@ -93,7 +93,7 @@ public class Record extends DeclarationScope implements Externalizable {
 		String symbval;
 		Record rec=new Record(visibleflag,Parser.expectIdentifier());
 		enterScope(rec);
-//			System.out.println("Record.doParse: rec.identifier="+rec.identifier+", visibleFlag="+visibleflag);
+//			IO.println("Record.doParse: rec.identifier="+rec.identifier+", visibleFlag="+visibleflag);
 			rec.variantset=new Vector<Variant>();
 			if(Parser.accept(KeyWord.COLON)) rec.prefixIdentifier=Parser.expectIdentifier();
 			if(Parser.accept(KeyWord.INFO)) {
@@ -150,7 +150,7 @@ public class Record extends DeclarationScope implements Externalizable {
     public VariableDeclaration findAttribute(String attrid) {
     	for(Declaration d:declarationList) if(d.identifier.equalsIgnoreCase(attrid)) return((VariableDeclaration)d);
     	for(Variant v:variantset) {
-    		//System.out.println("Record.findAttribute: Searching variant "+v);
+    		//IO.println("Record.findAttribute: Searching variant "+v);
     		for(Declaration d:v.atrset) if(d.identifier.equalsIgnoreCase(attrid)) return((VariableDeclaration)d);
     	}
     	if(prefixIdentifier != null) {
@@ -306,7 +306,7 @@ public class Record extends DeclarationScope implements Externalizable {
     	if(indefinite) s.append("indefinite ");
     	if(packed) s.append("packed ");
     	if(prefixIdentifier!=null) s.append(", prefixIdentifier=").append(prefixIdentifier).append(" ");
-    	System.out.println(s.toString()); s=new StringBuilder();
+    	IO.println(s.toString()); s=new StringBuilder();
     	if(declarationList!=null) {
     		for(Declaration d:declarationList) d.print("",indent+1);
     	}

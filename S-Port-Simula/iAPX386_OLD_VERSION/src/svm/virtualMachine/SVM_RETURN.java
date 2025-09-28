@@ -32,15 +32,15 @@ public class SVM_RETURN extends SVM_Instruction {
 //		RTStack.printCallTrace("SVM_RETURN.execute: RETURN From "+ rutID);
 		ProgramAddress padr = (ProgramAddress) returAddr.load();
 		if(Global.CALL_TRACE_LEVEL > 0) {
-			System.out.println("SVM_RETURN.execute: RETURN From "+ rutID + " and Continue at " + padr);
+			IO.println("SVM_RETURN.execute: RETURN From "+ rutID + " and Continue at " + padr);
 			RTStack.printCallTrace("SVM_RETURN.execute: RETURN From "+ rutID + " and Continue at " + padr);
 //			if(rutID.equals("EVTIME")) {
 				RTStack.dumpRTStack("SVM_RETURN.execute: ");
 //				int idx = 0;
 //				Value txtent = RTStack.load(idx);
-//				System.out.println("SVM_RETURN.execute: TOS="+txtent);
+//				IO.println("SVM_RETURN.execute: TOS="+txtent);
 //				DataAddress obj = (DataAddress) txtent.value();
-//				System.out.println("SVM_RETURN.execute: obj="+obj);
+//				IO.println("SVM_RETURN.execute: obj="+obj);
 //				RTUtil.dumpEntity(obj);
 //				Util.IERR("");
 //			}
@@ -53,12 +53,12 @@ public class SVM_RETURN extends SVM_Instruction {
 		}
 		
 		int n = RTStack.size() - callStackTop.rtStackIndex - callStackTop.exportSize;
-//		System.out.println("SVM_RETURN.execute: RTStack.size=" + RTStack.size() + ", rtStackIndex=" + callStackTop.rtStackIndex + ", exportSize=" + callStackTop.exportSize);
-//		System.out.println("SVM_RETURN.execute: n=" + n);
+//		IO.println("SVM_RETURN.execute: RTStack.size=" + RTStack.size() + ", rtStackIndex=" + callStackTop.rtStackIndex + ", exportSize=" + callStackTop.exportSize);
+//		IO.println("SVM_RETURN.execute: n=" + n);
 		
 		for(int i=0;i<n;i++) RTStack.pop();	
 		
-//		System.out.println("SVM_RETURN.execute: RTStack.size=" + RTStack.size());
+//		IO.println("SVM_RETURN.execute: RTStack.size=" + RTStack.size());
 //		RTStack.checkStackEmpty();  // TODO: MYHTEST
 //		Util.IERR("");
 		
@@ -70,7 +70,7 @@ public class SVM_RETURN extends SVM_Instruction {
 //				RTUtil.dumpCurins();
 //				Util.IERR("");
 //			}
-//			System.out.println("SVM_RETURN.execute: RETURN From "+ rutID + " and Continue at " + padr);
+//			IO.println("SVM_RETURN.execute: RETURN From "+ rutID + " and Continue at " + padr);
 			if(Global.EXEC_TRACE > 1) {
 				callStackTop = RTStack.callStack_TOP();
 				if(callStackTop == null) {
@@ -91,12 +91,12 @@ public class SVM_RETURN extends SVM_Instruction {
 		this.opcode = SVM_Instruction.iRETURN;
 		this.rutID = inpt.readString();
 		this.returAddr = (FrameAddress) Value.read(inpt);
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + this);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		oupt.writeString(rutID);
 		returAddr.write(oupt);

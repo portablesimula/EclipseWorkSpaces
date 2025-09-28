@@ -53,7 +53,7 @@ public final class SourceFileReader {
 			  lineNo++;
 			  PredefGlobal.sourceLineNumber=lineNo;
 			  PredefGlobal.currentSourceLine=line.toString();//.replace('\r',' ');
-			  if(RTS_FEC_Interface_Option.SOURCE_LISTING) System.out.println(sourceName+":Line "+lineNo+": "+PredefGlobal.currentSourceLine);
+			  if(RTS_FEC_Interface_Option.SOURCE_LISTING) IO.println(sourceName+":Line "+lineNo+": "+PredefGlobal.currentSourceLine);
 			  line=new StringBuilder();
 		  } else if(!Character.isISOControl(c)) line.append((char)c);
 		return (c);

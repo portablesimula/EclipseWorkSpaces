@@ -66,7 +66,7 @@ public class UnaryOperation extends Expression {
 				case S_NAME:  // NAME  and  @-operation
 					Type type=x.doSCodingDirect(true);
 					xtype=Type.Name(type);
-//					System.out.println("UnaryOperation.doSCodingDirect: x="+x.getClass().getSimpleName()+"  "+x);
+//					IO.println("UnaryOperation.doSCodingDirect: x="+x.getClass().getSimpleName()+"  "+x);
 					sCode.outinst(S_DEREF); sCode.outcode();
 					break;
         	

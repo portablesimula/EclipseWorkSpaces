@@ -163,9 +163,9 @@ public class Global {
 //		sPortHome = new File(sPortProperties.getProperty("s-port.home"));
 //		String version = sPortProperties.getProperty("s-port.version");
 //		releaseHome = new File(sPortHome, "/"+version);
-//		System.out.println("Global.loadProperties: sPortHome="+sPortHome);
-//		System.out.println("Global.loadProperties: Version="+version);
-//		System.out.println("Global.loadProperties: releaseHome="+releaseHome);
+//		IO.println("Global.loadProperties: sPortHome="+sPortHome);
+//		IO.println("Global.loadProperties: Version="+version);
+//		IO.println("Global.loadProperties: releaseHome="+releaseHome);
 ////		Util.IERR("");
 //	}
 
@@ -203,11 +203,11 @@ public class Global {
 				
 				Option.getCompilerOptions(sPortProperties);
 				String count = sPortProperties.getProperty("sPort.workspace.count","0");
-				System.out.println("Global.loadSPortEditorProperties: count="+count);
+				IO.println("Global.loadSPortEditorProperties: count="+count);
 				int n =  Integer.decode(count).intValue();
 				for(int i=0;i<n;i++) {
 					String ws = sPortProperties.getProperty("sPort.workspace." + (i+1));
-					System.out.println("Global.loadSPortEditorProperties: workspace="+ws);
+					IO.println("Global.loadSPortEditorProperties: workspace="+ws);
 					if(ws != null) {
 						File workspace = new File(ws);
 						if(workspace.exists()) workspaces.add(new File(ws));
@@ -237,7 +237,7 @@ public class Global {
 
 	/// Store Workspace and Options properties.
 	public static void storeSPortEditorProperties() {
-		System.out.println("Global.storeSPortEditorProperties: workspaces.size()="+workspaces.size());
+		IO.println("Global.storeSPortEditorProperties: workspaces.size()="+workspaces.size());
 		Option.setCompilerOptions(sPortProperties);
 		sPortProperties.setProperty("sPort.workspace.count", ""+workspaces.size());
 		int i = 1;

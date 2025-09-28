@@ -39,8 +39,8 @@ public abstract class RUPDATE extends Instruction {
 //			Address adr = (Address) CTStack.pop();
 //			CTStack.forceTosValue();			
 //			if(DEBUG) {
-//				System.out.println("RUPDATE.ofScode: adr="+adr.getClass().getSimpleName()+"  "+adr);
-//				System.out.println("RUPDATE.ofScode: sos="+CTStack.TOS);
+//				IO.println("RUPDATE.ofScode: adr="+adr.getClass().getSimpleName()+"  "+adr);
+//				IO.println("RUPDATE.ofScode: sos="+CTStack.TOS);
 //	//			Util.IERR("");
 //	//			CTStack.dumpStack("RUPDATE-2: ");
 //			}

@@ -26,10 +26,10 @@ public abstract class DotAddress {
 		do {
 			Tag aTag = Tag.inTag();
 //			Descriptor descr = Global.getMeaning(aTag);
-//			System.out.println("DotAddress.ofScode: descr=" + descr);
+//			IO.println("DotAddress.ofScode: descr=" + descr);
 			AttrDescr attr = (AttrDescr) Display.lookup(aTag);
 			offset += attr.rela;
-//			System.out.println("DotAddress.ofScode: " + attr + "  offset="+offset);
+//			IO.println("DotAddress.ofScode: " + attr + "  offset="+offset);
 			Scode.inputInstr();
 		} while (Scode.curinstr == Scode.S_C_DOT);
 
@@ -38,8 +38,8 @@ public abstract class DotAddress {
 		switch(terminator) {
 			case Scode.S_C_AADDR:{
 				AttrDescr attr = (AttrDescr) Display.lookup(globalOrConstTag);
-//				System.out.println("DotAddress.ofScode: AADDR: " + attr + "  offset="+(offset+attr.rela) + " = " + offset + " + " + attr.rela);
-//				System.out.println("DotAddress.ofScode: NEXT INSTR: " + Scode.edInstr(Scode.nextByte()));
+//				IO.println("DotAddress.ofScode: AADDR: " + attr + "  offset="+(offset+attr.rela) + " = " + offset + " + " + attr.rela);
+//				IO.println("DotAddress.ofScode: NEXT INSTR: " + Scode.edInstr(Scode.nextByte()));
 //				Util.IERR("SJEKK DETTE");
 				return IntegerValue.of(Type.T_AADDR, offset + attr.rela);
 			}
@@ -49,10 +49,10 @@ public abstract class DotAddress {
 				Descriptor descr = Display.lookup(globalOrConstTag);
 				if(descr == null) Util.IERR("IMPOSSIBLE: TESTING FAILED");
 				if(descr instanceof Variable var) {
-//					System.out.println("DotAddress.ofScode: var.address="+var.address);
+//					IO.println("DotAddress.ofScode: var.address="+var.address);
 					return new GeneralAddress(var.address, offset);
 				} else if(descr instanceof ConstDescr cns) {
-//					System.out.println("DotAddress.ofScode: cns.address="+cns.address);
+//					IO.println("DotAddress.ofScode: cns.address="+cns.address);
 					return new GeneralAddress(cns.getAddress(), offset);
 				}
 				Util.IERR("NOT IMPL: " + descr.getClass().getSimpleName());

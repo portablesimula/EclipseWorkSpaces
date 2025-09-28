@@ -42,7 +42,7 @@ public class SVM_PUSHLEN extends SVM_Instruction {
 	public void execute() {
 		IntegerValue size = IntegerValue.of(Type.T_SIZE, RTStack.size());
 		RTStack.push(size, "SVM_PUSHLEN");
-//		System.out.println("SVM_PUSHLEN.execute:  SAVE-RESTORE " + size);
+//		IO.println("SVM_PUSHLEN.execute:  SAVE-RESTORE " + size);
 //		Util.IERR("");
 		Global.PSC.addOfst(1);
 	}
@@ -57,12 +57,12 @@ public class SVM_PUSHLEN extends SVM_Instruction {
 	// ***********************************************************************************************
 	private SVM_PUSHLEN(AttributeInputStream inpt) throws IOException {
 		this.opcode = SVM_Instruction.iPUSHLEN;
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + this);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 	}
 

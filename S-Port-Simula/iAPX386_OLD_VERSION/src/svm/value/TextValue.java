@@ -26,7 +26,7 @@ public class TextValue extends Value {
 	 * text_value ::= text long_string
 	 */
 	public static TextValue ofScode() {
-//		System.out.println("TextValue.parse: curinstr=" + Scode.curinstr);
+//		IO.println("TextValue.parse: curinstr=" + Scode.curinstr);
 //		String textValue = Scode.inLongString();
 
 		TextValue txtval = new TextValue();
@@ -37,7 +37,7 @@ public class TextValue extends Value {
 //		txtval.addr = Global.TSEG.emitChars(txtval.textValue, "Part of: "+txtval.textValue);			
 //		txtval.length = txtval.textValue.length();
 		if(DEBUG) {
-			System.out.println("TextValue.ofScode: textValue="+txtval.textValue+"  ==> "+txtval);
+			IO.println("TextValue.ofScode: textValue="+txtval.textValue+"  ==> "+txtval);
 			Global.CSEG.dump(txtval.textValue);
 			Util.IERR("");
 		}
@@ -68,20 +68,20 @@ public class TextValue extends Value {
 	// *** Attribute File I/O
 	// ***********************************************************************************************
 	private TextValue(AttributeInputStream inpt) throws IOException {
-//		System.out.println("BEGIN TextValue.read: " + this);
+//		IO.println("BEGIN TextValue.read: " + this);
 		this.type = Type.T_TEXT;
 //		length = inpt.readShort();
 //		addr = (DataAddress) Value.read(inpt);
 		textValue = inpt.readString();
-		if(Global.ATTR_INPUT_TRACE) System.out.println("TextValue.read: " + this);
-//		System.out.println("NEW TextValue: " + this);
+		if(Global.ATTR_INPUT_TRACE) IO.println("TextValue.read: " + this);
+//		IO.println("NEW TextValue: " + this);
 //		Util.IERR("SJEKK DETTE");
 	}
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("Value.write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
 		oupt.writeKind(Scode.S_TEXT);
-//		System.out.println("TextValue.write: addr.segID=" + addr.segID);
+//		IO.println("TextValue.write: addr.segID=" + addr.segID);
 //		Util.IERR("");
 //		oupt.writeShort(length);
 //		addr.write(oupt);

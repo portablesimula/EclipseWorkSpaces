@@ -77,7 +77,7 @@ public class LongRealValue extends Value {
 			double val2 = other.toDouble();
 			res = this.value - val2;
 		} else res = this.value;
-//		System.out.println("IntegerValue.sub: " + this.value + " - " + other + " = " + res);
+//		IO.println("IntegerValue.sub: " + this.value + " - " + other + " = " + res);
 		if(res == 0) return null;
 		return LongRealValue.of(res);
 	}
@@ -94,14 +94,14 @@ public class LongRealValue extends Value {
 
 	@Override
 	public Value div(Value other) {
-//		System.out.println("RealValue.div: " + other + " / " + this.value);
+//		IO.println("RealValue.div: " + other + " / " + this.value);
 		double res = 0;
 		if(other != null) {
 //			LongRealValue val2 = (LongRealValue) other;
 			double val2 = other.toDouble();
 			res = val2 / this.value;
 		} else res = 0;
-//		System.out.println("RealValue.div: " + other + " / " + this.value + " = " + res);
+//		IO.println("RealValue.div: " + other + " / " + this.value + " = " + res);
 		if(res == 0) return null;
 		return LongRealValue.of(res);
 	}
@@ -126,7 +126,7 @@ public class LongRealValue extends Value {
 
 //	@Override
 //	public void print(final String indent) {
-//		System.out.println(indent + toString());
+//		IO.println(indent + toString());
 //	}
 	
 	public String toString() {
@@ -140,11 +140,11 @@ public class LongRealValue extends Value {
 	private LongRealValue(AttributeInputStream inpt) throws IOException {
 		this.type = Type.T_LREAL;
 		value = inpt.readDouble();
-//		System.out.println("NEW IMPORT: " + this);
+//		IO.println("NEW IMPORT: " + this);
 	}
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("Value.write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
 		oupt.writeKind(Scode.S_C_LREAL);
 		oupt.writeDouble(value);
 	}

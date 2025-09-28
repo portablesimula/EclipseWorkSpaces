@@ -29,7 +29,7 @@ public class SVM_LOADC extends SVM_Instruction {
 		this.value = value;
 		if(value != null ) {
 			if(value.type.tag != typeTag) {
-				System.out.println("NEW SVM_LOADC: value="+value+", type="+value.type);
+				IO.println("NEW SVM_LOADC: value="+value+", type="+value.type);
 				Util.IERR("INCONSISTENT: typeTag="+Scode.edTag(typeTag) + ", value'tag="+Scode.edTag(value.type.tag));
 			}
 		}
@@ -37,21 +37,21 @@ public class SVM_LOADC extends SVM_Instruction {
 	
 	@Override
 	public void execute() {
-//		System.out.println("SVM_LOADC.execute: "+this);
+//		IO.println("SVM_LOADC.execute: "+this);
 //		if(value == null) {
 //	 		RTStack.push(null, "SVM_LOADC"); 
 //		} else if(value.type == null) {
-//			System.out.println("SVM_LOADC.execute: value=" + value.getClass().getSimpleName() + " " + value);
+//			IO.println("SVM_LOADC.execute: value=" + value.getClass().getSimpleName() + " " + value);
 //			Util.IERR("");
 //		} else {
 //			switch(value.type.tag) {
 		
 //		if(value != null ) {
-//			System.out.println("SVM_LOADC.execute: value="+value.getClass().getSimpleName()+"  "+value);
-//			System.out.println("SVM_LOADC.execute: typeTag="+Scode.edTag(typeTag));
+//			IO.println("SVM_LOADC.execute: value="+value.getClass().getSimpleName()+"  "+value);
+//			IO.println("SVM_LOADC.execute: typeTag="+Scode.edTag(typeTag));
 //			if(value.type.tag != typeTag) Util.IERR("INCONSISTENT: typeTag="+Scode.edTag(typeTag) + ", value'tag="+Scode.edTag(value.type.tag));
 //		}
-//		System.out.println("SVM_LOADC.execute: value=" + Scode.edTag(typeTag) + " " + value);
+//		IO.println("SVM_LOADC.execute: value=" + Scode.edTag(typeTag) + " " + value);
 		switch(typeTag) {
 			case Scode.TAG_BOOL, Scode.TAG_CHAR, Scode.TAG_INT, Scode.TAG_SINT, Scode.TAG_REAL, Scode.TAG_LREAL,
 			     Scode.TAG_SIZE, Scode.TAG_AADDR, Scode.TAG_PADDR, Scode.TAG_RADDR:
@@ -61,7 +61,7 @@ public class SVM_LOADC extends SVM_Instruction {
 				if(Global.TESTING_STACK_ADDRESS) {
 					ObjectAddress oaddr = (ObjectAddress) value;
 					if(oaddr != null && oaddr.segID == null) {
-						System.out.println("SVM_LOADC.execute: OADDR: "+oaddr);
+						IO.println("SVM_LOADC.execute: OADDR: "+oaddr);
 						RTStack.dumpRTStack("SVM_LOADC.execute: NOTE: ");
 //						RTStack.callStack_TOP().dump("SVM_REFER.execute: NOTE: ");
 						Util.IERR("");
@@ -128,17 +128,17 @@ public class SVM_LOADC extends SVM_Instruction {
 		this.typeTag = inpt.readTag();
 		boolean present = inpt.readBoolean();
 		if(present)	this.value = Value.read(inpt);
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + this);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		oupt.writeTag(typeTag);
 		if(value != null) {
 			oupt.writeBoolean(true);
-//			System.out.println("SVM_LOADC.write: "+value);
+//			IO.println("SVM_LOADC.write: "+value);
 			value.write(oupt);
 		} else oupt.writeBoolean(false);
 	}

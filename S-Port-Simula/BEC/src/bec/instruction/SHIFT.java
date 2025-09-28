@@ -38,9 +38,9 @@ public abstract class SHIFT extends Instruction {
 //	    Type at = CTStack.arithType(tos.type, sos.type);
 
 		if(DEBUG) {
-			if(tos != null)	System.out.println("SHIFT: TOS: " + tos.getClass().getSimpleName() + "  " + tos);
-			if(sos != null)	System.out.println("SHIFT: SOS: " + sos.getClass().getSimpleName() + "  " + sos);
-			System.out.println("SHIFT: " + sos + " " + Scode.edInstr(instr) + " " + tos);
+			if(tos != null)	IO.println("SHIFT: TOS: " + tos.getClass().getSimpleName() + "  " + tos);
+			if(sos != null)	IO.println("SHIFT: SOS: " + sos.getClass().getSimpleName() + "  " + sos);
+			IO.println("SHIFT: " + sos + " " + Scode.edInstr(instr) + " " + tos);
 //			Util.IERR("");
 		}
 

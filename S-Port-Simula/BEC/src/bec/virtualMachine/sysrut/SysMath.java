@@ -16,9 +16,9 @@ public abstract class SysMath {
 	public static void raddep() {
 		SVM_CALL_SYS.ENTER("RADDEP: ", 1, 1); // exportSize, importSize
 		float val = RTStack.popReal();
-//		System.out.println("SysMath.RADDEP: inp="+val);
+//		IO.println("SysMath.RADDEP: inp="+val);
 		val = Math.nextUp(val);
-//		System.out.println("SysMath.RADDEP: out="+val);
+//		IO.println("SysMath.RADDEP: out="+val);
 		RTStack.push(RealValue.of(val), "EXPORT");
 		SVM_CALL_SYS.EXIT("RADDEP: ");
 	}
@@ -88,7 +88,7 @@ public abstract class SysMath {
 		int y = RTStack.popInt();
 		int x = RTStack.popInt();
 		int res = x % y;
-//		System.out.println("SysMath.modulo: "+x+" mod "+y+" ===> "+res);
+//		IO.println("SysMath.modulo: "+x+" mod "+y+" ===> "+res);
 		if(res == 0); //OK
 		else if(sign(res) != sign(y)) res = res + y;
 		

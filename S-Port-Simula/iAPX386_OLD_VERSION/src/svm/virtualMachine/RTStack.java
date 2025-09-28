@@ -44,30 +44,30 @@ public abstract class RTStack {
 	}
 	
 	private static void printCallStack(String title) {
-		System.out.println("CallStack["+callStack.size()+"]: " +title);
-		System.out.println("     at "+Global.PSC);
+		IO.println("CallStack["+callStack.size()+"]: " +title);
+		IO.println("     at "+Global.PSC);
 		for(int i=callStack.size()-1;i>=0;i--) {
 			CallStackFrame frame = callStack.get(i);
 			ProgramAddress curAddr =  frame.curAddr;
-			System.out.println("     at "+curAddr);	
+			IO.println("     at "+curAddr);	
 			frame.print("");
 		}
 	}
 	
 	public static void printCallTrace(String title) {
 //		RTStack.dumpRTStack(title);
-		System.out.println("CallStack["+callStack.size()+"]: " +title);// + " " + callStack_TOP().ident);
-//		System.out.println("     at "+Global.PSC);
+		IO.println("CallStack["+callStack.size()+"]: " +title);// + " " + callStack_TOP().ident);
+//		IO.println("     at "+Global.PSC);
 		int n = callStack.size()-1;
 		for(int i=n;i>=0;i--) {
 			CallStackFrame frame = callStack.get(i);
 //			String ident = (frame.curAddr == null)? "SYSRUT_" + frame.ident : ""+frame.curAddr;
 			if(i == n) {
-//				System.out.println("     " + kind + " "+ident + frame);
+//				IO.println("     " + kind + " "+ident + frame);
 				
 			} else {
-//				System.out.println("     called from "+ident + frame);
-				System.out.println("     called from " + frame.ident);
+//				IO.println("     called from "+ident + frame);
+				IO.println("     called from " + frame.ident);
 			}
 			if(Global.CALL_TRACE_LEVEL > 1)
 				frame.print("");
@@ -104,18 +104,18 @@ public abstract class RTStack {
 	}
 	
 	public static void dup(int n) {
-//		System.out.println("RTStack.dup: "+n);
+//		IO.println("RTStack.dup: "+n);
 		Vector<Value> values = new Vector<Value>();
 		int idx = stack.size()-1;
 		for(int i=0;i<n;i++) {
 			Value val = stack.get(idx-i);
-//			System.out.println("RTStack.dup: add: "+val);
+//			IO.println("RTStack.dup: add: "+val);
 			values.add(val);
 		}
 //		for(int i=0;i<n;i++) {
 		for(int i=n-1;i>=0;i--) {
 			stack.push(values.get(i));
-//			System.out.println("RTStack.dup: push: "+values.get(i));
+//			IO.println("RTStack.dup: push: "+values.get(i));
 		}		
 	}
 	
@@ -126,7 +126,7 @@ public abstract class RTStack {
 	}
 
 	public static void push(Value value, String comment) {
-//		System.out.println("RTStack.: " + value);
+//		IO.println("RTStack.: " + value);
 		stack.push(value);
 //		Util.IERR("");
 	}
@@ -158,7 +158,7 @@ public abstract class RTStack {
 	//
 	public static void addExport(int nSlotStacked, int nExportSlots) {
 		int idx = RTStack.size() - nSlotStacked;
-//		System.out.println("RTStack.addExport: " + idx + ", nExportSlots="+nExportSlots);
+//		IO.println("RTStack.addExport: " + idx + ", nExportSlots="+nExportSlots);
 		for(int i=0; i<nExportSlots;i++)
 			stack.add(idx, null);
 	}
@@ -180,7 +180,7 @@ public abstract class RTStack {
 //		for(int i=0;i<values.size();i++) {
 		for(int i=values.size()-1;i>=0;i--) {
 			Value value = values.get(i);
-//			System.out.println("RTStack.push: " + value);
+//			IO.println("RTStack.push: " + value);
 			stack.push(value);
 		}
 //		Util.IERR("");
@@ -190,7 +190,7 @@ public abstract class RTStack {
 		Vector<Value> values = new Vector<Value>();
 		for(int i=0;i<size;i++) {
 			Value value = RTStack.pop();
-//			System.out.println("RTStack.pop: " + value);
+//			IO.println("RTStack.pop: " + value);
 			values.add(value);
 		}
 		return values;
@@ -203,18 +203,18 @@ public abstract class RTStack {
 	
 	public static float popReal() {
 //		RealValue rval = (RealValue) pop();
-////		System.out.println("RTStack.popReal: rval="+rval);
+////		IO.println("RTStack.popReal: rval="+rval);
 //		return (rval==null)? 0 : rval.value;
 		
 		Value val = pop();
-//		System.out.println("RTStack.popReal: rval="+rval);
+//		IO.println("RTStack.popReal: rval="+rval);
 		return (val==null)? 0 : val.toFloat();
 		
 	}
 	
 	public static double popLongReal() {
 		LongRealValue rval = (LongRealValue) pop();
-//		System.out.println("RTStack.popLongReal: rval="+rval);
+//		IO.println("RTStack.popLongReal: rval="+rval);
 		return (rval==null)? 0 : rval.value;
 	}
 	
@@ -226,7 +226,7 @@ public abstract class RTStack {
 		DataAddress base = (DataAddress) RTStack.pop();
 //		int ofst = RTStack.popInt();
 		
-//		System.out.println("RTStack.popGADDRasOADDR: chradr="+chradr+", ofst="+ofst);
+//		IO.println("RTStack.popGADDRasOADDR: chradr="+chradr+", ofst="+ofst);
 		return new GeneralAddress(base,ofst);
 	}
 	
@@ -234,9 +234,9 @@ public abstract class RTStack {
 //		RTStack.dumpRTStack("RTStack.popGADDRasOADDR:");
 //		RTStack.printCallStack("RTStack.popGADDRasOADDR:");
 		int ofst = RTStack.popInt();
-//		System.out.println("RTStack.popGADDRasOADDR: ofst="+ofst);
+//		IO.println("RTStack.popGADDRasOADDR: ofst="+ofst);
 		DataAddress chradr = (DataAddress) RTStack.pop();
-//		System.out.println("RTStack.popGADDRasOADDR: chradr="+chradr+", ofst="+ofst);
+//		IO.println("RTStack.popGADDRasOADDR: chradr="+chradr+", ofst="+ofst);
 		if(chradr == null) {
 			if(ofst != 0) Util.IERR("");
 			return null;
@@ -248,17 +248,17 @@ public abstract class RTStack {
 	public static int frameIndex() {
 		CallStackFrame top = RTStack.callStack_TOP();
 		int frmx = (top == null)? 0 : top.rtStackIndex;
-//		System.out.println("RTStack.popOADDR; frmx="+frmx);
+//		IO.println("RTStack.popOADDR; frmx="+frmx);
 		return frmx;
 	}
 	
 	public static DataAddress popOADDR() {
 		try {
 			DataAddress oadr = (DataAddress) RTStack.pop();
-//			System.out.println("RTStack.popOADDR: "+oadr);
+//			IO.println("RTStack.popOADDR: "+oadr);
 			return oadr;
 		} catch(Exception e) {
-//			System.out.println("RTStack.popOADDR; frmx="+RTStack.frameIndex());
+//			IO.println("RTStack.popOADDR; frmx="+RTStack.frameIndex());
 //			Segment.lookup("PSEG_ADHOC00").dump("RTStack.popOADDR; ");
 //			Segment.lookup("PSEG_CENT_B_SUB:BODY").dump("RTStack.popOADDR; ");
 			Util.IERR(""+e);
@@ -281,7 +281,7 @@ public abstract class RTStack {
 		for(int i=0;i<nchr;i++) {
 			IntegerValue ival = (IntegerValue) x.load(); x.incrOffset();
 			char c = (ival==null)? '.' : (char) ival.value;
-//			System.out.println("SVM_SYSCALL.edString: c="+c);
+//			IO.println("SVM_SYSCALL.edString: c="+c);
 			sb.append(c);
 		}
 		return sb.toString();
@@ -292,7 +292,7 @@ public abstract class RTStack {
 		for(Value item:stack) {
 			s += ("   " + item);
 		}
-		System.out.println(s);
+		IO.println(s);
 	}
 	
 	public static String toLine() {
@@ -311,12 +311,12 @@ public abstract class RTStack {
 	}
 	
 	public static void dumpRTStack(String title) {
-		System.out.println("==== RTStack ================ " + title + " RTStack'DUMP ====================");
+		IO.println("==== RTStack ================ " + title + " RTStack'DUMP ====================");
 		int n = stack.size();
 		for(int i=0;i<n;i++) {
 			Value item = stack.get(i);
-			System.out.println("   " + i + ": " + item);
+			IO.println("   " + i + ": " + item);
 		}
-		System.out.println("==== RTStack ================ " + title + " RTStack' END  ====================");
+		IO.println("==== RTStack ================ " + title + " RTStack' END  ====================");
 	}
 }

@@ -19,7 +19,8 @@ public class SVM_CALL extends SVM_Instruction {
 		this.opcode = SVM_Instruction.iCALL;
 		this.rutAddr = rutAddr;
 		this.returSlot = returSlot;
-//		System.out.println("NEW SVM_CALL: "+this);
+//		IO.println("NEW SVM_CALL: "+this);
+		RTRegister.checkMindMaskEmpty();
 	}
 	
 	public static SVM_CALL ofTOS(ObjectAddress returSlot) {
@@ -34,7 +35,7 @@ public class SVM_CALL extends SVM_Instruction {
 		if(Global.EXEC_TRACE > 0) {
 			ProgramAddress.printInstr(this,false);
 		}
-//		System.out.println("SVM_CALL:execute: " + this);
+//		IO.println("SVM_CALL:execute: " + this);
 		if(rutAddr == null) {
 			// CALL-TOS
 			
@@ -61,7 +62,7 @@ public class SVM_CALL extends SVM_Instruction {
 //			}
 			
 			Global.PSC = (ProgramAddress) RTStack.pop().copy();
-//			System.out.println("SVM_CALL.execute: PSC="+Global.PSC);
+//			IO.println("SVM_CALL.execute: PSC="+Global.PSC);
 //			Global.PSC.segment().dump("SVM_CALL.execute: ", 0, 10);
 		} else {
 			Global.PSC = rutAddr.copy();
@@ -70,7 +71,7 @@ public class SVM_CALL extends SVM_Instruction {
 
 //		if(rutAddr != null && rutAddr.toString().equals("PSEG_KNWN_AR1IND:BODY[0]")) {
 ////			int idx = RTStack.size() - 2;
-////			System.out.println("SVM_CALL.execute: idx="+idx);
+////			IO.println("SVM_CALL.execute: idx="+idx);
 //			RTStack.dumpRTStack("");
 //			Segment.lookup("POOL_1").dump("SVM_CALL.execute: ", 707, 727);
 //			RTUtil.dumpCurins();
@@ -96,12 +97,12 @@ public class SVM_CALL extends SVM_Instruction {
 		this.returSlot = (ObjectAddress) Value.read(inpt);
 		boolean present = inpt.readBoolean();
 		if(present)	this.rutAddr = (ProgramAddress) Value.read(inpt);
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + this);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		returSlot.write(oupt);
 		if(rutAddr != null) {

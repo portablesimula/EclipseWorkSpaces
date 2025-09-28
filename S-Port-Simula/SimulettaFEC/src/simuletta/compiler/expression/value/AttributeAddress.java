@@ -61,11 +61,11 @@ public class AttributeAddress extends Value {
         aaddr.offset=Parser.expectIdentifier();
         while(Parser.accept(KeyWord.DOT)) {
         	String ident=Parser.expectIdentifier();
-//        	System.out.println("AttributeAddress.parse: DOT "+ident);
+//        	IO.println("AttributeAddress.parse: DOT "+ident);
             aaddr.dotList.add(ident);
         }
         Parser.expect(KeyWord.ENDPAR);
-//        System.out.println("AttributeAddress.parse: "+aaddr);
+//        IO.println("AttributeAddress.parse: "+aaddr);
 //        Util.STOP();
         return(aaddr);
 	}
@@ -84,7 +84,7 @@ public class AttributeAddress extends Value {
 //		Tag tag=rec.getTag();
 		VariableDeclaration q=null;
 //		for(String attr:dotList) {
-//            //System.out.println("AttributeAddress.doOutConst: DOT "+attr);
+//            //IO.println("AttributeAddress.doOutConst: DOT "+attr);
 ////            if(q!=null) {
 //            	sCode.outinst(S_C_DOT);
 //            	sCode.outtag(tag);
@@ -95,10 +95,10 @@ public class AttributeAddress extends Value {
 //		}
 		
 //		for(String attr:dotList) {
-//            System.out.println("AttributeAddress.doOutConst: DOT "+attr);
+//            IO.println("AttributeAddress.doOutConst: DOT "+attr);
 //		}		
 		for(int i=0;i<dotList.size();i++) {
-//            System.out.println("AttributeAddress.doOutConst: DOT "+attr);
+//            IO.println("AttributeAddress.doOutConst: DOT "+attr);
 //            if(q!=null) {
 //            	sCode.outinst(S_C_DOT);
 //            	sCode.outtag(tag);

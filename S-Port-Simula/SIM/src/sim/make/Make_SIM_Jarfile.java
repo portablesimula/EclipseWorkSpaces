@@ -5,7 +5,7 @@ import java.util.Vector;
 
 import sim.compiler.Global;
 import sim.compiler.Option;
-import sim.compiler.SimulaBEC;
+import sim.compiler.CommonBEC;
 import sim.compiler.SimulaFEC;
 import sim.compiler.Util;
 import static sim.compiler.Global.*;
@@ -18,14 +18,14 @@ public class Make_SIM_Jarfile {
 
 	public static void main(String[] argv) {
 		try {
-			System.out.println("Make SPORT SIM Compiler.jar in "+RELEASE_HOME);
+			IO.println("Make SPORT SIM Compiler.jar in "+RELEASE_HOME);
 			File releaseHome=new File(RELEASE_HOME);
 			releaseHome.mkdirs();
 			String compilerManifest=SportSIM_ROOT+"/src/sim/make/CompilerManifest.MF";
 			Util.exec("jar", "cmf", compilerManifest, RELEASE_HOME+"/SIM.jar", "-C", COMPILER_BIN, "./sim");
 //			Util.exec("jar", "-tvf", RELEASE_HOME+"/SIM.jar");
 			
-			System.out.println("Make_SIM_Jarfile - DONE: " + RELEASE_HOME + "/CommonSIM.jar");
+			IO.println("Make_SIM_Jarfile - DONE: " + RELEASE_HOME + "/CommonSIM.jar");
 			
 //			SINGLE_INLINE_TEST();
 //			FULL_INLINE_TEST();
@@ -37,8 +37,8 @@ public class Make_SIM_Jarfile {
 	private static void doCompile() {
 		Global.simdir = new File(RELEASE_HOME);
 		int execCode = SimulaFEC.callSimulaFEC();
-		if(Option.verbose) System.out.println("RETURN FROM FEC: ExitCode = "+execCode+"\n\n");
-		if(execCode == 0) SimulaBEC.callBEC();
+		if(Option.verbose) IO.println("Make_SIM_Jarfile: RETURN FROM FEC: ExitCode = "+execCode+"\n\n");
+		if(execCode == 0) CommonBEC.callBEC();
 	}
 
 	@SuppressWarnings("unused")

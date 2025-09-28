@@ -41,12 +41,12 @@ public class Parameter extends Quantity {
 		// - assume that categ <8 and kind < 16  ALWAYS ***;
 		int kind=Kind.K_ident;  // simple variable
     	int xtag=quantInfo.getXtag(0);
-//		System.out.println("writeQuant: "+indent+"Parameter "+identifier+", exttag="+xtag+", type="+type+", kind="+Kind.edKind(kind)+", categ="+Category.edCateg(categ)+", clf="+clf);
+//		IO.println("writeQuant: "+indent+"Parameter "+identifier+", exttag="+xtag+", type="+type+", kind="+Kind.edKind(kind)+", categ="+Category.edCateg(categ)+", clf="+clf);
 		String parKind=(classParameter)?"classParameter ":"Parameter "; 
     	if(RTS_FEC_Interface_Option.TRACE_CODING>2) AttrFile.OUPUT_TRACE(parKind+identifier+", exttag="+xtag+", type="+type
     			                   +", kind="+Kind.edKind(kind)+", categ="+Category.edCateg(categ)+", clf="+clf+", quantInfo="+quantInfo);
 		oupt.putByte((kind*8) + categ);
-//		System.out.println("writeQuant: PACKED="+((kind*8) + categ)+", kind="+kind+", categ="+categ);
+//		IO.println("writeQuant: PACKED="+((kind*8) + categ)+", kind="+kind+", categ="+categ);
 
 		// - assume that type < 128 ALWAYS ***;
 		String prefqual=this.type.prefqual;

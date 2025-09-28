@@ -45,7 +45,7 @@ public class REMOVE_ObjectAddress extends Value {
 //		Tag tag = Tag.ofScode();
 //		Descriptor descr = tag.getMeaning();
 //		if(descr == null) Util.IERR("IMPOSSIBLE: TESTING FAILED");
-////		System.out.println("OADDR_Value.ofScode: descr="+descr.getClass().getSimpleName()+"  "+descr);
+////		IO.println("OADDR_Value.ofScode: descr="+descr.getClass().getSimpleName()+"  "+descr);
 //		if(descr instanceof Variable var) return var.address;
 //		if(descr instanceof ConstDescr cns) return cns.getAddress();
 //		Util.IERR("MISSING: " + descr);
@@ -70,7 +70,7 @@ public class REMOVE_ObjectAddress extends Value {
 //		if(! Global.TESTING_REMOTE) Util.IERR("SKAL IKKE BRUKES");
 //		REMOVE_ObjectAddress addr = new REMOVE_ObjectAddress(REMOTE_ADDR, null, xReg, ofst);
 ////		addr.xReg = xReg;
-//		System.out.println("DataAddress.ofRemoteAddr: "+addr);
+//		IO.println("DataAddress.ofRemoteAddr: "+addr);
 //		if(xReg == 0) Util.IERR("");
 ////		System.exit(-1);
 //		return addr;
@@ -125,15 +125,15 @@ public class REMOVE_ObjectAddress extends Value {
 //	public REMOVE_ObjectAddress toStackAddress() {
 //		REMOVE_ObjectAddress oaddr = this;
 //		if(this.kind == REMOVE_ObjectAddress.REL_ADDR) {
-////			System.out.println("DataAddress.toStackAddress: OADDR: "+this);
+////			IO.println("DataAddress.toStackAddress: OADDR: "+this);
 ////			RTStack.dumpRTStack("DataAddress.toStackAddress: NOTE: ");
-////			System.out.println("DataAddress.toStackAddress: VALUE: "+this.load());
+////			IO.println("DataAddress.toStackAddress: VALUE: "+this.load());
 //			
 //			CallStackFrame callStackTop = RTStack.callStack_TOP();
 //			int bias = (callStackTop == null)? 0 : callStackTop.rtStackIndex;
 //			oaddr = new REMOVE_ObjectAddress(STACK_ADDR, segID, xReg, bias + ofst);
 //			
-////			System.out.println("DataAddress.toStackAddress: VALUE: "+oaddr.load());
+////			IO.println("DataAddress.toStackAddress: VALUE: "+oaddr.load());
 //		}
 ////		Util.IERR("");
 //		return oaddr;
@@ -159,15 +159,15 @@ public class REMOVE_ObjectAddress extends Value {
 //				break;
 //			case REMOTE_ADDR:
 //				//return "REMOTE_ADDR[RTStackTop+" + ofst + ']';
-//				System.out.println("DataAddress.store: "+value+"  "+this+", idx="+idx);
+//				IO.println("DataAddress.store: "+value+"  "+this+", idx="+idx);
 //				REMOVE_ObjectAddress regAddr = (REMOVE_ObjectAddress) RTRegister.getValue(xReg);
 //				dseg = regAddr.segment();
 //				int regOfst = regAddr.ofst;
 //				if(regAddr.xReg != 0) Util.IERR("NOT IMPL");
 //				
-//				System.out.println("DataAddress.store: dseg="+dseg);
-//				System.out.println("DataAddress.store: regOfst="+regOfst);
-//				System.out.println("DataAddress.store: ofst="+ofst);
+//				IO.println("DataAddress.store: dseg="+dseg);
+//				IO.println("DataAddress.store: regOfst="+regOfst);
+//				IO.println("DataAddress.store: ofst="+ofst);
 //
 //				reladdr = regOfst + ofst + idx;
 //				dseg.store(reladdr, value);
@@ -176,7 +176,7 @@ public class REMOVE_ObjectAddress extends Value {
 //				break;
 ////			case REFER_ADDR:  return "REFER_ADDR[" + ofst + ']';
 //			case STACK_ADDR: //  return "STACK_ADR[RTStack(" + ofst + ")]";
-////				System.out.println("DataAddress.store: "+value+"  "+this);
+////				IO.println("DataAddress.store: "+value+"  "+this);
 ////				RTStack.dumpRTStack("DataAddress.store: "+this);
 //				RTStack.store(ofst + idx, value, comment);
 ////				RTStack.dumpRTStack("DataAddress.store: "+this);
@@ -197,14 +197,14 @@ public class REMOVE_ObjectAddress extends Value {
 //				CallStackFrame callStackTop = RTStack.callStack_TOP();
 //				int bias = (callStackTop == null)? 0 : callStackTop.rtStackIndex;
 //				Value value = RTStack.load(bias + ofst + idx);
-////				System.out.println("DataAddress.load: value="+value);
+////				IO.println("DataAddress.load: value="+value);
 ////				Util.IERR("");
 //				return value;
 //			case REMOTE_ADDR:
 //				// return "REMOTE_ADDR[RTStackTop+" + ofst + ']';
-//				System.out.println("DataAddress.load: "+this+", idx="+idx);
+//				IO.println("DataAddress.load: "+this+", idx="+idx);
 //				Value regVal = RTRegister.getValue(xReg);
-//				System.out.println("DataAddress.load: regVal="+regVal);
+//				IO.println("DataAddress.load: regVal="+regVal);
 //				
 ////				DataAddress regAddr = (DataAddress) RTRegister.getValue(xReg);
 //				REMOVE_ObjectAddress regAddr = null;
@@ -218,9 +218,9 @@ public class REMOVE_ObjectAddress extends Value {
 //				int regOfst = regAddr.ofst;
 //				if(regAddr.xReg != 0) Util.IERR("NOT IMPL");
 //				
-//				System.out.println("DataAddress.load: dseg="+dseg);
-//				System.out.println("DataAddress.load: regOfst="+regOfst);
-//				System.out.println("DataAddress.load: ofst="+ofst);
+//				IO.println("DataAddress.load: dseg="+dseg);
+//				IO.println("DataAddress.load: regOfst="+regOfst);
+//				IO.println("DataAddress.load: ofst="+ofst);
 //
 //				reladdr = gOfst + regOfst + ofst + idx;
 ////				Util.IERR("NOT IMPL"+reladdr);
@@ -228,7 +228,7 @@ public class REMOVE_ObjectAddress extends Value {
 ////			case REFER_ADDR:  return "REFER_ADDR[" + ofst + ']';
 //			case STACK_ADDR:
 //				value = RTStack.load(ofst + idx);
-////				System.out.println("DataAddress.load: value="+value);
+////				IO.println("DataAddress.load: value="+value);
 ////				Util.IERR("");
 //				return value;
 //			default: Util.IERR(""+kind); return null;
@@ -257,8 +257,8 @@ public class REMOVE_ObjectAddress extends Value {
 //		if(other instanceof IntegerValue ival) {
 //			return new REMOVE_ObjectAddress(this.kind, this.segID, this.xReg, this.ofst - ival.value);
 //		} else if(other instanceof REMOVE_ObjectAddress oaddr) {
-////			System.out.println("DataAddress.sub: this="+this);
-////			System.out.println("DataAddress.sub: other="+other);
+////			IO.println("DataAddress.sub: this="+this);
+////			IO.println("DataAddress.sub: other="+other);
 //			if(!oaddr.segID.equals(segID)) {
 //				RTStack.dumpRTStack("DataAddress.sub: ");
 ////				Segment.lookup("CSEG_ADHOC02").dump("ProgramAddress.execute: FINAL ", 0, 20);
@@ -292,7 +292,7 @@ public class REMOVE_ObjectAddress extends Value {
 ////			case Scode.S_GT: res = LHS >  RHS; break;
 ////			case Scode.S_NE: res = LHS != RHS; break;
 ////		}
-//////		System.out.println("IntegerValue.compare: " + LHS + " " + Scode.edInstr(relation) + " " + RHS + " ==> " + res);
+//////		IO.println("IntegerValue.compare: " + LHS + " " + Scode.edInstr(relation) + " " + RHS + " ==> " + res);
 //////		Util.IERR("");
 ////		return res;
 ////	}
@@ -301,13 +301,13 @@ public class REMOVE_ObjectAddress extends Value {
 //		if(this.segID != null) {
 //			segment().dump("\nRTAddress.dumpArea:", ofst, ofst+lng);
 //		} else {
-//			System.out.println("\nRTAddress.dumpArea: BEGIN " + title + " +++++++++++++++++++++++++++++++++++++");
+//			IO.println("\nRTAddress.dumpArea: BEGIN " + title + " +++++++++++++++++++++++++++++++++++++");
 //			for(int i=0;i<lng;i++) {
 ////				RTAddress rtadr = new RTAddress(this, i);
 //				REMOVE_ObjectAddress rtadr = this.addOffset(i);
-//				System.out.println(""+rtadr+": " + load(ofst+i));
+//				IO.println(""+rtadr+": " + load(ofst+i));
 //			}
-//			System.out.println("RTAddress.dumpArea: ENDOF " + title + " +++++++++++++++++++++++++++++++++++++");
+//			IO.println("RTAddress.dumpArea: ENDOF " + title + " +++++++++++++++++++++++++++++++++++++");
 //		}
 ////		Util.IERR("");
 //	}
@@ -344,14 +344,14 @@ public class REMOVE_ObjectAddress extends Value {
 //		segID = inpt.readString();
 //		xReg = inpt.readReg(); // BARE HVIS: TESTING_REMOTE
 //		ofst = inpt.readShort();
-////		System.out.println("DataAddress.read: " + this);
+////		IO.println("DataAddress.read: " + this);
 //	}
 //
 //	public void write(AttributeOutputStream oupt) throws IOException {
-//		if(Global.ATTR_OUTPUT_TRACE) System.out.println("Value.write: " + this);
+//		if(Global.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
 //		oupt.writeKind(Scode.S_C_OADDR);
 //		writeBody(oupt);
-////		System.out.println("DataAddress.write: " + this + "   segID="+segID+", ofst="+ofst);
+////		IO.println("DataAddress.write: " + this + "   segID="+segID+", ofst="+ofst);
 //	}
 //
 //	public void writeBody(AttributeOutputStream oupt) throws IOException {

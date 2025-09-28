@@ -83,7 +83,7 @@ public class MemAddr extends Value {
 		Tag tag = Tag.inTag();
 		Descriptor descr = Display.lookup(tag);
 		if(descr == null) Util.IERR("IMPOSSIBLE: TESTING FAILED");
-//		System.out.println("OADDR_Value.ofScode: descr="+descr.getClass().getSimpleName()+"  "+descr);
+//		IO.println("OADDR_Value.ofScode: descr="+descr.getClass().getSimpleName()+"  "+descr);
 		if(descr instanceof Variable var) return var.address;
 		if(descr instanceof ConstDescr cns) return cns.getAddress();
 		Util.IERR("MISSING: " + descr);

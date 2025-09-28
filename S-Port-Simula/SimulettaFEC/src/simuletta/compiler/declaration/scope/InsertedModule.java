@@ -96,11 +96,11 @@ public class InsertedModule extends DeclarationScope {
 			if (!inpt.readObject().equals(version)) Util.ERROR("Malformed SimulettaAttributeFile: " + attributeFile);
 //			Hashtable<String, Mnemonic> mnemonics=(Hashtable<String, Mnemonic>)inpt.readObject();
 			int nMnemonics=inpt.readShort();
-//			System.out.println("InsertedModule.doInsertModule: "+identifier+"   nMnemonics="+nMnemonics);
+//			IO.println("InsertedModule.doInsertModule: "+identifier+"   nMnemonics="+nMnemonics);
 			for(int i=0;i<nMnemonics;i++) {
 //				Mnemonic mnemonic=Mnemonic.createAndRead(inpt);
 				Mnemonic mnemonic=(Mnemonic) inpt.readObject();
-//				System.out.println("InsertedModule.doInsertModule: "+identifier+"   ADD "+mnemonic);
+//				IO.println("InsertedModule.doInsertModule: "+identifier+"   ADD "+mnemonic);
 				SimulettaScanner.mnemonics.put(mnemonic.identifier,mnemonic);
 			}
 
@@ -117,9 +117,9 @@ public class InsertedModule extends DeclarationScope {
 //			
 //			SimulettaScanner.mnemonics.putAll(mnemonics);
 			if(Option.TRACE_ATTRIBUTE_INPUT) {
-				System.out.println("************************** MODULE "+identifier+": "+insertID+"'MNEMONICS **************************");
+				IO.println("************************** MODULE "+identifier+": "+insertID+"'MNEMONICS **************************");
 				SimulettaScanner.listMnemonics();
-				System.out.println("************************** MODULE "+identifier+": "+insertID+"'DECLARATIONS **************************");
+				IO.println("************************** MODULE "+identifier+": "+insertID+"'DECLARATIONS **************************");
 				//for(Declaration d:declarationList) d.print("",0);
 			}
 			

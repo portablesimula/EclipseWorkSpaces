@@ -29,7 +29,7 @@ import java.io.Writer;
 //		return consolePanel.read();
 //	}
 
-public class ExternalConsole {
+public class ExternalConsole { // TODO: REMOVE THIS CLASS ???
 	private InputStream inpt;
 	private OutputStream oupt;
 	private Reader reader;
@@ -48,7 +48,7 @@ public class ExternalConsole {
 
 	public char read() {
 		try {
-			System.out.println("RETT FØR BEC:read");
+			IO.println("RETT FØR BEC:read");
 //			return (char) reader.read();
 			return (char) inpt.read();
 		} catch (IOException e) {

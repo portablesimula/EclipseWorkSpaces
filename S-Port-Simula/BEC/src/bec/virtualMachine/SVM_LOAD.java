@@ -24,6 +24,8 @@ public class SVM_LOAD extends SVM_Instruction {
 		this.rtAddr = rtAddr;
 		this.xReg = xReg;
 		this.size = size;
+		RTRegister.reads("SVM_LOAD", rtAddr);
+		RTRegister.reads("SVM_LOAD", xReg);
 	}
 	
 	public SVM_LOAD(Variable var) {
@@ -48,15 +50,15 @@ public class SVM_LOAD extends SVM_Instruction {
 			case ObjectAddress.REFER_ADDR:
 				GeneralAddress gaddr = (GeneralAddress) RTRegister.getValue(xReg);
 				addr = gaddr.base.addOffset(rtAddr.getOfst() + gaddr.ofst);
-//				System.out.println("LOAD.execute: REFER_ADDR: "+rtAddr);
-//				System.out.println("LOAD.execute: REFER_ADDR: "+addr);
+//				IO.println("LOAD.execute: REFER_ADDR: "+rtAddr);
+//				IO.println("LOAD.execute: REFER_ADDR: "+addr);
 				doLoad(addr, 0); break;
 	
 			default: Util.IERR("");
 		}
 
 		if(DEBUG) {
-//			System.out.println("LOAD.execute: "+addr);
+//			IO.println("LOAD.execute: "+addr);
 //			addr.segment().dump("LOAD.execute: ", addr.offset, addr.offset+size);
 			addr.dumpArea("LOAD.execute: ", size);
 		}
@@ -74,7 +76,7 @@ public class SVM_LOAD extends SVM_Instruction {
 	@Override
 	public String toString() {
 		String s = "LOAD     " + rtAddr;
-		if(xReg != 0) s = s + "+R" + xReg + "(" + RTRegister.getValue(xReg) + ')';
+		if(xReg != 0) s = s + RTRegister.edRegValue(xReg);
 		if(size > 1) s += ", " + size;
 		return s;
 	}
@@ -87,12 +89,12 @@ public class SVM_LOAD extends SVM_Instruction {
 		this.rtAddr = ObjectAddress.read(inpt);
 		this.xReg = inpt.readReg();
 		this.size = inpt.readShort();
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + this);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		rtAddr.writeBody(oupt);
 		oupt.writeReg(xReg);

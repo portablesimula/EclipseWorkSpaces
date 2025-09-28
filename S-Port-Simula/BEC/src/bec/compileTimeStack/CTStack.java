@@ -31,11 +31,11 @@ public class CTStack {
 	
 //	@SuppressWarnings("unchecked")
 //	public static NamedStack<CTStackItem> getClone() {
-////		System.out.println("CTStack.get: "+stack.ident());
+////		IO.println("CTStack.get: "+stack.ident());
 //		return (NamedStack<CTStackItem>) stack.clone();
 //	}
 	public static NamedStack<CTStackItem> copy(String ident) {
-//		System.out.println("CTStack.get: "+stack.ident());
+//		IO.println("CTStack.get: "+stack.ident());
 		NamedStack<CTStackItem> copy = new NamedStack<CTStackItem>(ident);
 		for(CTStackItem item:stack) {
 			copy.add(item.copy());
@@ -56,12 +56,12 @@ public class CTStack {
 			stack.add(item.copy());
 		}
 		
-//		System.out.println("CTStack.reestablish: "+stack.ident());
+//		IO.println("CTStack.reestablish: "+stack.ident());
 //		stack.dumpStack("RESTORE: ");
 	}
 	
 	public static boolean equals(NamedStack<CTStackItem> stack1, NamedStack<CTStackItem> stack2) {
-//		System.out.println("\nCTStack.equals: "+stack1.ident()+"  "+stack2.ident());
+//		IO.println("\nCTStack.equals: "+stack1.ident()+"  "+stack2.ident());
 //		stack1.dumpStack("CTStack.equals: STACK-1");
 //		stack2.dumpStack("CTStack.equals: STACK-2");
 		if(stack1.size() != stack2.size()) return false;
@@ -80,28 +80,28 @@ public class CTStack {
 	/// * remember stack;
 	/// * purge stack;
 	public static void SAVE(String ident) {
-//		System.out.println("CTStack.SAVE: STACK="+stack.ident());
+//		IO.println("CTStack.SAVE: STACK="+stack.ident());
 		saveStack.push(stack);
 		stack = new NamedStack<CTStackItem>(ident);
 	}
 
 	public static void RESTORE() {
 		stack = saveStack.pop();
-//		System.out.println("CTStack.RESTORE: STACK="+stack.ident());
+//		IO.println("CTStack.RESTORE: STACK="+stack.ident());
 //		stack.dumpStack("RESTORE: ");
 	}
 
 	/// * remember stack;
 	/// * purge stack;
 	public static void BSEG(String ident) {
-//		System.out.println("CTStack.BSEG: STACK="+stack.ident());
+//		IO.println("CTStack.BSEG: STACK="+stack.ident());
 		bsegStack.push(stack);
 		stack = new NamedStack<CTStackItem>(ident);
 	}
 
 	public static void ESEG() {
 		stack = bsegStack.pop();
-//		System.out.println("CTStack.ESEG: STACK="+stack.ident());
+//		IO.println("CTStack.ESEG: STACK="+stack.ident());
 //		stack.dumpStack("RESTORE: ");
 	}
 	
@@ -130,17 +130,17 @@ public class CTStack {
 	}
 	
 	public static void push(CTStackItem s) {
-//		System.out.println("CTStack.push: " + s.edMode() + " " + s+"  STACK="+stack.ident());
+//		IO.println("CTStack.push: " + s.edMode() + " " + s+"  STACK="+stack.ident());
 		stack.push(s);
 	}
 	
 	public static void pushTempVAL(Type type, int count, String comment) {
-//		System.out.println("CTStack.pushTempVAL: " + type + " " + count + " " + comment+"  STACK="+stack.ident);
+//		IO.println("CTStack.pushTempVAL: " + type + " " + count + " " + comment+"  STACK="+stack.ident);
 		push(new Temp(CTStackItem.Mode.VAL, type, count, comment));
 	}
 	
 	public static void pushTempREF(Type type, int count, String comment) {
-//		System.out.println("CTStack.pushTempREF: " + type + " " + count + " " + comment);
+//		IO.println("CTStack.pushTempREF: " + type + " " + count + " " + comment);
 		push(new Temp(CTStackItem.Mode.REF, type, count, comment));
 	}
 	
@@ -149,12 +149,12 @@ public class CTStack {
 	}
 	
 	public static CTStackItem pop() {
-		if(stack.size() == 1) RTRegister.clearFreeRegs();
+//		if(stack.size() == 1) RTRegister.clearFreeRegs();
 		return stack.pop();
 	}
 	
 	public static void dup() {
-//		System.out.println("CTStack.dup: TOS=" + TOS());
+//		IO.println("CTStack.dup: TOS=" + TOS());
 		stack.push(TOS().copy());
 	}
 
@@ -164,14 +164,14 @@ public class CTStack {
 //		CTStack.push(new ConstItem(Type.T_INT, IntegerValue.of(Type.T_INT, 333) ));
 //		CTStack.push(new ConstItem(Type.T_INT, IntegerValue.of(Type.T_INT, 444) ));
 //		CTStack.dumpStack("TEST-1");
-//		System.out.println("TOS = " + CTStack.TOS());
-//		System.out.println("SOS = " + CTStack.SOS());
-//		System.out.println("Size = " + CTStack.size());
+//		IO.println("TOS = " + CTStack.TOS());
+//		IO.println("SOS = " + CTStack.SOS());
+//		IO.println("Size = " + CTStack.size());
 //		CTStack.pop();
 //		CTStack.dumpStack("TEST-2");
-//		System.out.println("TOS = " + CTStack.TOS());
-//		System.out.println("SOS = " + CTStack.SOS());
-//		System.out.println("Size = " + CTStack.size());
+//		IO.println("TOS = " + CTStack.TOS());
+//		IO.println("SOS = " + CTStack.SOS());
+//		IO.println("Size = " + CTStack.size());
 //		
 //		CTStack.push(new ConstItem(Type.T_INT, IntegerValue.of(Type.T_INT, 555) ));
 //		CTStack.saveState();
@@ -183,7 +183,7 @@ public class CTStack {
 //	}
 	
 	private static void STKERR(String msg) {
-		System.out.println("\nERROR: " + msg + " ================================================");
+		IO.println("\nERROR: " + msg + " ================================================");
 		CTStack.dumpStack("STKERR: ");
 		Global.PSEG.dump("STKERR: ");
 		Util.IERR("FORCED EXIT: " + msg);
@@ -225,7 +225,7 @@ public class CTStack {
 	}
 
 	public static void checkTosArith() {
-//		System.out.println("CTStack.checkTosArith: " + xTOS.type);
+//		IO.println("CTStack.checkTosArith: " + xTOS.type);
 		switch(TOS().type.tag) {
 			case Scode.TAG_INT, Scode.TAG_SINT, Scode.TAG_REAL, Scode.TAG_LREAL: break; 
 			default: STKERR("Illegal type of TOS");

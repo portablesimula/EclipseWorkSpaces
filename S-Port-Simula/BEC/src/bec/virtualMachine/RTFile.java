@@ -23,9 +23,9 @@ public class RTFile {
 	public RTFile(String fileName, int fileType, String action) {
 		this.fileName = fileName;
 		this.fileType = fileType;
-//		System.out.println("RTFile.opfile: fileName="+this.fileName);
-//		System.out.println("RTFile.opfile: fileType="+this.fileType+"  "+edFileType(this.fileType));
-//		System.out.println("RTFile.opfile: action="+action);
+//		IO.println("RTFile.opfile: fileName="+this.fileName);
+//		IO.println("RTFile.opfile: fileType="+this.fileType+"  "+edFileType(this.fileType));
+//		IO.println("RTFile.opfile: action="+action);
 		fileAction = new RTFileAction(action);
 	}
 

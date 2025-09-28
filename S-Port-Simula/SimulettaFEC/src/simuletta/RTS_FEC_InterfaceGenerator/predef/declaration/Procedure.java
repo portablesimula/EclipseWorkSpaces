@@ -63,19 +63,19 @@ public class Procedure extends Quantity {
     public static Procedure doParse(Type type) {
     	Procedure proc=new Procedure(Parser.expectIdentifier());
     	proc.type=type;
-    	//System.out.println("procedure.doParse: proc.identifier="+proc.identifier);
+    	//IO.println("procedure.doParse: proc.identifier="+proc.identifier);
     	Parser.expect(KeyWord.DEFINE);
 		proc.putQuantInfo(Parser.expectString());
-    	//System.out.println("procedure.doParse: quantInfo="+proc.quantInfo);
+    	//IO.println("procedure.doParse: quantInfo="+proc.quantInfo);
     	if(Parser.accept(KeyWord.BEGPAR)) {
     		proc.parameterList=ParameterList.parseParameters();
-    		//System.out.println("procedure.doParse: params="+proc.parameterList);
+    		//IO.println("procedure.doParse: params="+proc.parameterList);
     		Parser.expect(KeyWord.SEMICOLON);
     	} else {
     		Parser.expect(KeyWord.SEMICOLON); // SKIP IT
     		Parser.expect(KeyWord.SEMICOLON); // SKIP IT
     	}
-    	if(TESTING) System.out.println("Procedure.doParse: "+proc);
+    	if(TESTING) IO.println("Procedure.doParse: "+proc);
     	return(proc);
     }
 

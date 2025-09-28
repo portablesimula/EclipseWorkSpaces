@@ -30,7 +30,7 @@ public abstract class DSIZE extends Instruction {
 	public static void ofScode() {
 		Tag tag = Tag.ofScode();
 		RecordDescr fixrec = (RecordDescr) tag.getMeaning();
-//		System.out.println("DSIZE.ofScode: fixrec="+fixrec+"  nbrep="+fixrec.nbrep);
+//		IO.println("DSIZE.ofScode: fixrec="+fixrec+"  nbrep="+fixrec.nbrep);
 		if(fixrec.nbrep != 0) {
 //			CTStack.dumpStack("DSIZE.ofScode: ");
 			int n = fixrec.nbrep;

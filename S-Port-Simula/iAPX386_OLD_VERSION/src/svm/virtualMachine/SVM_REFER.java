@@ -58,8 +58,8 @@ public class SVM_REFER extends SVM_Instruction {
 	public void execute() {
 		int gOfst = RTStack.popInt();
 		DataAddress objadr = (DataAddress) RTStack.pop();
-//		System.out.println("SVM_REFER: objadr="+objadr);
-//		System.out.println("SVM_REFER: gOfst="+gOfst);
+//		IO.println("SVM_REFER: objadr="+objadr);
+//		IO.println("SVM_REFER: gOfst="+gOfst);
 		RTRegister.putValue(xReg, new GeneralAddress(objadr, gOfst));	
 		
 		Global.PSC.addOfst(1);
@@ -77,12 +77,12 @@ public class SVM_REFER extends SVM_Instruction {
 	private SVM_REFER(AttributeInputStream inpt) throws IOException {
 		this.opcode = SVM_Instruction.iREFER;
 		this.xReg = inpt.readReg();
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + this);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		oupt.writeReg(xReg);
 	}

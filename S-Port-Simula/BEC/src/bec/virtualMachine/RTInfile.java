@@ -32,7 +32,7 @@ public class RTInfile extends RTImageFile {
 			return;
 		}
 		try {
-//			System.out.println("NEW RTInfile: fileName=" + fileName);
+//			IO.println("NEW RTInfile: fileName=" + fileName);
 			lineReader = new BufferedReader(new FileReader(file));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -74,7 +74,7 @@ public class RTInfile extends RTImageFile {
 	public int inimage(ObjectAddress chrAddr, int nchr) {
 		try {
 			String line = (rest != null) ? rest : lineReader.readLine();
-//			System.out.println("RTInfile.inimage: line=\"" + line + '"');
+//			IO.println("RTInfile.inimage: line=\"" + line + '"');
 			rest = null;
 			if(line == null) {
 				RTUtil.set_STATUS(13); // End of file on input";
@@ -122,7 +122,7 @@ public class RTInfile extends RTImageFile {
 	public static int sysinInimage(ObjectAddress chrAddr, int nchr) {
 		try {
 			String line = (sysinRest != null) ? sysinRest : readLine();
-//			System.out.println("RTInfile.sysinInimage: line=\"" + line + '"');
+//			IO.println("RTInfile.sysinInimage: line=\"" + line + '"');
 			sysinRest = null;
 			if(line == null) {
 				RTUtil.set_STATUS(13); // End of file on input";

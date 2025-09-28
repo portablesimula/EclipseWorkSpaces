@@ -43,7 +43,7 @@ public class GeneralAddress extends Value {
 		Descriptor descr = tag.getMeaning();
 		if(descr == null) Util.IERR("IMPOSSIBLE: TESTING FAILED");
 		if(descr instanceof Variable var) {
-//			System.out.println("OADDR_Value.ofScode: descr="+descr.getClass().getSimpleName()+"  "+descr);
+//			IO.println("OADDR_Value.ofScode: descr="+descr.getClass().getSimpleName()+"  "+descr);
 			return new GeneralAddress(var.address, 0);
 		} else if(descr instanceof ConstDescr cns) {
 			return new GeneralAddress(cns.getAddress(), 0);
@@ -71,8 +71,8 @@ public class GeneralAddress extends Value {
 		if(other instanceof IntegerValue ival) {
 			return new GeneralAddress(this.base, this.ofst + ival.value);
 //		} else if(other instanceof ObjectAddress oaddr) {
-//			System.out.println("ObjectAddress.add: this="+this);
-//			System.out.println("ObjectAddress.add: other="+other);
+//			IO.println("ObjectAddress.add: this="+this);
+//			IO.println("ObjectAddress.add: other="+other);
 //			if(!oaddr.segID.equals(segID))
 //				Util.IERR("Illegal ObjectAddress'add operation: "+oaddr.segID+" != "+segID);
 //			return new ObjectAddress(this.segID, this.ofst + oaddr.ofst);
@@ -96,7 +96,7 @@ public class GeneralAddress extends Value {
 	}
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("Value.write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
 		oupt.writeKind(Scode.S_C_GADDR);
 		base.write(oupt);
 		oupt.writeShort(ofst);

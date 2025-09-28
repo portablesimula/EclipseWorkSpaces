@@ -92,16 +92,16 @@ public class StructuredConst extends Value {
 				rep.values=new Vector<Value>();
 				do {
 					Value val=parseValue(constflag);
-//			    	System.out.println("StructuredConst.parse(0): val="+val);
+//			    	IO.println("StructuredConst.parse(0): val="+val);
 					rep.values.add(val);
 				} while(Parser.accept(KeyWord.COMMA));
 				Parser.expect(KeyWord.ENDPAR);
-//		    	System.out.println("StructuredConst.parse(1): elt="+elt);
+//		    	IO.println("StructuredConst.parse(1): elt="+elt);
 			} else {
 				elt=parseValue(constflag);
-		    	//System.out.println("StructuredConst.parse(2): elt="+elt.getClass().getSimpleName()+"  "+elt);
+		    	//IO.println("StructuredConst.parse(2): elt="+elt.getClass().getSimpleName()+"  "+elt);
 			}
-	    	//System.out.println("StructuredConst.parse: elt="+elt);
+	    	//IO.println("StructuredConst.parse: elt="+elt);
 	    	if(elt==null) Util.STOP();
 			strcns.attributeValues.add(new AttributeValue(ident,elt));
 		} while(Parser.accept(KeyWord.COMMA)); // then goto L;
@@ -120,7 +120,7 @@ public class StructuredConst extends Value {
 		Type cnstype;
 		int fixrep;
 		enterLine();
-//			System.out.println("StructuredConst.doOutConst: "+this);
+//			IO.println("StructuredConst.doOutConst: "+this);
 			sCode.outinst(S_C_RECORD);
 			Record rec=(Record) Declaration.findMeaning(this.ident);
 			sCode.outtag(rec.getTag());
@@ -139,8 +139,8 @@ public class StructuredConst extends Value {
 	// ***********************************************************************************************
 
 	public static int outstruct(Record rec,Vector<AttributeValue> set) {
-//		System.out.println("StructuredConst.outstruct: QUAL="+rec.getClass().getSimpleName()+", set.size="+set.size()+", rec="+rec);
-//		for(AttributeValue atr:set) System.out.println("StructuredConst.outstruct: atr="+atr);
+//		IO.println("StructuredConst.outstruct: QUAL="+rec.getClass().getSimpleName()+", set.size="+set.size()+", rec="+rec);
+//		for(AttributeValue atr:set) IO.println("StructuredConst.outstruct: atr="+atr);
 		int result=0;
 		if(rec.prefixIdentifier != null && rec.prefixIdentifier.length()>0) {
 			Record prefix=(Record) Declaration.findMeaning(rec.prefixIdentifier);
@@ -175,7 +175,7 @@ public class StructuredConst extends Value {
 				sCode.outinst(S_ATTR); sCode.outtag(q.getTag());
 				q.type.toSCode(); //OldType.outtype(q.type);
 //				attrValue=getAttributeValue(q.identifier,set);
-//				System.out.println("StructuredConst.outAtrset: symbol="+q.identifier+"  ==>  "+attrValue+" =============================================================");
+//				IO.println("StructuredConst.outAtrset: symbol="+q.identifier+"  ==>  "+attrValue+" =============================================================");
 //				if(attrValue==null) q.type.toDefaultSCode();
 //				else
 				if(attrValue.value==null) {
@@ -191,7 +191,7 @@ public class StructuredConst extends Value {
 				}
 				sCode.outcode();
 			}
-//			System.out.println("StructuredConst.outAtrset: AFTER symbol="+q.identifier+"  ==>  "+attrValue+" =============================================================");
+//			IO.println("StructuredConst.outAtrset: AFTER symbol="+q.identifier+"  ==>  "+attrValue+" =============================================================");
 		}
 //		printAttrValueSet("StructuredConst.outAtrset: AFTER OUTPUT",set);
 //		checkAndClearMatched(rec,set);
@@ -203,7 +203,7 @@ public class StructuredConst extends Value {
 		for(AttributeValue val:set) {
 			if(!val.matched) {
 				Util.println("Unmatched: "+val);
-				System.out.println("XX-Extra unmatched element(s) in constant "+val+" in RECORD "+rec);
+				IO.println("XX-Extra unmatched element(s) in constant "+val+" in RECORD "+rec);
 				ERROR("XX-Extra unmatched element(s) in constant "+val+" in RECORD "+rec.identifier);
 			}
 			val.matched=false;

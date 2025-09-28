@@ -23,21 +23,21 @@ public class Util {
 	public static void println(String s) {
 		if(Global.console != null)
 			Global.console.write(s + '\n');
-		System.out.println(s);
+		IO.println(s);
 	}
 
 	public static void WARNING(String msg) {
 		if(Global.SCODE_INPUT_TRACE) {
 			Scode.flushTraceBuff();
 		}
-		System.out.println("ERROR: " + msg);
+		IO.println("ERROR: " + msg);
 	}
 
 	public static void ERROR(String msg) {
 		if(Global.SCODE_INPUT_TRACE) {
 			Scode.flushTraceBuff();
 		}
-		System.out.println("ERROR: " + msg);
+		IO.println("ERROR: " + msg);
 	}
 
 	public static void IERR(String msg) {
@@ -53,7 +53,7 @@ public class Util {
 	 */
 	public static void TRACE_OUTPUT(final String msg) {
 		if (Global.ATTR_OUTPUT_TRACE)
-			System.out.println("ATTR OUTPUT: " + msg);
+			IO.println("ATTR OUTPUT: " + msg);
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class Util {
 	 */
 	public static void TRACE_INPUT(final String msg) {
 		if (Global.ATTR_INPUT_TRACE)
-			System.out.println("ATTR INPUT: " + msg);
+			IO.println("ATTR INPUT: " + msg);
 	}
 
 
@@ -74,11 +74,11 @@ public class Util {
 	public static InputStream getConsoleInputStream() {
 		try {
 			Class<?> console = getClass("simula.compiler.utilities.ConsolePanel", "sim.Console");
-			System.out.println("Util.getConsoleReader: console="+console);
+			IO.println("Util.getConsoleReader: console="+console);
 			Field field_current = console.getDeclaredField("current");
-			System.out.println("Util.getConsoleReader: field_current="+field_current);
+			IO.println("Util.getConsoleReader: field_current="+field_current);
 			Method getInputStream = console.getDeclaredMethod("getInputStream");
-			System.out.println("Util.getConsoleReader: getInputStream="+getInputStream);
+			IO.println("Util.getConsoleReader: getInputStream="+getInputStream);
 			Object object = field_current.get(console);
 			return (InputStream) getInputStream.invoke(object);
 		} catch(Exception e) { e.printStackTrace(); return null; }
@@ -87,11 +87,11 @@ public class Util {
 	public static OutputStream getConsoleOutputStream() {
 		try {
 			Class<?> console = getClass("simula.compiler.utilities.ConsolePanel", "sim.Console");
-			System.out.println("Util.getConsoleWriter: console="+console);
+			IO.println("Util.getConsoleWriter: console="+console);
 			Field field_current = console.getDeclaredField("current");
-			System.out.println("Util.getConsoleWriter: field_current="+field_current);
+			IO.println("Util.getConsoleWriter: field_current="+field_current);
 			Method getOutputStream = console.getDeclaredMethod("getOutputStream");
-			System.out.println("Util.getConsoleWriter: getOutputStream="+getOutputStream);
+			IO.println("Util.getConsoleWriter: getOutputStream="+getOutputStream);
 			Object object = field_current.get(console);
 			return (OutputStream) getOutputStream.invoke(object);
 		} catch(Exception e) { e.printStackTrace(); return null; }
@@ -100,11 +100,11 @@ public class Util {
 	public static Reader getConsoleReader() {
 		try {
 			Class<?> console = getClass("simula.compiler.utilities.ConsolePanel", "sim.Console");
-			System.out.println("Util.getConsoleReader: console="+console);
+			IO.println("Util.getConsoleReader: console="+console);
 			Field field_current = console.getDeclaredField("current");
-			System.out.println("Util.getConsoleReader: field_current="+field_current);
+			IO.println("Util.getConsoleReader: field_current="+field_current);
 			Method getReader = console.getDeclaredMethod("getReader");
-			System.out.println("Util.getConsoleReader: getReader="+getReader);
+			IO.println("Util.getConsoleReader: getReader="+getReader);
 			Object object = field_current.get(console);
 			return (Reader) getReader.invoke(object);
 		} catch(Exception e) { e.printStackTrace(); return null; }
@@ -113,11 +113,11 @@ public class Util {
 	public static Writer getConsoleWriter() {
 		try {
 			Class<?> console = getClass("simula.compiler.utilities.ConsolePanel", "sim.Console");
-			System.out.println("Util.getConsoleWriter: console="+console);
+			IO.println("Util.getConsoleWriter: console="+console);
 			Field field_current = console.getDeclaredField("current");
-			System.out.println("Util.getConsoleWriter: field_current="+field_current);
+			IO.println("Util.getConsoleWriter: field_current="+field_current);
 			Method getWriter = console.getDeclaredMethod("getWriter");
-			System.out.println("Util.getConsoleWriter: getWriter="+getWriter);
+			IO.println("Util.getConsoleWriter: getWriter="+getWriter);
 			Object object = field_current.get(console);
 			return (Writer) getWriter.invoke(object);
 		} catch(Exception e) { e.printStackTrace(); return null; }
@@ -138,7 +138,7 @@ public class Util {
 	public static int exec(String... cmd) throws IOException {
 		String line="";
 		for(int i=0;i<cmd.length;i++) line=line+" "+cmd[i];
-        System.out.println("MakeSML.execute: command="+line);
+        IO.println("MakeSML.execute: command="+line);
 		ProcessBuilder processBuilder = new ProcessBuilder(cmd);
 		processBuilder.redirectErrorStream(true);
 		try {
@@ -148,14 +148,14 @@ public class Util {
 				while (output.available() > 0) {
 					System.out.append((char) output.read());
 				}
-//				System.out.println("ALIVE: "+process.isAlive());
+//				IO.println("ALIVE: "+process.isAlive());
 			}
-//			System.out.println("RETURN: "+process.exitValue());
+//			IO.println("RETURN: "+process.exitValue());
 //			Thread.dumpStack();
 			return (process.exitValue());
 
 		} catch(Exception e) {
-			System.out.println("ERROR: "+e);
+			IO.println("ERROR: "+e);
 			throw new RuntimeException("Process Execution failed: " + line, e);
 		}
 	}

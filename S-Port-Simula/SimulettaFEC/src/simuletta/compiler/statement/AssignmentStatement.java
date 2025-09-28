@@ -84,7 +84,7 @@ public class AssignmentStatement extends Statement {
 	// ***********************************************************************************************
 	public void doSCodeStatement() {
 		enterLine();
-			//System.out.println("AssignmentStatement.doSCodeStatement QUAL="+x.getClass().getSimpleName()+", x="+x);
+			//IO.println("AssignmentStatement.doSCodeStatement QUAL="+x.getClass().getSimpleName()+", x="+x);
         	Type xtype=x.doSCodingDirect();
         	while(nassign != 0) {
         		nassign=nassign-1;

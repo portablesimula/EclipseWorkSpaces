@@ -39,8 +39,8 @@ public final class MakeSetup {
 	public static final String RELEASE_ID = "SPort-1.0";
 	private final static int REVISION = 1;
 	
-//	private final static boolean EARLY_ACCESS = true;   // Used to produce an Early Access
-	private final static boolean EARLY_ACCESS = false;  // Used to produce a Release
+	private final static boolean EARLY_ACCESS = true;   // Used to produce an Early Access
+//	private final static boolean EARLY_ACCESS = false;  // Used to produce a Release
 	
 	private final static String SETUP_TEMPS="C:/GitHub/MakeSetup_Temps";
 	private final static String RELEASE_HOME=SETUP_TEMPS+"/"+RELEASE_ID;
@@ -89,17 +89,17 @@ public final class MakeSetup {
 //		   String SETUP_SRC=SIMULA_ROOT+"\\src\\make\\setup";
 		   String SETUP_SRC=SETUP_ROOT+"\\src\\make\\setup";
 		   File installerManifestFile=new File(SETUP_SRC+"\\InstallerManifest.MF");
-		   System.out.println("installerManifestFile: "+installerManifestFile);
+		   IO.println("installerManifestFile: "+installerManifestFile);
 		   Manifest manifest=new Manifest();
 		   InputStream inputStream=new FileInputStream(installerManifestFile);
 		   manifest.read(inputStream);
 		   Attributes main=manifest.getMainAttributes();
-		   System.out.println("Main-Class: "+main.getValue("Main-Class"));
-		   System.out.println("sPort-Revision: "+main.getValue("sPort-Revision"));
+		   IO.println("Main-Class: "+main.getValue("Main-Class"));
+		   IO.println("sPort-Revision: "+main.getValue("sPort-Revision"));
 		   main.putValue("sPort-Revision",""+REVISION);
 		   main.putValue("sPort-Setup-Dated",""+setupDated);
-		   System.out.println("sPort-Revision: "+main.getValue("sPort-Revision"));
-		   System.out.println("sPort-Setup-Dated: "+main.getValue("sPort-Setup-Dated"));
+		   IO.println("sPort-Revision: "+main.getValue("sPort-Revision"));
+		   IO.println("sPort-Setup-Dated: "+main.getValue("sPort-Setup-Dated"));
 		   OutputStream outputStream=new FileOutputStream(installerManifestFile);
 		   manifest.write(outputStream);
 		} catch(Exception e) { e.printStackTrace(); }
@@ -119,10 +119,10 @@ public final class MakeSetup {
 	
 	private static void loadProperties() {
 		String USER_HOME=System.getProperty("user.home");
-		System.out.println("USER_HOME="+USER_HOME);
+		IO.println("USER_HOME="+USER_HOME);
 //		File setupPropertiesDir=new File(USER_HOME+File.separatorChar+".simula");
 		File setupPropertiesDir=new File(GITHUB_ROOT+"\\github.io\\setup");
-		System.out.println("setupPropertiesDir="+setupPropertiesDir);
+		IO.println("setupPropertiesDir="+setupPropertiesDir);
 		setupPropertiesDir.mkdirs();
 		setupPropertiesFile=new File(setupPropertiesDir,"setupProperties.xml");
 		setupProperties = new Properties();
@@ -145,7 +145,7 @@ public final class MakeSetup {
 		File source=new File(SPORT_HOME+"/RTS");
 		String target=RELEASE_HOME+"/RTS";
 		printHeading("Copy Simula RuntimeSystem "+source+" ===> "+target);
-        System.out.println("MakeCompiler.copySimulaRuntimeSystem: target="+target);
+        IO.println("MakeCompiler.copySimulaRuntimeSystem: target="+target);
 		copyFolder(source,new File(target),true);
 		list(source);
 	}
@@ -157,15 +157,15 @@ public final class MakeSetup {
 		printHeading("Copy SIM, FEC and BEC into "+RELEASE_HOME);
 		copyFile("SIM.jar");
 		copyFile("SimulaFEC.jar");
-		copyFile("BEC.jar");
+		copyFile("CommonBEC.jar");
 		copyFile("runSimulaEditor.bat");
 	}
 	private static void copyFile(String fileName) throws IOException	{
 		File source=new File(SPORT_HOME+"/" + fileName);
 		File target=new File(RELEASE_HOME+"/" + fileName);
 		target.mkdirs();
-		System.out.println("source="+source);
-		System.out.println("target="+target);
+		IO.println("source="+source);
+		IO.println("target="+target);
 		Files.copy(source.toPath(), target.toPath(), REPLACE_EXISTING);
 	}
 
@@ -183,8 +183,8 @@ public final class MakeSetup {
 		File source=new File(SPORT_HOME+"/icons/"+fileName);
 		File target=new File(RELEASE_HOME+"/icons/"+fileName);
 		target.mkdirs();
-		System.out.println("source="+source);
-		System.out.println("target="+target);
+		IO.println("source="+source);
+		IO.println("target="+target);
 		Files.copy(source.toPath(), target.toPath(), REPLACE_EXISTING);
 	}
 	
@@ -218,11 +218,11 @@ public final class MakeSetup {
 	// *** COPY FOLDER
 	// ***************************************************************
 	static private void copyFolder(File source, File target,boolean copySubFolders) throws IOException {
-		System.out.println("COPY: "+source+" ==> "+target);
+		IO.println("COPY: "+source+" ==> "+target);
 		target.mkdirs();
 	    for(File file: source.listFiles()) {
 	        File fileDest = new File(target, file.getName());
-	        //System.out.println(fileDest.getAbsolutePath());
+	        //IO.println(fileDest.getAbsolutePath());
 	        if(file.isDirectory()) {
 	            if(copySubFolders) copyFolder(file, fileDest, copySubFolders);
 	        } else {
@@ -279,15 +279,15 @@ public final class MakeSetup {
 		File source=new File(SETUP_SRC+"/sim.png");
 		File target=new File(INSTALLER_BIN+"/make/setup/sim.png");
 		target.mkdirs();
-		System.out.println("source="+source);
-		System.out.println("target="+target);
+		IO.println("source="+source);
+		IO.println("target="+target);
 		Files.copy(source.toPath(), target.toPath(), REPLACE_EXISTING);
 			
 		String installerManifest=SETUP_SRC+"/InstallerManifest.MF";
 		
 		String files=" -C "+RELEASE_HOME+"."  // Complete Simula Release
 				    +" -C "+INSTALLER_BIN+" ./make/setup";
-		System.out.println("jar cmf "+installerManifest+" "+SETUP_TEMPS+"/"+SETUP_IDENT+".jar"+files);
+		IO.println("jar cmf "+installerManifest+" "+SETUP_TEMPS+"/"+SETUP_IDENT+".jar"+files);
 		
 		exec("jar", "cmf", installerManifest, SETUP_TEMPS+"/"+SETUP_IDENT+".jar",
 				"-C",RELEASE_HOME, ".",  // Complete Simula Release
@@ -304,13 +304,13 @@ public final class MakeSetup {
 	private static void copySetupJAR() throws IOException	{
 		File source=new File(SETUP_TEMPS+"/"+SETUP_IDENT+".jar");
 		File target2=new File(GITHUB_ROOT+"/github.io/setup/"+SETUP_IDENT+".jar");
-		System.out.println("source="+source);
-		System.out.println("target2="+target2);
+		IO.println("source="+source);
+		IO.println("target2="+target2);
 		Files.copy(source.toPath(), target2.toPath(), REPLACE_EXISTING);
 		if(! EARLY_ACCESS) {
 			String SETUP_IDENT_WITH_REVISION=SETUP_IDENT+"-R"+REVISION+".jar"; // E.g: simula-setup-r28.jar
 			File target1=new File(GITHUB_ROOT+"/github.io/setup/"+SETUP_IDENT_WITH_REVISION);
-			System.out.println("target1="+target1);
+			IO.println("target1="+target1);
 			Files.copy(source.toPath(), target1.toPath(), REPLACE_EXISTING);
 
 		}
@@ -332,16 +332,16 @@ public final class MakeSetup {
 	public static int exec(String... cmd) throws IOException {
 		String cmdLine="";
 		for(int i=0;i<cmd.length;i++) cmdLine=cmdLine+" "+cmd[i];
-        System.out.println("SIM.Util.exec: command ="+cmdLine);
+        IO.println("SIM.Util.exec: command ="+cmdLine);
 		ProcessBuilder processBuilder = new ProcessBuilder(cmd);
-		System.out.println("SIM.Util.exec: processBuilder = "+processBuilder);
+		IO.println("SIM.Util.exec: processBuilder = "+processBuilder);
 		processBuilder.inheritIO();
 		processBuilder.redirectErrorStream();
 		try {
 			Process process = processBuilder.start();
-			System.out.println("SIM.Util.exec: process = "+process);
+			IO.println("SIM.Util.exec: process = "+process);
 			int exitCode = process.waitFor();
-			System.out.println("SIM.Util.exec: exitCode = "+exitCode);
+			IO.println("SIM.Util.exec: exitCode = "+exitCode);
 			return exitCode;
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -352,9 +352,9 @@ public final class MakeSetup {
 
 	
 	private static void printHeading(String heading) {
-		System.out.println("************************************************************************************************************************************");
-		System.out.println("*** "+heading);
-		System.out.println("************************************************************************************************************************************");
+		IO.println("************************************************************************************************************************************");
+		IO.println("*** "+heading);
+		IO.println("************************************************************************************************************************************");
 	}
 	
 }

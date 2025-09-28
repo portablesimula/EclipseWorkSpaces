@@ -9,13 +9,14 @@ import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Type;
 import bec.util.Util;
+import bec.virtualMachine.RTRegister;
 
 public class BecCompiler {
 	String programHead;
 	static String scodeSource;
 	
 	public static void main(String[] argv) {
-		Global.console = new Terminal("Runtime Console");
+//		Global.console = new Terminal("Runtime Console");
 //		Terminal terminal = new Terminal("Runtime Console");
 //		System.setIn(terminal.getInputStream());
 //		System.setOut(terminal.getOutputStream());
@@ -30,6 +31,7 @@ public class BecCompiler {
 				else if (arg.equalsIgnoreCase("-traceSVM_DATA")) Global.PRINT_GENERATED_SVM_DATA = true;
 				else if (arg.equalsIgnoreCase("-verbose")) Global.verbose = true;
 				else if (arg.equalsIgnoreCase("-execVerbose")) Global.execVerbose = true;
+				else if (arg.equalsIgnoreCase("-nopopup")) Global.nopopup = true;
 				else if (arg.equalsIgnoreCase("-execTrace")) Global.EXEC_TRACE = 1;
 				else if (arg.equalsIgnoreCase("-callTrace")) Global.CALL_TRACE_LEVEL = 2;
 				else if (arg.equalsIgnoreCase("-dumpsAtExit")) Global.DUMPS_AT_EXIT = true;
@@ -45,6 +47,7 @@ public class BecCompiler {
 			Util.ERROR("no input file specified");
 			help();
 		}
+		if(! Global.nopopup) Global.console = new Terminal("Runtime Console");
 		
 		new BecCompiler(scodeSource);
 	}
@@ -54,22 +57,22 @@ public class BecCompiler {
 	 * Print synopsis of standard options
 	 */
 	private static void help() {
-		System.out.println("");
-		System.out.println("Usage: java -jar SportBEC.jar  [options]  ScodeFile ");
-		System.out.println("");
-		System.out.println("possible options include:");
-		System.out.println("  -becVerbose  Output messages about what the compiler is doing");
-		System.out.println("  -execVerbose Output messages about what the executor is doing");
-		System.out.println("  -help        Print this synopsis of standard options");
-		System.out.println("  -inputTrace  Produce input Scode trace");
-		System.out.println("  -listing     Produce pretty Scode listing");
-		System.out.println("  -execTrace   Produce instruction trace during execution");
-		System.out.println("  -callTrace   Produce routine call trace during execution");
-		System.out.println("  -dumpsAtExit Produce certain dumps at en of execution");
-		System.out.println("");
-		System.out.println("sourceFile ::= S-Code Source File");
+		IO.println("");
+		IO.println("Usage: java -jar CommonBEC.jar  [options]  ScodeFile ");
+		IO.println("");
+		IO.println("possible options include:");
+		IO.println("  -verbose  Output messages about what the compiler is doing");
+		IO.println("  -execVerbose Output messages about what the executor is doing");
+		IO.println("  -help        Print this synopsis of standard options");
+		IO.println("  -inputTrace  Produce input Scode trace");
+		IO.println("  -listing     Produce pretty Scode listing");
+		IO.println("  -execTrace   Produce instruction trace during execution");
+		IO.println("  -callTrace   Produce routine call trace during execution");
+		IO.println("  -dumpsAtExit Produce certain dumps at en of execution");
+		IO.println("");
+		IO.println("sourceFile ::= S-Code Source File");
 
-		System.out.println("BecCompiler.help - Exit: ");
+		IO.println("BecCompiler.help - Exit: ");
 		Thread.dumpStack();
 		System.exit(0);
 	}
@@ -93,6 +96,7 @@ public class BecCompiler {
 		Global.ifDepth = 0;
 		Scode.initScode();
 		Type.init();
+		RTRegister.init();
 
 		Thread.currentThread().setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
 			public void uncaughtException(Thread thread, Throwable e) {
@@ -123,7 +127,10 @@ public class BecCompiler {
 			}
 		} else Util.IERR("Illegal S-Program");
 		
-		if(Global.verbose) Util.println("DONE: BecCompiler: " + scodeSource);
+		if(Global.verbose) {
+			Util.println("DONE: BecCompiler: " + scodeSource);
+			RTRegister.printSummary();
+		}
 	}
 
 }

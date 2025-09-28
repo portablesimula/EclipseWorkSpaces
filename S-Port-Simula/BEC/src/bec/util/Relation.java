@@ -24,8 +24,8 @@ public class Relation {
 		Scode.inputInstr();
 		Relation rel = new Relation(Scode.curinstr);
 		if(DEBUG) {
-			System.out.println("Relation.ofScode: CurInstr="+Scode.edInstr(Scode.curinstr));
-			System.out.println("Relation.ofScode: relation="+Scode.edInstr(rel.relation));
+			IO.println("Relation.ofScode: CurInstr="+Scode.edInstr(Scode.curinstr));
+			IO.println("Relation.ofScode: relation="+Scode.edInstr(rel.relation));
 		}
 		switch(rel.relation) {
 			case Scode.S_LT, Scode.S_LE, Scode.S_EQ,
@@ -77,7 +77,7 @@ public class Relation {
 				case Scode.S_NE: res = /* 0 != 0 */ false; break;
 			}
 		}
-//		System.out.println("Relation.compare: " + lhs + " " + this + " " + rhs + " ==> " + res);
+//		IO.println("Relation.compare: " + lhs + " " + this + " " + rhs + " ==> " + res);
 		return res;
 	}
 	
@@ -91,7 +91,7 @@ public class Relation {
 			case Scode.S_GT: res = LHS >  RHS; break;
 			case Scode.S_NE: res = LHS != RHS; break;
 		}
-//		System.out.println("Segment.compare: " + LHS + " " + Scode.edInstr(relation) + " " + RHS + " ==> " + res);
+//		IO.println("Segment.compare: " + LHS + " " + Scode.edInstr(relation) + " " + RHS + " ==> " + res);
 //		Util.IERR("");
 		return res;		
 	}
@@ -165,14 +165,14 @@ public class Relation {
 		nErr += TEST(v66,  Scode.S_NE, v66, false);
 		
 
-		System.out.println("Number of errors: " + nErr);
+		IO.println("Number of errors: " + nErr);
 	}
 	
 	private static int TEST(Value lhs, int code, Value rhs, boolean expected) {
 		Relation rel = new Relation(code);
 		boolean b = rel.compare(lhs, rhs);
 		if(b != expected) {
-			System.out.println("TEST: " + lhs + " " + rel + " " + rhs + " ==> " + b);
+			IO.println("TEST: " + lhs + " " + rel + " " + rhs + " ==> " + b);
 			return 1;
 		}
 		return 0;

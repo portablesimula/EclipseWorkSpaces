@@ -37,8 +37,8 @@ public abstract class FDEST extends Instruction {
 		instr.destination = Global.PSEG.nextAddress();
       	Global.PSEG.emit(new SVM_NOOP(), "FDEST " + destination);
       	if(DEBUG) {
-//      		System.out.println("FDEST.ofScode: FIXUP["+addr.ofst+"]: "+instr);
-      		System.out.println("FDEST.ofScode: FIXUP["+addr.getOfst()+"]: "+instr);
+//      		IO.println("FDEST.ofScode: FIXUP["+addr.ofst+"]: "+instr);
+      		IO.println("FDEST.ofScode: FIXUP["+addr.getOfst()+"]: "+instr);
 			Global.PSEG.dump("FDEST.ofScode: FIXUP: ");
 //			Util.IERR(""+this);
       	}

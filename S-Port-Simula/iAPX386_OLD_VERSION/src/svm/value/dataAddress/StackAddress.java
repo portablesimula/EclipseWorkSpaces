@@ -26,7 +26,7 @@ public class StackAddress extends DataAddress {
 	
 	@Override
 	public void store(int idx, Value value, String comment) {
-//		System.out.println("DataAddress.store: "+value+"  "+this);
+//		IO.println("DataAddress.store: "+value+"  "+this);
 //		RTStack.dumpRTStack("DataAddress.store: "+this);
 		RTStack.store(ofst + idx, value, comment);
 //		RTStack.dumpRTStack("DataAddress.store: "+this);
@@ -36,7 +36,7 @@ public class StackAddress extends DataAddress {
 	@Override
 	public Value load(int idx) {
 		Value value = RTStack.load(ofst + idx);
-//		System.out.println("DataAddress.load: value="+value);
+//		IO.println("DataAddress.load: value="+value);
 		Util.IERR("");
 		return value;
 	}
@@ -53,16 +53,16 @@ public class StackAddress extends DataAddress {
 		this.kind = DataAddress.STACK_ADDR;
 		this.type = Type.T_OADDR;
 		ofst = inpt.readShort();
-//		System.out.println("DataAddress.read: " + this);
+//		IO.println("DataAddress.read: " + this);
 	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("RTStackAddress.write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("RTStackAddress.write: " + this);
 		oupt.writeKind(Scode.S_C_OADDR);
 		oupt.writeKind(kind);
 		oupt.writeShort(ofst);
-//		System.out.println("DataAddress.write: " + this + "   segID="+segID+", ofst="+ofst);
+//		IO.println("DataAddress.write: " + this + "   segID="+segID+", ofst="+ofst);
 	}
 
 //	public void writeBody(AttributeOutputStream oupt) throws IOException {

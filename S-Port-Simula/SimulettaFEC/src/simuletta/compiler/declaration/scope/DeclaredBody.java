@@ -75,7 +75,7 @@ public class DeclaredBody extends DeclarationScope implements Externalizable {
 
     public static DeclaredBody doParse(boolean visibleflag) {
 		Parser.TRACE("Grammar.declarations: BODY: visibleflag="+visibleflag);
-		//System.out.println("Grammar.declarations: BODY");
+		//IO.println("Grammar.declarations: BODY");
         if(!currentScope.isCurrentModule()) ERROR("Misplaced Routine Body");
         Parser.expect(KeyWord.BEGPAR);
         String rutProfileIdentifier=Parser.expectIdentifier();
@@ -176,7 +176,7 @@ public class DeclaredBody extends DeclarationScope implements Externalizable {
 		if(visible) s.append("visible ");
 		s.append("body ");
 		s.append(identifier).append(';');
-		System.out.println(s.toString());
+		IO.println(s.toString());
 		for(Declaration d:declarationList) d.print("",indent);
 	}
 

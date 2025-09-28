@@ -72,13 +72,13 @@ public class SVM_SAVE extends SVM_Instruction {
 			
 			if(DEBUG) {
 //				RTUtil.dumpEntity(saveObj);
-//				System.out.println("RTStack.saveStack:    SAVE-RESTORE  entitySize = " + entitySize);
-//				System.out.println("RTStack.saveStack:    SAVE-RESTORE  Size = " + size);
+//				IO.println("RTStack.saveStack:    SAVE-RESTORE  entitySize = " + entitySize);
+//				IO.println("RTStack.saveStack:    SAVE-RESTORE  Size = " + size);
 			}
 			for(int i=0;i<size;i++) {
 				Value item = RTStack.pop();
 				if(DEBUG) {
-					System.out.println("RTStack.saveStack:    SAVE-RESTORE " + item + " ===> saveObj("+(saveEntityHead + i)+")");
+					IO.println("RTStack.saveStack:    SAVE-RESTORE " + item + " ===> saveObj("+(saveEntityHead + i)+")");
 				}
 				saveObj.store(saveEntityHead + i, item, "");
 			}
@@ -98,12 +98,12 @@ public class SVM_SAVE extends SVM_Instruction {
 	// ***********************************************************************************************
 	private SVM_SAVE(AttributeInputStream inpt) throws IOException {
 		this.opcode = SVM_Instruction.iSAVE;
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + this);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 	}
 

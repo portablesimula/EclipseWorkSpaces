@@ -26,17 +26,17 @@ public class NamedStack<E> extends Stack<E> {
 		String lead = indent + title + ": Current Stack " + ident;
 //		if(stack.empty()) {
 		if(this.size() == 0) {
-			System.out.println(lead + ": **Empty**");				
+			IO.println(lead + ": **Empty**");				
 		} else {
-			System.out.println(lead);
+			IO.println(lead);
 			lead = indent + "        TOS: ";
 			for(int i=this.size()-1;i>=0;i--) {
 				E item = this.get(i);
 //				String mode = item.edMode();
-//				if(item instanceof ProfileItem) System.out.println(lead+"PROFILE:  " + item);
-//				else if(item instanceof AddressItem) System.out.println(lead+"REF:      " + item);
-//				else System.out.println(lead+"VAL:      " + item.getClass().getSimpleName() + "  " + item);
-				System.out.println(lead + item);
+//				if(item instanceof ProfileItem) IO.println(lead+"PROFILE:  " + item);
+//				else if(item instanceof AddressItem) IO.println(lead+"REF:      " + item);
+//				else IO.println(lead+"VAL:      " + item.getClass().getSimpleName() + "  " + item);
+				IO.println(lead + item);
 				lead = indent + "             ";					
 			}
 		}

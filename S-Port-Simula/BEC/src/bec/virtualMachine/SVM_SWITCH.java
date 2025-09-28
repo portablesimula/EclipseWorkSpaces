@@ -47,12 +47,12 @@ public class SVM_SWITCH extends SVM_Instruction {
 		for(int i=0;i<n;i++) {
 			DESTAB[i] = (ProgramAddress) Value.read(inpt);
 		}		
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + this);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		int n = DESTAB.length;
 		oupt.writeShort(n);

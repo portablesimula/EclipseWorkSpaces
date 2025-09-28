@@ -21,6 +21,7 @@ public class SVM_ENTER extends SVM_Instruction {
 		this.opcode = SVM_Instruction.iENTER;
 		this.rutIdent = rutIdent;
 		this.localSize = localSize;
+		RTRegister.checkMindMaskEmpty();
 	}
 
 	@Override
@@ -69,7 +70,7 @@ public class SVM_ENTER extends SVM_Instruction {
 	// ***********************************************************************************************
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		oupt.writeString(rutIdent);
 		oupt.writeShort(localSize);
@@ -77,7 +78,7 @@ public class SVM_ENTER extends SVM_Instruction {
 
 	public static SVM_ENTER read(AttributeInputStream inpt) throws IOException {
 		SVM_ENTER instr = new SVM_ENTER(inpt.readString(), inpt.readShort());
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + instr);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
 		return instr;
 	}
 

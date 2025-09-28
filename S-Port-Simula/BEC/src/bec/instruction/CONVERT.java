@@ -20,7 +20,7 @@ public abstract class CONVERT extends Instruction {
 	public static void ofScode() {
 //		CTStack.dumpStack("BEGIN CONVERT.ofScode: ");
 		Type toType = Type.ofScode();
-//		System.out.println("CONVERT: "+tos.getClass().getSimpleName());
+//		IO.println("CONVERT: "+tos.getClass().getSimpleName());
 
 		if(CTStack.TOS().type != toType) doConvert(toType);
 		
@@ -33,11 +33,11 @@ public abstract class CONVERT extends Instruction {
 		CTStackItem TOS = CTStack.TOS();
 		Type fromtype = TOS.type;
 		if(totype != fromtype) {
-			if(DEBUG) System.out.println("CONVERT.doConvert: " + TOS + " ==> " + totype);
+			if(DEBUG) IO.println("CONVERT.doConvert: " + TOS + " ==> " + totype);
 			Global.PSEG.emit(new SVM_CONVERT(fromtype.tag, totype.tag), "");
 			CTStack.pop(); CTStack.pushTempVAL(totype, 1, "CONVERT: ");
 			TOS.type = totype;
-			if(DEBUG) System.out.println("CONVERT.doConvert: " + totype + " ==> " + TOS);
+			if(DEBUG) IO.println("CONVERT.doConvert: " + totype + " ==> " + TOS);
 		}
 	}
 
@@ -45,7 +45,7 @@ public abstract class CONVERT extends Instruction {
 		FETCH.doFetch("CONVERT: ");
 		CTStackItem TOS = CTStack.TOS();
 		Type fromtype = TOS.type;
-		if(DEBUG) System.out.println("CONVERT.doConvert: " + TOS + " ==> " + totype);
+		if(DEBUG) IO.println("CONVERT.doConvert: " + TOS + " ==> " + totype);
 		Global.PSEG.emit(new SVM_CONVERT(fromtype.tag, totype.tag), "");
 		CTStack.pop(); CTStack.pushTempVAL(totype, 1, "CONVERT: ");
 	}

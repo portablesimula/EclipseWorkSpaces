@@ -29,11 +29,11 @@ import javax.swing.UIManager;
 public class Util {
 	
 	public static void warning(final String msg) {
-		System.out.println("WARNING: " + msg);
+		IO.println("WARNING: " + msg);
 	}
 	
 	public static void error(final String msg) {
-		System.out.println("ERROR: " + msg);
+		IO.println("ERROR: " + msg);
 	}
 
 	/// Utility method: ASSERT
@@ -57,7 +57,7 @@ public class Util {
 			}
 		}
 //		else
-		System.out.println("Util.println: " + s);
+		IO.println("Util.println: " + s);
 	}  
 
 	/// Print the internal error message: IMPOSSIBLE.
@@ -71,7 +71,7 @@ public class Util {
 //		String err = edLINE(": Internal error - " + msg);
 //		nError++;
 //		printError(err);
-		System.out.println("Internal error: " + msg);
+		IO.println("Internal error: " + msg);
 		Thread.dumpStack();
 //		FORCED_EXIT();
 		System.exit(-1);
@@ -89,7 +89,7 @@ public class Util {
 	/// @param msg the message to print
 	public static void TRACE(final String msg) {
 //		if (Option.TRACING)
-			System.out.println("TRACE " + Global.sourceLineNumber + ": " + msg);
+			IO.println("TRACE " + Global.sourceLineNumber + ": " + msg);
 	}
 	
 	public static boolean getBoolProperty(Properties properties, String key, boolean defaultValue) {
@@ -137,7 +137,7 @@ public class Util {
 		UIManager.put("OptionPane.background", Color.WHITE);
 		UIManager.put("Panel.background", Color.WHITE);
 		int answer = JOptionPane.showOptionDialog(null, msg, title, optionType, messageType, Global.sIcon, option, option[0]);
-		// System.out.println("doClose.saveDialog: answer="+answer);
+		// IO.println("doClose.saveDialog: answer="+answer);
 		UIManager.put("OptionPane.background", OptionPaneBackground);
 		UIManager.put("Panel.background", PanelBackground);
 		return (answer);
@@ -189,9 +189,9 @@ public class Util {
 	 * @param file the .jar file
 	 */
 	public static void listJarFile(final File file) {
-		System.out.println("---------  LIST .jar File: " + file + "  ---------");
+		IO.println("---------  LIST .jar File: " + file + "  ---------");
 		if (!(file.exists() && file.canRead())) {
-			System.out.println("ERROR: Can't read .jar file: " + file);
+			IO.println("ERROR: Can't read .jar file: " + file);
 			return;
 		}
 		JarFile jarFile = null;
@@ -202,7 +202,7 @@ public class Util {
 			Set<Object> keys = mainAttributes.keySet();
 			for (Object key : keys) {
 				String val = mainAttributes.getValue(key.toString());
-				System.out.println(key.toString() + "=\"" + val + "\"");
+				IO.println(key.toString() + "=\"" + val + "\"");
 			}
 
 			Enumeration<JarEntry> entries = jarFile.entries();
@@ -214,10 +214,10 @@ public class Util {
 				FileTime fileTime = entry.getLastModifiedTime();
 				String date = DateTimeFormatter.ofPattern("uuuu-MMM-dd HH:mm:ss", Locale.getDefault())
 						.withZone(ZoneId.systemDefault()).format(fileTime.toInstant());
-				System.out.println("Jar-Entry: " + size + "  " + date + "  \"" + entry + "\"");
+				IO.println("Jar-Entry: " + size + "  " + date + "  \"" + entry + "\"");
 			}
 		} catch (IOException e) {
-			System.out.println("IERR: Caused by: " + e);
+			IO.println("IERR: Caused by: " + e);
 		} finally {
 			if (jarFile != null)
 				try {
@@ -241,7 +241,7 @@ public class Util {
 	public static int exec(String... cmd) throws IOException {
 		String cmdLine="";
 		for(int i=0;i<cmd.length;i++) cmdLine=cmdLine+" "+cmd[i];
-        if(Option.verbose) System.out.println("SIM.Util.exec: command ="+cmdLine);
+        if(Option.verbose) IO.println("SIM.Util.exec: command ="+cmdLine);
 		ProcessBuilder processBuilder = new ProcessBuilder(cmd);
 //		processBuilder.inheritIO();
 //		processBuilder.redirectErrorStream();
@@ -251,13 +251,13 @@ public class Util {
 			BufferedReader errOut = process.errorReader(); // Process' error output
 			String line = null;
 			while((line = reader.readLine()) != null) {
-			    System.out.println(line);
+			    IO.println(line);
 				if(Global.consolePanel != null) {
 					Global.consolePanel.write(line + '\n');
 				}
 			}
 			while((line = errOut.readLine()) != null) {
-			    System.out.println(line);
+			    IO.println(line);
 				if(Global.consolePanel != null) {
 					Global.consolePanel.write(line + '\n');
 				}
@@ -269,7 +269,7 @@ public class Util {
 			
 			int exitCode = process.waitFor();
 			
-			if(Option.verbose) System.out.println("SIM.Util.exec: exitCode = "+exitCode);
+			if(Option.verbose) IO.println("SIM.Util.exec: exitCode = "+exitCode);
 			return exitCode;
 		} catch(Exception e) {
 			e.printStackTrace();

@@ -16,13 +16,14 @@ public class RunSingle_Simula_Testbatch {
 		sourceFileName = "C:/GitHub/EclipseWorkSpaces/S-Port-Simula/SimulaTestBatch/src/simulaTestBatch/"+name+".sim";
 
 		File file = new File(sourceFileName);
-		if(! file.exists()) { System.out.println("Sourcefile does not exist: "+file); System.exit(-1); }
+		if(! file.exists()) { IO.println("Sourcefile does not exist: "+file); System.exit(-1); }
 		
 		Vector<String> cmds = new Vector<String>();
 		cmds.add("java");
 		cmds.add("-jar");
 		cmds.add(Global.simdir + "/SIM.jar");
 		cmds.add("-nopopup");
+		cmds.add("-verbose");
 		
 //		cmds.add("-FEC:Listing");
 //		cmds.add("-FEC:SCodeTrace");
@@ -39,15 +40,16 @@ public class RunSingle_Simula_Testbatch {
 //		Option.verbose = true;
 		
 //		if(Option.verbose)
-			System.out.println("BEGIN SIMULA SIM: \"" + sourceFileName + '"');
+		IO.println("BEGIN SIMULA SIM: \"" + sourceFileName + '"');
+			IO.println("BEGIN SIMULA SIM: " + Global.simdir + "/SIM.jar");
 		try {
 			int exitCode = Util.exec(cmds);
 			if(exitCode != 0) {
-				System.out.println("SIM exitCode = "+exitCode);
+				IO.println("SIM exitCode = "+exitCode);
 				System.exit(-1);;
 			}
 		} catch (IOException e) {
-			System.out.println("SimulaFEC.callFEC - Exit: ");
+			IO.println("SimulaFEC.callFEC - Exit: ");
 			e.printStackTrace();
 			System.exit(0);
 		}
@@ -60,7 +62,7 @@ public class RunSingle_Simula_Testbatch {
 		
 		Vector<String> names = new Vector<String>();
 //		names.add("adHocPRE"); // Simula TestBatch Framework
-		names.add("adHoc00");
+//		names.add("adHoc00");
 //		names.add("adHoc01");
 //		names.add("adHoc02");
 //		names.add("adHoc03");
@@ -89,7 +91,7 @@ public class RunSingle_Simula_Testbatch {
 //		names.add("simtst19"); // OK:  Text concatenation and text expression evaluation.
 //		names.add("simtst20"); // OK:  Simple tests: integer relations <, <=, =, >=, > and <>
 //
-//		names.add("simtst21"); // OK:  Arrays of simple types and text.
+		names.add("simtst21"); // OK:  Arrays of simple types and text.
 //		names.add("simtst22"); // OK:  Test for-loops with various for-list elements
 //		names.add("simtst23"); // OK:  Type conversions in for step-until element.
 //		names.add("simtst24"); // OK:  Conditional statements with more complex Boolean expressions.
@@ -261,9 +263,9 @@ public class RunSingle_Simula_Testbatch {
 			doCompile(name);
 		}
 		
-		System.out.println("\n--- END OF SIMULA TESTBATCH");
+		IO.println("\n--- END OF SIMULA TESTBATCH");
 		long timeUsed  = System.currentTimeMillis( ) - startTimeMs;
-		System.out.println("\nElapsed Time: Approximately " + timeUsed/1000 + " sec.");
+		IO.println("\nElapsed Time: Approximately " + timeUsed/1000 + " sec.");
 
 	}
 

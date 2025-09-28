@@ -23,19 +23,19 @@ public class AttributeOutput {
 
 	
 //    public final void writeBoolean(boolean v) throws IOException {
-//    	if(TESTING) System.out.println("AttributeDataOutputStream.writeBoolean: "+v);
+//    	if(TESTING) IO.println("AttributeDataOutputStream.writeBoolean: "+v);
 //        out.write(v ? 1 : 0);
 //    }
 //
 //	
 //    public final void writeByte(int v) throws IOException {
-//    	if(TESTING) System.out.println("AttributeDataOutputStream.writeByte: "+v);
+//    	if(TESTING) IO.println("AttributeDataOutputStream.writeByte: "+v);
 //        out.write(v);
 //    }
 //
 //	
 //    public final void writeShort(int v) throws IOException {
-//    	if(TESTING) System.out.println("AttributeDataOutputStream.writeShort: "+v);
+//    	if(TESTING) IO.println("AttributeDataOutputStream.writeShort: "+v);
 ////        writeBuffer[0] = (byte)(v >>> 8);
 ////        writeBuffer[1] = (byte)(v >>> 0);
 ////        out.write(writeBuffer, 0, 2);
@@ -52,7 +52,7 @@ public class AttributeOutput {
 //
 //	
 //    public final void writeInt(int v) throws IOException {
-//		if(TESTING) System.out.println("AttributeDataOutputStream.writeInt: "+v);
+//		if(TESTING) IO.println("AttributeDataOutputStream.writeInt: "+v);
 ////        writeBuffer[0] = (byte)(v >>> 24);
 ////        writeBuffer[1] = (byte)(v >>> 16);
 ////        writeBuffer[2] = (byte)(v >>>  8);
@@ -92,7 +92,7 @@ public class AttributeOutput {
 //
 //	
 //    public final void writeKind(int v) throws IOException {
-//    	if(TESTING) System.out.println("AttributeDataOutputStream.writeKind: "+v);
+//    	if(TESTING) IO.println("AttributeDataOutputStream.writeKind: "+v);
 //    	if(USE_SYNCMARK) {
 //            out.write(91);
 //            out.write(92);
@@ -102,7 +102,7 @@ public class AttributeOutput {
 //
 //	
 //	public void writeIdent(String s) throws IOException {
-//		if(TESTING) System.out.println("AttributeDataOutputStream.writeIdent: \""+s+'"');
+//		if(TESTING) IO.println("AttributeDataOutputStream.writeIdent: \""+s+'"');
 //		Util.NOTIMPL("External I/O");
 //        int len = (s==null)?0:s.length();
 //        if(len > 255) throw new IllegalArgumentException("Too lomg identifier");
@@ -117,7 +117,7 @@ public class AttributeOutput {
 //
 //	
 //	public void writeString(String s) throws IOException {
-//		if(TESTING) System.out.println("AttributeDataOutputStream.writeString: \""+s+'"');
+//		if(TESTING) IO.println("AttributeDataOutputStream.writeString: \""+s+'"');
 //		Util.NOTIMPL("External I/O");
 //        int len = s.length();
 //        writeShort(len);
@@ -131,20 +131,20 @@ public class AttributeOutput {
 //
 //	
 //	public void writeTag(Tag tag) throws IOException {
-//    	if(TESTING) System.out.println("AttributeOutputStream.writeTag: "+tag);
+//    	if(TESTING) IO.println("AttributeOutputStream.writeTag: "+tag);
 //		tag.writeTag(this);
 //	}
 //
 //	
 //	public void writeType(Type type) throws IOException {
-//    	if(TESTING) System.out.println("AttributeOutputStream.writeType: "+type);
+//    	if(TESTING) IO.println("AttributeOutputStream.writeType: "+type);
 //		if(type==null) Type.writeNullType(this);
 //		else type.writeType(this);
 //	}
 //
 //	
 //	public void writeToken(Token token) throws IOException {
-//    	if(TESTING) System.out.println("AttributeOutputStream.writeToken: "+token.edToken());
+//    	if(TESTING) IO.println("AttributeOutputStream.writeToken: "+token.edToken());
 //		token.writeToken(this);
 //	}
 //

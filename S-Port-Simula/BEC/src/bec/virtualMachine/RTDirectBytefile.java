@@ -34,7 +34,7 @@ public class RTDirectBytefile extends RTByteFile {
 		}
 		MAXLOC = Integer.MAX_VALUE - 1;
 		try {
-//			System.out.println("NEW RTDirectBytefile: fileName=" + fileName);
+//			IO.println("NEW RTDirectBytefile: fileName=" + fileName);
 			String mode = "rws"; // mode is one of "r", "rw", "rws", or "rwd"
 			if (fileAction._SYNCHRONOUS)
 				mode = "rws";
@@ -72,7 +72,7 @@ public class RTDirectBytefile extends RTByteFile {
 				randomAccessFile.close();
 			randomAccessFile = null;
 		} catch (IOException e) {
-			System.out.println("clfile failed" + e);
+			IO.println("clfile failed" + e);
 			RTUtil.set_STATUS(17);
 		}
 	}
@@ -85,7 +85,7 @@ public class RTDirectBytefile extends RTByteFile {
 			return (0);
 
 		} catch (IOException e) {
-			System.out.println("Outbyte failed" + e);
+			IO.println("Outbyte failed" + e);
 			RTUtil.set_STATUS(17);
 			return 0;
 		}
@@ -95,17 +95,17 @@ public class RTDirectBytefile extends RTByteFile {
 		try {
 			randomAccessFile.write(b);
 		} catch (IOException e) {
-			System.out.println("Outbyte failed" + e);
+			IO.println("Outbyte failed" + e);
 			RTUtil.set_STATUS(17);
 		}
 	}
 
 	public void locate(final int p) {
 		try {
-//			System.out.println("RTDirectBytefile.locate: " + p);
+//			IO.println("RTDirectBytefile.locate: " + p);
 			randomAccessFile.seek(p - 1);
 		} catch (IOException e) {
-			System.out.println("locate failed" + e);
+			IO.println("locate failed" + e);
 			RTUtil.set_STATUS(17);
 		}
 	}
@@ -116,10 +116,10 @@ public class RTDirectBytefile extends RTByteFile {
 			long length = randomAccessFile.length();
 //			long fpntr = randomAccessFile.getFilePointer();
 //			length = Math.max(length, fpntr);
-//			System.out.println("RTDirectBytefile.lastloc: " + length);
+//			IO.println("RTDirectBytefile.lastloc: " + length);
 			return ((int) length);
 		} catch (IOException e) {
-			System.out.println("Lastloc failed" + e);
+			IO.println("Lastloc failed" + e);
 			RTUtil.set_STATUS(17);
 			return 0;
 		}

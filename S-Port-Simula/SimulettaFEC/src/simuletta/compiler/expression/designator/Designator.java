@@ -61,15 +61,15 @@ public class Designator extends Expression {
 //	public boolean isLegalDotList() { // Used for dotList    // TODO:NAME
 //		if(currentScope.isRoutine()) return(false);
 //		DesignatorElement first=varset.firstElement();
-//		if(TESTING) System.out.println("Designator.isLegalDotList: first="+first.getClass().getSimpleName()+"  "+first);
+//		if(TESTING) IO.println("Designator.isLegalDotList: first="+first.getClass().getSimpleName()+"  "+first);
 //		for(DesignatorElement elt:varset)
 //			if(!(elt instanceof Variable var)) return(false);
 //		if(first instanceof Variable var) {
 //			VariableDeclaration decl=(VariableDeclaration) Declaration.findMeaning(var.identifier);
 //			if(decl==null) IERR("Missing declaration of "+var.identifier);
-//			if(TESTING) System.out.println("Designator.isLegalDotList: decl="+decl.getClass().getSimpleName()+"  "+decl);
+//			if(TESTING) IO.println("Designator.isLegalDotList: decl="+decl.getClass().getSimpleName()+"  "+decl);
 //			Type type=decl.type;
-//			if(TESTING) System.out.println("Designator.isLegalDotList: type="+type+", keyWord="+type.getKeyWord());
+//			if(TESTING) IO.println("Designator.isLegalDotList: type="+type+", keyWord="+type.getKeyWord());
 //			if(type.getKeyWord()==KeyWord.REF) return(false);
 //		} else return(false);
 //		return(true);
@@ -117,7 +117,7 @@ public class Designator extends Expression {
 				designator=new QuaOperation(designator,type);
 			}
 			Parser.TRACE("Designator.parse: RESULT="+designator);
-//        	System.out.println("Designator.parse: RESULT="+designator);
+//        	IO.println("Designator.parse: RESULT="+designator);
 //        	if(designator.toString().equals("bio.simid.ent.cha")) {
 //        		try { Thread.sleep(10);	Thread.dumpStack(); } catch (InterruptedException e) {}
 //        	}
@@ -150,10 +150,10 @@ public class Designator extends Expression {
 	}
 	
 	public void print(String title) {
-		System.out.println("Designator.print: "+title);
+		IO.println("Designator.print: "+title);
 		if(!varset.isEmpty()) {
 			for(DesignatorElement elt:varset.set) {
-				System.out.println("Designator.print: "+elt);
+				IO.println("Designator.print: "+elt);
 			}
 		}
 	}

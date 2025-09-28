@@ -62,26 +62,26 @@ public class GeneralAddress extends Value {
 
 	public GeneralAddress(Designator dotList) {
 		this.dotList=dotList;
-        if(TESTING) System.out.println("NEW GeneralAddress:"+this+" ***********************************************************");
+        if(TESTING) IO.println("NEW GeneralAddress:"+this+" ***********************************************************");
 //		try { Thread.sleep(10);	Thread.dumpStack(); } catch (InterruptedException e) {}
 	}
 	
 	public static boolean TESTING=false;//true;
 
 	public static Expression parse() {
-        if(TESTING) System.out.println("GeneralAddress.parse:");
+        if(TESTING) IO.println("GeneralAddress.parse:");
         Parser.expect(KeyWord.BEGPAR);
         
         Designator designator=(Designator) Designator.parse();
-        if(TESTING) System.out.println("GeneralAddress.parse: designator="+designator.getClass().getSimpleName()+"  "+designator);
+        if(TESTING) IO.println("GeneralAddress.parse: designator="+designator.getClass().getSimpleName()+"  "+designator);
         Parser.expect(KeyWord.ENDPAR);
         if(designator.varset.isLegalDotList()) {   // TODO:NAME
         	GeneralAddress gaddr=new GeneralAddress((Designator)designator);
-            if(TESTING) System.out.println("GeneralAddress.parse: gaddr="+gaddr);
+            if(TESTING) IO.println("GeneralAddress.parse: gaddr="+gaddr);
             return(gaddr);
        } else {    	   
     	   Expression result=new UnaryOperation(S_NAME,designator);
-    	   if(TESTING) System.out.println("GeneralAddress.parse: result="+result);
+    	   if(TESTING) IO.println("GeneralAddress.parse: result="+result);
     	   return(result);
        }
 	}
@@ -91,7 +91,7 @@ public class GeneralAddress extends Value {
 	// *** Coding: doOutConst
 	// ***********************************************************************************************
 //	public Type doOutConst() {
-//        if(TESTING) System.out.println("GeneralAddress.doOutConst:"+this+" ***********************************************************");
+//        if(TESTING) IO.println("GeneralAddress.doOutConst:"+this+" ***********************************************************");
 //		enterLine();
 //		if(dotList==null) {			
 //			sCode.outinst(S_GNONE); sCode.outcode(); 
@@ -117,7 +117,7 @@ public class GeneralAddress extends Value {
 //		return(Type.Name(q.type));
 //	}
 	public Type doOutConst() {
-        if(TESTING) System.out.println("GeneralAddress.doOutConst:"+this+" ***********************************************************");
+        if(TESTING) IO.println("GeneralAddress.doOutConst:"+this+" ***********************************************************");
 		enterLine();
 		if(dotList==null) {			
 			sCode.outinst(S_GNONE); sCode.outcode(); 
@@ -126,7 +126,7 @@ public class GeneralAddress extends Value {
 		String ident=dotList.getIdent(0);
 		VariableDeclaration q=(VariableDeclaration) Declaration.findMeaning(ident);
 		Tag tag=q.getTag();
-		System.out.println("GeneralAddress.doOutConst: "+ident+"  q="+q);
+		IO.println("GeneralAddress.doOutConst: "+ident+"  q="+q);
 		Stack<Tag> qStack = new Stack<Tag>();
 		qStack.push(tag);
 		for(int i=1;i<dotList.varset.size();i++) {

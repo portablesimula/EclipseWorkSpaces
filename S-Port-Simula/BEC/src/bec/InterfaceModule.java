@@ -55,7 +55,7 @@ public class InterfaceModule extends S_Module {
 		Global.routineSegments = new Vector<Segment>();
 		LOOP: while(true) {
 			Scode.inputInstr();
-//			System.out.println("InterfaceModule'LOOP: Curinstr="+Scode.edInstr(Scode.curinstr));
+//			IO.println("InterfaceModule'LOOP: Curinstr="+Scode.edInstr(Scode.curinstr));
 			switch(Scode.curinstr) {
 				case Scode.S_GLOBAL:	Variable.ofGlobal(Global.DSEG); break;
 				case Scode.S_CONSTSPEC: ConstDescr.ofConstSpec(); break;

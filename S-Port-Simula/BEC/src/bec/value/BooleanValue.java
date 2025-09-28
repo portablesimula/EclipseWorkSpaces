@@ -67,7 +67,7 @@ public class BooleanValue extends Value {
 		if(this.value) {
 			if(other == null || !((BooleanValue)other).value) res = false;
 		}
-//		System.out.println("BooleanValue.imp: " + this.value + " imp " + other + " ==> " + res);
+//		IO.println("BooleanValue.imp: " + this.value + " imp " + other + " ==> " + res);
 		if(!res) return null;
 		return BooleanValue.of(res);
 	}
@@ -95,14 +95,14 @@ public class BooleanValue extends Value {
 			case Scode.S_NE: res = LHS != RHS; break;
 			default: Util.IERR("Undefined relation");
 		}
-//		System.out.println("BooleanValue.compare: " + LHS + " " + Scode.edInstr(relation) + " " + RHS + " ==> " + res);
+//		IO.println("BooleanValue.compare: " + LHS + " " + Scode.edInstr(relation) + " " + RHS + " ==> " + res);
 //		Util.IERR("");
 		return res;
 	}
 
 	@Override
 //	public void print(final String indent) {
-//		System.out.println(indent + toString());
+//		IO.println(indent + toString());
 //	}
 	
 	public String toString() {
@@ -123,13 +123,13 @@ public class BooleanValue extends Value {
 //		nErr += TEST(vTrue, Scode.S_NE, null, true);
 //		nErr += TEST(vTrue, Scode.S_NE, vTrue, false);		
 //		
-//		System.out.println("Number of errors: " + nErr);
+//		IO.println("Number of errors: " + nErr);
 //	}
 //	
 //	private static int TEST(BooleanValue lhs, int relation, BooleanValue rhs, boolean expected) {
 //		boolean b = lhs.compare(relation, rhs);
 //		if(b != expected) {
-//			System.out.println("TEST: " + lhs + " " + Scode.edInstr(relation) + " " + rhs + " ==> " + b);
+//			IO.println("TEST: " + lhs + " " + Scode.edInstr(relation) + " " + rhs + " ==> " + b);
 //			return 1;
 //		}
 //		return 0;
@@ -140,7 +140,7 @@ public class BooleanValue extends Value {
 	// ***********************************************************************************************
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("Value.write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
 		oupt.writeKind((value)?Scode.S_TRUE:Scode.S_FALSE);
 	}
 

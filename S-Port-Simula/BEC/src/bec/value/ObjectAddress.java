@@ -43,7 +43,7 @@ public class ObjectAddress extends Value {
 		Tag tag = Tag.ofScode();
 		Descriptor descr = tag.getMeaning();
 		if(descr == null) Util.IERR("IMPOSSIBLE: TESTING FAILED");
-//		System.out.println("OADDR_Value.ofScode: descr="+descr.getClass().getSimpleName()+"  "+descr);
+//		IO.println("OADDR_Value.ofScode: descr="+descr.getClass().getSimpleName()+"  "+descr);
 		if(descr instanceof Variable var) return var.address;
 		if(descr instanceof ConstDescr cns) return cns.getAddress();
 		Util.IERR("MISSING: " + descr);
@@ -100,15 +100,15 @@ public class ObjectAddress extends Value {
 	public ObjectAddress toStackAddress() {
 		ObjectAddress oaddr = this;
 		if(this.kind == ObjectAddress.REL_ADDR) {
-//			System.out.println("ObjectAddress.toStackAddress: OADDR: "+this);
+//			IO.println("ObjectAddress.toStackAddress: OADDR: "+this);
 //			RTStack.dumpRTStack("ObjectAddress.toStackAddress: NOTE: ");
-//			System.out.println("ObjectAddress.toStackAddress: VALUE: "+this.load());
+//			IO.println("ObjectAddress.toStackAddress: VALUE: "+this.load());
 			
 			CallStackFrame callStackTop = RTStack.callStack_TOP();
 			int bias = (callStackTop == null)? 0 : callStackTop.rtStackIndex;
 			oaddr = new ObjectAddress(STACK_ADDR, segID, bias + ofst);
 			
-//			System.out.println("ObjectAddress.toStackAddress: VALUE: "+oaddr.load());
+//			IO.println("ObjectAddress.toStackAddress: VALUE: "+oaddr.load());
 		}
 //		Util.IERR("");
 		return oaddr;
@@ -135,7 +135,7 @@ public class ObjectAddress extends Value {
 //			case REMOTE_ADDR: return "REMOTE_ADDR[RTStackTop+" + ofst + ']';
 //			case REFER_ADDR:  return "REFER_ADDR[" + ofst + ']';
 			case STACK_ADDR: //  return "STACK_ADR[RTStack(" + ofst + ")]";
-//				System.out.println("ObjectAddress.store: "+value+"  "+this);
+//				IO.println("ObjectAddress.store: "+value+"  "+this);
 //				RTStack.dumpRTStack("ObjectAddress.store: "+this);
 				RTStack.store(ofst + idx, value, comment);
 //				RTStack.dumpRTStack("ObjectAddress.store: "+this);
@@ -156,14 +156,14 @@ public class ObjectAddress extends Value {
 				CallStackFrame callStackTop = RTStack.callStack_TOP();
 				int bias = (callStackTop == null)? 0 : callStackTop.rtStackIndex;
 				Value value = RTStack.load(bias + ofst + idx);
-//				System.out.println("ObjectAddress.load: value="+value);
+//				IO.println("ObjectAddress.load: value="+value);
 //				Util.IERR("");
 				return value;
 //			case REMOTE_ADDR: return "REMOTE_ADDR[RTStackTop+" + ofst + ']';
 //			case REFER_ADDR:  return "REFER_ADDR[" + ofst + ']';
 			case STACK_ADDR:
 				value = RTStack.load(ofst + idx);
-//				System.out.println("ObjectAddress.load: value="+value);
+//				IO.println("ObjectAddress.load: value="+value);
 //				Util.IERR("");
 				return value;
 			default: Util.IERR(""+kind); return null;
@@ -181,8 +181,8 @@ public class ObjectAddress extends Value {
 		if(other instanceof IntegerValue ival) {
 			return new ObjectAddress(this.kind, this.segID, this.ofst + ival.value);
 		} else if(other instanceof ObjectAddress oaddr) {
-			System.out.println("ObjectAddress.add: this="+this);
-			System.out.println("ObjectAddress.add: other="+other);
+			IO.println("ObjectAddress.add: this="+this);
+			IO.println("ObjectAddress.add: other="+other);
 			if(!oaddr.segID.equals(segID))
 				Util.IERR("Illegal ObjectAddress'add operation: "+oaddr.segID+" != "+segID);
 			return new ObjectAddress(this.kind, this.segID, this.ofst + oaddr.ofst);
@@ -198,8 +198,8 @@ public class ObjectAddress extends Value {
 		if(other instanceof IntegerValue ival) {
 			return new ObjectAddress(this.kind, this.segID, this.ofst - ival.value);
 		} else if(other instanceof ObjectAddress oaddr) {
-//			System.out.println("ObjectAddress.sub: this="+this);
-//			System.out.println("ObjectAddress.sub: other="+other);
+//			IO.println("ObjectAddress.sub: this="+this);
+//			IO.println("ObjectAddress.sub: other="+other);
 			if(!oaddr.segID.equals(segID)) {
 				RTStack.dumpRTStack("ObjectAddress.sub: ");
 //				Segment.lookup("CSEG_ADHOC02").dump("ProgramAddress.execute: FINAL ", 0, 20);
@@ -233,7 +233,7 @@ public class ObjectAddress extends Value {
 //			case Scode.S_GT: res = LHS >  RHS; break;
 //			case Scode.S_NE: res = LHS != RHS; break;
 //		}
-////		System.out.println("IntegerValue.compare: " + LHS + " " + Scode.edInstr(relation) + " " + RHS + " ==> " + res);
+////		IO.println("IntegerValue.compare: " + LHS + " " + Scode.edInstr(relation) + " " + RHS + " ==> " + res);
 ////		Util.IERR("");
 //		return res;
 //	}
@@ -242,13 +242,13 @@ public class ObjectAddress extends Value {
 		if(this.segID != null) {
 			segment().dump("\nRTAddress.dumpArea:", ofst, ofst+lng);
 		} else {
-			System.out.println("\nRTAddress.dumpArea: BEGIN " + title + " +++++++++++++++++++++++++++++++++++++");
+			IO.println("\nRTAddress.dumpArea: BEGIN " + title + " +++++++++++++++++++++++++++++++++++++");
 			for(int i=0;i<lng;i++) {
 //				RTAddress rtadr = new RTAddress(this, i);
 				ObjectAddress rtadr = this.addOffset(i);
-				System.out.println(""+rtadr+": " + load(ofst+i));
+				IO.println(""+rtadr+": " + load(ofst+i));
 			}
-			System.out.println("RTAddress.dumpArea: ENDOF " + title + " +++++++++++++++++++++++++++++++++++++");
+			IO.println("RTAddress.dumpArea: ENDOF " + title + " +++++++++++++++++++++++++++++++++++++");
 		}
 //		Util.IERR("");
 	}
@@ -279,14 +279,14 @@ public class ObjectAddress extends Value {
 		kind = inpt.readKind();
 		segID = inpt.readString();
 		ofst = inpt.readShort();
-//		System.out.println("ObjectAddress.read: " + this);
+//		IO.println("ObjectAddress.read: " + this);
 	}
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("Value.write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
 		oupt.writeKind(Scode.S_C_OADDR);
 		writeBody(oupt);
-//		System.out.println("ObjectAddress.write: " + this + "   segID="+segID+", ofst="+ofst);
+//		IO.println("ObjectAddress.write: " + this + "   segID="+segID+", ofst="+ofst);
 	}
 
 	public void writeBody(AttributeOutputStream oupt) throws IOException {

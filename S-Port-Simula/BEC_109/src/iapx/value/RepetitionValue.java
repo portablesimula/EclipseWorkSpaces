@@ -70,7 +70,7 @@ public class RepetitionValue extends Value {
 		Value value = null;
 		Vector<Value> values = new Vector<Value>();
 		LOOP:while(true) {
-//			System.out.println("RepetitionValue.ofScode: "+Scode.edInstr(Scode.nextByte()));
+//			IO.println("RepetitionValue.ofScode: "+Scode.edInstr(Scode.nextByte()));
 			switch(Scode.nextByte()) {
 				case Scode.S_TEXT:     Scode.inputInstr(); type = Type.T_TEXT;  values.add(TextValue.ofScode()); break; // LOOP;
 				case Scode.S_C_INT:    Scode.inputInstr(); type = Type.T_INT;   values.add(IntegerValue.ofScode_INT()); break;
@@ -115,7 +115,7 @@ public class RepetitionValue extends Value {
 					values.add(IntegerValue.of(Type.T_INT, gaddr.ofst));
 					break;
 				default:
-//					System.out.println("RepetitionValue.ofScode: TERMINATED BY "+Scode.edInstr(Scode.nextByte()));
+//					IO.println("RepetitionValue.ofScode: TERMINATED BY "+Scode.edInstr(Scode.nextByte()));
 					break LOOP;
 			}
 		}
@@ -133,7 +133,7 @@ public class RepetitionValue extends Value {
 	
 	@Override
 	public void print(final String indent) {
-//		System.out.println(indent + toString());
+//		IO.println(indent + toString());
 		for(Value value:values) value.print(indent);
 //		Util.IERR("");
 	}
@@ -152,7 +152,7 @@ public class RepetitionValue extends Value {
 	private RepetitionValue(AttributeInputStream inpt) throws IOException {
 //		tag = inpt.readTag();
 //		type = ResolvedType.read(inpt);
-//		System.out.println("NEW IMPORT: " + this);
+//		IO.println("NEW IMPORT: " + this);
 		values = new Vector<Value>();
 		int n = inpt.readShort();
 		for(int i=0;i<n;i++) {
@@ -162,7 +162,7 @@ public class RepetitionValue extends Value {
 	}
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("Value.write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
 //		oupt.writeKind(Scode.S_C_???);
 		Util.IERR("TEST DETTE");
 		oupt.writeShort(values.size());

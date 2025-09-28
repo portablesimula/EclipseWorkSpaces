@@ -47,10 +47,10 @@ public class Variable extends Quantity {
 
     public static Quantity doParse(Type type,String identifier,boolean constflag) {
     	Variable quant=new Variable(type,identifier);
-//    	System.out.println("VariableDeclaration doParse: "+quant);
+//    	IO.println("VariableDeclaration doParse: "+quant);
 		Parser.expect(KeyWord.DEFINE);
 		quant.putQuantInfo(Parser.expectString());
-//		System.out.println("procedure.doParse: quantInfo="+quant.quantInfo);
+//		IO.println("procedure.doParse: quantInfo="+quant.quantInfo);
 		Parser.expect(KeyWord.SEMICOLON); // SKIP IT
     	
 		Util.println("Variable.doParse: " + quant);

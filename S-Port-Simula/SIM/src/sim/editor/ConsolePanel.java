@@ -104,7 +104,7 @@ public final class ConsolePanel extends JPanel {
 		    		 writer.write("ALL READING DONE");
 	    			 break LOOP;
 	    		 }
-	    		 System.out.println("READING DONE: " + line);
+	    		 IO.println("READING DONE: " + line);
 	    	 } catch (IOException e) {}
     	 }
 
@@ -163,7 +163,7 @@ public final class ConsolePanel extends JPanel {
 		textPane.requestFocusInWindow();
 		
 		reading = true; // Enables KeyListener (see below)
-		System.out.println("ConsolePanel.read: ");
+		IO.println("ConsolePanel.read: ");
 		while (reading)
 			Thread.yield();
 		return (keyin);
@@ -182,7 +182,7 @@ public final class ConsolePanel extends JPanel {
 					// textPane.getCaret().setVisible(true);
 
 					ConsolePanel.this.requestFocusInWindow();
-					System.out.println("ConsolePanel'read: ");
+					IO.println("ConsolePanel'read: ");
 					
 					// while(reading) Thread.yield();
 					while (ConsolePanel.this.read() != '\n')
@@ -268,7 +268,7 @@ public final class ConsolePanel extends JPanel {
 			@Override
 			public void write(int b) throws IOException {
 				String s = "" + (char) b;
-//		    	System.out.println("ConsolePanel'OutputStream.write: " + s);
+//		    	IO.println("ConsolePanel'OutputStream.write: " + s);
 				ConsolePanel.this.write(s, styleRegular);
 			}
 		    @Override
@@ -278,7 +278,7 @@ public final class ConsolePanel extends JPanel {
 					write(b[i]);
 //					System.out.print(sep+(char)b[i]); sep=",";
 				}
-//				System.out.println("]");
+//				IO.println("]");
 //		    	Util.IERR("NOT IMPL");
 		    }
 		    @Override
@@ -288,7 +288,7 @@ public final class ConsolePanel extends JPanel {
 		    		write(b[off+i]);
 //					System.out.print(sep+(char)b[off+i]); sep=",";
 		    	}
-//				System.out.println("]");
+//				IO.println("]");
 //		    	Util.IERR("NOT IMPL");
 		    }
 		    @Override
@@ -385,7 +385,7 @@ public final class ConsolePanel extends JPanel {
 	/// @param msg error message
 	/// @param e   the underlying cause
 	private static void IERR(final String msg, final Throwable e) {
-		System.out.println("IERR: " + msg + "  " + e);
+		IO.println("IERR: " + msg + "  " + e);
 		e.printStackTrace();
 	}
 
@@ -452,15 +452,15 @@ public final class ConsolePanel extends JPanel {
 	/// the KeyListener
 	private KeyListener listener = new KeyListener() {
 		public void keyPressed(KeyEvent event) {
-//			System.out.println("ConsolePanel'keyTyped: "+event);
+//			IO.println("ConsolePanel'keyTyped: "+event);
 		}
 
 		public void keyReleased(KeyEvent event) {
-//			System.out.println("ConsolePanel'keyTyped: "+event);
+//			IO.println("ConsolePanel'keyTyped: "+event);
 		}
 
 		public void keyTyped(KeyEvent event) {
-//			System.out.println("ConsolePanel'keyTyped: "+event);
+//			IO.println("ConsolePanel'keyTyped: "+event);
 			if (reading) {
 				keyin = event.getKeyChar();
 				reading = false;

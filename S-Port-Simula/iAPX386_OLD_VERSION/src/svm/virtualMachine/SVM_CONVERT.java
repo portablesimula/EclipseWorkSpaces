@@ -30,9 +30,9 @@ public class SVM_CONVERT extends SVM_Instruction {
 	@Override
 	public void execute() {
 		if(DEBUG) {
-			System.out.println("SVM_CONVERT.execute: "+Scode.edTag(fromType)+"  ==> " + Scode.edTag(toType));
+			IO.println("SVM_CONVERT.execute: "+Scode.edTag(fromType)+"  ==> " + Scode.edTag(toType));
 			Value tos = RTStack.peek();
-			System.out.println("SVM_CONVERT.execute: TOS="+tos);
+			IO.println("SVM_CONVERT.execute: TOS="+tos);
 		}
 		
 		Value fromValue = null;
@@ -43,13 +43,13 @@ public class SVM_CONVERT extends SVM_Instruction {
 		}
 
 		if(DEBUG) {
-			System.out.println("SVM_CONVERT.execute: fromValue="+fromValue+"  ==> " + Scode.edTag(toType));
+			IO.println("SVM_CONVERT.execute: fromValue="+fromValue+"  ==> " + Scode.edTag(toType));
 		}
 
 		Value toValue = convValue(fromValue, fromType, toType);
 
 		if(DEBUG)
-			System.out.println("SVM_CONVERT.execute: fromValue="+fromValue+"  ==> toValue="+toValue);
+			IO.println("SVM_CONVERT.execute: fromValue="+fromValue+"  ==> toValue="+toValue);
 
 		RTStack.push(toValue, "SVM_CONVERT: ");
 		Global.PSC.addOfst(1);
@@ -169,7 +169,7 @@ public class SVM_CONVERT extends SVM_Instruction {
 		} break;
 		default: toValue = null;
 		}
-//		if(DEBUG) System.out.println("CONVERT.convValue: " + fromValue + " ==> " + toValue + ", type=" + totype);
+//		if(DEBUG) IO.println("CONVERT.convValue: " + fromValue + " ==> " + toValue + ", type=" + totype);
 		if(ILL) {
 			Util.ERROR("convValue: conversion is undefined: " + Scode.edTag(fromtype) + " ==> " + Scode.edTag(totype));
 			Util.IERR("");
@@ -188,7 +188,7 @@ public class SVM_CONVERT extends SVM_Instruction {
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		oupt.writeShort(fromType);
 		oupt.writeShort(toType);
@@ -196,7 +196,7 @@ public class SVM_CONVERT extends SVM_Instruction {
 
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {
 		SVM_CONVERT instr = new SVM_CONVERT(inpt.readShort(), inpt.readShort());
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + instr);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
 		return instr;
 	}
 

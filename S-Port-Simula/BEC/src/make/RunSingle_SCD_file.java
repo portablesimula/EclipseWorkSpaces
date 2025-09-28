@@ -32,7 +32,7 @@ public final class RunSingle_SCD_file {
 
 //		try {
 			new BecCompiler(sCodeFileName);
-//			System.out.println("RETURN FROM: BecCompiler");
+//			IO.println("RETURN FROM: BecCompiler");
 //		} catch (Exception e) { Util.IERR("Compiler Error: " + e); }
 	}
 

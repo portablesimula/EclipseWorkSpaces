@@ -167,7 +167,7 @@ public class SPortEditor extends JFrame {
 					+"\nDo you want to continue ?\n\n"
 				;
 			int result=Util.optionDialog(msg,"Java version Notification",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,"Yes","No","Get Java");
-			System.out.println("result="+result);
+			IO.println("result="+result);
 			
 			if(result == 1) System.exit(0);
 			if(result == 2) {

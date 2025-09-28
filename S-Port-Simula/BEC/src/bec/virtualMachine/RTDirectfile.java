@@ -42,7 +42,7 @@ public class RTDirectfile extends RTImageFile {
 		RECORDSIZE = imglng;
 		MAXLOC = Integer.MAX_VALUE - 1;
 		try {
-//			System.out.println("NEW RTDirectfile: fileName=" + fileName);
+//			IO.println("NEW RTDirectfile: fileName=" + fileName);
 //			writer = new FileWriter(file, this.fileAction._APPEND);
 			String mode = "rws"; // mode is one of "r", "rw", "rws", or "rwd"
 			if (fileAction._SYNCHRONOUS)
@@ -73,7 +73,7 @@ public class RTDirectfile extends RTImageFile {
 				randomAccessFile.close();
 			randomAccessFile = null;
 		} catch (IOException e) {
-			System.out.println("clfile failed" + e);
+			IO.println("clfile failed" + e);
 			RTUtil.set_STATUS(17);
 		}
 	}
@@ -82,7 +82,7 @@ public class RTDirectfile extends RTImageFile {
 //		try {
 //			String line = (rest != null) ? rest : readLine();
 			String line = readLine();
-//			System.out.println("RTInfile.inimage: line=\"" + line + '"');
+//			IO.println("RTInfile.inimage: line=\"" + line + '"');
 //			rest = null;
 			if(line == null) {
 				RTUtil.set_STATUS(13); // End of file on input";
@@ -159,7 +159,7 @@ public class RTDirectfile extends RTImageFile {
 			long length = randomAccessFile.length();
 			return ((int) length / RECORDSIZE);
 		} catch (IOException e) {
-			System.out.println("Lastloc failed" + e);
+			IO.println("Lastloc failed" + e);
 			RTUtil.set_STATUS(17);
 			return 0;
 		}

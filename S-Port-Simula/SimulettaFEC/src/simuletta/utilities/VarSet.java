@@ -31,9 +31,9 @@ public class VarSet {
 	static boolean TESTING=false;//true;
 
 	public boolean isLegalDotList() {   // TODO:NAME
-		if(TESTING) System.out.println("VarSet.isLegalDotList("+this+")");
+		if(TESTING) IO.println("VarSet.isLegalDotList("+this+")");
 		boolean res=isLegalDotList2();
-//		System.out.println("VarSet.isLegalDotList("+this+")  ==>  "+res);
+//		IO.println("VarSet.isLegalDotList("+this+")  ==>  "+res);
 //		Util.STOP();
 		
 		return(res);
@@ -43,14 +43,14 @@ public class VarSet {
 //		if(Global.currentScope.isRoutine()) return(false);
 		Type encType=null;
 		DesignatorElement first=set.firstElement();
-		if(TESTING) System.out.println("VarSet.isLegalDotList: first="+first.getClass().getSimpleName()+"  "+first);
+		if(TESTING) IO.println("VarSet.isLegalDotList: first="+first.getClass().getSimpleName()+"  "+first);
 		if(first instanceof Variable var) {
 			if(var.argset!=null && var.argset.size()!=0) return(false);
 			VariableDeclaration decl=(VariableDeclaration) Declaration.findMeaning(var.identifier);
 			if(decl==null) IERR("Missing declaration of "+var.identifier);
-			if(TESTING) System.out.println("VarSet.isLegalDotList: decl="+decl.getClass().getSimpleName()+"  "+decl);
+			if(TESTING) IO.println("VarSet.isLegalDotList: decl="+decl.getClass().getSimpleName()+"  "+decl);
 			encType=decl.type;
-			if(TESTING) System.out.println("VarSet.isLegalDotList: type="+encType+", keyWord="+encType.getKeyWord());
+			if(TESTING) IO.println("VarSet.isLegalDotList: type="+encType+", keyWord="+encType.getKeyWord());
 		} else return(false);
 		
 		int n=set.size();
@@ -61,9 +61,9 @@ public class VarSet {
 				if(xvar.argset!=null && xvar.argset.size()!=0) return(false);
 				Record rec=encType.getQualifyingRecord();
 				VariableDeclaration attr=rec.findAttribute(xvar.identifier);
-				if(TESTING) System.out.println("VarSet.isLegalDotList: attr="+attr.getClass().getSimpleName()+"  "+attr);
+				if(TESTING) IO.println("VarSet.isLegalDotList: attr="+attr.getClass().getSimpleName()+"  "+attr);
 				encType=attr.type;
-				if(TESTING) System.out.println("VarSet.isLegalDotList: type="+encType+", keyWord="+encType.getKeyWord());
+				if(TESTING) IO.println("VarSet.isLegalDotList: type="+encType+", keyWord="+encType.getKeyWord());
 			} else return(false);
 			
 		}
@@ -74,7 +74,7 @@ public class VarSet {
 //		VarSet head=new VarSet();
 //		Type encType=null;
 //	LOOP:while(set.size()>0) {
-//			System.out.println("UnaryOperation.splitVarSet: head="+head+", rest="+set);
+//			IO.println("UnaryOperation.splitVarSet: head="+head+", rest="+set);
 //			DesignatorElement elt=set.firstElement();
 //			if(elt instanceof Variable var) {
 //				if(encType!=null) {
@@ -82,12 +82,12 @@ public class VarSet {
 //				}
 //				VariableDeclaration decl=(VariableDeclaration) Declaration.findMeaning(var.identifier);
 //				if(decl==null) IERR("Missing declaration of "+var.identifier);
-//				System.out.println("UnaryOperation.splitVarSet: decl="+decl.getClass().getSimpleName()+"  "+decl);
+//				IO.println("UnaryOperation.splitVarSet: decl="+decl.getClass().getSimpleName()+"  "+decl);
 //				encType=decl.type;
-//				System.out.println("UnaryOperation.splitVarSet: type="+encType+", keyWord="+encType.getKeyWord());
+//				IO.println("UnaryOperation.splitVarSet: type="+encType+", keyWord="+encType.getKeyWord());
 //				if(! (encType instanceof InfixType)) break LOOP;
 //				head.add(elt); set.removeElementAt(0);
-//				System.out.println("UnaryOperation.splitVarSet: head="+head+", rest="+set);
+//				IO.println("UnaryOperation.splitVarSet: head="+head+", rest="+set);
 //				Util.STOP();
 //			} else IERR("ANDRE ALTERNATIVER-1 ???");
 //		}

@@ -33,7 +33,7 @@ public class Test_ENVIR {
 		try {
 			exec(cmds);
 		} catch (IOException e) {
-			System.out.println("Test_ENVIR.compile - Exit: ");
+			IO.println("Test_ENVIR.compile - Exit: ");
 			e.printStackTrace();
 			System.exit(0);
 		}
@@ -51,7 +51,7 @@ public class Test_ENVIR {
 	public static int exec(String... cmd) throws IOException {
 		String line="";
 		for(int i=0;i<cmd.length;i++) line=line+" "+cmd[i];
-        System.out.println("MakeCompiler.execute: command="+line);
+        IO.println("MakeCompiler.execute: command="+line);
 		ProcessBuilder processBuilder = new ProcessBuilder(cmd);
 		processBuilder.redirectErrorStream(true);
 		try {
@@ -64,7 +64,7 @@ public class Test_ENVIR {
 			return (process.exitValue());
 
 		} catch(Exception e) {
-			System.out.println("ERROR: "+e);
+			IO.println("ERROR: "+e);
 			throw new RuntimeException("Process Execution failed: " + line, e);
 		}
 	}

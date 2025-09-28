@@ -23,7 +23,7 @@ public class Checker {
 		inpt.openattributefile();
 		readFileHead();
 		int key=inpt.getKey("doVerify");
-		if(TESTING) System.out.println("Checker.doVerify: Quant-start byte="+key); // TESTING
+		if(TESTING) IO.println("Checker.doVerify: Quant-start byte="+key); // TESTING
 		fetchquant("",key);
 
 		Util.STOP();
@@ -41,12 +41,12 @@ public class Checker {
 //                checkcode   in attrckhi,lo ;
         //!must start "S-port 108.1"
     	String symbol=inpt.readChars(12);
-		if(TESTING) System.out.println("Checker.readFileHead: \""+symbol+'"'); // TESTING
+		if(TESTING) IO.println("Checker.readFileHead: \""+symbol+'"'); // TESTING
 		if(!symbol.substring(0,12).equals("S-port 108.1")) Util.IERR("Wrong Layout");
 		checkCode=inpt.gettext();
-		if(TESTING) System.out.println("Checker.readFileHead: checkCode="+checkCode); // TESTING
+		if(TESTING) IO.println("Checker.readFileHead: checkCode="+checkCode); // TESTING
 		attrmod=inpt.gettext();
-		if(TESTING) System.out.println("Checker.readFileHead: attrmod="+attrmod); // TESTING
+		if(TESTING) IO.println("Checker.readFileHead: attrmod="+attrmod); // TESTING
 		
 		if(inpt.getKey("readFileHead")!=Key.mainKey) Util.IERR("Wrong Layout");
 	}
@@ -69,9 +69,9 @@ public class Checker {
 	public void readQuantHead(String indent,AttrFile oupt) throws IOException {
 		//*** basic quantity descriptor, size computed above ***;
 		// - assume that categ <8 and kind < 16  ALWAYS ***;
-//		if(TESTING) System.out.println("writeQuant: "+indent+identifier+", exttag="+xtag+", type="+type+", kind="+Kind.edKind(kind)+", categ="+Category.edCateg(categ)+", clf="+clf);
+//		if(TESTING) IO.println("writeQuant: "+indent+identifier+", exttag="+xtag+", type="+type+", kind="+Kind.edKind(kind)+", categ="+Category.edCateg(categ)+", clf="+clf);
 //		oupt.storebyte((char)( (kind*8) + categ ));
-//		if(TESTING) System.out.println("writeQuant: PACKED="+((kind*8) + categ)+", kind="+kind+", categ="+categ);
+//		if(TESTING) IO.println("writeQuant: PACKED="+((kind*8) + categ)+", kind="+kind+", categ="+categ);
 //
 //		// - assume that type < 128 ALWAYS ***;
 //		String prefqual=this.type.prefqual;
@@ -101,14 +101,14 @@ public class Checker {
 			int xcateg;
 			int xclf;
 			xcateg=leadKey;
-			if(TESTING) System.out.println("Checker.fetchquant: xcateg="+xcateg); // TESTING
+			if(TESTING) IO.println("Checker.fetchquant: xcateg="+xcateg); // TESTING
 	    	// BLE SKREVET SÅNN: oupt.storebyte((char)( (kind*8) + categ ));
 			if(xcateg >= 8) { // *** not simple;
 	               xkind=xcateg/8 ;
 	               xcateg=(xcateg & 7);
 			} else xkind=0;
-			if(TESTING) System.out.println("Checker.fetchquant: xkind="+xkind+", xcateg="+xcateg); // TESTING
-			if(TESTING) System.out.println("Checker.fetchquant: xkind="+Kind.edKind(xkind)+", xcateg="+Category.edCateg(xcateg)); // TESTING
+			if(TESTING) IO.println("Checker.fetchquant: xkind="+xkind+", xcateg="+xcateg); // TESTING
+			if(TESTING) IO.println("Checker.fetchquant: xkind="+Kind.edKind(xkind)+", xcateg="+Category.edCateg(xcateg)); // TESTING
 			int xtype=inpt.getByte("xtype");
 			String prefix=null;
 			if(xtype >= 128) { // *** prefix;
@@ -117,9 +117,9 @@ public class Checker {
 	        	prefix=inpt.readChars(n);
 			}
 			Type type=new Type(xtype,prefix);
-			if(TESTING) System.out.println("Checker.fetchquant: type="+type); // TESTING
+			if(TESTING) IO.println("Checker.fetchquant: type="+type); // TESTING
 			xclf=inpt.getByte("xclf");		
-			if(TESTING) System.out.println("Checker.fetchquant: xclf="+xclf); // TESTING
+			if(TESTING) IO.println("Checker.fetchquant: xclf="+xclf); // TESTING
 			
 			InputQuant quant=new InputQuant(type,xkind,xcateg,xclf);
 
@@ -133,12 +133,12 @@ public class Checker {
 //				Util.NOTIMPL("procedure parameter");
 			} else {
 				int xftag=inpt.getNumber("xtag")-1;
-				if(TESTING) System.out.println("Checker.fetchquant: xftag="+xftag); // TESTING
+				if(TESTING) IO.println("Checker.fetchquant: xftag="+xftag); // TESTING
 				quant.xidentstring=inpt.readString();
 				if(xkind==Kind.K_class) quant.xident=quant.xidentstring;
 			}
 			
-			if(TESTING) System.out.println("Checker.fetchquant: xidentstring="+quant.xidentstring); // TESTING
+			if(TESTING) IO.println("Checker.fetchquant: xidentstring="+quant.xidentstring); // TESTING
 	        	
 			int key;
 			CHCKMARK:while(true) {
@@ -216,25 +216,25 @@ public class Checker {
 
 //	     NOMORE: !*** next key has been read ***;
 			
-			//System.out.println("End fetchquant: "+indent+quant+"   KEY="+Key.edKey(key));
+			//IO.println("End fetchquant: "+indent+quant+"   KEY="+Key.edKey(key));
 			InputFile.INPUT_TRACE("End fetchquant: "+quant+"   KEY="+Key.edKey(key));
 
 				if(key==Key.begList) {
 					key=inpt.getKey("BEGIN LIST: "+quant.xidentstring);
-					if(TESTING) System.out.println("Checker.fetchquant.begList: "+quant+", key="+key);
+					if(TESTING) IO.println("Checker.fetchquant.begList: "+quant+", key="+key);
 //			        LOOP:
 					while(key < Key.lowKey) {
 			        	fetchquant(indent+"   ",key);
-						if(TESTING) System.out.println("Checker.fetchquant: CONTINUE LIST: "+quant+", key="+key);
+						if(TESTING) IO.println("Checker.fetchquant: CONTINUE LIST: "+quant+", key="+key);
 						
 						//if(key==Key.endlist) break LOOP;
 						
 						key=inpt.getKey("CONTINUE LIST"+quant.xidentstring);
-//						if(TESTING) System.out.println("Checker.fetchquant: CONTINUE LIST: "+quant+", key="+key);
+//						if(TESTING) IO.println("Checker.fetchquant: CONTINUE LIST: "+quant+", key="+key);
 //			        	Util.STOP();
 			        }
-					if(TESTING) System.out.println("Checker.fetchquant: END LIST: "+quant+", key="+key);
-					if(TESTING) System.out.println("Checker.fetchquant: END LIST: "+quant.xidentstring); // TESTING
+					if(TESTING) IO.println("Checker.fetchquant: END LIST: "+quant+", key="+key);
+					if(TESTING) IO.println("Checker.fetchquant: END LIST: "+quant.xidentstring); // TESTING
 					if(key!=Key.endlist) Util.IERR("Wrong Layout: got "+Key.edKey(key)+" while expeting 'endList'");
 				}
 

@@ -61,7 +61,7 @@ public class LabelDescr extends Descriptor {
 	// ***********************************************************************************************
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("IntDescr.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("IntDescr.Write: " + this);
 		oupt.writeKind(kind);
 		tag.write(oupt);
 		if(adr != null) {
@@ -73,14 +73,14 @@ public class LabelDescr extends Descriptor {
 	}
 
 	public static LabelDescr read(AttributeInputStream inpt, int kind) throws IOException {
-//		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  BEGIN IntDescr.Read");
+//		IO.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  BEGIN IntDescr.Read");
 		Tag tag = Tag.read(inpt);
 		LabelDescr lab = new LabelDescr(kind, tag);
-//		System.out.println("AFTER NEW CONST: "+lab);
+//		IO.println("AFTER NEW CONST: "+lab);
 		boolean present = inpt.readBoolean();
 		if(present) lab.adr = (ProgramAddress) Value.read(inpt);
-//		System.out.println("AFTER NEW MEMADDR: "+lab);
-		if(Global.ATTR_INPUT_TRACE) System.out.println("LabelDescr.Read: " + lab);
+//		IO.println("AFTER NEW MEMADDR: "+lab);
+		if(Global.ATTR_INPUT_TRACE) IO.println("LabelDescr.Read: " + lab);
 		return(lab);
 	}
 

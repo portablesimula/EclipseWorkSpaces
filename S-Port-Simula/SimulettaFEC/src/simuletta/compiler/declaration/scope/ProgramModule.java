@@ -198,7 +198,7 @@ public class ProgramModule extends DeclarationScope {
     		currentModule.global=(Parser.prevToken.getKeyWord()==KeyWord.GLOBAL);
     		currentModule.identifier=Parser.expectIdentifier();
     		//Util.TRACE("Grammar.doParse: module_ident="+currentModule.identifier+",");
-    		//System.out.println("Grammar.doParse: module_ident="+currentModule.identifier+",");
+    		//IO.println("Grammar.doParse: module_ident="+currentModule.identifier+",");
     		if(Parser.accept(KeyWord.BEGPAR)) {
     			currentModule.info=Parser.acceptString();
     			//Util.TRACE("Grammar.doParse: info="+info+",");
@@ -272,7 +272,7 @@ public class ProgramModule extends DeclarationScope {
     		//Util.println("DECLARATION: "+d.getClass().getSimpleName()+"  "+d.identifier+"  visible="+d.visible);
     		if(d.visible || currentModule.isGlobalModule()) {
     			if(!(d instanceof InlineRoutine)) {
-//    				System.out.println("ProgramModule.doSCodeModuleHead: doSCodeDeclaration d="+d);
+//    				IO.println("ProgramModule.doSCodeModuleHead: doSCodeDeclaration d="+d);
     				if(d.getTag() == null) Util.IERR("Missing tag in visible descriptor: "+d.getClass().getSimpleName()+"   "+d);
     				if(d.getTag().getXtag() < 0) Util.IERR("Missing xtag in visible descriptor: "+d);
     				d.doSCodeDeclaration();
@@ -292,8 +292,8 @@ public class ProgramModule extends DeclarationScope {
     		}
 //    		else Util.println("Unknown Declaration: d="+d.getClass().getSimpleName()+"  "+d);
     	}
-//		System.out.println("ProgramModule.doSCoding: visibleDeclarations.size="+visibleDeclarations.size());
-//		System.out.println("ProgramModule.doSCoding: nxtag="+Tag.nxtag);
+//		IO.println("ProgramModule.doSCoding: visibleDeclarations.size="+visibleDeclarations.size());
+//		IO.println("ProgramModule.doSCoding: nxtag="+Tag.nxtag);
     	
     	if(!currentModule.isMainProgram()) {
     		// GlobalModule and SubModule
@@ -437,7 +437,7 @@ public class ProgramModule extends DeclarationScope {
 	}
     	
 	private void writeAttrFile(Vector<Declaration> visibleDeclarations) throws IOException {
-		if (Option.verbose)	System.out.println("************************** BEGIN WRITE ATTRIBUTE FILE: "+identifier+"  lastTag="+Tag.lastTag+" **************************");
+		if (Option.verbose)	IO.println("************************** BEGIN WRITE ATTRIBUTE FILE: "+identifier+"  lastTag="+Tag.lastTag+" **************************");
 //		String relativeAttributeFileName="Attrs/FEC/"+Global.packetName+"/"+Global.sourceName+".atr";
 		String relativeAttributeFileName=Global.packetName+"/Attrs/"+Global.sourceName+".atr";
 		File attributeFile = new File(Global.outputDir,relativeAttributeFileName);
@@ -459,7 +459,7 @@ public class ProgramModule extends DeclarationScope {
 		oupt.writeShort(keys.size());
 		for(String key:keys) {
 			Mnemonic mne=SimulettaScanner.mnemonics.get(key);
-//			System.out.println("Mnemonic: "+mne.getClass().getSimpleName()+"   "+mne);
+//			IO.println("Mnemonic: "+mne.getClass().getSimpleName()+"   "+mne);
 //			mne.write(oupt);
 			oupt.writeObject(mne);
 		}
@@ -472,17 +472,17 @@ public class ProgramModule extends DeclarationScope {
 		
 		//oupt.flush();
 		oupt.close();	oupt = null;
-		if (Option.verbose)	System.out.println("************************** END WRITE ATTRIBUTE FILE: "+identifier+"  lastTag="+Tag.lastTag+", nxtag="+Tag.nxtag+" **************************");
+		if (Option.verbose)	IO.println("************************** END WRITE ATTRIBUTE FILE: "+identifier+"  lastTag="+Tag.lastTag+", nxtag="+Tag.nxtag+" **************************");
 		if (Option.verbose)	Util.TRACE("ProgramModule.writeProgramModule: *** ENDOF Generate SimulettaAttributeFile: " + attributeFile);
 		Global.outputAttributeFile=attributeFile;
 	}
 
 	public void print(final String lead,final int indent) {
-		System.out.println(Util.edIndent(indent)+"************************** "+lead+" BEGIN PRINT MODULE: "+identifier+"  lastTag="+Tag.lastTag+" **************************");
+		IO.println(Util.edIndent(indent)+"************************** "+lead+" BEGIN PRINT MODULE: "+identifier+"  lastTag="+Tag.lastTag+" **************************");
     	for(Declaration decl:declarationList) {
     		decl.print("",indent);
     	}
-		System.out.println(Util.edIndent(indent)+"************************** "+lead+" ENDOF PRINT MODULE: "+identifier+"  lastTag="+Tag.lastTag+" **************************");
+		IO.println(Util.edIndent(indent)+"************************** "+lead+" ENDOF PRINT MODULE: "+identifier+"  lastTag="+Tag.lastTag+" **************************");
     }
     
 	public String toString() {

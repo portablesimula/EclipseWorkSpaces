@@ -32,7 +32,7 @@ public class RTUtil {
 	}
 	
 	public static void set_STATUS(int status) {
-		if(Global.verbose) System.out.println("RTUtil.set_STATUS: " + status + "  " + edStatus(status));
+		if(Global.verbose) IO.println("RTUtil.set_STATUS: " + status + "  " + edStatus(status));
 //		Thread.dumpStack();
 		DSEG_RT.store(offset_STATUS, IntegerValue.of(Type.T_INT, status));	
 	}
@@ -262,10 +262,10 @@ public class RTUtil {
 		if(sort == null) return false;
 		IntegerValue misc = (IntegerValue) ent.addOffset(2).load();
 		Value variant = ent.addOffset(3).load();
-		System.out.println("============ Entity " + entID(ent) + " ============");
-		System.out.println(""+ent +              ": SL    " + sl);
-		System.out.println(""+ent.addOffset(1) + ": SORT  " + sort);
-		System.out.println(""+ent.addOffset(2) + ": MISC  " + misc);
+		IO.println("============ Entity " + entID(ent) + " ============");
+		IO.println(""+ent +              ": SL    " + sl);
+		IO.println(""+ent.addOffset(1) + ": SORT  " + sort);
+		IO.println(""+ent.addOffset(2) + ": MISC  " + misc);
 		int bdx = 0;
 		int lng = length(ent);
 		switch(sort.value) {
@@ -274,18 +274,18 @@ public class RTUtil {
 				SegmentAddress gcl = (SegmentAddress) ent.addOffset(4).load();
 				Value var1 = ent.addOffset(5).load();
 				Value var2 = ent.addOffset(6).load();
-				System.out.println(""+ent.addOffset(3) + ": PP    " + pp);
-				System.out.println(""+ent.addOffset(4) + ": GCL   " + gcl);
-				System.out.println(""+ent.addOffset(5) + ": VAR   " + var1);
-				System.out.println(""+ent.addOffset(6) + ": VAR   " + var2);
+				IO.println(""+ent.addOffset(3) + ": PP    " + pp);
+				IO.println(""+ent.addOffset(4) + ": GCL   " + gcl);
+				IO.println(""+ent.addOffset(5) + ": VAR   " + var1);
+				IO.println(""+ent.addOffset(6) + ": VAR   " + var2);
 				IntegerValue lngVal= (IntegerValue) pp.addOffset(3).load();
 				lng = lngVal.value;
 				bdx = 7;
 				break;
 			case S_TXTENT:
 				lngVal = (IntegerValue) variant;
-				System.out.println(""+ent.addOffset(3) + ": LNG   " + lngVal);
-				System.out.println(""+ent.addOffset(4) + ": TXT   \"" + edIDT(ent.addOffset(4), lngVal.value) + '"');
+				IO.println(""+ent.addOffset(3) + ": LNG   " + lngVal);
+				IO.println(""+ent.addOffset(4) + ": TXT   \"" + edIDT(ent.addOffset(4), lngVal.value) + '"');
 				
 //				lngVal = (IntegerValue) variant;
 //				lng = lngVal.value + 4;
@@ -297,22 +297,22 @@ public class RTUtil {
 			default:
 				lngVal = (IntegerValue) variant;
 				lng = lngVal.value;
-				System.out.println(""+ent.addOffset(3) + ": LNG   " + lngVal);
+				IO.println(""+ent.addOffset(3) + ": LNG   " + lngVal);
 				bdx = 4;
 		}
 		
 		
 		for(int i=bdx;i<lng;i++) {
-			System.out.println(""+ent.addOffset(i) + ": BODY  " + ent.addOffset(i).load());
+			IO.println(""+ent.addOffset(i) + ": BODY  " + ent.addOffset(i).load());
 		}
-//		System.out.println("============ Entity " + edSort(sort.value) + " ============");
+//		IO.println("============ Entity " + edSort(sort.value) + " ============");
 		return true;
 	}
 	
 	public static void dumpCurins() {
 		DataSegment rt = (DataSegment) Segment.find("DSEG_RT");
 		SegmentAddress curins = (SegmentAddress) rt.load(0);
-		System.out.println("RTUtil.dumpCurins: curins=" + curins);
+		IO.println("RTUtil.dumpCurins: curins=" + curins);
 		if(curins != null) RTUtil.printEntity(curins);
 //		Util.IERR("");
 	}
@@ -321,7 +321,7 @@ public class RTUtil {
 		DataSegment rt = (DataSegment) Segment.find("DSEG_RT");
 		SegmentAddress curins = (SegmentAddress) rt.load(0);
 		RTUtil.printEntity(curins);
-		System.out.println("==================================");
+		IO.println("==================================");
 	}
 	
 //    record area;                 -- Definition of storage pool
@@ -345,14 +345,14 @@ public class RTUtil {
 		Value stepsize = pool.addOffset(4).load();
 		Value mingap = pool.addOffset(5).load();
 		Value sequ = pool.addOffset(6).load();
-		System.out.println("=============== " + segID + " ===============");
-		System.out.println(""+pool +              ": SUC      " + suc);
-		System.out.println(""+pool.addOffset(1) + ": NXT      " + nxt);
-		System.out.println(""+pool.addOffset(2) + ": LIM      " + lim);
-		System.out.println(""+pool.addOffset(3) + ": STARTGC  " + startgc);
-		System.out.println(""+pool.addOffset(4) + ": STEPSIZE " + stepsize);
-		System.out.println(""+pool.addOffset(5) + ": MINGAP   " + mingap);
-		System.out.println(""+pool.addOffset(6) + ": SEQU     " + sequ);
+		IO.println("=============== " + segID + " ===============");
+		IO.println(""+pool +              ": SUC      " + suc);
+		IO.println(""+pool.addOffset(1) + ": NXT      " + nxt);
+		IO.println(""+pool.addOffset(2) + ": LIM      " + lim);
+		IO.println(""+pool.addOffset(3) + ": STARTGC  " + startgc);
+		IO.println(""+pool.addOffset(4) + ": STEPSIZE " + stepsize);
+		IO.println(""+pool.addOffset(5) + ": MINGAP   " + mingap);
+		IO.println(""+pool.addOffset(6) + ": SEQU     " + sequ);
 		
 		SegmentAddress ent = new SegmentAddress(segID, 7);
 		
@@ -365,7 +365,7 @@ public class RTUtil {
 			e.printStackTrace();
 			Util.IERR("");
 		}
-		System.out.println("=============== END " + segID + " ===============");
+		IO.println("=============== END " + segID + " ===============");
 	}
 
 	
@@ -412,7 +412,7 @@ public class RTUtil {
 		
 //		dseg.dump("BasicIO ", 30, 60);
 		
-		System.out.println("============ print BasicIO ============ " + dseg.size());
+		IO.println("============ print BasicIO ============ " + dseg.size());
 		int idx = 30;
 		prt(dseg, ent, " SL      ", idx++);
 		prt(dseg, ent, " SORT    ", idx++);
@@ -456,7 +456,7 @@ public class RTUtil {
 			IntegerValue value = (IntegerValue) dseg.load(62+i);
 			sb.append((char)((value==null)?0:value.value));
 		}
-		System.out.println(""+ent.addOffset(62) + ":  utbuff   \"" + sb + '"');
+		IO.println(""+ent.addOffset(62) + ":  utbuff   \"" + sb + '"');
 		
 	    //   character           ebuf(600); -- edit buffer (leftadj/exactfit)
 		sb = new StringBuilder();
@@ -464,7 +464,7 @@ public class RTUtil {
 			IntegerValue value = (IntegerValue) dseg.load(200+62+i);
 			sb.append((char)((value==null)?0:value.value));
 		}
-		System.out.println(""+ent.addOffset(200+62) + ": ebuff    \"" + sb + '"');
+		IO.println(""+ent.addOffset(200+62) + ": ebuff    \"" + sb + '"');
 		idx = idx + 200 + 600;
 		
 		prt(dseg, ent, "GCval   ", idx++);
@@ -483,12 +483,12 @@ public class RTUtil {
 		prt(dseg, ent, "errmsg  ", idx++);
 		prt(dseg, ent, "errmsg  ", idx++);
 		prt(dseg, ent, "errmsg  ", idx++);
-		System.out.println("============ endof BasicIO ============");
+		IO.println("============ endof BasicIO ============");
 	}
 	
 	private static void prt(DataSegment dseg, SegmentAddress ent, String ident, int ofst) {
 		Value value = dseg.load(ofst);
-		System.out.println(""+ent.addOffset(ofst) + ": " + ident + " " + value);
+		IO.println(""+ent.addOffset(ofst) + ": " + ident + " " + value);
 		
 	}
 	
@@ -498,7 +498,7 @@ public class RTUtil {
 		
 //		dseg.dump("DSEG_RT ", 0, 60);
 		
-		System.out.println("============ print DSEG_RT ============");
+		IO.println("============ print DSEG_RT ============");
 		prt(dseg, ent, " curins ", 0);
 		prt(dseg, ent, " status ", 1);
 		prt(dseg, ent, " itsize ", 2);
@@ -531,8 +531,8 @@ public class RTUtil {
 		prt(dseg, ent, "rstr_x ", 29);
 		prt(dseg, ent, "bio    ", 30);
 		prt(dseg, ent, "bio    ", 31);
-		System.out.println("          ... rest of bio truncated");
-		System.out.println("============ endof DSEG_RT ============");
+		IO.println("          ... rest of bio truncated");
+		IO.println("============ endof DSEG_RT ============");
 	}
 	
 	public static String edSort(int sort) {

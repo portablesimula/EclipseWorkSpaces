@@ -36,7 +36,7 @@ public abstract class DINITAREA extends Instruction {
 		Type type = Type.ofScode();
 		Scode.expect(Scode.S_FIXREP);
 		int fixrep = Scode.inNumber();
-//		System.out.println("DINITAREA.ofScode: type=" + type + ", instr=" + Scode.edInstr(Scode.curinstr) + ", fixrep="+fixrep);
+//		IO.println("DINITAREA.ofScode: type=" + type + ", instr=" + Scode.edInstr(Scode.curinstr) + ", fixrep="+fixrep);
 		CTStack.pop();
 //		Global.PSEG.emit(new SVM_NOOP(), "DINITAREA: ");
 		Global.PSEG.emit(new SVM_POPK(1), "DINITAREA: ");

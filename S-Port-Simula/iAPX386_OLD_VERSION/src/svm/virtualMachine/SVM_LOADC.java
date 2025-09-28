@@ -29,7 +29,7 @@ public class SVM_LOADC extends SVM_Instruction {
 		if(value != null ) {
 //			if(value.type.tag != typeTag) {
 			if(value.type != type) {
-				System.out.println("NEW SVM_LOADC: value="+value+", type="+value.type);
+				IO.println("NEW SVM_LOADC: value="+value+", type="+value.type);
 				Util.IERR("INCONSISTENT: type="+type + ", value'type="+value.type);
 			}
 		}
@@ -101,17 +101,17 @@ public class SVM_LOADC extends SVM_Instruction {
 		this.typeTag = inpt.readTag();
 		boolean present = inpt.readBoolean();
 		if(present)	this.value = Value.read(inpt);
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + this);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		oupt.writeTag(typeTag);
 		if(value != null) {
 			oupt.writeBoolean(true);
-//			System.out.println("SVM_LOADC.write: "+value);
+//			IO.println("SVM_LOADC.write: "+value);
 			value.write(oupt);
 		} else oupt.writeBoolean(false);
 	}

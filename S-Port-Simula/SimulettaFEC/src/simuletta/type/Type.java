@@ -121,7 +121,7 @@ public class Type implements Externalizable {
 			Parser.expect(KeyWord.ENDPAR); 
 			type=Type.Range(lower,upper); 
 		}
-//		System.out.println("Type.parse: "+type);
+//		IO.println("Type.parse: "+type);
 		return(type);  
     }
 
@@ -412,7 +412,7 @@ public class Type implements Externalizable {
 			if(key2==KeyWord.CHARACTER) return(Type.Character);
 		}
 		else if(type1 instanceof InfixType infx) {
-//			System.out.println("Type.checkCompatible: infx="+infx);
+//			IO.println("Type.checkCompatible: infx="+infx);
 			if(infx.qual.equals("STRING")) {
 				if(key2==KeyWord.CHARACTER) return(Type.Character);
 			}
@@ -571,7 +571,7 @@ public class Type implements Externalizable {
 			Record rec=(Record) Declaration.findMeaning(infix.qual);
 			if(!rec.IS_SCODE_EMITTED()) ERROR("Infix record is not written yet: "+rec.identifier);
 			sCode.outtag(rec.getTag());
-			//System.out.println("Type.toSCode: INFIX qual="+qual+", value="+key.getValue()+", value2="+key.getVal2());
+			//IO.println("Type.toSCode: INFIX qual="+qual+", value="+key.getValue()+", value2="+key.getVal2());
 			//Util.BREAK("Type.toSCode: INFIX qual="+qual+", value="+key.getValue()+", value2="+key.getVal2());
 			int info1=(int)infix.repCount;
 			if(info1>1) { sCode.outinst(S_FIXREP); sCode.outnumber(info1-1); }
@@ -598,7 +598,7 @@ public class Type implements Externalizable {
 //			Record rec=getRecord(qual);
 			Record rec=(Record) Declaration.findMeaning(qual);
 
-//			System.out.println("Type.toDefaultSCode: code="+rec.getTag().getCode());
+//			IO.println("Type.toDefaultSCode: code="+rec.getTag().getCode());
 //			if(rec.getTag().getCode()==94) {
 //				Util.STOP();
 //			}

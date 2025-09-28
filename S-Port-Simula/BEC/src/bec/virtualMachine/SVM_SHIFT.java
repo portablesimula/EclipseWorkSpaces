@@ -34,13 +34,13 @@ public class SVM_SHIFT extends SVM_Instruction {
 		Value tos = RTStack.pop();
 		Value sos = RTStack.pop();
 		if(DEBUG) {
-			if(tos != null)	System.out.println("SVM_SHIFT: TOS: " + tos.getClass().getSimpleName() + "  " + tos);
-			if(sos != null)	System.out.println("SVM_SHIFT: SOS: " + sos.getClass().getSimpleName() + "  " + sos);
-			System.out.println("SVM_SHIFT: " + sos + " " + Scode.edInstr(instr) + " " + tos);
+			if(tos != null)	IO.println("SVM_SHIFT: TOS: " + tos.getClass().getSimpleName() + "  " + tos);
+			if(sos != null)	IO.println("SVM_SHIFT: SOS: " + sos.getClass().getSimpleName() + "  " + sos);
+			IO.println("SVM_SHIFT: " + sos + " " + Scode.edInstr(instr) + " " + tos);
 		}
 		Value res = (sos == null)? null : sos.shift(instr, tos);
 		if(DEBUG)
-			System.out.println("SVM_SHIFT: " + sos + " " + Scode.edInstr(instr)+ " " + tos + " ==> " + res);
+			IO.println("SVM_SHIFT: " + sos + " " + Scode.edInstr(instr)+ " " + tos + " ==> " + res);
 		RTStack.push(res, "SVM_SHIFT: " + tos + " " + Scode.edInstr(instr)+ " " + sos + " = " + res);
 		Global.PSC.addOfst(1);
 	}
@@ -61,14 +61,14 @@ public class SVM_SHIFT extends SVM_Instruction {
 	// ***********************************************************************************************
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		oupt.writeKind(instr);
 	}
 
 	public static SVM_SHIFT read(AttributeInputStream inpt) throws IOException {
 		SVM_SHIFT instr = new SVM_SHIFT(inpt.readKind());
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + instr);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
 		return instr;
 	}
 

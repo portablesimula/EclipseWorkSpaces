@@ -72,7 +72,7 @@ public class Type {
 		else return(null);
     	Type type=new Type(code,qual);
     	if(Parser.accept(KeyWord.ARRAY)) type.isArray=true;
-    	//System.out.println("Type.parse: "+type);
+    	//IO.println("Type.parse: "+type);
     	if(code==Type.INOTY) return(null);
 		return(type);  
     }

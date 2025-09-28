@@ -38,7 +38,7 @@ public class SVM_STORE extends SVM_Instruction {
 		this.rtAddr = rtAddress;
 		this.xReg = xReg;
 		this.size = size;
-//		System.out.println("NEW SVM_STORE: " + this);
+//		IO.println("NEW SVM_STORE: " + this);
 	}
 	
 	@Override
@@ -55,7 +55,7 @@ public class SVM_STORE extends SVM_Instruction {
 //			case DataAddress.STACK_ADDR:  Util.IERR(""); doStore(addr, xReg); break;
 //			case DataAddress.REMOTE_ADDR:
 //				if(Global.TESTING_REMOTE) {
-//					System.out.println("SVM_STORE.execute: "+addr+", xReg="+addr.xReg);
+//					IO.println("SVM_STORE.execute: "+addr+", xReg="+addr.xReg);
 //					doStore(addr, xReg);
 ////					Util.IERR("NOT IMPL");
 //				} else {
@@ -73,7 +73,7 @@ public class SVM_STORE extends SVM_Instruction {
 //		
 //		if(DEBUG) {
 ////			addr.segment().dump("STORE.execute: ", addr.offset, addr.offset+size);
-////			System.out.println("STORE: size="+size);
+////			IO.println("STORE: size="+size);
 //			addr.dumpArea("STORE.execute: ", size);
 //		}
 		
@@ -88,7 +88,7 @@ public class SVM_STORE extends SVM_Instruction {
 //		if(xReg > 0) idx = idx + RTRegister.getIntValue(xReg);
 //		for(int i=0;i<size;i++) {
 //			Value item = RTStack.load(n-i);
-//			if(DEBUG) System.out.println("STORE: "+item+" ==> "+addr + "["+idx+"]");
+//			if(DEBUG) IO.println("STORE: "+item+" ==> "+addr + "["+idx+"]");
 //			addr.store(idx--, item, "");
 ////			RTStack.printCallTrace("STORE.execute: ");
 //		}
@@ -110,12 +110,12 @@ public class SVM_STORE extends SVM_Instruction {
 		this.rtAddr = (DataAddress) Value.read(inpt);
 		this.xReg = inpt.readReg();
 		this.size = inpt.readShort();
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + this);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		rtAddr.write(oupt);
 		oupt.writeReg(xReg);

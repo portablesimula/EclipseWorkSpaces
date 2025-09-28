@@ -25,7 +25,7 @@ public abstract class PUSH extends Instruction {
 	 */
 	public static void ofScode() {
 		Tag tag = Tag.inTag();
-		if(DEBUG) System.out.println("PUSH.ofScode: tag=" + tag);
+		if(DEBUG) IO.println("PUSH.ofScode: tag=" + tag);
 		Descriptor descr = Display.lookup(tag);
 		if(Option.GENERATE_Q_CODE) {
 //	      	switch(descr.kind) {
@@ -54,8 +54,8 @@ public abstract class PUSH extends Instruction {
 //			if(descr instanceof Variable var) {
 //				AddressItem addr = AddressItem.ofREF(var.type,0,var.address);
 //				if(DEBUG) {
-//					System.out.println("PUSH.doCode: var="+var);
-//					System.out.println("PUSH.doCode: addr="+addr);				
+//					IO.println("PUSH.doCode: var="+var);
+//					IO.println("PUSH.doCode: addr="+addr);				
 //				}
 //				CTStack.push(addr);
 //			} else if(descr instanceof ConstDescr cns) {

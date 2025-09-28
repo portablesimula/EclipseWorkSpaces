@@ -182,10 +182,10 @@ public class InlineRoutine extends Declaration {
 
 	
 	private int grabFixrep(Vector<Expression> argset,Type type) {
-//		System.out.println("InlineRoutine.grabFixrep: "+argset+", size="+argset.size());
+//		IO.println("InlineRoutine.grabFixrep: "+argset+", size="+argset.size());
 		if(argset.size() != 2) IERR("");
 		Expression arg=argset.remove(0);
-//		System.out.println("InlineRoutine.grabFixrep: "+arg.getClass().getSimpleName()+"  "+arg);
+//		IO.println("InlineRoutine.grabFixrep: "+arg.getClass().getSimpleName()+"  "+arg);
 		if(arg instanceof SimpleValue val) {
 			if(val.instr!= S_C_INT) IERR("Fixrep is not Integer'number");
 			sCode.outinst(S_PUSHC); sCode.outinst(S_C_INT); sCode.outstring(val.value); sCode.outcode();

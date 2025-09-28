@@ -36,12 +36,12 @@ public class SVM_POPK extends SVM_Instruction {
 	private SVM_POPK(AttributeInputStream inpt) throws IOException {
 		this.opcode = SVM_Instruction.iPOPK;
 		this.aux = inpt.readShort();
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + this);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		oupt.writeShort(aux);
 	}

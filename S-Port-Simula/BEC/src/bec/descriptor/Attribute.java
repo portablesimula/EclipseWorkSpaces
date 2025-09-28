@@ -46,7 +46,7 @@ public class Attribute extends Descriptor {
 	
 	@Override
 	public void print(final String indent) {
-		System.out.println(indent + this);
+		IO.println(indent + this);
 	}
 	
 	@Override
@@ -60,7 +60,7 @@ public class Attribute extends Descriptor {
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("LocDescr.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("LocDescr.Write: " + this);
 		oupt.writeKind(kind);
 		tag.write(oupt);
 		type.write(oupt);
@@ -78,7 +78,7 @@ public class Attribute extends Descriptor {
 		loc.rela = inpt.readShort();
 		loc.repCount = inpt.readShort();
 		loc.size = inpt.readShort();
-		if(Global.ATTR_INPUT_TRACE) System.out.println("LocDescr.Read: " + loc);
+		if(Global.ATTR_INPUT_TRACE) IO.println("LocDescr.Read: " + loc);
 		return loc;
 	}
 

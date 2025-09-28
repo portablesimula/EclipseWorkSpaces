@@ -37,19 +37,19 @@ public class AttributeInputStream {
     
     public int readKind() throws IOException {
     	int kind = inpt.readByte() & 0xFF;
-    	if(TRACE) System.out.println("AttributeInputStream.readKind: "+kind+':'+Kind.edKind(kind));
+    	if(TRACE) IO.println("AttributeInputStream.readKind: "+kind+':'+Kind.edKind(kind));
     	return kind;
 	}
     
     public void readInstr() throws IOException {
     	curinstr = inpt.readByte() & 0xFF;
-    	if(TRACE) System.out.println("AttributeInputStream.readInstr: "+curinstr+':'+Scode.edInstr(curinstr));
+    	if(TRACE) IO.println("AttributeInputStream.readInstr: "+curinstr+':'+Scode.edInstr(curinstr));
 //    	return curinstr;
 	}
     
     public int readReg() throws IOException {
     	int reg = inpt.readByte() & 0xFF;
-    	if(TRACE) System.out.println("AttributeInputStream.readReg: "+reg+':'+RTRegister.edReg(reg));
+    	if(TRACE) IO.println("AttributeInputStream.readReg: "+reg+':'+RTRegister.edReg(reg));
     	return reg;
 	}
 
@@ -57,67 +57,67 @@ public class AttributeInputStream {
     	String ident = readString();
     	int tag = inpt.readShort();
     	Scode.TAGIDENT.set(tag, ident);
-		if(TRACE) System.out.println("AttributeInputStream.readTag: "+Scode.edTag(tag));
+		if(TRACE) IO.println("AttributeInputStream.readTag: "+Scode.edTag(tag));
 		return tag;
 	}
 
     public int readTag() throws IOException {
     	int tag = inpt.readShort();
-		if(TRACE) System.out.println("AttributeInputStream.readTag: "+Scode.edTag(tag));
+		if(TRACE) IO.println("AttributeInputStream.readTag: "+Scode.edTag(tag));
 		return tag;
 	}
 
 //    public Type readType() throws IOException {
 //		int keyWord = inpt.readUnsignedByte();
 //		if(keyWord == 0) {
-//	    	if(TRACE) System.out.println("AttributeInputStream.readType: null");
+//	    	if(TRACE) IO.println("AttributeInputStream.readType: null");
 //			return null;
 //		}
 //		String classIdent = readString();
 //		Type type = new Type(keyWord,classIdent);			
-//    	if(TRACE) System.out.println("AttributeInputStream.readType: "+type);
+//    	if(TRACE) IO.println("AttributeInputStream.readType: "+type);
 //    	return type;
 //    }
 	
     public boolean readBoolean() throws IOException {
     	boolean b = inpt.readBoolean();
-    	if(TRACE) System.out.println("AttributeInputStream.readBoolean: "+b);
+    	if(TRACE) IO.println("AttributeInputStream.readBoolean: "+b);
     	return b;
     }
 	
     public int readChar() throws IOException {
     	int i = inpt.readShort();
-    	if(TRACE) System.out.println("AttributeInputStream.readInt: "+i);
+    	if(TRACE) IO.println("AttributeInputStream.readInt: "+i);
     	return i;
 	}
 	
     public int readShort() throws IOException {
     	short i = inpt.readShort();
-    	if(TRACE) System.out.println("AttributeInputStream.readShort: "+i);
+    	if(TRACE) IO.println("AttributeInputStream.readShort: "+i);
     	return i;
 	}
 	
     public int readInt() throws IOException {
     	int i = inpt.readInt();
-    	if(TRACE) System.out.println("AttributeInputStream.readInt: "+i);
+    	if(TRACE) IO.println("AttributeInputStream.readInt: "+i);
     	return i;
 	}
 	
     public float readFloat() throws IOException {
     	float i = inpt.readFloat();
-    	if(TRACE) System.out.println("AttributeInputStream.readFloat: "+i);
+    	if(TRACE) IO.println("AttributeInputStream.readFloat: "+i);
     	return i;
 	}
 	
     public double readDouble() throws IOException {
     	double i = inpt.readDouble();
-    	if(TRACE) System.out.println("AttributeInputStream.readDouble: "+i);
+    	if(TRACE) IO.println("AttributeInputStream.readDouble: "+i);
     	return i;
 	}
 
 //    public Object readConstant() throws IOException {
 //    	int key = inpt.readByte();
-//    	if(TRACE) System.out.println("AttributeInputStream.readConstant: key=" + (int)key + " \"" + key +"\"");
+//    	if(TRACE) IO.println("AttributeInputStream.readConstant: key=" + (int)key + " \"" + key +"\"");
 //    	Object res = null;
 //		switch(key) {
 //			case Type.T_VOID:		res = null; break;
@@ -129,7 +129,7 @@ public class AttributeInputStream {
 //			case Type.T_TEXT:		res = readString(); break;
 //			default: throw new RuntimeException("key = "+key);
 //		}
-//    	if(TRACE) System.out.println("AttributeInputStream.readDouble: "+res);
+//    	if(TRACE) IO.println("AttributeInputStream.readDouble: "+res);
 //    	return res;
 //	}
 
@@ -138,15 +138,15 @@ public class AttributeInputStream {
     	int lng = inpt.readShort()-1;
 //    	test = inpt.readShort(); if(test != 8888) Util.IERR(""+test);
     	if(lng < 0) {
-        	if(TRACE) System.out.println("AttributeInputStream.readString: null");
+        	if(TRACE) IO.println("AttributeInputStream.readString: null");
     		return null;
     	}
-    	if(TRACE) System.out.println("AttributeInputStream.readString: lng="+(char)lng+" "+lng);
+    	if(TRACE) IO.println("AttributeInputStream.readString: lng="+(char)lng+" "+lng);
     	if(lng > 2000) Thread.dumpStack();
     	StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < lng; i++) sb.append(inpt.readChar());
     	String s = sb.toString();
-    	if(TRACE) System.out.println("AttributeInputStream.readString: \""+s+'"');
+    	if(TRACE) IO.println("AttributeInputStream.readString: \""+s+'"');
     	return s;
     }
 
@@ -157,7 +157,7 @@ public class AttributeInputStream {
 //
 //    public int readSEQU(SyntaxClass obj) throws IOException {
 //    	int OBJECT_SEQU = inpt.readShort();
-//    	if(TRACE) System.out.println("AttributeInputStream.readSEQU: " + OBJECT_SEQU + "  ====>  " + obj.getClass().getSimpleName());
+//    	if(TRACE) IO.println("AttributeInputStream.readSEQU: " + OBJECT_SEQU + "  ====>  " + obj.getClass().getSimpleName());
 //		objectReference.put(OBJECT_SEQU, obj);
 //    	return OBJECT_SEQU;
 //	}
@@ -166,7 +166,7 @@ public class AttributeInputStream {
 //	public SyntaxClass readObj() throws IOException {
 //		int kind = readKind();
 //		switch(kind) {
-//		System.out.println("AttributeInputStream.readObj: "+Scode.edInstr(kind));
+//		IO.println("AttributeInputStream.readObj: "+Scode.edInstr(kind));
 //		switch(kind) {
 //			case Scode.S_BSEG:	    return DataSegment.readObject(inpt);
 //			case Scode.S_RECORD:    return RECORD.readObject(inpt);
@@ -179,15 +179,15 @@ public class AttributeInputStream {
 //			default: Util.IERR("IMPOSSIBLE "+Scode.edInstr(kind));
 //		}
 //		case ObjectKind.NULL:
-//			if(TRACE) System.out.println("AttributeInputStream.readObj: null");
+//			if(TRACE) IO.println("AttributeInputStream.readObj: null");
 //			return null;
 //		case ObjectKind.ObjectReference:
 //			int OBJECT_SEQU = inpt.readShort();
-//			if(TRACE) System.out.println("AttributeInputStream.readObj: OBJECT_SEQU="+OBJECT_SEQU);
+//			if(TRACE) IO.println("AttributeInputStream.readObj: OBJECT_SEQU="+OBJECT_SEQU);
 //			SyntaxClass obj;
 //			obj = objectReference.get(OBJECT_SEQU);
 //			Util.ASSERT(obj != null, "Invariant: OBJECT_SEQU="+modID+"#"+OBJECT_SEQU);
-//			if(TRACE) System.out.println("AttributeInputStream.readObj: "+obj);
+//			if(TRACE) IO.println("AttributeInputStream.readObj: "+obj);
 //			return(obj);
 //		default:
 //			obj = readObj(kind,this);
@@ -195,7 +195,7 @@ public class AttributeInputStream {
 //			objectReference.put(obj.OBJECT_SEQU, obj);
 //			obj.OBJECT_SEQU = 0;
 //			if(TRACE)
-//				System.out.println("AttributeInputStream.readObj: "+modID+"#"+obj.OBJECT_SEQU+" obj="+obj);
+//				IO.println("AttributeInputStream.readObj: "+modID+"#"+obj.OBJECT_SEQU+" obj="+obj);
 //			return(obj);
 //		}	
 //	}

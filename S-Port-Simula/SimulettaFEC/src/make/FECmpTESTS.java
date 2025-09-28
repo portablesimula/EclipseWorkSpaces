@@ -116,7 +116,7 @@ public final class FECmpTESTS {
 //		RTOption.LOOM_TRACING = false;
 //		RTOption.USE_VIRTUAL_THREAD=true;
 
-		if(Option.verbose) System.out.println("\nBEGIN COMPILE TESTS TO S-CODE");
+		if(Option.verbose) IO.println("\nBEGIN COMPILE TESTS TO S-CODE");
 		for(String name:names) {
 			String fileName = userDir+"/src/"+Global.packetName+"/sml/"+name+".sml";
 //			File outputFile=new File(userDir+"/src/"+Global.packetName+"/scd/"+name);
@@ -130,14 +130,14 @@ public final class FECmpTESTS {
 			SimulettaCompiler compiler = new SimulettaCompiler(fileName,outputFile);
 			compiler.doCompile();
 			if(Option.verbose) {
-				System.out.println("    SCode Output: "+outputFile);
-				System.out.println("    Attrs Output: "+Global.outputAttributeFile);
+				IO.println("    SCode Output: "+outputFile);
+				IO.println("    Attrs Output: "+Global.outputAttributeFile);
 			}
 		}
 		if(Option.verbose) {
-			System.out.println("--- END COMPILE SIMPLE TESTS TO S-CODE");
+			IO.println("--- END COMPILE SIMPLE TESTS TO S-CODE");
 			long timeUsed  = System.currentTimeMillis( ) - startTimeMs;
-			System.out.println("\nElapsed Time: Approximately " + timeUsed/1000 + " sec.");
+			IO.println("\nElapsed Time: Approximately " + timeUsed/1000 + " sec.");
 		}
 	}
 

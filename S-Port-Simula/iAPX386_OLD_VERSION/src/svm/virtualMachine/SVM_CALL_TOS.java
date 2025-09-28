@@ -25,7 +25,7 @@ public class SVM_CALL_TOS extends SVM_Instruction {
 		this.nParSlots = nParSlots;
 		this.exportSize = exportSize;
 		this.importSize = importSize;
-//		System.out.println("NEW SVM_CALL: "+this);
+//		IO.println("NEW SVM_CALL: "+this);
 	}
 	
 	@Override	
@@ -36,7 +36,7 @@ public class SVM_CALL_TOS extends SVM_Instruction {
 		if(Global.EXEC_TRACE > 0) {
 			ProgramAddress.printInstr(this,false);
 		}
-//		System.out.println("SVM_CALL:execute: " + this);
+//		IO.println("SVM_CALL:execute: " + this);
 		// CALL-TOS
 		
 		boolean TESTING = true;
@@ -62,13 +62,13 @@ public class SVM_CALL_TOS extends SVM_Instruction {
 		}
 		
 		Global.PSC = (ProgramAddress) RTStack.pop().copy();
-		System.out.println("SVM_CALL.execute: PSC="+Global.PSC);
+		IO.println("SVM_CALL.execute: PSC="+Global.PSC);
 		Global.PSC.segment().dump("SVM_CALL.execute: ", 0, 10);
 		RTStack.push(retur, "RETUR");
 
 //		if(rutAddr != null && rutAddr.toString().equals("PSEG_FIL_OUTTXT:BODY[0]")) {
 //			int idx = RTStack.size() - 2;
-//			System.out.println("SVM_CALL.execute: idx="+idx);
+//			IO.println("SVM_CALL.execute: idx="+idx);
 //			RTStack.dumpRTStack("");
 //			RTStack.guard(idx);	
 ////			Util.IERR("");
@@ -91,7 +91,7 @@ public class SVM_CALL_TOS extends SVM_Instruction {
 		nParSlots = inpt.readShort();
 		exportSize = inpt.readShort();
 		importSize = inpt.readShort();
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + this);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
 
 //	private String prfIdent;
@@ -102,7 +102,7 @@ public class SVM_CALL_TOS extends SVM_Instruction {
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		oupt.writeString(prfIdent);
 		returSlot.write(oupt);

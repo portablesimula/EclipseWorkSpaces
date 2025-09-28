@@ -73,7 +73,7 @@ public class RemoteAddress extends DataAddress {
 
 	@Override
 	public void store(int idx, Value value, String comment) {
-		System.out.println("RTRemoteAddress.store: "+value+"  "+this+", idx="+idx+", attrOfst="+ofst+", xReg:"+RTRegister.edReg(xReg)+", oaddr="+RTRegister.getValue(xReg));
+		IO.println("RTRemoteAddress.store: "+value+"  "+this+", idx="+idx+", attrOfst="+ofst+", xReg:"+RTRegister.edReg(xReg)+", oaddr="+RTRegister.getValue(xReg));
 		if(Global.TESTING_REMOTE) {
 //			DataAddress oaddr = (DataAddress) RTStack.pop();
 			oaddr.store(ofst + idx, value, comment);			
@@ -86,7 +86,7 @@ public class RemoteAddress extends DataAddress {
 	
 	@Override
 	public Value load(int idx) {
-//		System.out.println("RTRemoteAddress.load: "+this+", idx="+idx);
+//		IO.println("RTRemoteAddress.load: "+this+", idx="+idx);
 		if(Global.TESTING_REMOTE) {
 			DataAddress oaddr = (DataAddress) RTStack.pop();
 			return oaddr.load(ofst + idx);
@@ -121,17 +121,17 @@ public class RemoteAddress extends DataAddress {
 		this.type = Type.T_OADDR;
 		xReg = inpt.readReg();
 		ofst = inpt.readShort();
-//		System.out.println("DataAddress.read: " + this);
+//		IO.println("DataAddress.read: " + this);
 	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("RTRemoteAddress.write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("RTRemoteAddress.write: " + this);
 		oupt.writeKind(Scode.S_C_OADDR);
 		oupt.writeKind(kind);
 		oupt.writeReg(xReg);
 		oupt.writeShort(ofst);
-//		System.out.println("DataAddress.write: " + this + "   segID="+segID+", ofst="+ofst);
+//		IO.println("DataAddress.write: " + this + "   segID="+segID+", ofst="+ofst);
 	}
 
 //	public void writeBody(AttributeOutputStream oupt) throws IOException {

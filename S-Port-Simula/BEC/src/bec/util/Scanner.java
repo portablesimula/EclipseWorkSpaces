@@ -74,7 +74,7 @@ public final class Scanner {
 	            case '\r':			/* CR */
 	            	break;
 	            default:
-//	            	System.out.println("Scanner: char "+(char)current);
+//	            	IO.println("Scanner: char "+(char)current);
 	            	return Character.valueOf((char) current);
     		}
     	}
@@ -90,7 +90,7 @@ public final class Scanner {
     	while (Character.isDigit(getNext()))
     		number.append((char)current);
     	pushBack (current);
-//    	System.out.println("Scanner: Number "+number);
+//    	IO.println("Scanner: Number "+number);
     	return Integer.decode(number.toString());
     }
 
@@ -118,7 +118,7 @@ public final class Scanner {
     	while ((Character.isLetter(getNext()) || Character.isDigit(current) || current == '_'))
     		name.append((char)current);
     	pushBack(current);
-//    	System.out.println("Scanner: Name "+name);
+//    	IO.println("Scanner: Name "+name);
     	return(name.toString());
     }
 	

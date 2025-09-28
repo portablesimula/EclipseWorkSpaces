@@ -27,7 +27,7 @@ public class SVM_SUB extends SVM_Instruction {
 		Value tos = RTStack.pop();
 		Value sos = RTStack.pop();
 		Value res = (sos == null)? ( (tos == null)? null : tos.neg()) : sos.sub(tos);
-		if(DEBUG) System.out.println("SVM_SUB: " + sos + " - " + tos + " ==> " + res);
+		if(DEBUG) IO.println("SVM_SUB: " + sos + " - " + tos + " ==> " + res);
 		RTStack.push(res, "SVM_SUB: " + sos + " - " + tos + " = " + res);
 		Global.PSC.addOfst(1);
 	}
@@ -43,13 +43,13 @@ public class SVM_SUB extends SVM_Instruction {
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 	}
 
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {
 		SVM_SUB instr = new SVM_SUB();
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + instr);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
 		return instr;
 	}
 

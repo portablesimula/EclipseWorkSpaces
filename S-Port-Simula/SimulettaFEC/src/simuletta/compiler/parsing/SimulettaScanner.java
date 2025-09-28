@@ -103,7 +103,7 @@ public final class SimulettaScanner {
     //********************************************************************************
 	public static void listMnemonics() {
 		mnemonics.entrySet().forEach( entry -> {
-		    System.out.println( entry.getKey() + "->" + entry.getValue() );
+		    IO.println( entry.getKey() + "->" + entry.getValue() );
 		});
 	}
 

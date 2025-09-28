@@ -56,14 +56,14 @@ public abstract class SELECT extends Instruction {
 		tos.offset = tos.offset + attr.rela;
         tos.repdist = tos.type.size;
 		tos.type = attr.type;
-		if(DEBUG) System.out.println("SELECT.ofScode: ofst="+tos.offset + ", rela=" + attr.rela);
+		if(DEBUG) IO.println("SELECT.ofScode: ofst="+tos.offset + ", rela=" + attr.rela);
 		if(Option.GENERATE_Q_CODE) {
 			if(tos.atrState == Address.FromConst) {
 				tos.atrState = Address.NotStacked;
 				POP.qPOPKill(1);
 			}
 		} else {
-			if(DEBUG) System.out.println("SELECT.ofScode: TOS="+tos);
+			if(DEBUG) IO.println("SELECT.ofScode: TOS="+tos);
 		}
 //		if(instr == Scode.S_SELECTV) FETCH.doFetch("SELECTV " + tag + ": ");
 		if(instr == Scode.S_SELECTV) FETCH.GQfetch();

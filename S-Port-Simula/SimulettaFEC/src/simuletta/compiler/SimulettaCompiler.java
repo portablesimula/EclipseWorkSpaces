@@ -76,9 +76,9 @@ public class SimulettaCompiler {
 			s.append("End Simuletta: ").append(Global.sourceLineNumber).append(" lines, ");
 			if(nError != 0) s.append(nError); else s.append("no");
 			s.append(" errors.");
-			System.out.println(s.toString()); // symboltable.close;
+			IO.println(s.toString()); // symboltable.close;
 		}
-		if(nError > 0) System.out.println("Program Terminated due to " + nError + " Errors");	            
+		if(nError > 0) IO.println("Program Terminated due to " + nError + " Errors");	            
 	}
 
 	private InputStreamReader getReader() {

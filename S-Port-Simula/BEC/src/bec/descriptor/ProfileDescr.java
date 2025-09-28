@@ -38,7 +38,7 @@ public class ProfileDescr extends Descriptor {
 	
 	private ProfileDescr(int kind, Tag tag) {
 		super(kind, tag);
-//		System.out.println("NEW ProfileDescr: " + tag);
+//		IO.println("NEW ProfileDescr: " + tag);
 	}
 	
 	public String getSimpleName() {
@@ -77,7 +77,7 @@ public class ProfileDescr extends Descriptor {
 	 */
 	public static ProfileDescr ofScode() {
 		Tag ptag = Tag.ofScode();
-//		System.out.println("ProfileDescr.inProfile: " + Scode.edTag(ptag));
+//		IO.println("ProfileDescr.inProfile: " + Scode.edTag(ptag));
 		ProfileDescr prf = new ProfileDescr(Kind.K_ProfileDescr, ptag);
 		if(Scode.nextByte() == Scode.S_EXTERNAL) {
 			 // peculiar ::= external body:newtag nature:string xid:string
@@ -165,13 +165,13 @@ public class ProfileDescr extends Descriptor {
 		case Scode.S_EXTERNAL ->  profile += " EXTERNAL "  + Scode.edTag(bodyTag) + " " + nature + " " + ident;
 		case Scode.S_INTERFACE -> profile += " INTERFACE " + ident;
 		}
-		System.out.println(indent + profile);
-		if(exportTag != null) System.out.println(indent + "   " + exportTag.getMeaning());
-		if(params != null) for(Tag ptag:params) System.out.println(indent + "   " + ptag.getMeaning());
-		if(returSlot != null) System.out.println(indent + "   ReturSlot = " + returSlot);
-		if(DSEG != null) System.out.println(indent + "   DSEG = " + DSEG);
+		IO.println(indent + profile);
+		if(exportTag != null) IO.println(indent + "   " + exportTag.getMeaning());
+		if(params != null) for(Tag ptag:params) IO.println(indent + "   " + ptag.getMeaning());
+		if(returSlot != null) IO.println(indent + "   ReturSlot = " + returSlot);
+		if(DSEG != null) IO.println(indent + "   DSEG = " + DSEG);
 //		if(DSEG != null) DSEG.dump("ProfileDescr.print: ");
-		System.out.println(indent + "ENDPROFILE  FrameHeadSize="+frameSize);	
+		IO.println(indent + "ENDPROFILE  FrameHeadSize="+frameSize);	
 //		Util.IERR("");
 	}
 	
@@ -202,7 +202,7 @@ public class ProfileDescr extends Descriptor {
 	// ***********************************************************************************************
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("ProfileDescr.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("ProfileDescr.Write: " + this);
 		if(! CALL.USE_FRAME_ON_STACK) {
 			DSEG.write(oupt);
 		}
@@ -225,7 +225,7 @@ public class ProfileDescr extends Descriptor {
 	public static ProfileDescr read(AttributeInputStream inpt) throws IOException {
 		Tag tag = Tag.read(inpt);
 		ProfileDescr prf = new ProfileDescr(Kind.K_ProfileDescr, tag);
-		if(Global.ATTR_INPUT_TRACE) System.out.println("BEGIN ProfileDescr.Read: " + prf);
+		if(Global.ATTR_INPUT_TRACE) IO.println("BEGIN ProfileDescr.Read: " + prf);
 		prf.pKind = inpt.readShort();
 		String segID = inpt.readString();
 		if(! CALL.USE_FRAME_ON_STACK) {
@@ -244,7 +244,7 @@ public class ProfileDescr extends Descriptor {
 			prf.exportSize = inpt.readShort();
 		}
 		
-		if(Global.ATTR_INPUT_TRACE) System.out.println("ProfileDescr.Read: " + prf);
+		if(Global.ATTR_INPUT_TRACE) IO.println("ProfileDescr.Read: " + prf);
 //		prf.print("   ");
 //		Util.IERR("");
 		return prf;

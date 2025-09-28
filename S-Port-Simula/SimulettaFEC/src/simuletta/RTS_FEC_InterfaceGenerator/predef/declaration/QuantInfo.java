@@ -14,7 +14,7 @@ public class QuantInfo {
 	Vector<String> idents=new Vector<String>();
 
 	public QuantInfo(String info) {
-//		System.out.println("NEW QuantInfo: \""+info+'"');
+//		IO.println("NEW QuantInfo: \""+info+'"');
 		StringTokenizer st = new StringTokenizer(info);
 		String token=st.nextToken();
 		try { int i=Integer.valueOf(token);
@@ -29,21 +29,21 @@ public class QuantInfo {
 	    	 Util.ASSERT(token.startsWith("*"),"");
 	    	 if(token.startsWith("*")) token=token.substring(1);
 	    	 idents.add(token);
-//	         System.out.println(token);
+//	         IO.println(token);
 	    }
 		Util.ASSERT(idents.size()==nIdent,"");
 		Util.ASSERT(nIdent<=3,"nIdent<=3 GOT nIdent="+nIdent);
-		if(RTS_FEC_Interface_Option.INTERFACE_TRACE_LEVEL > 0) System.out.println("NEW "+this);
+		if(RTS_FEC_Interface_Option.INTERFACE_TRACE_LEVEL > 0) IO.println("NEW "+this);
 		if(idents.size() > 1) {
 			// CHECK INVARIANT - Subsequent idents must have increasing tag numbers
 			int t1=getXtag(0);
 			for(int i=1;i<nIdent;i++) {
 				int t2=getXtag(i);
 				if(t2 != (t1+1)) {
-					System.out.println("NEW QuantInfo: ************************ INVARIANT FAILED !  ************************");
-					System.out.println("NEW QuantInfo: \""+info+'"');
+					IO.println("NEW QuantInfo: ************************ INVARIANT FAILED !  ************************");
+					IO.println("NEW QuantInfo: \""+info+'"');
 					for(int j=0;j<nIdent;j++) {
-						System.out.println("NEW QuantInfo: "+idents.get(j)+"'tag="+getXtag(j));
+						IO.println("NEW QuantInfo: "+idents.get(j)+"'tag="+getXtag(j));
 					}
 //					Util.STOP();					
 				} t1=t2;
@@ -53,12 +53,12 @@ public class QuantInfo {
 	
 	static int nERR=0;
 	public int getXtag(int x) {
-		if(RTS_FEC_Interface_Option.INTERFACE_TRACE_LEVEL > 0)  System.out.println(""+this);
+		if(RTS_FEC_Interface_Option.INTERFACE_TRACE_LEVEL > 0)  IO.println(""+this);
 		try {
 			String id=idents.elementAt(x);
-			if(RTS_FEC_Interface_Option.INTERFACE_TRACE_LEVEL > 0)  System.out.println("QuantInfo-getXtag: \""+id+"\"");
+			if(RTS_FEC_Interface_Option.INTERFACE_TRACE_LEVEL > 0)  IO.println("QuantInfo-getXtag: \""+id+"\"");
 			int xtag=TagMap.tagMap.get(id);
-			if(RTS_FEC_Interface_Option.INTERFACE_TRACE_LEVEL > 0)  System.out.println("Quantity: "+id+" = "+xtag);
+			if(RTS_FEC_Interface_Option.INTERFACE_TRACE_LEVEL > 0)  IO.println("Quantity: "+id+" = "+xtag);
 //			if((++nERR)>4) Util.IERR("");
 			return(xtag);
 		} catch(Exception e) {

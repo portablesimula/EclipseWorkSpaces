@@ -150,7 +150,7 @@ public class Profile extends Declaration implements Externalizable {
     	if(interFace) s.append("GLOBAL ");
     	s.append("PROFILE ");
     	s.append(identifier).append(';');
-    	System.out.println(s.toString());
+    	IO.println(s.toString());
     	signatur.print("",indent);
     }
 

@@ -22,7 +22,7 @@ public class RTOutfile extends RTImageFile {
 			return;
 		}
 		try {
-//			System.out.println("NEW RTOutfile: fileName=" + fileName);
+//			IO.println("NEW RTOutfile: fileName=" + fileName);
 			writer = new FileWriter(file, this.fileAction._APPEND);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

@@ -31,12 +31,12 @@ public final class HexDump {
 			chr=chr+((char)b)+" ";
 			count++;
 			if(count==16) {
-				System.out.println("  "+hex+"   "+chr);
+				IO.println("  "+hex+"   "+chr);
 				count=0; hex=""; chr="";
 			}
 		}
 		while(hex.length()<(16*4)) hex=hex+" ";
-		System.out.println("  "+hex+"   "+chr);
+		IO.println("  "+hex+"   "+chr);
 		fileInputStream.close();
 	}
 	
@@ -51,7 +51,7 @@ public final class HexDump {
 //			name=name.substring(0,lng-5);
 //			String lead="case opr"+name+": ";
 //			while(lead.length()<20) lead=lead+' ';
-//			System.out.println(lead+"instr=new "+name+"(); return(instr.readInstr(inpt));");
+//			IO.println(lead+"instr=new "+name+"(); return(instr.readInstr(inpt));");
 //		}
 //	}
 	

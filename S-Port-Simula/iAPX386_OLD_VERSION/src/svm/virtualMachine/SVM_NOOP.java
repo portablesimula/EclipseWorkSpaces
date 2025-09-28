@@ -28,12 +28,12 @@ public class SVM_NOOP extends SVM_Instruction {
 	// ***********************************************************************************************
 	private SVM_NOOP(AttributeInputStream inpt) throws IOException {
 		this.opcode = SVM_Instruction.iNOOP;
-		if(Global.ATTR_INPUT_TRACE) System.out.println("SVM.Read: " + this);
+		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) System.out.println("SVM.Write: " + this);
+		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 	}
 

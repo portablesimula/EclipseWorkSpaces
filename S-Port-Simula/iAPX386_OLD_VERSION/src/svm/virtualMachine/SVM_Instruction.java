@@ -83,7 +83,7 @@ public class SVM_Instruction {
 	
 	public static SVM_Instruction readObject(AttributeInputStream inpt) throws IOException {
 		int opcode = inpt.readOpcode();
-//		System.out.println("SVM_Instruction.read: opcode="+edOpcode(opcode));
+//		IO.println("SVM_Instruction.read: opcode="+edOpcode(opcode));
 		switch(opcode) {
 			case iADD:		return SVM_ADD.read(inpt);
 			case iAND:		return SVM_AND.read(inpt);

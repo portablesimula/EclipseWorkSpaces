@@ -13,13 +13,13 @@ package make.setup;
 public final class Util { 
 
 	public static void IERR(final String msg) {
-		System.out.println("Internal error - " + msg);
+		IO.println("Internal error - " + msg);
 		Thread.dumpStack();
 		System.exit(-1);
 	}
 
 	public static void println(final String s) {
-		System.out.println(s);
+		IO.println(s);
 	}  
   
   

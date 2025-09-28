@@ -82,8 +82,8 @@ public final class SPortExtractor extends JFrame {
 	// *** SPortExtractor: Main Entry
 	// ****************************************************************
 	public static void main(String[] args) {
-		if(DEBUG) System.out.println("SPortExtractor: user.home="+System.getProperty("user.home"));
-		if(DEBUG) System.out.println("SPortExtractor: user.dir="+System.getProperty("user.dir"));
+		if(DEBUG) IO.println("SPortExtractor: user.home="+System.getProperty("user.home"));
+		if(DEBUG) IO.println("SPortExtractor: user.dir="+System.getProperty("user.dir"));
 		// List UIManager keys: https://thebadprogrammer.com/swing-uimanager-keys/
 		UIManager.put("OptionPane.background", Color.WHITE);
         UIManager.put("OptionPane.messagebackground", Color.WHITE);
@@ -138,7 +138,7 @@ public final class SPortExtractor extends JFrame {
 	        // Set the default close operation (exit when it gets closed)
 	        setDefaultCloseOperation(EXIT_ON_CLOSE);
 			setLocationRelativeTo(null); // center the frame on screen
-			if(DEBUG) System.out.println("Open ConsolePanel");
+			if(DEBUG) IO.println("Open ConsolePanel");
 			console=new Console();
 			mainFrame.setTitle("Installing S-Port Simula");
 			mainFrame.add(console);
@@ -175,11 +175,11 @@ public final class SPortExtractor extends JFrame {
 					+ "java -jar simula.jar\n"
 					+ "echo Press enter to continue; read dummy;\n";
 		}
-		if(DEBUG) System.out.println("INSTALL_DIR="+INSTALL_DIR);
-		if(DEBUG) System.out.println("fileName="+fileName);
-		if(DEBUG) System.out.println("text="+text);
+		if(DEBUG) IO.println("INSTALL_DIR="+INSTALL_DIR);
+		if(DEBUG) IO.println("fileName="+fileName);
+		if(DEBUG) IO.println("text="+text);
 		BATCH_FILE=new File(INSTALL_DIR,fileName);				
-		if(DEBUG) System.out.println("BATCH_FILE="+BATCH_FILE);
+		if(DEBUG) IO.println("BATCH_FILE="+BATCH_FILE);
 //		String msg="Do you want\n   '"+fileName+"'\nplaced in "+USER_HOME+" ?";
 //		int res=optionDialog(msg,"Question",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, "Yes", "No");
 //		if(res==0)
@@ -282,8 +282,8 @@ public final class SPortExtractor extends JFrame {
 //		//apps.mkdirs();
 //		File file=new File(apps,"Simula.desktop");
 //
-//		if(DEBUG) System.out.println("fullFilePath="+file);
-//		if(DEBUG) System.out.println("------ DESKTOP ENTRY ------\n"+text);
+//		if(DEBUG) IO.println("fullFilePath="+file);
+//		if(DEBUG) IO.println("------ DESKTOP ENTRY ------\n"+text);
 //		String msg="Do you want DesktopEntry\n      'Simula'\nplaced on your desktop ?";
 //		int res=optionDialog(msg,"Question",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, "Yes", "No");
 //		if(res==0) try {
@@ -330,9 +330,9 @@ public final class SPortExtractor extends JFrame {
 				simulaPropertiesFile.setWritable(true,false); // Sets everybody's write permission 
 			} catch(SecurityException e) {}
 			out=new FileOutputStream(simulaPropertiesFile);
-//			if(TESTING) System.out.println("SPortExtractor.updateProperties: Write "+simulaPropertiesFile);
+//			if(TESTING) IO.println("SPortExtractor.updateProperties: Write "+simulaPropertiesFile);
 			simulaProperties.storeToXML(out,"S-Port Setup Properties");
-//			if(TESTING) System.out.println("SPortExtractor.updateProperties: Write "+simulaPropertiesFile+" DONE");
+//			if(TESTING) IO.println("SPortExtractor.updateProperties: Write "+simulaPropertiesFile+" DONE");
 			if(console!=null) console.write("Write: "+simulaPropertiesFile+'\n');
 		} catch(Exception e) { e.printStackTrace(); }
 		finally { if(out!=null) try {out.close(); } catch(IOException e){}   }
@@ -343,7 +343,7 @@ public final class SPortExtractor extends JFrame {
 	// ***************************************************************
 	private String getJarFileName() {
 		myClassName = this.getClass().getName().replace('.', '/') + ".class";
-		if(DEBUG) System.out.println("SPortExtractor.getJarFileName: myClassName="+myClassName); // TODO: MYH
+		if(DEBUG) IO.println("SPortExtractor.getJarFileName: myClassName="+myClassName); // TODO: MYH
 		URL urlJar = ClassLoader.getSystemResource(myClassName);
 		String urlEncStr = urlJar.toString();
 		try {
@@ -354,10 +354,10 @@ public final class SPortExtractor extends JFrame {
 			int to = urlStr.indexOf("!/");
 			String jarFileName = urlStr.substring(from, to);
 			if(DEBUG) {
-				System.out.println("SPortExtractor.getJarFileName: myClassName=" + myClassName);
-				System.out.println("SPortExtractor.getJarFileName: urlEncStr=" + urlEncStr);
-				System.out.println("SPortExtractor.getJarFileName: urlStr=" + urlStr);
-				System.out.println("SPortExtractor.getJarFileName: jarFileName=" + jarFileName);
+				IO.println("SPortExtractor.getJarFileName: myClassName=" + myClassName);
+				IO.println("SPortExtractor.getJarFileName: urlEncStr=" + urlEncStr);
+				IO.println("SPortExtractor.getJarFileName: urlStr=" + urlStr);
+				IO.println("SPortExtractor.getJarFileName: jarFileName=" + jarFileName);
 			}
 			return jarFileName;
 		} catch (Exception e) { return(null); }
@@ -371,7 +371,7 @@ public final class SPortExtractor extends JFrame {
 	File getInstallDir(String filename) {
 		String installParentDirectory;
 		installParentDirectory = System.getProperty("user.home");
-		if(DEBUG) System.out.println("SPortExtractor.getInstallDir: installParentDirectory="+installParentDirectory); // TODO: MYH
+		if(DEBUG) IO.println("SPortExtractor.getInstallDir: installParentDirectory="+installParentDirectory); // TODO: MYH
 
 		String msg = "You are about to install a new S-Port System on your computer.\n"+"This installer will create the directory  '" + simulaInstallSubdirectory + "'\n"
 				+ "within the Install Directory you select below:\n ";
@@ -433,11 +433,11 @@ public final class SPortExtractor extends JFrame {
 			if (result != 1) System.exit(-1); // Stop the install
 			
 			File rts=new File(INSTALL_DIR+"/rts");
-			System.out.println("SPortExtractor.extract: rts="+rts);
+			IO.println("SPortExtractor.extract: rts="+rts);
 			if(rts.exists()) {
 				// Delete existing rts
 				boolean success=delete(rts);
-				System.out.println("SPortExtractor.extract: rts="+rts+", deleted="+success);
+				IO.println("SPortExtractor.extract: rts="+rts+", deleted="+success);
 			}
 			
 		}
@@ -467,7 +467,7 @@ public final class SPortExtractor extends JFrame {
 	// the result back into the main dialog
 	private String browseForInstallDirectory(String defaultInstallDir) {
 		JFileChooser fc = new JFileChooser();
-		if(DEBUG) System.out.println("SPortExtractor.browseForInstallDirectory: defaultInstallDir="+defaultInstallDir); // TODO: MYH
+		if(DEBUG) IO.println("SPortExtractor.browseForInstallDirectory: defaultInstallDir="+defaultInstallDir); // TODO: MYH
 		fc.setCurrentDirectory(new File(defaultInstallDir));
 		fc.setDialogType(JFileChooser.SAVE_DIALOG);
 		fc.setDialogTitle("Select destination directory for extracting S-Port Simula");
@@ -555,7 +555,7 @@ public final class SPortExtractor extends JFrame {
 //				Object[] options = { "Start Simula", "Exit" };
 //		        int answer = JOptionPane.showOptionDialog(SPortExtractor.this, msg, title, JOptionPane.DEFAULT_OPTION,
 //						JOptionPane.QUESTION_MESSAGE, simulaIcon, options, options[0]);
-//				if(DEBUG) System.out.println("SPortExtractor.extract: answer="+answer); // TODO: MYH
+//				if(DEBUG) IO.println("SPortExtractor.extract: answer="+answer); // TODO: MYH
 //				if(answer==0) {
 //					new Thread() {
 //						public void run() {	startJar(sPortJarFileName); }
@@ -600,7 +600,7 @@ public final class SPortExtractor extends JFrame {
 		int answer=optionDialog(msg,title,JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, "Start Editor", "Exit");
 
 		if(DEBUG)
-			System.out.println("SPortExtractor.extract: answer="+answer); // TODO: MYH
+			IO.println("SPortExtractor.extract: answer="+answer); // TODO: MYH
 		if(answer==0) {
 			new Thread() {
 				public void run() {	startJar(sPortJarFileName); }
@@ -614,11 +614,11 @@ public final class SPortExtractor extends JFrame {
 	private static void loadManifest(ZipFile zipFile,ZipEntry entry) throws IOException  {
 		Manifest manifest = new Manifest(zipFile.getInputStream(entry));
 		Attributes main=manifest.getMainAttributes();
-		if(DEBUG) System.out.println("SPortExtractor.loadManifest: Main-Class="+main.getValue("Main-Class"));
+		if(DEBUG) IO.println("SPortExtractor.loadManifest: Main-Class="+main.getValue("Main-Class"));
 		sPortRevisionID=main.getValue("sPort-Revision");
 		setupDated=main.getValue("sPort-Setup-Dated");
-		if(DEBUG) System.out.println("SPortExtractor.loadManifest: This sPort-Revision: "+sPortRevisionID);
-		if(DEBUG) System.out.println("SPortExtractor.loadManifest: This sPort-Setup-Dated: "+setupDated);
+		if(DEBUG) IO.println("SPortExtractor.loadManifest: This sPort-Revision: "+sPortRevisionID);
+		if(DEBUG) IO.println("SPortExtractor.loadManifest: This sPort-Setup-Dated: "+setupDated);
 		if(console!=null) {
 			console.write("SPort-Release ID:  "+sPortReleaseID+'R'+sPortRevisionID+'\n');
 			console.write("SPort-Setup-Dated: "+setupDated+'\n');
@@ -632,7 +632,7 @@ public final class SPortExtractor extends JFrame {
 		Runtime rt = Runtime.getRuntime();
 //		String cmd = getJavaProg() + " -jar " + jar;
 		String[] cmd = { getJavaProg(), "-jar", jar };
-//		if(TESTING) System.out.println("SPortExtractor.startJar: "+ getJavaProg() + " -jar " + jar);
+//		if(TESTING) IO.println("SPortExtractor.startJar: "+ getJavaProg() + " -jar " + jar);
 		try { rt.exec(cmd);
 		} catch (IOException ex) {
 			JOptionPane.showMessageDialog(null, "Can't run " + cmd, "Error Running Java", JOptionPane.ERROR_MESSAGE);
@@ -654,7 +654,7 @@ public final class SPortExtractor extends JFrame {
  		UIManager.put("OptionPane.background", Color.WHITE);
         UIManager.put("Panel.background", Color.WHITE);
 		int answer = JOptionPane.showOptionDialog(null,msg,title,optionType,messageType,simulaIcon, option, option[0]);
-		//System.out.println("doClose.saveDialog: answer="+answer);
+		//IO.println("doClose.saveDialog: answer="+answer);
 		UIManager.put("OptionPane.background",OptionPaneBackground);
         UIManager.put("Panel.background",PanelBackground);
 		return(answer);

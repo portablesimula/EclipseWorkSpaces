@@ -24,7 +24,7 @@ public class AttributeInput {
 	
 //    public final boolean readBoolean() throws IOException {
 //        int ch = in.read();
-//    	if(TESTING) System.out.println("AttributeDataInputStream.readBoolean: "+ch);
+//    	if(TESTING) IO.println("AttributeDataInputStream.readBoolean: "+ch);
 //        if (ch < 0) throw new EOFException();
 //        return (ch != 0);
 //    }
@@ -33,7 +33,7 @@ public class AttributeInput {
 //    public final byte readByte() throws IOException {
 //        int ch = in.read();
 //        if (ch < 0) throw new EOFException();
-//    	if(TESTING) System.out.println("AttributeDataInputStream.readByte: "+ch);
+//    	if(TESTING) IO.println("AttributeDataInputStream.readByte: "+ch);
 //        return (byte)(ch);
 //    }
 //
@@ -50,7 +50,7 @@ public class AttributeInput {
 //        int ch2 = in.read();
 //        if ((ch1 | ch2) < 0) throw new EOFException();
 //        short s=(short)((ch1 << 8) + (ch2 << 0));
-//    	if(TESTING) System.out.println("AttributeDataInputStream.readShort: "+s);
+//    	if(TESTING) IO.println("AttributeDataInputStream.readShort: "+s);
 //        return(s);
 //    }
 //
@@ -126,21 +126,21 @@ public class AttributeInput {
 //        kind = in.read();
 //        if (kind < 0) throw new EOFException();
 //    	if(TESTING)
-//    		System.out.println("AttributeDataInputStream.readKind: "+kind);
+//    		IO.println("AttributeDataInputStream.readKind: "+kind);
 //        return (byte)(kind);
 //    }
 //    
 //    private void OUT_OF_SYNC(int b1,int b2) throws IOException {
-//    	System.out.println("**************************************** ERROR: OUT OF SYNC WHILE READING "+name+": prevKind="+kind);
-//    	System.out.println("   b1:   "+b1);
-//    	System.out.println("   b2:   "+b2);
-//    	System.out.println("   NEXT: "+in.read());
-//    	System.out.println("   NEXT: "+in.read());
-//    	System.out.println("   NEXT: "+in.read());
-//    	System.out.println("   NEXT: "+in.read());
-//    	System.out.println("   NEXT: "+in.read());
-//    	System.out.println("   NEXT: "+in.read());
-//    	System.out.println("   NEXT: "+in.read());
+//    	IO.println("**************************************** ERROR: OUT OF SYNC WHILE READING "+name+": prevKind="+kind);
+//    	IO.println("   b1:   "+b1);
+//    	IO.println("   b2:   "+b2);
+//    	IO.println("   NEXT: "+in.read());
+//    	IO.println("   NEXT: "+in.read());
+//    	IO.println("   NEXT: "+in.read());
+//    	IO.println("   NEXT: "+in.read());
+//    	IO.println("   NEXT: "+in.read());
+//    	IO.println("   NEXT: "+in.read());
+//    	IO.println("   NEXT: "+in.read());
 //    	Util.IERR("OUT OF SYNC: prevKind="+kind);
 //    }
 //
@@ -152,7 +152,7 @@ public class AttributeInput {
 //        	sb.append(readChar());
 //        }
 //        String s=sb.toString();
-//        if(TESTING) System.out.println("AttributeDataInputStream.readIdent: "+s);
+//        if(TESTING) IO.println("AttributeDataInputStream.readIdent: "+s);
 //    	return(s);
 //	}
 //
@@ -164,45 +164,45 @@ public class AttributeInput {
 //        	sb.append(readChar());
 //        }
 //        String s=sb.toString();
-//        if(TESTING) System.out.println("AttributeDataInputStream.readString: "+s);
+//        if(TESTING) IO.println("AttributeDataInputStream.readString: "+s);
 //    	return(s);
 //	}
 //
 //	
 //	public Tag readTag() throws IOException, ClassNotFoundException {
 //		Tag tag=Tag.readTag(this);
-//        if(TESTING) System.out.println("AttributeInputStream.readTag: "+tag);
+//        if(TESTING) IO.println("AttributeInputStream.readTag: "+tag);
 //		return(tag);
 //	}
 //
 //	
 //	public Type readType() throws IOException, ClassNotFoundException {
 //		Type type=Type.readType(this);
-//		if(TESTING) System.out.println("AttributeInputStream.readType: "+type);
+//		if(TESTING) IO.println("AttributeInputStream.readType: "+type);
 //		return(type);
 //	}
 //
 //	
 //	public Token readToken() throws IOException, ClassNotFoundException {
 //		Token token=Token.readToken(this);
-//		if(TESTING) System.out.println("AttributeInputStream.readToken: "+token.edToken());
+//		if(TESTING) IO.println("AttributeInputStream.readToken: "+token.edToken());
 //		return(token);
 //	}
 //
 //	
 //	public void checkSyncMark(String mark) throws ClassNotFoundException, IOException {
-//		//System.out.println("checkSync: "+mark);
+//		//IO.println("checkSync: "+mark);
 //    	if(AttributeOutput.USE_SYNCMARK) {
 //    		String mrk=readIdent();
 //    		if(mrk.equals(mark)) return;
 //
-//    		System.out.println("\n\n*******************************************************************************************************************");
-//    		System.out.println("*** OUT OF SYNC WHILE READING "+name+": EXPECTING MARK '"+mark+"' GOT "+mrk.getClass().getSimpleName()+" '"+mrk+"'");
-//    		System.out.println("*** OUT OF SYNC("+mark+") THE FOLLOWING INPUT IS READ-AHEAD");
-//    		System.out.println("*******************************************************************************************************************");
+//    		IO.println("\n\n*******************************************************************************************************************");
+//    		IO.println("*** OUT OF SYNC WHILE READING "+name+": EXPECTING MARK '"+mark+"' GOT "+mrk.getClass().getSimpleName()+" '"+mrk+"'");
+//    		IO.println("*** OUT OF SYNC("+mark+") THE FOLLOWING INPUT IS READ-AHEAD");
+//    		IO.println("*******************************************************************************************************************");
 //    		int obj=0; int n=0;
 //    		while((obj=in.read())!=(-1) && (n++)<10) {
-//    			System.out.println("*** OUT OF SYNC: Next Byte: "+obj);
+//    			IO.println("*** OUT OF SYNC: Next Byte: "+obj);
 //    			//BREAK("OUT OF SYNC("+mark+")");
 //    		}
 //    		Util.IERR(name+":OUT OF SYNC("+mark+") "+mrk);
