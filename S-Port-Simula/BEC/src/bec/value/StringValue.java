@@ -4,10 +4,9 @@ import java.io.IOException;
 
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
-import bec.util.Global;
+import bec.util.Option;
 import bec.util.Scode;
 import bec.util.Type;
-import bec.util.Util;
 
 public class StringValue extends Value {
 	public ObjectAddress addr;
@@ -42,7 +41,7 @@ public class StringValue extends Value {
 	}
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
 		oupt.writeKind(Scode.S_STRING);
 //		addr.write(oupt);
 		oupt.writeString(addr.segID);

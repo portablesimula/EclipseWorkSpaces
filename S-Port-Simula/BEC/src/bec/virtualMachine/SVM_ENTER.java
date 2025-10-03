@@ -4,24 +4,22 @@ import java.io.IOException;
 
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
-import bec.segment.DataSegment;
-import bec.segment.Segment;
 import bec.util.Global;
-import bec.util.Util;
+import bec.util.Option;
 import bec.value.ProgramAddress;
 
 /**
  * Enter a Routine by pushing local variables onto the runtime stack.
  */
 public class SVM_ENTER extends SVM_Instruction {
-	String rutIdent;
-	int localSize;
+	private final String rutIdent;
+	private final int localSize;
 
 	public SVM_ENTER(String rutIdent, int localSize) {
 		this.opcode = SVM_Instruction.iENTER;
 		this.rutIdent = rutIdent;
 		this.localSize = localSize;
-		RTRegister.checkMindMaskEmpty();
+		DELETED_RTRegister.checkMindMaskEmpty();
 	}
 
 	@Override
@@ -34,9 +32,9 @@ public class SVM_ENTER extends SVM_Instruction {
 		for(int i=0;i<localSize;i++) {
 			RTStack.push(null, "LOCAL:");
 		}
-		if(Global.EXEC_TRACE > 2)
+		if(Option.EXEC_TRACE > 2)
 			callStackItem.dump(""+curAddr+": ENTER: " + rutIdent + ", localSize=" + localSize);
-		if(Global.CALL_TRACE_LEVEL > 0) {
+		if(Option.CALL_TRACE_LEVEL > 0) {
 			RTStack.printCallTrace("SVM_ENTER.execute: ENTER " + rutIdent + ", localSize=" + localSize);
 		}
 
@@ -70,7 +68,7 @@ public class SVM_ENTER extends SVM_Instruction {
 	// ***********************************************************************************************
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		oupt.writeString(rutIdent);
 		oupt.writeShort(localSize);
@@ -78,7 +76,7 @@ public class SVM_ENTER extends SVM_Instruction {
 
 	public static SVM_ENTER read(AttributeInputStream inpt) throws IOException {
 		SVM_ENTER instr = new SVM_ENTER(inpt.readString(), inpt.readShort());
-		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
+		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
 		return instr;
 	}
 

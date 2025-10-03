@@ -4,7 +4,6 @@ import bec.compileTimeStack.AddressItem;
 import bec.compileTimeStack.CTStack;
 import bec.util.Global;
 import bec.util.Type;
-import bec.virtualMachine.SVM_NOOP;
 import bec.virtualMachine.SVM_LOAD;
 
 public abstract class FETCH extends Instruction {
@@ -35,7 +34,7 @@ public abstract class FETCH extends Instruction {
 		if(CTStack.TOS() instanceof AddressItem addr) {
 			if(DEBUG) IO.println("FETCH.doFetch: addr="+addr);
 			Type type = addr.type;
-			Global.PSEG.emit(new SVM_LOAD(addr.objadr.addOffset(addr.offset), addr.xReg, type.size()), comment + " " +type);
+			Global.PSEG.emit(new SVM_LOAD(addr.objadr.addOffset(addr.offset), addr.indexed, type.size()), comment + " " +type);				
 			CTStack.pop(); CTStack.pushTempVAL(type, 1, "GQFetch: ");
 			if(DEBUG) {
 				CTStack.dumpStack("GQfetch: "+comment);

@@ -1,32 +1,14 @@
 begin
-   SYSINSERT RT,SYSR,KNWN,UTIL,STRG,CENT,CINT,ARR,FORM,LIBR,FIL,SMST,SML,EDIT,MNTR;    
-%   SYSINSERT RT,SYSR,KNWN,UTIL;    
+   SYSINSERT RT,SYSR,KNWN,UTIL;    
 
-       record area;                 -- Definition of storage pool
-       begin ref(area) suc;         -- Used to organize the pool list
-             ref(entity) nxt,lim;   -- Boundary pointers within the pool
-             ref(entity) startgc;   -- "freeze-address" for the pool
-             size stepsize;         -- extend/contract step
-             size mingap;           -- for this pool
-             short integer sequ;    -- Sequence number (1,2, ... )
-       end;
-
+   infix(string) s,	q;
  
- Visible routine xTESTING;
- begin ref(area) p;
- 		size poolsize;
- 		integer sequ;
- 		poolsize := 400 qua size;
- 		sequ := 444;
- 		
-        p:=DWAREA(poolsize,sequ);
-		p.sequ:=sequ;
- end;
- 
+      q:=s:="ABRA CA DAB";
+      
+      s.chradr:=name(var(s.chradr)(3)); s.nchr:=s.nchr-3;  -- Increment 3 char.
+%      STREQL(s, q);
+	  prt(s);      
 
-%	TESTING;
-	
-	B_PROG;
-	
+
  end;
 	 

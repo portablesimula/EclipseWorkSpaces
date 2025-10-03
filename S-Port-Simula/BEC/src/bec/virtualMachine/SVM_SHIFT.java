@@ -5,6 +5,7 @@ import java.io.IOException;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
+import bec.util.Option;
 import bec.util.Scode;
 import bec.util.Util;
 import bec.value.Value;
@@ -61,14 +62,14 @@ public class SVM_SHIFT extends SVM_Instruction {
 	// ***********************************************************************************************
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		oupt.writeKind(instr);
 	}
 
 	public static SVM_SHIFT read(AttributeInputStream inpt) throws IOException {
 		SVM_SHIFT instr = new SVM_SHIFT(inpt.readKind());
-		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
+		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
 		return instr;
 	}
 

@@ -4,6 +4,7 @@ import java.util.Stack;
 import java.util.Vector;
 
 import bec.util.Global;
+import bec.util.Option;
 import bec.util.Type;
 import bec.util.Util;
 import bec.value.GeneralAddress;
@@ -11,7 +12,6 @@ import bec.value.IntegerValue;
 import bec.value.ObjectAddress;
 import bec.value.ProgramAddress;
 import bec.value.LongRealValue;
-import bec.value.RealValue;
 import bec.value.Value;
 
 public abstract class RTStack {
@@ -63,7 +63,7 @@ public abstract class RTStack {
 //				IO.println("     called from "+ident + frame);
 				IO.println("     called from " + frame.ident);
 			}
-			if(Global.CALL_TRACE_LEVEL > 1)
+			if(Option.CALL_TRACE_LEVEL > 1)
 				frame.print("");
 		}
 	}
@@ -126,7 +126,7 @@ public abstract class RTStack {
 	}
 
 	public static void pushr(int reg, String comment) {
-		Value value = RTRegister.getValue(reg);
+		Value value = DELETED_RTRegister.getValue(reg);
 		if(value instanceof GeneralAddress gaddr) {
 			stack.push(gaddr.base);
 			stack.push(IntegerValue.of(Type.T_INT, gaddr.ofst));
@@ -190,9 +190,20 @@ public abstract class RTStack {
 		return values;
 	}
 	
-	public static int popInt() {
-		IntegerValue ival = (IntegerValue) pop();
+	public static int peekInt() {
+		IntegerValue ival = (IntegerValue) peek();
 		return (ival==null)? 0 : ival.value;
+	}
+	
+	public static int popInt() {
+		Value value = RTStack.pop();
+//		IO.println("RTStack.popInt: " +value);
+		if(value == null) return 0;
+		if(value instanceof IntegerValue ival) {
+			return (ival==null)? 0 : ival.value;
+		}
+		Util.IERR("");
+		return 0;
 	}
 	
 	public static float popReal() {
@@ -275,7 +286,7 @@ public abstract class RTStack {
 		for(int i=0;i<nchr;i++) {
 			IntegerValue ival = (IntegerValue) x.load(); x.incrOffset();
 			char c = (ival==null)? '.' : (char) ival.value;
-//			IO.println("SVM_SYSCALL.edString: c="+c);
+//			IO.println("RTStack.popString: c="+c);
 			sb.append(c);
 		}
 		return sb.toString();
@@ -301,7 +312,7 @@ public abstract class RTStack {
 		}
 		String s = sb.toString();
 		while(s.length() < 30) s = s + ' ';
-		return s + "      " + RTRegister.toLine();
+		return s + "      " + DELETED_RTRegister.toLine();
 	}
 	
 	public static void dumpRTStack(String title) {

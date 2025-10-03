@@ -5,12 +5,13 @@ import java.io.IOException;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
+import bec.util.Option;
 import bec.util.Util;
 
 // POP RT-Stack'TOS 
 // The aux values on the top of the operand stack is popped off and forgotten.
 public class SVM_POPK extends SVM_Instruction {
-	int aux;
+	private final int aux;
 	
 	public SVM_POPK(int aux) {
 		this.opcode = SVM_Instruction.iPOPK;
@@ -36,12 +37,12 @@ public class SVM_POPK extends SVM_Instruction {
 	private SVM_POPK(AttributeInputStream inpt) throws IOException {
 		this.opcode = SVM_Instruction.iPOPK;
 		this.aux = inpt.readShort();
-		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
+		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		oupt.writeShort(aux);
 	}

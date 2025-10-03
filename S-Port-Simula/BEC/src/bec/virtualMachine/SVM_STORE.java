@@ -5,9 +5,8 @@ import java.io.IOException;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
+import bec.util.Option;
 import bec.util.Util;
-import bec.value.GeneralAddress;
-import bec.value.IntegerValue;
 import bec.value.ObjectAddress;
 import bec.value.Value;
 
@@ -15,26 +14,18 @@ import bec.value.Value;
 
 //The size values on the top of the operand stack is stored at addr...
 public class SVM_STORE extends SVM_Instruction {
-	ObjectAddress rtAddr;
-	int xReg;
-	int size;
+	private final ObjectAddress rtAddr;
+	private final int size;
+	private final boolean indexed;
 	
 	private final boolean DEBUG = false;
 	
-//	public SVM_STORE(AddressItem itm, int size) {
-//		this.opcode = SVM_Instruction.iSTORE;
-//		this.addr = new RTAddress(itm);
-//		this.size = size;
-//	}
-	
-	public SVM_STORE(ObjectAddress rtAddr, int xReg, int size) {
+	public SVM_STORE(ObjectAddress rtAddr, boolean indexed, int size) {
 		this.opcode = SVM_Instruction.iSTORE;
 		this.rtAddr = rtAddr;
-		this.xReg = xReg;
 		this.size = size;
+		this.indexed = indexed;
 //		IO.println("NEW SVM_STORE: " + this);
-		RTRegister.reads("SVM_STORE", rtAddr);
-		RTRegister.reads("SVM_STORE", xReg);
 	}
 	
 	@Override
@@ -46,19 +37,26 @@ public class SVM_STORE extends SVM_Instruction {
 		
 		ObjectAddress addr = this.rtAddr;
 		switch(addr.kind) {
-			case ObjectAddress.SEGMNT_ADDR: doStore(addr, xReg); break;
-			case ObjectAddress.REL_ADDR:    doStore(addr, xReg); break;
-			case ObjectAddress.STACK_ADDR:  Util.IERR(""); doStore(addr, xReg); break;
+			case ObjectAddress.SEGMNT_ADDR: doStore(addr, indexed); break;
+			case ObjectAddress.REL_ADDR:    doStore(addr, indexed); break;
+			case ObjectAddress.STACK_ADDR:  Util.IERR(""); doStore(addr, indexed); break;
 			case ObjectAddress.REMOTE_ADDR:
+//				int idx = 0;
+				int idx = size - 1;
+				if(indexed)	idx += RTStack.popInt();
 				ObjectAddress oaddr = RTStack.popOADDR();
 				addr = oaddr.addOffset(addr.getOfst());
-				doStore(addr, xReg); break;
+				doStore2(addr, idx); break;
 			case ObjectAddress.REFER_ADDR:
-				GeneralAddress gaddr = (GeneralAddress) RTRegister.getValue(xReg);
-				addr = gaddr.base.addOffset(rtAddr.getOfst() + gaddr.ofst);
-				doStore(addr, 0); break;
-			default: Util.IERR("");
-		}
+//				RTStack.dumpRTStack("SVM_STORE.execute: ");
+				idx = size - 1;
+				if(indexed)	idx += RTStack.popInt();
+				int ofst = RTStack.popInt();
+				addr = RTStack.popOADDR().addOffset(rtAddr.getOfst() + ofst);
+				doStore2(addr, idx);
+				break;
+				default: Util.IERR("");
+			}			
 		
 		if(DEBUG) {
 //			addr.segment().dump("STORE.execute: ", addr.offset, addr.offset+size);
@@ -69,22 +67,31 @@ public class SVM_STORE extends SVM_Instruction {
 		Global.PSC.addOfst(1);		
 	}
 	
-	private void doStore(ObjectAddress addr, int xReg) {
-		int n = RTStack.size()-1;
+	private void doStore(ObjectAddress addr, boolean indexed) {
 		int idx = size - 1;
-		if(xReg > 0) idx = idx + RTRegister.getIntValue(xReg);
+		if(indexed)	idx += RTStack.popInt();
+		int n = RTStack.size()-1;
 		for(int i=0;i<size;i++) {
 			Value item = RTStack.load(n-i);
-			if(DEBUG) IO.println("STORE: "+item+" ==> "+addr + "["+idx+"]");
+			if(DEBUG) IO.println("SVM_STORE: "+item+" ==> "+addr + "["+idx+"]");
 			addr.store(idx--, item, "");
 //			RTStack.printCallTrace("STORE.execute: ");
 		}
-		
+	}
+	
+	private void doStore2(ObjectAddress addr, int idx) {
+		int n = RTStack.size()-1;
+		for(int i=0;i<size;i++) {
+			Value item = RTStack.load(n-i);
+			if(DEBUG) IO.println("SVM_STORE: "+item+" ==> "+addr + "["+idx+"]");
+			addr.store(idx--, item, "");
+//			RTStack.printCallTrace("STORE.execute: ");
+		}
 	}
 	
 	public String toString() {
 		String s = "";
-		if(xReg != 0) s = s + RTRegister.edRegValue(xReg);
+		if(indexed) s += "IDX";
 		if(size > 1) s = ", size=" + size;
 		return "STORE    " + rtAddr + s;
 	}
@@ -95,17 +102,17 @@ public class SVM_STORE extends SVM_Instruction {
 	private SVM_STORE(AttributeInputStream inpt) throws IOException {
 		this.opcode = SVM_Instruction.iSTORE;
 		this.rtAddr = ObjectAddress.read(inpt);
-		this.xReg = inpt.readReg();
+		this.indexed = inpt.readBoolean();
 		this.size = inpt.readShort();
-		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
+		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		rtAddr.writeBody(oupt);
-		oupt.writeReg(xReg);
+		oupt.writeBoolean(indexed);
 		oupt.writeShort(size);
 	}
 

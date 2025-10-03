@@ -8,6 +8,7 @@ import bec.AttributeOutputStream;
 import bec.ModuleIO;
 import bec.statement.InsertStatement;
 import bec.util.Global;
+import bec.util.Option;
 import bec.util.Type;
 import bec.util.Scode;
 import bec.util.Tag;
@@ -192,7 +193,7 @@ public class ConstDescr extends Descriptor {
 	// ***********************************************************************************************
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) IO.println("CONST.Write: " + this);
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("CONST.Write: " + this);
 		oupt.writeKind(kind);
 //		oupt.writeShort(ModuleIO.chgType(tag));
 		tag.write(oupt);
@@ -210,7 +211,7 @@ public class ConstDescr extends Descriptor {
 		cns.address = (ObjectAddress) Value.read(inpt);
 //		IO.println("AFTER NEW MEMADDR: "+cns);
 //		Util.IERR("Static Method 'readObject' needs a redefiniton");
-//		if(Global.ATTR_INPUT_TRACE) IO.println("ConstDescr.Read: " + cns);
+//		if(Option.ATTR_INPUT_TRACE) IO.println("ConstDescr.Read: " + cns);
 		return(cns);
 	}
 

@@ -5,21 +5,21 @@ import java.io.IOException;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
+import bec.util.Option;
 import bec.util.Scode;
 import bec.util.Type;
 import bec.util.Util;
 import bec.value.GeneralAddress;
 import bec.value.IntegerValue;
 import bec.value.ObjectAddress;
-import bec.value.ProgramAddress;
 import bec.value.RecordValue;
 import bec.value.StringValue;
 import bec.value.Value;
 
 //The value is loaded onto the operand stack.
 public class SVM_LOADC extends SVM_Instruction {
-	private int typeTag;
-	private Value value;
+	private final int typeTag;
+	private final Value value;
 
 	private final boolean DEBUG = false;
 
@@ -58,14 +58,12 @@ public class SVM_LOADC extends SVM_Instruction {
 					RTStack.push(value, "SVM_LOADC"); break;
 			case Scode.TAG_OADDR:
 				
-				if(Global.TESTING_STACK_ADDRESS) {
-					ObjectAddress oaddr = (ObjectAddress) value;
-					if(oaddr != null && oaddr.segID == null) {
-						IO.println("SVM_LOADC.execute: OADDR: "+oaddr);
-						RTStack.dumpRTStack("SVM_LOADC.execute: NOTE: ");
-//						RTStack.callStack_TOP().dump("SVM_REFER.execute: NOTE: ");
-						Util.IERR("");
-					}
+				ObjectAddress oaddr = (ObjectAddress) value;
+				if(oaddr != null && oaddr.segID == null) {
+					IO.println("SVM_LOADC.execute: OADDR: "+oaddr);
+					RTStack.dumpRTStack("SVM_LOADC.execute: NOTE: ");
+//					RTStack.callStack_TOP().dump("SVM_LOADC.execute: NOTE: ");
+					Util.IERR("");
 				}
 				
 				RTStack.push(value, "SVM_LOADC"); break;
@@ -88,11 +86,9 @@ public class SVM_LOADC extends SVM_Instruction {
 				} else {
 					GeneralAddress gaddr = (GeneralAddress) value;
 					
-					if(Global.TESTING_STACK_ADDRESS) {
-						ObjectAddress oaddr = gaddr.base;
-						if(oaddr != null && oaddr.kind == ObjectAddress.REL_ADDR) {
-							gaddr.base = oaddr.toStackAddress();
-						}
+					oaddr = gaddr.base;
+					if(oaddr != null && oaddr.kind == ObjectAddress.REL_ADDR) {
+						gaddr.base = oaddr.toStackAddress();
 					}
 					
 					RTStack.push(gaddr.base, "GADDR'OADR: ");
@@ -127,13 +123,13 @@ public class SVM_LOADC extends SVM_Instruction {
 		this.opcode = SVM_Instruction.iPUSHC;
 		this.typeTag = inpt.readTag();
 		boolean present = inpt.readBoolean();
-		if(present)	this.value = Value.read(inpt);
-		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
+		this.value = (! present)? null : Value.read(inpt);
+		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		oupt.writeTag(typeTag);
 		if(value != null) {

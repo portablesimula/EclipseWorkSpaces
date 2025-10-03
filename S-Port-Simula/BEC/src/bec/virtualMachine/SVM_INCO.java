@@ -5,6 +5,7 @@ import java.io.IOException;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
+import bec.util.Option;
 import bec.value.ObjectAddress;
 
 /**
@@ -49,13 +50,13 @@ public class SVM_INCO extends SVM_Instruction {
 	// ***********************************************************************************************
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 	}
 
 	public static SVM_INCO read(AttributeInputStream inpt) throws IOException {
 		SVM_INCO instr = new SVM_INCO();
-		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
+		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
 		return instr;
 	}
 

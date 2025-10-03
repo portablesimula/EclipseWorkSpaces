@@ -5,18 +5,18 @@ import java.io.IOException;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
-import bec.util.Util;
+import bec.util.Option;
 import bec.value.ObjectAddress;
 import bec.value.ProgramAddress;
 import bec.value.Value;
 
 public class SVM_CALL_TOS extends SVM_Instruction {
 //	private ProgramAddress rutAddr;
-	private String prfIdent;
-	private ObjectAddress returSlot;
-	private int nParSlots;
-	private int exportSize;
-	private int importSize;
+	private final String prfIdent;
+	private final ObjectAddress returSlot;
+	private final int nParSlots;
+	private final int exportSize;
+	private final int importSize;
 
 	public SVM_CALL_TOS(String prfIdent, ObjectAddress returSlot, int nParSlots,	int exportSize,	int importSize) {
 		this.opcode = SVM_Instruction.iCALL_TOS;
@@ -27,7 +27,7 @@ public class SVM_CALL_TOS extends SVM_Instruction {
 		this.exportSize = exportSize;
 		this.importSize = importSize;
 //		IO.println("NEW SVM_CALL: "+this);
-		RTRegister.checkMindMaskEmpty();
+		DELETED_RTRegister.checkMindMaskEmpty();
 	}
 	
 	@Override	
@@ -35,30 +35,22 @@ public class SVM_CALL_TOS extends SVM_Instruction {
 		ProgramAddress retur = Global.PSC.copy();
 //		retur.ofst++;
 		retur.addOfst(1);
-		if(Global.EXEC_TRACE > 0) {
+		if(Option.EXEC_TRACE > 0) {
 			ProgramAddress.printInstr(this,false);
 		}
 //		IO.println("SVM_CALL:execute: " + this);
 		// CALL-TOS
 		
-		boolean TESTING = true;
-		
-		if(TESTING) {
-//			String rutIdent = "CALL-TOS";
-//			int nParSlots = 1;
-//			int exportSize = 0;
-//			int importSize = 0;
-			RTStack.precallStack.push(new CallStackFrame(prfIdent, RTStack.size() - nParSlots, exportSize, importSize));
-			if(exportSize > 0) {
-				if(nParSlots > 0) {
-//					RTStack.dumpRTStack("SVM_PRECALL.execute-1");
-					RTStack.addExport(nParSlots, exportSize);
-//					RTStack.dumpRTStack("SVM_PRECALL.execute-2");
-//					Util.IERR("");
-				} else {
-					for(int i=0;i<exportSize;i++) {
-						RTStack.push(null, "EXPORT"); // Export slots		
-					}
+		RTStack.precallStack.push(new CallStackFrame(prfIdent, RTStack.size() - nParSlots, exportSize, importSize));
+		if(exportSize > 0) {
+			if(nParSlots > 0) {
+//				RTStack.dumpRTStack("SVM_PRECALL.execute-1");
+				RTStack.addExport(nParSlots, exportSize);
+//				RTStack.dumpRTStack("SVM_PRECALL.execute-2");
+//				Util.IERR("");
+			} else {
+				for(int i=0;i<exportSize;i++) {
+					RTStack.push(null, "EXPORT"); // Export slots		
 				}
 			}
 		}
@@ -93,7 +85,7 @@ public class SVM_CALL_TOS extends SVM_Instruction {
 		nParSlots = inpt.readShort();
 		exportSize = inpt.readShort();
 		importSize = inpt.readShort();
-		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
+		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
 
 //	private String prfIdent;
@@ -104,7 +96,7 @@ public class SVM_CALL_TOS extends SVM_Instruction {
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		oupt.writeString(prfIdent);
 		returSlot.write(oupt);

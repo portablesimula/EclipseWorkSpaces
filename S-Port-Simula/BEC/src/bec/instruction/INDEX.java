@@ -8,11 +8,9 @@ import bec.util.Scode;
 import bec.util.Type;
 import bec.util.Util;
 import bec.value.IntegerValue;
-import bec.virtualMachine.RTRegister;
-import bec.virtualMachine.SVM_ADDREG;
+import bec.virtualMachine.SVM_ADD;
 import bec.virtualMachine.SVM_LOADC;
 import bec.virtualMachine.SVM_MULT;
-import bec.virtualMachine.SVM_STORE2REG;
 
 public abstract class INDEX extends Instruction {
 	int instr; // INDEX | INDEXV
@@ -43,26 +41,28 @@ public abstract class INDEX extends Instruction {
 		CTStack.pop();
 		AddressItem adr = (AddressItem) CTStack.TOS();
 		int size = adr.size;
-		
+	
 //		IO.println("INDEX.ofScode: adr.offset="+adr.offset);
 //		IO.println("INDEX.ofScode: adr.size="+adr.size);
 //		IO.println("INDEX.ofScode: adr="+adr+"                 R"+adr.xReg);
-		
-		if(adr.xReg > 0) {
+	
+		if(adr.indexed) {
 			if(size > 1) {
 				Global.PSEG.emit(new SVM_LOADC(Type.T_INT, IntegerValue.of(Type.T_INT, size)), "INDEX.ofScode: ");
 				Global.PSEG.emit(new SVM_MULT(), "INDEX.ofScode: ");
-//				Util.IERR("NOT IMPL");
 			}
-			Global.PSEG.emit(new SVM_ADDREG(adr.xReg), "INDEX.ofScode: ");
+			Global.PSEG.emit(new SVM_ADD(), "INDEX.ofScode: ");
+			Util.IERR("NOT IMPL");
 		} else {
-			adr.xReg = RTRegister.getFreeReg();
 			if(size > 1) {
 				Global.PSEG.emit(new SVM_LOADC(Type.T_INT, IntegerValue.of(Type.T_INT, size)), "INDEX.ofScode: ");
 				Global.PSEG.emit(new SVM_MULT(), "INDEX.ofScode: ");
 			}
-			Global.PSEG.emit(new SVM_STORE2REG(adr.xReg), "INDEX.ofScode: ");
-		}
+			adr.indexed = true;
+//			IO.println("INDEX.ofScode: adr=" + adr);
+//			Util.IERR("");
+		}			
+		
 		if(DEBUG) Global.PSEG.dump("INDEX.ofScode: ");
 		
 		if(instr == Scode.S_INDEXV) FETCH.doFetch("INDEXV");

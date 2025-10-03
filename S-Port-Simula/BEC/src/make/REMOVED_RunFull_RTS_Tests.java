@@ -10,7 +10,7 @@ package make;
 import java.util.Vector;
 
 import bec.BecCompiler;
-import bec.util.Global;
+import bec.util.Option;
 
 public final class REMOVED_RunFull_RTS_Tests {
 	private static long startTimeMs = System.currentTimeMillis();
@@ -19,11 +19,11 @@ public final class REMOVED_RunFull_RTS_Tests {
 //	Global.scodeSource = "C:/Simuletta/SCode/simulaRTS/RT.scd";
 
 	public static void main(String[] args) {
-		Global.INLINE_TESTING = true;
-		Global.verbose = true;
+		Option.INLINE_TESTING = true;
+		Option.verbose = true;
 //		Scode.inputTrace = 4;
 //		Scode.listing = true;
-		Global.PRINT_GENERATED_SVM_CODE = true;
+		Option.PRINT_GENERATED_SVM_CODE = true;
 
 		// Set Compiler Options.
 //		Option.EXTENSIONS=false;

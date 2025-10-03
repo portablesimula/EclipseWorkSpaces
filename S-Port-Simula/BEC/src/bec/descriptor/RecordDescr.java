@@ -7,6 +7,7 @@ import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.segment.DataSegment;
 import bec.util.Global;
+import bec.util.Option;
 import bec.util.Scode;
 import bec.util.Tag;
 import bec.util.Type;
@@ -164,7 +165,7 @@ public class RecordDescr extends Descriptor {
 	// ***********************************************************************************************
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) IO.println("RecordDescr.Write: " + this);
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("RecordDescr.Write: " + this);
 		oupt.writeKind(kind);
 		tag.write(oupt);
 		oupt.writeShort(size);
@@ -178,7 +179,7 @@ public class RecordDescr extends Descriptor {
 		rec.size = inpt.readShort();
 		rec.nbrep = inpt.readShort();
 		rec.infoType = inpt.readBoolean();
-		if(Global.ATTR_INPUT_TRACE) IO.println("RecordDescr.Read: " + rec);
+		if(Option.ATTR_INPUT_TRACE) IO.println("RecordDescr.Read: " + rec);
 		return rec;
 	}
 

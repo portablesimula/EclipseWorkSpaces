@@ -5,6 +5,8 @@ import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.CTStackItem;
 import bec.compileTimeStack.CTStackItem.Mode;
 import bec.util.Global;
+import bec.util.Option;
+import bec.util.Util;
 import bec.value.ObjectAddress;
 import bec.virtualMachine.SVM_DUP;
 
@@ -34,9 +36,11 @@ public abstract class DUP extends Instruction {
 			if(tos instanceof AddressItem addr) {
 				CTStack.pop(); CTStack.pushTempVAL(addr.type, 1, "DUP: ");
 				rtAddr = addr.objadr.addOffset(addr.offset);
-				xReg = addr.xReg;
+//				xReg = addr.xReg;
 			}
 			Global.PSEG.emit(new SVM_DUP(rtAddr, xReg, tos.type.size()), "DUP: ");
+//			if(Option.TESTING_xREG)
+				Util.IERR("NOT IMPL");
 		}
 	}
 

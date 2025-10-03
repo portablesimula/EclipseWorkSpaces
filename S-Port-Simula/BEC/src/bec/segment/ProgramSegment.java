@@ -6,11 +6,9 @@ import java.util.Vector;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.descriptor.Kind;
-import bec.util.Global;
+import bec.util.Option;
 import bec.util.Scode;
 import bec.util.Type;
-import bec.util.Util;
-import bec.value.ObjectAddress;
 import bec.value.ProgramAddress;
 import bec.virtualMachine.SVM_Instruction;
 
@@ -98,7 +96,7 @@ public class ProgramSegment extends Segment {
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE)
+		if(Option.ATTR_OUTPUT_TRACE)
 			IO.println("ProgramSegment.Write: " + this + ", Size=" + instructions.size());
 //		oupt.writeInstr(Scode.S_BSEG);
 		oupt.writeKind(segmentKind);
@@ -120,8 +118,8 @@ public class ProgramSegment extends Segment {
 		String ident = inpt.readString();
 //		IO.println("ProgramSegment.readObject: ident="+ident+", segmentKind="+segmentKind);
 		ProgramSegment seg = new ProgramSegment(ident, segmentKind, inpt);
-		if(Global.ATTR_INPUT_TRACE) IO.println("ProgramSegment.Read: " + seg);
-		if(Global.ATTR_INPUT_DUMP) seg.dump("ProgramSegment.readObject: ");
+		if(Option.ATTR_INPUT_TRACE) IO.println("ProgramSegment.Read: " + seg);
+		if(Option.ATTR_INPUT_DUMP) seg.dump("ProgramSegment.readObject: ");
 //		Util.IERR("");
 		return seg;
 	}

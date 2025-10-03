@@ -10,6 +10,7 @@ import bec.descriptor.ConstDescr;
 import bec.descriptor.RecordDescr;
 import bec.segment.DataSegment;
 import bec.util.Global;
+import bec.util.Option;
 import bec.util.Scode;
 import bec.util.Tag;
 import bec.util.Type;
@@ -243,7 +244,7 @@ public class RecordValue extends Value {
 	}
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
 		oupt.writeKind(Scode.S_C_RECORD);
 		oupt.writeShort(attrValues.size());
 		tag.write(oupt);

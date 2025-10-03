@@ -4,23 +4,22 @@ import java.io.IOException;
 
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
-import bec.segment.Segment;
 import bec.util.Global;
-import bec.util.Util;
+import bec.util.Option;
 import bec.value.ObjectAddress;
 import bec.value.ProgramAddress;
 import bec.value.Value;
 
 public class SVM_CALL extends SVM_Instruction {
-	private ProgramAddress rutAddr;
-	private ObjectAddress returSlot;
+	private final ProgramAddress rutAddr;
+	private final ObjectAddress returSlot;
 
 	public SVM_CALL(ProgramAddress rutAddr, ObjectAddress returSlot) {
 		this.opcode = SVM_Instruction.iCALL;
 		this.rutAddr = rutAddr;
 		this.returSlot = returSlot;
 //		IO.println("NEW SVM_CALL: "+this);
-		RTRegister.checkMindMaskEmpty();
+		DELETED_RTRegister.checkMindMaskEmpty();
 	}
 	
 	public static SVM_CALL ofTOS(ObjectAddress returSlot) {
@@ -32,35 +31,12 @@ public class SVM_CALL extends SVM_Instruction {
 		ProgramAddress retur = Global.PSC.copy();
 //		retur.ofst++;
 		retur.addOfst(1);
-		if(Global.EXEC_TRACE > 0) {
+		if(Option.EXEC_TRACE > 0) {
 			ProgramAddress.printInstr(this,false);
 		}
 //		IO.println("SVM_CALL:execute: " + this);
 		if(rutAddr == null) {
-			// CALL-TOS
-			
-//			boolean TESTING = false;
-//			
-//			if(TESTING) {
-//				String rutIdent = "CALL-TOS";
-//				int nParSlots = 1;
-//				int exportSize = 0;
-//				int importSize = 0;
-//				RTStack.precallStack.push(new CallStackFrame(rutIdent, RTStack.size() - nParSlots, exportSize, importSize));
-//				if(exportSize > 0) {
-//					if(nParSlots > 0) {
-////						RTStack.dumpRTStack("SVM_PRECALL.execute-1");
-//						RTStack.addExport(nParSlots, exportSize);
-////						RTStack.dumpRTStack("SVM_PRECALL.execute-2");
-////						Util.IERR("");
-//					} else {
-//						for(int i=0;i<exportSize;i++) {
-//							RTStack.push(null, "EXPORT"); // Export slots		
-//						}
-//					}
-//				}
-//			}
-			
+			// CALL-TOS			
 			Global.PSC = (ProgramAddress) RTStack.pop().copy();
 //			IO.println("SVM_CALL.execute: PSC="+Global.PSC);
 //			Global.PSC.segment().dump("SVM_CALL.execute: ", 0, 10);
@@ -68,17 +44,6 @@ public class SVM_CALL extends SVM_Instruction {
 			Global.PSC = rutAddr.copy();
 		}
 		RTStack.push(retur, "RETUR");
-
-//		if(rutAddr != null && rutAddr.toString().equals("PSEG_KNWN_AR1IND:BODY[0]")) {
-////			int idx = RTStack.size() - 2;
-////			IO.println("SVM_CALL.execute: idx="+idx);
-//			RTStack.dumpRTStack("");
-//			Segment.lookup("POOL_1").dump("SVM_CALL.execute: ", 707, 727);
-//			RTUtil.dumpCurins();
-//			RTUtil.printPool("POOL_1");
-////			RTStack.guard(idx);	
-//			Util.IERR("");
-//		}
 	}
 	
 	@Override	
@@ -96,13 +61,13 @@ public class SVM_CALL extends SVM_Instruction {
 		this.opcode = SVM_Instruction.iCALL;
 		this.returSlot = (ObjectAddress) Value.read(inpt);
 		boolean present = inpt.readBoolean();
-		if(present)	this.rutAddr = (ProgramAddress) Value.read(inpt);
-		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
+		this.rutAddr = (!present)? null : (ProgramAddress) Value.read(inpt);
+		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		returSlot.write(oupt);
 		if(rutAddr != null) {

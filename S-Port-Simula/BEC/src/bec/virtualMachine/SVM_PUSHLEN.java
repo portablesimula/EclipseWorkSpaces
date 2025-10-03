@@ -5,6 +5,7 @@ import java.io.IOException;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
+import bec.util.Option;
 import bec.util.Type;
 import bec.util.Util;
 import bec.value.IntegerValue;
@@ -57,12 +58,12 @@ public class SVM_PUSHLEN extends SVM_Instruction {
 	// ***********************************************************************************************
 	private SVM_PUSHLEN(AttributeInputStream inpt) throws IOException {
 		this.opcode = SVM_Instruction.iPUSHLEN;
-		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
+		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 	}
 

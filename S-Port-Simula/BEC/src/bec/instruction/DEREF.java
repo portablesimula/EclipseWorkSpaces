@@ -4,7 +4,7 @@ import bec.compileTimeStack.AddressItem;
 import bec.compileTimeStack.CTStack;
 import bec.util.Global;
 import bec.util.Type;
-import bec.virtualMachine.SVM_DEREF;
+import bec.virtualMachine.SVM_LOADA;
 
 public abstract class DEREF extends Instruction {
 	
@@ -28,13 +28,17 @@ public abstract class DEREF extends Instruction {
      *                                                      |        |
      *                                                      '========'
 	 */
+	
+//	CheckTosRef;
+//  AssertAtrStacked; Pop; pushTemp(T_GADDR);
+
 	public static void ofScode() {
 		if(DEBUG) CTStack.dumpStack("DEREF: ");
 		CTStack.checkTosRef();
 		
 		AddressItem tos = (AddressItem) CTStack.TOS();
-		Global.PSEG.emit(new SVM_DEREF(tos.objadr, tos.offset, tos.xReg), "DEREF'objadr: ");
-					
+		if(DEBUG) IO.println("DEREF.ofScode: tos="+tos);
+		Global.PSEG.emit(new SVM_LOADA(tos.objadr, tos.offset, tos.indexed), "DEREF'objadr: ");			
 		CTStack.pop();
 		CTStack.pushTempVAL(Type.T_GADDR, 2, "DEREF: ");
 		return;

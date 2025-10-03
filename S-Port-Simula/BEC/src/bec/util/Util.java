@@ -15,7 +15,7 @@ public class Util {
 	}
 
 	public static void ITRC(String id, String msg) {
-		if(Global.SCODE_INPUT_TRACE) {
+		if(Option.SCODE_INPUT_TRACE) {
 			Scode.initTraceBuff("Line " + Scode.curline + "  " + id + ": " + msg);
 		}
 	}
@@ -27,14 +27,14 @@ public class Util {
 	}
 
 	public static void WARNING(String msg) {
-		if(Global.SCODE_INPUT_TRACE) {
+		if(Option.SCODE_INPUT_TRACE) {
 			Scode.flushTraceBuff();
 		}
 		IO.println("ERROR: " + msg);
 	}
 
 	public static void ERROR(String msg) {
-		if(Global.SCODE_INPUT_TRACE) {
+		if(Option.SCODE_INPUT_TRACE) {
 			Scode.flushTraceBuff();
 		}
 		IO.println("ERROR: " + msg);
@@ -52,7 +52,7 @@ public class Util {
 	 * @param msg the message to print
 	 */
 	public static void TRACE_OUTPUT(final String msg) {
-		if (Global.ATTR_OUTPUT_TRACE)
+		if (Option.ATTR_OUTPUT_TRACE)
 			IO.println("ATTR OUTPUT: " + msg);
 	}
 
@@ -61,7 +61,7 @@ public class Util {
 	 * @param msg the message to print
 	 */
 	public static void TRACE_INPUT(final String msg) {
-		if (Global.ATTR_INPUT_TRACE)
+		if (Option.ATTR_INPUT_TRACE)
 			IO.println("ATTR INPUT: " + msg);
 	}
 

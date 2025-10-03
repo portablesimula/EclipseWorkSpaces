@@ -6,6 +6,7 @@ import java.util.Vector;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
+import bec.util.Option;
 import bec.util.Util;
 import bec.value.GeneralAddress;
 import bec.value.ObjectAddress;
@@ -15,10 +16,10 @@ import bec.value.Value;
  * Remove two items on the Runtime-Stack and push the value (SOS + TOS)
  */
 public class SVM_ASSIGN extends SVM_Instruction {
-	private boolean update; // false: ASSIGN, true: UPDATE
-	private ObjectAddress rtAddr;
+	private final boolean update; // false: ASSIGN, true: UPDATE
+	private final ObjectAddress rtAddr;
 	private int xReg;
-	private int size;
+	private final int size;
 
 	private final boolean DEBUG = false;
 
@@ -42,8 +43,9 @@ public class SVM_ASSIGN extends SVM_Instruction {
 		this.rtAddr = rtAddr;
 		this.xReg = xReg;
 		this.size = size;
-		RTRegister.reads("SVM_ASSIGN", rtAddr);
-		RTRegister.reads("SVM_ASSIGN", xReg);
+		DELETED_RTRegister.reads("SVM_ASSIGN", rtAddr);
+		DELETED_RTRegister.reads("SVM_ASSIGN", xReg);
+		Util.IERR("NOT IMPL");
 	}
 
 	@Override
@@ -69,7 +71,7 @@ public class SVM_ASSIGN extends SVM_Instruction {
 				break;
 				
 			case ObjectAddress.REFER_ADDR:
-				GeneralAddress gaddr = (GeneralAddress) RTRegister.getValue(xReg);
+				GeneralAddress gaddr = (GeneralAddress) DELETED_RTRegister.getValue(xReg);
 				addr = gaddr.base.addOffset(rtAddr.getOfst() + gaddr.ofst);
 				doAssign(addr, 0, values);
 				break;
@@ -77,13 +79,14 @@ public class SVM_ASSIGN extends SVM_Instruction {
 			default: Util.IERR("");
 		}
 		
+		Util.IERR("NOT IMPL");
 		Global.PSC.addOfst(1);
 	}
 	
 	private void doAssign(ObjectAddress addr, int xReg, Vector<Value> values) {
 		if(DEBUG) for(int i=0;i<size;i++) IO.println("SVM_ASSIGN: BEFORE: sos.store: " + i + " " + values.get(i));
 		int idx = size;
-		int rx = (xReg == 0)? 0 : RTRegister.getIntValue(xReg);
+		int rx = (xReg == 0)? 0 : DELETED_RTRegister.getIntValue(xReg);
 		for(int i=0;i<size;i++) {
 			addr.store(rx + i, values.get((--idx)), "");
 		}
@@ -116,11 +119,11 @@ public class SVM_ASSIGN extends SVM_Instruction {
 		this.rtAddr = ObjectAddress.read(inpt);
 		this.xReg = inpt.readReg();
 		this.size = inpt.readShort();
-		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
+		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		if(rtAddr == null) Util.IERR("");
 		oupt.writeOpcode(opcode);
 		oupt.writeBoolean(update);

@@ -5,6 +5,7 @@ import java.io.IOException;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
+import bec.util.Option;
 import bec.util.Util;
 import bec.value.ObjectAddress;
 import bec.value.Value;
@@ -16,9 +17,9 @@ import bec.value.Value;
 	 * A duplicate of TOS is pushed onto the stack and forced into value mode.
  */
 public class SVM_DUP extends SVM_Instruction {
-	ObjectAddress rtAddr;
+	private final ObjectAddress rtAddr;
 	int xReg;
-	int size;
+	private final int size;
 	
 	public SVM_DUP(ObjectAddress rtAddr, int xReg, int size) {
 		this.opcode = SVM_Instruction.iDUP;
@@ -26,6 +27,7 @@ public class SVM_DUP extends SVM_Instruction {
 		this.xReg = xReg;
 		this.size = size;
 //		RTRegister.writes("SVM_DUP", xReg);
+		Util.IERR("NOT IMPL");
 	}
 
 	@Override
@@ -99,7 +101,7 @@ public class SVM_DUP extends SVM_Instruction {
 		String s = "";
 		if(rtAddr != null) {
 			s = rtAddr.toString();
-			s = s + ( (xReg == 0)? "" : "+R" + xReg + "(" + RTRegister.getValue(xReg) + ')' );
+			s = s + ( (xReg == 0)? "" : "+R" + xReg + "(" + DELETED_RTRegister.getValue(xReg) + ')' );
 		}
 		return "DUP      " + s;
 	}
@@ -109,7 +111,7 @@ public class SVM_DUP extends SVM_Instruction {
 	// ***********************************************************************************************
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		if(rtAddr == null) {
 			oupt.writeBoolean(false);
@@ -129,7 +131,7 @@ public class SVM_DUP extends SVM_Instruction {
 		int xReg = inpt.readReg();
 		int size = inpt.readShort();
 		SVM_DUP instr = new SVM_DUP(rtAddr, xReg, size);
-		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
+		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
 		return instr;
 	}
 

@@ -10,7 +10,7 @@ package make;
 import java.util.Vector;
 
 import bec.BecCompiler;
-import bec.util.Global;
+import bec.util.Option;
 
 public final class RunFull_SML_TestBatch {
 	private static long startTimeMs = System.currentTimeMillis();
@@ -21,13 +21,13 @@ public final class RunFull_SML_TestBatch {
 //	Global.scodeSource = "C:/Simuletta/SCode/simulaRTS/RT.scd";
 
 	public static void main(String[] args) {
-		Global.INLINE_TESTING = true;
+		Option.INLINE_TESTING = true;
 		
 //		SVM_CALLSYS.RUNTIME_VERBOSE = true;
 //		Global.verbose = true;
 //		Global.SCODE_INPUT_TRACE = true;
 //		Global.PRINT_GENERATED_SVM_CODE = true;
-//		Global.EXEC_TRACE = 1;
+//		Option.EXEC_TRACE = 1;
 //		Global.CALL_TRACE_LEVEL = 2;
 //		Global.DUMPS_AT_EXIT = true;
 		

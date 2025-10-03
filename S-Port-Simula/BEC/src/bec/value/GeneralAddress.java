@@ -9,6 +9,7 @@ import bec.descriptor.Descriptor;
 import bec.descriptor.Variable;
 import bec.segment.Segment;
 import bec.util.Global;
+import bec.util.Option;
 import bec.util.Scode;
 import bec.util.Tag;
 import bec.util.Type;
@@ -96,7 +97,7 @@ public class GeneralAddress extends Value {
 	}
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
 		oupt.writeKind(Scode.S_C_GADDR);
 		base.write(oupt);
 		oupt.writeShort(ofst);

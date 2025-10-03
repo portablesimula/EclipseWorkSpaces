@@ -1,17 +1,14 @@
 package bec.value;
 
 import java.io.IOException;
-import java.util.Vector;
-
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
-import bec.descriptor.Kind;
 import bec.segment.DataSegment;
 import bec.util.Global;
+import bec.util.Option;
 import bec.util.Scode;
 import bec.util.Type;
 import bec.util.Util;
-import bec.virtualMachine.SVM_LOADC;
 
 public class TextValue extends Value {
 //	private ObjectAddress addr; // Pointer to a sequence of Characters.
@@ -75,13 +72,13 @@ public class TextValue extends Value {
 //		length = inpt.readShort();
 //		addr = (ObjectAddress) Value.read(inpt);
 		textValue = inpt.readString();
-		if(Global.ATTR_INPUT_TRACE) IO.println("TextValue.read: " + this);
+		if(Option.ATTR_INPUT_TRACE) IO.println("TextValue.read: " + this);
 //		IO.println("NEW TextValue: " + this);
 //		Util.IERR("SJEKK DETTE");
 	}
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
 		oupt.writeKind(Scode.S_TEXT);
 //		IO.println("TextValue.write: addr.segID=" + addr.segID);
 //		Util.IERR("");

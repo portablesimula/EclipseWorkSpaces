@@ -7,7 +7,7 @@ import java.io.InputStream;
 //import PREV.syntaxClass.SyntaxClass;
 import bec.descriptor.Kind;
 import bec.util.Scode;
-import bec.virtualMachine.RTRegister;
+import bec.virtualMachine.DELETED_RTRegister;
 
 public class AttributeInputStream {
 //	String modID;
@@ -49,7 +49,7 @@ public class AttributeInputStream {
     
     public int readReg() throws IOException {
     	int reg = inpt.readByte() & 0xFF;
-    	if(TRACE) IO.println("AttributeInputStream.readReg: "+reg+':'+RTRegister.edReg(reg));
+    	if(TRACE) IO.println("AttributeInputStream.readReg: "+reg+':'+DELETED_RTRegister.edReg(reg));
     	return reg;
 	}
 

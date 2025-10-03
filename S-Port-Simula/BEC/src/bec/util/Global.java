@@ -13,27 +13,6 @@ import bec.value.ProgramAddress;
 
 public class Global {
 	
-	public static final boolean TESTING_STACK_ADDRESS = true;	
-
-	public static boolean INLINE_TESTING = false;
-	public static boolean verbose = false;
-	public static boolean execVerbose = false;
-	public static boolean nopopup = false;
-	public static int traceMode = 0;
-	public static boolean SCODE_INPUT_TRACE = false;
-	public static boolean TRACE_ALLOC_FRAME = false;
-	public static boolean PRINT_GENERATED_SVM_DATA = false;
-	public static boolean PRINT_GENERATED_SVM_CODE = false;
-	public static boolean ATTR_INPUT_TRACE = false;
-	public static boolean ATTR_OUTPUT_TRACE = false;
-	public static boolean ATTR_INPUT_DUMP = false;
-	public static boolean ATTR_OUTPUT_DUMP = false;
-	public static boolean SEGMENT_INPUT_DUMP = false;
-	public static boolean SEGMENT_OUTPUT_DUMP = false;
-	public static int EXEC_TRACE = 0;
-	public static int CALL_TRACE_LEVEL = 0;
-	public static boolean DUMPS_AT_EXIT = false;
-	
 //	public static ConsoleNewEdition console;
 //	public static RTS_ConsolePanel console;
 	public static Terminal console;
@@ -80,7 +59,7 @@ public class Global {
 				Util.IERR("Display-entry is already defined: " + Scode.edTag(tag) + "  " + prev);
 			}
 			DISPL.set(tag, d);
-			if(Global.traceMode != 0) IO.println("Display(" + Scode.edTag(tag) + ") = " +d);
+			if(Option.traceMode != 0) IO.println("Display(" + Scode.edTag(tag) + ") = " +d);
 		}
 		if(d == null) Util.IERR("");
 //		if(tag == 313) {

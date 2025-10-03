@@ -9,7 +9,7 @@ import bec.descriptor.Descriptor;
 import bec.descriptor.Variable;
 import bec.segment.DataSegment;
 import bec.segment.Segment;
-import bec.util.Global;
+import bec.util.Option;
 import bec.util.Scode;
 import bec.util.Tag;
 import bec.util.Type;
@@ -25,9 +25,9 @@ public class ObjectAddress extends Value {
 	
 	public static final int SEGMNT_ADDR = 1; // Segment Address
 	public static final int REMOTE_ADDR = 2; // Remote Address
-	public static final int REFER_ADDR = 3; // Refer Address
-	public static final int REL_ADDR = 4; // Frame relative Addtess
-	public static final int STACK_ADDR = 5; // Stack relative Address
+	public static final int REFER_ADDR  = 3; // Refer Address
+	public static final int REL_ADDR    = 4; // Frame relative Addtess
+	public static final int STACK_ADDR  = 5; // Stack relative Address
 	
 	protected ObjectAddress(int kind, String segID,	int ofst) {
 		this.type = Type.T_OADDR;
@@ -133,7 +133,16 @@ public class ObjectAddress extends Value {
 //				Util.IERR("");
 				break;
 //			case REMOTE_ADDR: return "REMOTE_ADDR[RTStackTop+" + ofst + ']';
-//			case REFER_ADDR:  return "REFER_ADDR[" + ofst + ']';
+			case REFER_ADDR:
+				// return "REFER_ADDR[" + ofst + ']';
+				RTStack.dumpRTStack("ObjectAddress.store: ");
+				int ofstx = RTStack.popInt();
+				ObjectAddress oaddr = RTStack.popOADDR().addOffset(ofstx);
+				IO.println("ObjectAddress.store: oaddr="+oaddr + ", value="+value);
+				RTStack.store(ofstx + idx, value, comment);
+				oaddr.dumpArea("", ofstx + idx + 8);
+				Util.IERR("");
+				break;
 			case STACK_ADDR: //  return "STACK_ADR[RTStack(" + ofst + ")]";
 //				IO.println("ObjectAddress.store: "+value+"  "+this);
 //				RTStack.dumpRTStack("ObjectAddress.store: "+this);
@@ -160,7 +169,18 @@ public class ObjectAddress extends Value {
 //				Util.IERR("");
 				return value;
 //			case REMOTE_ADDR: return "REMOTE_ADDR[RTStackTop+" + ofst + ']';
-//			case REFER_ADDR:  return "REFER_ADDR[" + ofst + ']';
+			case REFER_ADDR:
+				IO.println("ObjectAddress.load: REFER_ADDR[" + ofst + ']');
+				RTStack.dumpRTStack("ObjectAddress.load: REFER_ADDR[" + ofst + ']');
+				int ofstx = RTStack.popInt();
+				ObjectAddress oaddr = RTStack.popOADDR().addOffset(ofstx);
+				IO.println("ObjectAddress.load: oaddr="+oaddr);
+
+				value = oaddr.load(ofstx + idx);
+				IO.println("ObjectAddress.load: value="+value);
+				oaddr.dumpArea("", ofstx + idx + 8);
+				Util.IERR("");
+				return value;					
 			case STACK_ADDR:
 				value = RTStack.load(ofst + idx);
 //				IO.println("ObjectAddress.load: value="+value);
@@ -283,7 +303,7 @@ public class ObjectAddress extends Value {
 	}
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
 		oupt.writeKind(Scode.S_C_OADDR);
 		writeBody(oupt);
 //		IO.println("ObjectAddress.write: " + this + "   segID="+segID+", ofst="+ofst);

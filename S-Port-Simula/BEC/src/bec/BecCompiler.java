@@ -6,10 +6,11 @@ import bec.segment.Segment;
 import bec.util.Array;
 import bec.util.Terminal;
 import bec.util.Global;
+import bec.util.Option;
 import bec.util.Scode;
 import bec.util.Type;
 import bec.util.Util;
-import bec.virtualMachine.RTRegister;
+import bec.virtualMachine.DELETED_RTRegister;
 
 public class BecCompiler {
 	String programHead;
@@ -26,15 +27,15 @@ public class BecCompiler {
 			String arg=argv[i];
 			if (arg.charAt(0) == '-') { // command line option
 				if (arg.equalsIgnoreCase("-help")) help();
-				else if (arg.equalsIgnoreCase("-inputTrace")) Global.SCODE_INPUT_TRACE = true;
-				else if (arg.equalsIgnoreCase("-traceSVM_CODE")) Global.PRINT_GENERATED_SVM_CODE = true;
-				else if (arg.equalsIgnoreCase("-traceSVM_DATA")) Global.PRINT_GENERATED_SVM_DATA = true;
-				else if (arg.equalsIgnoreCase("-verbose")) Global.verbose = true;
-				else if (arg.equalsIgnoreCase("-execVerbose")) Global.execVerbose = true;
-				else if (arg.equalsIgnoreCase("-nopopup")) Global.nopopup = true;
-				else if (arg.equalsIgnoreCase("-execTrace")) Global.EXEC_TRACE = 1;
-				else if (arg.equalsIgnoreCase("-callTrace")) Global.CALL_TRACE_LEVEL = 2;
-				else if (arg.equalsIgnoreCase("-dumpsAtExit")) Global.DUMPS_AT_EXIT = true;
+				else if (arg.equalsIgnoreCase("-inputTrace")) Option.SCODE_INPUT_TRACE = true;
+				else if (arg.equalsIgnoreCase("-traceSVM_CODE")) Option.PRINT_GENERATED_SVM_CODE = true;
+				else if (arg.equalsIgnoreCase("-traceSVM_DATA")) Option.PRINT_GENERATED_SVM_DATA = true;
+				else if (arg.equalsIgnoreCase("-verbose")) Option.verbose = true;
+				else if (arg.equalsIgnoreCase("-execVerbose")) Option.execVerbose = true;
+				else if (arg.equalsIgnoreCase("-nopopup")) Option.nopopup = true;
+				else if (arg.equalsIgnoreCase("-execTrace")) Option.EXEC_TRACE = 1;
+				else if (arg.equalsIgnoreCase("-callTrace")) Option.CALL_TRACE_LEVEL = 2;
+				else if (arg.equalsIgnoreCase("-dumpsAtExit")) Option.DUMPS_AT_EXIT = true;
 				else {
 					Util.ERROR("Unknown option " + arg);
 					help();
@@ -47,7 +48,7 @@ public class BecCompiler {
 			Util.ERROR("no input file specified");
 			help();
 		}
-		if(! Global.nopopup) Global.console = new Terminal("Runtime Console");
+		if(! Option.nopopup) Global.console = new Terminal("Runtime Console");
 		
 		new BecCompiler(scodeSource);
 	}
@@ -89,14 +90,14 @@ public class BecCompiler {
 	 * 		::= main <local_quantity>* <program_element>*
 	 */
 	public BecCompiler(String scodeSource) {
-		if(Global.verbose) Util.println("BEC: Start BecCompiler with " + scodeSource);
+		if(Option.verbose) Util.println("BEC: Start BecCompiler with " + scodeSource);
 		Global.scodeSource = scodeSource;
 		Global.DISPL = new Array<Descriptor>();
 		Global.SEGMAP = new HashMap<String, Segment>();
 		Global.ifDepth = 0;
 		Scode.initScode();
 		Type.init();
-		RTRegister.init();
+		DELETED_RTRegister.init();
 
 		Thread.currentThread().setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
 			public void uncaughtException(Thread thread, Throwable e) {
@@ -127,9 +128,9 @@ public class BecCompiler {
 			}
 		} else Util.IERR("Illegal S-Program");
 		
-		if(Global.verbose) {
+		if(Option.verbose) {
 			Util.println("DONE: BecCompiler: " + scodeSource);
-			RTRegister.printSummary();
+			DELETED_RTRegister.printSummary();
 		}
 	}
 

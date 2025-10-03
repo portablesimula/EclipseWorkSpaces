@@ -2,12 +2,11 @@ package bec.compileTimeStack;
 
 import bec.util.Type;
 import bec.value.ObjectAddress;
-import bec.virtualMachine.RTRegister;
 
 public class AddressItem extends CTStackItem {
 	public ObjectAddress objadr;
 	public int offset;
-	public int xReg;
+	public boolean indexed;
 	
 	public AddressItem(Type type, int offset, ObjectAddress objadr) {
 		this.mode = Mode.REF;
@@ -20,14 +19,14 @@ public class AddressItem extends CTStackItem {
 	@Override
 	public CTStackItem copy() {
 		AddressItem addr = new AddressItem(type, offset, objadr);
-		addr.xReg = xReg;
+		addr.indexed = indexed;
 		return addr;
 	}
 
 	@Override
 	public String toString() {
 		String s = "" + type + " AT " + objadr + "[" + offset;
-		if(xReg > 0) s += "+" + RTRegister.edReg(xReg);
+		if(indexed) s += "+IDX";
 		s =  s  + "]";
 		if(objadr.kind == ObjectAddress.REMOTE_ADDR) s = s + " withRemoteBase";
 		return edMode() + "ADDR: " + s;

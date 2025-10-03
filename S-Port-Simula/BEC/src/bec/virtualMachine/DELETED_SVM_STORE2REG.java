@@ -5,24 +5,25 @@ import java.io.IOException;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
+import bec.util.Option;
 import bec.value.Value;
 
 // POP RT-Stack'TOS --> Register 
 // The value on the top of the operand stack is popped off and stored in reg.
-public class SVM_STORE2REG extends SVM_Instruction {
+public class DELETED_SVM_STORE2REG extends SVM_Instruction {
 	int reg;
 	int count;
 	
 	private static final boolean DEBUG = false;
 	
-	public SVM_STORE2REG(int reg, int count) {
+	public DELETED_SVM_STORE2REG(int reg, int count) {
 		this.opcode = SVM_Instruction.iSTORE2REG;
 		this.reg = reg;
 		this.count = count;
-		RTRegister.writes("SVM_STORE2REG", reg);
+		DELETED_RTRegister.writes("SVM_STORE2REG", reg);
 	}
 	
-	public SVM_STORE2REG(int reg) {
+	public DELETED_SVM_STORE2REG(int reg) {
 		this(reg, 1);
 	}
 	
@@ -30,11 +31,11 @@ public class SVM_STORE2REG extends SVM_Instruction {
 	public void execute() {
 		if(DEBUG) {
 //			RTStack.dumpRTStack("POP2REG: "+RTRegister.edReg(reg)+" count="+count);
-			RTStack.callStack_TOP().dump("POP2REG: "+RTRegister.edReg(reg)+" count="+count+"  ");
+			RTStack.callStack_TOP().dump("POP2REG: "+DELETED_RTRegister.edReg(reg)+" count="+count+"  ");
 		}
 		for(int i=0;i<count;i++) {
 			Value value = RTStack.pop();
-			RTRegister.putValue(reg+i, value);
+			DELETED_RTRegister.putValue(reg+i, value);
 		}
 		Global.PSC.addOfst(1);
 //		if(DEBUG) {
@@ -47,7 +48,7 @@ public class SVM_STORE2REG extends SVM_Instruction {
 		String s = "";
 		String sep = "";
 		for(int i=0;i<count;i++) {
-			s += (sep + RTRegister.edReg(reg+i));
+			s += (sep + DELETED_RTRegister.edReg(reg+i));
 			sep = "+";
 		}
 //		return "POP2REG  " + s;
@@ -57,23 +58,23 @@ public class SVM_STORE2REG extends SVM_Instruction {
 	// ***********************************************************************************************
 	// *** Attribute File I/O
 	// ***********************************************************************************************
-	private SVM_STORE2REG(AttributeInputStream inpt) throws IOException {
+	private DELETED_SVM_STORE2REG(AttributeInputStream inpt) throws IOException {
 		this.opcode = SVM_Instruction.iSTORE2REG;
 		this.reg = inpt.readShort();
 		this.count = inpt.readShort();
-		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
+		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		oupt.writeShort(reg);
 		oupt.writeShort(count);
 	}
 
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {
-		return new SVM_STORE2REG(inpt);
+		return new DELETED_SVM_STORE2REG(inpt);
 	}
 
 }

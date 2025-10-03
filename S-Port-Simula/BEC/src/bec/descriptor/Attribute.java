@@ -5,6 +5,7 @@ import java.io.IOException;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
+import bec.util.Option;
 import bec.util.Type;
 import bec.util.Util;
 import bec.util.Scode;
@@ -60,7 +61,7 @@ public class Attribute extends Descriptor {
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) IO.println("LocDescr.Write: " + this);
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("LocDescr.Write: " + this);
 		oupt.writeKind(kind);
 		tag.write(oupt);
 		type.write(oupt);
@@ -78,7 +79,7 @@ public class Attribute extends Descriptor {
 		loc.rela = inpt.readShort();
 		loc.repCount = inpt.readShort();
 		loc.size = inpt.readShort();
-		if(Global.ATTR_INPUT_TRACE) IO.println("LocDescr.Read: " + loc);
+		if(Option.ATTR_INPUT_TRACE) IO.println("LocDescr.Read: " + loc);
 		return loc;
 	}
 

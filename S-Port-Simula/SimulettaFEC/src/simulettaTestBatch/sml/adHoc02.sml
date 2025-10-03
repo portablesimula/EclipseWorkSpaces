@@ -1,39 +1,23 @@
 begin
-   SYSINSERT RT,SYSR,KNWN,UTIL,strg,cent,cint,arr,form,libr,fil,smst,sml,edit,mntr;
+   SYSINSERT RT,SYSR,KNWN,UTIL;    
+       
+ const infix(txtent:10) defident2 = record:txtent(sl=none, sort=S_TXTENT, misc=1, ncha=10, cha="ABCDEFGHIJ" );
 
- Routine TEST; -- VAR: npAccA
- import name(infix(parqnt)) fnp;  --  parameter quantity address
- export name() adr;               --  actual parameter's address
- begin ref(pardes)   ap;          --  Local copy here for efficiency.
- 	integer i;
- 
-%       ed_str("FORM.npAccA: fnp="); ed_GADDR(fnp); ed_out;
-       ap:= var(fnp).ap;
-%       ed_str("FORM.npAccA: ap="); ed_OADDR(fnp); ed_out;
-%       ed_str("FORM.npAccA: ap.code="); ed_INT(ap.code); ed_out;
-	i := ap.code;
-end;
+ const infix(txtqnt) acmdir2=record:txtqnt(ent=ref(defident2), cp=0, sp=0, lp = 10);
 
-
-	Visible routine TEST2; -- VAR: EncInt
-	import name(infix(parqnt)) fnp; export integer val; begin
-%		E_FNP_ACC_CNV(%integer%,%"EncInt"%);
-		name() adr;
-		adr:= TEST(fnp);
+	routine TXT2STR;
+	import infix (txtqnt) txt; export infix (string) str;
+	begin
+%	 str.nchr:=txt.lp - txt.sp;
+%	      str.chradr:=if txt.lp = 0 then noname
+%	      else name(txt.ent.cha(txt.sp));
+%	      if txt.lp = 0 then str.chradr := noname; else	 
+	      	 str.chradr := name(txt.ent.cha(txt.sp+7));
+%	      endif;	 
 	end;
 
-
-	infix(parqnt) par;
-	infix(pardes) pds;
-	ref(pardes) ap;
-	
-	B_PROG;
-	
-	par.ap := ref(pds);
-	ap := par.ap;
-	ap.code := 44;
-	
-	TEST2(name(par));
+		 TXT2STR(acmdir2);
+		 TXT2STR(acmdir2);
 
  end;
 	 

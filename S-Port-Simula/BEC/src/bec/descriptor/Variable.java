@@ -7,6 +7,7 @@ import bec.AttributeOutputStream;
 import bec.instruction.CALL;
 import bec.segment.DataSegment;
 import bec.util.Global;
+import bec.util.Option;
 import bec.util.Type;
 import bec.util.Scode;
 import bec.util.Tag;
@@ -232,7 +233,7 @@ public class Variable extends Descriptor {
 	// ***********************************************************************************************
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) IO.println("Variable.Write: " + this);
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("Variable.Write: " + this);
 		oupt.writeKind(kind); // K_GLOBAL, K_LOCAL, K_IMPORT, K_EXPORT, K_EXIT, K_RETUR
 		tag.write(oupt);
 		type.write(oupt);
@@ -254,7 +255,7 @@ public class Variable extends Descriptor {
 		if(present) {
 			var.address = (ObjectAddress) Value.read(inpt);
 		}
-		if(Global.ATTR_INPUT_TRACE) IO.println("Variable.Read: " + var);
+		if(Option.ATTR_INPUT_TRACE) IO.println("Variable.Read: " + var);
 		return var;
 	}
 

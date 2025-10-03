@@ -10,6 +10,7 @@ import bec.descriptor.Kind;
 import bec.segment.DataSegment;
 import bec.util.EndProgram;
 import bec.util.Global;
+import bec.util.Option;
 import bec.util.Type;
 import bec.util.Util;
 import bec.value.BooleanValue;
@@ -26,13 +27,13 @@ import bec.virtualMachine.sysrut.SysKnown;
 import bec.virtualMachine.sysrut.SysMath;
 
 public class SVM_CALL_SYS extends SVM_Instruction {
-	int kind;
+	private final int kind;
 
 	public SVM_CALL_SYS(int kind) {
 		this.opcode = SVM_Instruction.iCALLSYS;
 		if(kind == 0) Util.IERR("Undefined System Routine: " + kind);
 		this.kind = kind;
-		RTRegister.checkMindMaskEmpty();
+		DELETED_RTRegister.checkMindMaskEmpty();
 	}
 
 	@Override
@@ -127,27 +128,27 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 	}
 	
 	public static void ENTER(String ident, int exportSize, int importSize) {
-		if(Global.EXEC_TRACE > 4)
+		if(Option.EXEC_TRACE > 4)
 			RTStack.dumpRTStack(ident+"ENTER: ");
 		int rtStackIndex = RTStack.size() - (exportSize + importSize);
 		CallStackFrame callStackFrame = new CallStackFrame(ident, rtStackIndex, exportSize, importSize);
 		RTStack.callStack.push(callStackFrame);
 		
-		if(Global.EXEC_TRACE > 0) {
+		if(Option.EXEC_TRACE > 0) {
 			ProgramAddress.printInstr("CALLSYS  " + ident,false);
-			if(Global.EXEC_TRACE > 2)
+			if(Option.EXEC_TRACE > 2)
 				RTStack.callStack_TOP().dump(ident+"ENTER: ");
 		}
 
-		if(Global.CALL_TRACE_LEVEL > 0)
+		if(Option.CALL_TRACE_LEVEL > 0)
 			RTStack.printCallTrace("SVM_CALLSYS.ENTER: ");
 	}
 	
 	public static void EXIT(String ident) {
-		if(Global.CALL_TRACE_LEVEL > 0)
+		if(Option.CALL_TRACE_LEVEL > 0)
 			RTStack.printCallTrace("SVM_CALLSYS.EXIT: ");
 		CallStackFrame top = RTStack.callStack.pop();
-		if(Global.EXEC_TRACE > 2) {
+		if(Option.EXEC_TRACE > 2) {
 			RTStack.callStack_TOP().dump(ident+"RETURN: Called from " + top.curAddr);		
 		}
 	}
@@ -176,7 +177,7 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 	private void initia() {
 		ENTER("INITIA: ", 0, 1); // exportSize, importSize
 		ProgramAddress exchdl = (ProgramAddress) RTStack.pop();
-		if(Global.verbose) IO.println("SVM_SYSCALL.initia: "+exchdl);
+		if(Option.verbose) IO.println("SVM_SYSCALL.initia: "+exchdl);
 		EXIT("INITIA: ");
 	}
 	
@@ -190,7 +191,7 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 		int code = RTStack.popInt();
 //		IO.println("SVM_SYSCALL.terminate: "+str+" with exit code " + code);
 //		System.exit(code);
-		if(Global.DUMPS_AT_EXIT) {
+		if(Option.DUMPS_AT_EXIT) {
 //			Segment.lookup("DSEG_ADHOC02").dump("SVM_SYSCALL.terminate: ");
 			Global.DSEG.dump("SVM_SYSCALL.terminate: FINAL DATA SEGMENT ");
 			Global.CSEG.dump("SVM_SYSCALL.terminate: FINAL CONSTANT SEGMENT ");
@@ -232,6 +233,8 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 		int ofst = RTStack.popInt();
 		ObjectAddress chradr = (ObjectAddress) RTStack.pop();
 		/*int key = */RTStack.popInt();
+		
+//		chradr.segment().dump("SVM_CALL_SYS.printo: ", 30, chradr.getOfst() + 60);
 
 		ObjectAddress x = chradr.addOffset(ofst);
 		StringBuilder sb = new StringBuilder();
@@ -942,14 +945,14 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		oupt.writeKind(kind);
 	}
 
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {
 		SVM_CALL_SYS instr = new SVM_CALL_SYS(inpt.readKind());
-		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
+		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
 		return instr;
 	}
 

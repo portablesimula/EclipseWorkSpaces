@@ -7,6 +7,7 @@ import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.descriptor.Kind;
 import bec.util.Global;
+import bec.util.Option;
 import bec.util.Scode;
 import bec.util.Type;
 import bec.util.Util;
@@ -70,7 +71,7 @@ public class DataSegment extends Segment {
 		ObjectAddress addr = nextAddress();
 		values.add(value);
 		comment.add(cmnt);
-		if(Global.PRINT_GENERATED_SVM_DATA)
+		if(Option.PRINT_GENERATED_SVM_DATA)
 			listData("                                 ==> ", value, cmnt, addr.getOfst());
 		return addr;
 	}
@@ -87,17 +88,17 @@ public class DataSegment extends Segment {
 	public void emitDefaultValue(int size, int repCount, String cmnt) {
 //		IO.println("DataSegment.emitDefaultValue: size="+size);
 		if(repCount < 1) Util.IERR("");
-		boolean option = Global.PRINT_GENERATED_SVM_DATA;
+		boolean option = Option.PRINT_GENERATED_SVM_DATA;
 		int LIMIT = 30;
 		int n = size * repCount;
 		for(int i=0;i<n;i++) {
-			if(Global.PRINT_GENERATED_SVM_DATA && i == LIMIT) {
+			if(Option.PRINT_GENERATED_SVM_DATA && i == LIMIT) {
 				IO.println("                                 ==> ... " + (n-LIMIT) + " more truncated");
-				Global.PRINT_GENERATED_SVM_DATA = false;
+				Option.PRINT_GENERATED_SVM_DATA = false;
 			}
 			emit(null, cmnt);
 		}
-		Global.PRINT_GENERATED_SVM_DATA = option;
+		Option.PRINT_GENERATED_SVM_DATA = option;
 	}
 	
 	public ObjectAddress emitChars(final String chars, final String cmnt) {
@@ -172,7 +173,7 @@ public class DataSegment extends Segment {
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) IO.println("DataSegment.Write: " + this + ", Size=" + values.size());
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("DataSegment.Write: " + this + ", Size=" + values.size());
 //		oupt.writeInstr(Scode.S_BSEG);
 		oupt.writeKind(segmentKind);
 		oupt.writeString(ident);
@@ -192,8 +193,8 @@ public class DataSegment extends Segment {
 		String ident = inpt.readString();
 //		IO.println("DataSegment.readObject: ident="+ident+", segmentKind="+segmentKind);
 		DataSegment seg = new DataSegment(ident, segmentKind, inpt);
-		if(Global.ATTR_INPUT_TRACE) IO.println("DataSegment.Read: " + seg);
-		if(Global.ATTR_INPUT_DUMP) seg.dump("DataSegment.readObject: ");
+		if(Option.ATTR_INPUT_TRACE) IO.println("DataSegment.Read: " + seg);
+		if(Option.ATTR_INPUT_DUMP) seg.dump("DataSegment.readObject: ");
 //		Util.IERR("");
 		return seg;
 	}

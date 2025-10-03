@@ -4,6 +4,8 @@ import bec.compileTimeStack.AddressItem;
 import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.CTStackItem;
 import bec.util.Global;
+import bec.util.Option;
+import bec.util.Util;
 import bec.virtualMachine.SVM_ASSIGN;
 
 public abstract class UPDATE extends Instruction {
@@ -42,7 +44,10 @@ public abstract class UPDATE extends Instruction {
 		AddressItem sos = (AddressItem) CTStack.pop();
 		CTStack.pushTempVAL(tos.type, 1, "UPDATE: ");
 		
-		Global.PSEG.emit(new SVM_ASSIGN(true, sos.objadr.addOffset(sos.offset), sos.xReg, sos.size), "UPDATE: "); // Store into adr
+//		if(Option.TESTING_xREG)
+			Util.IERR("NOT IMPL");
+
+//		Global.PSEG.emit(new SVM_ASSIGN(true, sos.objadr.addOffset(sos.offset), sos.xReg, sos.size), "UPDATE: "); // Store into adr
 	}
 
 }

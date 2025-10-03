@@ -4,13 +4,14 @@ import java.io.IOException;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
+import bec.util.Option;
 import bec.util.Util;
 
 public class SVM_PRECALL extends SVM_Instruction {
-	String rutIdent;
-	int nParSlots;
-	int exportSize;
-	int importSize;
+	private final String rutIdent;
+	private final int nParSlots;
+	private final int exportSize;
+	private final int importSize;
 
 	public SVM_PRECALL(String rutIdent, int nParSlots, int exportSize, int importSize) {
 		this.opcode = SVM_Instruction.iPRECALL;
@@ -18,7 +19,7 @@ public class SVM_PRECALL extends SVM_Instruction {
 		this.nParSlots = nParSlots;
 		this.exportSize = exportSize;
 		this.importSize = importSize;
-		RTRegister.checkMindMaskEmpty();
+		DELETED_RTRegister.checkMindMaskEmpty();
 	}
 
 	@Override
@@ -49,7 +50,7 @@ public class SVM_PRECALL extends SVM_Instruction {
 	// ***********************************************************************************************
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		oupt.writeString(rutIdent);
 		oupt.writeShort(nParSlots);
@@ -63,7 +64,7 @@ public class SVM_PRECALL extends SVM_Instruction {
 		int exportSize = inpt.readShort();
 		int importSize = inpt.readShort();
 		SVM_PRECALL instr = new SVM_PRECALL(rutIdent, nParSlots, exportSize, importSize);
-		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
+		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
 		return instr;
 	}
 

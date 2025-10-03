@@ -4,7 +4,6 @@ import bec.compileTimeStack.CTStack;
 import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Util;
-import bec.value.ObjectAddress;
 import bec.value.ProgramAddress;
 import bec.virtualMachine.SVM_JUMP;
 import bec.virtualMachine.SVM_NOOP;
@@ -34,7 +33,7 @@ public abstract class FDEST extends Instruction {
 		Global.DESTAB[destination] = null;
 //		SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(addr.ofst);
 		SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(addr.getOfst());
-		instr.destination = Global.PSEG.nextAddress();
+		instr.setDestination(Global.PSEG.nextAddress());
       	Global.PSEG.emit(new SVM_NOOP(), "FDEST " + destination);
       	if(DEBUG) {
 //      		IO.println("FDEST.ofScode: FIXUP["+addr.ofst+"]: "+instr);

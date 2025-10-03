@@ -5,6 +5,7 @@ import java.io.IOException;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
+import bec.util.Option;
 import bec.util.Scode;
 import bec.util.Type;
 import bec.util.Util;
@@ -16,8 +17,8 @@ import bec.value.RealValue;
 import bec.value.Value;
 
 public class SVM_CONVERT extends SVM_Instruction {
-	int fromType;
-	int toType;
+	private final int fromType;
+	private final int toType;
 	
 	private final boolean DEBUG = false;
 		
@@ -189,7 +190,7 @@ public class SVM_CONVERT extends SVM_Instruction {
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		oupt.writeShort(fromType);
 		oupt.writeShort(toType);
@@ -197,7 +198,7 @@ public class SVM_CONVERT extends SVM_Instruction {
 
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {
 		SVM_CONVERT instr = new SVM_CONVERT(inpt.readShort(), inpt.readShort());
-		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
+		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
 		return instr;
 	}
 

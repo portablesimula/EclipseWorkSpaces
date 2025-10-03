@@ -1,7 +1,7 @@
 package bec.virtualMachine.sysrut;
 
 import bec.segment.Segment;
-import bec.util.Global;
+import bec.util.Option;
 import bec.util.Type;
 import bec.util.Util;
 import bec.value.IntegerValue;
@@ -74,7 +74,7 @@ public abstract class SysInfo {
 				break;
 			default: Util.IERR("");
 		}
-		if(Global.verbose) IO.println("SVM_SYSCALL.sizein: index=" + index + ", warea=" + warea + ", result=" +result);
+		if(Option.verbose) IO.println("SVM_SYSCALL.sizein: index=" + index + ", warea=" + warea + ", result=" +result);
 		RTStack.push(IntegerValue.of(Type.T_SIZE, result), "EXPORT");
 		SVM_CALL_SYS.EXIT("SIZEIN: ");
 	}
@@ -89,7 +89,7 @@ public abstract class SysInfo {
 		switch(index) {
 			case 6: // Garbage collection information. Info=0 signals the start of a garbage collection,
 				    // Info=1 signals termination of g.c. (see 5.2).
-				if(Global.execVerbose) {
+				if(Option.execVerbose) {
 					String more = (inform == 0)? " Begin" : " Endof";
 					IO.println("SVM_SYSCALL.gviinf: index=" + index + ", inform=" + inform + more + " Garbage Collection");
 				}

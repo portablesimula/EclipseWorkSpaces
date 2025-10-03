@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
-import bec.util.Global;
+import bec.util.Option;
 
 public class RTIndex {
 	public int size;
@@ -16,7 +16,7 @@ public class RTIndex {
 	}
 
 	public String toString() {
-		String s = RTRegister.edReg(reg);
+		String s = DELETED_RTRegister.edReg(reg);
 		if(size > 1) s += "*" + size;
 		return s;
 	}
@@ -28,12 +28,12 @@ public class RTIndex {
 	private RTIndex(AttributeInputStream inpt) throws IOException {
 		this.size = inpt.readShort();
 		this.reg = inpt.readShort();
-		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
+		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
 
 //	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeShort(size);
 		oupt.writeShort(reg);
 	}

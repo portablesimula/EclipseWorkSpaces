@@ -3,13 +3,14 @@ package bec.virtualMachine;
 import java.util.BitSet;
 
 import bec.util.Global;
+import bec.util.Option;
 import bec.util.Util;
 import bec.value.GeneralAddress;
 import bec.value.IntegerValue;
 import bec.value.ObjectAddress;
 import bec.value.Value;
 
-public final class RTRegister {
+public final class DELETED_RTRegister {
 	
 	private static final boolean DEBUG = false;
 	
@@ -88,6 +89,7 @@ public final class RTRegister {
 	}
 
 	public static int getFreeReg() {
+//		if(Option.TESTING_xREG) Util.IERR("");
 		int r = mindMask.nextClearBit(0);
 	    if(r >= 0) {
 			if(DEBUG) IO.println("RTRegister.getFreeReg: UsedRegs=" + ((isMindMaskEmpty())? "empty" : edRegused()) + " ==> " + edReg(r+1));
@@ -100,25 +102,23 @@ public final class RTRegister {
 	
 	public static void putValue(int r, Value value) {
 		
-		if(Global.TESTING_STACK_ADDRESS) {
-			if(value instanceof ObjectAddress oaddr) {
-//				IO.println("RTRegister.putValue: "+value+", reg="+reg+", value="+register[reg-1]);
-//				IO.println("RTRegister.putValue: OADDR: "+oaddr);
-				if(oaddr != null && oaddr.kind == ObjectAddress.REL_ADDR) {
-//					RTStack.dumpRTStack("RTRegister.putValue: NOTE: ");
-					Util.IERR("DETTE SKAL IKKE FOREKOMME");
-				}			
-			}
-			if(value instanceof GeneralAddress gaddr) {
-//				IO.println("RTRegister.putValue: "+value+", reg="+reg+", value="+register[reg-1]);
+		if(value instanceof ObjectAddress oaddr) {
+//			IO.println("RTRegister.putValue: "+value+", reg="+reg+", value="+register[reg-1]);
+//			IO.println("RTRegister.putValue: OADDR: "+oaddr);
+			if(oaddr != null && oaddr.kind == ObjectAddress.REL_ADDR) {
+//				RTStack.dumpRTStack("RTRegister.putValue: NOTE: ");
+				Util.IERR("DETTE SKAL IKKE FOREKOMME");
+			}			
+		}
+		if(value instanceof GeneralAddress gaddr) {
+//			IO.println("RTRegister.putValue: "+value+", reg="+reg+", value="+register[reg-1]);
+//			IO.println("RTRegister.putValue: GADDR: "+gaddr);
+			ObjectAddress oaddr = gaddr.base;
+			if(oaddr != null && oaddr.kind == ObjectAddress.REL_ADDR) {
+//				RTStack.dumpRTStack("RTRegister.putValue: NOTE: ");
+				gaddr.base = oaddr.toStackAddress();
 //				IO.println("RTRegister.putValue: GADDR: "+gaddr);
-				ObjectAddress oaddr = gaddr.base;
-				if(oaddr != null && oaddr.kind == ObjectAddress.REL_ADDR) {
-//					RTStack.dumpRTStack("RTRegister.putValue: NOTE: ");
-					gaddr.base = oaddr.toStackAddress();
-//					IO.println("RTRegister.putValue: GADDR: "+gaddr);
-					Util.IERR("DETTE SKAL IKKE FOREKOMME");
-				}
+				Util.IERR("DETTE SKAL IKKE FOREKOMME");
 			}
 		}
 
@@ -187,7 +187,7 @@ public final class RTRegister {
 	public static String edRegValue(int reg) {
 //		if(reg == 0) return "";
 		if(! Global.duringEXEC()) return edReg(reg);
-		return "+R" + reg + "(" + RTRegister.getValue(reg) + ')';
+		return "+R" + reg + "(" + DELETED_RTRegister.getValue(reg) + ')';
 	}
 	
 	public static void printSummary() {

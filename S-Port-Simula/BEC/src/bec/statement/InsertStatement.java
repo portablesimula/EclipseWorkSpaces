@@ -15,6 +15,7 @@ import bec.descriptor.Variable;
 import bec.segment.DataSegment;
 import bec.segment.ProgramSegment;
 import bec.util.Global;
+import bec.util.Option;
 import bec.util.Scode;
 import bec.util.Type;
 import bec.util.Util;
@@ -47,7 +48,7 @@ public class InsertStatement {
 		bias = Scode.ofScode();
 		limit = Scode.ofScode();
 
-		if(Global.ATTR_INPUT_TRACE)
+		if(Option.ATTR_INPUT_TRACE)
 			IO.println("**************   Begin  -  Input-module  " + modid + "  " + check + "   **************");
 		try {
 			current = this;
@@ -57,7 +58,7 @@ public class InsertStatement {
 			e.printStackTrace();
 			Util.IERR("ERROR READING: Input-module  " + modid + "  " + check);
 		}
-		if(Global.ATTR_INPUT_TRACE)
+		if(Option.ATTR_INPUT_TRACE)
 			IO.println("**************   Endof  -  Input-module  " + modid + "  " + check + "   **************");
 //		Global.dumpDISPL("END INSERT: ");
 //		Util.IERR("");
@@ -71,8 +72,8 @@ public class InsertStatement {
 		} else {
 			fileName = Global.getAttrFileName(modid, ".svm");
 		}
-		if(Global.verbose) IO.println("INSERT " + fileName);
-		if(Global.ATTR_INPUT_TRACE) IO.println("ATTRIBUTE INPUT: " + fileName);
+		if(Option.verbose) IO.println("INSERT " + fileName);
+		if(Option.ATTR_INPUT_TRACE) IO.println("ATTRIBUTE INPUT: " + fileName);
 		AttributeInputStream inpt = new AttributeInputStream(new FileInputStream(fileName));
 		int kind = inpt.readKind();
 		if(kind != Kind.K_Module) Util.IERR("Missing MODULE");

@@ -7,6 +7,7 @@ import bec.descriptor.Descriptor;
 import bec.descriptor.Kind;
 import bec.segment.Segment;
 import bec.util.Global;
+import bec.util.Option;
 import bec.util.Type;
 import bec.util.Util;
 
@@ -28,14 +29,14 @@ public class ModuleIO {
 			int tx = Global.iTAGTAB.get(i);
 			Descriptor d = Global.DISPL.get(tx);
 			if(d == null) Util.IERR("External tag " + i + " = Tag " + tx + " is not defined (OutModule)");
-//			if(Global.ATTR_OUTPUT_TRACE)
+//			if(Option.ATTR_OUTPUT_TRACE)
 //				IO.println("iTAGTAB["+i+"] " + d);
 			d.write(modoupt);
 		}
 	}
 
 	public static void outputModule(int nXtag) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE)
+		if(Option.ATTR_OUTPUT_TRACE)
 			IO.println("**************   Begin  -  Output-module  " + Global.modident + "  " + Global.modcheck + "   **************");
 		if(Global.outputDIR==null || Global.outputDIR.isEmpty()) Util.IERR("No Output Directory Specified");
 //		AttributeOutputStream modoupt = new AttributeOutputStream(new FileOutputStream(Global.getAttrFileName(Global.modident, ".svm")));
@@ -60,7 +61,7 @@ public class ModuleIO {
 //		writePreamble();
 		modoupt.writeKind(Kind.K_EndModule);
 		
-		if(Global.ATTR_OUTPUT_TRACE)
+		if(Option.ATTR_OUTPUT_TRACE)
 			IO.println("**************   Endof  -  Output-module  " + Global.modident + "  " + Global.modcheck + "   **************");
 	}
 

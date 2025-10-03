@@ -32,7 +32,7 @@ public abstract class RUPDATE extends Instruction {
 //			Util.IERR("");
 //			CTStack.dumpStack("RUPDATE-2: ");
 		}
-		Global.PSEG.emit(new SVM_STORE(adr.objadr.addOffset(adr.offset), adr.xReg, adr.size), "RUPDATE: "); // Store into adr
+		Global.PSEG.emit(new SVM_STORE(adr.objadr.addOffset(adr.offset), adr.indexed, adr.size), "RUPDATE: "); // Store into adr			
 	}
 
 }

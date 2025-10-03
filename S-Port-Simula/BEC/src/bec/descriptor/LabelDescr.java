@@ -6,6 +6,7 @@ import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.compileTimeStack.CTStack;
 import bec.util.Global;
+import bec.util.Option;
 import bec.util.Tag;
 import bec.util.Type;
 import bec.util.Util;
@@ -61,7 +62,7 @@ public class LabelDescr extends Descriptor {
 	// ***********************************************************************************************
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) IO.println("IntDescr.Write: " + this);
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("IntDescr.Write: " + this);
 		oupt.writeKind(kind);
 		tag.write(oupt);
 		if(adr != null) {
@@ -80,7 +81,7 @@ public class LabelDescr extends Descriptor {
 		boolean present = inpt.readBoolean();
 		if(present) lab.adr = (ProgramAddress) Value.read(inpt);
 //		IO.println("AFTER NEW MEMADDR: "+lab);
-		if(Global.ATTR_INPUT_TRACE) IO.println("LabelDescr.Read: " + lab);
+		if(Option.ATTR_INPUT_TRACE) IO.println("LabelDescr.Read: " + lab);
 		return(lab);
 	}
 

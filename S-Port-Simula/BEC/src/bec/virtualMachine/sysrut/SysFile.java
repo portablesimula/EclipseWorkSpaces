@@ -3,6 +3,7 @@ package bec.virtualMachine.sysrut;
 import java.util.Vector;
 
 import bec.util.Global;
+import bec.util.Option;
 import bec.util.Type;
 import bec.util.Util;
 import bec.value.IntegerValue;
@@ -141,7 +142,7 @@ public abstract class SysFile {
 				default -> Util.IERR(""+RTFile.edFileType(type));
 			}
 			key = addRTFile(fileSpec);
-			if(Global.execVerbose) IO.println("SVM_SYSCALL.opfile: key=" + key + ", spec="+spec);
+			if(Option.execVerbose) IO.println("SVM_SYSCALL.opfile: key=" + key + ", spec="+spec);
 //			Util.IERR("NOT IMPL");
 		}
 		RTStack.push(IntegerValue.of(Type.T_INT, key), "OPFILE");

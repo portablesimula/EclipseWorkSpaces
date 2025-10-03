@@ -12,6 +12,7 @@ import bec.segment.DataSegment;
 import bec.segment.ProgramSegment;
 import bec.segment.Segment;
 import bec.util.Global;
+import bec.util.Option;
 import bec.util.Scode;
 import bec.util.Tag;
 import bec.util.Type;
@@ -104,14 +105,14 @@ public class RoutineDescr extends Descriptor {
 
 		Scode.inputInstr();
 		int rela = prf.frameSize;
-		if(Global.TRACE_ALLOC_FRAME) {
+		if(Option.TRACE_ALLOC_FRAME) {
 			IO.println("\nRoutineDescr.ofRoutineDef: ALLOC LOCALS for "+rutAddr+" First rela="+rela);
 			prf.print("RoutineDescr.ofRoutineDef: ");			
 		}
 		
 		while(Scode.curinstr == Scode.S_LOCAL) {
 			Variable local = Variable.ofLocal(rela);
-			if(Global.TRACE_ALLOC_FRAME) {
+			if(Option.TRACE_ALLOC_FRAME) {
 				IO.println("RoutineDescr.ofRoutineDef:    LOCAL " + local);
 			}
 			if(local.repCount == 0) Util.IERR("");
@@ -120,7 +121,7 @@ public class RoutineDescr extends Descriptor {
 			Scode.inputInstr();
 		}
 		rut.localFrameSize = rela - prf.frameSize;
-		if(Global.TRACE_ALLOC_FRAME) {
+		if(Option.TRACE_ALLOC_FRAME) {
 			IO.println("RoutineDescr.ofRoutineDef: ALLOC LOCALS DONE: localFrameSize="+rut.localFrameSize);
 		}
 		Global.PSEG.emit(new SVM_ENTER(prf.getSimpleName(), rut.localFrameSize), ""+rut);
@@ -140,7 +141,7 @@ public class RoutineDescr extends Descriptor {
 //		if(! CALL.USE_FRAME_ON_STACK) {
 //			Global.DSEG = prevDSEG;
 //		}
-		if(Global.PRINT_GENERATED_SVM_CODE) {
+		if(Option.PRINT_GENERATED_SVM_CODE) {
 			Global.PSEG.dump("END RoutineDescr.ofRoutineDef:: ");
 		}
 		
@@ -160,7 +161,7 @@ public class RoutineDescr extends Descriptor {
 	// ***********************************************************************************************
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) IO.println("RoutineDescr.Write: " + this);
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("RoutineDescr.Write: " + this);
 //		if(DSEG != null) DSEG.write(oupt);
 //		if(PSEG != null) PSEG.write(oupt);
 		oupt.writeKind(kind);
@@ -197,7 +198,7 @@ public class RoutineDescr extends Descriptor {
 		
 		int n = inpt.readShort();
 		for(int i=0;i<n;i++) rut.locals.add(Tag.read(inpt));
-		if(Global.ATTR_INPUT_TRACE) IO.println("RoutineDescr.Read: " + rut);
+		if(Option.ATTR_INPUT_TRACE) IO.println("RoutineDescr.Read: " + rut);
 		
 		return(rut);
 	}

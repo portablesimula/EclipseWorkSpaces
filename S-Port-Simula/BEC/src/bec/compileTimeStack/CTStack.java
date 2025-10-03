@@ -9,7 +9,7 @@ import bec.util.Scode;
 import bec.util.Type;
 import bec.util.Util;
 import bec.value.Value;
-import bec.virtualMachine.RTRegister;
+import bec.virtualMachine.DELETED_RTRegister;
 
 public class CTStack {
 //	private static Stack<CTStackItem> stack = new Stack<CTStackItem>();

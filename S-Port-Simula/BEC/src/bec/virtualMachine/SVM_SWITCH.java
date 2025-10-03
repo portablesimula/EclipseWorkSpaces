@@ -5,6 +5,7 @@ import java.io.IOException;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
+import bec.util.Option;
 import bec.util.Util;
 import bec.value.ProgramAddress;
 import bec.value.Value;
@@ -15,7 +16,7 @@ import bec.value.Value;
  * Jump to switch case 'tos' in DESTAB.
  */
 public class SVM_SWITCH extends SVM_Instruction {
-	ProgramAddress[] DESTAB;
+	private final ProgramAddress[] DESTAB;
 
 	public SVM_SWITCH(ProgramAddress[] DESTAB) {
 		this.opcode = SVM_Instruction.iSWITCH;
@@ -47,12 +48,12 @@ public class SVM_SWITCH extends SVM_Instruction {
 		for(int i=0;i<n;i++) {
 			DESTAB[i] = (ProgramAddress) Value.read(inpt);
 		}		
-		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
+		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		int n = DESTAB.length;
 		oupt.writeShort(n);

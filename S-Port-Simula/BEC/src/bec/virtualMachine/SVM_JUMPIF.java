@@ -5,6 +5,7 @@ import java.io.IOException;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
+import bec.util.Option;
 import bec.util.Relation;
 import bec.util.Scode;
 import bec.util.Util;
@@ -12,8 +13,8 @@ import bec.value.ProgramAddress;
 import bec.value.Value;
 
 public class SVM_JUMPIF extends SVM_JUMP {
-	Relation relation;
-	int typeSize;
+	private final Relation relation;
+	private final int typeSize;
 
 	private static final boolean DEBUG = false;
 	
@@ -72,12 +73,12 @@ public class SVM_JUMPIF extends SVM_JUMP {
 		this.opcode = SVM_Instruction.iJUMPIF;
 		this.relation = Relation.read(inpt);
 		this.typeSize = inpt.readKind();
-		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
+		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		destination.write(oupt);
 		relation.write(oupt);

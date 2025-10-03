@@ -9,6 +9,7 @@ import bec.descriptor.Variable;
 import bec.segment.DataSegment;
 import bec.segment.Segment;
 import bec.util.Global;
+import bec.util.Option;
 import bec.util.Relation;
 import bec.util.Scode;
 import bec.util.Tag;
@@ -265,7 +266,7 @@ public class IntegerValue extends Value {
 	}
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
 		oupt.writeKind(Scode.S_C_INT);
 		type.write(oupt);
 		oupt.writeInt(value);

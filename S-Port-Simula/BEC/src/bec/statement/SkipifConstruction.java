@@ -67,7 +67,7 @@ public abstract class SkipifConstruction {
 		
 		// FIXUP:
 		SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(END_LABEL.getOfst());
-		instr.destination = Global.PSEG.nextAddress();
+		instr.setDestination(Global.PSEG.nextAddress());
       	Global.PSEG.emit(new SVM_NOOP(), "ENDSKIP["+Global.ifDepth+"]:");			
 		Global.ifDepth--;
 	}

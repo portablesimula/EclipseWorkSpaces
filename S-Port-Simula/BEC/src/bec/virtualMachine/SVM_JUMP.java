@@ -5,14 +5,21 @@ import java.io.IOException;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
+import bec.util.Option;
+import bec.util.Util;
 import bec.value.ProgramAddress;
 import bec.value.Value;
 
 public class SVM_JUMP extends SVM_Instruction {
-	public ProgramAddress destination;
+	protected ProgramAddress destination;
 
 	public SVM_JUMP(ProgramAddress destination) {
 		this.opcode = SVM_Instruction.iJUMP;
+		this.destination = destination;
+	}
+	
+	public void setDestination(ProgramAddress destination) {
+		if(this.destination != null) Util.IERR("");
 		this.destination = destination;
 	}
 
@@ -34,12 +41,12 @@ public class SVM_JUMP extends SVM_Instruction {
 	protected SVM_JUMP(AttributeInputStream inpt) throws IOException {
 		this.opcode = SVM_Instruction.iJUMP;
 		this.destination = (ProgramAddress) Value.read(inpt);
-		if(Global.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
+		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
 		destination.write(oupt);
 	}

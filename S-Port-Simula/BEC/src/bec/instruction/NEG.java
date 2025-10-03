@@ -3,7 +3,7 @@ package bec.instruction;
 import bec.compileTimeStack.CTStack;
 import bec.util.Global;
 import bec.util.Type;
-import bec.virtualMachine.RTRegister;
+import bec.virtualMachine.DELETED_RTRegister;
 import bec.virtualMachine.SVM_NEG;
 
 public abstract class NEG extends Instruction {

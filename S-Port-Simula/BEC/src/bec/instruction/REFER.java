@@ -6,8 +6,7 @@ import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Type;
 import bec.value.ObjectAddress;
-import bec.virtualMachine.RTRegister;
-import bec.virtualMachine.SVM_REFER;
+import bec.virtualMachine.DELETED_SVM_REFER;
 
 /**
  * 
@@ -50,15 +49,11 @@ public abstract class REFER extends Instruction {
 		
 		if(DEBUG) IO.println("REFER.ofScode: TOS="+CTStack.TOS().getClass().getSimpleName()+"  "+CTStack.TOS());
 
-		int reg = RTRegister.getFreeReg();
-		Global.PSEG.emit(new SVM_REFER(reg), "REFER: " + Scode.edTag(type.tag));
-		
-		// LOAD GADDR FROM TOS
 		ObjectAddress a = ObjectAddress.ofReferAddr();	
 		AddressItem adr = new AddressItem(type, 0, a);
-		adr.xReg = reg;
         CTStack.pop(); 
         CTStack.push(adr);			
+
 	}
 
 }

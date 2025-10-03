@@ -1,6 +1,7 @@
 package bec.inlineTest;
 
 import bec.util.Global;
+import bec.util.Option;
 
 import java.util.Vector;
 
@@ -28,17 +29,17 @@ public class MiniInlineTest {
 
 		names.add("TEST00");
 
-		Global.verbose = true;
-//		Global.traceMode = 4;
-//		Global.SCODE_INPUT_TRACE = true;
-//		Global.PRINT_GENERATED_SVM_CODE = true;
-//		Global.ATTR_INPUT_TRACE = true;
-//		Global.ATTR_OUTPUT_TRACE = true;
-//		Global.ATTR_INPUT_DUMP = true;
-//		Global.ATTR_OUTPUT_DUMP = true;
-//		Global.SEGMENT_INPUT_DUMP = true;
-//		Global.SEGMENT_OUTPUT_DUMP = true;
-		Global.EXEC_TRACE = 4;
+		Option.verbose = true;
+//		Option.traceMode = 4;
+//		Option.SCODE_INPUT_TRACE = true;
+//		Option.PRINT_GENERATED_SVM_CODE = true;
+//		Option.ATTR_INPUT_TRACE = true;
+//		Option.ATTR_OUTPUT_TRACE = true;
+//		Option.ATTR_INPUT_DUMP = true;
+//		Option.ATTR_OUTPUT_DUMP = true;
+//		Option.SEGMENT_INPUT_DUMP = true;
+//		Option.SEGMENT_OUTPUT_DUMP = true;
+		Option.EXEC_TRACE = 4;
 
 		for(String name:names) {
 //			String fileName = "C:/Simuletta/SCode/simulettaTestPrograms/"+name+".scd";

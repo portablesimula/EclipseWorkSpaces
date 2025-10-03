@@ -12,6 +12,7 @@ import bec.segment.ProgramSegment;
 import bec.segment.Segment;
 import bec.util.EndProgram;
 import bec.util.Global;
+import bec.util.Option;
 import bec.util.Scode;
 import bec.util.Tag;
 import bec.util.Type;
@@ -105,7 +106,7 @@ public class ProgramAddress extends Value {
 		}
 		
 		if(ofst >= size) {
-			if(Global.DUMPS_AT_EXIT) {
+			if(Option.DUMPS_AT_EXIT) {
 //				Segment.lookup("DSEG_ADHOC02").dump("ProgramAddress.execute: ");
 				Global.DSEG.dump("ProgramAddress.execute: FINAL DATA SEGMENT ");
 				Global.CSEG.dump("ProgramAddress.execute: FINAL CONSTANT SEGMENT ");
@@ -122,7 +123,7 @@ public class ProgramAddress extends Value {
 //			IO.println("ProgramAddress.execute: " + cur);
 			cur.execute();
 
-			if(Global.EXEC_TRACE > 0) {
+			if(Option.EXEC_TRACE > 0) {
 //				IO.println("ProgramAddress.execute: "+cur.getClass().getSimpleName());
 				if(cur instanceof SVM_CALL)        ; // NOTHING
 				else if(cur instanceof SVM_RETURN) ; // NOTHING
@@ -164,7 +165,7 @@ public class ProgramAddress extends Value {
 	}
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
 		oupt.writeKind(Scode.S_C_PADDR);
 		type.write(oupt);
 		oupt.writeString(segID);

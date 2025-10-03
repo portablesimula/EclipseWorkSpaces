@@ -9,6 +9,7 @@ import bec.instruction.CALL;
 import bec.segment.DataSegment;
 import bec.segment.Segment;
 import bec.util.Global;
+import bec.util.Option;
 import bec.util.Scode;
 import bec.util.Tag;
 import bec.util.Util;
@@ -202,7 +203,7 @@ public class ProfileDescr extends Descriptor {
 	// ***********************************************************************************************
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) IO.println("ProfileDescr.Write: " + this);
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("ProfileDescr.Write: " + this);
 		if(! CALL.USE_FRAME_ON_STACK) {
 			DSEG.write(oupt);
 		}
@@ -225,7 +226,7 @@ public class ProfileDescr extends Descriptor {
 	public static ProfileDescr read(AttributeInputStream inpt) throws IOException {
 		Tag tag = Tag.read(inpt);
 		ProfileDescr prf = new ProfileDescr(Kind.K_ProfileDescr, tag);
-		if(Global.ATTR_INPUT_TRACE) IO.println("BEGIN ProfileDescr.Read: " + prf);
+		if(Option.ATTR_INPUT_TRACE) IO.println("BEGIN ProfileDescr.Read: " + prf);
 		prf.pKind = inpt.readShort();
 		String segID = inpt.readString();
 		if(! CALL.USE_FRAME_ON_STACK) {
@@ -244,7 +245,7 @@ public class ProfileDescr extends Descriptor {
 			prf.exportSize = inpt.readShort();
 		}
 		
-		if(Global.ATTR_INPUT_TRACE) IO.println("ProfileDescr.Read: " + prf);
+		if(Option.ATTR_INPUT_TRACE) IO.println("ProfileDescr.Read: " + prf);
 //		prf.print("   ");
 //		Util.IERR("");
 		return prf;

@@ -6,6 +6,7 @@ import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.segment.DataSegment;
 import bec.util.Global;
+import bec.util.Option;
 import bec.util.Relation;
 import bec.util.Scode;
 import bec.util.Type;
@@ -140,7 +141,7 @@ public class BooleanValue extends Value {
 	// ***********************************************************************************************
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		if(Global.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
 		oupt.writeKind((value)?Scode.S_TRUE:Scode.S_FALSE);
 	}
 

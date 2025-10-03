@@ -8,6 +8,7 @@ import bec.segment.ProgramSegment;
 import bec.segment.Segment;
 import bec.util.EndProgram;
 import bec.util.Global;
+import bec.util.Option;
 import bec.util.Scode;
 import bec.util.Util;
 import bec.value.ProgramAddress;
@@ -63,7 +64,7 @@ public class MainProgram extends S_Module {
 //        DefLABEL(qEPROC,MainEntry.fix.val,entx.val);
 //        peepExhaust(true); ENDASM;
 		
-		if(Global.PRINT_GENERATED_SVM_CODE) {
+		if(Option.PRINT_GENERATED_SVM_CODE) {
 			Global.CSEG.dump("END MainProgram: ");
 			Global.TSEG.dump("END MainProgram: ");
 			Global.DSEG.dump("END MainProgram: ");
@@ -77,7 +78,7 @@ public class MainProgram extends S_Module {
 			Util.IERR("Illegal termination of program");
 		
 		try {
-			if(Global.verbose) Util.println("\n\nBEC: NEW MainProgram: BEGIN EXECUTE: " + mainEntry);
+			if(Option.verbose) Util.println("\n\nBEC: NEW MainProgram: BEGIN EXECUTE: " + mainEntry);
 			RTUtil.INIT();
 			Global.PSC = mainEntry;
 			while(true) {
@@ -85,7 +86,7 @@ public class MainProgram extends S_Module {
 			}
 		} catch(EndProgram eprog) {
 
-			if(Global.verbose) {
+			if(Option.verbose) {
 				Util.println("BEC: MainProgram - Exit: " + eprog.exitCode);
 //				Thread.dumpStack();
 			}
