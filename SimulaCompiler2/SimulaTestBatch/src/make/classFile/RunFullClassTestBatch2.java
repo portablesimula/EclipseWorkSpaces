@@ -259,6 +259,7 @@ public final class RunFullClassTestBatch2 {
 		names.add("simtst162.sim"); // OK: Test Complicated nested inspection
 		names.add("simtst163.sim"); // OK: Test Inspect when, when, otherwise (selected)
 		names.add("simtst164.sim"); // OK: Test Extended Text Procedures
+		names.add("simtst165.sim"); // OK: Activate direct
 
 		names.add("RT_ErrorTest.sim"); // Simula Error TestBatch Framework
 		names.add("simerr01.sim"); // OK: ILLEGAL GOTO out of an operating Process and into the enclosing System.

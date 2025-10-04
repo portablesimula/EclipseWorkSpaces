@@ -19,7 +19,6 @@ public class SVM_PRECALL extends SVM_Instruction {
 		this.nParSlots = nParSlots;
 		this.exportSize = exportSize;
 		this.importSize = importSize;
-		DELETED_RTRegister.checkMindMaskEmpty();
 	}
 
 	@Override

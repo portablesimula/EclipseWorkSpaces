@@ -125,15 +125,15 @@ public abstract class RTStack {
 //		Util.IERR("");
 	}
 
-	public static void pushr(int reg, String comment) {
-		Value value = DELETED_RTRegister.getValue(reg);
-		if(value instanceof GeneralAddress gaddr) {
-			stack.push(gaddr.base);
-			stack.push(IntegerValue.of(Type.T_INT, gaddr.ofst));
-		} else{
-			stack.push(value);
-		}
-	}
+//	public static void pushr(int reg, String comment) {
+//		Value value = DELETED_RTRegister.getValue(reg);
+//		if(value instanceof GeneralAddress gaddr) {
+//			stack.push(gaddr.base);
+//			stack.push(IntegerValue.of(Type.T_INT, gaddr.ofst));
+//		} else{
+//			stack.push(value);
+//		}
+//	}
 
 	// Current Stack;
 	//
@@ -312,7 +312,7 @@ public abstract class RTStack {
 		}
 		String s = sb.toString();
 		while(s.length() < 30) s = s + ' ';
-		return s + "      " + DELETED_RTRegister.toLine();
+		return s;
 	}
 	
 	public static void dumpRTStack(String title) {

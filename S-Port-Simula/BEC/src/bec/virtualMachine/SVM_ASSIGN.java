@@ -18,8 +18,8 @@ import bec.value.Value;
 public class SVM_ASSIGN extends SVM_Instruction {
 	private final boolean update; // false: ASSIGN, true: UPDATE
 	private final ObjectAddress rtAddr;
-	private int xReg;
 	private final int size;
+	private final boolean indexed;
 
 	private final boolean DEBUG = false;
 
@@ -37,15 +37,12 @@ public class SVM_ASSIGN extends SVM_Instruction {
 	 * TOS or SOS, that has been deferred for optimisation purposes, must take place before the
 	 * assignment code is generated. SOS and TOS are popped from the stack.
 	 */
-	public SVM_ASSIGN(boolean update, ObjectAddress rtAddr, int xReg, int size) {
+	public SVM_ASSIGN(boolean update, ObjectAddress rtAddr, boolean indexed, int size) {
 		this.opcode = SVM_Instruction.iASSIGN;
 		this.update = update;
 		this.rtAddr = rtAddr;
-		this.xReg = xReg;
+		this.indexed = indexed;
 		this.size = size;
-		DELETED_RTRegister.reads("SVM_ASSIGN", rtAddr);
-		DELETED_RTRegister.reads("SVM_ASSIGN", xReg);
-		Util.IERR("NOT IMPL");
 	}
 
 	@Override
@@ -58,35 +55,41 @@ public class SVM_ASSIGN extends SVM_Instruction {
 		Vector<Value> values = RTStack.pop(size);
 		if(DEBUG) for(int i=0;i<size;i++) IO.println("SVM_ASSIGN: values["+i+"] = " + values.get(i));
 		
+		int idx = size - 1;
+		if(indexed)	idx += RTStack.popInt();
 		ObjectAddress addr = this.rtAddr;
 		switch(rtAddr.kind) {
-			case ObjectAddress.SEGMNT_ADDR: doAssign(addr, xReg, values); break;
-			case ObjectAddress.REL_ADDR:    doAssign(addr, xReg, values); break;
-			case ObjectAddress.STACK_ADDR:  Util.IERR(""); doAssign(addr, xReg, values); break;
+			case ObjectAddress.SEGMNT_ADDR: doAssign(addr, idx, values); break;
+			case ObjectAddress.REL_ADDR:    doAssign(addr, idx, values); break;
+			case ObjectAddress.STACK_ADDR:  Util.IERR(""); doAssign(addr, idx, values); break;
 			case ObjectAddress.REMOTE_ADDR:
 				// this.addr is Stack Relative Address
 				ObjectAddress oaddr = RTStack.popOADDR();
 				addr = oaddr.addOffset(addr.getOfst());
-				doAssign(addr, xReg, values);
+				doAssign(addr, idx, values);
 				break;
 				
 			case ObjectAddress.REFER_ADDR:
-				GeneralAddress gaddr = (GeneralAddress) DELETED_RTRegister.getValue(xReg);
-				addr = gaddr.base.addOffset(rtAddr.getOfst() + gaddr.ofst);
-				doAssign(addr, 0, values);
-				break;
+////				GeneralAddress gaddr = (GeneralAddress) DELETED_RTRegister.getValue(xReg);
+////				addr = gaddr.base.addOffset(rtAddr.getOfst() + gaddr.ofst);
+//				doAssign(addr, values);
+//				break;
 	
+				int ofst = RTStack.popInt();
+				addr = RTStack.popOADDR().addOffset(rtAddr.getOfst() + ofst);
+				doAssign(addr, idx, values);
+				break;
+
 			default: Util.IERR("");
 		}
 		
-		Util.IERR("NOT IMPL");
 		Global.PSC.addOfst(1);
 	}
 	
-	private void doAssign(ObjectAddress addr, int xReg, Vector<Value> values) {
+	private void doAssign(ObjectAddress addr, int rx, Vector<Value> values) {
 		if(DEBUG) for(int i=0;i<size;i++) IO.println("SVM_ASSIGN: BEFORE: sos.store: " + i + " " + values.get(i));
 		int idx = size;
-		int rx = (xReg == 0)? 0 : DELETED_RTRegister.getIntValue(xReg);
+//		int rx = 0;//(xReg == 0)? 0 : DELETED_RTRegister.getIntValue(xReg);
 		for(int i=0;i<size;i++) {
 			addr.store(rx + i, values.get((--idx)), "");
 		}
@@ -117,7 +120,7 @@ public class SVM_ASSIGN extends SVM_Instruction {
 		this.opcode = SVM_Instruction.iSTORE;
 		this.update = inpt.readBoolean();
 		this.rtAddr = ObjectAddress.read(inpt);
-		this.xReg = inpt.readReg();
+		this.indexed = inpt.readBoolean();
 		this.size = inpt.readShort();
 		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
@@ -128,7 +131,7 @@ public class SVM_ASSIGN extends SVM_Instruction {
 		oupt.writeOpcode(opcode);
 		oupt.writeBoolean(update);
 		rtAddr.writeBody(oupt);
-		oupt.writeReg(xReg);
+		oupt.writeBoolean(indexed);
 		oupt.writeShort(size);
 	}
 	

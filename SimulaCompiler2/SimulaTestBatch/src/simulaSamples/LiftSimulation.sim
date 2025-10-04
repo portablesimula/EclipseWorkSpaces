@@ -34,8 +34,7 @@ real decelerationTime=0.001; -- Deceleration time for lift
 real startTime=7.0;          -- Starting time in the morning
 real endTime=19.0;           -- Ending time in the evening
 
-outtext("Number of lifts: ");
-breakoutimage; nLifts := inint;
+outtext("Number of lifts: "); breakoutimage; nLifts := inint;
 if(nLifts < 2)  then nLifts := 2;
 if(nLifts > 10) then nLifts := 10;
 
@@ -510,7 +509,6 @@ Simulation begin
     ----------------------------------
 
     hold(startTime);
-    activate new Reporter; 
 
     begin -- Initiate global variables
         integer j;
@@ -531,6 +529,8 @@ Simulation begin
             activate new Person(randint(1,nFloors,U1)) at persionActivationTime;
         end;
     end;
+ 
+    activate new Reporter; 
     
     hold(endTime - time);
   

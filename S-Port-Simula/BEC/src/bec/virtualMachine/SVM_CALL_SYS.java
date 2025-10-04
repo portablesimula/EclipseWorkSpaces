@@ -33,7 +33,6 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 		this.opcode = SVM_Instruction.iCALLSYS;
 		if(kind == 0) Util.IERR("Undefined System Routine: " + kind);
 		this.kind = kind;
-		DELETED_RTRegister.checkMindMaskEmpty();
 	}
 
 	@Override

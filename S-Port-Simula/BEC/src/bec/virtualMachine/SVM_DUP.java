@@ -18,16 +18,13 @@ import bec.value.Value;
  */
 public class SVM_DUP extends SVM_Instruction {
 	private final ObjectAddress rtAddr;
-	int xReg;
 	private final int size;
 	
-	public SVM_DUP(ObjectAddress rtAddr, int xReg, int size) {
+	public SVM_DUP(ObjectAddress rtAddr, int size) {
 		this.opcode = SVM_Instruction.iDUP;
 		this.rtAddr = rtAddr;
-		this.xReg = xReg;
 		this.size = size;
 //		RTRegister.writes("SVM_DUP", xReg);
-		Util.IERR("NOT IMPL");
 	}
 
 	@Override
@@ -42,7 +39,6 @@ public class SVM_DUP extends SVM_Instruction {
 			} else {
 				RTStack.dup(size);
 			}
-			if(xReg != 0) Util.IERR("NOT IMPL: xReg="+xReg);
 		} else {
 			Value tos = RTStack.pop();
 //			if(tos != null)	IO.println("SVM_DUP: TOS: " + tos.getClass().getSimpleName() + "  " + tos);
@@ -66,42 +62,42 @@ public class SVM_DUP extends SVM_Instruction {
 		Global.PSC.addOfst(1);
 	}
 
-	public void OLD_execute() {
-		Value tos = RTStack.pop();
-//		if(tos != null)	IO.println("SVM_DUP: TOS: " + tos.getClass().getSimpleName() + "  " + tos);
-		RTStack.push(tos, "SVM_DUP: ");
-		if(rtAddr == null) {
-			// DUP VALUE
-			if(size != 1) Util.IERR("NOT IMPL: size="+size);
-			if(xReg != 0) Util.IERR("NOT IMPL: xReg="+xReg);
-			RTStack.push(tos, "SVM_DUP: ");
-//			Util.IERR("SJEKK DETTE");
-		} else {
-			if(rtAddr.kind == ObjectAddress.REMOTE_ADDR) {
-				// this.addr is Stack Relative Address
-				ObjectAddress oaddr = RTStack.popOADDR();
-//				IO.println("SVM_DUP.execute: oaddr="+oaddr+", rtAddr="+rtAddr);
-				RTStack.push(oaddr, "SVM_DUP: ");
-				oaddr = oaddr.addOffset(rtAddr.getOfst());
-				
-				if(size != 1) Util.IERR("NOT IMPL: size="+size);
-				tos = oaddr.load(0);
-				RTStack.push(tos, "SVM_DUP: ");				
-			} else {
-				if(size != 1) Util.IERR("NOT IMPL: size="+size);
-				tos = rtAddr.load(0);
-				RTStack.push(tos, "SVM_DUP: ");
-			}
-		}
-		Global.PSC.addOfst(1);
-	}
+//	public void OLD_execute() {
+//		Value tos = RTStack.pop();
+////		if(tos != null)	IO.println("SVM_DUP: TOS: " + tos.getClass().getSimpleName() + "  " + tos);
+//		RTStack.push(tos, "SVM_DUP: ");
+//		if(rtAddr == null) {
+//			// DUP VALUE
+//			if(size != 1) Util.IERR("NOT IMPL: size="+size);
+//			if(xReg != 0) Util.IERR("NOT IMPL: xReg="+xReg);
+//			RTStack.push(tos, "SVM_DUP: ");
+////			Util.IERR("SJEKK DETTE");
+//		} else {
+//			if(rtAddr.kind == ObjectAddress.REMOTE_ADDR) {
+//				// this.addr is Stack Relative Address
+//				ObjectAddress oaddr = RTStack.popOADDR();
+////				IO.println("SVM_DUP.execute: oaddr="+oaddr+", rtAddr="+rtAddr);
+//				RTStack.push(oaddr, "SVM_DUP: ");
+//				oaddr = oaddr.addOffset(rtAddr.getOfst());
+//				
+//				if(size != 1) Util.IERR("NOT IMPL: size="+size);
+//				tos = oaddr.load(0);
+//				RTStack.push(tos, "SVM_DUP: ");				
+//			} else {
+//				if(size != 1) Util.IERR("NOT IMPL: size="+size);
+//				tos = rtAddr.load(0);
+//				RTStack.push(tos, "SVM_DUP: ");
+//			}
+//		}
+//		Global.PSC.addOfst(1);
+//	}
 
 	@Override	
 	public String toString() {
 		String s = "";
 		if(rtAddr != null) {
 			s = rtAddr.toString();
-			s = s + ( (xReg == 0)? "" : "+R" + xReg + "(" + DELETED_RTRegister.getValue(xReg) + ')' );
+//			s = s + ( (xReg == 0)? "" : "+R" + xReg + "(" + DELETED_RTRegister.getValue(xReg) + ')' );
 		}
 		return "DUP      " + s;
 	}
@@ -119,7 +115,6 @@ public class SVM_DUP extends SVM_Instruction {
 			oupt.writeBoolean(true);
 			rtAddr.writeBody(oupt);
 		}
-		oupt.writeReg(xReg);
 		oupt.writeShort(size);
 	}
 
@@ -128,9 +123,8 @@ public class SVM_DUP extends SVM_Instruction {
 		ObjectAddress rtAddr = null;
 		boolean present = inpt.readBoolean();
 		if(present) rtAddr = ObjectAddress.read(inpt);
-		int xReg = inpt.readReg();
 		int size = inpt.readShort();
-		SVM_DUP instr = new SVM_DUP(rtAddr, xReg, size);
+		SVM_DUP instr = new SVM_DUP(rtAddr, size);
 		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
 		return instr;
 	}

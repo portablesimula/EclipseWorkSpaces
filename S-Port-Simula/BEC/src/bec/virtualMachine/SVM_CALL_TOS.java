@@ -26,8 +26,6 @@ public class SVM_CALL_TOS extends SVM_Instruction {
 		this.nParSlots = nParSlots;
 		this.exportSize = exportSize;
 		this.importSize = importSize;
-//		IO.println("NEW SVM_CALL: "+this);
-		DELETED_RTRegister.checkMindMaskEmpty();
 	}
 	
 	@Override	

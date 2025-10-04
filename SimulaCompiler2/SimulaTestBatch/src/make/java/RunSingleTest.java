@@ -14,6 +14,7 @@ import simula.compiler.Simula;
 import simula.compiler.SimulaCompiler;
 import simula.compiler.utilities.Global;
 import simula.compiler.utilities.Option;
+import simula.editor.RTOption;
 
 /**
  * Simula Test Batch donated by Simula as.
@@ -34,7 +35,7 @@ public final class RunSingleTest {
 		Option.compilerMode = Option.CompilerMode.viaJavaSource;
 //		Option.verbose=true;
 //		Option.EXTENSIONS=false;
-//		Option.CaseSensitive=true;
+		Option.CaseSensitive=true;
 //		Option.noExecution=true;
 //		Option.WARNINGS=false;
 		Simula.setSelectors("ZDTW");
@@ -87,18 +88,18 @@ public final class RunSingleTest {
 //		RTOption.BLOCK_TRACING = true;
 //		RTOption.GOTO_TRACING = true;
 //		RTOption.QPS_TRACING = true;
-//		RTOption.SML_TRACING = true;
+		RTOption.SML_TRACING = true;
 		
 		
 		Vector<String> names=new Vector<String>();
 //		names.add("AdHoc_SimulaTest.sim"); // Simula TestBatch Framework
-		names.add("adHoc00.sim"); // For ad'hoc testing
+//		names.add("adHoc00.sim"); // For ad'hoc testing
 //		names.add("adHoc01.sim"); // For ad'hoc testing
 //		names.add("CLASS_COMMON.sim"); // For ad'hoc testing
 		
 		// *** SIMULA TEST BATCH TIL EKSEKVERING
 		// String name=Global.packetName+"/sim/InspectionSamples.sim";
-//		names.add("SimulaTest.sim"); // Simula TestBatch Framework
+		names.add("SimulaTest.sim"); // Simula TestBatch Framework
 //		names.add("simtst00.sim"); // OK:  Empty test
 //		names.add("simtst01.sim"); // OK:  Meaningless test of conditional statements,
 //		names.add("simtst02.sim"); // OK:  Test boolean operators/expressions
@@ -289,6 +290,7 @@ public final class RunSingleTest {
 //		names.add("simtst162.sim"); // OK: Test Complicated nested inspection
 //		names.add("simtst163.sim"); // OK: Test Inspect when, when, otherwise (selected)
 //		names.add("simtst164.sim"); // OK: Test Extended Text Procedures
+		names.add("simtst165.sim"); // OK: Activate direct
 //		
 //		names.add("RT_ErrorTest.sim"); // Simula TestBatch Framework
 //		names.add("simerr01.sim"); // OK: ILLEGAL GOTO out of an operating Process and into the enclosing System.

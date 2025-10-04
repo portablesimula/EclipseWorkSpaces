@@ -5,6 +5,7 @@ import java.io.IOException;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.descriptor.Variable;
+import bec.segment.Segment;
 import bec.util.Global;
 import bec.util.Option;
 import bec.util.Util;
@@ -42,6 +43,8 @@ public class SVM_LOAD extends SVM_Instruction {
 			case ObjectAddress.REL_ADDR:    doLoad(addr, indexed); break;
 			case ObjectAddress.STACK_ADDR:  Util.IERR(""); doLoad(addr, indexed); break;
 			case ObjectAddress.REMOTE_ADDR:
+//				Segment.lookup("PSEG_ADHOC03").dump("SVM_LOAD.REMOTE_ADDR: "+indexed);
+				RTStack.dumpRTStack("SVM_LOAD.REMOTE_ADDR: "+indexed);
 				int idx = 0;
 //				int idx = size - 1;
 				if(indexed)	idx += RTStack.popInt();

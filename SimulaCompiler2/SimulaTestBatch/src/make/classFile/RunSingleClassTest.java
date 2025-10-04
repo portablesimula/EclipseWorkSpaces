@@ -282,7 +282,8 @@ public final class RunSingleClassTest {
 //		names.add("simtst161.sim"); // OK: Test Specified Virtual ref-type Functions as part of an Expression
 //		names.add("simtst162.sim"); // OK: Test Complicated nested inspection
 //		names.add("simtst163.sim"); // OK: Test Inspect when, when, otherwise (selected)
-		names.add("simtst164.sim"); // OK: Test Extended Text Procedures
+//		names.add("simtst164.sim"); // OK: Test Extended Text Procedures
+		names.add("simtst165.sim"); // OK: Activate direct
 		
 //		names.add("RT_ErrorTest.sim"); // Simula TestBatch Framework
 //		names.add("simerr01.sim"); // OK: ILLEGAL GOTO out of an operating Process and into the enclosing System.

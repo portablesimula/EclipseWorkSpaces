@@ -10,7 +10,6 @@ import bec.util.Option;
 import bec.util.Scode;
 import bec.util.Type;
 import bec.util.Util;
-import bec.virtualMachine.DELETED_RTRegister;
 
 public class BecCompiler {
 	String programHead;
@@ -97,7 +96,6 @@ public class BecCompiler {
 		Global.ifDepth = 0;
 		Scode.initScode();
 		Type.init();
-		DELETED_RTRegister.init();
 
 		Thread.currentThread().setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
 			public void uncaughtException(Thread thread, Throwable e) {
@@ -130,7 +128,6 @@ public class BecCompiler {
 		
 		if(Option.verbose) {
 			Util.println("DONE: BecCompiler: " + scodeSource);
-			DELETED_RTRegister.printSummary();
 		}
 	}
 

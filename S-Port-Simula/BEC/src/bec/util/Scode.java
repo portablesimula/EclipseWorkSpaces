@@ -2,8 +2,6 @@ package bec.util;
 
 import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.CTStackItem;
-import bec.virtualMachine.DELETED_RTRegister;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 
@@ -100,9 +98,6 @@ public class Scode {
 		if(Option.SCODE_INPUT_TRACE) {
 //			String ctstk = (CTStack.size() == 0)? "" : " "+CTStack.ident()+"-STACK"+"["+CTStack.size()+"]: "+CTStack.TOS();
 			String ctstk = (CTStack.size() == 0)? "" : " "+CTStack.ident()+"-STACK"+"["+CTStack.size()+"]:";
-//			if(RTRegister.CTregused.cardinality() != 0) ctstk += " Regused="+RTRegister.edCTRegused();
-//			if(RTRegister.nRegUsed() != 0) ctstk += " Regused="+RTRegister.edRegused();
-			if(! DELETED_RTRegister.isMindMaskEmpty()) ctstk += " Regused="+DELETED_RTRegister.edRegused();
 			
 			String line = traceBuff.toString();
 			while(line.length() < 60) line = line + " ";

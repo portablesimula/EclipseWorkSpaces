@@ -66,6 +66,7 @@ public class RunSingle_Simula_Testbatch {
 //		names.add("adHoc01");
 //		names.add("adHoc02");
 //		names.add("adHoc03");
+		names.add("adHoc04");
 
 //		names.add("SimulaTest"); // Simula TestBatch Framework
 //		names.add("simtst00"); // OK:  Empty test
@@ -91,7 +92,7 @@ public class RunSingle_Simula_Testbatch {
 //		names.add("simtst19"); // OK:  Text concatenation and text expression evaluation.
 //		names.add("simtst20"); // OK:  Simple tests: integer relations <, <=, =, >=, > and <>
 //
-		names.add("simtst21"); // OK:  Arrays of simple types and text.
+//		names.add("simtst21"); // OK:  Arrays of simple types and text.
 //		names.add("simtst22"); // OK:  Test for-loops with various for-list elements
 //		names.add("simtst23"); // OK:  Type conversions in for step-until element.
 //		names.add("simtst24"); // OK:  Conditional statements with more complex Boolean expressions.

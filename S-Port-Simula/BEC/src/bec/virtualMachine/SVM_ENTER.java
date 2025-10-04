@@ -19,7 +19,6 @@ public class SVM_ENTER extends SVM_Instruction {
 		this.opcode = SVM_Instruction.iENTER;
 		this.rutIdent = rutIdent;
 		this.localSize = localSize;
-		DELETED_RTRegister.checkMindMaskEmpty();
 	}
 
 	@Override

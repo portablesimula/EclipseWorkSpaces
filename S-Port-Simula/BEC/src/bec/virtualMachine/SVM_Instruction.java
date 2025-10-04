@@ -100,12 +100,12 @@ public class SVM_Instruction {
 			case iNEG:		return SVM_NEG.read(inpt);
 			case iLOAD:		return SVM_LOAD.read(inpt);
 			case iPUSHC:	return SVM_LOADC.read(inpt);
-			case iPUSHR:	return DELETED_SVM_PUSHR.read(inpt);
+//			case iPUSHR:	return DELETED_SVM_PUSHR.read(inpt);
 			case iPUSHLEN:	return SVM_PUSHLEN.read(inpt);
 			case iSAVE:		return SVM_SAVE.read(inpt);
 			case iRESTORE:	return SVM_RESTORE.read(inpt);
 			case iRETURN:	return SVM_RETURN.read(inpt);
-			case iSTORE2REG:	return DELETED_SVM_STORE2REG.read(inpt);
+//			case iSTORE2REG:	return DELETED_SVM_STORE2REG.read(inpt);
 			case iSTORE:	return SVM_STORE.read(inpt);
 			case iREM:		return SVM_REM.read(inpt);
 			case iSUB:		return SVM_SUB.read(inpt);
@@ -118,8 +118,8 @@ public class SVM_Instruction {
 			case iPRECALL:	return SVM_PRECALL.read(inpt);
 			case iPOPK:		return SVM_POPK.read(inpt);
 			case iENTER:	return SVM_ENTER.read(inpt);
-			case iREFER_NOT_USED:	return DELETED_SVM_REFER.read(inpt);
-			case iADDREG:	return DELETED_SVM_ADDREG.read(inpt);
+//			case iREFER_NOT_USED:	return DELETED_SVM_REFER.read(inpt);
+//			case iADDREG:	return DELETED_SVM_ADDREG.read(inpt);
 			case iINITO:	return SVM_INITO.read(inpt);
 			case iGETO:		return SVM_GETO.read(inpt);
 			case iSETO:		return SVM_SETO.read(inpt);

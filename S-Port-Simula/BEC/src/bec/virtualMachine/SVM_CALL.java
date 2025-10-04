@@ -18,8 +18,6 @@ public class SVM_CALL extends SVM_Instruction {
 		this.opcode = SVM_Instruction.iCALL;
 		this.rutAddr = rutAddr;
 		this.returSlot = returSlot;
-//		IO.println("NEW SVM_CALL: "+this);
-		DELETED_RTRegister.checkMindMaskEmpty();
 	}
 	
 	public static SVM_CALL ofTOS(ObjectAddress returSlot) {

@@ -2,11 +2,8 @@ package bec.instruction;
 
 import bec.compileTimeStack.AddressItem;
 import bec.compileTimeStack.CTStack;
-import bec.util.Global;
-import bec.util.Scode;
 import bec.util.Type;
 import bec.value.ObjectAddress;
-import bec.virtualMachine.DELETED_SVM_REFER;
 
 /**
  * 

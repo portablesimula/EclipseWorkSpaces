@@ -21,7 +21,6 @@ public class SVM_RETURN extends SVM_Instruction {
 		this.returAddr = returAddr;
 		if(rutID == null) Util.IERR("");
 		if(returAddr == null) Util.IERR("");
-		DELETED_RTRegister.checkMindMaskEmpty();
 	}
 	
 	@Override	

@@ -1,0 +1,8 @@
+begin
+
+	text txt;
+	txt :- blanks (30);
+
+	txt.putint (7);
+
+end of program;

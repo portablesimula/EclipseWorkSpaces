@@ -4,8 +4,6 @@ import bec.compileTimeStack.AddressItem;
 import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.CTStackItem;
 import bec.util.Global;
-import bec.util.Option;
-import bec.util.Util;
 import bec.virtualMachine.SVM_ASSIGN;
 
 public abstract class ASSIGN extends Instruction {
@@ -31,11 +29,8 @@ public abstract class ASSIGN extends Instruction {
 		@SuppressWarnings("unused")
 		CTStackItem tos = CTStack.pop();
 		AddressItem sos = (AddressItem) CTStack.pop();
-		
-//		if(Option.TESTING_xREG)
-			Util.IERR("NOT IMPL");
 
-//		Global.PSEG.emit(new SVM_ASSIGN(false, sos.objadr.addOffset(sos.offset), sos.xReg, sos.size), "ASSIGN: "); // Store into adr
+		Global.PSEG.emit(new SVM_ASSIGN(false, sos.objadr.addOffset(sos.offset), sos.indexed, sos.size), "ASSIGN: "); // Store into adr
 	}
 
 }
