@@ -55,7 +55,8 @@ public class SVM_ASSIGN extends SVM_Instruction {
 		Vector<Value> values = RTStack.pop(size);
 		if(DEBUG) for(int i=0;i<size;i++) IO.println("SVM_ASSIGN: values["+i+"] = " + values.get(i));
 		
-		int idx = size - 1;
+//		int idx = size - 1;
+		int idx = 0;
 		if(indexed)	idx += RTStack.popInt();
 		ObjectAddress addr = this.rtAddr;
 		switch(rtAddr.kind) {
@@ -82,6 +83,8 @@ public class SVM_ASSIGN extends SVM_Instruction {
 
 			default: Util.IERR("");
 		}
+		
+//		Util.IERR("STOP");
 		
 		Global.PSC.addOfst(1);
 	}

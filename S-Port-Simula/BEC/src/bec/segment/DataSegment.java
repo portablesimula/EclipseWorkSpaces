@@ -62,7 +62,7 @@ public class DataSegment extends Segment {
 			e.printStackTrace();
 			IO.println("DataSegment.load: FAILED - SE PÅ DETTE SEINERE !! e="+e);
 //			this.dump("DataSegment.load: FAILED: " + e + " ");
-//			Util.IERR("DataSegment.load: FAILED");
+			Util.IERR("DataSegment.load: FAILED");
 			return null;
 		}
 	}

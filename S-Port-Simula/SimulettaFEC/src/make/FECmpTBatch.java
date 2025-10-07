@@ -25,7 +25,7 @@ public final class FECmpTBatch {
 		Vector<String> names=new Vector<String>();
 		
 //		names.add("adHoc00");
-		names.add("adHoc01");
+//		names.add("adHoc01");
 		names.add("adHoc02");
 ////		names.add("adHoc03");
 //		names.add("adHoc04");

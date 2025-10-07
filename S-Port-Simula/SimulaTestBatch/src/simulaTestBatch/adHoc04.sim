@@ -1,8 +1,23 @@
+
 begin
 
-	text txt;
-	txt :- blanks (30);
+	procedure test(result,expected); text result,expected; begin
+		if result <> expected then begin
+	    	outtext (" - the following result is wrong: ");
+	   	end;
+	end;
 
-	txt.putint (7);
+	text t1,t2; integer k;
+	
+	t1 :- copy("ABCDE");
+%	t2 :- copy("FGHIJ");
+	
+%	if t1 <> t2 then begin
+%	   	outtext (" - the following result is wrong: ");
+%	end;
+
+	test(t1, "FGHIJ");
+	
+	k := k // 0;
 
 end of program;

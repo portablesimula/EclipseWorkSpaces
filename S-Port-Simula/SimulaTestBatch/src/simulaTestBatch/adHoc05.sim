@@ -1,0 +1,20 @@
+
+begin
+
+
+	procedure test(result,expected); text result,expected; begin
+		if result <> expected then  !*** NOTE 5 ***;
+	   	begin
+	    	outtext (" - the following result is wrong: ");
+	   	end;
+	end;
+	
+	text txt;
+	txt :- blanks(5);
+	
+	txt.putint (7);
+%	outtext(txt); outimage;
+	test(txt,"    7");
+
+
+end of program;

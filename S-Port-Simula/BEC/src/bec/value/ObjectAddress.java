@@ -9,6 +9,7 @@ import bec.descriptor.Descriptor;
 import bec.descriptor.Variable;
 import bec.segment.DataSegment;
 import bec.segment.Segment;
+import bec.util.Global;
 import bec.util.Option;
 import bec.util.Scode;
 import bec.util.Tag;
@@ -16,6 +17,7 @@ import bec.util.Type;
 import bec.util.Util;
 import bec.virtualMachine.CallStackFrame;
 import bec.virtualMachine.RTStack;
+import bec.virtualMachine.RTUtil;
 
 public class ObjectAddress extends Value {
 //	public DataSegment seg;
@@ -223,7 +225,16 @@ public class ObjectAddress extends Value {
 			if(!oaddr.segID.equals(segID)) {
 				RTStack.dumpRTStack("ObjectAddress.sub: ");
 //				Segment.lookup("CSEG_ADHOC02").dump("ProgramAddress.execute: FINAL ", 0, 20);
-				Segment.lookup("CSEG_ADHOC02").dump("ProgramAddress.execute: FINAL ");
+//				Segment.lookup("ADHOC04_BSEG_0").dump("ObjectAddress.sub: ");
+				
+//				Global.DSEG.dump("ProgramAddress.execute: FINAL DATA SEGMENT ");
+//				Global.CSEG.dump("ProgramAddress.execute: FINAL CONSTANT SEGMENT ");
+//				Global.TSEG.dump("ProgramAddress.execute: FINAL CONSTANT TEXT SEGMENT ");
+////				Segment.lookup("DSEG_RT").dump("ProgramAddress.execute: BIOINS", 30, 82);
+////				Segment.lookup("POOL_1").dump("ProgramAddress.execute: FINAL POOL_1", 0, 60);
+//				RTUtil.printPool("POOL_1");
+
+				
 				Util.IERR("Illegal ObjectAddress'sub operation: "+oaddr.segID+" != "+segID);
 			}
 			return IntegerValue.of(Type.T_SIZE, this.ofst - oaddr.ofst);

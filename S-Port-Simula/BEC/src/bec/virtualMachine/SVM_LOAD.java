@@ -38,27 +38,34 @@ public class SVM_LOAD extends SVM_Instruction {
 	@Override
 	public void execute() {
 		ObjectAddress addr = this.rtAddr;
+		int idx =(! indexed)? 0 :RTStack.popInt();
 		switch(addr.kind) {
-			case ObjectAddress.SEGMNT_ADDR: doLoad(addr, indexed); break;
-			case ObjectAddress.REL_ADDR:    doLoad(addr, indexed); break;
-			case ObjectAddress.STACK_ADDR:  Util.IERR(""); doLoad(addr, indexed); break;
+			case ObjectAddress.SEGMNT_ADDR: doLoad(addr, idx); break;
+			case ObjectAddress.REL_ADDR:
+//				RTStack.dumpRTStack("SVM_LOAD.REL_ADDR: "+addr+", IDX="+idx);
+				doLoad(addr, idx); break;
+			case ObjectAddress.STACK_ADDR:  Util.IERR(""); doLoad(addr, idx); break;
 			case ObjectAddress.REMOTE_ADDR:
 //				Segment.lookup("PSEG_ADHOC03").dump("SVM_LOAD.REMOTE_ADDR: "+indexed);
-				RTStack.dumpRTStack("SVM_LOAD.REMOTE_ADDR: "+indexed);
-				int idx = 0;
-//				int idx = size - 1;
-				if(indexed)	idx += RTStack.popInt();
+//				RTStack.dumpRTStack("SVM_LOAD.REMOTE_ADDR: "+indexed);
 				ObjectAddress oaddr = RTStack.popOADDR();
 				addr = oaddr.addOffset(addr.getOfst());
-				doLoad2(addr, idx); break;
+				
+//				IO.println("SVM_LOAD.execute: REMOTE_ADR: "+oaddr.getClass().getSimpleName()+"  "+oaddr+", SegID="+oaddr.segID);
+//				IO.println("SVM_LOAD.execute: REMOTE_ADR: "+addr.getClass().getSimpleName()+"  "+addr+", SegID="+addr.segID);
+//				if(addr.segID.equals("POOL_1") & addr.getOfst() == 734) {
+//					addr.segment().dump("", 734-10, 734+10);
+//					Util.IERR("GOT IT");
+//				}
+				
+				doLoad(addr, idx); break;
+//				doLoadRev(addr, idx); break;
 				
 			case ObjectAddress.REFER_ADDR:
 //				RTStack.dumpRTStack("SVM_STORE.execute: ");
-				idx = size - 1;
-				if(indexed)	idx += RTStack.popInt();
 				int ofst = RTStack.popInt();
 				addr = RTStack.popOADDR().addOffset(rtAddr.getOfst() + ofst);
-				doLoad2(addr, idx); break;
+				doLoad(addr, idx); break;
 	
 			default: Util.IERR("");
 		}			
@@ -70,19 +77,16 @@ public class SVM_LOAD extends SVM_Instruction {
 		}
 		Global.PSC.addOfst(1);
 	}
-		
-	private void doLoad(ObjectAddress addr, boolean indexed) {
-		int idx = 0;
-		if(indexed)	idx += RTStack.popInt();
-		for(int i=0;i<size;i++) {
+	
+	private void doLoadRev(ObjectAddress addr, int idx) {
+//		for(int i=0;i<size;i++) {
+		for(int i=size-1;i<=0;i--) {
 			Value value = addr.load(idx + i);
 			RTStack.push(value, "SVM_LOAD: "+addr+":"+size);
 		}		
 	}
 	
-	private void doLoad2(ObjectAddress addr, int idx) {
-//		int idx = 0;
-//		if(indexed)	idx += RTStack.popInt();
+	private void doLoad(ObjectAddress addr, int idx) {
 		for(int i=0;i<size;i++) {
 			Value value = addr.load(idx + i);
 			RTStack.push(value, "SVM_LOAD: "+addr+":"+size);

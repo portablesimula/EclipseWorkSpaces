@@ -27,11 +27,11 @@ public class RunSingle_Simula_Testbatch {
 		
 //		cmds.add("-FEC:Listing");
 //		cmds.add("-FEC:SCodeTrace");
-		cmds.add("-BEC:SCodeTrace");
-		cmds.add("-BEC:TraceSVM_CODE");
+//		cmds.add("-BEC:SCodeTrace");
+//		cmds.add("-BEC:TraceSVM_CODE");
 //		cmds.add("-BEC:TraceSVM_DATA");
 		cmds.add("-execTrace");
-//		cmds.add("-callTrace");
+		cmds.add("-callTrace");
 //		cmds.add("-dumpsAtExit");
 
 		cmds.add("-simdir"); cmds.add("C:/SPORT");
@@ -73,7 +73,7 @@ public class RunSingle_Simula_Testbatch {
 //		names.add("simtst01"); // OK:  Meaningless test of conditional statements,
 //		names.add("simtst02"); // OK:  Test boolean operators/expressions
 //		names.add("simtst03"); // OK:  Test Text Value Relations
-//		names.add("simtst04"); // OK:  To test putint and putreal.
+//			names.add("simtst04"); // OK:  To test putint and putreal.
 //		names.add("simtst05"); // OK:  Test Aritmetisk Relations
 //		names.add("simtst06"); // OK:  Test Mathematical Functions
 //		names.add("simtst07"); // OK:  Test Mathematical Library

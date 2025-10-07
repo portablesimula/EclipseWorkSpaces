@@ -29,7 +29,7 @@ public final class RunSingle_SML_TestBatch {
 		Option.PRINT_GENERATED_SVM_CODE = true;
 		Option.PRINT_GENERATED_SVM_DATA = true;
 		Option.EXEC_TRACE = 1;
-//		Option.CALL_TRACE_LEVEL = 2;
+		Option.CALL_TRACE_LEVEL = 2;
 //		Option.DUMPS_AT_EXIT = true;
 		
 		// Set Compiler Options.
