@@ -126,7 +126,7 @@ public class GeneralAddress extends Value {
 		String ident=dotList.getIdent(0);
 		VariableDeclaration q=(VariableDeclaration) Declaration.findMeaning(ident);
 		Tag tag=q.getTag();
-		IO.println("GeneralAddress.doOutConst: "+ident+"  q="+q);
+//		IO.println("GeneralAddress.doOutConst: "+ident+"  q="+q);
 		Stack<Tag> qStack = new Stack<Tag>();
 		qStack.push(tag);
 		for(int i=1;i<dotList.varset.size();i++) {

@@ -86,10 +86,10 @@ public class Type {
 		type.comment = "From " + rec;
 		Type old = TMAP.get(rec.tag.val);
 		if(old != null) {
-//			IO.println("DataType.newRecType: old=" + old);
-			if(rec.tag.val != Scode.TAG_STRING)	Util.IERR("Already defined: " + type);
+			IO.println("DataType.newRecType: " + Scode.edTag(type.tag) + "  Already defined as " + Scode.edTag(old.tag));
+//			if(rec.tag.val != Scode.TAG_STRING)	Util.IERR("Already defined: " + type);
 		} else {
-//			if(rec.tag.val == 2483) Util.IERR("");
+//			if(rec.tag.val == 2497) Util.IERR("");
 			TMAP.put(rec.tag.val, type);
 			RECTYPES.add(type);
 		}
@@ -144,7 +144,7 @@ public class Type {
 
 	private static Type newBasType(int tag, int size) {
 		Type type = new Type(tag, size);
-		if(tag == 2483) Util.IERR("");
+//		if(tag == 2497) Util.IERR("");
 		TMAP.put(tag, type);
 		return type;
 	}
@@ -191,8 +191,9 @@ public class Type {
 			
 			if(tag == Scode.TAG_STRING) ; // OK Predefinert
 			else if(TMAP.get(tag) ==null) {
-//				if(tag == 2483) {
+//				if(tag == 2497) {
 //					IO.println("Type.readRECTYPES: NEW Type: " + type + ", tag=" + tag);
+////					Thread.dumpStack();
 ////					Util.IERR("");
 //				}
 				TMAP.put(tag, type);

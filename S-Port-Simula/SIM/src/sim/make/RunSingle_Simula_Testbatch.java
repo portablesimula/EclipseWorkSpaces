@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.Vector;
 
 import sim.compiler.Global;
-import sim.compiler.Option;
 import sim.compiler.Util;
 import static sim.compiler.Global.*;
 
@@ -30,8 +29,8 @@ public class RunSingle_Simula_Testbatch {
 //		cmds.add("-BEC:SCodeTrace");
 //		cmds.add("-BEC:TraceSVM_CODE");
 //		cmds.add("-BEC:TraceSVM_DATA");
-		cmds.add("-execTrace");
-		cmds.add("-callTrace");
+//		cmds.add("-execTrace");
+//		cmds.add("-callTrace");
 //		cmds.add("-dumpsAtExit");
 
 		cmds.add("-simdir"); cmds.add("C:/SPORT");
@@ -66,7 +65,7 @@ public class RunSingle_Simula_Testbatch {
 //		names.add("adHoc01");
 //		names.add("adHoc02");
 //		names.add("adHoc03");
-		names.add("adHoc04");
+//		names.add("adHoc04");
 
 //		names.add("SimulaTest"); // Simula TestBatch Framework
 //		names.add("simtst00"); // OK:  Empty test
@@ -136,7 +135,7 @@ public class RunSingle_Simula_Testbatch {
 //		names.add("simtst54"); // OK:  A VERY Simple Simulation
 //		names.add("simtst55"); // OK:  Test virtual procedures.
 //		names.add("simtst56"); // OK:  Test virtual procedures.
-//		names.add("simtst57"); // OK:  Virtual procedure - different number of parameters
+		names.add("simtst57"); // OK:  Virtual procedure - different number of parameters
 //		names.add("simtst58"); // OK:  Goto from within a connection into otherwise
 ////		names.add("simtst59"); // ERR:  Test 2-dim Array by value.
 //		names.add("simtst60"); // OK:  Visibility of protected attributes.
@@ -259,6 +258,8 @@ public class RunSingle_Simula_Testbatch {
 ////		names.add("simtst161"); // ERR: Test Specified Virtual ref-type Functions as part of an Expression
 //		names.add("simtst162"); // OK: Test Complicated nested inspection
 //		names.add("simtst163"); // OK: Test Inspect when, when, otherwise (selected)
+//		names.add("simtst164"); // OK: Test Extended Text Procedures
+		names.add("simtst165"); // OK: Activate direct
 		
 		for(String name:names) {
 			doCompile(name);

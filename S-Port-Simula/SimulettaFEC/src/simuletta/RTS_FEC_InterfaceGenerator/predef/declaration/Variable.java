@@ -53,7 +53,7 @@ public class Variable extends Quantity {
 //		IO.println("procedure.doParse: quantInfo="+quant.quantInfo);
 		Parser.expect(KeyWord.SEMICOLON); // SKIP IT
     	
-		Util.println("Variable.doParse: " + quant);
+//		Util.println("Variable.doParse: " + quant);
 //    	Util.STOP();
 		return(quant);
     }

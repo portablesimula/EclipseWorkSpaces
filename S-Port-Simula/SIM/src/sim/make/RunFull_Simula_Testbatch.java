@@ -247,6 +247,8 @@ public class RunFull_Simula_Testbatch {
 //		names.add("simtst161"); // ERR: Test Specified Virtual ref-type Functions as part of an Expression
 		names.add("simtst162"); // OK: Test Complicated nested inspection
 		names.add("simtst163"); // OK: Test Inspect when, when, otherwise (selected)
+//		names.add("simtst164"); // OK: Test Extended Text Procedures
+		names.add("simtst165"); // OK: Activate direct
 		
 //		FEC_Option.verbose = true;
 //		fecListing = true;

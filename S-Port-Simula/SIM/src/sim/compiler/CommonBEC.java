@@ -53,7 +53,7 @@ public abstract class CommonBEC {
 		cmds.add(sCodeFileName);
 
 		if(Option.verbose) {
-			IO.println("SimulaBEC.callSimulaBEC: zzzzzzzzz BEGIN BEC: " + sCodeFileName + " ==> .svm");
+			IO.println("SimulaBEC.callSimulaBEC: BEGIN BEC: " + sCodeFileName + " ==> .svm");
 			String cmdLine="";
 			for(String cmd:cmds) cmdLine=cmdLine+" "+cmd;
 	        IO.println("SimulaBEC.callBEC: command ="+cmdLine);

@@ -67,7 +67,7 @@ public final class FECmpRTS {
 		
 		// Set Compile Time Options and tracing.BEGIN COMPILE
 //		Option.INLINE_TESTING=true;
-	    Option.verbose = true;
+//	    Option.verbose = true;
 //		Option.WARNINGS=true;
 
 		// Overall TRACING Options
@@ -95,7 +95,7 @@ public final class FECmpRTS {
 		
 		// Coder Trace Options
 //		Option.TRACE_FIND_MEANING=true;
-		Option.TRACE_CODING=1;
+//		Option.TRACE_CODING=1;
 		
 		//Option.TRACE_REPAIRING=true;
 
