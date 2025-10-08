@@ -470,8 +470,8 @@ public class RTS_Simulation extends RTS_Simset {
 //		}
 //	}
 
-	/// Utility: Trace Simulation event
-	/// @param msg the event message
+	/// Utility: Edit SQS
+	/// @return edited SQS
 	private String ED_SQS() {
 		StringBuilder sb = new StringBuilder();
 		RTS_EVENT_NOTICE n = (RTS_EVENT_NOTICE) RTS_Ranking.FIRST(sqs);;
