@@ -286,7 +286,7 @@ public final class SimulaCompiler {
 		if (Util.nError > 0) {
 			String msg="Compiler terminate " + Global.sourceName + " after " + Util.nError + " errors during semantic checking";
 			Util.println(msg);
-			Thread.dumpStack();
+//			Thread.dumpStack();
 			throw new RuntimeException(msg);
 		}
 		

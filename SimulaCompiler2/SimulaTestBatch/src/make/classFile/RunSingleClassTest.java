@@ -46,8 +46,8 @@ public final class RunSingleClassTest {
 		Option.noPopup = true;
 		Option.internal.TESTING_STACK_SIZE = true;
 //		Option.internal.DEBUGGING=true;
-		Option.internal.LIST_GENERATED_CLASS_FILES=true;
-		Option.internal.TRACE_CODING=true;
+//		Option.internal.LIST_GENERATED_CLASS_FILES=true;
+//		Option.internal.TRACE_CODING=true;
 
 		// Overall TRACING Options
 //		Option.internal.TRACING=true;
@@ -88,7 +88,8 @@ public final class RunSingleClassTest {
 //		names.add("AdHoc_SimulaTest.sim"); // Simula TestBatch Framework
 //		names.add("adHoc00.sim"); // For ad'hoc testing
 //		names.add("adHoc01.sim"); // For ad'hoc testing
-		names.add("adHoc02.sim"); // For ad'hoc testing
+//		names.add("adHoc02.sim"); // For ad'hoc testing
+		names.add("adHoc03.sim"); // For ad'hoc testing
 		
 		// *** SIMULA TEST BATCH TIL EKSEKVERING
 		// String name=Global.packetName+"/sim/InspectionSamples.sim";

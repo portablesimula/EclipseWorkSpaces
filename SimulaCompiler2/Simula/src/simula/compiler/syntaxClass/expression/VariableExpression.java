@@ -310,6 +310,14 @@ public final class VariableExpression extends Expression {
 							if (formalType != null && (!formalType.equals(actualParameter.type))
 									&& formalType.isArithmeticType())
 								Util.error("Parameter Array " + actualParameter + " must be of Type " + formalType);
+						} else {
+							if(actualParameter instanceof VariableExpression pvar) {
+								if(! pvar.hasArguments()) {
+									Declaration pdecl = pvar.meaning.declaredAs;
+									if(pdecl instanceof ArrayDeclaration)
+										Util.error("Array identifier '" + actualParameter + "' as actual parameter does not match formal type " + formalParameter);
+								}
+							}
 						}
 						Expression checkedParameter = TypeConversion.testAndCreate(formalType, actualParameter);
 						checkedParameter.backLink = this;

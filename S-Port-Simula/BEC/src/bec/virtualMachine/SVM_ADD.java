@@ -9,11 +9,19 @@ import bec.util.Option;
 import bec.value.Value;
 
 /**
- * Remove two items on the Runtime-Stack and push the value (SOS + TOS)
+ * Operation ADD
+ * 
+ * 	Runtime Stack
+ * 	   ..., sos, tos →
+ * 	   ..., result
+ *
+ * The 'tos' and 'sos' are popped off the Runtime stack.
+ * The 'result' is calculated as result = sos + tos.
+ * Then the 'result' is pushed onto the Runtime Stack.
+ * 
+ * 'tos' and 'sos' must be of the same arithmetic type, i.e. int, float or double.
  */
 public class SVM_ADD extends SVM_Instruction {
-
-	private final boolean DEBUG = false;
 
 	public SVM_ADD() {
 		this.opcode = SVM_Instruction.iADD;
@@ -23,14 +31,7 @@ public class SVM_ADD extends SVM_Instruction {
 	public void execute() {
 		Value tos = RTStack.pop();
 		Value sos = RTStack.pop();
-		if(DEBUG) {
-			if(tos != null)	IO.println("SVM_ADD: TOS: " + tos.getClass().getSimpleName() + "  " + tos);
-			if(sos != null)	IO.println("SVM_ADD: SOS: " + sos.getClass().getSimpleName() + "  " + sos);
-			IO.println("SVM_ADD: " + sos + " + " + tos);
-//			RTUtil.dumpCurins();
-		}
 		Value res = (sos == null)? tos : sos.add(tos);
-		if(DEBUG) IO.println("SVM_ADD: " + sos + " + " + tos + " ==> " + res);
 		RTStack.push(res, "SVM_ADD: " + tos + " + " + sos + " = " + res);
 		Global.PSC.addOfst(1);
 	}

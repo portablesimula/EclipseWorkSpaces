@@ -6,7 +6,6 @@ import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Option;
-import bec.util.Util;
 import bec.value.ObjectAddress;
 import bec.value.Value;
 
@@ -18,87 +17,25 @@ public class SVM_STORE extends SVM_Instruction {
 	private final int size;
 	private final boolean indexed;
 	
-	private final boolean DEBUG = false;
-	
 	public SVM_STORE(ObjectAddress rtAddr, boolean indexed, int size) {
 		this.opcode = SVM_Instruction.iSTORE;
 		this.rtAddr = rtAddr;
 		this.size = size;
 		this.indexed = indexed;
-//		IO.println("NEW SVM_STORE: " + this);
 	}
 	
-//	@Override
-//	public void execute() {
-//		if(DEBUG) {
-////			Global.PSC.segment().dump("STORE.execute: ");
-//			RTStack.dumpRTStack("STORE.execute: ");
-//		}
-//		
-//		ObjectAddress addr = this.rtAddr;
-//		switch(addr.kind) {
-//			case ObjectAddress.SEGMNT_ADDR: doStore(addr, indexed); break;
-//			case ObjectAddress.REL_ADDR:    doStore(addr, indexed); break;
-//			case ObjectAddress.STACK_ADDR:  Util.IERR(""); doStore(addr, indexed); break;
-//			case ObjectAddress.REMOTE_ADDR:
-////				int idx = 0;
-//				int idx = size - 1;
-//				if(indexed)	idx += RTStack.popInt();
-//				ObjectAddress oaddr = RTStack.popOADDR();
-//				addr = oaddr.addOffset(addr.getOfst());
-//				doStore2(addr, idx); break;
-//			case ObjectAddress.REFER_ADDR:
-////				RTStack.dumpRTStack("SVM_STORE.execute: ");
-//				idx = size - 1;
-//				if(indexed)	idx += RTStack.popInt();
-//				int ofst = RTStack.popInt();
-//				addr = RTStack.popOADDR().addOffset(rtAddr.getOfst() + ofst);
-//				doStore2(addr, idx);
-//				break;
-//			default: Util.IERR("");
-//		}			
-//		
-//		if(DEBUG) {
-////			addr.segment().dump("STORE.execute: ", addr.offset, addr.offset+size);
-////			IO.println("STORE: size="+size);
-//			addr.dumpArea("STORE.execute: ", size);
-//		}
-//		
-//		Global.PSC.addOfst(1);		
-//	}
-
 	@Override
 	public void execute() {
 		int idx = size - 1;
 		if(indexed)	idx += RTStack.popInt();
-		ObjectAddress addr = this.rtAddr;
-		switch(addr.kind) {
-			case ObjectAddress.SEGMNT_ADDR: doStore(addr, idx); break;
-			case ObjectAddress.REL_ADDR:    doStore(addr, idx); break;
-			case ObjectAddress.STACK_ADDR:  Util.IERR(""); doStore(addr, idx); break;
-			case ObjectAddress.REMOTE_ADDR:
-				ObjectAddress oaddr = RTStack.popOADDR();
-				addr = oaddr.addOffset(addr.getOfst());
-				doStore(addr, idx); break;
-			case ObjectAddress.REFER_ADDR:
-				int ofst = RTStack.popInt();
-				addr = RTStack.popOADDR().addOffset(rtAddr.getOfst() + ofst);
-				doStore(addr, idx);
-				break;
-			default: Util.IERR("");
-		}			
-		
-		Global.PSC.addOfst(1);		
-	}
-	
-	private void doStore(ObjectAddress addr, int idx) {
+		ObjectAddress addr = rtAddr.toRTMemAddr();
 		int n = RTStack.size()-1;
 		for(int i=0;i<size;i++) {
 			Value item = RTStack.load(n-i);
-			if(DEBUG) IO.println("SVM_STORE: "+item+" ==> "+addr + "["+idx+"]");
 			addr.store(idx--, item, "");
-//			RTStack.printCallTrace("STORE.execute: ");
 		}
+		
+		Global.PSC.addOfst(1);		
 	}
 	
 	public String toString() {

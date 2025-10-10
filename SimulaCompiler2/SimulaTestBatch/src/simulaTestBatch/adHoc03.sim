@@ -1,0 +1,7 @@
+BEGIN
+   INTEGER ARRAY a(1:4);
+
+%   OutText("a(1) is ");
+   OutInt(a, 0);
+%   OutImage;
+END.

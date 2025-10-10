@@ -8,7 +8,6 @@ import bec.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Option;
 import bec.util.Util;
-import bec.value.GeneralAddress;
 import bec.value.ObjectAddress;
 import bec.value.Value;
 
@@ -20,8 +19,6 @@ public class SVM_ASSIGN extends SVM_Instruction {
 	private final ObjectAddress rtAddr;
 	private final int size;
 	private final boolean indexed;
-
-	private final boolean DEBUG = false;
 
 	/**
 	 * assign_instruction ::= assign | update
@@ -37,6 +34,27 @@ public class SVM_ASSIGN extends SVM_Instruction {
 	 * TOS or SOS, that has been deferred for optimisation purposes, must take place before the
 	 * assignment code is generated. SOS and TOS are popped from the stack.
 	 */
+	/**
+	 * Operation LOADA objadr offset indexed
+	 * 
+	 * Case indexed:
+	 * 		Runtime Stack
+	 * 		   ..., stacked(?), index →
+	 * 		   ..., resadr, ofst
+	 *
+	 * The 'index' on the top of the Runtime Stack is popped off and added to 'offset' to form the new 'ofst'.
+	 * Then Force 'objadr' unstacked. IE. pop off stacked part and form the resulting address 'resadr'
+	 * Then the resulting address and 'ofst' are pushed onto the Runtime Stack.
+	 * 
+	 * Case not indexed:
+	 * 		Runtime Stack
+	 * 		   ..., stacked(?) →
+	 * 		   ..., resadr, offset
+	 *
+	 * Force 'objadr' unstacked. IE. pop off stacked part and form the resulting address 'resadr'
+	 * The resulting address and 'offset' are pushed onto the Runtime Stack.
+	 */
+	// Force address unstacked. IE. pop off stacked part and form the resulting address 'resadr'
 	public SVM_ASSIGN(boolean update, ObjectAddress rtAddr, boolean indexed, int size) {
 		this.opcode = SVM_Instruction.iASSIGN;
 		this.update = update;
@@ -47,67 +65,18 @@ public class SVM_ASSIGN extends SVM_Instruction {
 
 	@Override
 	public void execute() {
-		if(DEBUG) {
-			IO.println("\nSVM_ASSIGN: BEGIN DEBUG INFO ++++++++++++++++++++++øø++++++++++++++++++++++++++++++++++++++++++++++");
-			RTUtil.printCurins();
-			RTStack.dumpRTStack("SVM_ASSIGN: ");
-		}
 		Vector<Value> values = RTStack.pop(size);
-		if(DEBUG) for(int i=0;i<size;i++) IO.println("SVM_ASSIGN: values["+i+"] = " + values.get(i));
-		
-//		int idx = size - 1;
-		int idx = 0;
-		if(indexed)	idx += RTStack.popInt();
-		ObjectAddress addr = this.rtAddr;
-		switch(rtAddr.kind) {
-			case ObjectAddress.SEGMNT_ADDR: doAssign(addr, idx, values); break;
-			case ObjectAddress.REL_ADDR:    doAssign(addr, idx, values); break;
-			case ObjectAddress.STACK_ADDR:  Util.IERR(""); doAssign(addr, idx, values); break;
-			case ObjectAddress.REMOTE_ADDR:
-				// this.addr is Stack Relative Address
-				ObjectAddress oaddr = RTStack.popOADDR();
-				addr = oaddr.addOffset(addr.getOfst());
-				doAssign(addr, idx, values);
-				break;
+		int idx = (! indexed)? 0 : RTStack.popInt();
+		ObjectAddress addr = rtAddr.toRTMemAddr();
+		int n = size;
+		for(int i=0;i<size;i++)
+			addr.store(idx + i, values.get((--n)), "");
+		if(update) 
+			for(int i=0;i<size;i++)
+				RTStack.pushx(values, "SVM_ASSIGN");
 				
-			case ObjectAddress.REFER_ADDR:
-////				GeneralAddress gaddr = (GeneralAddress) DELETED_RTRegister.getValue(xReg);
-////				addr = gaddr.base.addOffset(rtAddr.getOfst() + gaddr.ofst);
-//				doAssign(addr, values);
-//				break;
-	
-				int ofst = RTStack.popInt();
-				addr = RTStack.popOADDR().addOffset(rtAddr.getOfst() + ofst);
-				doAssign(addr, idx, values);
-				break;
-
-			default: Util.IERR("");
-		}
-		
-//		Util.IERR("STOP");
 		
 		Global.PSC.addOfst(1);
-	}
-	
-	private void doAssign(ObjectAddress addr, int rx, Vector<Value> values) {
-		if(DEBUG) for(int i=0;i<size;i++) IO.println("SVM_ASSIGN: BEFORE: sos.store: " + i + " " + values.get(i));
-		int idx = size;
-//		int rx = 0;//(xReg == 0)? 0 : DELETED_RTRegister.getIntValue(xReg);
-		for(int i=0;i<size;i++) {
-			addr.store(rx + i, values.get((--idx)), "");
-		}
-		if(DEBUG) for(int i=0;i<size;i++) IO.println("SVM_ASSIGN: AFTER: sos.store: " + i + " " + values.get(i));
-		
-		if(update) {
-			for(int i=0;i<size;i++) {
-				RTStack.pushx(values, "SVM_ASSIGN");
-			}
-			if(DEBUG) {
-				RTUtil.printCurins();
-				RTStack.dumpRTStack("SVM_ASSIGN: ");
-				IO.println("SVM_ASSIGN: END DEBUG INFO\n");
-			}
-		}		
 	}
 
 	@Override	

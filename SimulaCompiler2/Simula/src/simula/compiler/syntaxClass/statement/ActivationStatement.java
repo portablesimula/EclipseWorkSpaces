@@ -104,14 +104,17 @@ public final class ActivationStatement extends Statement {
 		REAC = activator.getKeyWord() == KeyWord.REACTIVATE;
 		if (Option.internal.TRACE_PARSE) Parse.TRACE("Parse ActivationStatement");
 		object1 = Expression.expectExpression();
+		object1.backLink = this;
 		code = ActivationCode.direct;
 		if (Parse.accept(KeyWord.AT) || Parse.accept(KeyWord.DELAY)) {
 			code = (Parse.prevToken.getKeyWord() == KeyWord.AT) ? ActivationCode.at : ActivationCode.delay;
 			time = Expression.expectExpression();
+			time.backLink = this;
 			if (Parse.accept(KeyWord.PRIOR)) prior = true;
 		} else if (Parse.accept(KeyWord.BEFORE) || Parse.accept(KeyWord.AFTER)) {
 			code = (Parse.prevToken.getKeyWord() == KeyWord.BEFORE) ? ActivationCode.before : ActivationCode.after;
 			object2 = Expression.expectExpression();
+			object2.backLink = this;
 		}
 		if (Option.internal.TRACE_PARSE) Util.TRACE("Line "+lineNumber+": ActivationStatement: "+this);
 	}

@@ -7,7 +7,6 @@ import bec.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Option;
 import bec.util.Type;
-import bec.util.Util;
 import bec.value.IntegerValue;
 import bec.value.ObjectAddress;
 
@@ -31,7 +30,6 @@ import bec.value.ObjectAddress;
  * Force 'objadr' unstacked. IE. pop off stacked part and form the resulting address 'resadr'
  * The resulting address and 'offset' are pushed onto the Runtime Stack.
  */
-
 public class SVM_LOADA extends SVM_Instruction {
 	private final ObjectAddress objadr;
 	private final int offset;
@@ -53,31 +51,7 @@ public class SVM_LOADA extends SVM_Instruction {
 		if(DEBUG) IO.println("SVM_LOADA.execute: objadr="+objadr+", offset="+offset+", indexed="+indexed+", idx="+idx);
 		
 		// Force address unstacked. IE. pop off stacked part and form the resulting address 'resadr'
-		ObjectAddress resadr = null;
-		switch(objadr.kind) {
-			case ObjectAddress.SEGMNT_ADDR:
-				// RTStack: ...
-				resadr = objadr;
-				if(DEBUG) IO.println("SVM_LOADA.execute: SEGMENT_ADDR: resadr="+resadr);
-				break;
-			case ObjectAddress.REMOTE_ADDR:
-				// RTStack: ..., objadr
-				resadr = (ObjectAddress) RTStack.pop();
-				if(DEBUG) IO.println("SVM_LOADA.execute: REMOTE_ADDR: resadr="+resadr);
-				break;
-			case ObjectAddress.REFER_ADDR:
-				// RTStack: ..., objadr, ofst
-				int ofst = RTStack.popInt();
-				resadr = RTStack.popOADDR().addOffset(ofst);
-				if(DEBUG) IO.println("SVM_LOADA.execute: REFER_ADDR: resadr="+resadr);
-				break;
-//			case ObjectAddress.REL_ADDR:
-//			case ObjectAddress.STACK_ADDR:
-//				Util.IERR("SVM_LOADA.execute: NOTE: CREATE AN ADDRESS TO A VALUE ON THE RTSTACK: " + objadr);
-//				break;
-			default: Util.IERR(""+objadr);
-		}
-
+		ObjectAddress resadr = objadr.toRTMemAddr();
 		RTStack.push(resadr, "SVM_LOADA: ");
 		RTStack.push(IntegerValue.of(Type.T_INT, offset + idx), null);
 		

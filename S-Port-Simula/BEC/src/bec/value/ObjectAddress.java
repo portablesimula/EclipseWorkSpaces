@@ -116,6 +116,40 @@ public class ObjectAddress extends Value {
 		return oaddr;
 	}
 	
+//	public ObjectAddress toMemAddr() {
+//		ObjectAddress addr = this;
+//		switch(this.kind) {
+//			case ObjectAddress.SEGMNT_ADDR: break; // Nothing
+//			case ObjectAddress.REL_ADDR:    break; // Nothing
+//			case ObjectAddress.STACK_ADDR:  Util.IERR(""); break;
+//			case ObjectAddress.REMOTE_ADDR:
+//				ObjectAddress oaddr = RTStack.popOADDR();
+//				addr = oaddr.addOffset(addr.getOfst());
+//				break;
+//			case ObjectAddress.REFER_ADDR:
+//				int ofst = RTStack.popInt();
+//				addr = RTStack.popOADDR().addOffset(this.getOfst() + ofst);
+//				break;
+//			default: Util.IERR("");
+//		}
+//		return addr;
+//	}
+	public ObjectAddress toRTMemAddr() {
+//		ObjectAddress addr = this;
+		switch(this.kind) {
+			case ObjectAddress.SEGMNT_ADDR: return this; // Nothing
+			case ObjectAddress.REL_ADDR:    return this; // Nothing
+			case ObjectAddress.STACK_ADDR:  Util.IERR(""); return this;
+			case ObjectAddress.REMOTE_ADDR:
+				ObjectAddress oaddr = RTStack.popOADDR();
+				return oaddr.addOffset(this.ofst);
+			case ObjectAddress.REFER_ADDR:
+				int ofset = RTStack.popInt();
+				return RTStack.popOADDR().addOffset(this.ofst + ofset);
+			default: Util.IERR(""); return null;
+		}
+	}
+	
 	@Override
 	public void emit(DataSegment dseg, String comment) {
 		dseg.emit(this, comment);
