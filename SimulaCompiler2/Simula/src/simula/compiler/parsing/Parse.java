@@ -100,9 +100,11 @@ public final class Parse {
 			if (Parse.currentToken == null) {
 				if (!endOfFileErrorGiven) {
 					//Util.warning("Possible scanning past END-OF-FILE");
+					//Util.error("Possible scanning past END-OF-FILE.");
 				}
 				endOfFileErrorGiven = true;
 				Parse.currentToken = new Token(KeyWord.END);
+//				Parse.currentToken = new Token(KeyWord.EOF);
 			}
 		} else {
 			Parse.currentToken = savedToken;
@@ -126,6 +128,7 @@ public final class Parse {
 		for (int key : keys)
 			if (Parse.currentToken.getKeyWord() == key) {
 				nextToken();
+//				IO.println("Line "+ Global.sourceLineNumber+": Parse.accept: " + KeyWord.edit(key) + " accepted, nextToken: " + Parse.currentToken);
 				return (true);
 			}
 		return (false);

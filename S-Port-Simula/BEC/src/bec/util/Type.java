@@ -84,15 +84,15 @@ public class Type {
 		Type type = new Type(rec.tag.val, rec.size);
 		type.rep0size = rec.nbrep;
 		type.comment = "From " + rec;
-		Type old = TMAP.get(rec.tag.val);
-		if(old != null) {
-			IO.println("DataType.newRecType: " + Scode.edTag(type.tag) + "  Already defined as " + Scode.edTag(old.tag));
+//		Type old = TMAP.get(rec.tag.val);
+//		if(old != null) {
+//			IO.println("DataType.newRecType: " + Scode.edTag(type.tag) + "  Already defined as " + Scode.edTag(old.tag));
 //			if(rec.tag.val != Scode.TAG_STRING)	Util.IERR("Already defined: " + type);
-		} else {
+//		} else {
 //			if(rec.tag.val == 2497) Util.IERR("");
 			TMAP.put(rec.tag.val, type);
 			RECTYPES.add(type);
-		}
+//		}
 	}
 	
 	public static void removeFromTMAP(int tag) {

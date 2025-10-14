@@ -17,6 +17,20 @@ import bec.value.ObjectAddress;
  * the pointer is skipped, i.e. iterate this description, otherwise the value of the refered pointer is
  * returned.
  */
+/// Operation GETO
+/// 
+/// 	Runtime Stack
+/// 	   ... →
+/// 	   ..., next
+///
+/// Push 'next' pointer of an earlier registered save-object.
+/// In case the 'next' being onone, no more pointers and the scan 
+/// of the save-object should be terminated.
+///
+/// If more pointers the SAVE-INDEX is updated.
+/// In case the "next" pointer is onone, the pointer is skipped.
+///
+/// See: SVM_INITO and SVM_SETO.
 public class SVM_GETO extends SVM_Instruction {
 
 	public SVM_GETO() {

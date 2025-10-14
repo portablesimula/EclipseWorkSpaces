@@ -1,6 +1,5 @@
 package bec.inlineTest;
 
-import bec.util.Global;
 import bec.util.Option;
 
 import java.util.Vector;

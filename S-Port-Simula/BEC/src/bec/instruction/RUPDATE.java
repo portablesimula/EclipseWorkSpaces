@@ -6,7 +6,6 @@ import bec.util.Global;
 import bec.virtualMachine.SVM_STORE;
 
 public abstract class RUPDATE extends Instruction {
-	private static final boolean DEBUG = false;
 	
 	/**
 	 * assign_instruction ::= assign | update | rupdate
@@ -21,18 +20,10 @@ public abstract class RUPDATE extends Instruction {
 	 * roles of TOS and SOS are interchanged, i.e. the value transfer is from SOS to TOS.
 	 */
 	public static void ofScode() {
-		if(DEBUG)
-			CTStack.dumpStack("RUPDATE.ofScode: ");
 		CTStack.checkTosRef(); CTStack.checkSosValue(); CTStack.checkTypesEqual();
 		AddressItem adr = (AddressItem) CTStack.pop();
 		CTStack.forceTosValue();			
-		if(DEBUG) {
-			IO.println("RUPDATE.ofScode: adr="+adr);
-			IO.println("RUPDATE.ofScode: sos="+CTStack.TOS());
-//			Util.IERR("");
-//			CTStack.dumpStack("RUPDATE-2: ");
-		}
-		Global.PSEG.emit(new SVM_STORE(adr.objadr.addOffset(adr.offset), adr.indexed, adr.size), "RUPDATE: "); // Store into adr			
+		Global.PSEG.emit(new SVM_STORE(adr.objadr.addOffset(adr.offset), adr.size), "RUPDATE: "); // Store into adr			
 	}
 
 }

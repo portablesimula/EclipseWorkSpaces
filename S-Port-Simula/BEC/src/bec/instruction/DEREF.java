@@ -7,8 +7,6 @@ import bec.util.Type;
 import bec.virtualMachine.SVM_LOADA;
 
 public abstract class DEREF extends Instruction {
-	
-	private static final boolean DEBUG = false;
 
 	/**
 	 * addressing_instruction ::= deref
@@ -28,17 +26,10 @@ public abstract class DEREF extends Instruction {
      *                                                      |        |
      *                                                      '========'
 	 */
-	
-//	CheckTosRef;
-//  AssertAtrStacked; Pop; pushTemp(T_GADDR);
-
 	public static void ofScode() {
-		if(DEBUG) CTStack.dumpStack("DEREF: ");
 		CTStack.checkTosRef();
-		
 		AddressItem tos = (AddressItem) CTStack.TOS();
-		if(DEBUG) IO.println("DEREF.ofScode: tos="+tos);
-		Global.PSEG.emit(new SVM_LOADA(tos.objadr, tos.offset, tos.indexed), "DEREF'objadr: ");			
+		Global.PSEG.emit(new SVM_LOADA(tos.objadr, tos.offset), "DEREF'objadr: ");			
 		CTStack.pop();
 		CTStack.pushTempVAL(Type.T_GADDR, 2, "DEREF: ");
 		return;

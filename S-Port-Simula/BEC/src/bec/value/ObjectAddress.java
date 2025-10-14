@@ -9,7 +9,6 @@ import bec.descriptor.Descriptor;
 import bec.descriptor.Variable;
 import bec.segment.DataSegment;
 import bec.segment.Segment;
-import bec.util.Global;
 import bec.util.Option;
 import bec.util.Scode;
 import bec.util.Tag;
@@ -17,13 +16,13 @@ import bec.util.Type;
 import bec.util.Util;
 import bec.virtualMachine.CallStackFrame;
 import bec.virtualMachine.RTStack;
-import bec.virtualMachine.RTUtil;
 
 public class ObjectAddress extends Value {
 //	public DataSegment seg;
 	public int kind;
 	public String segID;
 	protected int ofst;
+	public boolean indexed;
 	
 	public static final int SEGMNT_ADDR = 1; // Segment Address
 	public static final int REMOTE_ADDR = 2; // Remote Address
@@ -31,11 +30,12 @@ public class ObjectAddress extends Value {
 	public static final int REL_ADDR    = 4; // Frame relative Addtess
 	public static final int STACK_ADDR  = 5; // Stack relative Address
 	
-	protected ObjectAddress(int kind, String segID,	int ofst) {
+	protected ObjectAddress(int kind, String segID,	int ofst, boolean indexed) {
 		this.type = Type.T_OADDR;
 		this.kind = kind;
 		this.segID = segID;
 		this.ofst = ofst;
+		this.indexed = indexed;
 	}
 	
 	/**
@@ -53,12 +53,12 @@ public class ObjectAddress extends Value {
 	}
 	
 	public static ObjectAddress ofSegAddr(String segID, int ofst) {
-		return new ObjectAddress(SEGMNT_ADDR, segID, ofst);
+		return new ObjectAddress(SEGMNT_ADDR, segID, ofst, false);
 	}
 	
 	public static ObjectAddress ofSegAddr(DataSegment seg, int ofst) {
 		String segID = (seg == null)? null : seg.ident;
-		return new ObjectAddress(SEGMNT_ADDR, segID, ofst);
+		return new ObjectAddress(SEGMNT_ADDR, segID, ofst, false);
 	}
 	
 //	public static ObjectAddress ofRelAddr(DataSegment seg) {
@@ -67,15 +67,15 @@ public class ObjectAddress extends Value {
 //	}
 
 	public static ObjectAddress ofRemoteAddr() {
-		return new ObjectAddress(REMOTE_ADDR, null, 0);
+		return new ObjectAddress(REMOTE_ADDR, null, 0, false);
 	}
 
 	public static ObjectAddress ofReferAddr() {
-		return new ObjectAddress(REFER_ADDR, null, 0);
+		return new ObjectAddress(REFER_ADDR, null, 0, false);
 	}
 
 	public static ObjectAddress ofRelFrameAddr(int ofst) {
-		return new ObjectAddress(REL_ADDR, null, ofst);
+		return new ObjectAddress(REL_ADDR, null, ofst, false);
 	}
 	
 	public int size() {
@@ -88,7 +88,7 @@ public class ObjectAddress extends Value {
 	}
 		
 	public Value copy() {
-		return new ObjectAddress(kind, segID,	ofst);
+		return new ObjectAddress(kind, segID, ofst, indexed);
 	}
 	
 	public int getOfst() { return ofst; }
@@ -96,7 +96,7 @@ public class ObjectAddress extends Value {
 	public void decrOffset() { ofst--; }
 	
 	public ObjectAddress addOffset(int ofst) {
-		return new ObjectAddress(this.kind, segID, this.ofst + ofst);
+		return new ObjectAddress(this.kind, segID, this.ofst + ofst, indexed);
 	}
 	
 	public ObjectAddress toStackAddress() {
@@ -108,38 +108,31 @@ public class ObjectAddress extends Value {
 			
 			CallStackFrame callStackTop = RTStack.callStack_TOP();
 			int bias = (callStackTop == null)? 0 : callStackTop.rtStackIndex;
-			oaddr = new ObjectAddress(STACK_ADDR, segID, bias + ofst);
-			
+			oaddr = new ObjectAddress(STACK_ADDR, segID, bias + ofst, indexed);
 //			IO.println("ObjectAddress.toStackAddress: VALUE: "+oaddr.load());
 		}
 //		Util.IERR("");
 		return oaddr;
 	}
 	
-//	public ObjectAddress toMemAddr() {
-//		ObjectAddress addr = this;
-//		switch(this.kind) {
-//			case ObjectAddress.SEGMNT_ADDR: break; // Nothing
-//			case ObjectAddress.REL_ADDR:    break; // Nothing
-//			case ObjectAddress.STACK_ADDR:  Util.IERR(""); break;
-//			case ObjectAddress.REMOTE_ADDR:
-//				ObjectAddress oaddr = RTStack.popOADDR();
-//				addr = oaddr.addOffset(addr.getOfst());
-//				break;
-//			case ObjectAddress.REFER_ADDR:
-//				int ofst = RTStack.popInt();
-//				addr = RTStack.popOADDR().addOffset(this.getOfst() + ofst);
-//				break;
-//			default: Util.IERR("");
-//		}
-//		return addr;
-//	}
+	/// Force 'objadr' unstacked.
+	/// Ie. pop off any stacked part and form the resulting address 'resadr'.
+	/// 
+	/// The unstacking of the 'objadr' depend on its address kind:
+	///
+	/// - REMOTE_ADDR: object address 'oaddr' is popped of the Runtime stack.
+	///                resadr := oaddr + objadr.offset
+	/// - REFER_ADDR:  'offset' and object address 'oaddr' is popped of the Runtime stack.
+	///                resadr := oaddr + objadr.offset + offset
+	/// - Otherwise:   resadr := objadr
+	///
+	/// @return resadr as calculated
+	///
 	public ObjectAddress toRTMemAddr() {
-//		ObjectAddress addr = this;
 		switch(this.kind) {
 			case ObjectAddress.SEGMNT_ADDR: return this; // Nothing
 			case ObjectAddress.REL_ADDR:    return this; // Nothing
-			case ObjectAddress.STACK_ADDR:  Util.IERR(""); return this;
+			case ObjectAddress.STACK_ADDR:  Util.IERR("NOT IMPL"); return this;
 			case ObjectAddress.REMOTE_ADDR:
 				ObjectAddress oaddr = RTStack.popOADDR();
 				return oaddr.addOffset(this.ofst);
@@ -235,13 +228,13 @@ public class ObjectAddress extends Value {
 	public Value add(Value other) {
 		if(other == null) return this;
 		if(other instanceof IntegerValue ival) {
-			return new ObjectAddress(this.kind, this.segID, this.ofst + ival.value);
+			return new ObjectAddress(this.kind, this.segID, this.ofst + ival.value, indexed);
 		} else if(other instanceof ObjectAddress oaddr) {
 			IO.println("ObjectAddress.add: this="+this);
 			IO.println("ObjectAddress.add: other="+other);
 			if(!oaddr.segID.equals(segID))
 				Util.IERR("Illegal ObjectAddress'add operation: "+oaddr.segID+" != "+segID);
-			return new ObjectAddress(this.kind, this.segID, this.ofst + oaddr.ofst);
+			return new ObjectAddress(this.kind, this.segID, this.ofst + oaddr.ofst, indexed);
 		} else {
 			Util.IERR(""+other.getClass().getSimpleName()+"  "+other);
 			return null;
@@ -252,7 +245,7 @@ public class ObjectAddress extends Value {
 	public Value sub(Value other) {
 		if(other == null) return this;
 		if(other instanceof IntegerValue ival) {
-			return new ObjectAddress(this.kind, this.segID, this.ofst - ival.value);
+			return new ObjectAddress(this.kind, this.segID, this.ofst - ival.value, indexed);
 		} else if(other instanceof ObjectAddress oaddr) {
 //			IO.println("ObjectAddress.sub: this="+this);
 //			IO.println("ObjectAddress.sub: other="+other);
@@ -340,24 +333,23 @@ public class ObjectAddress extends Value {
 	// ***********************************************************************************************
 	private ObjectAddress(AttributeInputStream inpt) throws IOException {
 		this.type = Type.T_OADDR;
-//		readLocals(this, inpt);
 		kind = inpt.readKind();
 		segID = inpt.readString();
 		ofst = inpt.readShort();
-//		IO.println("ObjectAddress.read: " + this);
+		indexed = inpt.readBoolean();
 	}
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
 		oupt.writeKind(Scode.S_C_OADDR);
 		writeBody(oupt);
-//		IO.println("ObjectAddress.write: " + this + "   segID="+segID+", ofst="+ofst);
 	}
 
 	public void writeBody(AttributeOutputStream oupt) throws IOException {
 		oupt.writeKind(kind);
 		oupt.writeString(segID);
 		oupt.writeShort(ofst);
+		oupt.writeBoolean(indexed);
 	}
 	
 	public static ObjectAddress read(AttributeInputStream inpt) throws IOException {

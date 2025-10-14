@@ -34,15 +34,11 @@ public abstract class UPDATE extends Instruction {
 	 * describe the value assigned.
 	 */
 	public static void ofScode() {
-		CTStack.forceTosValue();			
-		CTStack.checkSosRef();
-		CTStack.checkTypesEqual();
-//		FETCH.doFetch("ASSIGN: "); // Force TOS value
+		CTStack.forceTosValue(); CTStack.checkSosRef(); CTStack.checkTypesEqual();
 		CTStackItem tos = CTStack.pop();
 		AddressItem sos = (AddressItem) CTStack.pop();
 		CTStack.pushTempVAL(tos.type, 1, "UPDATE: ");
-
-		Global.PSEG.emit(new SVM_ASSIGN(true, sos.objadr.addOffset(sos.offset), sos.indexed, sos.size), "UPDATE: "); // Store into adr
+		Global.PSEG.emit(new SVM_ASSIGN(true, sos.objadr.addOffset(sos.offset), sos.size), "UPDATE: "); // Store into adr
 	}
 
 }

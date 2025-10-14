@@ -8,13 +8,17 @@ import bec.util.Global;
 import bec.util.Option;
 import bec.value.ObjectAddress;
 
-/**
- * The two top elements are replaced by the object address.
- *    RESULT = new ObjectAddress(segID, sos + tos)
- */
+/// Operation INCO
+/// 
+/// 	Runtime Stack
+/// 	   ..., sos, tos →
+/// 	   ..., result
+///
+/// The size 'tos' and the oaddr 'sos' are popped off the Runtime stack.
+/// The 'result' is calculated as result = new ObjectAddress(sos.segID, sos.offset + tos)
+/// Then the 'result' is pushed onto the Runtime Stack.
+///
 public class SVM_INCO extends SVM_Instruction {
-
-	private final boolean DEBUG = false;
 
 	public SVM_INCO() {
 		this.opcode = SVM_Instruction.iINCO;
@@ -22,21 +26,10 @@ public class SVM_INCO extends SVM_Instruction {
 
 	@Override
 	public void execute() {
-//		try {
 		int tos = RTStack.popInt();
 		ObjectAddress sos = RTStack.popOADDR();
-		if(DEBUG) {
-			IO.println("SVM_INCO: TOS: " + tos);
-			IO.println("SVM_INCO: SOS: " + sos);
-			IO.println("SVM_INCO: " + sos + " + " + tos);
-		}
-//		ObjectAddress res = (sos == null)? new ObjectAddress(null, tos) : sos.addOffset(tos);
 		ObjectAddress res = (sos == null)? ObjectAddress.ofRelFrameAddr(tos) : sos.addOffset(tos);
-		if(DEBUG) IO.println("SVM_INCO: " + sos + " + " + tos + " ==> " + res);
 		RTStack.push(res, "SVM_INCO: " + tos + " + " + sos + " = " + res);
-//		} catch(Exception e) {
-//			e.printStackTrace();
-//		}
 		Global.PSC.addOfst(1);
 	}
 

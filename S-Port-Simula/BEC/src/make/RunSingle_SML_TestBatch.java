@@ -40,7 +40,7 @@ public final class RunSingle_SML_TestBatch {
 		
 //		names.add("adHoc00.scd");
 //			names.add("adHoc01.scd");
-		names.add("adHoc02.scd");
+//		names.add("adHoc02.scd");
 //		names.add("adHoc03.scd");
 //			names.add("adHoc04.scd");
 //		names.add("adHoc05.scd");
@@ -52,7 +52,8 @@ public final class RunSingle_SML_TestBatch {
 //			names.add("adHoc11.scd");
 //			names.add("adHoc12.scd");
 //			names.add("adHoc13.scd");
-//			names.add("adHoc14.scd");
+//		names.add("adHoc14.scd");
+		names.add("adHoc15.scd");
 		
 //		names.add("smltst00.scd"); // Standard layout of test programs
 //			names.add("smltst01.scd"); // Simple Assignments

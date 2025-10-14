@@ -8,8 +8,6 @@ import bec.virtualMachine.SVM_LOAD;
 
 public abstract class FETCH extends Instruction {
 
-	private static final boolean DEBUG = false;
-
 	/**
 	 * addressing_instruction ::= fetch
 	 * 
@@ -29,19 +27,11 @@ public abstract class FETCH extends Instruction {
 		doFetch("FETCH");
 	}
 
-	
 	public static void doFetch(String comment) {
 		if(CTStack.TOS() instanceof AddressItem addr) {
-			if(DEBUG) IO.println("FETCH.doFetch: addr="+addr);
 			Type type = addr.type;
-			Global.PSEG.emit(new SVM_LOAD(addr.objadr.addOffset(addr.offset), addr.indexed, type.size()), comment + " " +type);				
+			Global.PSEG.emit(new SVM_LOAD(addr.objadr.addOffset(addr.offset), type.size()), comment + " " +type);				
 			CTStack.pop(); CTStack.pushTempVAL(type, 1, "GQFetch: ");
-			if(DEBUG) {
-				CTStack.dumpStack("GQfetch: "+comment);
-				Global.PSEG.dump("GQfetch: "+comment);
-			}
-//		} else {
-//			Global.PSEG.emit(new SVM_NOOP(), "GQfetch: "+comment);
 		}
 	}
 

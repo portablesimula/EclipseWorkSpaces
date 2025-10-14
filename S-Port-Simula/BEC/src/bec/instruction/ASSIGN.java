@@ -23,14 +23,11 @@ public abstract class ASSIGN extends Instruction {
 	 * assignment code is generated. SOS and TOS are popped from the stack.
 	 */
 	public static void ofScode() {
-		CTStack.checkSosRef();
-		CTStack.checkTypesEqual();
-		CTStack.forceTosValue();
+		CTStack.checkSosRef(); CTStack.checkTypesEqual(); CTStack.forceTosValue();
 		@SuppressWarnings("unused")
 		CTStackItem tos = CTStack.pop();
 		AddressItem sos = (AddressItem) CTStack.pop();
-
-		Global.PSEG.emit(new SVM_ASSIGN(false, sos.objadr.addOffset(sos.offset), sos.indexed, sos.size), "ASSIGN: "); // Store into adr
+		Global.PSEG.emit(new SVM_ASSIGN(false, sos.objadr.addOffset(sos.offset), sos.size), "ASSIGN: "); // Store into adr
 	}
 
 }

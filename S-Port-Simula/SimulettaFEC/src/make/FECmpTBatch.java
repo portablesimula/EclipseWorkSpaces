@@ -39,7 +39,7 @@ public final class FECmpTBatch {
 //		names.add("adHoc12");
 //		names.add("adHoc13");
 //		names.add("adHoc14");
-//		names.add("adHoc15");
+		names.add("adHoc15");
 		
 		names.add("smltst00"); // Standard layout of test programs
 		names.add("smltst01"); // Simple Assignments

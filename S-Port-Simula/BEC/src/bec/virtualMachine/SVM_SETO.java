@@ -13,6 +13,18 @@ import bec.value.ObjectAddress;
  * SAVE-OBJECT and SAVE-INDEX. Note that t-seto does not update SAVE-INDEX.
  * TOS is popped.
  */
+/// Operation GETO
+/// 
+/// 	Runtime Stack
+/// 	   ..., oaddr →
+/// 	   ...
+///
+/// An oaddr is popped of the Runtime stack and inserted
+/// into the pointer variable refered by SAVE-OBJECT and SAVE-INDEX.
+/// Note that t-seto does not update SAVE-INDEX.
+///
+/// See: SVM_INITO and SVM_GETO.
+///
 public class SVM_SETO extends SVM_Instruction {
 
 	public SVM_SETO() {

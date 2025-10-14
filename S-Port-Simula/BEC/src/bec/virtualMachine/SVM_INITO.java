@@ -22,6 +22,34 @@ import bec.value.Value;
  * i.e. SAVE-OBJECT is set to refer to the object, and SAVE-INDEX is initialized.
  * TOS is popped.
  */
+
+/// Operation INITO
+/// 
+/// 	Runtime Stack
+/// 	   ..., oaddr →
+/// 	   ...
+///
+/// The oaddr of a save-object is popped off the Runtime stack.
+/// It points to the first value after the Object head, and is
+/// reduced and saved in the SAVE-OBJECT pointer.
+///
+///
+/// 
+///          SAVE-OBJECT ---------->.=====================.
+///                                 |                     |
+///                                 |     Object head     |
+///                                 |                     |
+///          TOS oaddr ------------>|=====================|
+///                                 |                     |
+///                NEXT-------------|->.================. |
+///                                 |  |     oaddr      | |
+///                                 |  '================' |
+///                                 |                     |
+///                                 '====================='
+///
+/// See: SVM_GETO and SVM_SETO.
+/// See also S-Port - Definition of S-code - sect. 7. INTERMEDIATE RESULTS.
+///
 public class SVM_INITO extends SVM_Instruction {
 	private static ObjectAddress SAVE_OBJECT;
 	private static int SAVE_INDEX;
@@ -49,20 +77,18 @@ public class SVM_INITO extends SVM_Instruction {
 //	       variant entry(Pmovit)    moveIt;
 //	 end;
 
+	/// Used by SVM_GETO
 	static ObjectAddress get() {
 		while(SAVE_INDEX < SAVE_LENGTH) {
 			Value value = SAVE_OBJECT.addOffset(SAVE_INDEX++).load();
 			if(DEBUG) IO.println("SVM_INITO.get: SAVE_OBJECT["+(SAVE_INDEX-1)+"] = "+value);
 			if(value instanceof ObjectAddress oaddr) return oaddr;
 		}
-		if(DEBUG) {
-//			Segment.lookup("POOL_0").dump("SVM_INITO.execute: FINAL POOL_0", 0, 20);
-			IO.println("SVM_INITO.get: FINISHED !");
-//			Util.IERR("");
-		}
+		if(DEBUG) IO.println("SVM_INITO.get: FINISHED !");
 		return null;
 	}
 	
+	/// Used by SVM_SETO
 	static void set(ObjectAddress oaddr) {
 		if(DEBUG) IO.println("SVM_INITO.set: SAVE_OBJECT["+(SAVE_INDEX-1)+"] = "+oaddr);
 		SAVE_OBJECT.store(SAVE_INDEX - 1, oaddr, "SETO");
@@ -70,18 +96,14 @@ public class SVM_INITO extends SVM_Instruction {
 
 	@Override
 	public void execute() {
-//		if(DEBUG) Segment.lookup("POOL_0").dump("SVM_INITO.execute: INITIAL POOL_0", 0, 20);
 		try {
-//			SAVE_OBJECT = RTStack.popOADDR();
-			SAVE_OBJECT = RTStack.popOADDR().addOffset(-7);
+			SAVE_OBJECT = RTStack.popOADDR().addOffset(-7); // 7 == Size of Object Head
 			SAVE_INDEX = 0+6;
 			if(DEBUG) {
 				IO.println("SVM_INITO: " + SAVE_OBJECT.getClass().getSimpleName() + " " + SAVE_OBJECT);
 				RTUtil.dumpEntity(SAVE_OBJECT);
 			}
 			IntegerValue sort = (IntegerValue) SAVE_OBJECT.load(1);
-//			if(sort.value != 1) Util.IERR("NOT A SAVE OBJECT");
-//			if(sort.value != 9) Util.IERR("NOT A SAVE OBJECT");
 			if(sort.value != RTUtil.S_SAV) Util.IERR("NOT A SAVE OBJECT");
 			IntegerValue lng = (IntegerValue) SAVE_OBJECT.load(3);
 			if(DEBUG) IO.println("SVM_INITO: sort="+sort+", lng="+lng);
@@ -89,7 +111,6 @@ public class SVM_INITO extends SVM_Instruction {
 		} catch(Exception e) {
 			IO.println("SVM_INITO: FAILED: " + e);
 			e.printStackTrace();
-//			System.exit(-1);
 		}
 		
 		Global.PSC.addOfst(1);

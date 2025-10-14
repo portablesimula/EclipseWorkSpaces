@@ -220,6 +220,8 @@ public class RTFileAction {
 				// The value "anycreate" implies that if the file does exist
 				// at "open" the file is opened, otherwise a new file is created.
 				if (!file.exists()) {
+					IO.println("RTFileAction.doCreateAction: " + file + " +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+//					file.mkdirs();
 					boolean success = file.createNewFile();
 					// IO.println("FILE.doCreateAction: Create on "+file+",
 					// success="+success);

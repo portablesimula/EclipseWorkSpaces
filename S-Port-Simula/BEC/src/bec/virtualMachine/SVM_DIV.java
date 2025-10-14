@@ -12,6 +12,18 @@ import bec.value.Value;
 /**
  * Remove to items on the Runtime-Stack and push the value (SOS / TOS)
  */
+/// Operation DIV
+/// 
+/// 	Runtime Stack
+/// 	   ..., sos, tos →
+/// 	   ..., result
+///
+/// The 'tos' and 'sos' are popped off the Runtime stack.
+/// The 'result' is calculated as result = sos / tos.
+/// Then the 'result' is pushed onto the Runtime Stack.
+/// 
+/// 'tos' and 'sos' must be of the same arithmetic type, i.e. int, float or double.
+///
 public class SVM_DIV extends SVM_Instruction {
 
 	public SVM_DIV() {

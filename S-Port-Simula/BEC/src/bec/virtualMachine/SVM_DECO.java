@@ -8,13 +8,18 @@ import bec.util.Global;
 import bec.util.Option;
 import bec.value.ObjectAddress;
 
-/**
- * The two top elements are replaced by the object address.
- *    RESULT = new ObjectAddress(segID, sos - tos)
- */
+/// Operation DECO
+/// 
+/// 	Runtime Stack
+/// 	   ..., sos, tos →
+/// 	   ..., result
+///
+/// The size 'tos' and the oaddr 'sos' are popped off the Runtime stack.
+/// The 'result' is calculated as result = new ObjectAddress(sos.segID, sos.offset - tos)
+/// Then the 'result' is pushed onto the Runtime Stack.
+/// 
+///
 public class SVM_DECO extends SVM_Instruction {
-
-	private final boolean DEBUG = false;
 
 	public SVM_DECO() {
 		this.opcode = SVM_Instruction.iDECO;
@@ -24,14 +29,7 @@ public class SVM_DECO extends SVM_Instruction {
 	public void execute() {
 		int tos = RTStack.popInt();
 		ObjectAddress sos = RTStack.popOADDR();
-		if(DEBUG) {
-			IO.println("SVM_DECO: TOS: " + tos);
-			IO.println("SVM_DECO: SOS: " + sos);
-			IO.println("SVM_DECO: " + sos + " - " + tos);
-		}
-//		ObjectAddress res = (sos == null)? new ObjectAddress(null, -tos) : sos.addOffset(-tos);
 		ObjectAddress res = (sos == null)? ObjectAddress.ofRelFrameAddr( -tos) : sos.addOffset(-tos);
-		if(DEBUG) IO.println("SVM_DECO: " + sos + " - " + tos + " ==> " + res);
 		RTStack.push(res, "SVM_DECO: " + tos + " - " + sos + " = " + res);
 		Global.PSC.addOfst(1);
 	}

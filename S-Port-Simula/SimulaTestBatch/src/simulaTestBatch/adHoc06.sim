@@ -1,0 +1,8 @@
+
+begin
+
+   integer array A(0:10);
+   A(5) := 444;
+   A(5) := -A(5);
+
+end;

@@ -8,11 +8,10 @@ import bec.descriptor.Variable;
 import bec.util.Scode;
 import bec.util.Tag;
 import bec.util.Util;
+import bec.value.ObjectAddress;
 
 public abstract class PUSH extends Instruction {
-	
-	private static final boolean DEBUG = false;
-	
+
 	/**
 	 * stack_instruction ::= push obj:tag | pushv obj:tag
 	 * 
@@ -20,21 +19,15 @@ public abstract class PUSH extends Instruction {
 	 */
 	public static void ofScode(int instr) {
 		Tag tag = Tag.ofScode();
-		if(DEBUG) IO.println("PUSH.doCode: tag="+Scode.edTag(tag.val)+"  "+tag);
 		Descriptor x = tag.getMeaning();
 		if(x instanceof Variable var) {
-			AddressItem addr = new AddressItem(var.type,0,var.address);
-			if(DEBUG) {
-				IO.println("PUSH.doCode: var="+var);
-				IO.println("PUSH.doCode: addr="+addr);				
-			}
-			CTStack.push(addr);
+				ObjectAddress oaddr = (ObjectAddress) var.address.copy();
+				CTStack.push(new AddressItem(var.type,0,oaddr));
 		} else if(x instanceof ConstDescr cns) {
-			CTStack.push(new AddressItem(cns.type,0,cns.getAddress()));
+				ObjectAddress oaddr = (ObjectAddress) cns.getAddress().copy();
+				CTStack.push(new AddressItem(cns.type,0,oaddr));
 		} else Util.IERR("");
         if(instr == Scode.S_PUSHV) FETCH.doFetch("PUSHV: ");
-        
-//		CTStack.dumpStack("PUSH: "+Scode.edInstr(instr));
 	}
 
 }

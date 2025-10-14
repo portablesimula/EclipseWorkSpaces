@@ -10,6 +10,8 @@ import bec.util.Util;
 
 // POP RT-Stack'TOS 
 // The aux values on the top of the operand stack is popped off and forgotten.
+//
+// aux == -1  POPALL
 public class SVM_POPK extends SVM_Instruction {
 	private final int aux;
 	

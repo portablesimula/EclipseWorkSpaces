@@ -1,20 +1,25 @@
 
 begin
 
+   class Q(pA);
+      integer   array  pA;
+   begin
+      integer         z;
+      z := 0;
 
-	procedure test(result,expected); text result,expected; begin
-		if result <> expected then  !*** NOTE 5 ***;
-	   	begin
-	    	outtext (" - the following result is wrong: ");
-	   	end;
-	end;
-	
-	text txt;
-	txt :- blanks(5);
-	
-	txt.putint (7);
-%	outtext(txt); outimage;
-	test(txt,"    7");
+         pA(z) := -pA(z);
+   end of class Q;
 
 
-end of program;
+   ref(Q)             qr;
+   integer            i1;
+   integer   array    ARR(0:10);
+
+      ARR(0) := 444;
+      ARR(5) := 555;
+
+   qr :- new Q(ARR);
+
+
+
+end;

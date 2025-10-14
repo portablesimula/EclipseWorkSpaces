@@ -7,6 +7,13 @@ import bec.util.Global;
 import bec.util.Option;
 import bec.util.Util;
 
+/// Operation PRECALL rutIdent nParSlots exportSize importSize
+/// 
+///	  Runtime Stack
+///		..., arg1, arg2, ... , arg'n →
+///		..., value1, value2, ... , value'size
+///
+///
 public class SVM_PRECALL extends SVM_Instruction {
 	private final String rutIdent;
 	private final int nParSlots;

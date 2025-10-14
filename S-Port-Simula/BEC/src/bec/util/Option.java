@@ -2,7 +2,7 @@ package bec.util;
 
 public abstract class Option {
 	
-//	public static final boolean TESTING_DEREF = true;	
+//	public static final boolean TESTING_INDEXED = true;	
 
 	public static boolean INLINE_TESTING = false;
 	public static boolean verbose = false;

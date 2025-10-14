@@ -10,6 +10,21 @@ import bec.util.Relation;
 import bec.value.BooleanValue;
 import bec.value.Value;
 
+/// Operation COMPARE relation
+/// 
+/// 		relation ::= ?lt | ?le | ?eq | ?ge | ?gt | ?ne
+/// 
+/// 	Runtime Stack
+/// 	   ..., sos, tos →
+/// 	   ..., result
+///
+/// The 'tos' and 'sos' are popped off the Runtime stack.
+/// The 'result' is calculated as result = sos relation tos.
+/// Then the boolean 'result' is pushed onto the Runtime Stack.
+/// 
+/// 'tos' and 'sos' must be of the same arithmetic type, i.e. int, float or double,
+/// or boolean, in which case: relation ::= ?eq | ?ne
+///
 public class SVM_COMPARE extends SVM_Instruction {
 	private final Relation relation;
 	

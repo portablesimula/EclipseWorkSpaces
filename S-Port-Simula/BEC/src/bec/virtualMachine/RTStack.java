@@ -202,7 +202,7 @@ public abstract class RTStack {
 		if(value instanceof IntegerValue ival) {
 			return (ival==null)? 0 : ival.value;
 		}
-		Util.IERR("");
+		Util.IERR(""+value.getClass().getSimpleName());
 		return 0;
 	}
 	

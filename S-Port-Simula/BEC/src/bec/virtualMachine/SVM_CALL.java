@@ -10,6 +10,13 @@ import bec.value.ObjectAddress;
 import bec.value.ProgramAddress;
 import bec.value.Value;
 
+/// Operation CALL rutadr returSlot
+/// 
+///	  Runtime Stack
+///		..., value1, value2, ... , value'n →
+///		..., value1, value2, ... , value'size
+///
+///
 public class SVM_CALL extends SVM_Instruction {
 	private final ProgramAddress rutAddr;
 	private final ObjectAddress returSlot;
@@ -27,17 +34,13 @@ public class SVM_CALL extends SVM_Instruction {
 	@Override	
 	public void execute() {
 		ProgramAddress retur = Global.PSC.copy();
-//		retur.ofst++;
 		retur.addOfst(1);
 		if(Option.EXEC_TRACE > 0) {
 			ProgramAddress.printInstr(this,false);
 		}
-//		IO.println("SVM_CALL:execute: " + this);
 		if(rutAddr == null) {
 			// CALL-TOS			
 			Global.PSC = (ProgramAddress) RTStack.pop().copy();
-//			IO.println("SVM_CALL.execute: PSC="+Global.PSC);
-//			Global.PSC.segment().dump("SVM_CALL.execute: ", 0, 10);
 		} else {
 			Global.PSC = rutAddr.copy();
 		}

@@ -8,19 +8,18 @@ import bec.util.Global;
 import bec.util.Option;
 import bec.value.Value;
 
-/**
- * Operation ADD
- * 
- * 	Runtime Stack
- * 	   ..., sos, tos →
- * 	   ..., result
- *
- * The 'tos' and 'sos' are popped off the Runtime stack.
- * The 'result' is calculated as result = sos + tos.
- * Then the 'result' is pushed onto the Runtime Stack.
- * 
- * 'tos' and 'sos' must be of the same arithmetic type, i.e. int, float or double.
- */
+/// Operation ADD
+/// 
+/// 	Runtime Stack
+/// 	   ..., sos, tos →
+/// 	   ..., result
+///
+/// The 'tos' and 'sos' are popped off the Runtime stack.
+/// The 'result' is calculated as result = sos + tos.
+/// Then the 'result' is pushed onto the Runtime Stack.
+/// 
+/// 'tos' and 'sos' must be of the same arithmetic type, i.e. int, float or double.
+///
 public class SVM_ADD extends SVM_Instruction {
 
 	public SVM_ADD() {

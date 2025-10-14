@@ -28,22 +28,15 @@ public class StringValue extends Value {
 	// ***********************************************************************************************
 	private StringValue(AttributeInputStream inpt) throws IOException {
 		this.type = Type.T_STRING;
-//		IO.println("NEW StringValue: ");
-//		addr = ObjectAddress.read(inpt);
 		String segID = inpt.readString();
 		int ofst = inpt.readShort();
-//		addr = new ObjectAddress(segID,	ofst);
 		addr = ObjectAddress.ofSegAddr(segID,	ofst);
-//		IO.println("NEW StringValue: addr="+addr);
 		lng = inpt.readShort();
-//		IO.println("NEW StringValue: " + this);
-//		Util.IERR("SJEKK DETTE");
 	}
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
 		oupt.writeKind(Scode.S_STRING);
-//		addr.write(oupt);
 		oupt.writeString(addr.segID);
 		oupt.writeShort(addr.ofst);
 		

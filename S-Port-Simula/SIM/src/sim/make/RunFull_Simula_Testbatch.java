@@ -148,7 +148,7 @@ public class RunFull_Simula_Testbatch {
 		names.add("simtst76"); // OK:  Test of detach and resume in SIMSET.
 //		names.add("simtst77"); // OK:  Two infile objects reading from the same external file.
 		names.add("simtst78"); // OK:  Test the text procedure filename of class file.
-		names.add("simtst79"); // OK:  Test the attribute 'IsOpen' of class file.
+//		names.add("simtst79"); // OK:  Test the attribute 'IsOpen' of class file.
 		names.add("simtst80"); // OK:  Test the attribute 'IsOpen' of class file.
 
 		names.add("simtst81"); // OK:  Test the value of close.
@@ -206,7 +206,7 @@ public class RunFull_Simula_Testbatch {
 //		names.add("simtst126"); // ERR: GOTO SIMPLE SWITCH   // SORRY, switch element requiring thunk IS NOT IMPLEMENTED
 		names.add("simtst127"); // OK: Switch (character) Statement
 		names.add("simtst128"); // OK: Standard Procedure edit and edfix
-		names.add("Precompiled129"); // ERR: Precompile this for Simtst 129.
+		names.add("Precompiled129"); // OK: Precompile this for Simtst 129.
 		names.add("simtst129"); // OK: Switch in precompiled class
 //		names.add("simtst130"); // ERR: Class SimLib, a set of utility procedures from DEC Handbook.  // NOT IMPLEMENTED
 

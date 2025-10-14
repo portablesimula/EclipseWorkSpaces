@@ -10,7 +10,18 @@ import bec.value.IntegerValue;
 import bec.value.ObjectAddress;
 import bec.value.Value;
 
-//The value is pushed onto the operand stack.
+/// Operation SAVE
+/// 
+///	  Runtime Stack
+///		value1, value2, ... , value'size, oaddr →
+///		- empty
+///
+/// The oaddr of a save-object is popped off the Runtime stack.
+/// Then the complete Runtime stack is saved within the save-object.
+///
+/// See: SVM_PUSHLEN and SVM_RERSTORE
+/// See also S-Port - Definition of S-code - sect. 7. INTERMEDIATE RESULTS.
+///
 public class SVM_SAVE extends SVM_Instruction {
 
 	private static final boolean DEBUG = false;
@@ -19,20 +30,6 @@ public class SVM_SAVE extends SVM_Instruction {
 		this.opcode = SVM_Instruction.iSAVE;
 	}
 	
-	/// save
-	/// * force TOS value; check TOS type(OADDR);
-	/// * pop;
-	/// * remember stack;
-	/// * purge stack;
-	///
-	/// TOS describes the address of a save-object. The size of this object is as determined by the
-	/// preceding pushlen. The complete state of the stack is remembered (together with the values of
-	/// ALLOCATED and MARKS) and the compilation continues with an empty stack.
-	///
-	/// Code is generated, which - if TOS.VALUE <> onone (see note below) - at run time will save the
-	/// used part of the temporary area, and set the SAVE-MARKS attribute.
-	///
-	/// TOS is popped.
 	@Override
 	public void execute() {
 		saveStack();

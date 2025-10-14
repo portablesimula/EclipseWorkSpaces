@@ -13,9 +13,19 @@ import bec.value.ObjectAddress;
 /**
  * TOS and SOS are replaced by a description of the signed distance from TOS to SOS.
  */
+/// Operation DIST
+/// 
+/// 	Runtime Stack
+/// 	   ..., sos, tos →
+/// 	   ..., result
+///
+/// The 'tos' and 'sos' are popped off the Runtime stack.
+/// The 'result' is calculated as result = sos - tos.
+/// Then the 'result' is pushed onto the Runtime Stack.
+/// 
+/// 'tos' and 'sos' must be of the type oaddr.
+///
 public class SVM_DIST extends SVM_Instruction {
-
-	private final boolean DEBUG = false;
 
 	public SVM_DIST() {
 		this.opcode = SVM_Instruction.iDIST;
@@ -25,15 +35,9 @@ public class SVM_DIST extends SVM_Instruction {
 	public void execute() {
 		ObjectAddress tos = RTStack.popOADDR();
 		ObjectAddress sos = RTStack.popOADDR();
-		if(DEBUG) {
-			IO.println("SVM_DIST: TOS: " + tos);
-			IO.println("SVM_DIST: SOS: " + sos);
-			IO.println("SVM_DIST: " + sos + " - " + tos);
-		}
 		int tval = (tos == null)? 0 : tos.getOfst();
 		int sval = (sos == null)? 0 : sos.getOfst();
 		IntegerValue res = IntegerValue.of(Type.T_SIZE, sval - tval);
-		if(DEBUG) IO.println("SVM_DIST: " + sos + " - " + tos + " ==> " + res);
 		RTStack.push(res, "SVM_DIST: " + sos + " - " + tos + " = " + res);
 		Global.PSC.addOfst(1);
 	}
