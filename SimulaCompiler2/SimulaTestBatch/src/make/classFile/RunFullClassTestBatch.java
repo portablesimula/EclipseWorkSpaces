@@ -275,6 +275,15 @@ public final class RunFullClassTestBatch {
 		names.add("simerr09.sim"); // OK: Read/write access on DirectFile and DirectByteFile
 		names.add("simerr10.sim"); // OK: Integer Overflow
 
+		names.add("single_tst01.sim"); // OK: Single test: L: OutText("...");
+		names.add("single_tst02.sim"); // OK: Single test: OutText("...");
+		names.add("single_tst03.sim"); // OK: Single test: L: if true then OutText("...");
+		names.add("single_tst04.sim"); // OK: Single test: if true then OutText("...");
+		names.add("single_tst05.sim"); // OK: Single test: L: inspect new simset do begin OutText("..."); end
+		names.add("single_tst06.sim"); // OK: Single test: inspect new simset do begin OutText("..."); end
+		names.add("single_tst07.sim"); // OK: Single test: L: while ...
+		names.add("single_tst08.sim"); // OK: Single test: while ...
+
 		for(String name:names) {
 			String fileName = sourceDir+name;
 			Option.internal.RUNTIME_USER_DIR=new File(fileName).getParent();

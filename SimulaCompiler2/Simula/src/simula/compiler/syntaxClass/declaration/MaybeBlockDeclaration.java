@@ -109,10 +109,13 @@ public final class MaybeBlockDeclaration extends BlockDeclaration {
 			Parse.TRACE("Parse MayBeBlock");
 		while (Declaration.acceptDeclaration(this))
 			Parse.expect(KeyWord.SEMICOLON);
-		while (!Parse.accept(KeyWord.END)) {
+		while (!Parse.accept(KeyWord.END, KeyWord.EOF)) {
 			Statement stm = Statement.expectStatement();
 			if (stm != null) statements.add(stm);
 		}
+		if (Parse.prevToken.keyWord == KeyWord.EOF) {
+			Util.error("Illegal termination of block. Missing END.");
+		}		
 		if (declarationKind != ObjectKind.SimulaProgram) {
 			if (!declarationList.isEmpty()) {
 				declarationKind = ObjectKind.SubBlock;

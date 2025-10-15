@@ -51,7 +51,7 @@ SimulaTest(109,"--- Simple Co-Routine Sample 2: detach - resume") begin
       trace("Main: Before second resume");
       resume(x);
       trace("Main: Before third resume");
-      !resume(x); !Will cause ERROR: Resume(x): x is not in detached state.
+%     !resume(x); !Will cause ERROR: Resume(x): x is not in detached state.
    end subBlock;
    
    

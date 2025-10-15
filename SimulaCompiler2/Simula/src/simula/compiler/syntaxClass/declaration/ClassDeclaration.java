@@ -358,7 +358,7 @@ public class ClassDeclaration extends BlockDeclaration {
 				Parse.accept(KeyWord.SEMICOLON);
 			}
 			boolean seen = false;
-			while (!Parse.accept(KeyWord.END)) {
+			while (!Parse.accept(KeyWord.END, KeyWord.EOF)) {
 				stm = Statement.expectStatement();
 				if (stm != null)
 					cls.statements.add(stm);
@@ -369,6 +369,9 @@ public class ClassDeclaration extends BlockDeclaration {
 						cls.statements.add(new InnerStatement(Parse.currentToken.lineNumber));
 					seen = true;
 				}
+			}
+			if (Parse.prevToken.keyWord == KeyWord.EOF) {
+				Util.error("Illegal termination of class declaration. Missing END.");
 			}
 			if (!seen)
 				cls.statements.add(new InnerStatement(Parse.currentToken.lineNumber)); // Implicit INNER

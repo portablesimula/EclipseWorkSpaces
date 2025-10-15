@@ -8,6 +8,7 @@ package simula.compiler.parsing;
 import java.io.Reader;
 
 import simula.compiler.syntaxClass.Type;
+import simula.compiler.utilities.Global;
 import simula.compiler.utilities.KeyWord;
 import simula.compiler.utilities.Token;
 import simula.compiler.utilities.Util;
@@ -51,9 +52,6 @@ public final class Parse {
 	/// The saved Token used by 'pushBack'
 	private static Token savedToken; // Used by 'pushBack'
 	
-	/// Indicate that endOfFile error is given
-	private static boolean endOfFileErrorGiven;
-	
 	/// The SimulaScanner
 	private static SimulaScanner simulaScanner;
 	
@@ -73,7 +71,6 @@ public final class Parse {
 		prevToken = null;
 		currentToken = null;
 		savedToken = null; // Used by 'pushBack'
-		endOfFileErrorGiven=false;
 
 		nextToken();
 	}
@@ -98,19 +95,14 @@ public final class Parse {
 		if (savedToken == null) {
 			Parse.currentToken = simulaScanner.nextToken();
 			if (Parse.currentToken == null) {
-				if (!endOfFileErrorGiven) {
-					//Util.warning("Possible scanning past END-OF-FILE");
-					//Util.error("Possible scanning past END-OF-FILE.");
-				}
-				endOfFileErrorGiven = true;
-				Parse.currentToken = new Token(KeyWord.END);
-//				Parse.currentToken = new Token(KeyWord.EOF);
+				Parse.currentToken = new Token(KeyWord.EOF);
+//				IO.println("Parse.nextToken: EOF");
 			}
 		} else {
 			Parse.currentToken = savedToken;
 			savedToken = null;
 		}
-		if(Parse.currentToken.getKeyWord()==KeyWord.IDENTIFIER)
+		if(Parse.currentToken != null && Parse.currentToken.getKeyWord()==KeyWord.IDENTIFIER)
 			if(Parse.prevToken!=null && Parse.prevToken.getKeyWord()==KeyWord.IDENTIFIER) {
 				Util.error("Misplaced identifier "+Parse.currentToken+" directly after the identifier "+Parse.prevToken+" - Ignored");
 		        nextToken();
@@ -129,10 +121,25 @@ public final class Parse {
 			if (Parse.currentToken.getKeyWord() == key) {
 				nextToken();
 //				IO.println("Line "+ Global.sourceLineNumber+": Parse.accept: " + KeyWord.edit(key) + " accepted, nextToken: " + Parse.currentToken);
-				return (true);
+//				acceptTrace(key, keys);
+				return true;
 			}
-		return (false);
+//		acceptTrace(0, keys);
+		return false;
 	}
+	
+//	private static void acceptTrace(int accepted, int...keys) {
+//		String keyList = "";
+//		String sep = "";
+//		for (int key : keys) {
+//			keyList += sep + KeyWord.edit(key);
+//			sep = ",";
+//		}
+//		String line = "Line "+ Global.sourceLineNumber+": Parse.accept(" + keyList + ")";
+//		if(accepted != 0)
+//			 IO.println(line + KeyWord.edit(accepted) + " accepted, nextToken: " + Parse.currentToken);
+//		else IO.println(line + " not accepted, nextToken: " + Parse.currentToken);
+//	}
 
 	/// Expect the given KeyWord.
 	/// 

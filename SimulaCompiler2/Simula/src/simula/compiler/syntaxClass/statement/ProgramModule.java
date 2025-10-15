@@ -10,13 +10,13 @@ import java.util.Vector;
 
 import simula.compiler.parsing.Parse;
 import simula.compiler.syntaxClass.Type;
+import simula.compiler.syntaxClass.declaration.BlockDeclaration;
 import simula.compiler.syntaxClass.declaration.ClassDeclaration;
 import simula.compiler.syntaxClass.declaration.ConnectionBlock;
 import simula.compiler.syntaxClass.declaration.Declaration;
 import simula.compiler.syntaxClass.declaration.DeclarationScope;
 import simula.compiler.syntaxClass.declaration.ExternalDeclaration;
 import simula.compiler.syntaxClass.declaration.MaybeBlockDeclaration;
-import simula.compiler.syntaxClass.declaration.PrefixedBlockDeclaration;
 import simula.compiler.syntaxClass.declaration.ProcedureDeclaration;
 import simula.compiler.syntaxClass.declaration.StandardClass;
 import simula.compiler.syntaxClass.declaration.StandardProcedure;
@@ -37,20 +37,16 @@ import simula.compiler.utilities.Util;
 /// 
 /// Simula Standard: Chapter 6 Program Modules
 /// 
-///      SIMULA-source-module
+///	     SIMULA-source-module
 ///         = [ external-head ] ( program | procedure-declaration | class-declaration )
-///         
+///
 ///         external-head = external-declaration ; { external-declaration ; }
 ///         
 ///            external-declaration = external-procedure-declaration | external-class-declaration
 ///            
-/// 			program = [ block-prefix ] block | [ block-prefix ] compound-statement
+/// 		program = statement
 /// 
-/// 				block-prefix = class-identifier [ ( actual-parameter-part ) ]
-/// 
-/// 			procedure-declaration
-/// 			     = [ type ] PROCEDURE procedure-identifier procedure-head procedure-body
-/// 
+/// 		procedure-declaration = [ type ] PROCEDURE procedure-identifier procedure-head procedure-body
 /// </pre>
 /// 
 /// @author SIMULA Standards Group
@@ -92,10 +88,10 @@ public final class ProgramModule extends Statement {
 	/// Create a new ProgramModule.
 	public ProgramModule() {
 		super(0);
-		DeclarationScope mainModule=null;
+//		DeclarationScope mainModule=null;
 		sysin=new VariableExpression("sysin");
 		sysout=new VariableExpression("sysout");
-		try	{
+//		try	{
 			if(Option.internal.TRACE_PARSE) Parse.TRACE("Parse Program");
 			Global.setScope(StandardClass.BASICIO);		    	// BASICIO Begin
 			new ConnectionBlock(sysin, null)                     	//    Inspect sysin do
@@ -107,31 +103,70 @@ public final class ProgramModule extends Statement {
 				externalHead = ExternalDeclaration.expectExternalHead(StandardClass.BASICIO);					
 				Parse.expect(KeyWord.SEMICOLON);
 			}
+		
+			if(Option.verbose) Util.TRACE("ProgramModule: END NEW SimulaProgram: "+toString());
+//		} catch(Throwable e) {
+//			e.printStackTrace();
+//			Util.IERR();
+//			}
+//		this.mainModule=mainModule;
+		this.mainModule = mainProgram();
+	}
+	
+	private DeclarationScope mainProgram() {
+			DeclarationScope mainModule=null;
 			String ident=Parse.acceptIdentifier();
 			if(ident!=null) {
 				if(Parse.accept(KeyWord.CLASS)) mainModule=ClassDeclaration.expectClassDeclaration(ident);
 			    else {
-			    	VariableExpression blockPrefix=VariableExpression.expectVariable(ident);	
-			    	
-			  	    Parse.expect(KeyWord.BEGIN);
-		        	mainModule=PrefixedBlockDeclaration.expectPrefixedBlock(blockPrefix,true);
+			    	Parse.saveCurrentToken();
+			    	mainModule = doParseProgram();
 			    }
 			}
-			else if(Parse.accept(KeyWord.BEGIN)) mainModule=MaybeBlockDeclaration.createMainProgramBlock(); 
+//			else if(Parse.accept(KeyWord.BEGIN)) mainModule=MaybeBlockDeclaration.createMainProgramBlock(); 
 			else if(Parse.accept(KeyWord.CLASS)) mainModule=ClassDeclaration.expectClassDeclaration(null);
 			else {
 				Type type=Parse.acceptType();
-			    if(Parse.expect(KeyWord.PROCEDURE)) mainModule=ProcedureDeclaration.expectProcedureDeclaration(type);
+			    if(Parse.accept(KeyWord.PROCEDURE)) mainModule=ProcedureDeclaration.expectProcedureDeclaration(type);
+			    else {
+			    	mainModule = doParseProgram();
+			    }
 			}
 			StandardClass.BASICIO.declarationList.add(mainModule);
-		
-			if(Option.verbose) Util.TRACE("ProgramModule: END NEW SimulaProgram: "+toString());
-		} catch(Throwable e) {
-			e.printStackTrace();
-			Util.IERR();
-			}
-		this.mainModule=mainModule;
-	}	
+			return mainModule;
+	}
+	
+	private DeclarationScope doParseProgram() {
+//		if (Option.internal.TRACE_PARSE) Util.TRACE("ProgramModule.doParseProgram: line="+lineNumber+" "+Parse.prevToken);
+		BlockDeclaration mainBlock = new MaybeBlockDeclaration(Global.sourceName);
+//		mainBlock.lineNumber = Parse.prevToken.lineNumber;
+		mainBlock.isMainModule = true;
+		mainBlock.declarationKind = ObjectKind.SimulaProgram;
+//		mainBlock.modifyIdentifier(Global.sourceName);
+
+		Statement program = Statement.expectStatement();
+//    	IO.println("ProgramModule.mainProgram: "+program);
+		mainBlock.statements.add(program);
+		return mainBlock;
+	}
+	
+	private DeclarationScope doParseProgram1() {
+		BlockDeclaration mainBlock=null;
+    	Statement program = Statement.expectStatement();
+//    	IO.println("ProgramModule.mainProgram: "+program);
+    	if(program instanceof BlockStatement blk) {
+    		mainBlock = blk.blockDeclaration;
+    	} else {
+    		if (Option.internal.TRACE_PARSE) Util.TRACE("ProgramModule.doParseProgram: line="+lineNumber+" "+Parse.prevToken);
+    		mainBlock = new MaybeBlockDeclaration(Global.sourceName);
+    		mainBlock.lineNumber = Parse.prevToken.lineNumber;
+    		mainBlock.statements.add(program);
+    	}
+		mainBlock.isMainModule = true;
+		mainBlock.declarationKind = ObjectKind.SimulaProgram;
+//		mainBlock.modifyIdentifier(Global.sourceName);
+		return mainBlock;
+	}
 
 	@Override
 	public void doChecking() {

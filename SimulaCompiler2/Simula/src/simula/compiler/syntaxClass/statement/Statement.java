@@ -111,6 +111,7 @@ public abstract class Statement extends SyntaxClass {
 		    case KeyWord.INNER:      Parse.nextToken(); return (new InnerStatement(lineNumber));
 		    case KeyWord.SEMICOLON:  Parse.nextToken(); return (new DummyStatement(lineNumber)); // Dummy Statement
 		    case KeyWord.END:        return (new DummyStatement(lineNumber)); // Dummy Statement, keep END
+		    case KeyWord.EOF:    	 return (new DummyStatement(lineNumber)); // Dummy Statement, keep EOF
 		
 		    case KeyWord.IDENTIFIER: case KeyWord.NEW: case KeyWord.THIS: case KeyWord.BEGPAR:
 		         Expression expr = Expression.acceptExpression();

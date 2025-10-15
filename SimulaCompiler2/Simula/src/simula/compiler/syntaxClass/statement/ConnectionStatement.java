@@ -21,6 +21,7 @@ import simula.compiler.syntaxClass.declaration.ConnectionBlock;
 import simula.compiler.syntaxClass.declaration.DeclarationScope;
 import simula.compiler.syntaxClass.declaration.InspectVariableDeclaration;
 import simula.compiler.syntaxClass.declaration.MaybeBlockDeclaration;
+import simula.compiler.syntaxClass.declaration.StandardClass;
 import simula.compiler.syntaxClass.expression.AssignmentOperation;
 import simula.compiler.syntaxClass.expression.Expression;
 import simula.compiler.syntaxClass.expression.VariableExpression;
@@ -132,10 +133,15 @@ public final class ConnectionStatement extends Statement {
 		inspectedVariable = new VariableExpression(ident);
 		DeclarationScope scope = Global.getCurrentScope();
 		inspectVariableDeclaration = new InspectVariableDeclaration(Type.Ref("RTObject"), ident, scope, this);
-		while (scope instanceof ConnectionBlock
+		
+		LOOP: while (scope instanceof ConnectionBlock
 				|| (scope instanceof MaybeBlockDeclaration && scope.declarationList.size() == 0 )) {
-			scope = scope.declaredIn;
+			if(scope instanceof BlockDeclaration blk && blk.isMainModule) break LOOP;
+			DeclarationScope declaredIn = scope.declaredIn;
+			scope = declaredIn;
 		}
+			
+//		IO.println("NEW ConnectionStatement: add inspectVariableDeclaration to "+scope);
 		scope.declarationList.add(inspectVariableDeclaration);
 		inspectVariableDeclaration.declaredIn = scope;
 

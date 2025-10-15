@@ -51,7 +51,7 @@ import simula.compiler.utilities.Util;
 public final class BlockStatement extends Statement {
 	
 	/// The associated block declaration.
-	private BlockDeclaration blockDeclaration;
+	public BlockDeclaration blockDeclaration;
 
 	/// Create a new BlockStatement.
 	/// @param blockDeclaration the BlockDeclaration

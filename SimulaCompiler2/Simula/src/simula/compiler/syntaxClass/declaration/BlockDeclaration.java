@@ -41,7 +41,7 @@ import simula.compiler.utilities.Util;
 public abstract class BlockDeclaration extends DeclarationScope {
 	
 	/// If true; this is the outermost Subblock or Prefixed Block.
-	protected boolean isMainModule;
+	public boolean isMainModule;
 	
 	/// The statements belonging to this block.
 	public ObjectList<Statement> statements = new ObjectList<Statement>();

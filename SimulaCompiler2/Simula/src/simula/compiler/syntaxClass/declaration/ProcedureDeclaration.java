@@ -277,9 +277,12 @@ public class ProcedureDeclaration extends BlockDeclaration {
 			}
 //			Vector<Statement> stmList = proc.statements;
 			ObjectList<Statement> stmList = proc.statements;
-			while (!Parse.accept(KeyWord.END)) {
+			while (!Parse.accept(KeyWord.END, KeyWord.EOF)) {
 				stm = Statement.expectStatement();
 				if (stm != null) stmList.add(stm);
+			}
+			if (Parse.prevToken.keyWord == KeyWord.EOF) {
+				Util.error("Illegal termination of procedure declaration. Missing END.");
 			}
 		}
 		else proc.statements.add(Statement.expectStatement());

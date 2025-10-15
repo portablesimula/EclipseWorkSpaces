@@ -78,7 +78,7 @@ public final class SimulaScanner extends DefaultScanner {
 		SEARCH:while(!EOF_SEEN) {
 			int c=getNext();
 			if(!EOF_SEEN && !isWhiteSpace(c)) {
-				Util.warning("Text after final END");
+				Util.warning("Text after final END or single statement program.");
 				break SEARCH;
 			}
 		}

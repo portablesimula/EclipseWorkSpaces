@@ -263,6 +263,15 @@ public final class RunFullTestBatch {
 		names.add("simerr08.sim"); // OK: Illegal assignment. Name parameter is not a variable
 		names.add("simerr09.sim"); // OK: Read/write access on DirectFile and DirectByteFile
 		names.add("simerr10.sim"); // OK: Integer Overflow
+
+		names.add("single_tst01.sim"); // OK: Single test: L: OutText("...");
+		names.add("single_tst02.sim"); // OK: Single test: OutText("...");
+		names.add("single_tst03.sim"); // OK: Single test: L: if true then OutText("...");
+		names.add("single_tst04.sim"); // OK: Single test: if true then OutText("...");
+		names.add("single_tst05.sim"); // OK: Single test: L: inspect new simset do begin OutText("..."); end
+		names.add("single_tst06.sim"); // OK: Single test: inspect new simset do begin OutText("..."); end
+		names.add("single_tst07.sim"); // OK: Single test: L: while ...
+		names.add("single_tst08.sim"); // OK: Single test: while ...
 		
 		Global.packetName="simulaTestBatch";
 //		Global.simulaRtsLib=new File(userDir,"bin"); // To use Eclipse Project's simula.runtime

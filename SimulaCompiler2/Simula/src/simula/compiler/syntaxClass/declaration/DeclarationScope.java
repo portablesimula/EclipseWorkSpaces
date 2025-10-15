@@ -68,7 +68,7 @@ public abstract class DeclarationScope extends Declaration  {
 	
 	/// Modify the identifier of this class, procedure, ...
 	/// @param newIdentifier the new identifier
-	protected void modifyIdentifier(final String newIdentifier) {
+	public void modifyIdentifier(final String newIdentifier) {
 		this.identifier = newIdentifier;
 		checkAlreadyDefined();
 		if (declarationKind == ObjectKind.ContextFreeMethod) externalIdent = this.identifier;

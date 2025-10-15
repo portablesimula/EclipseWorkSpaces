@@ -1,7 +1,12 @@
-BEGIN
+% procedure CC;
+ BEGIN
+%    INTEGER i;
 %   INTEGER ARRAY a(1:4);
 
-   OutText("a(1) is ");
+% L:   OutText("a(1) is ");
+%	if true then outtext("OK");
+	inspect new simset do begin	outtext("ABRA"); end
+		
 %   OutInt(a, 0);
 %   OutImage;
-
+ END

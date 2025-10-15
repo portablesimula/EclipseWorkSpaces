@@ -50,14 +50,14 @@ public final class RunSingleClassTest {
 //		Option.internal.TRACE_CODING=true;
 
 		// Overall TRACING Options
-		Option.internal.TRACING=true;
+//		Option.internal.TRACING=true;
 
 		// Scanner Trace Options
 //		Option.internal.TRACE_SCAN=true;
 //		Option.internal.TRACE_COMMENTS=true;
 
 		// Parser Trace Options
-		Option.internal.TRACE_PARSE=true;
+//		Option.internal.TRACE_PARSE=true;
 //		Option.internal.PRINT_SYNTAX_TREE=1;
 //		Option.internal.TRACE_ATTRIBUTE_OUTPUT=true;
 //		Option.internal.TRACE_ATTRIBUTE_INPUT=true;
@@ -89,7 +89,7 @@ public final class RunSingleClassTest {
 //		names.add("adHoc00.sim"); // For ad'hoc testing
 //		names.add("adHoc01.sim"); // For ad'hoc testing
 //		names.add("adHoc02.sim"); // For ad'hoc testing
-//		names.add("adHoc03.sim"); // For ad'hoc testing
+		names.add("adHoc03.sim"); // For ad'hoc testing
 		
 		// *** SIMULA TEST BATCH TIL EKSEKVERING
 		// String name=Global.packetName+"/sim/InspectionSamples.sim";
@@ -176,7 +176,7 @@ public final class RunSingleClassTest {
 //		names.add("simtst67.sim"); // OK:  Simple test of detach, call and resume.
 //		names.add("simtst68.sim"); // OK:  Test of coroutines.
 //		names.add("simtst69.sim"); // OK:  Test complex use of detach, call and resume.
-		names.add("simtst70.sim"); // OK:  Text attributes and relations
+//		names.add("simtst70.sim"); // OK:  Text attributes and relations
 //		
 //		names.add("simtst71.sim"); // OK:  Test visibility of identifiers.
 //		names.add("simtst72.sim"); // OK:  Test of formal procedures.
@@ -300,6 +300,15 @@ public final class RunSingleClassTest {
 //		names.add("simerr07.sim"); // OK: Wrong number of paramerters to virtual procedure
 //		names.add("simerr08.sim"); // OK: Illegal assignment. Name parameter is not a variable
 //		names.add("simerr09.sim"); // OK: Read/write access on DirectFile and DirectByteFile
+
+//		names.add("single_tst01.sim"); // OK: Single test: L: OutText("...");
+//		names.add("single_tst02.sim"); // OK: Single test: OutText("...");
+//		names.add("single_tst03.sim"); // OK: Single test: L: if true then OutText("...");
+//		names.add("single_tst04.sim"); // OK: Single test: if true then OutText("...");
+//		names.add("single_tst05.sim"); // OK: Single test: L: inspect new simset do begin OutText("..."); end
+//		names.add("single_tst06.sim"); // OK: Single test: inspect new simset do begin OutText("..."); end
+//		names.add("single_tst07.sim"); // OK: Single test: L: while ...
+//		names.add("single_tst08.sim"); // OK: Single test: while ...
 
 		
 		

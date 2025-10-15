@@ -97,9 +97,12 @@ public final class PrefixedBlockDeclaration extends ClassDeclaration {
 		block.isMainModule=isMainModule;
 		if (Option.internal.TRACE_PARSE)	Parse.TRACE("Parse PrefixedBlock");
 		while (Declaration.acceptDeclaration(block)) Parse.accept(KeyWord.SEMICOLON);
-		while (!Parse.accept(KeyWord.END)) {
+		while (!Parse.accept(KeyWord.END, KeyWord.EOF)) {
 			Statement stm = Statement.expectStatement();
 			if (stm != null) block.statements.add(stm);
+		}
+		if (Parse.prevToken.keyWord == KeyWord.EOF) {
+			Util.error("Illegal termination of prefixed block. Missing END.");
 		}
 		block.lastLineNumber = Global.sourceLineNumber;
 		if (Option.internal.TRACE_PARSE)	Util.TRACE("Line "+block.lineNumber+": PrefixedBlockDeclaration: "+block);
