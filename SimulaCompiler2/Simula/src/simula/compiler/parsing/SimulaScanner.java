@@ -988,9 +988,9 @@ public final class SimulaScanner extends DefaultScanner {
 				Token cc=scanDirectiveLine();
 				if(editorMode) tokenQueue.add(cc);				   
 			}
-			if(prevChar=='\n') {
-				Util.warning("END-Comment span mutiple source lines");
-			}
+//			if(prevChar=='\n') {
+//				Util.warning("END-Comment span mutiple source lines");
+//			}
 			if (current == ';') {
 				if (Option.internal.TRACE_COMMENTS) Util.TRACE("ENDCOMMENT:\"" + skipped + '"');
 				if (firstLine < lastLine && (skipped.length() > 0))
