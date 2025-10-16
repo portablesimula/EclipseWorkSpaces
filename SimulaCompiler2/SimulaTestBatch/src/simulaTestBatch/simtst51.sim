@@ -162,4 +162,4 @@ SimulaTest(51,"--- Test 'inner'") begin
    rd :- new K;
    Check(sysout.image.strip, " L3  L17  L18", 14);
 
-end;
+end

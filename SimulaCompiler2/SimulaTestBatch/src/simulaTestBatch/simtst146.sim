@@ -95,4 +95,4 @@ SimulaTest(146,"--- Test text by value to formal and virtual procedure") begin
 
 	trace("At END");
 
- end;
+ end

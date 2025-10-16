@@ -57,4 +57,4 @@ SimulaTest(61,"--- Test remote access to attributes which are protected.") begin
       end;
    end;
 
- end;
+end

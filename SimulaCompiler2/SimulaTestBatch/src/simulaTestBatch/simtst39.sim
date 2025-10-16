@@ -24,4 +24,4 @@ SimulaTest(39,"--- Check that a formal parameter is global to the procedure body
 
    if i <> 0 then err("Wrong variable used in procedure body.");
 
-end;
+end

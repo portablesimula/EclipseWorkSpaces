@@ -46,4 +46,4 @@ SimulaTest(128,"--- Test the new standard procedures waitSomeTime, edit and edfi
    waitSomeTime(100);
    trace(simulaid);
    
-end;
+end

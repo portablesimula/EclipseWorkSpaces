@@ -56,4 +56,4 @@ SimulaTest(113,"--- Test Virtual Switch") begin
    trace("In MAIN after new " & x.ident); 
    
    
-end;
+end

@@ -67,4 +67,4 @@ SimulaTest(88,"--- Test visibility of Hidden attributes.") begin
    
    end;
    
-end;
+end

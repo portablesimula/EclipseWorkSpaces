@@ -56,4 +56,4 @@ SimulaTest(91,"--- Test virtual procedures, simple case.") begin
       x.P1(copy("og dette var bra !!!!"));
       x.P2(copy("og til slutt var dette bra !!!!"));
 
- end;
+end

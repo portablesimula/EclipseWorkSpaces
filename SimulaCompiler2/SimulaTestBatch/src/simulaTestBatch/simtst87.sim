@@ -70,4 +70,4 @@ SimulaTest(87,"--- Test Specification of Virtual Procedures.") begin
    checkPval(3,4567);
   
    
-end;
+end

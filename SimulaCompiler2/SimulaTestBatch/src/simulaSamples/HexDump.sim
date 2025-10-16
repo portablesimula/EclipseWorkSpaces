@@ -72,4 +72,5 @@ FINISH:
       outimage; outimage;
       outtext("END  --  Input Bytes "); outint(sequ,0);
       outimage; outimage;
-end;
+
+end program.

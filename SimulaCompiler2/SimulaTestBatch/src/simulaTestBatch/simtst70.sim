@@ -306,4 +306,4 @@ SimulaTest(70,"--- Test the text attributes length, pos, main, setpos,") begin
 	                                ! Test of sub and strip       ;
 	txt1 :- "1234567890   ";        !*****************************;
 	
-end;
+end

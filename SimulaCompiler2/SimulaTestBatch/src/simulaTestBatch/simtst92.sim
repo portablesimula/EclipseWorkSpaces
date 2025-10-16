@@ -60,4 +60,4 @@ SimulaTest(92,"--- Test 1-dim Array by value.") begin
    x.Q(RA);
    checkArray("After Normal: x.Q(RA)",RA,789);
    
-end;
+end

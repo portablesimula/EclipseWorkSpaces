@@ -44,4 +44,4 @@ RT_ErrorTest("  8 --- Test Illegal assignment. Name parameter is not a variable"
    trace("END OF TEST08");
 
 
-end;
+end

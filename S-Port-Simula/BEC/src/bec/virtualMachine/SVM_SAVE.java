@@ -55,8 +55,8 @@ public class SVM_SAVE extends SVM_Instruction {
 //	 end;
 //	 Visible record savent:inst;
 //	 begin  end;
-	public static int saveEntityHead = 7;
-	public static int sizeOffset = 3;
+	public final static int saveEntityHead = 7;
+	public final static int sizeOffset = 3;
 	private static void saveStack() {
 //		RTStack.dumpRTStack("RTStack.saveStack: ");
 		ObjectAddress savePos = RTStack.popOADDR();

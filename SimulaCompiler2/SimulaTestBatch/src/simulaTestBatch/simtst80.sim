@@ -41,4 +41,4 @@ SimulaTest(80,"--- Test the attribute 'isopen' of class file.") begin
 
    if not f1 qua Infile.close then err(" cannot close Infile");
       
-end;
+end

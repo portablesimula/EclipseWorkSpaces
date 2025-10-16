@@ -41,4 +41,4 @@ SimulaTest(43,"--- Test an integer procedure which computes ""n-fac"", using rec
       end
    end;
 
-end of program;
+end of program

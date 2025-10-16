@@ -140,4 +140,4 @@ SimulaTest(32,"--- Simple test of formal procedures.") begin
 
    P (AP) ;
 
-end of program;
+end of program

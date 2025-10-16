@@ -93,4 +93,4 @@ SimulaTest(24,"--- Test conditional statements with more complex boolean express
    if b2 or else not b6 imp b2 and b2 eqv not b5 then else err ("*** error : Conditional statement (46).");
       
 
-end;
+end

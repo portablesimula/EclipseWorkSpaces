@@ -108,4 +108,4 @@ SimulaTest(62,"--- Test complex use of detach and resume.") begin
          end;
    end;
 
-end;
+end

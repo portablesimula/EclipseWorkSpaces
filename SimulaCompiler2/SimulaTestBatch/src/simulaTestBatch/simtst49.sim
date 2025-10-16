@@ -66,4 +66,4 @@ SimulaTest(49,"--- Test for statements in connection blocks.") begin
       outtext("            Erroneus values : " & t); outimage;
    end;
 
-end;
+end

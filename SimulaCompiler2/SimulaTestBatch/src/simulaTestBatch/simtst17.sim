@@ -230,4 +230,4 @@ SimulaTest(17,"--- Test the (de-)editing text attributes getint, getreal, getfra
       end
    end;
 
-end;
+end program.

@@ -354,4 +354,4 @@ SimulaTest(64,"--- Test parameter transmission by value to classes.") begin
 
    CheckLines(13, 10);
 
-end;
+end

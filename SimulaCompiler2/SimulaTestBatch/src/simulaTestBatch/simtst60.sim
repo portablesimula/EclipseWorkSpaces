@@ -44,4 +44,4 @@ SimulaTest(60,"--- Test visibility of protected attributes.") begin
    inspect xb do i := 7;
    check(7,17,"Test 3");
 
-end;
+end

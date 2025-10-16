@@ -34,4 +34,4 @@ RT_ErrorTest("  2 --- Testing NONE-CHECK") begin
    
    trace("THIS LINE SHOULD NEVER BE EXECUTED");
 
-end;
+end

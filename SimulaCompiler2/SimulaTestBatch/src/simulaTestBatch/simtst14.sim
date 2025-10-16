@@ -99,4 +99,4 @@ SimulaTest(14,"--- Test the text attributes pos, setpos, more, getchar and putch
       outimage; outimage;
    end;
 
- end;
+ end

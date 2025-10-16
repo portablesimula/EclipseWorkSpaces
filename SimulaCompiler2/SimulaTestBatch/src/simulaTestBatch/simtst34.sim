@@ -52,4 +52,4 @@ SimulaTest(34,"--- Test procedures with procedures as parameters.") begin
 
    if bool then P3(Q1,true) else P3(Q2,true);
    
-end;
+end

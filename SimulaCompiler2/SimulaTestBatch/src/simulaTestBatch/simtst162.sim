@@ -80,4 +80,4 @@ SimulaTest(162,"--- Test Complicated nested inspection") begin
 
 	trace("At END");
 
- end;
+ end

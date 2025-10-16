@@ -84,4 +84,4 @@ SimulaTest(19,"--- Test text concatenation and text expression evaluation.") beg
       
    end;
 
-end;
+end

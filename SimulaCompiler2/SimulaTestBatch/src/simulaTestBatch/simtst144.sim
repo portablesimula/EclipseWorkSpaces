@@ -18,4 +18,4 @@ Precompiled144(144,"--- Test constants and 'is', 'in', 'qua' and 'this' in preco
 
 	trace("At Main'END with K = " & edit(K));
       
-end;
+end

@@ -109,4 +109,4 @@ SimulaTest(164,"--- Test Extended Text Procedures") begin
 
 	trace("At END");
 
- end;
+ end

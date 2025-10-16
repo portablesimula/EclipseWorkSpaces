@@ -126,4 +126,4 @@ if   char (rank (c1)) <> c1
   or char (0) > char (rank ('B'))  then err ("*** error : In procedure char.");
 
 
-end of program;
+end of program

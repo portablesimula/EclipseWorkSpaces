@@ -317,4 +317,4 @@ SimulaTest(22,"--- Test for-loops with various for-list elements.") begin
    end ;
    
 
-end;
+end

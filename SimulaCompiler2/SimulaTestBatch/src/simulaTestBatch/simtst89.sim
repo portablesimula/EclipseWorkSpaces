@@ -49,4 +49,4 @@ SimulaTest(89,"--- Test Inbytefile and Outbytefile.") begin
       inpt.close; inoupt.close;
       
       
-end;
+end

@@ -98,4 +98,4 @@ SimulaTest(66,"--- Test corutines and two infiles which read from the same file.
       end;
    end;
 
- end
+end

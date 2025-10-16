@@ -68,4 +68,4 @@ SimulaTest(121,"--- Test LEGAL GOTO out of an operating Process and the enclosin
    trace("THIS LINE SHOULD NEVER BE EXECUTED");
    EXIT_LABEL: trace("At END OF TEST");
       
-end;
+end

@@ -68,5 +68,4 @@ SimulaTest(114,"--- Test Switch Statement") begin
 NOMORE:
    trace("In MAIN after NOMORE");
    
-end;
-
+end

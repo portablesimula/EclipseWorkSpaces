@@ -77,4 +77,4 @@ SimulaTest(59,"--- Test 2-dim Array by value.") begin
 	QQ(1,RA);
 E:   
    
-end;
+end

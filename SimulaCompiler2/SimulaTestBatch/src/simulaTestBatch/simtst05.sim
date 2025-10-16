@@ -367,4 +367,4 @@ if     not l1 =  l2   and     -2222 <  l2
            begin inspect sysout do begin image:=notext; setpos(1) end end
 else  err("MAX.3 (comparing long REALs)");
 
-end of program;
+end of program

@@ -98,4 +98,4 @@ SimulaTest(35,"--- Test labels and switches as parameters to procedures") begin
 %     
 %  end ;
 
-end;
+end

@@ -10,4 +10,4 @@ begin
          begin ord:=n//0; end;
    end;
 
-end;
+end

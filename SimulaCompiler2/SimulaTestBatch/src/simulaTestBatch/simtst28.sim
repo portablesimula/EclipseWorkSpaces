@@ -265,4 +265,4 @@ SimulaTest(28,"--- Test paramenter transmission to procedures by value.") begin
    sysout.setpos (1);
    sysout.image:= notext;
 
-end;
+end

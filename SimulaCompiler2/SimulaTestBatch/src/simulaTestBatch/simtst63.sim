@@ -148,4 +148,4 @@ SimulaTest(63,"--- Test transmission by name of reference types.") begin
       outimage;
    end;
 
-end;
+end

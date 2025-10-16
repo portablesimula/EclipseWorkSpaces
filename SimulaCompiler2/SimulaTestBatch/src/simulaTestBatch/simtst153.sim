@@ -50,4 +50,4 @@ SimulaTest(153,"--- Test GOTO ConditionalExpression") begin
 	
 	trace("At END");
 	
- end;
+ end

@@ -364,4 +364,4 @@ SimulaTest(65,"--- Test parameter transmission by reference to classes.") begin
 
    ClearLines;
 
-end;
+end

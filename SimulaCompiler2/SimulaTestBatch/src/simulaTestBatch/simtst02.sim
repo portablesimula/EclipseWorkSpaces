@@ -119,4 +119,4 @@ if not result then err ("*** error : Boolean expr. (13).");
 result := b2 or else not b6 imp b2 and b2 eqv not b5;
 if not result then err ("*** error : Boolean expr. (14).");
 
-end of program;
+end of program

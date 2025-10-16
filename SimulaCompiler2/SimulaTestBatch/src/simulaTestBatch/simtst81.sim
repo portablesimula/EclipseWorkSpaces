@@ -189,4 +189,4 @@ SimulaTest(81,"--- Test the value of close.") begin
 
 % TERMINATE:
 
-end;
+end

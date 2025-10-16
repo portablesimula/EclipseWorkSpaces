@@ -166,4 +166,4 @@ SimulaTest(149,"--- Test all mode/type parameters to a Class") begin
 
 	trace("At END");
 
- end;
+ end

@@ -221,4 +221,4 @@ SimulaTest(38,"--- Test the value of type procedures.") begin
               if rB.t == notext then "Attribute = notext" else rB.t );
    end;
 
-end;
+end

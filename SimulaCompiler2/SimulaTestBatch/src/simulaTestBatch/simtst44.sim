@@ -47,4 +47,4 @@ SimulaTest(44,"--- Test text procedure.") begin
       outimage;
    end;
 
-end of program;
+end of program

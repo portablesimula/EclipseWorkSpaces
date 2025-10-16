@@ -98,4 +98,4 @@ SimulaTest(30,"--- Simple test of Arrays.") begin
 	if iARR(2) ne 666 then err(" ERROR 6");
 	
 
-end;
+end

@@ -46,4 +46,4 @@ SimulaTest(125,"--- Test goto label within compound statements") begin
    
    trace("END PROGRAM");
 
-end;
+end

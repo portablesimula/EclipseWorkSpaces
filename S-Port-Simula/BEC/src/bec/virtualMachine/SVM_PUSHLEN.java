@@ -7,44 +7,33 @@ import bec.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Option;
 import bec.util.Type;
-import bec.util.Util;
 import bec.value.IntegerValue;
 
-//The value is pushed onto the operand stack.
+
+/// Operation PUSHLEN
+/// 
+///	  Runtime Stack
+///		... →
+///		..., size
+///
+///	The size of the Runtime stack is pushed onto the Runtime stack.
+///
+///	For optimisation purposes, if it is set to nosize the accompaning save
+/// and corresponding restore will receive onone as parameter.
+///
+/// See: SVM_SAVE and SVM_RERSTORE
+/// See also S-Port - Definition of S-code - sect. 7. INTERMEDIATE RESULTS.
+///	
 public class SVM_PUSHLEN extends SVM_Instruction {
 	
 	public SVM_PUSHLEN() {
 		this.opcode = SVM_Instruction.iPUSHLEN;
 	}
 	
-	/**
-	 * stack_instruction ::= pushlen
-	 * 
-	 * pushlen
-	 * 
-	 * push( VAL, SIZE, "temporary area.LENGTH" );
-	 *
-	 *
-	 *	An implicit eval is performed.
-	 *
-	 *	The SIZE needed for the following save, that is the sum of the current value of ALLOCATED
-	 *	and the number of object units, which is needed for SAVE-MARKS and possibly other
-	 *	implementation-dependant information, is computed and the value is pushed onto the stack.
-	 *
-	 *	For optimisation purposes, it is set to nosize in case ALLOCATED = nosize (i.e. if the temporary
-	 *	area is empty). In this case the accompaning save and corresponding restore will receive onone
-	 *	as parameter.
-	 *
-	 *	An S-compiler may choose to skip code generation for the complete sequence pushlen, asscall,
-	 *	call, and save in the case ALLOCATED = nosize. In that case the processing of restore is
-	 *	changed, see below.	public static void ofScode() {
-	 */
 	@Override
 	public void execute() {
 		IntegerValue size = IntegerValue.of(Type.T_SIZE, RTStack.size());
 		RTStack.push(size, "SVM_PUSHLEN");
-//		IO.println("SVM_PUSHLEN.execute:  SAVE-RESTORE " + size);
-//		Util.IERR("");
 		Global.PSC.addOfst(1);
 	}
 	

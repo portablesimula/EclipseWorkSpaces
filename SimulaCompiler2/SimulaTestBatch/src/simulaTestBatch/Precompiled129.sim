@@ -23,4 +23,4 @@ SimulaTest class Precompiled129(i); integer i; begin
    X2:
    X3:
 
-end;
+end

@@ -215,4 +215,4 @@ SimulaTest(26,"--- Test designational expressions, the goto statement and switch
       end;
    end;
 
-end;
+end

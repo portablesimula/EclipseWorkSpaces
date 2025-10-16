@@ -27,4 +27,4 @@ SimulaTest(86,"--- Simple Test of Separately Compiled Class.") begin
  
   end;
   
-end;
+end

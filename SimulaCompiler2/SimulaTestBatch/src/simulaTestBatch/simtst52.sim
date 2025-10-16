@@ -56,4 +56,4 @@ SimulaTest(52,"--- Test 'inner'") begin
       outreal(b, 4, 10); outimage;
    end;
 
-end;
+end

@@ -179,4 +179,4 @@ if isum <> 34911 or txt <> " 34911" then begin
    outtext (txt); outint (isum, 8); outimage;
 end;
 
-end of program;
+end of program

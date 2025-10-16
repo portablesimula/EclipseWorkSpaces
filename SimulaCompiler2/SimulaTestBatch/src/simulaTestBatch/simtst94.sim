@@ -192,4 +192,4 @@ SimulaTest(94,"--- Test Simset - first, last, empty, cardinal and clear.") begin
 
      end prefix block;
 
-end;
+end

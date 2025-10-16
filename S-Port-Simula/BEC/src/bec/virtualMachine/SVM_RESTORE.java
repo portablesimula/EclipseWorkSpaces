@@ -11,6 +11,18 @@ import bec.value.IntegerValue;
 import bec.value.ObjectAddress;
 import bec.value.Value;
 
+/// Operation SAVE
+/// 
+///	  Runtime Stack
+///		oaddr →
+///		value1, value2, ... , value'size  
+///
+/// The oaddr of a save-object is popped off the Runtime stack.
+/// Then the complete Runtime stack is restored from the save-object.
+///
+/// See: SVM_PUSHLEN and SVM_RERSTORE
+/// See also S-Port - Definition of S-code - sect. 7. INTERMEDIATE RESULTS.
+///
 public class SVM_RESTORE extends SVM_Instruction {
 
 	private static final boolean DEBUG = false;
@@ -21,46 +33,36 @@ public class SVM_RESTORE extends SVM_Instruction {
 	
 	@Override
 	public void execute() {
-		restoreStack();
-//		Util.IERR("");
+		ObjectAddress savePos = RTStack.popOADDR();
+		if(savePos != null)	restoreStack(savePos);
 		Global.PSC.addOfst(1);
 	}
 	
-	private static void restoreStack() {
-//		RTStack.dumpRTStack("RTStack.restoreStack: ");
-		ObjectAddress savePos = RTStack.popOADDR();
-		if(savePos == null) {
-//			Util.IERR("");
-		} else {
+	private static void restoreStack(ObjectAddress savePos) {
+		IntegerValue entitySize = (IntegerValue) savePos.addOffset(SVM_SAVE.sizeOffset - SVM_SAVE.saveEntityHead).load();
+		int size = entitySize.value - SVM_SAVE.saveEntityHead;
+		
+		if(DEBUG) {
+			IO.println("RTStack.restoreStack: BEGIN RESTORE ++++++++++++++++++++++++++++++++++++++++");
 			ObjectAddress saveObj = savePos.addOffset(-SVM_SAVE.saveEntityHead);
-			IntegerValue entitySize = (IntegerValue) saveObj.addOffset(SVM_SAVE.sizeOffset).load();
-			int size = entitySize.value - SVM_SAVE.saveEntityHead;
-			
+			RTUtil.dumpEntity(saveObj);
+			IO.println("RTStack.restoreStack: RESTORE  entitySize = " + entitySize);
+			IO.println("RTStack.restoreStack: RESTORE  Size = " + size);
+		}
+
+		for(int i=size-1;i>=0;i--) {
+			Value item = savePos.load(i);
 			if(DEBUG) {
-				IO.println("RTStack.restoreStack: BEGIN RESTORE ++++++++++++++++++++++++++++++++++++++++");
-				RTUtil.dumpEntity(saveObj);
-				IO.println("RTStack.restoreStack: RESTORE  entitySize = " + entitySize);
-				IO.println("RTStack.restoreStack: RESTORE  Size = " + size);
+				IO.println("RTStack.saveStack:    SAVE-RESTORE " + item + " <=== saveObj("+(SVM_SAVE.saveEntityHead + i)+")");
 			}
-	
-			for(int i=size-1;i>=0;i--) {
-//			for(int i=0;i<size;i++) {
-//				Value item = saveObj.addOffset(SVM_SAVE.saveEntityHead + i).load();
-				Value item = saveObj.load(SVM_SAVE.saveEntityHead + i);
-//				IO.println("RTStack.restoreStack: RESTORE  item = " + item);
-				if(DEBUG) {
-					IO.println("RTStack.saveStack:    SAVE-RESTORE " + item + " <=== saveObj("+(SVM_SAVE.saveEntityHead + i)+")");
-				}
-				RTStack.push(item, "RESTORE: ");
-			}
-	
-			if(DEBUG) {
-				RTStack.dumpRTStack("RTStack.restoreStack: ");
-				Util.IERR("");
-			}
+			RTStack.push(item, "RESTORE: ");
+		}
+
+		if(DEBUG) {
+			RTStack.dumpRTStack("RTStack.restoreStack: ");
+			Util.IERR("");
 		}
 	}
-
 	
 	@Override
 	public String toString() {

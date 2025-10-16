@@ -48,4 +48,4 @@ SimulaTest(10,"--- Test the evaluation of text constants.") begin
    if "a""b" = "a!34!b" then
    else err ("*** error : Text constant (7).") ;
  
- end;
+ end

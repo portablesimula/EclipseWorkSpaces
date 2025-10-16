@@ -121,4 +121,4 @@ SimulaTest(45,"--- Test object relations - is and in.") begin
    check(rb in B, false, 63);
 
    
- end;
+ end

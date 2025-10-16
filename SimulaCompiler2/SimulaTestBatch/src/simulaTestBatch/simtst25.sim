@@ -132,4 +132,4 @@ SimulaTest(25,"--- Test multiple arithmetic assignment.") begin
       
    end;
 
-end;
+end

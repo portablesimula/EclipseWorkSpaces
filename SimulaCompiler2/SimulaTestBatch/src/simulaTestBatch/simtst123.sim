@@ -63,4 +63,4 @@ SimulaTest(123,"--- Test goto virtual label") begin
    trace("At end OF TEST");
       
    
-end;   
+end

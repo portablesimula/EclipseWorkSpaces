@@ -41,4 +41,4 @@ SimulaTest(41,"--- Test labels and switches as parameters to procedures") begin
       outimage ;
    end ;
 
-end;
+end

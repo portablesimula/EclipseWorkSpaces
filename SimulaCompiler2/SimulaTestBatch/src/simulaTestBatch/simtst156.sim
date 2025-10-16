@@ -90,4 +90,4 @@ SimulaTest(156,"--- Test arrays in multiple assignments") begin
 	
 	trace("At END");
 
- end;
+ end

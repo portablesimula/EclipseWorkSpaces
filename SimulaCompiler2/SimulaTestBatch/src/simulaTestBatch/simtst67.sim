@@ -78,4 +78,4 @@ SimulaTest(67,"--- Simple test of detach, call and resume.") begin
 
    Checki;
    
- end
+end

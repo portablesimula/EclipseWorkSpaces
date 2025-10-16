@@ -1052,4 +1052,4 @@ if result <> facit then begin
    err("Failed");
    end;
 
-end of program;
+end of program

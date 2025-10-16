@@ -83,4 +83,4 @@ SimulaTest(147,"--- Test virtual procedure by name") begin
 
 	trace("At END");
 
- end;
+ end

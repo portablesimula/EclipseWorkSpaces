@@ -50,4 +50,4 @@ SimulaTest(99,"--- Test mod, rem, min, max.") begin
        if y<x then err(" y<x!!!");
        if ly<lx then err(" ly<lx!!!");
 
-end;
+end

@@ -18,4 +18,4 @@ begin
     
     trace("--- Start Statements of class SubSep") ; 
     x :- new B;  
-end;
+end

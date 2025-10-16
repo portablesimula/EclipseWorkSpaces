@@ -21,4 +21,4 @@ RT_ErrorTest("  4 --- Test Division by Zero in Precompiled Procedure") begin
      
    trace("THIS LINE SHOULD NEVER BE EXECUTED");
   
-end;
+end

@@ -80,4 +80,4 @@ SimulaTest(48,"--- Test of qua") begin
           1, " B.Tp ", 10);
    check(rc qua C.i, ra qua C qua A qua B qua A qua C.Tp, 3, " C.Tp ", 11);
 
-end;
+end

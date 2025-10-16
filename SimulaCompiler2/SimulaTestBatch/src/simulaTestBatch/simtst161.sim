@@ -99,4 +99,4 @@ SimulaTest(161,"--- Test Specified Virtual ref-type Functions as part of an Expr
 
 	trace("At END");
 
- end;
+ end

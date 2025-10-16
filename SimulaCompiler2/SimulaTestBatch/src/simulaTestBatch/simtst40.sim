@@ -37,4 +37,4 @@ SimulaTest(40,"--- Test separate compilation of procedures.") begin
       outint(i, 5); outimage ;
    end;
    
-end;
+end

@@ -73,4 +73,4 @@ SimulaTest(163,"--- Test Inspect when, when, otherwise (selected)") begin
 
 	trace("At END");
 
- end;
+ end

@@ -90,4 +90,4 @@ SimulaTest(158,"--- Test Specified Virtual Boolean Functions as part of an Expre
 
 	trace("At END");
 
- end;
+ end

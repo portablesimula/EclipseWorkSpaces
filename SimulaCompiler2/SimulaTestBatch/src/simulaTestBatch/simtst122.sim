@@ -43,4 +43,4 @@ SimulaTest(122,"--- Test goto label in super class") begin
    new B;
    trace("At end OF TEST");
       
-end;
+end

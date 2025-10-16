@@ -196,4 +196,4 @@ SimulaTest(21,"--- Test arrays of simple types and text.") begin
       end
    end;
 
-end;
+end

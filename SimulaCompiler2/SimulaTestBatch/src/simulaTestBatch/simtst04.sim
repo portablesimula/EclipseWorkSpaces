@@ -382,4 +382,4 @@ txt.putreal (lon, longprecision);
 test("long real operation (16).",txt,"       -1.797693134862315&+308");
 
 
-end of program;
+end of program

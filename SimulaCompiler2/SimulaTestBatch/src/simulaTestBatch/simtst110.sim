@@ -73,4 +73,4 @@ SimulaTest(110,"--- Simple Co-Routine Sample 3: detach - resume - chain") begin
       trace("Main: End of Program");
    end subBlock;
    
-end program;
+end of program

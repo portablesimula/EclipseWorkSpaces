@@ -58,4 +58,4 @@ SimulaTest(154,"--- Test function result assignment") begin
 	
 	trace("At END");
 
- end;
+ end

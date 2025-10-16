@@ -24,4 +24,4 @@ RT_ErrorTest("  3 --- Test Division by Zero in Precompiled Class") begin
      
    trace("THIS LINE SHOULD NEVER BE EXECUTED");
   
-end;
+end

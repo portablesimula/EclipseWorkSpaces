@@ -59,4 +59,4 @@ SimulaTest(13,"--- Test text value and text reference assigment.") begin
       and t2.length = 5 then
    else err ("*** error : Text reference assignment (5).");
 
- end;
+ end

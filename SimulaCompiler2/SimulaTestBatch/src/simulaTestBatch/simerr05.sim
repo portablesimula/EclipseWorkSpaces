@@ -25,4 +25,4 @@ RT_ErrorTest("  5 --- Test NumberFormatException") begin
       
    trace("THIS LINE SHOULD NEVER BE EXECUTED");
 
-end;
+end

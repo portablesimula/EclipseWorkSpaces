@@ -90,4 +90,4 @@ SimulaTest(159,"--- Test Specified Virtual Real Functions as part of an Expressi
 
 	trace("At END");
 
- end;
+ end

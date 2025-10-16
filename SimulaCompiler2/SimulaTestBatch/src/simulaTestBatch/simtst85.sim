@@ -295,4 +295,4 @@ inspect new Directfile("direct85") do begin
 end of inspect Directfile;
 
 
-end of program;
+end of program

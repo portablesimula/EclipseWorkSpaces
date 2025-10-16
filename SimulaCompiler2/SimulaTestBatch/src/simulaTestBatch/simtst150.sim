@@ -173,4 +173,4 @@ SimulaTest(150,"--- Test all mode/type parameters except name, ... to a Procedur
 
 	trace("At END");
 
- end;
+ end

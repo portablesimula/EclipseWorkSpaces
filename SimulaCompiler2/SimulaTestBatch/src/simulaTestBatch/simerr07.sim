@@ -54,4 +54,4 @@ RT_ErrorTest("  7 --- Test Wrong number of paramerters to virtual procedure") be
    trace("END OF TEST07");
 
 
-end;
+end

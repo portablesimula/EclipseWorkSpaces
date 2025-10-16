@@ -43,4 +43,4 @@ SimulaTest(46,"--- Test the qualification of a function designator.") begin
       outimage;
    end;
 
-end;
+end

@@ -76,4 +76,4 @@ SimulaTest(37,"--- Test call by name: Actual parameter is of a different type th
       outimage ;
    end ;
 
-end;
+end

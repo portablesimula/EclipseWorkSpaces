@@ -76,4 +76,4 @@ SimulaTest(157,"--- Test identifier access") begin
 	
 	trace("At END");
 
- end;
+ end

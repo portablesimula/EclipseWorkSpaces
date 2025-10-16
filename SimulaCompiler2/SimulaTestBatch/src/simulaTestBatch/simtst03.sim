@@ -91,4 +91,4 @@ if t1 < t2 then err ("***  Wrong ranking of one character texts (1).");
 if t1 > t2 then else err ("***  Wrong ranking of one character texts (2).");
 
 
-end of program;
+end of program

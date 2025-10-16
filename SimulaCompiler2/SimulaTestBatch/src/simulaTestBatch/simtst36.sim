@@ -56,4 +56,4 @@ SimulaTest(36,"--- Test Jensens Device - Call by name.") begin
 
    test(simpson, 1640);
 
-   end;
+end

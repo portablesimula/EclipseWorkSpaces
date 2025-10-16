@@ -55,4 +55,4 @@ SimulaTest(109,"--- Simple Co-Routine Sample 2: detach - resume") begin
    end subBlock;
    
    
-end program;
+end of program

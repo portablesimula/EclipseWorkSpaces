@@ -87,4 +87,4 @@ SimulaTest(69,"--- Test complex use of detach, call and resume.") begin
       prt("--------------------------------------------------------");
 
       
-end S1;
+end S1.

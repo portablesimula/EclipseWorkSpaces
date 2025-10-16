@@ -36,4 +36,4 @@ SimulaTest(104,"--- Test procedure parameter 'F' by name.") begin
    r := Q(P);
    trace("r := Q(P)",r,34);
    
-end;      
+end     

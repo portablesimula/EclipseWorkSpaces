@@ -109,4 +109,4 @@ SimulaTest(148,"--- Test procedure min and max with arguments of all types") beg
 
 	trace("At END");
 
- end;
+ end

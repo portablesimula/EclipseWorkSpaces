@@ -81,4 +81,4 @@ SimulaTest(20,"--- Test the relational operators <, <=, =, >=, >") begin
       
    end ;
 
-end;
+end

@@ -60,7 +60,7 @@ public final class ProgramModule extends Statement {
 	final private VariableExpression sysout;
 	
 	/// The mainModule declaration.
-	public final DeclarationScope mainModule;
+	public DeclarationScope mainModule;
 
 	/// The external head
 	public Vector<ExternalDeclaration> externalHead;
@@ -88,10 +88,9 @@ public final class ProgramModule extends Statement {
 	/// Create a new ProgramModule.
 	public ProgramModule() {
 		super(0);
-//		DeclarationScope mainModule=null;
 		sysin=new VariableExpression("sysin");
 		sysout=new VariableExpression("sysout");
-//		try	{
+		try	{
 			if(Option.internal.TRACE_PARSE) Parse.TRACE("Parse Program");
 			Global.setScope(StandardClass.BASICIO);		    	// BASICIO Begin
 			new ConnectionBlock(sysin, null)                     	//    Inspect sysin do
@@ -103,68 +102,37 @@ public final class ProgramModule extends Statement {
 				externalHead = ExternalDeclaration.expectExternalHead(StandardClass.BASICIO);					
 				Parse.expect(KeyWord.SEMICOLON);
 			}
-		
-			if(Option.verbose) Util.TRACE("ProgramModule: END NEW SimulaProgram: "+toString());
-//		} catch(Throwable e) {
-//			e.printStackTrace();
-//			Util.IERR();
-//			}
-//		this.mainModule=mainModule;
-		this.mainModule = mainProgram();
-	}
-	
-	private DeclarationScope mainProgram() {
-			DeclarationScope mainModule=null;
+			// Now: Looking for ( program | procedure-declaration | class-declaration )
 			String ident=Parse.acceptIdentifier();
 			if(ident!=null) {
 				if(Parse.accept(KeyWord.CLASS)) mainModule=ClassDeclaration.expectClassDeclaration(ident);
-			    else {
-			    	Parse.saveCurrentToken();
-			    	mainModule = doParseProgram();
-			    }
+			    else { Parse.saveCurrentToken(); mainModule = doParseProgram(); }
 			}
-//			else if(Parse.accept(KeyWord.BEGIN)) mainModule=MaybeBlockDeclaration.createMainProgramBlock(); 
 			else if(Parse.accept(KeyWord.CLASS)) mainModule=ClassDeclaration.expectClassDeclaration(null);
 			else {
 				Type type=Parse.acceptType();
 			    if(Parse.accept(KeyWord.PROCEDURE)) mainModule=ProcedureDeclaration.expectProcedureDeclaration(type);
-			    else {
-			    	mainModule = doParseProgram();
-			    }
+			    else mainModule = doParseProgram();
 			}
 			StandardClass.BASICIO.declarationList.add(mainModule);
-			return mainModule;
+			
+			if(Parse.currentToken.keyWord != KeyWord.EOF) {
+				Util.warning("Text after Program end - starting with " + Parse.currentToken);
+			}
+			
+			if(Option.verbose) Util.TRACE("ProgramModule: END NEW SimulaProgram: "+toString());
+		} catch(Throwable e) {
+			e.printStackTrace();
+			Util.IERR();
+		}
 	}
 	
 	private DeclarationScope doParseProgram() {
-//		if (Option.internal.TRACE_PARSE) Util.TRACE("ProgramModule.doParseProgram: line="+lineNumber+" "+Parse.prevToken);
 		BlockDeclaration mainBlock = new MaybeBlockDeclaration(Global.sourceName);
-//		mainBlock.lineNumber = Parse.prevToken.lineNumber;
 		mainBlock.isMainModule = true;
 		mainBlock.declarationKind = ObjectKind.SimulaProgram;
-//		mainBlock.modifyIdentifier(Global.sourceName);
-
 		Statement program = Statement.expectStatement();
-//    	IO.println("ProgramModule.mainProgram: "+program);
 		mainBlock.statements.add(program);
-		return mainBlock;
-	}
-	
-	private DeclarationScope doParseProgram1() {
-		BlockDeclaration mainBlock=null;
-    	Statement program = Statement.expectStatement();
-//    	IO.println("ProgramModule.mainProgram: "+program);
-    	if(program instanceof BlockStatement blk) {
-    		mainBlock = blk.blockDeclaration;
-    	} else {
-    		if (Option.internal.TRACE_PARSE) Util.TRACE("ProgramModule.doParseProgram: line="+lineNumber+" "+Parse.prevToken);
-    		mainBlock = new MaybeBlockDeclaration(Global.sourceName);
-    		mainBlock.lineNumber = Parse.prevToken.lineNumber;
-    		mainBlock.statements.add(program);
-    	}
-		mainBlock.isMainModule = true;
-		mainBlock.declarationKind = ObjectKind.SimulaProgram;
-//		mainBlock.modifyIdentifier(Global.sourceName);
 		return mainBlock;
 	}
 

@@ -91,4 +91,4 @@ SimulaTest(12,"--- Test text value and reference relations.") begin
       and t1 = t2 then
    else err ("*** error : Text reference relation (8).");
 
- end;
+ end

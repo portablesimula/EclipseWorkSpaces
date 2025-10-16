@@ -91,4 +91,4 @@ RT_ErrorTest("  9 --- Test Read/write access on Directfile and Directbytefile") 
    trace("END OF TEST09");
 
 
-end;
+end

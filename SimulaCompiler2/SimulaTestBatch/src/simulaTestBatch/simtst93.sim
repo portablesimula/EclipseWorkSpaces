@@ -257,4 +257,4 @@ SimulaTest(93,"--- Test Simset - Linkage, Head, Link, into, out, follow and prec
 
      end prefix block;
 
-end;
+end

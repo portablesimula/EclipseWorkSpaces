@@ -52,4 +52,4 @@ SimulaTest(105,"--- Test Multiple Assignments") begin
    P("case 3",r,3.54,"X=4.0000, i=4, Y=3.5400, F=3.5400");
    P("case 4",n,4.01,"X=4.0000, i=4, Y=4.0100, F=4.0000");
 
-end;   
+end

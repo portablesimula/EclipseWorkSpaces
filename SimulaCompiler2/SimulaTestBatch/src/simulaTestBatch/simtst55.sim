@@ -144,4 +144,4 @@ SimulaTest(55,"--- Test virtual procedures.") begin
 
    Check(sysout.image.strip, " E.cP  E.cP  E.cP  E.P  E.cP  E.iP", 5);
 
-end;
+end

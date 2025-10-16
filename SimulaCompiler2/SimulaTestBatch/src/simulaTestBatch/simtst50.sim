@@ -148,4 +148,4 @@ SimulaTest(50,"--- Test when and otherwise-clause in connection statement.") beg
       outimage;
    end;
 
-end;
+end

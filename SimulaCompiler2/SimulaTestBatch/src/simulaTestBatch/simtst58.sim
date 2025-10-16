@@ -26,4 +26,4 @@ SimulaTest(58,"--- Test Goto from within a connection into otherwise") begin
 
    if failed then err("goto test failed.");
    
-end;
+end

@@ -66,4 +66,4 @@ SimulaTest(126,"--- Test goto simple switch") begin
    
    trace("end PROGRAM");
 
-end;
+end

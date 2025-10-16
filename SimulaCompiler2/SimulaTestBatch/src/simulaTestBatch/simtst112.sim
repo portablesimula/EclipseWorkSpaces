@@ -70,4 +70,4 @@ SimulaTest(112,"--- Test Virtual Label - Sample 2") begin
    trace("In MAIN after new " & x.ident); 
    
    
-end;
+end

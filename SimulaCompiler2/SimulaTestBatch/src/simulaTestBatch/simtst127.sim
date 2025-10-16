@@ -80,5 +80,4 @@ SimulaTest(127,"--- Test switch statement") begin
 
    trace("End of program");
       
-end;
-
+end

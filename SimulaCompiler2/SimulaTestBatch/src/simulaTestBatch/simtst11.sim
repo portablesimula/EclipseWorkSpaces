@@ -136,4 +136,4 @@ SimulaTest(11,"--- Text Attributes constant, start, length, pos and main") begin
    end;
 
 
- end;
+ end

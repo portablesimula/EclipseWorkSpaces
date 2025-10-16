@@ -350,4 +350,4 @@ SimulaTest(16,"--- Test the standard text procedures sub and strip") begin
       outimage; outimage;
    end;
 
-end;
+end
