@@ -78,7 +78,7 @@ public final class SimulaScanner extends DefaultScanner {
 		SEARCH:while(!EOF_SEEN) {
 			int c=getNext();
 			if(!EOF_SEEN && !isWhiteSpace(c)) {
-				Util.warning("Text after final END or single statement program.");
+				Util.warning("Text after Program end.");
 				break SEARCH;
 			}
 		}
@@ -987,6 +987,9 @@ public final class SimulaScanner extends DefaultScanner {
 				// Directive inside END-Comment
 				Token cc=scanDirectiveLine();
 				if(editorMode) tokenQueue.add(cc);				   
+			}
+			if(prevChar=='\n') {
+				Util.warning("END-Comment span mutiple source lines");
 			}
 			if (current == ';') {
 				if (Option.internal.TRACE_COMMENTS) Util.TRACE("ENDCOMMENT:\"" + skipped + '"');
