@@ -99,21 +99,6 @@ public abstract class PUSHC extends Instruction {
 		    					 }
 		    default: Util.IERR("NOT IMPLEMENTED: " + Scode.edInstr(Scode.curinstr));
 		}
-		
-//		if(type == Type.T_GADDR) {
-//			Global.PSEG.emit(new SVM_LOADC(type, value), "GADDR: ");				
-//		} else if(type == Type.T_TEXT) {
-//			TextValue txtval = (TextValue) value;
-//			ObjectAddress addr = txtval.emitChars(Global.TSEG);
-//			type = Type.T_STRING;
-//			value = new StringValue(addr, txtval.textValue.length());
-//			Global.PSEG.emit(new SVM_LOADC(type, value), "");
-//		} else if(type.isRecordType()) {
-//			Global.PSEG.emit(new SVM_LOADC(type, value), "Record: ");
-//		} else {
-//			Global.PSEG.emit(new SVM_LOADC(type, value), "");
-//		}
-
 		CTStack.push(new ConstItem(type, value));
 		Global.PSEG.emit(new SVM_LOADC(type, value), "");
 	}

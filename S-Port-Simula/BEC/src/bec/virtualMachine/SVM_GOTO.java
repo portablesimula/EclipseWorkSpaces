@@ -8,9 +8,15 @@ import bec.util.Global;
 import bec.util.Option;
 import bec.value.ProgramAddress;
 
-/**
- * Remove top item on the Runtime-Stack and set PSC to that value
- */
+/// Operation GOTO
+/// 
+/// 	Runtime Stack
+/// 	   paddr →
+/// 	   - empty
+///
+/// The paddr is popped of the Runtim stack.
+/// Then Program Sequence Control PCS := paddr
+///
 public class SVM_GOTO extends SVM_Instruction {
 
 	public SVM_GOTO() {

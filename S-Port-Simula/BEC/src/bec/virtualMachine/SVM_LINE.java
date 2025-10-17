@@ -7,10 +7,14 @@ import bec.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Option;
 
-/**
- * 
- * 
- */
+/// Operation LINE lineType lineNumber
+/// 
+/// 	Runtime Stack
+/// 	   ... →
+/// 	   ...
+///
+/// The Global variable sourceLineNumber := sourceLine;
+///
 public class SVM_LINE extends SVM_Instruction {
 	private final int type; // 0, DCL, STM
 	private final int sourceLine;
@@ -22,6 +26,7 @@ public class SVM_LINE extends SVM_Instruction {
 
 	@Override
 	public void execute() {
+		Global.sourceLineNumber = sourceLine;
 		Global.PSC.addOfst(1);
 	}
 	

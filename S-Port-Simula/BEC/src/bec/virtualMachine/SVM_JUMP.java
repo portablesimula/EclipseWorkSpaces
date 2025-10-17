@@ -10,6 +10,11 @@ import bec.util.Util;
 import bec.value.ProgramAddress;
 import bec.value.Value;
 
+/// Operation JUMP paddr
+/// 
+/// Unconditional Jump to paddr.
+/// The Program Sequence Control PCS := paddr
+///
 public class SVM_JUMP extends SVM_Instruction {
 	protected ProgramAddress destination;
 

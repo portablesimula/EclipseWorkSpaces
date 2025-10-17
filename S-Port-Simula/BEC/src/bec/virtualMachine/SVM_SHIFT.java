@@ -7,19 +7,26 @@ import bec.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Option;
 import bec.util.Scode;
-import bec.util.Util;
 import bec.value.Value;
 
-/**
- * Bitwise Shift
- * 
- * Remove two items on the Runtime-Stack and push the value (SOS opr TOS)
- * 
- * 
- * Signed Left Shift	<<	The left shift operator moves all bits by a given number of bits to the left.
- * Signed Right Shift	>>	The right shift operator moves all bits by a given number of bits to the right.
- * Unsigned Right Shift	>>>	It is the same as the signed right shift, but the vacant leftmost position is filled with 0 instead of the sign bit.
- */
+/// Operation SHIFT opr
+/// 
+/// 	Runtime Stack
+/// 	   ..., sos, tos →
+/// 	   ..., result
+///
+/// The 'tos' and 'sos' are popped off the Runtime stack.
+/// The 'result' is calculated as result = sos opr tos.
+/// Then the 'result' is pushed onto the Runtime Stack.
+/// 
+/// 'tos' and 'sos' must be of type int.
+/// 
+/// The operation depends on the 'opr' parameter:
+///	LSHIFTA: Signed Left Shift     << The left shift operator moves all bits by a given number of bits to the left.
+/// LSHIFTL: Unsigned Left Shift   << The left shift operator moves all bits by a given number of bits to the left.
+/// RSHIFTA: Signed Right Shift    >> The right shift operator moves all bits by a given number of bits to the right.
+/// RSHIFTL: Unsigned Right Shift  >>> It is the same as the signed right shift, but the vacant leftmost position is filled with 0 instead of the sign bit.
+///
 public class SVM_SHIFT extends SVM_Instruction {
 	int instr;
 	
@@ -49,10 +56,10 @@ public class SVM_SHIFT extends SVM_Instruction {
 	@Override	
 	public String toString() {
 		switch(instr) {
-		case Scode.S_LSHIFTA: return("LSHIFTA");
-		case Scode.S_LSHIFTL: return("LSHIFTL");
-		case Scode.S_RSHIFTA: return("RSHIFTA");
-		case Scode.S_RSHIFTL: return("RSHIFTL");
+			case Scode.S_LSHIFTA: return("LSHIFTA");
+			case Scode.S_LSHIFTL: return("LSHIFTL");
+			case Scode.S_RSHIFTA: return("RSHIFTA");
+			case Scode.S_RSHIFTL: return("RSHIFTL");
 		}
 		return "SHIFT    ";
 	}

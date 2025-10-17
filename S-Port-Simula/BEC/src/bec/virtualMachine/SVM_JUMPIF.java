@@ -12,6 +12,22 @@ import bec.util.Util;
 import bec.value.ProgramAddress;
 import bec.value.Value;
 
+/// Operation JUMPIF paddr
+/// 
+/// 	Runtime Stack
+/// 	   ..., sos, tos →
+/// 	   ...
+///
+/// The 'tos' and 'sos' are popped off the Runtime stack.
+/// The 'result' is calculated as result = sos relation tos.
+/// Note: Both 'tos' abd 'sos' may be multi-sized.
+///
+/// Conditional Jump to paddr.
+///
+/// A conditional jump is executed, branching only if the relation evaluates true.
+/// Ie. The Program Sequence Control PCS := paddr
+/// otherwise PCS is incremented by one.
+///
 public class SVM_JUMPIF extends SVM_JUMP {
 	private final Relation relation;
 	private final int typeSize;

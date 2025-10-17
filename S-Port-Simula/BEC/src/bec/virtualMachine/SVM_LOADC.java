@@ -16,7 +16,15 @@ import bec.value.RecordValue;
 import bec.value.StringValue;
 import bec.value.Value;
 
-//The value is loaded onto the operand stack.
+/// Operation LOAD typeTag value
+/// 
+///	  Runtime Stack
+///		... →
+///		..., value1, value2, ... , value'size
+///
+/// The the values are loaded and pushed onto the Runtime stack.
+/// The number of values are type dependent.
+///
 public class SVM_LOADC extends SVM_Instruction {
 	private final int typeTag;
 	private final Value value;
@@ -37,21 +45,6 @@ public class SVM_LOADC extends SVM_Instruction {
 	
 	@Override
 	public void execute() {
-//		IO.println("SVM_LOADC.execute: "+this);
-//		if(value == null) {
-//	 		RTStack.push(null, "SVM_LOADC"); 
-//		} else if(value.type == null) {
-//			IO.println("SVM_LOADC.execute: value=" + value.getClass().getSimpleName() + " " + value);
-//			Util.IERR("");
-//		} else {
-//			switch(value.type.tag) {
-		
-//		if(value != null ) {
-//			IO.println("SVM_LOADC.execute: value="+value.getClass().getSimpleName()+"  "+value);
-//			IO.println("SVM_LOADC.execute: typeTag="+Scode.edTag(typeTag));
-//			if(value.type.tag != typeTag) Util.IERR("INCONSISTENT: typeTag="+Scode.edTag(typeTag) + ", value'tag="+Scode.edTag(value.type.tag));
-//		}
-//		IO.println("SVM_LOADC.execute: value=" + Scode.edTag(typeTag) + " " + value);
 		switch(typeTag) {
 			case Scode.TAG_BOOL, Scode.TAG_CHAR, Scode.TAG_INT, Scode.TAG_SINT, Scode.TAG_REAL, Scode.TAG_LREAL,
 			     Scode.TAG_SIZE, Scode.TAG_AADDR, Scode.TAG_PADDR, Scode.TAG_RADDR:
@@ -77,7 +70,6 @@ public class SVM_LOADC extends SVM_Instruction {
 				RTStack.push(null,      "String'GADDR'OFST: ");
 				RTStack.push(lng,       "String'lng: ");
 				if(DEBUG) RTStack.dumpRTStack("SVM_LOADC.execute: ");
-//				Util.IERR("");
 				break;
 			case Scode.TAG_GADDR:
 				if(value == null) {
@@ -96,18 +88,14 @@ public class SVM_LOADC extends SVM_Instruction {
 				} break;
 			default:
 				RecordValue rval = (RecordValue)value;
-//				for(Value val:rval.attrValues)
 				for(int i=0;i<rval.attrValues.size();i++) {
 					Value val = rval.attrValues.get(i);
 					RTStack.push(val, "Record: " + rval.tag);				
 				}
 				
 				if(DEBUG) RTStack.dumpRTStack("SVM_LOADC.execute: ");
-				
-//				Util.IERR("");
 				break;
 		}
-//		}
 		Global.PSC.addOfst(1);
 	}
 	

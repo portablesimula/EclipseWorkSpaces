@@ -8,9 +8,29 @@ import bec.util.Global;
 import bec.util.Option;
 import bec.value.Value;
 
-/**
- * Remove two items on the Runtime-Stack and push the value (SOS / TOS)
- */
+/// Operation REM
+/// 
+/// 	Runtime Stack
+/// 	   ..., sos, tos →
+/// 	   ..., result
+///
+/// The 'tos' and 'sos' are popped off the Runtime stack.
+/// The 'result' is calculated as result = sos rem tos.
+/// Then the 'result' is pushed onto the Runtime Stack.
+/// 
+/// 'tos' and 'sos' must be of type int.
+/// 
+/// Remainder, defined as "sos - (sos // tos) * tos".
+///
+/// Note that SIMULA demands "truncation towards zero" for integer division.
+/// Thus (except for a zero remainder) the result of rem has the same sign
+/// as the result of the division. In more formal terms:
+///
+///		i div j = sign(i/j) * entier(abs(i/j))
+///		i rem j = i - (i div j) * j
+///
+/// where '/' represents the exact mathematical division within the space of real numbers.
+///
 public class SVM_REM extends SVM_Instruction {
 
 	public SVM_REM() {

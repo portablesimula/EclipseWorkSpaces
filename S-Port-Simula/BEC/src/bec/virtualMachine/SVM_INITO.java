@@ -11,18 +11,6 @@ import bec.value.IntegerValue;
 import bec.value.ObjectAddress;
 import bec.value.Value;
 
-/**
- * temp_control ::= t-inito
- * 
- * t-inito
- * force TOS value; check TOS type(OADDR);
- * pop;
- * 
- * Code is generated to initialise a scan of the object described by TOS,
- * i.e. SAVE-OBJECT is set to refer to the object, and SAVE-INDEX is initialized.
- * TOS is popped.
- */
-
 /// Operation INITO
 /// 
 /// 	Runtime Stack

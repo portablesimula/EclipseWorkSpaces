@@ -8,21 +8,25 @@ import bec.util.Global;
 import bec.util.Option;
 import bec.util.Util;
 
-// POP RT-Stack'TOS 
-// The aux values on the top of the operand stack is popped off and forgotten.
-//
-// aux == -1  POPALL
+/// Operation POPK n
+/// 
+///	  Runtime Stack
+///		..., value1, value2, ... , value'n →
+///		...,
+///
+/// The 'n' values on the top of the Runtime stack is popped off and forgotten.
+///
 public class SVM_POPK extends SVM_Instruction {
-	private final int aux;
+	private final int n;
 	
-	public SVM_POPK(int aux) {
+	public SVM_POPK(int n) {
 		this.opcode = SVM_Instruction.iPOPK;
-		this.aux = aux;
+		this.n = n;
 	}
 
 	@Override
 	public void execute() {
-		for(int i=0;i<aux;i++) {
+		for(int i=0;i<n;i++) {
 			if(RTStack.curSize() <= 0) Util.IERR("RTStack underflow");
 			RTStack.pop();
 		}
@@ -30,7 +34,7 @@ public class SVM_POPK extends SVM_Instruction {
 	}
 
 	public String toString() {
-		return "POPK     " + aux;
+		return "POPK     " + n;
 	}
 	
 	// ***********************************************************************************************
@@ -38,7 +42,7 @@ public class SVM_POPK extends SVM_Instruction {
 	// ***********************************************************************************************
 	private SVM_POPK(AttributeInputStream inpt) throws IOException {
 		this.opcode = SVM_Instruction.iPOPK;
-		this.aux = inpt.readShort();
+		this.n = inpt.readShort();
 		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
 
@@ -46,7 +50,7 @@ public class SVM_POPK extends SVM_Instruction {
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
-		oupt.writeShort(aux);
+		oupt.writeShort(n);
 	}
 
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {

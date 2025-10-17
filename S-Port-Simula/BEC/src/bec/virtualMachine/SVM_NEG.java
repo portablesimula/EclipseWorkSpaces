@@ -8,10 +8,18 @@ import bec.util.Global;
 import bec.util.Option;
 import bec.value.Value;
 
-/**
- * 
- * Remove the top item on the Runtime-Stack and push the negative value
- */
+/// Operation NEG
+/// 
+/// 	Runtime Stack
+/// 	   ..., tos →
+/// 	   ..., result
+///
+/// The 'tos' is popped off the Runtime stack.
+/// The 'result' is calculated as result = - tos.
+/// Then the 'result' is pushed onto the Runtime Stack.
+/// 
+/// 'tos' must be of the arithmetic type, i.e. int, float or double.
+///
 public class SVM_NEG extends SVM_Instruction {
 
 	public SVM_NEG() {

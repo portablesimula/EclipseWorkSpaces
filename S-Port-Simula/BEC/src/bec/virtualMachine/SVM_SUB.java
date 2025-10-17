@@ -8,13 +8,18 @@ import bec.util.Global;
 import bec.util.Option;
 import bec.value.Value;
 
-/**
- * SOS and TOS are replaced by a description of the value of the application of the operator. The
- * type of the result is the same as the type of the operands. SOS is always the left operand, i.e.
- * SOS op TOS. All arithmetic on subranges of INT should be performed in full integer arithmetic.
- * 
- * Remove two items on the Runtime-Stack and push the value SOS - TOS
- */
+/// Operation SUB
+/// 
+/// 	Runtime Stack
+/// 	   ..., sos, tos →
+/// 	   ..., result
+///
+/// The 'tos' and 'sos' are popped off the Runtime stack.
+/// The 'result' is calculated as result = sos - tos.
+/// Then the 'result' is pushed onto the Runtime Stack.
+/// 
+/// 'tos' and 'sos' must be of the same arithmetic type, i.e. int, float or double.
+///
 public class SVM_SUB extends SVM_Instruction {
 
 	private final boolean DEBUG = false;

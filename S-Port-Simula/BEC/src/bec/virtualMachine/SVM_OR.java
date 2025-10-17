@@ -8,17 +8,25 @@ import bec.util.Global;
 import bec.util.Option;
 import bec.value.Value;
 
-/**
- * SOS and TOS are replaced by the value of the application of the operator. The
- * type of the result is the same as the type of the operands. SOS is always the left operand, i.e.
- * SOS op TOS. All arithmetic on subranges of INT should be performed in full integer arithmetic.
- * 
- * Remove to items from the Runtime-Stack and push the value SOS or TOS
- * 
- *  a  \  b  true   false
- *  true     true   true
- *  false    true   false
- */
+/// Operation OR
+/// 
+/// 	Runtime Stack
+/// 	   ..., sos, tos →
+/// 	   ..., result
+///
+/// The 'tos' and 'sos' are popped off the Runtime stack.
+/// The 'result' is calculated as result = sos or tos.
+/// Then the 'result' is pushed onto the Runtime Stack.
+/// 
+/// 'tos' and 'sos' must be of the same type, boolean or int.
+/// 
+/// The 'or' operation is defined by the following matrix:
+/// 
+///       OR
+/// 	a  \  b  true   false
+///     true     true   true
+///     false    true   false
+///
 public class SVM_OR extends SVM_Instruction {
 
 	public SVM_OR() {

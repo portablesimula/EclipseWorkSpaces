@@ -6,15 +6,20 @@ import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Option;
-import bec.util.Util;
 import bec.value.ProgramAddress;
 import bec.value.Value;
 
-/**
- * 
- * BESKRIVELSE ....
- * Jump to switch case 'tos' in DESTAB.
- */
+/// Operation SWITCH destab
+/// 
+/// 	Runtime Stack
+/// 	   index →
+/// 	   - empty
+///
+/// The 'index' is popped of the Runtim stack.
+/// Then Program Sequence Control PCS := destab[index]
+///
+/// The 'destab' is an array of Program Addresses.
+///
 public class SVM_SWITCH extends SVM_Instruction {
 	private final ProgramAddress[] DESTAB;
 

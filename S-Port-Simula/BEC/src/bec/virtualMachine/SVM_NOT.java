@@ -16,6 +16,20 @@ import bec.value.Value;
  * 
  * Remove the top item on the Runtime-Stack and push the NOT value
  */
+/// Operation NOT
+/// 
+/// 	Runtime Stack
+/// 	   ..., tos →
+/// 	   ..., result
+///
+/// The 'tos' is popped off the Runtime stack.
+/// The 'result' is calculated as result = ! tos.
+/// Then the 'result' is pushed onto the Runtime Stack.
+/// 
+/// 'tos' must be boolean or int.
+/// 
+/// The 'and' operation is defined by the following matrix:
+///
 public class SVM_NOT extends SVM_Instruction {
 
 	public SVM_NOT() {
