@@ -121,7 +121,18 @@ public class ProgramAddress extends Value {
 		} else {
 			SVM_Instruction cur = seg.instructions.get(ofst);
 //			IO.println("ProgramAddress.execute: " + cur);
-			cur.execute();
+			
+			try {
+				cur.execute();
+			} catch(EndProgram e) { throw e; // RE-THROW
+			} catch(Exception e) {
+				Util.println("\n\nProgramAddress.execute: FATAL ERROR: EXECUTION FAILED !");
+				printInstr(cur,false);
+				e.printStackTrace();
+//				seg.dump("");
+				seg.dump("",ofst-20,ofst+20);
+				throw new EndProgram(-1, "EXECUTION FAILED !");
+			}
 
 			if(Option.EXEC_TRACE > 0) {
 //				IO.println("ProgramAddress.execute: "+cur.getClass().getSimpleName());
@@ -144,7 +155,7 @@ public class ProgramAddress extends Value {
 		if(decr) paddr.ofst--;
 		String line = "EXEC: "+paddr+"  "+cur;
 		while(line.length()<70) line=line+' ';
-		IO.println(line+"   "+tail);
+		Util.println(line+"   "+tail);
 //		RTStack.dumpRTStack("ProgramAddress.execute:");
 //		Util.IERR("");
 		

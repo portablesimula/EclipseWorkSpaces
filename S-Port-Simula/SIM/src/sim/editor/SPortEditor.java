@@ -101,6 +101,7 @@ public class SPortEditor extends JFrame {
     }
     
     public void start() {
+    	Global.inEditor = true;
 		try { setIconImage(Global.simIcon.getImage()); } catch (Exception e) {}
     	if(Option.verbose) Util.println("Start " + Global.sPortVersion);
     	if(Option.INLINE_TESTING) {

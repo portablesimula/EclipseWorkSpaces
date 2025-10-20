@@ -299,16 +299,8 @@ public class RTS_Simulation extends RTS_Simset {
 				return;
 			RTS_Process prevCurrent = current();
 			X.EVENT = new RTS_EVENT_NOTICE(time(), X);
-			
-			boolean TESTING = true; // TODO: Rydd før R31
-			if(TESTING) {
-				// X.EVENT.precede(FIRSTEV());
-				RTS_Ranking.PRECEDE(X.EVENT, RTS_Ranking.FIRST(sqs));
-			} else {
-				// X.EVENT.precede(FIRSTEV());
-				RTS_Ranking.INTO(X.EVENT, sqs, X.EVENT.rnk);
-			}
-			
+			// X.EVENT.precede(FIRSTEV());
+			RTS_Ranking.PRECEDE(X.EVENT, RTS_Ranking.FIRST(sqs));
 			removeEvent(EV);
 			TRACE_ACTIVATE(REAC, X.edObjectIdent());
 			if (prevCurrent != current())

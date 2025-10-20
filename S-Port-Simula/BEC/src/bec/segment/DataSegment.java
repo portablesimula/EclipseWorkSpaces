@@ -51,6 +51,7 @@ public class DataSegment extends Segment {
 	
 	public void store(int index, Value value) {
 		if(index == guard) Util.IERR("FATAL ERROR: Attempt to change Guarded location: "+ObjectAddress.ofSegAddr(this, index)+" from "+values.get(index)+" to "+value);
+//		if(index < 0 || index >= values.size()) Util.IERR("DataSegment.store: Index out of range(0,"+values.size()+") index="+index);
 		values.set(index, value);
 	}
 	

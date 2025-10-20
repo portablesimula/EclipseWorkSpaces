@@ -1,8 +1,11 @@
-
-begin
-
-   integer array A(0:10);
-   A(5) := 444;
-   A(5) := -A(5);
-
-end;
+Simulation begin 
+	integer i;
+	     
+   Process class Prime; begin
+           hold(10);  
+   end;  
+    
+   activate new Prime at 2;  
+   hold(10); 
+   i := i // 0; 
+end

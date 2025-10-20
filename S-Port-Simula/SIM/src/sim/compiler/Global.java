@@ -56,6 +56,9 @@ public class Global {
 	public static final String sPortReleaseID = "S-Port-1.0";
 	
 	public static File simdir; // E.g: ../user/Simula/SPort-1.0
+
+	/// Indicates that the S-Port editor is running.
+	public static boolean inEditor;
 	
 	/// A Simula icon
 	public static ImageIcon simIcon;

@@ -49,7 +49,26 @@ public class BecCompiler {
 		}
 		if(! Option.nopopup) Global.console = new Terminal("Runtime Console");
 		
-		new BecCompiler(scodeSource);
+		try {
+			new BecCompiler(scodeSource);
+		} catch(Throwable e) {
+			Util.println("BecCompiler.main: BEC GOT Exception: " + e.getClass().getSimpleName());
+//		e.printStackTrace();
+		Thread.dumpStack();
+		printStackTrace();
+		if(Global.console != null) {
+//			while(true) Thread.yield();
+			Util.println("BecCompiler.main: Program will terminate in aprox. 30 secods");
+//			int sleep = 30 * 1000; // 30 seconds
+//			LOOP: while(true) {
+//				if((--sleep) < 0) break LOOP;
+//				try { Thread.sleep(1); } catch (InterruptedException e2) {}
+//			}
+			try { Thread.sleep(30 * 1000); } catch (InterruptedException e2) {}
+		}
+		System.exit(-1);
+			
+		}
 	}
 
 
@@ -97,16 +116,24 @@ public class BecCompiler {
 		Scode.initScode();
 		Type.init();
 
-		Thread.currentThread().setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-			public void uncaughtException(Thread thread, Throwable e) {
-				Util.println("BecCompiler.UncaughtExceptionHandler: BEC GOT Exception: " + e.getClass().getSimpleName());
-//				e.printStackTrace();
-				Thread.dumpStack();
-				if(Global.console != null) {
-					while(true) Thread.yield();
-				}
-				System.exit(-1);
-		}});
+//		Thread.currentThread().setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+//			public void uncaughtException(Thread thread, Throwable e) {
+//				Util.println("BecCompiler.UncaughtExceptionHandler: BEC GOT Exception: " + e.getClass().getSimpleName());
+////				e.printStackTrace();
+//				Thread.dumpStack();
+//				printStackTrace();
+//				if(Global.console != null) {
+////					while(true) Thread.yield();
+//					Util.println("BecCompiler.UncaughtExceptionHandler: Program will terminate in aprox. 30 secods");
+////					int sleep = 30 * 1000; // 30 seconds
+////					LOOP: while(true) {
+////						if((--sleep) < 0) break LOOP;
+////						try { Thread.sleep(1); } catch (InterruptedException e2) {}
+////					}
+//					try { Thread.sleep(30 * 1000); } catch (InterruptedException e2) {}
+//				}
+//				System.exit(-1);
+//		}});
 
 		Scode.inputInstr();
 		if(Scode.curinstr == Scode.S_PROGRAM) {
@@ -128,6 +155,13 @@ public class BecCompiler {
 		
 		if(Option.verbose) {
 			Util.println("DONE: BecCompiler: " + scodeSource);
+		}
+	}
+	
+	private static void printStackTrace() {
+		StackTraceElement[] elts = Thread.currentThread().getStackTrace();
+		for(StackTraceElement elt:elts) {
+			Util.println(""+elt);
 		}
 	}
 

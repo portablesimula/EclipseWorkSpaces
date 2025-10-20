@@ -80,7 +80,7 @@ public final class RunSingleClassTest {
 //		RTOption.BLOCK_TRACING = true;
 //		RTOption.GOTO_TRACING = true;
 //		RTOption.QPS_TRACING = true;
-//		RTOption.SML_TRACING = true;
+		RTOption.SML_TRACING = true;
 		
 //		Option.internal.RUNTIME_USER_DIR = "C:/GitHub/EclipseWorkSpaces/SimulaCompiler2/TestBatch/";
     	//System.setProperty("file.encoding","UTF-8");

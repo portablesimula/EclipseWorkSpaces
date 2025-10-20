@@ -5,8 +5,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import bec.util.Global;
+import bec.util.Option;
 import bec.util.Type;
 import bec.util.Util;
 import bec.value.IntegerValue;
@@ -101,7 +104,7 @@ public class RTInfile extends RTImageFile {
 	
 	private static String sysinRest = null;
 	
-	private static String readLine() throws IOException {
+	private static String readLine() throws IOException, TimeoutException {
 		StringBuilder sb = new StringBuilder();
 		if(Global.console != null) {
 			int c = Global.console.read();
@@ -110,13 +113,25 @@ public class RTInfile extends RTImageFile {
 				c = Global.console.read();
 			}
 		} else {
-			int c = System.in.read();
+			int c = IO_read(5, TimeUnit.SECONDS);
 			while(c != '\n') {
 				sb.append((char)c);
-				c = System.in.read();
+				c = IO_read(5, TimeUnit.SECONDS);
 			}
 		}
 		return sb.toString();
+	}
+	
+	private static int IO_read(int timeout, TimeUnit unit) throws IOException, TimeoutException {
+		long sleep = unit.toMillis(timeout);
+		LOOP: while(true) {
+			if(System.in.available() > 0) return System.in.read();
+			if((--sleep) < 0) break LOOP;
+			try { Thread.sleep(1); } catch (InterruptedException e) {}
+		}
+		if(Option.execVerbose)
+			IO.println("RTInfile.readLine: throw new TimeoutException()");
+		throw new TimeoutException();
 	}
 
 	public static int sysinInimage(ObjectAddress chrAddr, int nchr) {
@@ -140,7 +155,7 @@ public class RTInfile extends RTImageFile {
 				sysinRest = line.substring(nchr);
 				return nchr;
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 //			throw new RTS_SimulaRuntimeError("Inimage failed", e);
 			Util.IERR("sysinInimage failed: " + e);
 		}
