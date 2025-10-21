@@ -67,9 +67,9 @@ public class RunSingle_Simula_Testbatch {
 //		names.add("adHoc03");
 //		names.add("adHoc04");
 //		names.add("adHoc05");
-		names.add("adHoc06");
+//		names.add("adHoc06");
 //		names.add("adHoc07");
-//		names.add("adHoc08");
+		names.add("adHoc08");
 
 //		names.add("SimulaTest"); // Simula TestBatch Framework
 //		names.add("simtst00"); // OK:  Empty test
