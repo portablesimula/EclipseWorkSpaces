@@ -23,14 +23,14 @@ public final class RunSingle_SML_TestBatch {
 	public static void main(String[] args) {
 		Option.INLINE_TESTING = true;
 		
-//		SVM_CALLSYS.RUNTIME_VERBOSE = true;
-//		Option.verbose = true;
-		Option.SCODE_INPUT_TRACE = true;
-		Option.PRINT_GENERATED_SVM_CODE = true;
-		Option.PRINT_GENERATED_SVM_DATA = true;
-		Option.EXEC_TRACE = 1;
-		Option.CALL_TRACE_LEVEL = 2;
-//		Option.DUMPS_AT_EXIT = true;
+////		SVM_CALLSYS.RUNTIME_VERBOSE = true;
+////		Option.verbose = true;
+//		Option.SCODE_INPUT_TRACE = true;
+//		Option.PRINT_GENERATED_SVM_CODE = true;
+//		Option.PRINT_GENERATED_SVM_DATA = true;
+//		Option.EXEC_TRACE = 1;
+//		Option.CALL_TRACE_LEVEL = 2;
+////		Option.DUMPS_AT_EXIT = true;
 		
 		// Set Compiler Options.
 //		Option.EXTENSIONS=false;

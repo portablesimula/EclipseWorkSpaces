@@ -135,6 +135,10 @@ public class ObjectAddress extends Value {
 			case ObjectAddress.STACK_ADDR:  Util.IERR("NOT IMPL"); return this;
 			case ObjectAddress.REMOTE_ADDR:
 				ObjectAddress oaddr = RTStack.popOADDR();
+				if(oaddr == null) {
+//					Global.PSC.segment().dump(null);
+					Segment.lookup("PSEG_SML_EVTIME:BODY").dump("SCM_LOAD.execute: ");
+				}
 				return oaddr.addOffset(this.ofst);
 			case ObjectAddress.REFER_ADDR:
 				int ofset = RTStack.popInt();

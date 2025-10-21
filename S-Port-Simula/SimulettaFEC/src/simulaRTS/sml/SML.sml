@@ -411,21 +411,21 @@ const infix(modinf) SMLMOD=record:modinf
  exit label psc;
  begin ref(simltn) simblk; ref(proces) newcur;
        if x = none then
-			TRACE_ACTIVATE(REAC, " none", x);
+%			TRACE_ACTIVATE(REAC, " none", x);
 %-X         if bio.trc  --- (re)activate none
 %-X         then bio.obsEvt:=if reac then EVT_RAC1 else EVT_ACT1;
 %-X              bio.smbP1:=x; observ endif;
        elsif x.sort = S_TRM then
-			TRACE_ACTIVATE(REAC, " terminated process ", x);
+%			TRACE_ACTIVATE(REAC, " terminated process ", x);
 %-X         if bio.trc  --- (re)activate terminated process
 %-X         then bio.obsEvt:=if reac then EVT_RAC2 else EVT_ACT2;
 %-X              bio.smbP1:=x; observ endif;
        elsif (x.bl <> none) and (not reac) then
-			TRACE_ACTIVATE(REAC, " scheduled process ", x);
+%			TRACE_ACTIVATE(REAC, " scheduled process ", x);
 %-X         if bio.trc  --- activate scheduled process
 %-X         then bio.obsEvt:=EVT_ACT3; bio.smbP1:=x; observ endif;
        elsif x = y then
-			TRACE_ACTIVATE(REAC, " before/after itself ", x);
+%			TRACE_ACTIVATE(REAC, " before/after itself ", x);
 %-X         if bio.trc  --- reactivate  x  before/after  x
 %-X         then bio.obsEvt:=EVT_RAC3; bio.smbP1:=x; observ endif;
        else if code then RANK_FOLLOW(x,y) else RANK_PRECEDE(x,y) endif;
@@ -437,7 +437,7 @@ const infix(modinf) SMLMOD=record:modinf
             ---  If y is not scheduled in a before/after statement,
             ---  then the only effect is to remove x from the sequencing set.
             if newcur = simblk.sqs then ERROR(ENO_SML_1) endif;
-			TRACE_ACTIVATE_AFTER(REAC, x, code, y);
+%			TRACE_ACTIVATE_AFTER(REAC, x, code, y);
             if newcur <> simblk.cur
             then simblk.cur:=newcur;
 %-X              smltim:=newcur.rnk;
@@ -452,17 +452,17 @@ const infix(modinf) SMLMOD=record:modinf
  exit label psc;
  begin long real time; ref(simltn) simblk; ref(proces) newcur;
        if x = none then
-			TRACE_ACTIVATE(REAC, " none", x);
+%			TRACE_ACTIVATE(REAC, " none", x);
 %-X         if bio.trc  --- (re)activate none
 %-X         then bio.obsEvt:=if reac then EVT_RAC1 else EVT_ACT1;
 %-X              bio.smbP1:=x; observ endif;
        elsif x.sort = S_TRM then
-			TRACE_ACTIVATE(REAC, " terminated process ", x);
+%			TRACE_ACTIVATE(REAC, " terminated process ", x);
 %-X         if bio.trc  --- (re)activate terminated process
 %-X         then bio.obsEvt:=if reac then EVT_RAC2 else EVT_ACT2;
 %-X              bio.smbP1:=x; observ endif;
        elsif (x.bl <> none) and (not reac) then
-			TRACE_ACTIVATE(REAC, " scheduled process ", x);
+%			TRACE_ACTIVATE(REAC, " scheduled process ", x);
 %-X         if bio.trc  --- activate scheduled process
 %-X         then bio.obsEvt:=EVT_ACT3; bio.smbP1:=x; observ endif;
        else simblk:=x.sl qua simltn; time:=simblk.cur.rnk;
@@ -475,8 +475,7 @@ const infix(modinf) SMLMOD=record:modinf
 %-X         then bio.obsEvt:=if reac then EVT_RACT else EVT_ACTI;
 %-X              bio.smbP1:=x; observ endif;
             newcur:=SQS_FIRST() qua ref(proces);
---			TRACE_ACTIVATE(REAC, X.edObjectIdent() + " at " + T + ((PRIO) ? "prior" : ""));
-			TRACE_ACTIVATE_DELAY(REAC, x, code, t, prior);
+%			TRACE_ACTIVATE_DELAY(REAC, x, code, t, prior);
             if newcur <> simblk.cur
             then simblk.cur:=newcur;
 %-X              smltim:=newcur.rnk;
@@ -490,21 +489,21 @@ const infix(modinf) SMLMOD=record:modinf
  import ref(proces) x; boolean reac; exit label psc;
  begin ref(simltn) simblk;
        if x = none then
-			TRACE_ACTIVATE(REAC, " none", x);
+%			TRACE_ACTIVATE(REAC, " none", x);
 %-X         if bio.trc  --- (re)activate none
 %-X         then bio.obsEvt:=if reac then EVT_RAC1 else EVT_ACT1;
 %-X              bio.smbP1:=x; observ endif;
        elsif x.sort = S_TRM then
-			TRACE_ACTIVATE(REAC, " terminated process ", x);
+%			TRACE_ACTIVATE(REAC, " terminated process ", x);
 %-X         if bio.trc  --- (re)activate terminated process
 %-X         then bio.obsEvt:=if reac then EVT_RAC2 else EVT_ACT2;
 %-X              bio.smbP1:=x; observ endif;
        elsif (x.bl <> none) and (not reac) then
-			TRACE_ACTIVATE(REAC, " scheduled process ", x);
+%			TRACE_ACTIVATE(REAC, " scheduled process ", x);
 %-X         if bio.trc  --- activate scheduled process
 %-X         then bio.obsEvt:=EVT_ACT3; bio.smbP1:=x; observ endif;
        elsif x.sl qua ref(simltn).cur = x then
-			TRACE_ACTIVATE(REAC, " current ", x);
+%			TRACE_ACTIVATE(REAC, " current ", x);
 %-X         if bio.trc  --- reactivate current
 %-X         then bio.obsEvt:=EVT_RAC4; bio.smbP1:=x; observ endif;
        else simblk:=x.sl; RANK_PRECEDE(x,simblk.cur);
@@ -512,7 +511,7 @@ const infix(modinf) SMLMOD=record:modinf
 %-X         then bio.obsEvt:=if reac then EVT_RACT else EVT_ACTI;
 %-X              bio.smbP1:=x; observ endif;
             simblk.cur:=x;
-			TRACE_ACTIVATE(REAC, " direct ", x);
+%			TRACE_ACTIVATE(REAC, " direct ", x);
 %-X         smltim:=x.rnk;
             psc:=RESUMX(x,psc);
        endif;
@@ -573,9 +572,9 @@ E:end;
 
  Visible routine HOLD;
  import ref(simltn) simblk; long real time; exit label psc;
- begin ref(rankin) suc; ref(proces) x; x:=simblk.cur;
-       if time>0.0&&0
-       then time:=x.rnk:=x.rnk+time else time:=x.rnk endif;
+ begin ref(rankin) suc; ref(proces) x;
+ 	   x:=simblk.cur;
+       if time>0.0&&0 then time:=x.rnk:=x.rnk+time else time:=x.rnk endif;
        suc:=RANK_SUC(x);
        if suc <> none
        then if suc.rnk <= time
@@ -583,7 +582,6 @@ E:end;
 %-X              if bio.trc
 %-X              then bio.obsEvt:=EVT_HOLD; bio.smbP1:=x; observ endif;
                  simblk.cur:=suc;
-				 SIM_TRACE_TIME(" Hold ", time);
 %-X              smltim:=suc.rnk;
                  psc:=RESUMX(simblk.cur,psc);
 %-X              goto E;
@@ -598,16 +596,31 @@ E:end;
 % import ref(proces) prcs; export long real time;
 % begin if prcs.bl = none then ERROR(ENO_PRC_1) endif;
 %       time:=prcs.rnk;
+% 	   ed_str("EVTIME: "); ed_oaddr(prcs); ed_str(" ==> "); ed_lrl(time, 2); ed_out;
 % end;
 
+% Visible routine NEW_EVTIME;
+% import ref(simltn) sim; export long real time;
+% begin ref(proces) prcs;
+% 	   prcs:=sim.cur;
+% 	   if prcs.bl = none then ERROR(ENO_PRC_1) endif;
+% % 	   DMPENT(prcs);
+% % 	   DMPOOL(1);
+%       time:=prcs.rnk;
+% 	   ed_str("EVTIME: "); ed_oaddr(prcs); ed_str(" ==> "); ed_fix(time, 2); ed_out;
+% end;
+
+% ERROR in FEC: Parameter 'obj' may be IN Process or Simulation
  Visible routine EVTIME;
- import ref(simltn) sim; export long real time;
- begin ref(proces) prcs;
- 	   prcs:=sim.cur;
- 	   if prcs.bl = none then ERROR(ENO_PRC_1) endif;
-% 	   DMPENT(prcs);
-% 	   DMPOOL(1);
-       time:=prcs.rnk;
+ import ref(proces) obj; export long real time; begin
+ 	ref(simltn) simblk; ref(proces) prcs; ref(claptp) pp;
+	pp := obj.pp qua ref(claptp);
+	if pp.prefix(1) = ref(SMLPTP) then
+		simblk := obj;
+		prcs:=simblk.cur;
+	else prcs := obj; endif;	
+	if prcs.bl = none then ERROR(ENO_PRC_1) endif;
+	time:=prcs.rnk;
  end;
 
 
@@ -623,7 +636,9 @@ E:end;
 
  Visible routine NEXTEV;
  import ref(proces) ins; export ref(proces) suc;
- begin suc:=RANK_SUC(ins); end;
+ begin suc:=RANK_SUC(ins);
+% 	   ed_str("NEXTEV: "); ed_oaddr(ins); ed_str(" ==> "); ed_oaddr(suc); ed_out;
+ end;
 
 
  Visible routine ACCUM;
@@ -640,9 +655,11 @@ E:end;
  Routine TRACE_ACTIVATE; import boolean REAC; infix(string) msg; ref(proces) x; begin
 --		if (RTS_Option.SML_TRACING) {
 		boolean TESTING; TESTING := true;
+--		boolean TESTING; TESTING := false;
 		if TESTING then
 			ed_str("Time=");
-			ed_lrl(EVTIME(curins qua ref(simltn)), 4);
+%			ed_lrl(EVTIME(curins qua ref(simltn)), 4);
+			ED_LRL(smltim qua long real,2);		
 			if REAC then ed_str(" REACTIVATE ") else ed_str(" ACTIVATE ") endif;
 			ed_str(msg);
 %			ED_eID(x);
@@ -656,9 +673,10 @@ E:end;
  Routine TRACE_ACTIVATE_AFTER; import boolean REAC; ref(proces) x; boolean after; ref(proces) y; begin
 --		if (RTS_Option.SML_TRACING) {
 		boolean TESTING; TESTING := true;
+--		boolean TESTING; TESTING := false;
 		if TESTING then
 			ed_str("Time=");
-			ed_lrl(EVTIME(curins qua ref(simltn)), 4);
+			ED_LRL(smltim qua long real,2);		
 			if REAC then ed_str(" REACTIVATE ") else ed_str(" ACTIVATE ") endif;
 %			ED_eID(x);
 			ED_PRC_IDENT(x);
@@ -673,10 +691,11 @@ E:end;
  
  Routine TRACE_ACTIVATE_DELAY; import boolean REAC; ref(proces) x; boolean delay; long real tm; boolean prior; begin
 	--		if (RTS_Option.SML_TRACING) {
-	boolean TESTING; TESTING := true;
+		boolean TESTING; TESTING := true;
+--		boolean TESTING; TESTING := false;
 	if TESTING then
 		ed_str("Time=");
-		ed_lrl(EVTIME(curins qua ref(simltn)), 4);
+		ED_LRL(smltim qua long real,2);		
 		if REAC then ed_str(" REACTIVATE ") else ed_str(" ACTIVATE ") endif;
 %		ED_eID(x);
 		ED_PRC_IDENT(x);
@@ -692,64 +711,70 @@ E:end;
 
  Routine SIM_TRACE; import infix(string) msg; begin
 --		if (RTS_Option.SML_TRACING) {
+		boolean TESTING; TESTING := true;
+--		boolean TESTING; TESTING := false;
+	if TESTING then
 		ed_str("Time=");
-		ed_lrl(EVTIME(curins qua ref(simltn)), 4);
+		ED_LRL(smltim qua long real,2);		
 		ed_str(msg);
 		ed_str("  SQS: Current="); ED_SQS;
 		ed_out;
---		}
+	endif;
  end;
 
- Routine SIM_TRACE_TIME; import infix(string) msg; long real tm; begin
+ Routine SIM_TRACE_TIME; import infix(string) msg; ref(simltn) simblk; long real tm; begin
 --		if (RTS_Option.SML_TRACING) {
+		boolean TESTING; TESTING := true;
+--		boolean TESTING; TESTING := false;
+	if TESTING then
 		ed_str("Time=");
-		ed_lrl(EVTIME(curins qua ref(simltn)), 4);
+%		ED_LRL(smltim qua long real,2);		
+		ED_FIX(smltim qua long real,2);		
 		ed_str(msg);
-		ed_lrl(tm, 2);
-%		ed_str("  SQS: Current="); ED_SQS;
+%		ed_lrl(tm, 2);
+		ed_fix(tm, 2);
 		ed_out;
-		PRT_SQS;
---		}
+		PRT_SQS2(simblk);
+	endif;
  end;
 
  Routine PRT_SQS; begin
-%		ref(rankin) n; character sep;
-		ref(simltn) simblk; ref(proces) prc;
-		
-%		ed_out; ed_str("CURINS: ");	ED_eID(curins); ed_out;
-
+		ref(simltn) simblk;
 		simblk := curins qua ref(simltn);
-%		ed_str("SIMBLK: ");	ED_eID(simblk); ed_out;
+		PRT_SQS2(simblk);
+ end;		
+
+ Routine PRT_SQS2; import ref(simltn) simblk; begin
+		ref(proces) prc;
 		if simblk.sqs=none then prc:=none
-		else prc:=simblk.sqs.bl endif; -- I.e. 'old' current
-%		ed_str("PRC: ");	ED_eID(prc); ed_out;
+		else prc:=simblk.sqs.bl endif;
 		
+%		if simblk.sqs ne none then
+%			ed_str("PRT_SQS: simblk.sqs.bl="); ed_oaddr(simblk.sqs.bl); ed_out;
+%			ed_str("PRT_SQS: simblk.sqs.ll="); ed_oaddr(simblk.sqs.ll); ed_out;
+%		endif;
+	   
 		if prc=simblk.sqs then PRT("      SEQUENCING SET IS EMPTY");
 		else PRT("      *** SEQUENCING SET: First entry is 'current'");
 			repeat while prc <> none
 			do ED_STR("      Time "); ED_LRL(prc.rnk,2);
-%			   ED_STR("  -- "); ED_eID(prc); ED_OUT;
-			   ED_STR("  -- "); ED_PRC_IDENT(prc); ED_OUT;
+			   ED_STR("  -- "); ed_oaddr(prc); ed_str(" -- "); ED_PRC_IDENT(prc); ED_OUT;
 			   prc:=NEXTEV(prc);
 			endrepeat;
 		endif;
  end;
 
  Routine ED_SQS; begin
---		StringBuilder sb = new StringBuilder();
---		RTS_EVENT_NOTICE n = (RTS_EVENT_NOTICE) RTS_Ranking.FIRST(sqs);;
-		
-		ref(rankin) n; infix(string) sep;
-		ref(simltn) simblk; ref(proces) prc;
-
-%		PRT_SQS;
-		
-%		ed_out; ed_str("CURINS: ");	ED_eID(curins); ed_out;
-
+		ref(simltn) simblk;
 		simblk := curins qua ref(simltn);
 %		ed_str("SIMBLK: ");	ED_eID(simblk); ed_out;
+		ED_SQS2(simblk);
+ end;
+ 		
+ Routine ED_SQS2; import ref(simltn) simblk; begin
+		ref(proces) prc; infix(string) sep;
 		if simblk.sqs=none then prc:=none
-		else prc:=simblk.sqs.bl endif; -- I.e. 'old' current
+		else prc:=simblk.sqs.bl endif;
 %		ed_str("PRC: ");	ED_eID(prc); ed_out;
 		
 		sep := "";
