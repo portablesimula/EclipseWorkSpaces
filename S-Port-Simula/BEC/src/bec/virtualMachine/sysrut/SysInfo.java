@@ -48,7 +48,7 @@ public abstract class SysInfo {
 			case 99: Segment.lookup("DSEG_RT").dump("",0,100); break; // AD'HOC DUMP UTILITY
 			default: Util.IERR("");
 		}
-		RTStack.push(IntegerValue.of(Type.T_INT, result), "EXPORT");
+		RTStack.push(IntegerValue.of(Type.T_INT, result));
 		SVM_CALL_SYS.EXIT("GINTIN: ");
 	}
 	
@@ -75,7 +75,7 @@ public abstract class SysInfo {
 			default: Util.IERR("");
 		}
 		if(Option.verbose) IO.println("SVM_SYSCALL.sizein: index=" + index + ", warea=" + warea + ", result=" +result);
-		RTStack.push(IntegerValue.of(Type.T_SIZE, result), "EXPORT");
+		RTStack.push(IntegerValue.of(Type.T_SIZE, result));
 		SVM_CALL_SYS.EXIT("SIZEIN: ");
 	}
 

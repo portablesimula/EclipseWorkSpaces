@@ -33,7 +33,7 @@ public class SVM_EQV extends SVM_Instruction {
 		Value tos = RTStack.pop();
 		Value sos = RTStack.pop();
 		Value res = (tos == null)? null : tos.eqv(sos);
-		RTStack.push(res, "SVM_AND: " + tos + " eqv " + sos + " = " + res);
+		RTStack.push(res);
 		Global.PSC.addOfst(1);
 	}
 	

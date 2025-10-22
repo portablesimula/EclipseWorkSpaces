@@ -47,7 +47,7 @@ public abstract class SysEdit {
 //		itemAddr.segment().dump("SVM_SYSCALL.putstr:",54,70);
 //		RTUtil.printBasicIO();
 
-		RTStack.push(IntegerValue.of(Type.T_INT, valNchr), "EXPORT");
+		RTStack.push(IntegerValue.of(Type.T_INT, valNchr));
 		SVM_CALL_SYS.EXIT("PUTSTR: ");
 	}
 	
@@ -94,7 +94,7 @@ public abstract class SysEdit {
 		int nchr = sval.length();
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
 		RTUtil.move(sval, itemAddr, nchr);
-		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
+		RTStack.push(IntegerValue.of(Type.T_INT, nchr));
 		SVM_CALL_SYS.EXIT("PUTINT2: ");
 	}
 	
@@ -264,7 +264,7 @@ public abstract class SysEdit {
 		int nchr = sval.length();
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
 		RTUtil.move(sval, itemAddr, nchr);
-		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
+		RTStack.push(IntegerValue.of(Type.T_INT, nchr));
 		SVM_CALL_SYS.EXIT("PTREAL2: ");
 	}
 	
@@ -312,7 +312,7 @@ public abstract class SysEdit {
 		int nchr = sval.length();
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
 		RTUtil.move(sval, itemAddr, nchr);
-		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
+		RTStack.push(IntegerValue.of(Type.T_INT, nchr));
 		SVM_CALL_SYS.EXIT("PLREAL2: ");
 	}
 	
@@ -360,7 +360,7 @@ public abstract class SysEdit {
 		int nchr = sval.length();
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
 		RTUtil.move(sval, itemAddr, nchr);
-		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
+		RTStack.push(IntegerValue.of(Type.T_INT, nchr));
 		SVM_CALL_SYS.EXIT("PUTFIX2: ");
 	}
 	
@@ -408,7 +408,7 @@ public abstract class SysEdit {
 		int nchr = sval.length();
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
 		RTUtil.move(sval, itemAddr, nchr);
-		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
+		RTStack.push(IntegerValue.of(Type.T_INT, nchr));
 		SVM_CALL_SYS.EXIT("PUTFIX2: ");
 	}
 	
@@ -428,7 +428,7 @@ public abstract class SysEdit {
 		int nchr = sval.length();
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
 		RTUtil.move(sval, itemAddr, nchr);
-		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
+		RTStack.push(IntegerValue.of(Type.T_INT, nchr));
 		SVM_CALL_SYS.EXIT("PUTHEX: ");
 	}
 	
@@ -448,7 +448,7 @@ public abstract class SysEdit {
 		int nchr = sval.length();
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
 		RTUtil.move(sval, itemAddr, nchr);
-		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
+		RTStack.push(IntegerValue.of(Type.T_INT, nchr));
 		SVM_CALL_SYS.EXIT("PUTSIZE: ");
 	}
 	
@@ -467,7 +467,7 @@ public abstract class SysEdit {
 		int nchr = sval.length();
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
 		RTUtil.move(sval, itemAddr, nchr);
-		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
+		RTStack.push(IntegerValue.of(Type.T_INT, nchr));
 		SVM_CALL_SYS.EXIT("PTOADR2: ");
 	}
 	
@@ -486,7 +486,7 @@ public abstract class SysEdit {
 		int nchr = sval.length();
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
 		RTUtil.move(sval, itemAddr, nchr);
-		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
+		RTStack.push(IntegerValue.of(Type.T_INT, nchr));
 		SVM_CALL_SYS.EXIT("PTPADR2: ");
 	}
 	
@@ -505,7 +505,7 @@ public abstract class SysEdit {
 		int nchr = sval.length();
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
 		RTUtil.move(sval, itemAddr, nchr);
-		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
+		RTStack.push(IntegerValue.of(Type.T_INT, nchr));
 		SVM_CALL_SYS.EXIT("PTRADR2	: ");
 	}
 	
@@ -524,7 +524,7 @@ public abstract class SysEdit {
 		int nchr = sval.length();
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
 		RTUtil.move(sval, itemAddr, nchr);
-		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
+		RTStack.push(IntegerValue.of(Type.T_INT, nchr));
 		SVM_CALL_SYS.EXIT("PTAADR2	: ");
 	}
 	
@@ -545,7 +545,7 @@ public abstract class SysEdit {
 		int nchr = sval.length();
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
 		RTUtil.move(sval, itemAddr, nchr);
-		RTStack.push(IntegerValue.of(Type.T_INT, nchr), "EXPORT");
+		RTStack.push(IntegerValue.of(Type.T_INT, nchr));
 		SVM_CALL_SYS.EXIT("PTGADR2	: ");
 	}
 

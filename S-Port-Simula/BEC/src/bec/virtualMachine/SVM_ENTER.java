@@ -29,7 +29,7 @@ public class SVM_ENTER extends SVM_Instruction {
 		callStackItem.localSize = localSize;
 		RTStack.callStack.push(callStackItem);
 		for(int i=0;i<localSize;i++) {
-			RTStack.push(null, "LOCAL:");
+			RTStack.push(null);
 		}
 		if(Option.EXEC_TRACE > 2)
 			callStackItem.dump(""+curAddr+": ENTER: " + rutIdent + ", localSize=" + localSize);

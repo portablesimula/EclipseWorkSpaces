@@ -34,7 +34,7 @@ public class SVM_SUB extends SVM_Instruction {
 		Value sos = RTStack.pop();
 		Value res = (sos == null)? ( (tos == null)? null : tos.neg()) : sos.sub(tos);
 		if(DEBUG) IO.println("SVM_SUB: " + sos + " - " + tos + " ==> " + res);
-		RTStack.push(res, "SVM_SUB: " + sos + " - " + tos + " = " + res);
+		RTStack.push(res);
 		Global.PSC.addOfst(1);
 	}
 	

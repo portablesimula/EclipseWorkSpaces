@@ -44,7 +44,7 @@ public class SVM_CALL extends SVM_Instruction {
 		} else {
 			Global.PSC = rutAddr.copy();
 		}
-		RTStack.push(retur, "RETUR");
+		RTStack.push(retur);
 	}
 	
 	@Override	

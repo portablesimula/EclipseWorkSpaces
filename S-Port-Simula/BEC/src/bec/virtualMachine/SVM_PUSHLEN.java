@@ -33,7 +33,7 @@ public class SVM_PUSHLEN extends SVM_Instruction {
 	@Override
 	public void execute() {
 		IntegerValue size = IntegerValue.of(Type.T_SIZE, RTStack.size());
-		RTStack.push(size, "SVM_PUSHLEN");
+		RTStack.push(size);
 		Global.PSC.addOfst(1);
 	}
 	

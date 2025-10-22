@@ -38,7 +38,7 @@ public class SVM_DIST extends SVM_Instruction {
 		int tval = (tos == null)? 0 : tos.getOfst();
 		int sval = (sos == null)? 0 : sos.getOfst();
 		IntegerValue res = IntegerValue.of(Type.T_SIZE, sval - tval);
-		RTStack.push(res, "SVM_DIST: " + sos + " - " + tos + " = " + res);
+		RTStack.push(res);
 		Global.PSC.addOfst(1);
 	}
 

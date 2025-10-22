@@ -46,7 +46,7 @@ public class SVM_LOAD extends SVM_Instruction {
 		ObjectAddress addr = objadr.toRTMemAddr();
 		for(int i=0;i<size;i++) {
 			Value value = addr.load(idx + i);
-			RTStack.push(value, "SVM_LOAD: "+addr+":"+size);
+			RTStack.push(value);
 		}
 		Global.PSC.addOfst(1);
 	}

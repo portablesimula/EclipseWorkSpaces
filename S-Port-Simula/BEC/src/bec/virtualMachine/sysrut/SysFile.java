@@ -59,7 +59,7 @@ public abstract class SysFile {
 //		IO.println("SVM_SYSCALL.gdspec: index=" + index + ", result=" +result);
 		RTUtil.move(result, itemAddr, result.length());
 
-		RTStack.push(IntegerValue.of(Type.T_INT, result.length()), "EXPORT");
+		RTStack.push(IntegerValue.of(Type.T_INT, result.length()));
 		SVM_CALL_SYS.EXIT("GDSPEC: ");
 	}
 	
@@ -69,7 +69,7 @@ public abstract class SysFile {
 		SVM_CALL_SYS.ENTER("GETLPP: ", 1, 1); // exportSize, importSize
 		@SuppressWarnings("unused")
 		int key = RTStack.popInt();
-		RTStack.push(IntegerValue.of(Type.T_INT, 66), "GETLPP");
+		RTStack.push(IntegerValue.of(Type.T_INT, 66));
 		SVM_CALL_SYS.EXIT("GETLPP: ");
 	}
 	
@@ -145,7 +145,7 @@ public abstract class SysFile {
 			if(Option.execVerbose) IO.println("SVM_SYSCALL.opfile: key=" + key + ", spec="+spec);
 //			Util.IERR("NOT IMPL");
 		}
-		RTStack.push(IntegerValue.of(Type.T_INT, key), "OPFILE");
+		RTStack.push(IntegerValue.of(Type.T_INT, key));
 //		Util.IERR("");
 		SVM_CALL_SYS.EXIT("OPFILE: ");
 	}
@@ -221,7 +221,7 @@ public abstract class SysFile {
 		} else {
 			Util.IERR("");
 		}
-		RTStack.push(IntegerValue.of(Type.T_INT, filled), "INIMAG");
+		RTStack.push(IntegerValue.of(Type.T_INT, filled));
 		SVM_CALL_SYS.EXIT("INIMAG: ");
 	}
 
@@ -314,7 +314,7 @@ public abstract class SysFile {
 			byt = dbfile.inbyte();
 		}
 		else Util.IERR("");
-		RTStack.push(IntegerValue.of(Type.T_INT, byt), "INBYTE");
+		RTStack.push(IntegerValue.of(Type.T_INT, byt));
 		SVM_CALL_SYS.EXIT("INBYTE: ");
 //		Util.IERR("");
 	}
@@ -390,7 +390,7 @@ public abstract class SysFile {
 			}
 			else Util.IERR("");
 		}
-		RTStack.push(IntegerValue.of(Type.T_INT, maxloc), "MXLOC");
+		RTStack.push(IntegerValue.of(Type.T_INT, maxloc));
 		SVM_CALL_SYS.EXIT("MXLOC: ");
 //		Util.IERR("");
 	}
@@ -412,7 +412,7 @@ public abstract class SysFile {
 			}
 			else Util.IERR("");
 		}
-		RTStack.push(IntegerValue.of(Type.T_INT, maxloc), "LSTLOC");
+		RTStack.push(IntegerValue.of(Type.T_INT, maxloc));
 		SVM_CALL_SYS.EXIT("LSTLOC: ");
 //		Util.IERR("");
 	}

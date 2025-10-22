@@ -39,7 +39,7 @@ public class SVM_PRECALL extends SVM_Instruction {
 //				Util.IERR("");
 			} else {
 				for(int i=0;i<exportSize;i++) {
-					RTStack.push(null, "EXPORT"); // Export slots		
+					RTStack.push(null); // Export slots		
 				}
 			}
 		}

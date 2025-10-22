@@ -19,7 +19,7 @@ public abstract class SysMath {
 //		IO.println("SysMath.RADDEP: inp="+val);
 		val = Math.nextUp(val);
 //		IO.println("SysMath.RADDEP: out="+val);
-		RTStack.push(RealValue.of(val), "EXPORT");
+		RTStack.push(RealValue.of(val));
 		SVM_CALL_SYS.EXIT("RADDEP: ");
 	}
 
@@ -29,7 +29,7 @@ public abstract class SysMath {
 		SVM_CALL_SYS.ENTER("DADDEP: ", 1, 1); // exportSize, importSize
 		double val = RTStack.popLongReal();
 		val = Math.nextUp(val);
-		RTStack.push(LongRealValue.of(val), "EXPORT");
+		RTStack.push(LongRealValue.of(val));
 		SVM_CALL_SYS.EXIT("DADDEP: ");
 	}
 
@@ -39,7 +39,7 @@ public abstract class SysMath {
 		SVM_CALL_SYS.ENTER("RSUBEP: ", 1, 1); // exportSize, importSize
 		float val = RTStack.popReal();
 		val = Math.nextDown(val);
-		RTStack.push(RealValue.of(val), "EXPORT");
+		RTStack.push(RealValue.of(val));
 		SVM_CALL_SYS.EXIT("RSUBEP: ");
 	}
 
@@ -49,7 +49,7 @@ public abstract class SysMath {
 		SVM_CALL_SYS.ENTER("DSUBEP: ", 1, 1); // exportSize, importSize
 		double val = RTStack.popLongReal();
 		val = Math.nextDown(val);
-		RTStack.push(LongRealValue.of(val), "EXPORT");
+		RTStack.push(LongRealValue.of(val));
 		SVM_CALL_SYS.EXIT("DSUBEP: ");
 	}
 
@@ -60,7 +60,7 @@ public abstract class SysMath {
 		int x = RTStack.popInt();
 		int b = RTStack.popInt();
 		int res = IPOW(b, x);
-		RTStack.push(IntegerValue.of(Type.T_INT, res), "EXPORT");
+		RTStack.push(IntegerValue.of(Type.T_INT, res));
 		SVM_CALL_SYS.EXIT("IIPOWR: ");
 	}
 
@@ -93,7 +93,7 @@ public abstract class SysMath {
 		else if(sign(res) != sign(y)) res = res + y;
 		
 //		int res = y % x;
-		RTStack.push(IntegerValue.of(Type.T_INT, res), "EXPORT");
+		RTStack.push(IntegerValue.of(Type.T_INT, res));
 		SVM_CALL_SYS.EXIT("MODULO: ");
 	}
 	private static int sign(int i) {
@@ -133,7 +133,7 @@ public abstract class SysMath {
 		int x = RTStack.popInt();
 		float b = RTStack.popReal();
 		double res = Math.pow(b, x);
-		RTStack.push(LongRealValue.of(res), "EXPORT");
+		RTStack.push(LongRealValue.of(res));
 		SVM_CALL_SYS.EXIT("RIPOWR: ");
 	}
 
@@ -146,7 +146,7 @@ public abstract class SysMath {
 		float x = RTStack.popReal();
 		float b = RTStack.popReal();
 		float res = (float) Math.pow(b, x);
-		RTStack.push(RealValue.of(res), "EXPORT");
+		RTStack.push(RealValue.of(res));
 		SVM_CALL_SYS.EXIT("RRPOWR: ");
 	}
 
@@ -160,7 +160,7 @@ public abstract class SysMath {
 		int x = RTStack.popInt();
 		double b = RTStack.popLongReal();
 		double res = Math.pow(b, x);
-		RTStack.push(LongRealValue.of(res), "EXPORT");
+		RTStack.push(LongRealValue.of(res));
 		SVM_CALL_SYS.EXIT("DIPOWR: ");
 	}
 
@@ -174,7 +174,7 @@ public abstract class SysMath {
 		double x = RTStack.popLongReal();
 		double b = RTStack.popLongReal();
 		double res = Math.pow(b, x);
-		RTStack.push(LongRealValue.of(res), "EXPORT");
+		RTStack.push(LongRealValue.of(res));
 		SVM_CALL_SYS.EXIT("DDPOWR: ");
 	}
 
@@ -194,7 +194,7 @@ public abstract class SysMath {
 		SVM_CALL_SYS.ENTER("RSQROO: ", 1, 1); // exportSize, importSize
 		float r = RTStack.popReal();
 		float res = (float) Math.sqrt(r);
-		RTStack.push(RealValue.of(res), "EXPORT");
+		RTStack.push(RealValue.of(res));
 		SVM_CALL_SYS.EXIT("RSQROO: ");
 	}
 
@@ -204,7 +204,7 @@ public abstract class SysMath {
 		SVM_CALL_SYS.ENTER("SQROOT: ", 1, 1); // exportSize, importSize
 		double r = RTStack.popLongReal();
 		double res = Math.sqrt(r);
-		RTStack.push(LongRealValue.of(res), "EXPORT");
+		RTStack.push(LongRealValue.of(res));
 		SVM_CALL_SYS.EXIT("SQROOT: ");
 	}
 
@@ -214,7 +214,7 @@ public abstract class SysMath {
 		SVM_CALL_SYS.ENTER("RLOGAR: ", 1, 1); // exportSize, importSize
 		float r = RTStack.popReal();
 		double res = Math.log(r);
-		RTStack.push(LongRealValue.of(res), "EXPORT");
+		RTStack.push(LongRealValue.of(res));
 		SVM_CALL_SYS.EXIT("RLOGAR: ");
 	}
 
@@ -224,7 +224,7 @@ public abstract class SysMath {
 		SVM_CALL_SYS.ENTER("LOGARI: ", 1, 1); // exportSize, importSize
 		double r = RTStack.popLongReal();
 		double res = Math.log(r);
-		RTStack.push(LongRealValue.of(res), "EXPORT");
+		RTStack.push(LongRealValue.of(res));
 		SVM_CALL_SYS.EXIT("LOGARI: ");
 	}
 
@@ -237,7 +237,7 @@ public abstract class SysMath {
 		SVM_CALL_SYS.ENTER("DLOG10: ", 1, 1); // exportSize, importSize
 		double r = RTStack.popLongReal();
 		double res = Math.log10(r);
-		RTStack.push(LongRealValue.of(res), "EXPORT");
+		RTStack.push(LongRealValue.of(res));
 		SVM_CALL_SYS.EXIT("DLOG10: ");
 	}
 
@@ -248,7 +248,7 @@ public abstract class SysMath {
 //		float r = (float) RTStack.popLongReal();
 		float r = RTStack.popReal();
 		float res = (float) Math.exp(r);
-		RTStack.push(RealValue.of(res), "EXPORT");
+		RTStack.push(RealValue.of(res));
 		SVM_CALL_SYS.EXIT("REXPON: ");
 	}
 
@@ -258,7 +258,7 @@ public abstract class SysMath {
 		SVM_CALL_SYS.ENTER("EXPONE: ", 1, 1); // exportSize, importSize
 		double r = RTStack.popLongReal();
 		double res = Math.exp(r);
-		RTStack.push(LongRealValue.of(res), "EXPORT");
+		RTStack.push(LongRealValue.of(res));
 		SVM_CALL_SYS.EXIT("EXPONE: ");
 	}
 
@@ -268,7 +268,7 @@ public abstract class SysMath {
 		SVM_CALL_SYS.ENTER("RSINUS: ", 1, 1); // exportSize, importSize
 		float r = RTStack.popReal();
 		float res = (float) Math.sin(r);
-		RTStack.push(RealValue.of(res), "EXPORT");
+		RTStack.push(RealValue.of(res));
 		SVM_CALL_SYS.EXIT("RSINUS: ");
 	}
 
@@ -278,7 +278,7 @@ public abstract class SysMath {
 		SVM_CALL_SYS.ENTER("SINUSR: ", 1, 1); // exportSize, importSize
 		double r = RTStack.popLongReal();
 		double res = Math.sin(r);
-		RTStack.push(LongRealValue.of(res), "EXPORT");
+		RTStack.push(LongRealValue.of(res));
 		SVM_CALL_SYS.EXIT("SINUSR: ");
 	}
 
@@ -288,7 +288,7 @@ public abstract class SysMath {
 		SVM_CALL_SYS.ENTER("RCOSIN: ", 1, 1); // exportSize, importSize
 		float r = RTStack.popReal();
 		float res = (float) Math.cos(r);
-		RTStack.push(RealValue.of(res), "EXPORT");
+		RTStack.push(RealValue.of(res));
 		SVM_CALL_SYS.EXIT("RCOSIN: ");
 	}
 
@@ -298,7 +298,7 @@ public abstract class SysMath {
 		SVM_CALL_SYS.ENTER("COSINU: ", 1, 1); // exportSize, importSize
 		double r = RTStack.popLongReal();
 		double res = Math.cos(r);
-		RTStack.push(LongRealValue.of(res), "EXPORT");
+		RTStack.push(LongRealValue.of(res));
 		SVM_CALL_SYS.EXIT("COSINU: ");
 	}
 
@@ -320,7 +320,7 @@ public abstract class SysMath {
 		SVM_CALL_SYS.ENTER("RARTAN: ", 1, 1); // exportSize, importSize
 		float r = RTStack.popReal();
 		float res = (float) Math.atan(r);
-		RTStack.push(RealValue.of(res), "EXPORT");
+		RTStack.push(RealValue.of(res));
 		SVM_CALL_SYS.EXIT("RARTAN: ");
 	}
 
@@ -330,7 +330,7 @@ public abstract class SysMath {
 		SVM_CALL_SYS.ENTER("ARCTAN: ", 1, 1); // exportSize, importSize
 		double r = RTStack.popLongReal();
 		double res = Math.atan(r);
-		RTStack.push(LongRealValue.of(res), "EXPORT");
+		RTStack.push(LongRealValue.of(res));
 		SVM_CALL_SYS.EXIT("ARCTAN: ");
 	}
 

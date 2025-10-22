@@ -90,7 +90,7 @@ public class SVM_CONVERT extends SVM_Instruction {
 			default:			  fromValue = RTStack.pop();
 		}
 		Value toValue = convValue(fromValue, fromType, toType);
-		RTStack.push(toValue, "CONVERT: ");
+		RTStack.push(toValue);
 		Global.PSC.addOfst(1);
 	}
 	

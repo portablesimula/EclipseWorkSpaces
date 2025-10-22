@@ -161,7 +161,7 @@ public class ObjectAddress extends Value {
 				break;
 			case REL_ADDR:
 				int frmx = RTStack.frameIndex();
-				RTStack.store(frmx + ofst + idx, value, comment);
+				RTStack.store(frmx + ofst + idx, value);
 
 //				Util.IERR("");
 				break;
@@ -172,14 +172,14 @@ public class ObjectAddress extends Value {
 				int ofstx = RTStack.popInt();
 				ObjectAddress oaddr = RTStack.popOADDR().addOffset(ofstx);
 				IO.println("ObjectAddress.store: oaddr="+oaddr + ", value="+value);
-				RTStack.store(ofstx + idx, value, comment);
+				RTStack.store(ofstx + idx, value);
 				oaddr.dumpArea("", ofstx + idx + 8);
 				Util.IERR("");
 				break;
 			case STACK_ADDR: //  return "STACK_ADR[RTStack(" + ofst + ")]";
 //				IO.println("ObjectAddress.store: "+value+"  "+this);
 //				RTStack.dumpRTStack("ObjectAddress.store: "+this);
-				RTStack.store(ofst + idx, value, comment);
+				RTStack.store(ofst + idx, value);
 //				RTStack.dumpRTStack("ObjectAddress.store: "+this);
 //				Util.IERR("");
 				break;

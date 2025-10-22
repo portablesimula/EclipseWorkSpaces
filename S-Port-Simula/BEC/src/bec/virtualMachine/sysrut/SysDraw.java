@@ -82,7 +82,7 @@ public abstract class SysDraw {
 			
 //			return (((double) seed) / TWO_POW_31M1D);
 			double res = ((double) seed) / TWO_POW_31M1D;
-			RTStack.push(LongRealValue.of(res), "EXPORT");
+			RTStack.push(LongRealValue.of(res));
 		} else { // Antithetic drawing
 			seed = (((-seed) | 1) * MULTIPLIER) % TWO_POW_31;
 //			U.put((int) -seed);
@@ -91,7 +91,7 @@ public abstract class SysDraw {
 			
 //			return (1.0d - ((double) seed) / TWO_POW_31M1D);
 			double res = 1.0d - ((double) seed) / TWO_POW_31M1D;
-			RTStack.push(LongRealValue.of(res), "EXPORT");
+			RTStack.push(LongRealValue.of(res));
 		}
 
 //		Util.IERR("");

@@ -164,7 +164,7 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 	 *  import range(0:127) index; export integer result  end;
 	 */
 	private void verbose() {
-		RTStack.push(BooleanValue.of(RUNTIME_VERBOSE), "EXPORT");
+		RTStack.push(BooleanValue.of(RUNTIME_VERBOSE));
 		ENTER("VERBOSE: ", 1, 0); // exportSize, importSize
 		EXIT("VERBOSE: ");
 	}
@@ -214,7 +214,7 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 		String str2 = RTStack.popString();
 		boolean result = str1.equals(str2);
 //		IO.println("SVM_CALLSYS.stringEqual: " + str1 + " equals " + str2 + " ==> " + result);
-		RTStack.push(BooleanValue.of(result), "EXPORT");
+		RTStack.push(BooleanValue.of(result));
 		EXIT("STREQL: " + result);
 	}
 
@@ -303,7 +303,7 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 		}
 //		dseg.dump("SVM_SYSCALL.zeroarea: ", idxFrom, idxTo);
 //		Util.IERR("");
-		RTStack.push(null, ""); // ?????
+		RTStack.push(null); // ?????
 		EXIT("ZEROAREA: ");
 	}
 	
@@ -320,7 +320,7 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 		
 		DataSegment pool = new DataSegment("POOL_" + warea, Kind.K_SEG_DATA);
 		pool.emitDefaultValue(1, lng);
-		RTStack.push(ObjectAddress.ofSegAddr(pool, 0) , "EXPORT");
+		RTStack.push(ObjectAddress.ofSegAddr(pool, 0));
 
 //		Util.IERR("");
 		EXIT("DWAREA: ");
@@ -330,7 +330,7 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 	/// export long real sec  end;
 	private void cputime() {
 		ENTER("CPUTIM: ", 0, 1); // exportSize, importSize
-		RTStack.push(null, "CPUTIM: ");
+		RTStack.push(null);
 		EXIT("CPUTIM: ");
 	}
 	
@@ -358,7 +358,7 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 				oaddr.store(i, val, "DATTIM: ");
 			}
 		}
-		RTStack.push(IntegerValue.of(Type.T_INT, length), "DATTIM: ");
+		RTStack.push(IntegerValue.of(Type.T_INT, length));
 		EXIT("DATTIM: ");
 	}
 

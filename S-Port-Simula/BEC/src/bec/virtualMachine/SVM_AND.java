@@ -38,7 +38,7 @@ public class SVM_AND extends SVM_Instruction {
 		Value tos = RTStack.pop();
 		Value sos = RTStack.pop();
 		Value res = (tos == null)? null : tos.and(sos);
-		RTStack.push(res, "SVM_AND: " + tos + " and " + sos + " = " + res);
+		RTStack.push(res);
 		Global.PSC.addOfst(1);
 	}
 	

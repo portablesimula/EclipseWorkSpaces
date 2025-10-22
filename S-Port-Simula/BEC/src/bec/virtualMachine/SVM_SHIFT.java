@@ -49,7 +49,7 @@ public class SVM_SHIFT extends SVM_Instruction {
 		Value res = (sos == null)? null : sos.shift(instr, tos);
 		if(DEBUG)
 			IO.println("SVM_SHIFT: " + sos + " " + Scode.edInstr(instr)+ " " + tos + " ==> " + res);
-		RTStack.push(res, "SVM_SHIFT: " + tos + " " + Scode.edInstr(instr)+ " " + sos + " = " + res);
+		RTStack.push(res);
 		Global.PSC.addOfst(1);
 	}
 

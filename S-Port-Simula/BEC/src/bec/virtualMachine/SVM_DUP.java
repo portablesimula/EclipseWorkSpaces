@@ -26,7 +26,7 @@ public class SVM_DUP extends SVM_Instruction {
 	@Override
 	public void execute() {
 		if(n == 1) {
-			RTStack.push(RTStack.peek(), "SVM_DUP: ");				
+			RTStack.push(RTStack.peek());				
 		} else {
 			RTStack.dup(n);
 		}

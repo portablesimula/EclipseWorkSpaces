@@ -48,7 +48,7 @@ public class SVM_LOADC extends SVM_Instruction {
 		switch(typeTag) {
 			case Scode.TAG_BOOL, Scode.TAG_CHAR, Scode.TAG_INT, Scode.TAG_SINT, Scode.TAG_REAL, Scode.TAG_LREAL,
 			     Scode.TAG_SIZE, Scode.TAG_AADDR, Scode.TAG_PADDR, Scode.TAG_RADDR:
-					RTStack.push(value, "SVM_LOADC"); break;
+					RTStack.push(value); break;
 			case Scode.TAG_OADDR:
 				
 				ObjectAddress oaddr = (ObjectAddress) value;
@@ -59,22 +59,22 @@ public class SVM_LOADC extends SVM_Instruction {
 					Util.IERR("");
 				}
 				
-				RTStack.push(value, "SVM_LOADC"); break;
+				RTStack.push(value); break;
 			case Scode.TAG_TEXT:
 				Util.IERR("IMPOSSIBLE");
 				break;
 			case Scode.TAG_STRING:
 				StringValue sval = (StringValue) value;
 				IntegerValue lng = IntegerValue.of(Type.T_INT, sval.lng);
-				RTStack.push(sval.addr, "String'GADDR'OADR: ");
-				RTStack.push(null,      "String'GADDR'OFST: ");
-				RTStack.push(lng,       "String'lng: ");
+				RTStack.push(sval.addr);
+				RTStack.push(null);
+				RTStack.push(lng);
 				if(DEBUG) RTStack.dumpRTStack("SVM_LOADC.execute: ");
 				break;
 			case Scode.TAG_GADDR:
 				if(value == null) {
-					RTStack.push(null, "GADDR'OADR: ");
-					RTStack.push(null, "GADDR'OFST: ");
+					RTStack.push(null);
+					RTStack.push(null);
 				} else {
 					GeneralAddress gaddr = (GeneralAddress) value;
 					
@@ -83,14 +83,14 @@ public class SVM_LOADC extends SVM_Instruction {
 						gaddr.base = oaddr.toStackAddress();
 					}
 					
-					RTStack.push(gaddr.base, "GADDR'OADR: ");
-					RTStack.push(IntegerValue.of(Type.T_INT, gaddr.ofst), "GADDR'OFST: ");
+					RTStack.push(gaddr.base);
+					RTStack.push(IntegerValue.of(Type.T_INT, gaddr.ofst));
 				} break;
 			default:
 				RecordValue rval = (RecordValue)value;
 				for(int i=0;i<rval.attrValues.size();i++) {
 					Value val = rval.attrValues.get(i);
-					RTStack.push(val, "Record: " + rval.tag);				
+					RTStack.push(val);				
 				}
 				
 				if(DEBUG) RTStack.dumpRTStack("SVM_LOADC.execute: ");

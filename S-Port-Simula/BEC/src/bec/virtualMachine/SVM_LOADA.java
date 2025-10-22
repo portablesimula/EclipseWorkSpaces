@@ -44,8 +44,8 @@ public class SVM_LOADA extends SVM_Instruction {
 	public void execute() {
 		int ofst = (! objadr.indexed)? offset : offset + RTStack.popInt();
 		ObjectAddress resadr = objadr.toRTMemAddr();
-		RTStack.push(resadr, "SVM_LOADA: ");
-		RTStack.push(IntegerValue.of(Type.T_INT, ofst), null);
+		RTStack.push(resadr);
+		RTStack.push(IntegerValue.of(Type.T_INT, ofst));
 		
 		Global.PSC.addOfst(1);
 	}

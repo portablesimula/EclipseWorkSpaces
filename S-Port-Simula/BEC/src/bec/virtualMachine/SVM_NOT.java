@@ -49,7 +49,7 @@ public class SVM_NOT extends SVM_Instruction {
 				res = IntegerValue.of(Type.T_INT, ~ ival.value);
 			} else Util.IERR("");
 		}
-		RTStack.push(res, "SVM_NOT:  not " + tos + " ==> " + res);
+		RTStack.push(res);
 		Global.PSC.addOfst(1);
 	}
 	

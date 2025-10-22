@@ -83,7 +83,7 @@ public abstract class SysDeEdit {
 		String item = getIntegerItem(arg);
 		int res = Integer.parseInt(item);
 //		IO.println("SysEdit.GETINT: item="+item+"  ===>  "+res);
-		RTStack.push(IntegerValue.of(Type.T_INT, res), "EXPORT");
+		RTStack.push(IntegerValue.of(Type.T_INT, res));
 		SVM_CALL_SYS.EXIT("GETINT: ");
 	}
 
@@ -195,7 +195,7 @@ public abstract class SysDeEdit {
 		String item = getRealItem(arg);
 		double res = Double.parseDouble(item);
 //		IO.println("SysEdit.GTREAL: item="+item+"  ===>  "+res);
-		RTStack.push(LongRealValue.of(res), "EXPORT");
+		RTStack.push(LongRealValue.of(res));
 		SVM_CALL_SYS.EXIT("GTREAL: ");
 	}
 
@@ -280,7 +280,7 @@ public abstract class SysDeEdit {
 		String item = getFracItem(arg);
 		int res = Integer.parseInt(item);
 //		IO.println("SysEdit.GTFRAC: item="+item+"  ===>  "+res);
-		RTStack.push(IntegerValue.of(Type.T_INT, res), "EXPORT");
+		RTStack.push(IntegerValue.of(Type.T_INT, res));
 		SVM_CALL_SYS.EXIT("GTFRAC: ");
 	}
 

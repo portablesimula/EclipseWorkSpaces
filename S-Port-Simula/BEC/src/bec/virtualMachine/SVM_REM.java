@@ -42,7 +42,7 @@ public class SVM_REM extends SVM_Instruction {
 		Value tos = RTStack.pop();
 		Value sos = RTStack.pop();
 		Value res = (tos == null)? null : tos.rem(sos);
-		RTStack.push(res, "SVM_REM: " + tos + " + " + sos + " = " + res);
+		RTStack.push(res);
 		Global.PSC.addOfst(1);
 	}
 	
