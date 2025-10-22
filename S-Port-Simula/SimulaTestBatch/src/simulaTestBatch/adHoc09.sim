@@ -1,7 +1,9 @@
 begin integer MAX, SQRT_MAX;   
     
   outtext( "Find out how many primes are less than " ); breakoutimage;   
-  MAX      := inint; outimage;  
+%  MAX      := inint; outimage;  
+%  MAX      := 66000;  
+  MAX      := 77000;  
   SQRT_MAX := sqrt(MAX) + 1;  
      
   begin boolean array bArray( 0 : MAX );   
@@ -27,10 +29,13 @@ begin integer MAX, SQRT_MAX;
   
     for n := 5 step 1 until SQRT_MAX + 1 do  
       if bArray(n) then begin  
-         n2 := n * n;  
-         for k := n2 step n2 until MAX do  
+         n2 := n * n; 
+         outtext("TEST: n2="); outint(n2, 0); outtext("; MAX="); outint(MAX, 0); outimage; 
+         for k := n2 step n2 until MAX do begin 
+               outtext("TEST: k="); outint(k, 0); outimage; 
                if k < MAX then
-               		bArray(k) := false; 
+               bArray(k) := false; 
+            end;   
       end;  
          
     for k := 0 step 1 until MAX do  

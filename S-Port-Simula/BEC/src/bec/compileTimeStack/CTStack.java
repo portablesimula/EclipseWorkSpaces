@@ -11,14 +11,9 @@ import bec.util.Util;
 import bec.value.Value;
 
 public class CTStack {
-//	private static Stack<CTStackItem> stack = new Stack<CTStackItem>();
 	private static NamedStack<CTStackItem> stack = new NamedStack<CTStackItem>("MAIN");
-	
-//	private static Stack<Stack<CTStackItem>> saveStack = new Stack<Stack<CTStackItem>>();
 	private static Stack<NamedStack<CTStackItem>> saveStack = new Stack<NamedStack<CTStackItem>>();
 	private static Stack<NamedStack<CTStackItem>> bsegStack = new Stack<NamedStack<CTStackItem>>();
-
-//	private static final boolean DEBUG = false;
 	
 	public static String ident() {
 		return stack.ident();
@@ -28,41 +23,22 @@ public class CTStack {
 		return stack;
 	}
 	
-//	@SuppressWarnings("unchecked")
-//	public static NamedStack<CTStackItem> getClone() {
-////		IO.println("CTStack.get: "+stack.ident());
-//		return (NamedStack<CTStackItem>) stack.clone();
-//	}
 	public static NamedStack<CTStackItem> copy(String ident) {
-//		IO.println("CTStack.get: "+stack.ident());
 		NamedStack<CTStackItem> copy = new NamedStack<CTStackItem>(ident);
 		for(CTStackItem item:stack) {
 			copy.add(item.copy());
 		}
-//		if(stack.size() > 1) {
-//			stack.dumpStack("THIS STACK");
-//			stack.dumpStack("COPY STACK");
-////			Util.IERR("");
-//		}
 		return copy;
 	}
 
 	public static void reestablish(NamedStack<CTStackItem> saved) {
-//		stack = saved;
-//		stack = saved.getCopy();
 		stack = new NamedStack<CTStackItem>(saved.ident());
 		for(CTStackItem item:saved) {
 			stack.add(item.copy());
 		}
-		
-//		IO.println("CTStack.reestablish: "+stack.ident());
-//		stack.dumpStack("RESTORE: ");
 	}
 	
 	public static boolean equals(NamedStack<CTStackItem> stack1, NamedStack<CTStackItem> stack2) {
-//		IO.println("\nCTStack.equals: "+stack1.ident()+"  "+stack2.ident());
-//		stack1.dumpStack("CTStack.equals: STACK-1");
-//		stack2.dumpStack("CTStack.equals: STACK-2");
 		if(stack1.size() != stack2.size()) return false;
 		for(int i=0;i<stack1.size();i++) {
 			CTStackItem itm1 = stack1.get(i);
@@ -79,29 +55,23 @@ public class CTStack {
 	/// * remember stack;
 	/// * purge stack;
 	public static void SAVE(String ident) {
-//		IO.println("CTStack.SAVE: STACK="+stack.ident());
 		saveStack.push(stack);
 		stack = new NamedStack<CTStackItem>(ident);
 	}
 
 	public static void RESTORE() {
 		stack = saveStack.pop();
-//		IO.println("CTStack.RESTORE: STACK="+stack.ident());
-//		stack.dumpStack("RESTORE: ");
 	}
 
 	/// * remember stack;
 	/// * purge stack;
 	public static void BSEG(String ident) {
-//		IO.println("CTStack.BSEG: STACK="+stack.ident());
 		bsegStack.push(stack);
 		stack = new NamedStack<CTStackItem>(ident);
 	}
 
 	public static void ESEG() {
 		stack = bsegStack.pop();
-//		IO.println("CTStack.ESEG: STACK="+stack.ident());
-//		stack.dumpStack("RESTORE: ");
 	}
 	
 	public static CTStackItem TOS() { // Top of Compile-time stack
@@ -129,7 +99,6 @@ public class CTStack {
 	}
 	
 	public static void push(CTStackItem s) {
-//		IO.println("CTStack.push: " + s.edMode() + " " + s+"  STACK="+stack.ident());
 		stack.push(s);
 	}
 	

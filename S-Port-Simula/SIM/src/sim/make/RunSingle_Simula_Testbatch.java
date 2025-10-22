@@ -24,14 +24,14 @@ public class RunSingle_Simula_Testbatch {
 		cmds.add("-nopopup");
 		cmds.add("-verbose");
 		
-////		cmds.add("-FEC:Listing");
-////		cmds.add("-FEC:SCodeTrace");
-//		cmds.add("-BEC:SCodeTrace");
-//		cmds.add("-BEC:TraceSVM_CODE");
-////		cmds.add("-BEC:TraceSVM_DATA");
+//		cmds.add("-FEC:Listing");
+//		cmds.add("-FEC:SCodeTrace");
+		cmds.add("-BEC:SCodeTrace");
+		cmds.add("-BEC:TraceSVM_CODE");
+//		cmds.add("-BEC:TraceSVM_DATA");
 //		cmds.add("-execTrace");
-////		cmds.add("-callTrace");
-////		cmds.add("-dumpsAtExit");
+//		cmds.add("-callTrace");
+//		cmds.add("-dumpsAtExit");
 
 		cmds.add("-simdir"); cmds.add("C:/SPORT");
 		cmds.add(sourceFileName);
@@ -69,7 +69,8 @@ public class RunSingle_Simula_Testbatch {
 //		names.add("adHoc05");
 //		names.add("adHoc06");
 //		names.add("adHoc07");
-		names.add("adHoc08");
+//		names.add("adHoc08");
+		names.add("adHoc09");
 
 //		names.add("SimulaTest"); // Simula TestBatch Framework
 //		names.add("simtst00"); // OK:  Empty test
