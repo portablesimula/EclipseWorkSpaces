@@ -72,7 +72,7 @@ public class IntegerValue extends Value {
 	
 	@Override
 	public void emit(DataSegment dseg, String comment) {
-		dseg.emit(this, comment);
+		dseg.emit(this);
 	}
 
 	@Override

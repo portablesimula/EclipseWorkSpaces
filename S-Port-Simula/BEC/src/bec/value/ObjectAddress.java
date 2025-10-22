@@ -149,7 +149,7 @@ public class ObjectAddress extends Value {
 	
 	@Override
 	public void emit(DataSegment dseg, String comment) {
-		dseg.emit(this, comment);
+		dseg.emit(this);
 	}
 	
 	public void store(int idx, Value value, String comment) {

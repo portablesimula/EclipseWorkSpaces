@@ -124,7 +124,7 @@ public class RepetitionValue extends Value {
 	public void emit(DataSegment dseg, String comment) {
 		for(Value value:values) {
 			if(value == null)
-				 dseg.emit(null, comment);
+				 dseg.emit(null);
 			else value.emit(dseg, comment);
 		}
 	}

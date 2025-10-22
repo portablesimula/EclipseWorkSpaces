@@ -6,7 +6,6 @@ import java.util.Vector;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.descriptor.Kind;
-import bec.util.Global;
 import bec.util.Option;
 import bec.util.Scode;
 import bec.util.Type;
@@ -18,19 +17,15 @@ import bec.value.Value;
 
 public class DataSegment extends Segment {
 	Vector<Value> values;
-	Vector<String> comment;
 	private int guard = -1;
 	
 	private static final boolean DEBUG = false;
 
 	public DataSegment(String ident, int segmentKind) {
 		super(ident, segmentKind);
-//		IO.println("NEW DataSegment: " + this);
-//		Thread.dumpStack();
 		this.ident = ident.toUpperCase();
 		this.segmentKind = segmentKind;
 		values = new Vector<Value>();
-		comment = new Vector<String>();
 	}
 	
 	public void addGuard(int ofst) {
@@ -51,34 +46,19 @@ public class DataSegment extends Segment {
 	
 	public void store(int index, Value value) {
 		if(index == guard) Util.IERR("FATAL ERROR: Attempt to change Guarded location: "+ObjectAddress.ofSegAddr(this, index)+" from "+values.get(index)+" to "+value);
-//		if(index < 0 || index >= values.size()) Util.IERR("DataSegment.store: Index out of range(0,"+values.size()+") index="+index);
-//		try {
-			values.set(index, value);
-//		} catch(Exception e) {
-//			e.printStackTrace();
-//			Util.IERR("ERROR "+this.ident);
-//		}
+		values.set(index, value);
 	}
 	
 	public Value load(int index) {
-//		IO.println("DataSegment.load: "+this+", index="+index);
-		try {
-			return values.get(index);
-		} catch(Exception e) {
-			e.printStackTrace();
-			IO.println("DataSegment.load: FAILED - SE PÅ DETTE SEINERE !! e="+e);
-//			this.dump("DataSegment.load: FAILED: " + e + " ");
-			Util.IERR("DataSegment.load: FAILED");
-			return null;
-		}
+		return values.get(index);
 	}
 	
-	public ObjectAddress emit(final Value value,final String cmnt) {
+	public ObjectAddress emit(final Value value) {
 		ObjectAddress addr = nextAddress();
 		values.add(value);
-		comment.add(cmnt);
+//		comment.add(cmnt);
 		if(Option.PRINT_GENERATED_SVM_DATA)
-			listData("                                 ==> ", value, cmnt, addr.getOfst());
+			listData("                                 ==> ", value, "cmnt", addr.getOfst());
 		return addr;
 	}
 
@@ -102,7 +82,7 @@ public class DataSegment extends Segment {
 				IO.println("                                 ==> ... " + (n-LIMIT) + " more truncated");
 				Option.PRINT_GENERATED_SVM_DATA = false;
 			}
-			emit(null, cmnt);
+			emit(null);
 		}
 		Option.PRINT_GENERATED_SVM_DATA = option;
 	}
@@ -111,7 +91,7 @@ public class DataSegment extends Segment {
 		ObjectAddress addr = nextAddress();
 		int n = chars.length();
 		for(int i=0;i<n;i++) {
-			emit(IntegerValue.of(Type.T_CHAR, chars.charAt(i)), cmnt);
+			emit(IntegerValue.of(Type.T_CHAR, chars.charAt(i)));
 		}
 		return addr;
 	}
@@ -150,7 +130,7 @@ public class DataSegment extends Segment {
 			while(line.length() < 8) line = " " +line;
 			String value = ""+values.get(i);
 			while(value.length() < 25) value = value + ' ';
-			IO.println(line + value + "   " + comment.get(i));
+			IO.println(line + value);
 		}
 		IO.println("==================== " + title + ident + " END  ====================");
 //		Util.IERR("");
@@ -168,10 +148,8 @@ public class DataSegment extends Segment {
 	private DataSegment(String ident, int segmentKind, AttributeInputStream inpt) throws IOException {
 		super(ident, segmentKind);
 		values = new Vector<Value>();
-		comment = new Vector<String>();
 		int n = inpt.readShort();
 		for(int i=0;i<n;i++) {
-			comment.add(inpt.readString());
 			values.add(Value.read(inpt));
 		}
 //		IO.println("NEW IMPORT: " + this);
@@ -185,7 +163,6 @@ public class DataSegment extends Segment {
 		oupt.writeString(ident);
 		oupt.writeShort(values.size());
 		for(int i=0;i<values.size();i++) {
-			oupt.writeString(comment.get(i));
 			Value val = values.get(i);
 //			IO.println("DataSegment.Write: "+val);
 			if(val == null)

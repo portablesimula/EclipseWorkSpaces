@@ -52,9 +52,9 @@ public class TextValue extends Value {
 	@Override
 	public void emit(DataSegment dseg, String comment) {
 		ObjectAddress addr = emitChars(Global.TSEG);
-		dseg.emit(addr, "TEXT'CHRADR'oaddr: " + comment);
-		dseg.emit(null, "TEXT'CHRADR'ofst:  " + comment);
-		dseg.emit(IntegerValue.of(Type.T_INT, textValue.length()), "TEXT'lng:   " + comment);
+		dseg.emit(addr);
+		dseg.emit(null);
+		dseg.emit(IntegerValue.of(Type.T_INT, textValue.length()));
 	}
 	
 	public String toString() {

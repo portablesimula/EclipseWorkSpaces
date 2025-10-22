@@ -94,7 +94,7 @@ public class RecordDescr extends Descriptor {
 		int rep = (repCount > 0) ? repCount : 1;
 		for(int i=0;i<rep;i++) {
 			for(int j=0;j<size;j++)
-				dseg.emit(null, comment);
+				dseg.emit(null);
 		}
 	}
 		

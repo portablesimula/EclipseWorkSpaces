@@ -182,7 +182,7 @@ public class Variable extends Descriptor {
 			else if(system.equalsIgnoreCase("ALLOCO")) value = null;//new RoutineAddress(true);
 			else if(system.equalsIgnoreCase("FREEOB")) value = null;//new RoutineAddress(true);
 			else Util.IERR("MISSING: " + system);
-			Global.DSEG.emit(value, var.toString());
+			Global.DSEG.emit(value);
 		} else {
 //			IO.println("Variable.ofGlobal: "+var);
 //			IO.println("Variable.ofGlobal: size="+var.type.size());
