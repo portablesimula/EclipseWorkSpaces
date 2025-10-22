@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Simula-Setup-Dated: Sat Jul 26 13:48:04 CEST 2025
 Main-Class: make.setup.SPortExtractor
-sPort-Revision: 1
-sPort-Setup-Dated: Wed Oct 22 09:02:24 CEST 2025
+sPort-Revision: 2
+sPort-Setup-Dated: Wed Oct 22 12:16:29 CEST 2025
 

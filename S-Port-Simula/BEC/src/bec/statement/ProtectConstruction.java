@@ -51,7 +51,7 @@ public class ProtectConstruction { // extends ProgramElement {
 	/// TOS is popped.
 	private static void doSAVE() {
 		CTStack.checkTosType(Type.T_OADDR);
-		FETCH.doFetch(null);
+		CTStack.forceTosValue();
 		CTStack.pop();
 		CTStack.SAVE("SAVE");
 		
@@ -76,7 +76,7 @@ public class ProtectConstruction { // extends ProgramElement {
 	/// TOS is popped.
 	private static void doRESTORE() {
 		CTStack.checkTosRef(); CTStack.checkTosType(Type.T_OADDR);
-		FETCH.doFetch(null);
+		CTStack.forceTosValue();
 		CTStack.pop();
 		CTStack.checkStackEmpty();
 		CTStack.RESTORE();

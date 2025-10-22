@@ -29,7 +29,7 @@ begin integer MAX, SQRT_MAX;
       if bArray(n) then begin  
          n2 := n * n;  
          for k := n2 step n2 until MAX do  
-               if k < MAX then
+               if k <= MAX then
                		bArray(k) := false; 
       end;  
          

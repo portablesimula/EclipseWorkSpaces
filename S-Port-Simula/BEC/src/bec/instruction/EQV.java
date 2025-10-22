@@ -40,7 +40,7 @@ public abstract class EQV extends Instruction {
 		Global.PSEG.emit(new SVM_EQV(), "EQV: ");
 		CTStack.pop();
 		CTStack.pop();
-	    CTStack.pushTempVAL(at, 1, "EQV: ");
+	    CTStack.pushTempVAL(at, 1);
 	}	
 
 }

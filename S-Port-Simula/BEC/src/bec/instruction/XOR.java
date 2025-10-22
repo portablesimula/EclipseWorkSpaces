@@ -12,8 +12,6 @@ public abstract class XOR extends Instruction {
 	/**
 	 * arithmetic_instruction ::= xor
 	 * 
-	 * and, or, xor, imp, eqv (dyadic)
-	 * 
 	 * force TOS value; check TOS type(BOOL);
 	 * force SOS value; check SOS type(BOOL);
 	 * pop; pop;
@@ -40,7 +38,7 @@ public abstract class XOR extends Instruction {
 		Global.PSEG.emit(new SVM_XOR(), "XOR: ");
 		CTStack.pop();
 		CTStack.pop();
-	    CTStack.pushTempVAL(at, 1, "XOR: ");
+	    CTStack.pushTempVAL(at, 1);
 	}
 
 	@Override

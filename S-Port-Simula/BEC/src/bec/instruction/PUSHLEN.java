@@ -31,15 +31,8 @@ public abstract class PUSHLEN extends Instruction {
 	 *	changed, see below.	public static void ofScode() {
 	 */
 	public static void ofScode() {
-		CTStack.pushTempVAL(Type.T_SIZE, 1, "PUSHLEN: ");
+		CTStack.pushTempVAL(Type.T_SIZE, 1);
 		Global.PSEG.emit(new SVM_PUSHLEN(), "");
-//		Util.IERR("NOT IMPL");
 	}
-
-//    when S_PUSHLEN: itm.int:=Pushlen;
-//    if not SkipProtect
-//    then pushCoonst(T_SIZE,itm);
-//         Qf2(qPUSHC,0,qEAX,cVAL,itm.wrd);
-//    endif;
 
 }

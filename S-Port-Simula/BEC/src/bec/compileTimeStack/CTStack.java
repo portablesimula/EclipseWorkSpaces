@@ -102,14 +102,14 @@ public class CTStack {
 		stack.push(s);
 	}
 	
-	public static void pushTempVAL(Type type, int count, String comment) {
+	public static void pushTempVAL(Type type, int count) {
 //		IO.println("CTStack.pushTempVAL: " + type + " " + count + " " + comment+"  STACK="+stack.ident);
-		push(new Temp(CTStackItem.Mode.VAL, type, count, comment));
+		push(new Temp(CTStackItem.Mode.VAL, type, count));
 	}
 	
-	public static void pushTempREF(Type type, int count, String comment) {
+	public static void pushTempREF(Type type, int count) {
 //		IO.println("CTStack.pushTempREF: " + type + " " + count + " " + comment);
-		push(new Temp(CTStackItem.Mode.REF, type, count, comment));
+		push(new Temp(CTStackItem.Mode.REF, type, count));
 	}
 	
 	public static void pushCoonst(Type type, Value value) {
@@ -158,7 +158,7 @@ public class CTStack {
 	}
 
 	public static void forceTosValue() {
-		FETCH.doFetch("forceTosValue");
+		FETCH.doFetch();
 	}
 
 	public static void checkTosRef() {

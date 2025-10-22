@@ -25,18 +25,15 @@ public abstract class MULT extends Instruction {
 	 * SOS op TOS. All arithmetic on subranges of INT should be performed in full integer arithmetic. 
 	 */
 	public static void ofScode() {
-		CTStack.forceTosValue();			
-		CTStack.checkTosArith(); CTStack.checkSosArith(); CTStack.checkSosValue(); CTStack.checkTypesEqual();
+		CTStack.forceTosValue(); CTStack.checkTosArith();
+		CTStack.checkSosArith(); CTStack.checkSosValue(); CTStack.checkTypesEqual();
 		CTStackItem tos = CTStack.TOS();
 		CTStackItem sos = CTStack.SOS();
 	    Type at = CTStack.arithType(tos.type, sos.type);
 		Global.PSEG.emit(new SVM_MULT(), "MULT: ");
 		CTStack.pop();
 		CTStack.pop();
-	    CTStack.pushTempVAL(at, 1, "MULT: ");
-//		CTStack.dumpStack("MULT.doCode: ");
-//		Global.PSEG.dump("MULT.doCode: ");
-//		Util.IERR(""+this);
+	    CTStack.pushTempVAL(at, 1);
 	}
 
 }

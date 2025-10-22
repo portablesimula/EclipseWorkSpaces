@@ -22,18 +22,12 @@ public abstract class COMPARE extends Instruction {
 	 * relation ::= ?lt | ?le | ?eq | ?ge | ?gt | ?ne
 	 */
 	public static void ofScode() {
-//		CTStack.dumpStack();
 		Relation relation = Relation.ofScode();
-		
 		CTStack.forceTosValue();
 		CTStack.checkTypesEqual(); CTStack.checkSosValue();	
 		CTStack.pop(); CTStack.pop();
 		Global.PSEG.emit(new SVM_COMPARE(relation), "");
-		CTStack.pushTempVAL(Type.T_BOOL, 1, "COMPARE: ");
-
-//		CTStack.dumpStack();
-//		Global.PSEG.dump();
-//		Util.IERR(""+this);
+		CTStack.pushTempVAL(Type.T_BOOL, 1);
 	}	
 
 }

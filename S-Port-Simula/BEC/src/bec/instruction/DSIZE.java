@@ -30,12 +30,9 @@ public abstract class DSIZE extends Instruction {
 	public static void ofScode() {
 		Tag tag = Tag.ofScode();
 		RecordDescr fixrec = (RecordDescr) tag.getMeaning();
-//		IO.println("DSIZE.ofScode: fixrec="+fixrec+"  nbrep="+fixrec.nbrep);
 		if(fixrec.nbrep != 0) {
-//			CTStack.dumpStack("DSIZE.ofScode: ");
 			int n = fixrec.nbrep;
-			CTStack.forceTosValue();
-			CTStack.checkTosInt();
+			CTStack.forceTosValue(); CTStack.checkTosInt();
 			CTStack.pop();
 			IntegerValue nbrepValue = IntegerValue.of(Type.T_INT, n);
 			Global.PSEG.emit(new SVM_LOADC(Type.T_INT, nbrepValue), "DSIZE'nbrep: ");
@@ -44,10 +41,9 @@ public abstract class DSIZE extends Instruction {
 			Global.PSEG.emit(new SVM_LOADC(Type.T_INT, fixValue), "DSIZE'recSize: ");
 			Global.PSEG.emit(new SVM_ADD(), "ADD: ");
 			
-			CTStack.pushTempVAL(Type.T_SIZE, 1, "DSIZE: ");
+			CTStack.pushTempVAL(Type.T_SIZE, 1);
 		} else {
 			Util.IERR("Illegal DSIZE on: " + fixrec);
-//           GQpop; itm.int:=0; pushCoonst(T_SIZE,itm);
 		}
 	}
 

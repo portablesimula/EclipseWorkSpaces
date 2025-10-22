@@ -40,7 +40,7 @@ public abstract class AND extends Instruction {
 		Global.PSEG.emit(new SVM_AND(), "");
 		CTStack.pop();
 		CTStack.pop();
-	    CTStack.pushTempVAL(at, 1, "AND: ");
+	    CTStack.pushTempVAL(at, 1);
 	}
 
 }

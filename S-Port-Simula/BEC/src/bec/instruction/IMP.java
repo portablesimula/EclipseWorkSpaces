@@ -40,10 +40,7 @@ public abstract class IMP extends Instruction {
 		Global.PSEG.emit(new SVM_IMP(), "IMP: ");
 		CTStack.pop();
 		CTStack.pop();
-	    CTStack.pushTempVAL(at, 1, "IMP: ");
-//		CTStack.dumpStack();
-//		Global.PSEG.dump();
-//		Util.IERR(""+this);
+	    CTStack.pushTempVAL(at, 1);
 	}
 
 }

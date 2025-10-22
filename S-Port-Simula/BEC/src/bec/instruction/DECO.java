@@ -27,7 +27,7 @@ public abstract class DECO extends Instruction {
 		Global.PSEG.emit(new SVM_DECO(), "");
 		CTStack.pop();
 		CTStack.pop();
-	    CTStack.pushTempVAL(Type.T_OADDR, 1, "DECO: ");
+	    CTStack.pushTempVAL(Type.T_OADDR, 1);
 	}
 
 }

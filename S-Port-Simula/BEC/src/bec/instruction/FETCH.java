@@ -24,14 +24,14 @@ public abstract class FETCH extends Instruction {
 	 *      after fetch              '============'
 	 */
 	public static void ofScode() {
-		doFetch("FETCH");
+		doFetch();
 	}
 
-	public static void doFetch(String comment) {
+	public static void doFetch() {
 		if(CTStack.TOS() instanceof AddressItem addr) {
 			Type type = addr.type;
-			Global.PSEG.emit(new SVM_LOAD(addr.objadr.addOffset(addr.offset), type.size()), comment + " " +type);				
-			CTStack.pop(); CTStack.pushTempVAL(type, 1, "GQFetch: ");
+			Global.PSEG.emit(new SVM_LOAD(addr.objadr.addOffset(addr.offset), type.size()), " " +type);				
+			CTStack.pop(); CTStack.pushTempVAL(type, 1);
 		}
 	}
 

@@ -27,7 +27,7 @@ public abstract class PUSH extends Instruction {
 				ObjectAddress oaddr = (ObjectAddress) cns.getAddress().copy();
 				CTStack.push(new AddressItem(cns.type,0,oaddr));
 		} else Util.IERR("");
-        if(instr == Scode.S_PUSHV) FETCH.doFetch("PUSHV: ");
+        if(instr == Scode.S_PUSHV) CTStack.forceTosValue();
 	}
 
 }

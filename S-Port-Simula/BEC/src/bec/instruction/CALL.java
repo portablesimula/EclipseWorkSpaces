@@ -48,7 +48,7 @@ public abstract class CALL extends Instruction {
 		
 		int nParSlots = 0;
 		for(int i=0;i<nParStacked;i++) {
-			FETCH.doFetch(null);
+			CTStack.forceTosValue();
 			CTStackItem par = CTStack.pop();
 			nParSlots = nParSlots + par.type.size();
 		}
@@ -115,7 +115,7 @@ public abstract class CALL extends Instruction {
 		if(export != null) {
 			Type returnType = export.type;
 			if(DEBUG) IO.println("CallInstruction.callSYS: returnType="+returnType);
-			CTStack.pushTempVAL(returnType, 1, "EXPORT: ");
+			CTStack.pushTempVAL(returnType, 1);
 		}
 	}
 	
@@ -130,14 +130,14 @@ public abstract class CALL extends Instruction {
 		
 		//--- First: Treat TOS ---
 		if(st != parType) {
-			CONVERT.GQconvert(parType);
+			CONVERT.doConvert(parType);
 		} else if(tos instanceof AddressItem) {
 			tos.type = st;
 		} else {
-			CONVERT.GQconvert(parType);
+			CONVERT.doConvert(parType);
 		}
 		
-		if(CTStack.TOS() instanceof AddressItem) FETCH.doFetch("putPar: ");
+		if(CTStack.TOS() instanceof AddressItem) CTStack.forceTosValue();
 		CTStack.pop();
 		
 		if(nrep > 1) { // Then: Treat rest of rep-par ---

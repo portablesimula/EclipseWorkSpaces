@@ -37,7 +37,7 @@ public abstract class UPDATE extends Instruction {
 		CTStack.forceTosValue(); CTStack.checkSosRef(); CTStack.checkTypesEqual();
 		CTStackItem tos = CTStack.pop();
 		AddressItem sos = (AddressItem) CTStack.pop();
-		CTStack.pushTempVAL(tos.type, 1, "UPDATE: ");
+		CTStack.pushTempVAL(tos.type, 1);
 		Global.PSEG.emit(new SVM_ASSIGN(true, sos.objadr.addOffset(sos.offset), sos.size), "UPDATE: "); // Store into adr
 	}
 

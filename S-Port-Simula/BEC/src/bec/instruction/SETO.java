@@ -20,7 +20,7 @@ public abstract class SETO extends Instruction {
 	 */
 	public static void ofScode() {
 		CTStack.checkTosType(Type.T_OADDR);
-		FETCH.doFetch("SETO: "); CTStack.pop();
+		CTStack.forceTosValue(); CTStack.pop();
 		Global.PSEG.emit(new SVM_SETO(), "SGETO: ");
 //		Util.IERR("NOT IMPL");
 	}

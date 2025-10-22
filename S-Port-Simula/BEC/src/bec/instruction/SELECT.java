@@ -57,7 +57,7 @@ public abstract class SELECT extends Instruction {
 		adr.type = attr.type;
 		adr.size = attr.size;
 		if(DEBUG) IO.println("SELECT.ofScode: TOS="+adr);
-		if(instr == Scode.S_SELECTV) FETCH.doFetch("SELECTV " + tag + ": ");
+		if(instr == Scode.S_SELECTV) CTStack.forceTosValue();
 //		CTStack.dumpStack();
 //		Util.IERR("");
 	}

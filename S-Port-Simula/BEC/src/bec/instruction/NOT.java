@@ -25,15 +25,11 @@ public abstract class NOT extends Instruction {
 	    if(at != Type.T_BOOL) {
 		    at = CTStack.arithType(at, Type.T_INT);
 		    CTStack.checkTosArith();
-		    if( at == Type.T_REAL || at == Type.T_LREAL) Util.IERR("CODER.GQnot-1");
+		    if( at == Type.T_REAL || at == Type.T_LREAL) Util.IERR("");
 	    }
 		Global.PSEG.emit(new SVM_NOT(), "NOT: ");
 		CTStack.pop();
-	    CTStack.pushTempVAL(at, 1, "NOT: ");
-	    
-//		CTStack.dumpStack("NOT: ");
-//		Global.PSEG.dump("NOT: ");
-//		Util.IERR(""+this);
+	    CTStack.pushTempVAL(at, 1);
 	}
 
 }

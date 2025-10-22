@@ -51,7 +51,7 @@ public abstract class INDEX extends Instruction {
 			}
 			adr.setIndexed(true);
 		}			
-		if(instr == Scode.S_INDEXV) FETCH.doFetch("INDEXV");
+		if(instr == Scode.S_INDEXV) CTStack.forceTosValue();
 	}
 
 	@Override

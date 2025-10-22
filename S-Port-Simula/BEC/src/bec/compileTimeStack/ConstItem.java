@@ -24,7 +24,7 @@ public class ConstItem extends Temp {
 
 	public ConstItem(Type type, Value value) {
 //		super(type, 0, 0, "ConstItem: ");
-		super(CTStackItem.Mode.VAL, type, 0, "ConstItem: ");
+		super(CTStackItem.Mode.VAL, type, 0);
 		this.value = value;
 //		if(type.tag == 0) Util.IERR("NEW Coonst: NO TYPE: "+value);
 	}

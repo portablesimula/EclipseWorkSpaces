@@ -21,7 +21,7 @@ public abstract class INITO extends Instruction {
 	public static void ofScode() {
 		CTStack.forceTosValue();			
 		CTStack.checkTosType(Type.T_OADDR);
-		FETCH.doFetch("INITO: ");
+		CTStack.forceTosValue();
 		CTStack.pop();
 		Global.PSEG.emit(new SVM_INITO(), "INITO: ");
 	}
