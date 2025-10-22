@@ -46,7 +46,7 @@ public class TextValue extends Value {
 	public ObjectAddress emitChars(DataSegment dseg) {
 //		TSEG = new DataSegment("TSEG_" + sourceID, Kind.K_SEG_CONST);
 //		if(Global.TSEG == null) Global.TSEG = new DataSegment("TSEG", Kind.K_SEG_CONST);
-		return dseg.emitChars(textValue, "Part of: "+textValue);			
+		return dseg.emitChars(textValue);			
 	}
 	
 	@Override

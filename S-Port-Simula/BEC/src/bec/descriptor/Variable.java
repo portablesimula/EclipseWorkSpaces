@@ -69,7 +69,7 @@ public class Variable extends Descriptor {
 		var.type = Type.ofScode();
 		var.repCount = (Scode.accept(Scode.S_REP)) ? Scode.inNumber() : 1;
 		var.address = seg.nextAddress();
-		seg.emitDefaultValue(var.type.size(), var.repCount, "IMPORT " + var.type);
+		seg.emitDefaultValue(var.type.size(), var.repCount);
 		return var;
 	}
 	
@@ -91,7 +91,7 @@ public class Variable extends Descriptor {
 		var.repCount = (Scode.accept(Scode.S_REP)) ? Scode.inNumber() : 1;
 		var.address = seg.nextAddress();
 //		type.emitDefaultValue(seg, "EXPORT " + type);
-		seg.emitDefaultValue(var.type.size(), var.repCount, "EXPORT " + var.type);
+		seg.emitDefaultValue(var.type.size(), var.repCount);
 		return var;
 	}
 	
@@ -144,7 +144,7 @@ public class Variable extends Descriptor {
 //			Util.IERR("");
 //		}
 		for(int i=0;i<var.repCount;i++) {
-			seg.emitDefaultValue(var.type.size(), var.repCount, "LOCAL " + var.type);			
+			seg.emitDefaultValue(var.type.size(), var.repCount);			
 		}
 //		Global.dumpDISPL("Variable.ofGlobal: ");
 //		seg.dump("Variable.ofGlobal: ");
@@ -200,7 +200,7 @@ public class Variable extends Descriptor {
 //				Util.IERR("");
 			}
 			if(count == 0) Util.IERR("");
-			seg.emitDefaultValue(count, var.repCount, "GLOBAL " + var.type);
+			seg.emitDefaultValue(count, var.repCount);
 		}
 
 //		Global.dumpDISPL("Variable.ofGlobal: ");

@@ -319,7 +319,7 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 //		IO.println("SVM_SYSCALL.dwarea: lng=" + lng + ", warea=" + warea);
 		
 		DataSegment pool = new DataSegment("POOL_" + warea, Kind.K_SEG_DATA);
-		pool.emitDefaultValue(1, lng, pool.ident);
+		pool.emitDefaultValue(1, lng);
 		RTStack.push(ObjectAddress.ofSegAddr(pool, 0) , "EXPORT");
 
 //		Util.IERR("");

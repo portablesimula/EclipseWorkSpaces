@@ -58,20 +58,20 @@ public class DataSegment extends Segment {
 		values.add(value);
 //		comment.add(cmnt);
 		if(Option.PRINT_GENERATED_SVM_DATA)
-			listData("                                 ==> ", value, "cmnt", addr.getOfst());
+			listData("                                 ==> ", value, addr.getOfst());
 		return addr;
 	}
 
-	private void listData(String indent, Value value,String cmnt, int idx) {
+	private void listData(String indent, Value value, int idx) {
 		String line = ident + "[" + idx + "] ";
 		while(line.length() < 8) line = " " +line;
 		String val = ""+value;
-		while(val.length() < 50) val = val + ' ';
-		IO.println(indent + line + val + "   " + cmnt);
+//		while(val.length() < 50) val = val + ' ';
+		IO.println(indent + line + val);
 		
 	}
 
-	public void emitDefaultValue(int size, int repCount, String cmnt) {
+	public void emitDefaultValue(int size, int repCount) {
 //		IO.println("DataSegment.emitDefaultValue: size="+size);
 		if(repCount < 1) Util.IERR("");
 		boolean option = Option.PRINT_GENERATED_SVM_DATA;
@@ -87,7 +87,7 @@ public class DataSegment extends Segment {
 		Option.PRINT_GENERATED_SVM_DATA = option;
 	}
 	
-	public ObjectAddress emitChars(final String chars, final String cmnt) {
+	public ObjectAddress emitChars(final String chars) {
 		ObjectAddress addr = nextAddress();
 		int n = chars.length();
 		for(int i=0;i<n;i++) {
@@ -105,10 +105,6 @@ public class DataSegment extends Segment {
 		for(int i=0;i<n;i++) {
 			TextValue tval = texts.get(i);
 			if(DEBUG) IO.println("DataSegment.emitRepText["+i+"]: "+tval);
-			
-//			emit(tval.addr,"CHRADR");
-//			emit(IntegerValue.of(Type.T_INT,0),"OFST");
-//			emit(IntegerValue.of(Type.T_INT,tval.length),"LNG");
 			tval.emit(this, cmnt);
 		}
 		return addr;
@@ -133,7 +129,6 @@ public class DataSegment extends Segment {
 			IO.println(line + value);
 		}
 		IO.println("==================== " + title + ident + " END  ====================");
-//		Util.IERR("");
 	}
 	
 	public String toString() {
@@ -152,19 +147,16 @@ public class DataSegment extends Segment {
 		for(int i=0;i<n;i++) {
 			values.add(Value.read(inpt));
 		}
-//		IO.println("NEW IMPORT: " + this);
 	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("DataSegment.Write: " + this + ", Size=" + values.size());
-//		oupt.writeInstr(Scode.S_BSEG);
 		oupt.writeKind(segmentKind);
 		oupt.writeString(ident);
 		oupt.writeShort(values.size());
 		for(int i=0;i<values.size();i++) {
 			Value val = values.get(i);
-//			IO.println("DataSegment.Write: "+val);
 			if(val == null)
 				 oupt.writeInstr(Scode.S_NULL);
 			else val.write(oupt);
@@ -172,13 +164,10 @@ public class DataSegment extends Segment {
 	}
 
 	public static DataSegment readObject(AttributeInputStream inpt, int segmentKind) throws IOException {
-//		int segmentKind = inpt.readKind();
 		String ident = inpt.readString();
-//		IO.println("DataSegment.readObject: ident="+ident+", segmentKind="+segmentKind);
 		DataSegment seg = new DataSegment(ident, segmentKind, inpt);
 		if(Option.ATTR_INPUT_TRACE) IO.println("DataSegment.Read: " + seg);
 		if(Option.ATTR_INPUT_DUMP) seg.dump("DataSegment.readObject: ");
-//		Util.IERR("");
 		return seg;
 	}
 	
