@@ -24,7 +24,7 @@ public class SwitchDescr extends Descriptor {
 		DESTAB = new ProgramAddress[size];
 		CTStack.checkTosInt();
 		CTStack.pop();
-    	Global.PSEG.emit(new SVM_SWITCH(DESTAB), "");
+    	Global.PSEG.emit(new SVM_SWITCH(DESTAB));
 	}
 	
 	public static SwitchDescr ofScode() {

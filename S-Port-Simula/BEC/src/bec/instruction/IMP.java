@@ -37,7 +37,7 @@ public abstract class IMP extends Instruction {
 	    	CTStack.checkSosValue(); CTStack.checkSosType(Type.T_BOOL);
 	    }
 	    
-		Global.PSEG.emit(new SVM_IMP(), "IMP: ");
+		Global.PSEG.emit(new SVM_IMP());
 		CTStack.pop();
 		CTStack.pop();
 	    CTStack.pushTempVAL(at, 1);

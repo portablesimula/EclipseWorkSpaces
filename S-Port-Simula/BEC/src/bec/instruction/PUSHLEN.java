@@ -32,7 +32,7 @@ public abstract class PUSHLEN extends Instruction {
 	 */
 	public static void ofScode() {
 		CTStack.pushTempVAL(Type.T_SIZE, 1);
-		Global.PSEG.emit(new SVM_PUSHLEN(), "");
+		Global.PSEG.emit(new SVM_PUSHLEN());
 	}
 
 }

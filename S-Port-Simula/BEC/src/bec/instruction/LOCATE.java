@@ -46,7 +46,7 @@ public abstract class LOCATE extends Instruction {
 		CTStack.pop();
 		
 		if(CTStack.TOS().type == Type.T_GADDR)
-			Global.PSEG.emit(new SVM_ADD(), "LOCATE: ");
+			Global.PSEG.emit(new SVM_ADD());
 		
 		CTStack.pop(); CTStack.pushTempVAL(Type.T_GADDR, 1);
 	}

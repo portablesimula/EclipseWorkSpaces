@@ -54,7 +54,7 @@ public abstract class SkipifConstruction {
 		Global.ifDepth++;
 		NamedStack<CTStackItem> SKIP_Stack = CTStack.copy("IF-Stack-Copy-"+Global.ifDepth);
 		ProgramAddress END_LABEL = Global.PSEG.nextAddress();
-		Global.PSEG.emit(new SVM_JUMPIF(relation, tos.type.size(), null), "JUMPIF["+Global.ifDepth+"] " + relation + ':');
+		Global.PSEG.emit(new SVM_JUMPIF(relation, tos.type.size(), null));
 		
 		Scode.inputInstr();
 		S_Module.programElements();
@@ -68,7 +68,7 @@ public abstract class SkipifConstruction {
 		// FIXUP:
 		SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(END_LABEL.getOfst());
 		instr.setDestination(Global.PSEG.nextAddress());
-      	Global.PSEG.emit(new SVM_NOOP(), "ENDSKIP["+Global.ifDepth+"]:");			
+      	Global.PSEG.emit(new SVM_NOOP());			
 		Global.ifDepth--;
 	}
 }

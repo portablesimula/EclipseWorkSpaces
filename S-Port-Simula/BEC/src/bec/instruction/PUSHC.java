@@ -100,7 +100,7 @@ public abstract class PUSHC extends Instruction {
 		    default: Util.IERR("NOT IMPLEMENTED: " + Scode.edInstr(Scode.curinstr));
 		}
 		CTStack.push(new ConstItem(type, value));
-		Global.PSEG.emit(new SVM_LOADC(type, value), "");
+		Global.PSEG.emit(new SVM_LOADC(type, value));
 	}
 
 }

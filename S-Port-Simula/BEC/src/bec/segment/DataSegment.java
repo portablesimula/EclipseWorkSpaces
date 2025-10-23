@@ -56,7 +56,6 @@ public class DataSegment extends Segment {
 	public ObjectAddress emit(final Value value) {
 		ObjectAddress addr = nextAddress();
 		values.add(value);
-//		comment.add(cmnt);
 		if(Option.PRINT_GENERATED_SVM_DATA)
 			listData("                                 ==> ", value, addr.getOfst());
 		return addr;

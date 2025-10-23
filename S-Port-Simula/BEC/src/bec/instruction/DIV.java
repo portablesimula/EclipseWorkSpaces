@@ -30,7 +30,7 @@ public abstract class DIV extends Instruction {
 		CTStackItem tos = CTStack.TOS();
 		CTStackItem sos = CTStack.SOS();
 	    Type at = CTStack.arithType(tos.type, sos.type);
-		Global.PSEG.emit(new SVM_DIV(), "");
+		Global.PSEG.emit(new SVM_DIV());
 		CTStack.pop();
 		CTStack.pop();
 	    CTStack.pushTempVAL(at, 1);

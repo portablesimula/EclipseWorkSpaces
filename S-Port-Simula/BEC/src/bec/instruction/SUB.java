@@ -31,7 +31,7 @@ public abstract class SUB extends Instruction {
 		CTStackItem tos = CTStack.TOS();
 		CTStackItem sos = CTStack.SOS();
 	    Type at = CTStack.arithType(tos.type, sos.type);
-		Global.PSEG.emit(new SVM_SUB(), "");
+		Global.PSEG.emit(new SVM_SUB());
 		CTStack.pop();
 		CTStack.pop();
 	    CTStack.pushTempVAL(at, 1);

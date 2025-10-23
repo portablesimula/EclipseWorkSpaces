@@ -30,9 +30,7 @@ public abstract class SDEST extends Instruction {
 		if(swt.DESTAB[which] != null) Util.IERR("SWITCH dest["+which+"]. dest != null");
 
 		swt.DESTAB[which] = Global.PSEG.nextAddress();
-      	Global.PSEG.emit(new SVM_NOOP(), "SDEST " + which);
-//		Global.PSEG.dump("SDEST: ");
-//		Util.IERR(""+this);
+      	Global.PSEG.emit(new SVM_NOOP());
 	}
 
 }

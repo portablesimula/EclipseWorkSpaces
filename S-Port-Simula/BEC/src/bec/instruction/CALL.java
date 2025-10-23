@@ -58,7 +58,7 @@ public abstract class CALL extends Instruction {
 		if(spec.pKind == 0) {
 			int exportSize = (spec.getExport() == null)? 0 : spec.getExport().type.size();
 			int importSize = spec.frameSize-exportSize-1;
-			Global.PSEG.emit(new SVM_PRECALL(spec.getSimpleName(), nParSlots, exportSize, importSize), ""+Scode.edTag(profileTag));
+			Global.PSEG.emit(new SVM_PRECALL(spec.getSimpleName(), nParSlots, exportSize, importSize));
 		}
 		
 		boolean CALL_TOS = false;
@@ -68,7 +68,7 @@ public abstract class CALL extends Instruction {
 			if(Scode.curinstr == Scode.S_ASSPAR) {
 				Scode.inputInstr();
 				putPar(pitem,1);
-		      	Global.PSEG.emit(new SVM_NOOP(), "ASSPAR ");
+		      	Global.PSEG.emit(new SVM_NOOP());
 		      	if(DEBUG) {
 		      		IO.println("CallInstruction: ASSPAR: nasspar="+pitem.nasspar);
 		      	}
@@ -77,7 +77,7 @@ public abstract class CALL extends Instruction {
 				int nRep = Scode.inByte();
 				Scode.inputInstr();
 				putPar(pitem,nRep);
-		      	Global.PSEG.emit(new SVM_NOOP(), "ASSREP " + nRep);
+		      	Global.PSEG.emit(new SVM_NOOP());
 			}
 			else if(Scode.curinstr == Scode.S_CALL_TOS) {
 				CALL_TOS = true;
@@ -91,19 +91,19 @@ public abstract class CALL extends Instruction {
 	    	Util.IERR("Wrong number of Parameters: got " + pitem.nasspar + ", required" + +pitem.spc.params.size());
 //	    ---------  Call Routine  ---------
 	    if(CALL_TOS) {
-	    	Global.PSEG.emit(SVM_CALL.ofTOS(spec.returSlot), "");
+	    	Global.PSEG.emit(SVM_CALL.ofTOS(spec.returSlot));
 	    	CTStack.pop();
 	    } else {
 			int bodyTag = Scode.ofScode();
 	    	if(spec.pKind > 0) {
-	    		Global.PSEG.emit(new SVM_CALL_SYS(spec.pKind), "");
+	    		Global.PSEG.emit(new SVM_CALL_SYS(spec.pKind));
 	    	} else {
 	    		RoutineDescr rut = (RoutineDescr) Global.DISPL.get(bodyTag);
 	    		if(rut == null) Util.IERR("Unknown Routine: " + Scode.edTag(bodyTag));
-	    		Global.PSEG.emit(new SVM_CALL(rut.getAddress(), spec.returSlot), ""+rut);
+	    		Global.PSEG.emit(new SVM_CALL(rut.getAddress(), spec.returSlot));
 	    	}
 	    }
-		Global.PSEG.emit(new SVM_NOOP(), "Return Point");
+		Global.PSEG.emit(new SVM_NOOP());
 	    if(! (CTStack.TOS() instanceof ProfileItem)) {
 			CTStack.dumpStack("CALL.ofScode: ");
 	    	Util.IERR("CALL.ofScode: Missing ProfileItem on TOS");
@@ -156,7 +156,7 @@ public abstract class CALL extends Instruction {
 			int parSize = parType.size();
 			int n = parSize * (repCount - nrep);
 			for(int i=0;i<n;i++) {
-				Global.PSEG.emit(new SVM_LOADC(Type.T_INT, null), "putPar: ASSREP'fill: ");
+				Global.PSEG.emit(new SVM_LOADC(Type.T_INT, null));
 				
 			}
 		}

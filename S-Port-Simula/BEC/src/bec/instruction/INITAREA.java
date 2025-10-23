@@ -23,9 +23,7 @@ public abstract class INITAREA extends Instruction {
 		CTStack.forceTosValue();			
 		CTStack.checkTosType(Type.T_OADDR);
 		Type type = Type.ofScode();
-//		CTStack.pop();
-		Global.PSEG.emit(new SVM_NOOP(), "INITAREA: ");
-//		Util.IERR("NOT IMPL: "+type);
+		Global.PSEG.emit(new SVM_NOOP());
 	}
 
 }

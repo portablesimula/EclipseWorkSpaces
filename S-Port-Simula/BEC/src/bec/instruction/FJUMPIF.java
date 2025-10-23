@@ -23,23 +23,16 @@ public abstract class FJUMPIF extends Instruction {
 	 * evaluates true. The destination will refer to an undefined program point to be located later (by fdest).
 	 */
 	public static void ofScode() {
-//		CTStack.dumpStack();
 		CTStack.checkTypesEqual();
 		CTStack.checkSosValue();
 		Relation relation = Relation.ofScode();
 		int destination = Scode.inByte();
 		if(Global.DESTAB[destination] != null) Util.IERR("Destination is already defined");
-		
-//		int cond = Util.GQrelation();
-		// Check Relation
 		CTStackItem tos = CTStack.pop();
 		CTStack.pop();
 		
 		Global.DESTAB[destination] = Global.PSEG.nextAddress();
-		Global.PSEG.emit(new SVM_JUMPIF(relation, tos.type.size(), null), "FJUMPIF: "+relation+" "+destination);
-//		Global.PSEG.dump();
-//		CTStack.dumpStack();
-//		Util.IERR(""+this);
+		Global.PSEG.emit(new SVM_JUMPIF(relation, tos.type.size(), null));
 	}
 
 }

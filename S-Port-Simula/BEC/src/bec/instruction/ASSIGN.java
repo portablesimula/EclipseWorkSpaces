@@ -27,7 +27,7 @@ public abstract class ASSIGN extends Instruction {
 		@SuppressWarnings("unused")
 		CTStackItem tos = CTStack.pop();
 		AddressItem sos = (AddressItem) CTStack.pop();
-		Global.PSEG.emit(new SVM_ASSIGN(false, sos.objadr.addOffset(sos.offset), sos.size), "ASSIGN: "); // Store into adr
+		Global.PSEG.emit(new SVM_ASSIGN(false, sos.objadr.addOffset(sos.offset), sos.size)); // Store into adr
 	}
 
 }

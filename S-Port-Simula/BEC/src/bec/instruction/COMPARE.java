@@ -26,7 +26,7 @@ public abstract class COMPARE extends Instruction {
 		CTStack.forceTosValue();
 		CTStack.checkTypesEqual(); CTStack.checkSosValue();	
 		CTStack.pop(); CTStack.pop();
-		Global.PSEG.emit(new SVM_COMPARE(relation), "");
+		Global.PSEG.emit(new SVM_COMPARE(relation));
 		CTStack.pushTempVAL(Type.T_BOOL, 1);
 	}	
 

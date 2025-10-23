@@ -124,7 +124,7 @@ public class RoutineDescr extends Descriptor {
 		if(Option.TRACE_ALLOC_FRAME) {
 			IO.println("RoutineDescr.ofRoutineDef: ALLOC LOCALS DONE: localFrameSize="+rut.localFrameSize);
 		}
-		Global.PSEG.emit(new SVM_ENTER(prf.getSimpleName(), rut.localFrameSize), ""+rut);
+		Global.PSEG.emit(new SVM_ENTER(prf.getSimpleName(), rut.localFrameSize));
 	
 //		if(DEBUG) {
 //			IO.println("RoutineDescr.ofRoutineDef: " + rut + "??????????????????????????????????????????????????????????????????????????????????????");
@@ -135,7 +135,7 @@ public class RoutineDescr extends Descriptor {
 		CTStack.checkStackEmpty();
 		if(DEBUG) prf.print("RoutineDescr.ofRoutineDef: ");
 //		Global.PSEG.emit(new SVM_RETURN(prf.ident, prf.returSlot), "");
-		Global.PSEG.emit(new SVM_RETURN(prftag.ident(), prf.returSlot), "");
+		Global.PSEG.emit(new SVM_RETURN(prftag.ident(), prf.returSlot));
 		CTStack.checkStackEmpty();
 
 //		if(! CALL.USE_FRAME_ON_STACK) {

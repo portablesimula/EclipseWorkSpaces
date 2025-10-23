@@ -24,7 +24,7 @@ public abstract class INCO extends Instruction {
 	public static void ofScode() {
 		CTStack.forceTosValue();			
 		CTStack.checkTosType(Type.T_SIZE); CTStack.checkSosValue(); CTStack.checkSosType(Type.T_OADDR);
-		Global.PSEG.emit(new SVM_INCO(), "");
+		Global.PSEG.emit(new SVM_INCO());
 		CTStack.pop();
 		CTStack.pop();
 	    CTStack.pushTempVAL(Type.T_OADDR, 1);

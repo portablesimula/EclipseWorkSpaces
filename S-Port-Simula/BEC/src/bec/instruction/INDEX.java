@@ -46,8 +46,8 @@ public abstract class INDEX extends Instruction {
 			Util.IERR("NOT IMPL");
 		} else {
 			if(size > 1) {
-				Global.PSEG.emit(new SVM_LOADC(Type.T_INT, IntegerValue.of(Type.T_INT, size)), "INDEX.ofScode: ");
-				Global.PSEG.emit(new SVM_MULT(), "INDEX.ofScode: ");
+				Global.PSEG.emit(new SVM_LOADC(Type.T_INT, IntegerValue.of(Type.T_INT, size)));
+				Global.PSEG.emit(new SVM_MULT());
 			}
 			adr.setIndexed(true);
 		}			

@@ -30,7 +30,7 @@ public abstract class FETCH extends Instruction {
 	public static void doFetch() {
 		if(CTStack.TOS() instanceof AddressItem addr) {
 			Type type = addr.type;
-			Global.PSEG.emit(new SVM_LOAD(addr.objadr.addOffset(addr.offset), type.size()), " " +type);				
+			Global.PSEG.emit(new SVM_LOAD(addr.objadr.addOffset(addr.offset), type.size()));				
 			CTStack.pop(); CTStack.pushTempVAL(type, 1);
 		}
 	}

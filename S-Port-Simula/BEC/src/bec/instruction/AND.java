@@ -37,7 +37,7 @@ public abstract class AND extends Instruction {
 	    	CTStack.checkSosValue(); CTStack.checkSosType(Type.T_BOOL);
 	    }
 	    
-		Global.PSEG.emit(new SVM_AND(), "");
+		Global.PSEG.emit(new SVM_AND());
 		CTStack.pop();
 		CTStack.pop();
 	    CTStack.pushTempVAL(at, 1);

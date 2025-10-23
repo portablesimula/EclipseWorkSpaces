@@ -37,7 +37,7 @@ public abstract class OR extends Instruction {
 	    	CTStack.checkSosValue(); CTStack.checkSosType(Type.T_BOOL);
 	    }
 	    
-		Global.PSEG.emit(new SVM_OR(), "OR: ");
+		Global.PSEG.emit(new SVM_OR());
 		CTStack.pop();
 		CTStack.pop();
 	    CTStack.pushTempVAL(at, 1);

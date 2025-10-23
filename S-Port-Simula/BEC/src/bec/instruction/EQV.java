@@ -37,7 +37,7 @@ public abstract class EQV extends Instruction {
 	    	CTStack.checkSosValue(); CTStack.checkSosType(Type.T_BOOL);
 	    }
 	    
-		Global.PSEG.emit(new SVM_EQV(), "EQV: ");
+		Global.PSEG.emit(new SVM_EQV());
 		CTStack.pop();
 		CTStack.pop();
 	    CTStack.pushTempVAL(at, 1);

@@ -24,7 +24,7 @@ public abstract class DECO extends Instruction {
 	public static void ofScode() {
 		CTStack.forceTosValue();
 		CTStack.checkTosType(Type.T_SIZE); CTStack.checkSosValue(); CTStack.checkSosType(Type.T_OADDR);
-		Global.PSEG.emit(new SVM_DECO(), "");
+		Global.PSEG.emit(new SVM_DECO());
 		CTStack.pop();
 		CTStack.pop();
 	    CTStack.pushTempVAL(Type.T_OADDR, 1);

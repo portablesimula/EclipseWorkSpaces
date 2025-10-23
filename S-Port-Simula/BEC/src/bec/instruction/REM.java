@@ -32,7 +32,7 @@ public abstract class REM extends Instruction {
 		CTStackItem tos = CTStack.TOS();
 		CTStackItem sos = CTStack.SOS();
 	    Type at = CTStack.arithType(tos.type, sos.type);
-		Global.PSEG.emit(new SVM_REM(), "REM:  ");
+		Global.PSEG.emit(new SVM_REM());
 		CTStack.pop();
 		CTStack.pop();
 	    CTStack.pushTempVAL(at, 1);

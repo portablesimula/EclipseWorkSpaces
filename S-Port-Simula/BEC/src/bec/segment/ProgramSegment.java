@@ -14,14 +14,14 @@ import bec.virtualMachine.SVM_Instruction;
 
 public class ProgramSegment extends Segment {
 	public Vector<SVM_Instruction> instructions;
-	Vector<String> comment;
+//	Vector<String> comment;
 
 	public ProgramSegment(String ident, int segmentKind) {
 		super(ident, segmentKind);
 		this.ident = ident.toUpperCase();
 		this.segmentKind = segmentKind;
 		instructions = new Vector<SVM_Instruction>();
-		comment = new Vector<String>();
+//		comment = new Vector<String>();
 	}
 	
 	public ProgramAddress nextAddress() {
@@ -32,12 +32,10 @@ public class ProgramSegment extends Segment {
 		return instructions.get(index);
 	}
 	
-	public void emit(SVM_Instruction value,String cmnt) {
+//	public void emit(SVM_Instruction value,String cmnt) {
+	public void emit(SVM_Instruction value) {
 		instructions.add(value);
-		comment.add(cmnt);
-//		String s = value.toString();
-//		while(s.length() < 30) s += ' ';
-//		IO.println("          " + s + " " + cmnt);
+//		comment.add(cmnt);
 	}
 	
 	private int lastListed;
@@ -52,8 +50,8 @@ public class ProgramSegment extends Segment {
 		String line = ident + "[" + idx + "] ";
 		while(line.length() < 8) line = " " +line;
 		String value = ""+instructions.get(idx);
-		while(value.length() < 50) value = value + ' ';
-		IO.println(indent + line + value + "   " + comment.get(idx));
+//		while(value.length() < 50) value = value + ' ';
+		IO.println(indent + line + value); // + "   " + comment.get(idx));
 		
 	}
 	
@@ -66,11 +64,6 @@ public class ProgramSegment extends Segment {
 	public void dump(String title,int from,int to) {
 		IO.println("========================== " + title + ident + " DUMP ==========================");
 		for(int i=from;i<to;i++) {
-//			String line = "" + i + ": ";
-//			while(line.length() < 8) line = " " +line;
-//			String value = ""+instructions.get(i);
-//			while(value.length() < 50) value = value + ' ';
-//			IO.println(line + value + "   " + comment.get(i));
 			listIntruction("",i);
 		}
 		IO.println("========================== " + title + ident + " END  ==========================");
@@ -86,10 +79,10 @@ public class ProgramSegment extends Segment {
 	private ProgramSegment(String ident, int segmentKind, AttributeInputStream inpt) throws IOException {
 		super(ident, segmentKind);
 		instructions = new Vector<SVM_Instruction>();
-		comment = new Vector<String>();
+//		comment = new Vector<String>();
 		int n = inpt.readShort();
 		for(int i=0;i<n;i++) {
-			comment.add(inpt.readString());
+//			comment.add(inpt.readString());
 			instructions.add(SVM_Instruction.readObject(inpt));
 		}
 	}
@@ -103,7 +96,7 @@ public class ProgramSegment extends Segment {
 		oupt.writeString(ident);
 		oupt.writeShort(instructions.size());
 		for(int i=0;i<instructions.size();i++) {
-			oupt.writeString(comment.get(i));
+//			oupt.writeString(comment.get(i));
 			SVM_Instruction val = instructions.get(i);
 			if(val == null)
 				 oupt.writeInstr(Scode.S_NULL);

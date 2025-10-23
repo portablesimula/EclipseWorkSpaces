@@ -17,7 +17,7 @@ public abstract class LINE extends Instruction {
 		Scode.curline = Scode.inNumber();	
 		if(kind==2)
 			CTStack.checkStackEmpty();
-		Global.PSEG.emit(new SVM_LINE(0, Scode.curline), "LINE: ");
+		Global.PSEG.emit(new SVM_LINE(0, Scode.curline));
 	}
 
 }

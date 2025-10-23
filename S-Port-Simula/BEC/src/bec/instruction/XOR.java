@@ -35,7 +35,7 @@ public abstract class XOR extends Instruction {
 	    	CTStack.checkSosValue(); CTStack.checkSosType(Type.T_BOOL);
 	    }
 	    
-		Global.PSEG.emit(new SVM_XOR(), "XOR: ");
+		Global.PSEG.emit(new SVM_XOR());
 		CTStack.pop();
 		CTStack.pop();
 	    CTStack.pushTempVAL(at, 1);

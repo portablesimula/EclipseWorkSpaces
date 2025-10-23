@@ -56,7 +56,7 @@ public abstract class S_Module {
 
 	public static void setLine(int type) {
 		Global.curline = Scode.inNumber();
-		Global.PSEG.emit(new SVM_LINE(type, Global.curline), "MONITOR.setLine: ");
+		Global.PSEG.emit(new SVM_LINE(type, Global.curline));
 	}
 
 }

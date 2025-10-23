@@ -65,7 +65,7 @@ public abstract class IfConstrction {
 		
 		ProgramAddress IF_LABEL = Global.PSEG.nextAddress();
 		ProgramAddress ELSE_LABEL = null;
-		Global.PSEG.emit(new SVM_JUMPIF(relation.not(), tos.type.size(), null), "GOTOIF["+Global.ifDepth+"] NOT_" + relation + ':');
+		Global.PSEG.emit(new SVM_JUMPIF(relation.not(), tos.type.size(), null));
 //		Global.PSEG.dump();
 
 //		Relation relation = Relation.ofScode();
@@ -93,12 +93,12 @@ public abstract class IfConstrction {
 			}
 			
 			ELSE_LABEL = Global.PSEG.nextAddress();
-			Global.PSEG.emit(new SVM_JUMP(null), "GOTO_ENDIF["+Global.ifDepth+"]:");
+			Global.PSEG.emit(new SVM_JUMP(null));
 			
 			// FIXUP:
 			SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(IF_LABEL.getOfst());
 			instr.setDestination(Global.PSEG.nextAddress());
-	      	Global.PSEG.emit(new SVM_NOOP(), "ELSE["+Global.ifDepth+"]:");
+	      	Global.PSEG.emit(new SVM_NOOP());
 	      	
 //	      	Global.PSEG.dump("IfConstruction.ofScode: ELSE: ");
 //			Util.IERR("");
@@ -124,12 +124,12 @@ public abstract class IfConstrction {
 			// FIXUP:
 			SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(ELSE_LABEL.getOfst());
 			instr.setDestination(Global.PSEG.nextAddress());
-	      	Global.PSEG.emit(new SVM_NOOP(), "ENDIF["+Global.ifDepth+"]:");		
+	      	Global.PSEG.emit(new SVM_NOOP());		
 		} else {
 			// FIXUP:
 			SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(IF_LABEL.getOfst());
 			instr.setDestination(Global.PSEG.nextAddress());
-	      	Global.PSEG.emit(new SVM_NOOP(), "ENDIF["+Global.ifDepth+"]:");			
+	      	Global.PSEG.emit(new SVM_NOOP());			
 		}
 		
 		if(ELSE_Stack != null) {

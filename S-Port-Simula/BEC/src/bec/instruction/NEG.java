@@ -19,7 +19,7 @@ public abstract class NEG extends Instruction {
 		CTStack.forceTosValue();			
 		CTStack.checkTosArith();
 		Type at = CTStack.TOS().type;
-		Global.PSEG.emit(new SVM_NEG(), "");
+		Global.PSEG.emit(new SVM_NEG());
 		CTStack.pop();
 	    CTStack.pushTempVAL(at, 1);
 	}

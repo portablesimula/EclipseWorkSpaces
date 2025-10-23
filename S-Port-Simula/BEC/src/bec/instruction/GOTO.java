@@ -21,7 +21,7 @@ public abstract class GOTO extends Instruction {
 	public static void ofScode() {
 		CTStack.forceTosValue();			
 		CTStack.checkTosType(Type.T_PADDR);
-		Global.PSEG.emit(new SVM_GOTO(), "GOTO-TOS: ");
+		Global.PSEG.emit(new SVM_GOTO());
 		CTStack.pop();
 		CTStack.checkStackEmpty();
 	}

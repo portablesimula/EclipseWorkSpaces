@@ -13,7 +13,7 @@ public class Type {
 	public  int tag;
 	private int size;  // Size of type in basic cells
 	private int rep0size;  // Size of rep 0 attribute in basic cells
-	String comment;
+//	String comment;
 
 	private static HashMap<Integer, Type> TMAP;
 	private static Vector<Type> RECTYPES;
@@ -83,16 +83,9 @@ public class Type {
 //		IO.println("DataType.newRecType: " + Scode.edTag(rec.tag.val) + ", size="+rec.size);
 		Type type = new Type(rec.tag.val, rec.size);
 		type.rep0size = rec.nbrep;
-		type.comment = "From " + rec;
-//		Type old = TMAP.get(rec.tag.val);
-//		if(old != null) {
-//			IO.println("DataType.newRecType: " + Scode.edTag(type.tag) + "  Already defined as " + Scode.edTag(old.tag));
-//			if(rec.tag.val != Scode.TAG_STRING)	Util.IERR("Already defined: " + type);
-//		} else {
-//			if(rec.tag.val == 2497) Util.IERR("");
-			TMAP.put(rec.tag.val, type);
-			RECTYPES.add(type);
-//		}
+//		type.comment = "From " + rec;
+		TMAP.put(rec.tag.val, type);
+		RECTYPES.add(type);
 	}
 	
 	public static void removeFromTMAP(int tag) {
@@ -162,7 +155,7 @@ public class Type {
 	}
 	
 	public String toString() {
-		return Scode.edTag(tag) + " size=" + size + ", rep0size=" + rep0size + " " + comment;
+		return Scode.edTag(tag) + " size=" + size + ", rep0size=" + rep0size; // + " " + comment;
 	}
 
 	// ***********************************************************************************************
@@ -177,9 +170,8 @@ public class Type {
 //			IO.println("Type.writeRECTYPES: " + type.tag );
 			oupt.writeTagID(type.tag);
 			oupt.writeShort(type.size);
-			type.comment = "From " + Global.currentModule;
+//			type.comment = "From " + Global.currentModule;
 		}
-//		Util.IERR("");
 	}
 
 	public static void readRECTYPES(AttributeInputStream inpt) throws IOException {
@@ -191,19 +183,10 @@ public class Type {
 			
 			if(tag == Scode.TAG_STRING) ; // OK Predefinert
 			else if(TMAP.get(tag) ==null) {
-//				if(tag == 2497) {
-//					IO.println("Type.readRECTYPES: NEW Type: " + type + ", tag=" + tag);
-////					Thread.dumpStack();
-////					Util.IERR("");
-//				}
 				TMAP.put(tag, type);
 				RECTYPES.add(type);
-//				Type.dumpTypes("Type.readRECTYPES: ");
 			}
-//			IO.println("Type.readRECTYPES: NEW Type: " + type);
-//			Util.IERR("");
 		}
-//		Type.dumpTypes("Type.readRECTYPES: ");
 	}
 
 	public void write(AttributeOutputStream oupt) throws IOException {

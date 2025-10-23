@@ -23,7 +23,7 @@ public abstract class INITO extends Instruction {
 		CTStack.checkTosType(Type.T_OADDR);
 		CTStack.forceTosValue();
 		CTStack.pop();
-		Global.PSEG.emit(new SVM_INITO(), "INITO: ");
+		Global.PSEG.emit(new SVM_INITO());
 	}
 
 }

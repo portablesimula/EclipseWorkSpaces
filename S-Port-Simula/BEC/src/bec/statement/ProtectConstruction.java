@@ -2,13 +2,11 @@ package bec.statement;
 
 import bec.S_Module;
 import bec.compileTimeStack.CTStack;
-import bec.instruction.FETCH;
 import bec.instruction.Instruction;
 import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Type;
 import bec.util.Util;
-import bec.virtualMachine.SVM_PUSHLEN;
 import bec.virtualMachine.SVM_RESTORE;
 import bec.virtualMachine.SVM_SAVE;
 
@@ -55,7 +53,7 @@ public class ProtectConstruction { // extends ProgramElement {
 		CTStack.pop();
 		CTStack.SAVE("SAVE");
 		
-		Global.PSEG.emit(new SVM_SAVE(), "ProtectConstruction.ofStatement: ");
+		Global.PSEG.emit(new SVM_SAVE());
 	}
 	
 	
@@ -81,7 +79,7 @@ public class ProtectConstruction { // extends ProgramElement {
 		CTStack.checkStackEmpty();
 		CTStack.RESTORE();
 		
-		Global.PSEG.emit(new SVM_RESTORE(), "ProtectConstruction.ofStatement: ");
+		Global.PSEG.emit(new SVM_RESTORE());
 	}
 
 	/**

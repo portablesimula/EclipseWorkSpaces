@@ -35,11 +35,11 @@ public abstract class DSIZE extends Instruction {
 			CTStack.forceTosValue(); CTStack.checkTosInt();
 			CTStack.pop();
 			IntegerValue nbrepValue = IntegerValue.of(Type.T_INT, n);
-			Global.PSEG.emit(new SVM_LOADC(Type.T_INT, nbrepValue), "DSIZE'nbrep: ");
-			Global.PSEG.emit(new SVM_MULT(), "MULT: ");
+			Global.PSEG.emit(new SVM_LOADC(Type.T_INT, nbrepValue));
+			Global.PSEG.emit(new SVM_MULT());
 			IntegerValue fixValue = IntegerValue.of(Type.T_INT, fixrec.size);
-			Global.PSEG.emit(new SVM_LOADC(Type.T_INT, fixValue), "DSIZE'recSize: ");
-			Global.PSEG.emit(new SVM_ADD(), "ADD: ");
+			Global.PSEG.emit(new SVM_LOADC(Type.T_INT, fixValue));
+			Global.PSEG.emit(new SVM_ADD());
 			
 			CTStack.pushTempVAL(Type.T_SIZE, 1);
 		} else {

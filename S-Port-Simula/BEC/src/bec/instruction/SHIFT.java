@@ -29,7 +29,7 @@ public abstract class SHIFT extends Instruction {
 	public static void ofScode(int instr) {
 		CTStack.forceTosValue();			
 		CTStackItem tos = CTStack.TOS();
-	    Global.PSEG.emit(new SVM_SHIFT(instr), "");
+	    Global.PSEG.emit(new SVM_SHIFT(instr));
 		CTStack.pop();
 		CTStack.pop();
 	    CTStack.pushTempVAL(tos.type, 1);

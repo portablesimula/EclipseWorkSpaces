@@ -20,12 +20,8 @@ public abstract class FJUMP extends Instruction {
 		CTStack.checkStackEmpty();
 		int destination = Scode.inByte();
 		if(Global.DESTAB[destination] != null) Util.IERR("Destination is already defined");
-		
-//		CTStack.dumpStack();
 		Global.DESTAB[destination] = Global.PSEG.nextAddress();
-		Global.PSEG.emit(new SVM_JUMP(null), "FJUMP: "+destination);
-//		Global.PSEG.dump();
-//		Util.IERR(""+this);
+		Global.PSEG.emit(new SVM_JUMP(null));
 	}
 
 }

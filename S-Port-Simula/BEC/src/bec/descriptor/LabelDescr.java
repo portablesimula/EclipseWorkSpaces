@@ -43,7 +43,7 @@ public class LabelDescr extends Descriptor {
 			fix.setAddress(Global.PSEG.nextAddress());
 		}
 		lab.adr = Global.PSEG.nextAddress();
-      	Global.PSEG.emit(new SVM_NOOP(), "LABEL " + tag);
+      	Global.PSEG.emit(new SVM_NOOP());
 		CTStack.checkStackEmpty();
 		return lab;
 	}

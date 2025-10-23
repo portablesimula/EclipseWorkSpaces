@@ -20,15 +20,10 @@ public abstract class BJUMP extends Instruction {
 	public static void ofScode() {
 		CTStack.checkStackEmpty();
 		int destination = Scode.inByte();
-
-//		CTStack.dumpStack();
-		
 		ProgramAddress addr = Global.DESTAB[destination];
 		if(addr == null) Util.IERR("BJUMP dest. dest == null");
-		Global.PSEG.emit(new SVM_JUMP(addr), "BJUMP: ");
+		Global.PSEG.emit(new SVM_JUMP(addr));
 		Global.DESTAB[destination] = null;
-//		Global.PSEG.dump();
-//		Util.IERR(""+this);
 	}
 
 }

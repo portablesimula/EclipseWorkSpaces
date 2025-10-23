@@ -17,16 +17,11 @@ public abstract class BDEST extends Instruction {
 	 * The destination is defined to refer to the current program point.
 	 */
 	public static void ofScode() {
-//		CTStack.dumpStack();
 		CTStack.checkStackEmpty();
 		int destination = Scode.inByte();
-
 		if(Global.DESTAB[destination] != null) Util.IERR("BJUMP dest. dest == null");
-
 		Global.DESTAB[destination] = Global.PSEG.nextAddress();
-      	Global.PSEG.emit(new SVM_NOOP(), "BDEST " + destination);
-//		Global.PSEG.dump();
-//		Util.IERR(""+this);
+      	Global.PSEG.emit(new SVM_NOOP());
 	}
 
 }

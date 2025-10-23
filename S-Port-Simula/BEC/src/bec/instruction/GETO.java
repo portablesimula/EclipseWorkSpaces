@@ -22,7 +22,7 @@ public abstract class GETO extends Instruction {
 	 */
 	public static void ofScode() {
 		CTStack.pushTempVAL(Type.T_OADDR, 1);
-		Global.PSEG.emit(new SVM_GETO(), "GETO: ");
+		Global.PSEG.emit(new SVM_GETO());
 	}
 
 }
