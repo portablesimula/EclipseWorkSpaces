@@ -1,3 +1,8 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec.descriptor;
 
 import java.io.IOException;
@@ -8,10 +13,13 @@ import bec.util.Global;
 import bec.util.Tag;
 import bec.util.Util;
 
-//Record Object;
-//begin range(0:MaxByte) kind;   --- Object kind code
-//      range(0:MaxType) type; 
-//end;
+/// Descriptor.
+///
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/descriptor/Descriptor.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public class Descriptor extends Instruction {
 	int kind;  // Object kind code
 	public Tag tag; 
@@ -39,11 +47,6 @@ public class Descriptor extends Instruction {
 	public void write(AttributeOutputStream oupt) throws IOException {
 		Util.IERR("Method 'write' needs a redefinition in "+this.getClass().getSimpleName());
 	}
-
-//	public static Descriptor read(AttributeInputStream inpt, int kind) throws IOException {
-//		Util.IERR("Static Method 'readObject' needs a redefiniton");
-//		return(null);
-//	}
 
 
 }

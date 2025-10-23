@@ -1,3 +1,8 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec.descriptor;
 
 import java.io.IOException;
@@ -17,6 +22,32 @@ import bec.value.ObjectAddress;
 import bec.value.Value;
 import bec.virtualMachine.SVM_CALL_SYS;
 
+/// Profile descriptor.
+///
+/// S-CODE:
+///
+///	routine_profile
+///		 ::= profile profile:newtag <peculiar>?
+///			   <import_definition>* <export or exit>? endprofile
+///
+///		peculiar
+///			::= known body:newtag kid:string
+///			::= system body:newtag sid:string
+///			::= external body:newtag nature:string xid:string
+///			::= interface pid:string
+///
+///		import_definition
+///			::= import parm:newtag quantity_descriptor
+///
+///		export_or_exit
+///			::= export parm:newtag resolved_type
+///			::= exit return:newtag
+/// 
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/descriptor/ProfileDescr.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public class ProfileDescr extends Descriptor {
 	public int pKind; // Peculiar Profile Kind
 	public Vector<Tag> params;
@@ -39,7 +70,6 @@ public class ProfileDescr extends Descriptor {
 	
 	private ProfileDescr(int kind, Tag tag) {
 		super(kind, tag);
-//		IO.println("NEW ProfileDescr: " + tag);
 	}
 	
 	public String getSimpleName() {
@@ -57,7 +87,6 @@ public class ProfileDescr extends Descriptor {
 
 	}
 
-//	%title ***   I n p u t   P r o f i l e   ***
 	/**
 	 * 	routine_profile
 	 * 		 ::= profile profile:newtag <peculiar>?
@@ -78,7 +107,6 @@ public class ProfileDescr extends Descriptor {
 	 */
 	public static ProfileDescr ofScode() {
 		Tag ptag = Tag.ofScode();
-//		IO.println("ProfileDescr.inProfile: " + Scode.edTag(ptag));
 		ProfileDescr prf = new ProfileDescr(Kind.K_ProfileDescr, ptag);
 		if(Scode.nextByte() == Scode.S_EXTERNAL) {
 			 // peculiar ::= external body:newtag nature:string xid:string
@@ -171,9 +199,7 @@ public class ProfileDescr extends Descriptor {
 		if(params != null) for(Tag ptag:params) IO.println(indent + "   " + ptag.getMeaning());
 		if(returSlot != null) IO.println(indent + "   ReturSlot = " + returSlot);
 		if(DSEG != null) IO.println(indent + "   DSEG = " + DSEG);
-//		if(DSEG != null) DSEG.dump("ProfileDescr.print: ");
 		IO.println(indent + "ENDPROFILE  FrameHeadSize="+frameSize);	
-//		Util.IERR("");
 	}
 	
 	public String toString() {
@@ -210,7 +236,6 @@ public class ProfileDescr extends Descriptor {
 		oupt.writeKind(kind);
 		tag.write(oupt);
 		oupt.writeShort(pKind);
-//		oupt.writeString(DSEG.ident);
 		oupt.writeString(this.dsegIdent());
 		oupt.writeShort(frameSize);
 		oupt.writeShort(params.size());
@@ -246,11 +271,8 @@ public class ProfileDescr extends Descriptor {
 		}
 		
 		if(Option.ATTR_INPUT_TRACE) IO.println("ProfileDescr.Read: " + prf);
-//		prf.print("   ");
-//		Util.IERR("");
 		return prf;
 	}
-
 
 
 }

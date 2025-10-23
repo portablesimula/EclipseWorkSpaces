@@ -1,16 +1,32 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec.descriptor;
 
 import java.io.IOException;
 
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
-import bec.util.Global;
 import bec.util.Option;
 import bec.util.Type;
 import bec.util.Util;
 import bec.util.Scode;
 import bec.util.Tag;
 
+/// Attribute descriptor.
+///
+/// S-CODE:
+///
+/// attribute_definition
+///		::= attr attr:newtag quantity_descriptor
+///
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/descriptor/Attribute.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public class Attribute extends Descriptor {
 	public Type type;
 	public int rela;
@@ -30,11 +46,6 @@ public class Attribute extends Descriptor {
 		this.size = type.size();
 		this.repCount = (Scode.accept(Scode.S_REP)) ? Scode.inNumber() : 1;
 	}
-	
-//	private Type DataType.typeSize(Type type) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
 
 	public static Attribute ofLocalVariable(Tag tag, Type type) {
 		Util.IERR("DETTE MÅ RETTES");

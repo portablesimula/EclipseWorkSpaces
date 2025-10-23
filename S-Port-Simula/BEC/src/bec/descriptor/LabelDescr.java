@@ -1,3 +1,8 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec.descriptor;
 
 import java.io.IOException;
@@ -15,9 +20,24 @@ import bec.value.ProgramAddress;
 import bec.value.Value;
 import bec.virtualMachine.SVM_NOOP;
 
-//Record IntDescr:Descriptor;      -- K_Globalvar
-//begin infix(MemAddr) adr;        -- K_IntLabel
-//end;                             -- K_IntRoutine   Local Routine  ER FJÆRNET !"!!
+/// Label descriptor.
+///
+/// S-CODE:
+///
+/// label_declaration
+///		::= label_specification | label_definition
+///
+/// 	label_specification
+///			::= labelspec label:newtag
+///
+/// 	label_definition
+///			::= label label:spectag
+/// 
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/descriptor/LabelDescr.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public class LabelDescr extends Descriptor {
 	private ProgramAddress adr;
 
@@ -26,7 +46,6 @@ public class LabelDescr extends Descriptor {
 	}
 	
 	public static LabelDescr ofLabelSpec() {
-//		Tag tag = Tag.ofScode();
 		Tag tag = Tag.ofScode();
 		LabelDescr lab = (LabelDescr) Global.DISPL.get(tag.val);
 		if(lab != null) Util.IERR("");
@@ -74,13 +93,10 @@ public class LabelDescr extends Descriptor {
 	}
 
 	public static LabelDescr read(AttributeInputStream inpt, int kind) throws IOException {
-//		IO.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  BEGIN IntDescr.Read");
 		Tag tag = Tag.read(inpt);
 		LabelDescr lab = new LabelDescr(kind, tag);
-//		IO.println("AFTER NEW CONST: "+lab);
 		boolean present = inpt.readBoolean();
 		if(present) lab.adr = (ProgramAddress) Value.read(inpt);
-//		IO.println("AFTER NEW MEMADDR: "+lab);
 		if(Option.ATTR_INPUT_TRACE) IO.println("LabelDescr.Read: " + lab);
 		return(lab);
 	}

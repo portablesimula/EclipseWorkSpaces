@@ -1,3 +1,8 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec.descriptor;
 
 import java.io.IOException;
@@ -5,13 +10,37 @@ import java.util.Vector;
 
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
-import bec.segment.DataSegment;
 import bec.util.Global;
 import bec.util.Option;
 import bec.util.Scode;
 import bec.util.Tag;
 import bec.util.Type;
 
+/// Record descriptor.
+///
+/// S-CODE:
+///
+///	record_descriptor
+///		::= record record_tag:newtag <record_info>?
+///			<prefix_part>? common_part
+///			<alternate_part>*
+///			endrecord 
+///
+///			record_info	::= info "TYPE" | info "DYNAMIC"
+///			prefix_part	::= prefix resolved_structure
+///			common_part	::= <attribute_definition>*
+///			alternate_part ::= alt <attribute_definition>*
+///				attribute_definition ::= attr attr:newtag quantity_descriptor
+///				resolved_structure ::= structured_type < fixrep count:ordinal >?
+///					structured_type ::= record_tag:tag
+///
+///				quantity_descriptor ::= resolved_type < Rep count:number >?
+/// 
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/descriptor/RecordDescr.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public class RecordDescr extends Descriptor {
 	public int size;      // Record size information
 	public int nbrep;     // Size of rep(0) attribute
@@ -81,7 +110,6 @@ public class RecordDescr extends Descriptor {
 		}
 		Scode.expect(Scode.S_ENDRECORD);
 		Type.newRecType(rec);
-//		rec.print("    ");
 		return rec;
 	}
 	

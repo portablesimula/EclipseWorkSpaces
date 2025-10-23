@@ -1,3 +1,8 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec.descriptor;
 
 import java.io.IOException;
@@ -6,7 +11,6 @@ import java.util.Vector;
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.compileTimeStack.CTStack;
-import bec.instruction.CALL;
 import bec.instruction.Instruction;
 import bec.segment.DataSegment;
 import bec.segment.ProgramSegment;
@@ -23,6 +27,24 @@ import bec.value.Value;
 import bec.virtualMachine.SVM_ENTER;
 import bec.virtualMachine.SVM_RETURN;
 
+/// Routine descriptor.
+///
+/// S-CODE:
+///
+/// 	routine_specification
+///			::= routinespec body:newtag profile:tag
+///
+/// 	routine_definition
+/// 		::= routine body:spectag profile:tag
+///			 <local_quantity>* <instruction>* en///routine
+///
+///			local_quantity
+///				::= local var:newtag quantity_descriptor
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/descriptor/RoutineDescr.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public class RoutineDescr extends Descriptor {
 	ProgramSegment PSEG;
 	private ProgramAddress adr;
@@ -76,20 +98,12 @@ public class RoutineDescr extends Descriptor {
 	public static void ofRoutineDef() {
 		Tag tag = Tag.ofScode();
 		Tag prftag = Tag.ofScode();
-//		Global.dumpDISPL("RoutineDescr.ofRoutineDef: ");
-//		IO.println("RoutineDescr.ofRoutineDef: tag="+tag + "  prfTag="+prftag);
 		
 		RoutineDescr rut = (RoutineDescr) Global.DISPL.get(tag.val);
 		if(rut == null) rut = new RoutineDescr(Kind.K_IntRoutine, tag, prftag);
-//		String id = Global.moduleID + '_' + prftag.ident();
 		String modID = (Global.moduleID == null)? "" : (Global.moduleID + '_');
 		String id = modID + tag.ident();
 		
-//		DataSegment prevDSEG = null;
-//		if(! CALL.USE_FRAME_ON_STACK) {
-//			rut.DSEG = new DataSegment("DSEG_LOCAL_" + id, Kind.K_SEG_DATA);
-//			prevDSEG = Global.DSEG; Global.DSEG = rut.DSEG;
-//		}
 		rut.PSEG = new ProgramSegment("PSEG_" + id, Kind.K_SEG_CODE);
 		ProgramSegment prevPSEG = Global.PSEG; Global.PSEG = rut.PSEG;
 		
@@ -99,7 +113,6 @@ public class RoutineDescr extends Descriptor {
 		}
 		rut.adr = rutAddr;
 		
-//		IO.println("RoutineDescr.ofRoutineDef: "+Global.DISPL.get(prftag.val));
 		ProfileDescr prf = (ProfileDescr) Global.DISPL.get(prftag.val);
 		if(prf == null) Util.IERR("Missing Profile " + Scode.edTag(prftag.val));
 
@@ -126,34 +139,22 @@ public class RoutineDescr extends Descriptor {
 		}
 		Global.PSEG.emit(new SVM_ENTER(prf.getSimpleName(), rut.localFrameSize));
 	
-//		if(DEBUG) {
-//			IO.println("RoutineDescr.ofRoutineDef: " + rut + "??????????????????????????????????????????????????????????????????????????????????????");
-//		}
 		while(Instruction.inInstruction()) { Scode.inputInstr(); }
 	
 		if(Scode.curinstr != Scode.S_ENDROUTINE) Util.IERR("Missing - endroutine");
 		CTStack.checkStackEmpty();
 		if(DEBUG) prf.print("RoutineDescr.ofRoutineDef: ");
-//		Global.PSEG.emit(new SVM_RETURN(prf.ident, prf.returSlot), "");
 		Global.PSEG.emit(new SVM_RETURN(prftag.ident(), prf.returSlot));
 		CTStack.checkStackEmpty();
 
-//		if(! CALL.USE_FRAME_ON_STACK) {
-//			Global.DSEG = prevDSEG;
-//		}
 		if(Option.PRINT_GENERATED_SVM_CODE) {
 			Global.PSEG.dump("END RoutineDescr.ofRoutineDef:: ");
 		}
-		
-//		if(rut.PSEG != null && rut.PSEG.ident.equalsIgnoreCase("PSEG_SYSR_SYSPRI:BODY")) {
-//			IO.println("RoutineDescr.ofRoutineDef: ADD PSEG_SYSR_SYSPRI:BODY ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-//		}
 
 		if(rut.DSEG != null) Global.routineSegments.add(rut.DSEG);
 		if(rut.PSEG != null) Global.routineSegments.add(rut.PSEG);
 		
 		Global.PSEG = prevPSEG;
-//		Util.IERR("");
 	}
 
 	// ***********************************************************************************************
@@ -162,8 +163,6 @@ public class RoutineDescr extends Descriptor {
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("RoutineDescr.Write: " + this);
-//		if(DSEG != null) DSEG.write(oupt);
-//		if(PSEG != null) PSEG.write(oupt);
 		oupt.writeKind(kind);
 		if(prftag != null) {
 			oupt.writeBoolean(true);
@@ -182,7 +181,6 @@ public class RoutineDescr extends Descriptor {
 	}
 
 	public static RoutineDescr read(AttributeInputStream inpt) throws IOException {
-//		IO.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  BEGIN RoutineDescr.Read");
 		Tag prftag = null;
 		boolean present = inpt.readBoolean();
 		if(present) prftag = Tag.read(inpt);

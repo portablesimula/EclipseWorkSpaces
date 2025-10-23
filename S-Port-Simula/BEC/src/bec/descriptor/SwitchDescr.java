@@ -1,3 +1,8 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec.descriptor;
 
 import bec.compileTimeStack.CTStack;
@@ -7,20 +12,25 @@ import bec.util.Tag;
 import bec.value.ProgramAddress;
 import bec.virtualMachine.SVM_SWITCH;
 
-/**
- * forward_jump ::= switch switch:newtag size:number
- */
+/// Switch.
+///
+/// S-CODE:
+///
+///	 forward_jump ::= switch switch:newtag size:number
+///
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/descriptor/SwitchDescr.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public class SwitchDescr extends Descriptor {
 	int size;
 	public ProgramAddress[] DESTAB;
 	
-	/**
-	 * forward_jump ::= switch switch:newtag size:number
-	 */
+	///  forward_jump ::= switch switch:newtag size:number
 	private SwitchDescr(int kind, Tag tag) {
 		super(kind, tag);
 		size = Scode.inNumber();
-//		if(size >= MxpSdest) Util.ERROR("Too large Case-Statement");
 		DESTAB = new ProgramAddress[size];
 		CTStack.checkTosInt();
 		CTStack.pop();

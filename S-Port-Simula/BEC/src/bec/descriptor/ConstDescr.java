@@ -1,3 +1,8 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec.descriptor;
 
 import java.io.IOException;
@@ -5,35 +10,67 @@ import java.util.Vector;
 
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
-import bec.ModuleIO;
-import bec.statement.InsertStatement;
 import bec.util.Global;
 import bec.util.Option;
 import bec.util.Type;
 import bec.util.Scode;
 import bec.util.Tag;
 import bec.util.Util;
-import bec.value.FixupAddress;
 import bec.value.FixupOADDR;
 import bec.value.ObjectAddress;
-import bec.value.ProgramAddress;
 import bec.value.RepetitionValue;
 import bec.value.Value;
 
+/// Constant descriptor.
+///
+/// S-CODE:
+///
+/// constant_declaration
+/// 		::= constant_specification | constant_definition
+/// 
+///	constant_specification
+///		::= constspec const:newtag quantity_descriptor
+///
+///	constant_definition
+///		::= const const:spectag quantity_descriptor repetition_value
+///
+///		quantity_descriptor ::= resolved_type < Rep count:number >?
+///
+///			resolved_type
+///				::= resolved_structure | simple_type
+///				::= INT range lower:number upper:number
+///				::= SINT
+///
+///				resolved_structure ::= structured_type < fixrep count:ordinal >?
+///
+///					structured_type ::= record_tag:tag
+///
+///		repetition_value
+///			::= <boolean_value>+
+///			::= <character_value>+ | text_value
+///			::= <integer_value>+ | <size_value>+
+///			::= <real_value>+ | <longreal_value>+
+///			::= <attribute_address>+ | <object_address>+
+///			::= <general_address>+ | <program_address>+
+///			::= <routine_address>+ | <record_value>+
+///
+///			text_value
+///				::= text long_string
+/// 
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/descriptor/ConstDescr.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public class ConstDescr extends Descriptor {
 	public Type type;
 	private ObjectAddress address;
 	private Vector<RepetitionValue> values;
 	public static int fixrepTail;
 	
-	private static final boolean DEBUG = false;
-	
 	private ConstDescr(int kind, Tag tag) {
 		super(kind, tag);
 		this.values = new Vector<RepetitionValue>();
-//		this.tag = tag;
-////		Global.Display.set(tag, this);
-//		Global.intoDisplay(this, tag);
 	}
 
 //	%title ***   C o n s t   and   C o n s t s p e c   ***
@@ -71,87 +108,49 @@ public class ConstDescr extends Descriptor {
 	 *				::= text long_string
 	 */
 	public static ConstDescr ofConstSpec() {
-//		Tag tag = Tag.ofScode();
 		Tag tag = Tag.ofScode();
 		ConstDescr cnst = (ConstDescr) Global.DISPL.get(tag.val);
 		if(cnst != null) Util.IERR("New CONSPEC but cnst="+cnst);
 		
 		cnst = new ConstDescr(Kind.K_Coonst, tag);
-//		IO.println("NEW ConstDescr.ofConstSpec: "+cnst);
-		
-//		cnst.quant = new QuantityDescriptor();
 		cnst.type = Type.ofScode();
 		
 		if(Scode.accept(Scode.S_FIXREP)) {
 			Scode.inNumber();
-//			Util.IERR("DETTE ER EN 'ResolvedType' - HVA NÅ ?");
-//			IO.println("DETTE ER EN 'ResolvedType' - HVA NÅ ?");
 		}
 
 		int repCount = (Scode.accept(Scode.S_REP)) ? Scode.inNumber() : 1;
-
-		if(DEBUG) {
-			IO.println("CONST.inConstant: " + cnst);
-//			if(Global.traceMode > 3)
-				cnst.print("   ");
-//			Util.IERR("");
-		}
 		return cnst;
 		
 	}
 	
 	public static ConstDescr ofConstDef() {
-//		Tag tag = Tag.ofScode();
 		Tag tag = Tag.ofScode();
 		ConstDescr cnst = (ConstDescr) Global.DISPL.get(tag.val);
 		if(cnst == null) {
 			cnst = new ConstDescr(Kind.K_Coonst, tag);
 		}
-		if(DEBUG) IO.println("NEW ConstDescr.ofConstDef: "+cnst);
-//		cnst.quant = new QuantityDescriptor();
 		cnst.type = Type.ofScode();
 		
 		fixrepTail = 0;
 		if(Scode.accept(Scode.S_FIXREP)) {
 			int fixrep = Scode.inNumber();
-//			IO.println("ConstDescr.ofConstDef: "+cnst);
-//			IO.println("ConstDescr.ofConstDef: "+cnst.type);
-//			IO.println("ConstDescr.ofConstDef: FIXREP "+fixrep);
 			RecordDescr rec = (RecordDescr) Global.getMeaning(cnst.type.tag);
-//			IO.println("ConstDescr.ofConstDef: descr="+rec);
 			int count = rec.size + rec.nbrep * fixrep;
 			fixrepTail = rec.nbrep * fixrep;
-//			IO.println("ConstDescr.ofConstDef: count="+count);
-//			Util.IERR("DETTE ER EN 'ResolvedType' - HVA NÅ ?");
-//			IO.println("DETTE ER EN 'ResolvedType' - HVA NÅ ?");
 		}
 
 		int repCount = (Scode.accept(Scode.S_REP)) ? Scode.inNumber() : 1;
 		
 		if(cnst.address instanceof FixupOADDR fix) {
 			fix.setAddress(Global.CSEG.nextAddress());
-//			Util.IERR("");
 		}
 		cnst.address = Global.CSEG.nextAddress();
 		for(int i=0;i<repCount;i++) {
 			RepetitionValue value = RepetitionValue.ofScode();
 			cnst.values.add(value);
-			if(DEBUG) {
-				IO.println("NEW ConstDescr.ofConstDef: "+value.getClass().getSimpleName());
-				value.print("NEW ConstDescr.ofConstDef: ");
-			}
 			value.emit(Global.CSEG);
-		}
-		
-		if(DEBUG) {
-			IO.println("CONST.inConstant: " + cnst);
-//			if(Global.traceMode > 3) cnst.print("   ");
-			Global.CSEG.dump("ConstDescr.ofConstDef: ");
-			Global.DSEG.dump("ConstDescr.ofConstDef: ");
-//			Util.IERR("");
-		}
-//		if(fixrepTail > 0) Util.IERR("");
-		return cnst;
+		}		return cnst;
 	}
 	
 	public ObjectAddress getAddress() {
@@ -162,7 +161,6 @@ public class ConstDescr extends Descriptor {
 	@Override
 	public void print(final String indent) {
 		for(RepetitionValue value:values) {
-//		if(value != null) {
 			boolean done = false;
 			if(value.values instanceof Vector<Value> vector) {
 				if(vector instanceof Vector<?> elts) {
@@ -193,23 +191,16 @@ public class ConstDescr extends Descriptor {
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("CONST.Write: " + this);
 		oupt.writeKind(kind);
-//		oupt.writeShort(ModuleIO.chgType(tag));
 		tag.write(oupt);
 		type.write(oupt);
 		address.write(oupt);
-//		quant.write(oupt);
 	}
 
 	public static ConstDescr read(AttributeInputStream inpt) throws IOException {
-//		IO.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  BEGIN CONST.Read");
 		Tag tag = Tag.read(inpt);
 		ConstDescr cns = new ConstDescr(Kind.K_Coonst, tag);
-//		IO.println("AFTER NEW CONST: "+cns);
 		cns.type = Type.read(inpt);
 		cns.address = (ObjectAddress) Value.read(inpt);
-//		IO.println("AFTER NEW MEMADDR: "+cns);
-//		Util.IERR("Static Method 'readObject' needs a redefiniton");
-//		if(Option.ATTR_INPUT_TRACE) IO.println("ConstDescr.Read: " + cns);
 		return(cns);
 	}
 

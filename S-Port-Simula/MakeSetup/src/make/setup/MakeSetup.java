@@ -37,10 +37,10 @@ import static java.nio.file.StandardCopyOption.*;
  */
 public final class MakeSetup {
 	public static final String RELEASE_ID = "SPort-1.0";
-	private final static int REVISION = 2;
+	private final static int REVISION = 3;
 	
-//	private final static boolean EARLY_ACCESS = true;   // Used to produce an Early Access
-	private final static boolean EARLY_ACCESS = false;  // Used to produce a Release
+	private final static boolean EARLY_ACCESS = true;   // Used to produce an Early Access
+//	private final static boolean EARLY_ACCESS = false;  // Used to produce a Release
 	
 	private final static String SETUP_TEMPS="C:/GitHub/MakeSetup_Temps";
 	private final static String RELEASE_HOME=SETUP_TEMPS+"/"+RELEASE_ID;
