@@ -1,3 +1,8 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec.compileTimeStack;
 
 import bec.util.Scode;
@@ -5,21 +10,12 @@ import bec.util.Type;
 import bec.util.Util;
 import bec.value.Value;
 
-//Record Coonst:Temp;               --- Value is also in 'itm'
-//begin infix(ValueItem) itm;
-//end;
-//
-//Record ValueItem; info "TYPE";
-//begin variant range(0:MaxByte) byt(8); -- ?? variant range(0:MaxWord) byt(8);
-//      variant range(0:MaxWord) wrd(4);
-//      variant integer int(2);
-//      variant real rev(2);
-//      variant long real lrv;
-//      variant infix(MemAddr) base;     -- size 6(-E) / 8(+E)
-//              range(0:MaxWord) Ofst;
-//end;
-
-public class ConstItem extends Temp {
+/// Constant Item.
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/compileTimeStack/ConstItem.java"><b>Source File</b></a>.
+/// 
+/// @author Øystein Myhre Andersen
+public class ConstItem extends TempItem {
 	public Value value;
 
 	public ConstItem(Type type, Value value) {

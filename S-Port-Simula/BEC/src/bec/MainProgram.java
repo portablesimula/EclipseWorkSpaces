@@ -23,7 +23,7 @@ import bec.virtualMachine.RTUtil;
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/MainProgram.java"><b>Source File</b></a>.
 /// 
-/// @author S-Port: Definition of S-code V3.0
+/// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class MainProgram extends S_Module {
 	

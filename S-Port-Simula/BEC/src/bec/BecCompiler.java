@@ -20,7 +20,7 @@ import bec.util.Util;
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/BecCompiler.java"><b>Source File</b></a>.
 /// 
-/// @author S-Port: Definition of S-code V3.0
+/// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class BecCompiler {
 	String programHead;

@@ -1,3 +1,8 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec.compileTimeStack;
 
 import java.util.Stack;
@@ -10,6 +15,11 @@ import bec.util.Type;
 import bec.util.Util;
 import bec.value.Value;
 
+/// Compile time Stack.
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/compileTimeStack/CTStack.java"><b>Source File</b></a>.
+/// 
+/// @author Øystein Myhre Andersen
 public class CTStack {
 	private static NamedStack<CTStackItem> stack = new NamedStack<CTStackItem>("MAIN");
 	private static Stack<NamedStack<CTStackItem>> saveStack = new Stack<NamedStack<CTStackItem>>();
@@ -103,11 +113,11 @@ public class CTStack {
 	}
 	
 	public static void pushTempVAL(Type type, int count) {
-		push(new Temp(CTStackItem.Mode.VAL, type, count));
+		push(new TempItem(CTStackItem.Mode.VAL, type, count));
 	}
 	
 	public static void pushTempREF(Type type, int count) {
-		push(new Temp(CTStackItem.Mode.REF, type, count));
+		push(new TempItem(CTStackItem.Mode.REF, type, count));
 	}
 	
 	public static void pushCoonst(Type type, Value value) {

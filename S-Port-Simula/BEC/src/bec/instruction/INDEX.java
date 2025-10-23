@@ -2,7 +2,7 @@ package bec.instruction;
 
 import bec.compileTimeStack.AddressItem;
 import bec.compileTimeStack.CTStack;
-import bec.compileTimeStack.Temp;
+import bec.compileTimeStack.TempItem;
 import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Type;
@@ -33,7 +33,7 @@ public abstract class INDEX extends Instruction {
 	public static void ofScode(int instr) {
 		CTStack.forceTosValue();			
 		CTStack.checkTosInt(); CTStack.checkSosRef();
-		if(! (CTStack.TOS() instanceof Temp)) Util.IERR("");
+		if(! (CTStack.TOS() instanceof TempItem)) Util.IERR("");
 		CTStack.pop();
 		AddressItem adr = (AddressItem) CTStack.TOS();
 		int size = adr.size;
