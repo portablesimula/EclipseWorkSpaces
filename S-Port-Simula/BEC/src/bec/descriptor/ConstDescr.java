@@ -140,9 +140,7 @@ public class ConstDescr extends Descriptor {
 				IO.println("NEW ConstDescr.ofConstDef: "+value.getClass().getSimpleName());
 				value.print("NEW ConstDescr.ofConstDef: ");
 			}
-			
-			String comment = tag + " type=" + cnst.type;
-			value.emit(Global.CSEG, comment);
+			value.emit(Global.CSEG);
 		}
 		
 		if(DEBUG) {

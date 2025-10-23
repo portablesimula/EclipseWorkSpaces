@@ -85,12 +85,12 @@ public class RTInfile extends RTImageFile {
 			}
 			if(line.length() <= nchr) {
 				for(int i=0;i<line.length();i++) {
-					chrAddr.store(i, IntegerValue.of(Type.T_CHAR, line.charAt(i)), "INIMA: ");
+					chrAddr.store(i, IntegerValue.of(Type.T_CHAR, line.charAt(i)));
 				}
 				return line.length();
 			} else {
 				for(int i=0;i<nchr;i++) {
-					chrAddr.store(i, IntegerValue.of(Type.T_CHAR, line.charAt(i)), "INIMA: ");
+					chrAddr.store(i, IntegerValue.of(Type.T_CHAR, line.charAt(i)));
 				}
 				rest = line.substring(nchr);
 				return nchr;
@@ -145,12 +145,12 @@ public class RTInfile extends RTImageFile {
 			}
 			if(line.length() <= nchr) {
 				for(int i=0;i<line.length();i++) {
-					chrAddr.store(i, IntegerValue.of(Type.T_CHAR, line.charAt(i)), "INIMA: ");
+					chrAddr.store(i, IntegerValue.of(Type.T_CHAR, line.charAt(i)));
 				}
 				return line.length();
 			} else {
 				for(int i=0;i<nchr;i++) {
-					chrAddr.store(i, IntegerValue.of(Type.T_CHAR, line.charAt(i)), "INIMA: ");
+					chrAddr.store(i, IntegerValue.of(Type.T_CHAR, line.charAt(i)));
 				}
 				sysinRest = line.substring(nchr);
 				return nchr;

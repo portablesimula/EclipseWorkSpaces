@@ -74,7 +74,7 @@ public abstract class SysEdit {
 			RTUtil.move(sval, itemAddr.addOffset(diff), nchr);
 //			IO.println("SysEdit.PUTINT: diff="+diff);
 			IntegerValue blnk = IntegerValue.of(Type.T_CHAR, ' ');
-			for(int i=diff-1;i>=0;i--) itemAddr.store(i, blnk, "");
+			for(int i=diff-1;i>=0;i--) itemAddr.store(i, blnk);
 		}
 		SVM_CALL_SYS.EXIT("PUTINT: ");
 	}
@@ -125,7 +125,7 @@ public abstract class SysEdit {
 			RTUtil.move(sval, itemAddr.addOffset(diff), nchr);
 //			IO.println("SysEdit.PTFRAC: diff="+diff);
 			IntegerValue blnk = IntegerValue.of(Type.T_CHAR, ' ');
-			for(int i=diff-1;i>=0;i--) itemAddr.store(i, blnk, "");
+			for(int i=diff-1;i>=0;i--) itemAddr.store(i, blnk);
 		}
 		SVM_CALL_SYS.EXIT("PTFRAC: ");
 	}
@@ -240,7 +240,7 @@ public abstract class SysEdit {
 			int diff = itemNchr - nchr;
 			RTUtil.move(sval, itemAddr.addOffset(diff), nchr);
 			IntegerValue blnk = IntegerValue.of(Type.T_CHAR, ' ');
-			for(int i=diff-1;i>=0;i--) itemAddr.store(i, blnk, "");
+			for(int i=diff-1;i>=0;i--) itemAddr.store(i, blnk);
 		}
 		SVM_CALL_SYS.EXIT("PTREAL: ");
 		
@@ -289,7 +289,7 @@ public abstract class SysEdit {
 			int diff = itemNchr - nchr;
 			RTUtil.move(sval, itemAddr.addOffset(diff), nchr);
 			IntegerValue blnk = IntegerValue.of(Type.T_CHAR, ' ');
-			for(int i=diff-1;i>=0;i--) itemAddr.store(i, blnk, "");
+			for(int i=diff-1;i>=0;i--) itemAddr.store(i, blnk);
 		}
 		SVM_CALL_SYS.EXIT("PLREAL2: ");
 	}
@@ -337,7 +337,7 @@ public abstract class SysEdit {
 			int diff = itemNchr - nchr;
 			RTUtil.move(sval, itemAddr.addOffset(diff), nchr);
 			IntegerValue blnk = IntegerValue.of(Type.T_CHAR, ' ');
-			for(int i=diff-1;i>=0;i--) itemAddr.store(i, blnk, "");
+			for(int i=diff-1;i>=0;i--) itemAddr.store(i, blnk);
 		}
 		SVM_CALL_SYS.EXIT("PUTFIX: ");
 	}
@@ -385,7 +385,7 @@ public abstract class SysEdit {
 			int diff = itemNchr - nchr;
 			RTUtil.move(sval, itemAddr.addOffset(diff), nchr);
 			IntegerValue blnk = IntegerValue.of(Type.T_CHAR, ' ');
-			for(int i=diff-1;i>=0;i--) itemAddr.store(i, blnk, "");
+			for(int i=diff-1;i>=0;i--) itemAddr.store(i, blnk);
 		}
 		SVM_CALL_SYS.EXIT("PUTFIX: ");
 	}

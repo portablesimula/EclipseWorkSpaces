@@ -78,7 +78,7 @@ public class SVM_SAVE extends SVM_Instruction {
 				if(DEBUG) {
 					IO.println("RTStack.saveStack:    SAVE-RESTORE " + item + " ===> saveObj("+(saveEntityHead + i)+")");
 				}
-				saveObj.store(saveEntityHead + i, item, "");
+				saveObj.store(saveEntityHead + i, item);
 			}
 			if(DEBUG) {
 				RTUtil.dumpEntity(saveObj);

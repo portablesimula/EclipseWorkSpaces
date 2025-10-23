@@ -148,11 +148,11 @@ public class ObjectAddress extends Value {
 	}
 	
 	@Override
-	public void emit(DataSegment dseg, String comment) {
+	public void emit(DataSegment dseg) {
 		dseg.emit(this);
 	}
 	
-	public void store(int idx, Value value, String comment) {
+	public void store(int idx, Value value) {
 		switch(kind) {
 			case SEGMNT_ADDR:
 				DataSegment dseg = segment();

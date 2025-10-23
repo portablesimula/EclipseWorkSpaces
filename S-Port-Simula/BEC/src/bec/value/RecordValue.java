@@ -194,11 +194,11 @@ public class RecordValue extends Value {
 	}
 	
 	@Override
-	public void emit(DataSegment dseg, String comment) {
+	public void emit(DataSegment dseg) {
 		for(Value value:attrValues) {
 			if(value == null)
 				 dseg.emit(null);
-			else value.emit(dseg, comment);
+			else value.emit(dseg);
 		}
 	}
 

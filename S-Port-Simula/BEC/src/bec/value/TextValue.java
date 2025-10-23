@@ -50,7 +50,7 @@ public class TextValue extends Value {
 	}
 	
 	@Override
-	public void emit(DataSegment dseg, String comment) {
+	public void emit(DataSegment dseg) {
 		ObjectAddress addr = emitChars(Global.TSEG);
 		dseg.emit(addr);
 		dseg.emit(null);

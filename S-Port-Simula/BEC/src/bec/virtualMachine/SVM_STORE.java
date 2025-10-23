@@ -48,7 +48,7 @@ public class SVM_STORE extends SVM_Instruction {
 		idx = idx + size - 1;
 		for(int i=0;i<size;i++) {
 			Value item = RTStack.load(n-i);
-			addr.store(idx--, item, "");
+			addr.store(idx--, item);
 		}
 		Global.PSC.addOfst(1);		
 	}

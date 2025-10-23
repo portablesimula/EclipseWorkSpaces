@@ -19,13 +19,10 @@ public class Value {
 	 */
 	public void print(final String indent) {
 		IO.println(this.getClass().getSimpleName() + ".print: " +  toString());
-//		Util.IERR("Method 'print' need a redefinition in " + this.getClass().getSimpleName());
-//		Thread.dumpStack();
 	}
 
-	public void emit(DataSegment dseg, String comment) {
+	public void emit(DataSegment dseg) {
 		Util.IERR("Method 'emit' need a redefinition in " + this.getClass().getSimpleName());
-//		return null;
 	}
 
 	public float toFloat() {

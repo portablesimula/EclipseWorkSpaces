@@ -275,7 +275,7 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 		for(int i=0;i<lng;i++) {
 			Value val = from.load(i);
 //			IO.println("SVM_CALL.movein: idx="+i+", value="+val);
-			to.store(i, val, "MOVEIN: ");
+			to.store(i, val);
 		}
 		EXIT("MOVEIN: ");
 	}
@@ -355,7 +355,7 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 		} else {
 			for(int i=0;i<length;i++) {
 				Value val = IntegerValue.of(Type.T_CHAR, s.charAt(i));
-				oaddr.store(i, val, "DATTIM: ");
+				oaddr.store(i, val);
 			}
 		}
 		RTStack.push(IntegerValue.of(Type.T_INT, length));

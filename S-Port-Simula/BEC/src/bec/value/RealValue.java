@@ -44,7 +44,7 @@ public class RealValue extends Value {
 //	}
 	
 	@Override
-	public void emit(DataSegment dseg, String comment) {
+	public void emit(DataSegment dseg) {
 		dseg.emit(this);
 	}
 

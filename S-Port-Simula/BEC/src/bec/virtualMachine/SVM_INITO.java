@@ -79,7 +79,7 @@ public class SVM_INITO extends SVM_Instruction {
 	/// Used by SVM_SETO
 	static void set(ObjectAddress oaddr) {
 		if(DEBUG) IO.println("SVM_INITO.set: SAVE_OBJECT["+(SAVE_INDEX-1)+"] = "+oaddr);
-		SAVE_OBJECT.store(SAVE_INDEX - 1, oaddr, "SETO");
+		SAVE_OBJECT.store(SAVE_INDEX - 1, oaddr);
 	}
 
 	@Override

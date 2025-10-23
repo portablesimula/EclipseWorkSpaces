@@ -96,7 +96,7 @@ public class DataSegment extends Segment {
 		return addr;
 	}
 	
-	public ObjectAddress emitRepText(String cmnt) {
+	public ObjectAddress emitRepText() {
 		Vector<TextValue> texts = new Vector<TextValue>();
 		do { Scode.inputInstr(); texts.add(TextValue.ofScode());
 		} while(Scode.nextByte() == Scode.S_TEXT);
@@ -105,7 +105,7 @@ public class DataSegment extends Segment {
 		for(int i=0;i<n;i++) {
 			TextValue tval = texts.get(i);
 			if(DEBUG) IO.println("DataSegment.emitRepText["+i+"]: "+tval);
-			tval.emit(this, cmnt);
+			tval.emit(this);
 		}
 		return addr;
 	}

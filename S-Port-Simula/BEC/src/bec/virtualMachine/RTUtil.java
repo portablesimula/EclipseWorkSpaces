@@ -572,14 +572,14 @@ public class RTUtil {
 	public static void move(String src, ObjectAddress dst, int count) {
 		for(int i=0;i<count;i++) {
 			Value x = IntegerValue.of(Type.T_CHAR, src.charAt(i));
-			dst.store(i, x, "MOVE DEST: "); //into.incrOffset();
+			dst.store(i, x); //into.incrOffset();
 		}
 	}
 	
 	public static void move(ObjectAddress src, ObjectAddress dst, int count) {
 		for(int i=0;i<count;i++) {
 			Value x = src.load(i);
-			dst.store(i, x, "MOVE DEST: "); //into.incrOffset();
+			dst.store(i, x); //into.incrOffset();
 		}
 	}
 

@@ -99,7 +99,7 @@ public class RTDirectfile extends RTImageFile {
 //			}
 			if(line.length() <= nchr) {
 				for(int i=0;i<line.length();i++) {
-					chrAddr.store(i, IntegerValue.of(Type.T_CHAR, line.charAt(i)), "INIMA: ");
+					chrAddr.store(i, IntegerValue.of(Type.T_CHAR, line.charAt(i)));
 				}
 				return line.length();
 			} else {

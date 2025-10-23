@@ -58,8 +58,8 @@ public class SVM_ASSIGN extends SVM_Instruction {
 		ObjectAddress addr = objadr.toRTMemAddr();
 		int n = size;
 		for(int i=0;i<size;i++)
-			addr.store(idx + i, values.get((--n)), "");
-		if(update) RTStack.pushx(values, "SVM_ASSIGN");
+			addr.store(idx + i, values.get((--n)));
+		if(update) RTStack.pushx(values);
 //		} catch(Exception e) {
 //			e.printStackTrace();
 //		}

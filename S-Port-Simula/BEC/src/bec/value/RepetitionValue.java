@@ -121,11 +121,11 @@ public class RepetitionValue extends Value {
 	}
 		
 	@Override
-	public void emit(DataSegment dseg, String comment) {
+	public void emit(DataSegment dseg) {
 		for(Value value:values) {
 			if(value == null)
 				 dseg.emit(null);
-			else value.emit(dseg, comment);
+			else value.emit(dseg);
 		}
 	}
 	

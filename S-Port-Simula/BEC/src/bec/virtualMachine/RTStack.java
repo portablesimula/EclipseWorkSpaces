@@ -148,7 +148,7 @@ public abstract class RTStack {
 		return stack.peek();
 	}
 
-	public static void pushx(Vector<Value> values, String comment) {
+	public static void pushx(Vector<Value> values) {
 		for(int i=values.size()-1;i>=0;i--) {
 			Value value = values.get(i);
 			stack.push(value);
