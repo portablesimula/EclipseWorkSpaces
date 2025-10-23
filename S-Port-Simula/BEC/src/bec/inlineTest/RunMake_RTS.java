@@ -33,7 +33,7 @@ public class RunMake_RTS {
 		names.add("MNTR");	// SCode ==> C:/SPORT/RTS/MNTR.svm
 
 		Global.outputDIR = "C:/SPORT/RTS/";
-		Option.verbose = true;
+//		Option.verbose = true;
 //		Option.traceMode = 4;
 //		Option.SCODE_INPUT_TRACE = true;
 //		Option.TRACE_ALLOC_FRAME = true;

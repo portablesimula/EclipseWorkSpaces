@@ -1,3 +1,8 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec;
 
 import java.io.FileOutputStream;
@@ -11,6 +16,11 @@ import bec.util.Option;
 import bec.util.Type;
 import bec.util.Util;
 
+/// Module IO Utilities.
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/ModuleIO.java"><b>Source File</b></a>.
+/// 
+/// @author Øystein Myhre Andersen
 public class ModuleIO {
 
 //	%title ***   O u t p u t    M o d u l e   ***

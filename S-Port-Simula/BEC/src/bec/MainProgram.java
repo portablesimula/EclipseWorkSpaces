@@ -1,3 +1,8 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec;
 
 import java.util.Vector;
@@ -14,6 +19,12 @@ import bec.util.Util;
 import bec.value.ProgramAddress;
 import bec.virtualMachine.RTUtil;
 
+/// This is an implementation of S-Code Main Program definition.
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/MainProgram.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code V3.0
+/// @author Øystein Myhre Andersen
 public class MainProgram extends S_Module {
 	
 	/**

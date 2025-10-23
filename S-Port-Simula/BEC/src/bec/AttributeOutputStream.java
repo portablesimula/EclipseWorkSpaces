@@ -1,3 +1,8 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec;
 
 import java.io.DataOutputStream;
@@ -8,6 +13,11 @@ import bec.descriptor.Kind;
 import bec.util.Scode;
 import bec.virtualMachine.SVM_Instruction;
 
+/// Attribute Output Stream.
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/AttributeOutputStream.java"><b>Source File</b></a>.
+/// 
+/// @author Øystein Myhre Andersen
 public class AttributeOutputStream {
 	DataOutputStream oupt;
 
@@ -16,14 +26,11 @@ public class AttributeOutputStream {
     public AttributeOutputStream(OutputStream oupt) throws IOException {
     	this.oupt = new DataOutputStream(oupt);
     }
-	
-//	public void flush() throws IOException { oupt.flush(); }
 
 	public void close() throws IOException { oupt.flush(); oupt.close(); }
 
     public void writeKind(int i) throws IOException {
 		if(TRACE) IO.println("AttributeOutputStream.writeKind: "+i+':'+Kind.edKind(i));
-//		if(i > Scode.S_max || i < 1) throw new IllegalArgumentException("Argument = "+i);
 		if(i > Scode.S_max || i < 0) throw new IllegalArgumentException("Argument = "+i);
 		oupt.writeByte(i);
 	}
@@ -40,12 +47,6 @@ public class AttributeOutputStream {
 		oupt.writeByte(i);
 	}
 
-//    public void writeReg(int i) throws IOException {
-//		if(TRACE) IO.println("AttributeOutputStream.writeOpcode: "+i+':'+SVM_Instruction.edOpcode(i));
-//		if(i > DELETED_RTRegister.rMax || i < 0) throw new IllegalArgumentException("Argument = "+i);
-//		oupt.writeByte(i);
-//	}
-
     public void writeTag(int i) throws IOException {
 		if(TRACE) IO.println("AttributeOutputStream.writeTag: "+Scode.edTag(i));
 		oupt.writeShort(i);
@@ -56,16 +57,6 @@ public class AttributeOutputStream {
 		writeString(Scode.TAGIDENT.get(i));
 		oupt.writeShort(i);
 	}
-
-//    public void writeType(Type type) throws IOException {
-//		if(TRACE) IO.println("AttributeOutputStream.writeType: "+type);
-//		if(type == null)
-//			oupt.writeByte(0);
-//		else {
-//			oupt.writeByte(type.keyWord);
-//			writeString(type.classIdent);
-//		}
-//	}
 	
     public void writeBoolean(boolean b) throws IOException {
 		if(TRACE) IO.println("AttributeOutputStream.writeBoolean: "+b);
@@ -98,52 +89,17 @@ public class AttributeOutputStream {
 		oupt.writeShort(i);			
 	}
 
-//    public void writeConstant(Object c) throws IOException {
-//		if(TRACE) IO.println("AttributeOutputStream.writeConstant: "+c);
-//		if(c == null)						{ oupt.writeByte(Type.T_VOID); }
-//		else if(c instanceof Boolean b)		{ oupt.writeByte(Type.T_BOOLEAN);   oupt.writeBoolean(b);	}
-//		else if(c instanceof Integer i)		{ oupt.writeByte(Type.T_INTEGER);   oupt.writeShort(i);	}
-//		else if(c instanceof Long li)		{ oupt.writeByte(Type.T_INTEGER);   oupt.writeShort(li.intValue()); }
-//		else if(c instanceof Character k)	{ oupt.writeByte(Type.T_CHARACTER); oupt.writeChar(k); }
-//		else if(c instanceof Float f)		{ oupt.writeByte(Type.T_REAL);      oupt.writeFloat(f); }
-//		else if(c instanceof Double f)		{ oupt.writeByte(Type.T_LONG_REAL); oupt.writeDouble(f); }
-//		else if(c instanceof String s)		{ oupt.writeByte(Type.T_TEXT);      writeString(s); }
-//		else Util.IERR(""+c.getClass().getSimpleName());
-//	}
-
     public void writeString(String s) throws IOException {
 		if(TRACE) IO.println("AttributeOutputStream.writeString: "+s);
 		if(s == null) {
 			oupt.writeShort(0);
-//			IO.println("AttributeOutputStream.writeString: writeShort:" + 0);
 		} else {
 			int lng = s.length();
 			oupt.writeShort(lng+1);
-//			IO.println("AttributeOutputStream.writeString: writeShort:" + (lng+1));
 			for(int i=0;i<lng;i++) {
 				oupt.writeChar(s.charAt(i));
-//				IO.println("AttributeOutputStream.writeString: writeChar:" + s.charAt(i));
 			}
 		}
 	}
-
-//	public void writeObjectList(ObjectList<?> list) throws IOException {
-//		ObjectList.write(list, this);
-//	}
-//
-//    public void writeObj(SyntaxClass obj) throws IOException {
-//		if(obj == null) {
-//			if(TRACE) IO.println("AttributeOutputStream.writeObj: null");
-//			writeKind(ObjectKind.NULL);
-//		} else if(obj.OBJECT_SEQU != 0) {
-//			if(TRACE) IO.println("AttributeOutputStream.writeObj: ObjectReference "+(obj.OBJECT_SEQU));
-//			writeKind(ObjectKind.ObjectReference);
-//			oupt.writeShort(obj.OBJECT_SEQU);
-//		} else {
-//			obj.OBJECT_SEQU = Global.Object_SEQU++;
-//			if(TRACE) IO.println("AttributeOutputStream.writeObj: OBJECT_SEQU="+obj.OBJECT_SEQU+": "+obj.getClass().getSimpleName()+"  "+obj);
-//			obj.write(this);
-//		}
-//    }
 
 }

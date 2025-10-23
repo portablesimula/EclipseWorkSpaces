@@ -1,3 +1,8 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec;
 
 import java.io.IOException;
@@ -21,6 +26,12 @@ import bec.util.Scode;
 import bec.util.Tag;
 import bec.util.Util;
 
+/// This is an implementation of S-Code Module definition.
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/ModuleDefinition.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code V3.0
+/// @author Øystein Myhre Andersen
 public class ModuleDefinition extends S_Module {
 	
 	/**

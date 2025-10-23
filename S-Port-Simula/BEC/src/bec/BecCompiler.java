@@ -1,3 +1,8 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec;
 
 import java.util.HashMap;
@@ -11,16 +16,17 @@ import bec.util.Scode;
 import bec.util.Type;
 import bec.util.Util;
 
+/// This is an implementation of a S-Code Back-end Compiler (BEC).
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/BecCompiler.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code V3.0
+/// @author Øystein Myhre Andersen
 public class BecCompiler {
 	String programHead;
 	static String scodeSource;
 	
 	public static void main(String[] argv) {
-//		Global.console = new Terminal("Runtime Console");
-//		Terminal terminal = new Terminal("Runtime Console");
-//		System.setIn(terminal.getInputStream());
-//		System.setOut(terminal.getOutputStream());
-
 		// Parse command line arguments.
 		for(int i=0;i<argv.length;i++) {
 			String arg=argv[i];
@@ -53,21 +59,13 @@ public class BecCompiler {
 			new BecCompiler(scodeSource);
 		} catch(Throwable e) {
 			Util.println("BecCompiler.main: BEC GOT Exception: " + e.getClass().getSimpleName());
-//		e.printStackTrace();
-		Thread.dumpStack();
-		printStackTrace();
-		if(Global.console != null) {
-//			while(true) Thread.yield();
-			Util.println("BecCompiler.main: Program will terminate in aprox. 30 secods");
-//			int sleep = 30 * 1000; // 30 seconds
-//			LOOP: while(true) {
-//				if((--sleep) < 0) break LOOP;
-//				try { Thread.sleep(1); } catch (InterruptedException e2) {}
-//			}
-			try { Thread.sleep(30 * 1000); } catch (InterruptedException e2) {}
-		}
-		System.exit(-1);
-			
+			Thread.dumpStack();
+			printStackTrace();
+			if(Global.console != null) {
+				Util.println("BecCompiler.main: Program will terminate in aprox. 30 secods");
+				try { Thread.sleep(30 * 1000); } catch (InterruptedException e2) {}
+			}
+			System.exit(-1);
 		}
 	}
 
@@ -115,25 +113,6 @@ public class BecCompiler {
 		Global.ifDepth = 0;
 		Scode.initScode();
 		Type.init();
-
-//		Thread.currentThread().setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-//			public void uncaughtException(Thread thread, Throwable e) {
-//				Util.println("BecCompiler.UncaughtExceptionHandler: BEC GOT Exception: " + e.getClass().getSimpleName());
-////				e.printStackTrace();
-//				Thread.dumpStack();
-//				printStackTrace();
-//				if(Global.console != null) {
-////					while(true) Thread.yield();
-//					Util.println("BecCompiler.UncaughtExceptionHandler: Program will terminate in aprox. 30 secods");
-////					int sleep = 30 * 1000; // 30 seconds
-////					LOOP: while(true) {
-////						if((--sleep) < 0) break LOOP;
-////						try { Thread.sleep(1); } catch (InterruptedException e2) {}
-////					}
-//					try { Thread.sleep(30 * 1000); } catch (InterruptedException e2) {}
-//				}
-//				System.exit(-1);
-//		}});
 
 		Scode.inputInstr();
 		if(Scode.curinstr == Scode.S_PROGRAM) {
