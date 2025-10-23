@@ -208,14 +208,6 @@ public class Variable extends Descriptor {
 //		Util.IERR("");
 		return var;
 	}
-	
-//	private void emit(DataSegment dseg, String cmnt) {
-////		Value value = quant.type.defaultValue();
-//		String comment = Scode.edTag(tag) + " Quant=" + quant + "  " + cmnt;
-////		dseg.emit(value, comment);
-//		
-//		quant.type.emitDefaultValue(dseg, comment);
-//	}
 
 	@Override
 	public void print(final String indent) {
@@ -238,7 +230,6 @@ public class Variable extends Descriptor {
 		tag.write(oupt);
 		type.write(oupt);
 		oupt.writeShort(repCount);
-//		address.write(oupt);
 		if(address != null) {
 			oupt.writeBoolean(true);
 			address.write(oupt);
@@ -250,7 +241,6 @@ public class Variable extends Descriptor {
 		Variable var = new Variable(kind, tag);
 		var.type = Type.read(inpt);
 		var.repCount = inpt.readShort();
-//		var.address = (ObjectAddress) Value.read(inpt);
 		boolean present = inpt.readBoolean();
 		if(present) {
 			var.address = (ObjectAddress) Value.read(inpt);

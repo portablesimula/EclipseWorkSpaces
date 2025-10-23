@@ -13,7 +13,6 @@ public class Type {
 	public  int tag;
 	private int size;  // Size of type in basic cells
 	private int rep0size;  // Size of rep 0 attribute in basic cells
-//	String comment;
 
 	private static HashMap<Integer, Type> TMAP;
 	private static Vector<Type> RECTYPES;
@@ -34,7 +33,6 @@ public class Type {
 	 *			::= SINT                                 -- NOTE: DETTE ER NYTT
 	 *
 	 */
-//	public Type() {
 	public static Type ofScode() {
 		int tag = Scode.ofScode();
 		if(tag == Scode.TAG_INT) {
@@ -44,20 +42,7 @@ public class Type {
 				Scode.inNumber(); // high
 			}
 		}
-//		if(Scode.accept(Scode.S_FIXREP)) {
-//			int fixrep = Scode.inNumber();
-//			IO.println("Type.ofScode: "+Scode.edTag(tag)+" FIXREP "+fixrep);
-////			Descriptor descr = tag.getMeaning();
-//			dumpTypes("Type.ofScode: ");
-//			Type type = TMAP.get(tag);
-//			IO.println("Type.ofScode: type="+type);
-//
-//			Util.IERR("DETTE ER EN 'ResolvedType' - HVA NÅ ?");
-//			IO.println("DETTE ER EN 'ResolvedType' - HVA NÅ ?");
-//		}
-//		IO.println("NEW Type.ofScode: " + Scode.edTag(tag));
 		Type type = TMAP.get(tag);
-//		Util.IERR("SJEKK DETTE: " + type);
 		if(type == null) {
 			Util.IERR("Illegal type: " + Scode.edTag(tag));
 		}
@@ -72,18 +57,12 @@ public class Type {
 	public static Type lookupType(RecordDescr rec) {
 		Type type = TMAP.get(rec.tag.val);
 		if(type == null) Util.IERR("Type.recType: UNKNOWN: " + rec);
-		
-//		rec.print("Type.lookupType: ");
-//		IO.println("Type.lookupType: type=" + type);
-		
 		return type;
 	}
 
 	public static void newRecType(RecordDescr rec) {
-//		IO.println("DataType.newRecType: " + Scode.edTag(rec.tag.val) + ", size="+rec.size);
 		Type type = new Type(rec.tag.val, rec.size);
 		type.rep0size = rec.nbrep;
-//		type.comment = "From " + rec;
 		TMAP.put(rec.tag.val, type);
 		RECTYPES.add(type);
 	}
@@ -155,7 +134,7 @@ public class Type {
 	}
 	
 	public String toString() {
-		return Scode.edTag(tag) + " size=" + size + ", rep0size=" + rep0size; // + " " + comment;
+		return Scode.edTag(tag) + " size=" + size + ", rep0size=" + rep0size;
 	}
 
 	// ***********************************************************************************************
@@ -167,10 +146,8 @@ public class Type {
 		oupt.writeKind(Kind.K_RECTYPES);
 		oupt.writeShort(RECTYPES.size());
 		for(Type type:RECTYPES) {
-//			IO.println("Type.writeRECTYPES: " + type.tag );
 			oupt.writeTagID(type.tag);
 			oupt.writeShort(type.size);
-//			type.comment = "From " + Global.currentModule;
 		}
 	}
 

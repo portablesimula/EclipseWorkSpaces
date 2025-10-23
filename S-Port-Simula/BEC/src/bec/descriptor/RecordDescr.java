@@ -89,14 +89,6 @@ public class RecordDescr extends Descriptor {
 		RecordDescr prefix = (RecordDescr) Global.DISPL.get(prefixTag);
 		return prefix;
 	}
-
-	public void emitDefaultValues(DataSegment dseg, int repCount, String comment) {
-		int rep = (repCount > 0) ? repCount : 1;
-		for(int i=0;i<rep;i++) {
-			for(int j=0;j<size;j++)
-				dseg.emit(null);
-		}
-	}
 		
 	@Override
 	public void print(final String indent) {
