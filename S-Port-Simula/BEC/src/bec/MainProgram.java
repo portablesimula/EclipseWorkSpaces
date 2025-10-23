@@ -95,7 +95,7 @@ public class MainProgram extends S_Module {
 //				Thread.dumpStack();
 //				return;
 //			}
-			Util.println("\nProgram - Exit: " + eprog.exitCode);
+//			Util.println("\nProgram - Exit: " + eprog.exitCode);
 			return;
 		}
 		
