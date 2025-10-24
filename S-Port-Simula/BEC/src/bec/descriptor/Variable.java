@@ -93,12 +93,10 @@ public class Variable extends Descriptor {
 	}
 	
 	public static Variable ofLocal(int rela) {
-		if(! CALL.USE_FRAME_ON_STACK) Util.IERR("ILLEGAL USE OF: ofLocal");
 		Tag tag = Tag.ofScode();
 		Variable var = new Variable(Kind.K_LocalVar, tag);
 		var.type = Type.ofScode();
 		var.repCount = (Scode.accept(Scode.S_REP)) ? Scode.inNumber() : 1;
-//		var.address = new ObjectAddress(null, rela);
 		var.address = ObjectAddress.ofRelFrameAddr(rela);
 		return var;
 	}

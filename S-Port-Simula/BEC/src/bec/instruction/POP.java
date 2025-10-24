@@ -1,3 +1,8 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec.instruction;
 
 import bec.compileTimeStack.CTStack;
@@ -8,24 +13,23 @@ import bec.virtualMachine.SVM_POPK;
 
 public abstract class POP extends Instruction {
 	
-	/**
-	 * stack_instruction ::= pop
-	 * 
-	 * Pop off TOS;
-	 * This instruction is illegal if TOS is a profile description.
-	 */
+	/// S-INSTRUCTION: POP
+	///
+	/// stack_instruction ::= pop
+	/// 
+	/// Pop off TOS;
+	/// This instruction is illegal if TOS is a profile description.
+	/// 
+	/// 
+	/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/POP.java"><b>Source File</b></a>.
+	/// 
+	/// @author S-Port: Definition of S-code
+	/// @author Øystein Myhre Andersen
 	public static void ofScode() {
-//		CTStack.dumpStack();
 		if(CTStack.TOS() instanceof ProfileItem) Util.IERR("Illegal pop of profileItem ");
-		
-//		IO.println("POP.ofScode: TOS="+CTStack.TOS().getClass().getSimpleName()+"  "+CTStack.TOS());
-//		IO.println("POP.ofScode: TOS.type="+CTStack.TOS().type);
 		int size = CTStack.TOS().type.size();
-//		IO.println("POP.ofScode: TOS.type.size="+size);
 		CTStack.pop();
-//		CTStack.dumpStack("POP: ");
 		Global.PSEG.emit(new SVM_POPK(size));
-//		if(CTStack.size() == 0) RTRegister.clearFreeRegs();
 	}
 
 }

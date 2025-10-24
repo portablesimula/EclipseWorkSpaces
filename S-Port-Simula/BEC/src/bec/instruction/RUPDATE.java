@@ -1,3 +1,8 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec.instruction;
 
 import bec.compileTimeStack.AddressItem;
@@ -5,20 +10,24 @@ import bec.compileTimeStack.CTStack;
 import bec.util.Global;
 import bec.virtualMachine.SVM_STORE;
 
+/// S-INSTRUCTION: RUPDATE
+///
+///  assign_instruction ::= rupdate (dyadic)
+///  
+///  check TOS ref;
+///  force SOS value; check types identical;
+///  pop;
+///  
+///  This instruction (“reverse update”) works almost like update with the sole exception that the
+///  roles of TOS and SOS are interchanged, i.e. the value transfer is from SOS to TOS.
+/// 
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/RUPDATE.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public abstract class RUPDATE extends Instruction {
 	
-	/**
-	 * assign_instruction ::= assign | update | rupdate
-	 * 
-	 * rupdate (dyadic)
-	 * 
-	 * check TOS ref;
-	 * force SOS value; check types identical;
-	 * pop;
-	 * 
-	 * This instruction (“reverse update”) works almost like update with the sole exception that the
-	 * roles of TOS and SOS are interchanged, i.e. the value transfer is from SOS to TOS.
-	 */
 	public static void ofScode() {
 		CTStack.checkTosRef(); CTStack.checkSosValue(); CTStack.checkTypesEqual();
 		AddressItem adr = (AddressItem) CTStack.pop();

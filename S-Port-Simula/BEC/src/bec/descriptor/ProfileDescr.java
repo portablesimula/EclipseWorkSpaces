@@ -230,9 +230,6 @@ public class ProfileDescr extends Descriptor {
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("ProfileDescr.Write: " + this);
-		if(! CALL.USE_FRAME_ON_STACK) {
-			DSEG.write(oupt);
-		}
 		oupt.writeKind(kind);
 		tag.write(oupt);
 		oupt.writeShort(pKind);
@@ -254,9 +251,6 @@ public class ProfileDescr extends Descriptor {
 		if(Option.ATTR_INPUT_TRACE) IO.println("BEGIN ProfileDescr.Read: " + prf);
 		prf.pKind = inpt.readShort();
 		String segID = inpt.readString();
-		if(! CALL.USE_FRAME_ON_STACK) {
-			prf.DSEG =(DataSegment) Segment.lookup(segID);
-		}
 		prf.frameSize = inpt.readShort();
 		prf.params = new Vector<Tag>();
 		int n = inpt.readShort();

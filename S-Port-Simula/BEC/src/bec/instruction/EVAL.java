@@ -1,31 +1,23 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec.instruction;
-
-import bec.compileTimeStack.CTStack;
-import bec.compileTimeStack.CTStackItem;
 
 public abstract class EVAL extends Instruction {
 
-	private static final boolean DEBUG = false;
-
-	/**
-	 * eval_instruction ::= eval
-	 * 
-	 * NOTE: when S_EVAL: --  Qf1(qEVAL,0) -- REMOVED FOR AD'HOC TEST  - IN OLD BEC for PC-Simula
-
-	 */
-	public static void ofScode() {
-//		Util.IERR("NOT IMPL");
-//		IO.println("EVAL.ofScode: SJEKK DETTE SEINERE EN GANG");
-		CTStackItem tos = CTStack.TOS();
-
-		if(DEBUG) {
-			if(tos != null)	IO.println("EVAL: TOS: " + tos.getClass().getSimpleName() + "  " + tos);
-			IO.println("EVAL: " + tos + ", mode="+tos.edMode());
-//			Util.IERR("");
-		}
-		
-//		tos.mode = CTStackItem.Mode.VAL;
-//		CTStack.forceTosValue();
-	}
+	/// S-INSTRUCTION: EVAL
+	///
+	/// eval_instruction ::= eval
+	///
+	/// NOTE: In this implementation  EVAL == NOOP
+	/// 
+	/// 
+	/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/EVAL.java"><b>Source File</b></a>.
+	/// 
+	/// @author S-Port: Definition of S-code
+	/// @author Øystein Myhre Andersen
+	public static void ofScode() {}
 
 }

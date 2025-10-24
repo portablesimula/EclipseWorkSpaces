@@ -1,3 +1,8 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec.instruction;
 
 import bec.compileTimeStack.CTStack;
@@ -22,51 +27,57 @@ import bec.virtualMachine.SVM_LOADC;
 
 public abstract class PUSHC extends Instruction {
 	
-	/**
-	 * stack_instruction ::= pushc value
-	 * 
-	 *	 value
-	 *		::= boolean_value | character_value
-	 *		::= integer_value | size_value
-	 *		::= real_value | longreal_value
-	 *		::= attribute_address | object_address
-	 *		::= general_address | program_address
-	 *		::= routine_address | record_value
-	 * 
-	 * text_value      ::= text long_string
-	 * boolean_value   ::= true | false 
-	 * character_value ::= c-char byte
-	 * integer_value   ::= c-int integer_literal:string
-	 * real_value      ::= c-real real_literal:string 
-	 * longreal_value  ::= c-lreal real_literal:string
-	 * size_value      ::= c-size type | nosize
-	 * 
-	 * attribute_address
-	 * 		::= < c-dot attribute:tag >* c-aaddr attribute:tag
-	 * 		::= anone
-	 * 
-	 * object_address
-	 * 		::= c-oaddr global_or_const:tag
-	 * 		::= onone
-	 * 
-	 * general_address
-	 * 		::= < c-dot attr:tag >* c-gaddr global_or_const:tag
-	 * 		::= gnone
-	 * 
-	 * program_address ::= c-paddr label:tag | nowhere
-	 * routine_address ::= c-raddr body:tag | nobody
-	 * 
-	 * record_value
-	 * 		::= c-record structured_type
-	 * 			<attribute_value>+ endrecord
-	 * 
-	 * End-Condition: Scode'nextByte = First byte after the value
-	 * 
-	 * pushc constant:value
-	 * push( VAL, constant.TYPE, "value" );
-	 * 
-	 * A descriptor of the given value is pushed onto the stack.
-	 */
+	/// S-INSTRUCTION: PUSHC
+	///
+	/// stack_instruction ::= pushc value
+	/// 
+	///	 value
+	///		::= boolean_value | character_value
+	///		::= integer_value | size_value
+	///		::= real_value | longreal_value
+	///		::= attribute_address | object_address
+	///		::= general_address | program_address
+	///		::= routine_address | record_value
+	/// 
+	/// text_value      ::= text long_string
+	/// boolean_value   ::= true | false 
+	/// character_value ::= c-char byte
+	/// integer_value   ::= c-int integer_literal:string
+	/// real_value      ::= c-real real_literal:string 
+	/// longreal_value  ::= c-lreal real_literal:string
+	/// size_value      ::= c-size type | nosize
+	/// 
+	/// attribute_address
+	/// 		::= < c-dot attribute:tag >* c-aaddr attribute:tag
+	/// 		::= anone
+	/// 
+	/// object_address
+	/// 		::= c-oaddr global_or_const:tag
+	/// 		::= onone
+	/// 
+	/// general_address
+	/// 		::= < c-dot attr:tag >* c-gaddr global_or_const:tag
+	/// 		::= gnone
+	/// 
+	/// program_address ::= c-paddr label:tag | nowhere
+	/// routine_address ::= c-raddr body:tag | nobody
+	/// 
+	/// record_value
+	/// 		::= c-record structured_type
+	/// 			<attribute_value>+ endrecord
+	/// 
+	/// End-Condition: Scode'nextByte = First byte after the value
+	/// 
+	/// pushc constant:value
+	/// push( VAL, constant.TYPE, "value" );
+	/// 
+	/// A descriptor of the given value is pushed onto the stack.
+	/// 
+	/// 
+	/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/PUSHC.java"><b>Source File</b></a>.
+	/// 
+	/// @author S-Port: Definition of S-code
+	/// @author Øystein Myhre Andersen
 	public static void ofScode() {
 		Type type = null;
 		Value value = null;

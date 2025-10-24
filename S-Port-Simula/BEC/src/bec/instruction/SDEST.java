@@ -1,3 +1,8 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec.instruction;
 
 import bec.compileTimeStack.CTStack;
@@ -8,21 +13,25 @@ import bec.util.Tag;
 import bec.util.Util;
 import bec.virtualMachine.SVM_NOOP;
 
+/// S-INSTRUCTION: SDEST
+///
+///  forward_destination ::= sdest switch:tag which:number
+///  
+///  check stack empty;
+///  
+///  The tag must have been defined in a switch instruction, and the number must be within the range
+///  defined by the corresponding switch instruction, otherwise: error.
+///  The destination "D(which)" of the switch instruction defining the tag is located at the current program
+///  point.
+/// 
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/SDEST.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public abstract class SDEST extends Instruction {
 	
-	/**
-	 * forward_destination ::= sdest switch:tag which:number
-	 * 
-	 * check stack empty;
-	 * 
-	 * The tag must have been defined in a switch instruction, and the number must be within the range
-	 * defined by the corresponding switch instruction, otherwise: error.
-	 * The destination "D(which)" of the switch instruction defining the tag is located at the current program
-	 * point.
-	 */
-	private SDEST() {}
 	public static void ofScode() {
-//		CTStack.dumpStack();
 		Tag tag = Tag.ofScode();
 		int which = Scode.inNumber();
 		CTStack.checkStackEmpty();

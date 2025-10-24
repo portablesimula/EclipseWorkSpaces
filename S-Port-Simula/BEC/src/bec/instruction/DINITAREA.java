@@ -1,3 +1,8 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec.instruction;
 
 import bec.compileTimeStack.CTStack;
@@ -8,19 +13,27 @@ import bec.virtualMachine.SVM_POPK;
 
 public abstract class DINITAREA extends Instruction {
 	
-	/**
-	 * dinitarea structured_type (dyadic)
-	 * force TOS value; check TOS type(INT);
-	 * force SOS value; check SOS type(OADDR);
-	 * pop;
-	 * 
-	 * TOS.TYPE must be INT, SOS.TYPE must be OADDR, and the structured type must contain an
-	 * indefinite repetition, otherwise: error.
-	 * The value of TOS is used to resolve the type, i.e fixing the number of elements in the indefinite
-	 * repetition, following that the evaluation proceeds exactly as for initarea.
-	 * 
-	 * NOTE: In this implementation  DINITAREA == NOOP
-	 */
+	/// S-INSTRUCTION: DINITAREA
+	///
+	/// dinitarea structured_type (dyadic)
+	///
+	/// force TOS value; check TOS type(INT);
+	/// force SOS value; check SOS type(OADDR);
+	/// pop;
+	/// 
+	/// TOS.TYPE must be INT, SOS.TYPE must be OADDR, and the structured type must contain an
+	/// indefinite repetition, otherwise: error.
+	/// The value of TOS is used to resolve the type, i.e fixing the number of elements in the indefinite
+	/// repetition, following that the evaluation proceeds exactly as for initarea.
+	/// 
+	/// NOTE: In this implementation  DINITAREA == NOOP
+	/// 
+	/// 
+	/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/DINITAREA.java"><b>Source File</b></a>.
+	/// 
+	/// @author S-Port: Definition of S-code
+	/// @author Øystein Myhre Andersen
+	@SuppressWarnings("unused")
 	public static void ofScode() {
 		CTStack.forceTosValue();
 		CTStack.checkTosType(Type.T_OADDR); CTStack.checkSosValue(); CTStack.checkSosType(Type.T_INT);

@@ -1,3 +1,8 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec.instruction;
 
 import bec.S_Module;
@@ -8,10 +13,42 @@ import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Util;
 
+/// S-INSTRUCTION: BSEG
+///
+///   * remember stack;
+///   * purge stack;
+///
+/// The current program point is remembered together with the complete state of the stack, the "bsegstack".
+/// Some new segment is designated the current program point, together with a new, empty stack.
+///
+/// S-INSTRUCTION: ESEG
+///
+///  * check stack empty;
+///  * reestablish stack remembered at corresponding bseg;
+///
+/// The "bseg-stack" is restored together with the saved program point.
+///
+///
+/// SEGMENTATION CONTROL.
+///
+/// segment_instruction
+///		::= bseg <program_element>* eseg
+///
+/// This instruction specifies that the enclosed program elements are out of sequence, i.e. the code
+/// generated must either be located elsewhere or it must be preceded by an unconditional jump instruction
+/// leading to the program point following eseg. The segment instruction is illegal within routine bodies.
+///
+/// Note that all jump/destination sets must be fully enclosed within a segment.
+/// The bseg and eseg have similar effects on the stack as save and restore (chapter 7).
+///
+/// More info in: S-Port: Definition of S-code sectn. 12. SEGMENTATION CONTROL
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/BSEG.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public abstract class BSEG extends Instruction {
 	private static int SEQU;
-	
-	private static final boolean DEBUG = false;
 	
 	/**
 	 * segment_instruction ::= bseg <program_element>* eseg
@@ -24,15 +61,10 @@ public abstract class BSEG extends Instruction {
 		ProgramSegment prevPSEG = Global.PSEG;
 		Global.PSEG = new ProgramSegment(Global.getSourceID()+"_BSEG_" + SEQU++, Kind.K_SEG_CODE);
 
-		if(DEBUG) CTStack.dumpStack("BSEG.ofScode: SAVE: " + CTStack.ident());
 		CTStack.BSEG("BSEG");
-			if(DEBUG) CTStack.dumpStack("BSEG.ofScode: AFTER SAVE: " + CTStack.ident());
 			S_Module.programElements();
-//			Scode.inputInstr();
 			if(Scode.curinstr != Scode.S_ESEG) Util.IERR("Missing ESEG, Got " + Scode.edInstr(Scode.curinstr));
-			if(DEBUG) CTStack.dumpStack("BSEG.ofScode: AFTER ESEG");
 		CTStack.ESEG();
-		if(DEBUG) CTStack.dumpStack("BSEG.ofScode: RESTORED: " + CTStack.ident());
 		
 		Global.routineSegments.add(Global.PSEG);
 		Global.PSEG = prevPSEG;

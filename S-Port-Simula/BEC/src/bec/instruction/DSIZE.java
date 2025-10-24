@@ -1,3 +1,8 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec.instruction;
 
 import bec.compileTimeStack.CTStack;
@@ -13,20 +18,26 @@ import bec.virtualMachine.SVM_LOADC;
 
 public abstract class DSIZE extends Instruction {
 	
-	/**
-	 * addressing_instruction ::= dsize structured_type
-	 * 
-	 *		structured_type ::= record_tag:tag
-	 *
-	 * dsize structured_type
-	 * 
-	 * force TOS value; check TOS type(INT);
-	 * pop;
-	 * push( VAL, SIZE, "size(type with mod. rep.count)" );
-	 * 
-	 * The structured type must be prefixed with a "DYNAMIC" type (see 4.3.6),
-	 * and it must contain an indefinite repetition, otherwise: error.
-	 */
+	/// S-INSTRUCTION: DSIZE
+	///
+	/// addressing_instruction ::= dsize structured_type
+	/// 
+	///		structured_type ::= record_tag:tag
+	///
+	/// dsize structured_type
+	/// 
+	/// force TOS value; check TOS type(INT);
+	/// pop;
+	/// push( VAL, SIZE, "size(type with mod. rep.count)" );
+	/// 
+	/// The structured type must be prefixed with a "DYNAMIC" type (see 4.3.6),
+	/// and it must contain an indefinite repetition, otherwise: error.
+	/// 
+	/// 
+	/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/DSIZE.java"><b>Source File</b></a>.
+	/// 
+	/// @author S-Port: Definition of S-code
+	/// @author Øystein Myhre Andersen
 	public static void ofScode() {
 		Tag tag = Tag.ofScode();
 		RecordDescr fixrec = (RecordDescr) tag.getMeaning();

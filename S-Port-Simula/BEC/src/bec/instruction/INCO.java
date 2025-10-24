@@ -7,20 +7,25 @@ import bec.virtualMachine.SVM_INCO;
 
 public abstract class INCO extends Instruction {
 	
-	/**
-	 * addressing_instruction ::= inco
-	 * 
-	 * inco, deco (dyadic)
-	 * force TOS value; check TOS type(SIZE);
-	 * force SOS value; check SOS type(OADDR);
-	 * pop; pop;
-	 * push( VAL, OADDR, "value(SOS) +/- value(TOS)" );
-	 * 
-	 * The two top elements are replaced by a descriptor of the object address RESULT defined
-	 * through the equation
-	 * dist(RESULT,value(SOS)) = +/- value(TOS)
-	 * where + corresponds to inco and - to deco.
-	 */
+	/// S-INSTRUCTION: INCO
+	///
+	/// addressing_instruction ::= inco (dyadic)
+	///
+	/// force TOS value; check TOS type(SIZE);
+	/// force SOS value; check SOS type(OADDR);
+	/// pop; pop;
+	/// push( VAL, OADDR, "value(SOS) +/- value(TOS)" );
+	/// 
+	/// The two top elements are replaced by a descriptor of
+	/// the object address RESULT defined through the equation
+	///
+	/// 	dist(RESULT,value(SOS)) = + value(TOS)
+	/// 
+	/// 
+	/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/INCO.java"><b>Source File</b></a>.
+	/// 
+	/// @author S-Port: Definition of S-code
+	/// @author Øystein Myhre Andersen
 	public static void ofScode() {
 		CTStack.forceTosValue();			
 		CTStack.checkTosType(Type.T_SIZE); CTStack.checkSosValue(); CTStack.checkSosType(Type.T_OADDR);

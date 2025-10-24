@@ -1,3 +1,8 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec.instruction;
 
 import bec.compileTimeStack.ProfileItem;
@@ -18,25 +23,29 @@ import bec.virtualMachine.SVM_LOADC;
 import bec.virtualMachine.SVM_CALL_SYS;
 
 public abstract class CALL extends Instruction {
-	private static final boolean DEBUG = false;
 	
-	public static final boolean USE_FRAME_ON_STACK = true;
-	/**
-	 * call_instruction
-	 * 		::= connect_profile <parameter_eval>*
-	 * 				connect_routine
-	 * 
-	 * 		connect_profile
-	 * 			::= precall profile:tag
-	 * 			::= asscall profile:tag
-	 * 			::= repcall n:byte profile:tag
-	 * 
-	 * 		connect_routine ::= call body:tag | <instruction>+ call-tos
-	 * 
-	 * 		parameter_eval
-	 * 			::= <instruction>+ asspar
-	 * 			::= <instruction>+ assrep n:byte
-	 */
+	/// S-INSTRUCTION: CALL
+	///
+	/// call_instruction
+	/// 		::= connect_profile <parameter_eval>*
+	/// 				connect_routine
+	/// 
+	/// 		connect_profile
+	/// 			::= precall profile:tag
+	/// 			::= asscall profile:tag
+	/// 			::= repcall n:byte profile:tag
+	/// 
+	/// 		connect_routine ::= call body:tag | <instruction>+ call-tos
+	/// 
+	/// 		parameter_eval
+	/// 			::= <instruction>+ asspar
+	/// 			::= <instruction>+ assrep n:byte
+	/// 
+	/// 
+	/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/CALL.java"><b>Source File</b></a>.
+	/// 
+	/// @author S-Port: Definition of S-code
+	/// @author Øystein Myhre Andersen
 	public static void ofScode(int nParStacked) {
 		int profileTag = Scode.ofScode();
 		Scode.inputInstr();
@@ -69,9 +78,6 @@ public abstract class CALL extends Instruction {
 				Scode.inputInstr();
 				putPar(pitem,1);
 		      	Global.PSEG.emit(new SVM_NOOP());
-		      	if(DEBUG) {
-		      		IO.println("CallInstruction: ASSPAR: nasspar="+pitem.nasspar);
-		      	}
 			}
 			else if(Scode.curinstr == Scode.S_ASSREP) {
 				int nRep = Scode.inByte();
@@ -85,8 +91,7 @@ public abstract class CALL extends Instruction {
 			}
 			else Util.IERR("Syntax error in call Instruction");
 		}
-//	    ---------  Final Actions  ---------
-		if(DEBUG) IO.println("CallInstruction: FINAL: " + pitem.spc);
+	    //---------  Final Actions  ---------
 	    if(pitem.nasspar != pitem.spc.params.size())
 	    	Util.IERR("Wrong number of Parameters: got " + pitem.nasspar + ", required" + +pitem.spc.params.size());
 //	    ---------  Call Routine  ---------
@@ -114,7 +119,6 @@ public abstract class CALL extends Instruction {
 		Variable export = spec.getExport();
 		if(export != null) {
 			Type returnType = export.type;
-			if(DEBUG) IO.println("CallInstruction.callSYS: returnType="+returnType);
 			CTStack.pushTempVAL(returnType, 1);
 		}
 	}

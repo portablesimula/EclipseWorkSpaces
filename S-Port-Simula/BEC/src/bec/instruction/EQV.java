@@ -1,46 +1,50 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec.instruction;
 
 import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.CTStackItem;
 import bec.util.Global;
 import bec.util.Type;
-import bec.util.Util;
 import bec.virtualMachine.SVM_EQV;
 
+/// S-INSTRUCTION: EQV
+///
+/// arithmetic_instruction ::= eqv (dyadic)
+/// 
+/// force TOS value; check TOS type(BOOL,INT);
+/// force SOS value; check SOS type(BOOL,INT);
+/// check types equal;
+/// pop; pop;
+/// push( VAL, BOOL, "value(SOS) eqv value(TOS)" );
+/// 
+/// TOS and SOS are replaced by a description of the result of applying the operator.
+/// Note that SOS is the left operand.
+/// 
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/EQV.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public abstract class EQV extends Instruction {
 	
-	/**
-	 * arithmetic_instruction ::= eqv
-	 * 
-	 * and, or, xor, imp, eqv (dyadic)
-	 * 
-	 * force TOS value; check TOS type(BOOL);
-	 * force SOS value; check SOS type(BOOL);
-	 * pop; pop;
-	 * push( VAL, BOOL, "value(SOS) op value(TOS)" );
-	 * 
-	 * TOS and SOS are replaced by a description of the result of applying the operator.
-	 * Note that SOS is the left operand.
-	 */
+	/// Scans the remaining S-Code (if any) belonging to this instruction.
+	/// Perform the specified stack operations (which may result in code generation).
+	/// Finally: Emit an SVM_EQV instruction.
 	public static void ofScode() {
-		CTStack.forceTosValue();			
+		CTStack.forceTosValue();
 		CTStackItem tos = CTStack.TOS();
-	    
+	    CTStack.checkSosValue(); CTStack.checkTypesEqual();
 	    Type at = tos.type;
-	    if(at != Type.T_BOOL) {
-			CTStackItem sos = CTStack.SOS();
-		    at = CTStack.arithType(at, sos.type);
-		    CTStack.checkTosArith(); CTStack.checkSosArith();
-		    CTStack.checkSosValue(); CTStack.checkTypesEqual();
-		    if( at == Type.T_REAL || at == Type.T_LREAL) Util.IERR("");
-	    } else {
-	    	CTStack.checkSosValue(); CTStack.checkSosType(Type.T_BOOL);
-	    }
+	    if(at != Type.T_BOOL)
+	    	CTStack.checkTosType(Type.T_INT);
+		CTStack.pop(); CTStack.pop();
+	    CTStack.pushTempVAL(at, 1);
 	    
 		Global.PSEG.emit(new SVM_EQV());
-		CTStack.pop();
-		CTStack.pop();
-	    CTStack.pushTempVAL(at, 1);
-	}	
+	}
 
 }

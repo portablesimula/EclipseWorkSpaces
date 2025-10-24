@@ -1,6 +1,9 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec.instruction;
-
-import java.util.Vector;
 
 import bec.descriptor.ConstDescr;
 import bec.descriptor.RecordDescr;
@@ -12,27 +15,28 @@ import bec.statement.SkipifConstruction;
 import bec.util.Scode;
 import bec.util.Util;
 
-public class Instruction { // extends ProgramElement {
-	
-//	%title ***   I n s t r u c t i o n   ***
-	public static Vector<Instruction> inInstructionSet(){
-		Vector<Instruction> instructionSet = new Vector<Instruction>();
-		LOOP:while(true) {
-//			Instruction instr = inInstruction();
-			Object obj = inInstruction();
-			if(obj == null) break LOOP;
-			if(obj instanceof Instruction instr)
-				instructionSet.add(instr);
-			Scode.inputInstr();
-		}
+/// S-INSTRUCTION:
+///
+/// instruction
+/// 		::= constant_declaration
+/// 		::= record_descriptor | routine_specification
+/// 		::= stack_instruction | assign_instruction
+/// 		::= addressing_instruction | protect_instruction
+/// 		::= temp_control | access_instruction
+/// 		::= arithmetic_instruction | convert_instruction
+/// 		::= jump_instruction | goto_instruction
+/// 		::= if_instruction | skip_instruction
+/// 		::= segment_instruction | call_instruction
+/// 		::= area_initialisation | eval_instruction
+/// 		::= info_setting | macro_call
+/// 
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/Instruction.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
+public class Instruction {
 		
-//		IO.println("\nNEW InstructionSet");
-//		for(ProgramElement instr:instructionSet)
-//			IO.println("   " + instr);
-//		IO.println("END InstructionSet");
-
-		return instructionSet;
-	}
 	public static void inInstructions() {
 		LOOP:while(true) {
 			if(! inInstruction()) break LOOP;
@@ -40,44 +44,15 @@ public class Instruction { // extends ProgramElement {
 		}
 	}
 
-	
-//	public static void ofScode() {
-//		Util.IERR("Method ofScode need a redefinition");// in "+this.getClass().getSimpleName());
-//	}
-
-	/**
-	 * Utility print method.
-	 * 
-	 * @param indent number of spaces leading the lines
-	 */
-	public void print(final String indent) {
-		Util.IERR("Method printTree need a redefinition in "+this.getClass().getSimpleName());
-	}
-
-	/**
-	 * instruction
-	 * 		::= constant_declaration
-	 * 		::= record_descriptor | routine_specification
-	 * 		::= stack_instruction | assign_instruction
-	 * 		::= addressing_instruction | protect_instruction
-	 * 		::= temp_control | access_instruction
-	 * 		::= arithmetic_instruction | convert_instruction
-	 * 		::= jump_instruction | goto_instruction
-	 * 		::= if_instruction | skip_instruction
-	 * 		::= segment_instruction | call_instruction
-	 * 		::= area_initialisation | eval_instruction
-	 * 		::= info_setting | macro_call
-	 */
 	public static boolean inInstruction() {
-//		IO.println("Parse.instruction: "+Scode.edInstr(Scode.curinstr));
 		switch(Scode.curinstr) {
 			case Scode.S_CONSTSPEC ->   ConstDescr.ofConstSpec();
 			case Scode.S_CONST ->	    ConstDescr.ofConstDef();
 			case Scode.S_ROUTINESPEC -> RoutineDescr.ofRoutineSpec();
 			case Scode.S_RECORD ->      RecordDescr.ofScode();
-			case Scode.S_SETOBJ ->      Util.IERR("SSTMT.SETOBJ is not implemented");
-			case Scode.S_GETOBJ ->      Util.IERR("SSTMT.GETOBJ is not implemented");
-			case Scode.S_ACCESS, Scode.S_ACCESSV -> Util.IERR("SSTMT.ACCESS is not implemented");
+			case Scode.S_SETOBJ ->      Util.IERR("SETOBJ is not implemented");
+			case Scode.S_GETOBJ ->      Util.IERR("GETOBJ is not implemented");
+			case Scode.S_ACCESS, Scode.S_ACCESSV -> Util.IERR("ACCESS is not implemented");
 			case Scode.S_PUSH ->        PUSH.ofScode(Scode.S_PUSH);
 			case Scode.S_PUSHV ->       PUSH.ofScode(Scode.S_PUSHV);
 			case Scode.S_PUSHC ->       PUSHC.ofScode();
@@ -103,7 +78,7 @@ public class Instruction { // extends ProgramElement {
 			case Scode.S_REPCALL ->     CALL.ofScode(Scode.inByte());
 			case Scode.S_GOTO ->        GOTO.ofScode();
 			case Scode.S_PUSHLEN ->     PUSHLEN.ofScode();
-			case Scode.S_SAVE ->        ProtectConstruction.ofInstruction(); // ProtectConstruction(false)
+			case Scode.S_SAVE ->        ProtectConstruction.ofInstruction();
 			case Scode.S_T_INITO ->     INITO.ofScode();
 			case Scode.S_T_GETO ->      GETO.ofScode();
 			case Scode.S_T_SETO ->      SETO.ofScode();
@@ -111,8 +86,8 @@ public class Instruction { // extends ProgramElement {
 			case Scode.S_STMT ->        LINE.ofScode(2);
 			case Scode.S_LINE ->        LINE.ofScode(0);
 			case Scode.S_EMPTY ->       EMPTY.ofScode();
-			case Scode.S_SETSWITCH ->   Util.IERR("NOT IMPLEMENTED: " + Scode.edInstr(Scode.curinstr)); //  SetSwitch
-			case Scode.S_INFO ->        Util.IERR("NOT IMPLEMENTED: " + Scode.edInstr(Scode.curinstr)); //       Ed(errmsg,InString); WARNING("Unknown info: ");
+			case Scode.S_SETSWITCH ->   Util.IERR("NOT IMPLEMENTED: " + Scode.edInstr(Scode.curinstr));
+			case Scode.S_INFO ->        Util.IERR("NOT IMPLEMENTED: " + Scode.edInstr(Scode.curinstr));
 			case Scode.S_DELETE ->      DELETE.ofScode();
 			case Scode.S_ZEROAREA ->    ZEROAREA.ofScode();
 			case Scode.S_INITAREA ->    INITAREA.ofScode();

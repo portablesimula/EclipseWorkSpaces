@@ -1,3 +1,8 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec.instruction;
 
 import bec.compileTimeStack.AddressItem;
@@ -11,14 +16,20 @@ import bec.virtualMachine.SVM_DUP;
 
 public abstract class DUP extends Instruction {
 	
-	/**
-	 * stack_instruction ::= dup
-	 * 
-	 * push( TOS );
-	 * force TOS value;
-	 * 
-	 * A duplicate of TOS is pushed onto the stack and forced into value mode.
-	 */
+	/// S-INSTRUCTION: DUP
+	///
+	/// stack_instruction ::= dup
+	/// 
+	/// push( TOS );
+	/// force TOS value;
+	/// 
+	/// A duplicate of TOS is pushed onto the stack and forced into value mode.
+	/// 
+	/// 
+	/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/DUP.java"><b>Source File</b></a>.
+	/// 
+	/// @author S-Port: Definition of S-code
+	/// @author Øystein Myhre Andersen
 	public static void ofScode() {
 		CTStack.dup();
 		CTStackItem tos = CTStack.TOS();
@@ -32,10 +43,8 @@ public abstract class DUP extends Instruction {
 			Global.PSEG.emit(new SVM_DUP(tos.type.size()));
 		}
 	}
-
-
+	
 	private static int sizeOnStack(ObjectAddress oaddr) {
-//		IO.println("SVM_DUP.dupsizeOnStack: "+oaddr);
 		int size =(oaddr.indexed)? 1 : 0;
 		switch(oaddr.kind) {
 			case ObjectAddress.SEGMNT_ADDR: // Stack: nothing + index(?)
@@ -50,7 +59,6 @@ public abstract class DUP extends Instruction {
 				break;
 			default: Util.IERR("");
 		}
-//		IO.println("SVM_DUP.dupsizeOnStack: "+oaddr+", sizeOnStack="+size);
 		return size;
 	}
 
