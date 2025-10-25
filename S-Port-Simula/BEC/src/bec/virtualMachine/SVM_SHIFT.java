@@ -9,7 +9,7 @@ import bec.util.Option;
 import bec.util.Scode;
 import bec.value.Value;
 
-/// Operation SHIFT opr
+/// SVM-INSTRUCTION: SHIFT opr
 /// 
 /// 	Runtime Stack
 /// 	   ..., sos, tos →

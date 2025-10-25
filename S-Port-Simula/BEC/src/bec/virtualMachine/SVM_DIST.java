@@ -13,7 +13,7 @@ import bec.value.ObjectAddress;
 /**
  * TOS and SOS are replaced by a description of the signed distance from TOS to SOS.
  */
-/// Operation DIST
+/// SVM-INSTRUCTION: DIST
 /// 
 /// 	Runtime Stack
 /// 	   ..., sos, tos →

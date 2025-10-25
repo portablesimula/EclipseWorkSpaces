@@ -4,7 +4,7 @@ import bec.util.Global;
 import bec.value.BooleanValue;
 import bec.value.Value;
 
-/// Operation IMP
+/// SVM-INSTRUCTION: IMP
 /// 
 /// 	Runtime Stack
 /// 	   ..., sos, tos →

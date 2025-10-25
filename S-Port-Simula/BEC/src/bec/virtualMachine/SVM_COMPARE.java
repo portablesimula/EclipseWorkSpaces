@@ -10,7 +10,7 @@ import bec.util.Relation;
 import bec.value.BooleanValue;
 import bec.value.Value;
 
-/// Operation COMPARE relation
+/// SVM-INSTRUCTION: COMPARE relation
 /// 
 /// 		relation ::= ?lt | ?le | ?eq | ?ge | ?gt | ?ne
 /// 

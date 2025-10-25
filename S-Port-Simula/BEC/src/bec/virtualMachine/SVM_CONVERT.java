@@ -16,7 +16,7 @@ import bec.value.ObjectAddress;
 import bec.value.RealValue;
 import bec.value.Value;
 
-/// Operation CONVERT fromType toType
+/// SVM-INSTRUCTION: CONVERT fromType toType
 /// 
 /// 	Runtime Stack
 /// 	   ..., tos →

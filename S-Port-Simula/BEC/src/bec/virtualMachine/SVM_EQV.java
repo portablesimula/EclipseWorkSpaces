@@ -3,7 +3,7 @@ package bec.virtualMachine;
 import bec.util.Global;
 import bec.value.Value;
 
-/// Operation EQV
+/// SVM-INSTRUCTION: EQV
 /// 
 /// 	Runtime Stack
 /// 	   ..., sos, tos →

@@ -8,7 +8,7 @@ import bec.util.Global;
 import bec.util.Option;
 import bec.util.Util;
 
-/// Operation POPK n
+/// SVM-INSTRUCTION: POPK n
 /// 
 ///	  Runtime Stack
 ///		..., value1, value2, ... , value'n →

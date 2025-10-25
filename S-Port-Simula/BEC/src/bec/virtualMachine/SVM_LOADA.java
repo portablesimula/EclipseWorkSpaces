@@ -10,7 +10,7 @@ import bec.util.Type;
 import bec.value.IntegerValue;
 import bec.value.ObjectAddress;
 
-/// Operation LOADA objadr size
+/// SVM-INSTRUCTION: LOADA objadr size
 /// 
 ///	  Runtime Stack
 ///		..., oaddr(?), offset(?), index(?) →

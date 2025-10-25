@@ -12,7 +12,7 @@ import bec.util.Util;
 import bec.value.ProgramAddress;
 import bec.value.Value;
 
-/// Operation JUMPIF paddr
+/// SVM-INSTRUCTION: JUMPIF paddr
 /// 
 /// 	Runtime Stack
 /// 	   ..., sos, tos →

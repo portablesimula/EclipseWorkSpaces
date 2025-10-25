@@ -11,7 +11,7 @@ import bec.value.IntegerValue;
 import bec.value.ObjectAddress;
 import bec.value.Value;
 
-/// Operation INITO
+/// SVM-INSTRUCTION: INITO
 /// 
 /// 	Runtime Stack
 /// 	   ..., oaddr →

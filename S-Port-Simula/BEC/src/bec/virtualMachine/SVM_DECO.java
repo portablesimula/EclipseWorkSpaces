@@ -8,7 +8,7 @@ import bec.util.Global;
 import bec.util.Option;
 import bec.value.ObjectAddress;
 
-/// Operation DECO
+/// SVM-INSTRUCTION: DECO
 /// 
 /// 	Runtime Stack
 /// 	   ..., sos, tos →

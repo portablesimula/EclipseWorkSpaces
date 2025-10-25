@@ -12,7 +12,7 @@ import bec.value.Value;
 /**
  * Remove to items on the Runtime-Stack and push the value (SOS / TOS)
  */
-/// Operation DIV
+/// SVM-INSTRUCTION: DIV
 /// 
 /// 	Runtime Stack
 /// 	   ..., sos, tos →

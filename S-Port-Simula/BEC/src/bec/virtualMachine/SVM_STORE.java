@@ -9,7 +9,7 @@ import bec.util.Option;
 import bec.value.ObjectAddress;
 import bec.value.Value;
 
-/// Operation STORE objadr size
+/// SVM-INSTRUCTION: STORE objadr size
 /// 
 ///	  Runtime Stack
 ///		..., value1, value2, ... , value'size, oaddr(?), offset(?), index(?) →

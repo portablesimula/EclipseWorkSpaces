@@ -10,7 +10,7 @@ import bec.value.ObjectAddress;
 import bec.value.ProgramAddress;
 import bec.value.Value;
 
-/// Operation CALL rutadr returSlot
+/// SVM-INSTRUCTION: CALL rutadr returSlot
 /// 
 ///	  Runtime Stack
 ///		..., value1, value2, ... , value'n →

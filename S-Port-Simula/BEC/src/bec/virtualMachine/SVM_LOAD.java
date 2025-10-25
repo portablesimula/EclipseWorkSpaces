@@ -10,7 +10,7 @@ import bec.util.Option;
 import bec.value.ObjectAddress;
 import bec.value.Value;
 
-/// Operation LOAD objadr size
+/// SVM-INSTRUCTION: LOAD objadr size
 /// 
 ///	  Runtime Stack
 ///		..., oaddr(?), offset(?), index(?) →

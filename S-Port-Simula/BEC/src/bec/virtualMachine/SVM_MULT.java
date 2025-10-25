@@ -8,7 +8,7 @@ import bec.util.Global;
 import bec.util.Option;
 import bec.value.Value;
 
-/// Operation MULT
+/// SVM-INSTRUCTION: MULT
 /// 
 /// 	Runtime Stack
 /// 	   ..., sos, tos →

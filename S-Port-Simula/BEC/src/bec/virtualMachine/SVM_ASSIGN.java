@@ -11,13 +11,13 @@ import bec.util.Util;
 import bec.value.ObjectAddress;
 import bec.value.Value;
 
-/// Operation ASSIGN objadr size
+/// SVM-INSTRUCTION: ASSIGN objadr size
 /// 
 ///	  Runtime Stack
 ///		..., oaddr(?), offset(?), index(?), value1, value2, ... , value'size →
 ///		...
 ///
-/// Operation UPDATE objadr size
+/// SVM-INSTRUCTION: UPDATE objadr size
 /// 
 ///   Runtime Stack
 ///		..., oaddr(?), offset(?), index(?), value1, value2, ... , value'size →

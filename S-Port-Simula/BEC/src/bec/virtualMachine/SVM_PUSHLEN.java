@@ -10,7 +10,7 @@ import bec.util.Type;
 import bec.value.IntegerValue;
 
 
-/// Operation PUSHLEN
+/// SVM-INSTRUCTION: PUSHLEN
 /// 
 ///	  Runtime Stack
 ///		... →

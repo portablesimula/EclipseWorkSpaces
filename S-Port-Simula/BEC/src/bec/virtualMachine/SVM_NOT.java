@@ -16,7 +16,7 @@ import bec.value.Value;
  * 
  * Remove the top item on the Runtime-Stack and push the NOT value
  */
-/// Operation NOT
+/// SVM-INSTRUCTION: NOT
 /// 
 /// 	Runtime Stack
 /// 	   ..., tos →

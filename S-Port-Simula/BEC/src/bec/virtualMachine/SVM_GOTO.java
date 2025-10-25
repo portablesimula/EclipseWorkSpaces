@@ -8,7 +8,7 @@ import bec.util.Global;
 import bec.util.Option;
 import bec.value.ProgramAddress;
 
-/// Operation GOTO
+/// SVM-INSTRUCTION: GOTO
 /// 
 /// 	Runtime Stack
 /// 	   paddr →

@@ -13,7 +13,7 @@ import bec.value.ObjectAddress;
  * SAVE-OBJECT and SAVE-INDEX. Note that t-seto does not update SAVE-INDEX.
  * TOS is popped.
  */
-/// Operation GETO
+/// SVM-INSTRUCTION: GETO
 /// 
 /// 	Runtime Stack
 /// 	   ..., oaddr →

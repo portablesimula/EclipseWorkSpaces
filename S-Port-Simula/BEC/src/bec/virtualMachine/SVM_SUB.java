@@ -8,7 +8,7 @@ import bec.util.Global;
 import bec.util.Option;
 import bec.value.Value;
 
-/// Operation SUB
+/// SVM-INSTRUCTION: SUB
 /// 
 /// 	Runtime Stack
 /// 	   ..., sos, tos →

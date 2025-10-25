@@ -7,7 +7,7 @@ import bec.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Option;
 
-/// Operation DUP n
+/// SVM-INSTRUCTION: DUP n
 /// 
 ///	  Runtime Stack
 ///		..., value1, value2, ... , value'n →

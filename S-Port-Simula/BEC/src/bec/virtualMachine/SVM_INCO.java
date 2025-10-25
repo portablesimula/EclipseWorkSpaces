@@ -8,7 +8,7 @@ import bec.util.Global;
 import bec.util.Option;
 import bec.value.ObjectAddress;
 
-/// Operation INCO
+/// SVM-INSTRUCTION: INCO
 /// 
 /// 	Runtime Stack
 /// 	   ..., sos, tos →

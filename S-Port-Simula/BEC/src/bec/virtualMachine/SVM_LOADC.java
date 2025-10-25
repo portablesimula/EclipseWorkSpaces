@@ -16,7 +16,7 @@ import bec.value.RecordValue;
 import bec.value.StringValue;
 import bec.value.Value;
 
-/// Operation LOAD typeTag value
+/// SVM-INSTRUCTION: LOAD typeTag value
 /// 
 ///	  Runtime Stack
 ///		... →

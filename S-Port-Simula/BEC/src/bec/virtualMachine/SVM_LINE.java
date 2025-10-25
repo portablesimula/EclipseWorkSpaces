@@ -7,7 +7,7 @@ import bec.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Option;
 
-/// Operation LINE lineType lineNumber
+/// SVM-INSTRUCTION: LINE lineType lineNumber
 /// 
 /// 	Runtime Stack
 /// 	   ... →

@@ -13,7 +13,7 @@ import bec.util.Global;
 import bec.util.Option;
 import bec.value.Value;
 
-/// Operation ADD
+/// SVM-INSTRUCTION: ADD
 /// 
 /// 	Runtime Stack
 /// 	   ..., sos, tos →

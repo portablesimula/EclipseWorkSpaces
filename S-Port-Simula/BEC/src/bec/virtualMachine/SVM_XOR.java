@@ -8,7 +8,7 @@ import bec.util.Global;
 import bec.util.Option;
 import bec.value.Value;
 
-/// Operation XOR
+/// SVM-INSTRUCTION: XOR
 /// 
 /// 	Runtime Stack
 /// 	   ..., sos, tos →

@@ -9,7 +9,7 @@ import bec.util.Option;
 import bec.value.ProgramAddress;
 import bec.value.Value;
 
-/// Operation SWITCH destab
+/// SVM-INSTRUCTION: SWITCH destab
 /// 
 /// 	Runtime Stack
 /// 	   index →
