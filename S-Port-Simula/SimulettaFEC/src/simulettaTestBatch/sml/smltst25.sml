@@ -19,7 +19,7 @@ begin
       "BOOL: false  true",
       "SIZE: 0  10",
       "OADDR: NONE  POOL_0[10]",
-      "PADDR: NOWHERE  PSEG_SMLTST25[470]",
+      "PADDR: NOWHERE  PSEG_SMLTST25[468]",
       "RADDR: NOBODY  PSEG_RBODY[0]",
       "AADDR: NOFIELD  FIELD:8",
       "GADDR: GNONE  POOL_0[0][9]",

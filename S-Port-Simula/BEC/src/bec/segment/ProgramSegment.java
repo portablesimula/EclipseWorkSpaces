@@ -1,3 +1,8 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec.segment;
 
 import java.io.IOException;
@@ -12,6 +17,11 @@ import bec.util.Type;
 import bec.value.ProgramAddress;
 import bec.virtualMachine.SVM_Instruction;
 
+/// Program Segment.
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/segment/ProgramSegment.java"><b>Source File</b></a>.
+/// 
+/// @author Øystein Myhre Andersen
 public class ProgramSegment extends Segment {
 	public Vector<SVM_Instruction> instructions;
 
@@ -95,14 +105,11 @@ public class ProgramSegment extends Segment {
 	}
 
 	public static ProgramSegment readObject(AttributeInputStream inpt) throws IOException {
-//		int segmentKind = inpt.readKind();
 		int segmentKind = Kind.K_SEG_CODE;
 		String ident = inpt.readString();
-//		IO.println("ProgramSegment.readObject: ident="+ident+", segmentKind="+segmentKind);
 		ProgramSegment seg = new ProgramSegment(ident, segmentKind, inpt);
 		if(Option.ATTR_INPUT_TRACE) IO.println("ProgramSegment.Read: " + seg);
 		if(Option.ATTR_INPUT_DUMP) seg.dump("ProgramSegment.readObject: ");
-//		Util.IERR("");
 		return seg;
 	}
 	

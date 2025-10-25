@@ -1,3 +1,8 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec.statement;
 
 import bec.S_Module;
@@ -13,31 +18,70 @@ import bec.virtualMachine.SVM_JUMP;
 import bec.virtualMachine.SVM_JUMPIF;
 import bec.virtualMachine.SVM_NOOP;
 
+/// S-INSTRUCTION: IF
+///
+///	if_statement
+///		::= if relation <program_element>* else_part
+///
+///		relation ::= ?lt | ?le | ?eq | ?ge | ?gt | ?ne
+///
+///		else_part
+///			::= else <program_element>* endif
+///			::= endif
+///
+///	if_instruction
+///		::= if relation <instruction>* i_else_part
+///
+///
+///		i_else_part
+///			::= else <instruction>* endif
+///			::= endif
+/// 
+///
+/// if relation
+/// * force TOS value; force SOS value;
+/// * check relation;
+/// * pop; pop;
+/// * remember stack as "if-stack";
+///
+/// The generated code will compute the value of the relation, and transfer control to an "else-label" (to be
+/// defined later) if the relation is false. A copy of the complete state of the S-compiler's stack is saved as
+/// the "if-stack".
+///
+///
+/// else
+/// 	* force TOS value;
+/// 	* remember stack as "else-stack";
+/// 	* reestablish stack saved as "if-stack";
+///
+/// 	An unconditional forward branch is generated to an "end-label" (to be defined later). A copy is made of
+/// 	the complete state of the stack and this is saved as the "else-stack", then the stack is restored to the state
+/// 	saved as the "if-stack". Finally the "else-label" (used by if) is located at the current program point.
+///
+///
+/// endif
+/// * force TOS value;
+/// * merge current stack with "else-stack" if it exists, otherwise "if-stack";
+///
+/// The current stack and the saved stack are merged. The saved stack will be the "if-stack" if no else-part
+/// has been processed, otherwise it will be the "else-stack". The merge takes each corresponding pair of
+/// stack items and forces them to be identical by applying fetch operations when necessary - this process
+/// will generally involve inserting code sequences into the if-part and the else-part. It is an error if the two
+/// stacks do not contain the same number of elements or if any pair of stack items cannot be made
+/// identical. After the merge the saved stack is deleted.
+/// If no else-part was processed the "else-label", otherwise the "end-label", is located at the current
+/// program point.
+///
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/statement/IfConstrction.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public abstract class IfConstrction {
 	
 	private static final boolean DEBUG = false;
 
-	private IfConstrction() {
-	}
-
-	/**
-	 *	if_statement
-	 *		::= if relation <program_element>* else_part
-	 *
-	 *		relation ::= ?lt | ?le | ?eq | ?ge | ?gt | ?ne
-	 *
-	 *		else_part
-	 *			::= else <program_element>* endif
-	 *			::= endif
-	 *
-	 *	if_instruction
-	 *		::= if relation <instruction>* i_else_part
-	 *
-	 *
-	 *		i_else_part
-	 *			::= else <instruction>* endif
-	 *			::= endif
-	 */
+	/// Treat a complete If Statement.
 	public static void ofScode() {
 		// if relation
 		// * force TOS value; force SOS value;
@@ -66,10 +110,6 @@ public abstract class IfConstrction {
 		ProgramAddress IF_LABEL = Global.PSEG.nextAddress();
 		ProgramAddress ELSE_LABEL = null;
 		Global.PSEG.emit(new SVM_JUMPIF(relation.not(), tos.type.size(), null));
-//		Global.PSEG.dump();
-
-//		Relation relation = Relation.ofScode();
-//		IO.println("IfConstruction.ofScode: CurInstr="+Scode.edInstr(Scode.curinstr));
 		
 		NamedStack<CTStackItem> ELSE_Stack = null;
 		
@@ -99,9 +139,6 @@ public abstract class IfConstrction {
 			SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(IF_LABEL.getOfst());
 			instr.setDestination(Global.PSEG.nextAddress());
 	      	Global.PSEG.emit(new SVM_NOOP());
-	      	
-//	      	Global.PSEG.dump("IfConstruction.ofScode: ELSE: ");
-//			Util.IERR("");
 
 			Scode.inputInstr();
 			S_Module.programElements();
@@ -140,11 +177,6 @@ public abstract class IfConstrction {
 			if(! CTStack.equals(CTStack.current(), ELSE_Stack)) {
 				Util.IERR("Merge IF-Stack and ELSE-Stack FAILED !");
 			}
-//		} else {
-//			CTStack.reestablish(IF_Stack);
-//			if(DEBUG) {
-//				IF_Stack.dumpStack(Global.ifDepth, "ENDIF: reestablish IF_Stack");
-//			}
 		}
 		
 		Global.ifDepth--;

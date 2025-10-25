@@ -1,3 +1,8 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec.segment;
 
 import java.io.IOException;
@@ -15,6 +20,11 @@ import bec.value.ObjectAddress;
 import bec.value.TextValue;
 import bec.value.Value;
 
+/// Data Segment.
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/segment/DataSegment.java"><b>Source File</b></a>.
+/// 
+/// @author Øystein Myhre Andersen
 public class DataSegment extends Segment {
 	Vector<Value> values;
 	private int guard = -1;

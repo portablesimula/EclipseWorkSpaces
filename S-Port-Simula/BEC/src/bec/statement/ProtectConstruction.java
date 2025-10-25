@@ -1,3 +1,8 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec.statement;
 
 import bec.S_Module;
@@ -10,11 +15,16 @@ import bec.util.Util;
 import bec.virtualMachine.SVM_RESTORE;
 import bec.virtualMachine.SVM_SAVE;
 
-public class ProtectConstruction { // extends ProgramElement {
-	
-//	public ProtectStatement() {
-//		parse();
-//	}
+/// S-INSTRUCTION: IF
+///
+/// protect_statement ::= save <program_element>* restore
+///
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/statement/ProtectConstruction.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
+public class ProtectConstruction {
 
 	/**
 	 * protect_statement ::= save <program_element>* restore
