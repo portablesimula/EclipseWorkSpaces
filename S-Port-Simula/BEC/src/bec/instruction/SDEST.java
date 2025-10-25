@@ -11,7 +11,6 @@ import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Tag;
 import bec.util.Util;
-import bec.virtualMachine.SVM_NOOP;
 
 /// S-INSTRUCTION: SDEST
 ///
@@ -31,15 +30,20 @@ import bec.virtualMachine.SVM_NOOP;
 /// @author Øystein Myhre Andersen
 public abstract class SDEST extends Instruction {
 	
+	/// Scans the remaining S-Code (if any) belonging to this instruction.
+	/// Perform the specified stack operations (which may result in code generation).
+	/// Finally: Update the switch destination table.
 	public static void ofScode() {
 		Tag tag = Tag.ofScode();
 		int which = Scode.inNumber();
+		
 		CTStack.checkStackEmpty();
+		
 		SwitchDescr swt = (SwitchDescr) tag.getMeaning();
 		if(swt.DESTAB[which] != null) Util.IERR("SWITCH dest["+which+"]. dest != null");
 
 		swt.DESTAB[which] = Global.PSEG.nextAddress();
-      	Global.PSEG.emit(new SVM_NOOP());
+//     	Global.PSEG.emit(new SVM_NOOP());
 	}
 
 }

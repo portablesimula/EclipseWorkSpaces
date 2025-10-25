@@ -15,31 +15,28 @@ import bec.util.Tag;
 import bec.util.Util;
 import bec.value.ObjectAddress;
 
+/// S-INSTRUCTION: PUSH
+///
+/// stack_instruction ::= push obj:tag | pushv obj:tag
+///
+/// * push( REF, obj.TYPE, obj.BASE, obj.OFFSET );
+///
+/// Obj must refer to a defined global, local or constant quantity, otherwise: error.
+/// Observe that routine parameters and exit tags are local quantities.
+///
+/// A copy of the descriptor is pushed onto the stack.
+///
+/// If instruction pushv: force TOS value.
+/// 
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/PUSH.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public abstract class PUSH extends Instruction {
 
-	/**
-	 * stack_instruction ::= push obj:tag | pushv obj:tag
-	 * 
-	 * End-Condition: Scode'nextByte = First byte after the tag
-	 */
-	/// S-INSTRUCTION: PUSH
-	///
-	/// stack_instruction ::= push obj:tag | pushv obj:tag
-	///
-	/// * push( REF, obj.TYPE, obj.BASE, obj.OFFSET );
-	///
-	/// Obj must refer to a defined global, local or constant quantity, otherwise: error.
-	/// Observe that routine parameters and exit tags are local quantities.
-	///
-	/// A copy of the descriptor is pushed onto the stack.
-	///
-	/// If instruction pushv: force TOS value.
-	/// 
-	/// 
-	/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/PUSH.java"><b>Source File</b></a>.
-	/// 
-	/// @author S-Port: Definition of S-code
-	/// @author Øystein Myhre Andersen
+	/// Scans the remaining S-Code (if any) belonging to this instruction.
+	/// Perform the specified stack operations (which may result in code generation).
 	public static void ofScode(int instr) {
 		Tag tag = Tag.ofScode();
 		Descriptor x = tag.getMeaning();

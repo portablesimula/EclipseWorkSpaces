@@ -28,6 +28,9 @@ import bec.virtualMachine.SVM_STORE;
 /// @author Øystein Myhre Andersen
 public abstract class RUPDATE extends Instruction {
 	
+	/// Scans the remaining S-Code (if any) belonging to this instruction.
+	/// Perform the specified stack operations (which may result in code generation).
+	/// Finally: Emit an SVM_STORE instruction.
 	public static void ofScode() {
 		CTStack.checkTosRef(); CTStack.checkSosValue(); CTStack.checkTypesEqual();
 		AddressItem adr = (AddressItem) CTStack.pop();

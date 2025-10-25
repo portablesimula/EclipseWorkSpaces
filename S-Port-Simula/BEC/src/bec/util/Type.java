@@ -62,7 +62,7 @@ public class Type {
 
 	public static void newRecType(RecordDescr rec) {
 		Type type = new Type(rec.tag.val, rec.size);
-		type.rep0size = rec.nbrep;
+		type.rep0size = rec.rep0size;
 		TMAP.put(rec.tag.val, type);
 		RECTYPES.add(type);
 	}

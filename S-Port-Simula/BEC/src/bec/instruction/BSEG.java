@@ -50,11 +50,11 @@ import bec.util.Util;
 public abstract class BSEG extends Instruction {
 	private static int SEQU;
 	
-	/**
-	 * segment_instruction ::= bseg <program_element>* eseg
-	 * 
-	 * End-Condition: Scode'nextByte = First byte after ESEG
-	 */
+	/// Treat a complete Segment Instruction by opening a new Program Segment and
+	/// process all Program Elements in it and finally expect an ESEG instruction.
+	/// Then the Program Segment is closed and we continue with the 'old' segment.
+	///
+	/// End-Condition: Scode'nextByte = First byte after ESEG
 	public static void ofScode() {
 		Scode.inputInstr();
 		
@@ -68,9 +68,6 @@ public abstract class BSEG extends Instruction {
 		
 		Global.routineSegments.add(Global.PSEG);
 		Global.PSEG = prevPSEG;
-		
-//		Util.IERR("SJEKK DETTE");	
-//		if(Scode.inputTrace > 3) print();
 	}
 
 }

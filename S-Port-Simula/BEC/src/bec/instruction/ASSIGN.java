@@ -31,6 +31,9 @@ import bec.virtualMachine.SVM_ASSIGN;
 /// @author Øystein Myhre Andersen
 public abstract class ASSIGN extends Instruction {
 	
+	/// Scans the remaining S-Code (if any) belonging to this instruction.
+	/// Perform the specified stack operations (which may result in code generation).
+	/// Finally: Emit an SVM_ASSIGN instruction.
 	public static void ofScode() {
 		CTStack.checkSosRef(); CTStack.checkTypesEqual(); CTStack.forceTosValue();
 		@SuppressWarnings("unused")

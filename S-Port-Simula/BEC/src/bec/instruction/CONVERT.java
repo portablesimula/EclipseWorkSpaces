@@ -11,27 +11,31 @@ import bec.util.Global;
 import bec.util.Type;
 import bec.virtualMachine.SVM_CONVERT;
 
+/// S-INSTRUCTION: CONVERT
+///
+/// convert_instruction ::= convert simple_type
+/// 
+/// TOS must be of simple type, otherwise: error.
+/// 
+/// The TYPE of TOS is changed to the type specified in the instruction, this may imply code generation.
+/// 
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/CONVERT.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public abstract class CONVERT extends Instruction {
 
-	/// S-INSTRUCTION: CONVERT
-	///
-	/// convert_instruction ::= convert simple_type
-	/// 
-	/// TOS must be of simple type, otherwise: error.
-	/// 
-	/// The TYPE of TOS is changed to the type specified in the instruction, this may imply code generation.
-	/// 
-	/// 
-	/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/CONVERT.java"><b>Source File</b></a>.
-	/// 
-	/// @author S-Port: Definition of S-code
-	/// @author Øystein Myhre Andersen
+	/// Scans the remaining S-Code (if any) belonging to this instruction.
+	/// Perform the specified stack operations (which may result in code generation).
+	/// Finally: Call 'doConvert' to test and possibly Emit an SVM_COMPARE instruction.
 	public static void ofScode() {
 		Type toType = Type.ofScode();
 		CTStack.forceTosValue();
 		doConvert(toType);
 	}
 	
+	/// Test and possibly Emit an SVM_CONVERT instruction.
 	public static void doConvert(Type totype) {
 		CTStackItem TOS = CTStack.TOS();
 		Type fromtype = TOS.type;

@@ -8,44 +8,42 @@ package bec.instruction;
 import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.CTStackItem;
 import bec.util.Global;
-import bec.util.Type;
 import bec.virtualMachine.SVM_REM;
 
+/// S-INSTRUCTION: REM
+///
+/// arithmetic_instruction ::= rem (dyadic)
+///
+/// Remainder, defined as "SOS - (SOS//TOS)*TOS".
+/// Syntax and semantics as for mult except that INT is the only legal type.
+/// 
+/// Note that SIMULA demands "truncation towards zero" for integer division. Thus (except for a
+/// zero remainder) the result of rem has the same sign as the result of the division.
+/// In more formal terms:
+/// 
+///	 i div j = sign(i/j) * entier(abs(i/j))
+/// 
+///	 i rem j = i - (i div j) * j
+/// 
+/// where '/' represents the exact mathematical division within the space of real numbers.
+/// 
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/REM.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public abstract class REM extends Instruction {
 	
-	/// S-INSTRUCTION: REM
-	///
-	/// arithmetic_instruction ::= rem (dyadic)
-	///
-	/// Remainder, defined as "SOS - (SOS//TOS)*TOS".
-	/// Syntax and semantics as for mult except that INT is the only legal type.
-	/// 
-	/// Note that SIMULA demands "truncation towards zero" for integer division. Thus (except for a
-	/// zero remainder) the result of rem has the same sign as the result of the division.
-	/// In more formal terms:
-	/// 
-	///	 i div j = sign(i/j) * entier(abs(i/j))
-	/// 
-	///	 i rem j = i - (i div j) * j
-	/// 
-	/// where '/' represents the exact mathematical division within the space of real numbers.
-	/// 
-	/// 
-	/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/REM.java"><b>Source File</b></a>.
-	/// 
-	/// @author S-Port: Definition of S-code
-	/// @author Øystein Myhre Andersen
-	private REM() {}
+	/// Scans the remaining S-Code (if any) belonging to this instruction.
+	/// Perform the specified stack operations (which may result in code generation).
+	/// Finally: Emit an SVM_REM instruction.
 	public static void ofScode() {
-		CTStack.forceTosValue();			
-		CTStack.checkTosArith(); CTStack.checkSosArith(); CTStack.checkSosValue(); CTStack.checkTypesEqual();
-		CTStackItem tos = CTStack.TOS();
-		CTStackItem sos = CTStack.SOS();
-	    Type at = CTStack.arithType(tos.type, sos.type);
+		CTStack.forceTosValue(); CTStack.checkTosArith();
+		CTStack.checkSosValue(); CTStack.checkTypesEqual();
+		CTStackItem tos = CTStack.pop(); CTStack.pop();
+	    CTStack.pushTempVAL(tos.type, 1);
+
 		Global.PSEG.emit(new SVM_REM());
-		CTStack.pop();
-		CTStack.pop();
-	    CTStack.pushTempVAL(at, 1);
 	}
 
 }

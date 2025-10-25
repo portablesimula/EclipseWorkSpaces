@@ -23,14 +23,14 @@ public final class RunSingle_SML_TestBatch {
 	public static void main(String[] args) {
 		Option.INLINE_TESTING = true;
 		
-////		SVM_CALLSYS.RUNTIME_VERBOSE = true;
-////		Option.verbose = true;
-//		Option.SCODE_INPUT_TRACE = true;
-//		Option.PRINT_GENERATED_SVM_CODE = true;
-//		Option.PRINT_GENERATED_SVM_DATA = true;
-//		Option.EXEC_TRACE = 1;
-//		Option.CALL_TRACE_LEVEL = 2;
-////		Option.DUMPS_AT_EXIT = true;
+//		SVM_CALLSYS.RUNTIME_VERBOSE = true;
+//		Option.verbose = true;
+		Option.SCODE_INPUT_TRACE = true;
+		Option.PRINT_GENERATED_SVM_CODE = true;
+		Option.PRINT_GENERATED_SVM_DATA = true;
+		Option.EXEC_TRACE = 1;
+		Option.CALL_TRACE_LEVEL = 2;
+//		Option.DUMPS_AT_EXIT = true;
 		
 		// Set Compiler Options.
 //		Option.EXTENSIONS=false;
@@ -39,7 +39,7 @@ public final class RunSingle_SML_TestBatch {
 		Vector<String> names = new Vector<String>();
 		
 //		names.add("adHoc00.scd");
-		names.add("adHoc01.scd");
+//		names.add("adHoc01.scd");
 //		names.add("adHoc02.scd");
 //		names.add("adHoc03.scd");
 //			names.add("adHoc04.scd");
@@ -68,7 +68,7 @@ public final class RunSingle_SML_TestBatch {
 //		names.add("smltst10.scd"); // Arithmetic Relations ( < , <= , = , >= , > , <> )
 //		names.add("smltst11.scd"); // Boolean Relations ( = , <> )
 //		names.add("smltst12.scd"); // Size Relations ( < , <= , = , >= , > , <> )
-//		names.add("smltst13.scd"); // General Reference Expression
+		names.add("smltst13.scd"); // General Reference Expression
 //		names.add("smltst14.scd"); // Object Reference and Size Expression
 //		names.add("smltst15.scd"); // Type Conversion
 //		names.add("smltst16.scd"); // Type Conversion between name,ref and field

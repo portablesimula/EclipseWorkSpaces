@@ -6,35 +6,38 @@
 package bec.instruction;
 
 import bec.compileTimeStack.CTStack;
-import bec.util.Global;
 import bec.util.Type;
-import bec.virtualMachine.SVM_NOOP;
 
+/// S-INSTRUCTION: INITAREA
+///
+/// initarea resolved_type
+/// force TOS value; check TOS type(OADDR);
+/// 
+/// TOS.TYPE must be OADDR, otherwise: error.
+/// The argument type is imposed upon the area, and the area is initialised according to the table below.
+/// Only the common part of an instance of a structure will be initialised, ignoring both the prefix and any
+/// alternate part(s). The structure is initialised component by component according to the table below.
+/// 
+/// NOTE: In this implementation  INITAREA == NOOP
+/// 
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/INITAREA.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public abstract class INITAREA extends Instruction {
 	
-	/// S-INSTRUCTION: INITAREA
-	///
-	/// initarea resolved_type
-	/// force TOS value; check TOS type(OADDR);
-	/// 
-	/// TOS.TYPE must be OADDR, otherwise: error.
-	/// The argument type is imposed upon the area, and the area is initialised according to the table below.
-	/// Only the common part of an instance of a structure will be initialised, ignoring both the prefix and any
-	/// alternate part(s). The structure is initialised component by component according to the table below.
-	/// 
+	/// Scans the remaining S-Code (if any) belonging to this instruction.
+	/// Perform the specified stack operations (which may result in code generation).
 	/// NOTE: In this implementation  INITAREA == NOOP
-	/// 
-	/// 
-	/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/INITAREA.java"><b>Source File</b></a>.
-	/// 
-	/// @author S-Port: Definition of S-code
-	/// @author Øystein Myhre Andersen
 	public static void ofScode() {
-		CTStack.forceTosValue();			
-		CTStack.checkTosType(Type.T_OADDR);
 		@SuppressWarnings("unused")
 		Type type = Type.ofScode();
-		Global.PSEG.emit(new SVM_NOOP());
+
+		CTStack.forceTosValue();			
+		CTStack.checkTosType(Type.T_OADDR);
+		
+//		Global.PSEG.emit(new SVM_NOOP());
 	}
 
 }

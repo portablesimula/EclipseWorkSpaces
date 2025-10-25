@@ -32,11 +32,15 @@ import bec.virtualMachine.SVM_ASSIGN;
 /// @author Øystein Myhre Andersen
 public abstract class UPDATE extends Instruction {
 	
+	/// Scans the remaining S-Code (if any) belonging to this instruction.
+	/// Perform the specified stack operations (which may result in code generation).
+	/// Finally: Emit an SVM_ASSIGN instruction.
 	public static void ofScode() {
 		CTStack.forceTosValue(); CTStack.checkSosRef(); CTStack.checkTypesEqual();
 		CTStackItem tos = CTStack.pop();
 		AddressItem sos = (AddressItem) CTStack.pop();
 		CTStack.pushTempVAL(tos.type, 1);
+		
 		Global.PSEG.emit(new SVM_ASSIGN(true, sos.objadr.addOffset(sos.offset), sos.size)); // Store into adr
 	}
 

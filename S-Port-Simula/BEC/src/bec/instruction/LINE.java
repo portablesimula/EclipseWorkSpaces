@@ -10,24 +10,29 @@ import bec.util.Global;
 import bec.util.Scode;
 import bec.virtualMachine.SVM_LINE;
 
+/// S-INSTRUCTION: LINE
+///
+/// 	info_setting
+/// 		::= decl line:number
+/// 		::= line line:number
+/// 		::= stmt line:number
+/// 
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/LINE.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public abstract class LINE extends Instruction {
 
-	/// S-INSTRUCTION: LINE
-	///
-	/// 	info_setting
-	/// 		::= decl line:number
-	/// 		::= line line:number
-	/// 		::= stmt line:number
-	/// 
-	/// 
-	/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/LINE.java"><b>Source File</b></a>.
-	/// 
-	/// @author S-Port: Definition of S-code
-	/// @author Øystein Myhre Andersen
+	/// Scans the remaining S-Code (if any) belonging to this instruction.
+	/// Perform the specified stack operations (which may result in code generation).
+	/// Finally: Emit an SVM_LINE instruction.
 	public static void ofScode(int kind) {
 		Scode.curline = Scode.inNumber();	
+		
 		if(kind==2)
 			CTStack.checkStackEmpty();
+		
 		Global.PSEG.emit(new SVM_LINE(0, Scode.curline));
 	}
 

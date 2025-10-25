@@ -11,29 +11,32 @@ import bec.util.Global;
 import bec.util.Type;
 import bec.virtualMachine.SVM_LOAD;
 
+/// S-INSTRUCTION: FETCH
+///
+/// addressing_instruction ::= fetch
+/// 
+/// force TOS value;
+/// 
+/// TOS.MODE should be REF, otherwise fetch has no effect.
+/// TOS is modified to describe the contents of the area previously described.
+/// 
+///      (TOS) -------------------,
+///                               |
+///                               V
+///      The resulting            .============.
+///          TOS -----------------|---> VALUE  |
+///      after fetch              '============'
+/// 
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/FETCH.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public abstract class FETCH extends Instruction {
 
-	/// S-INSTRUCTION: FETCH
-	///
-	/// addressing_instruction ::= fetch
-	/// 
-	/// force TOS value;
-	/// 
-	/// TOS.MODE should be REF, otherwise fetch has no effect.
-	/// TOS is modified to describe the contents of the area previously described.
-	/// 
-	///      (TOS) -------------------,
-	///                               |
-	///                               V
-	///      The resulting            .============.
-	///          TOS -----------------|---> VALUE  |
-	///      after fetch              '============'
-	/// 
-	/// 
-	/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/FETCH.java"><b>Source File</b></a>.
-	/// 
-	/// @author S-Port: Definition of S-code
-	/// @author Øystein Myhre Andersen
+	/// Scans the remaining S-Code (if any) belonging to this instruction.
+	/// Perform the specified stack operations (which may result in code generation).
+	/// Finally: If TOS mode = address, Emit an SVM_LOAD instruction.
 	public static void ofScode() {
 		doFetch();
 	}
@@ -41,8 +44,8 @@ public abstract class FETCH extends Instruction {
 	public static void doFetch() {
 		if(CTStack.TOS() instanceof AddressItem addr) {
 			Type type = addr.type;
-			Global.PSEG.emit(new SVM_LOAD(addr.objadr.addOffset(addr.offset), type.size()));				
 			CTStack.pop(); CTStack.pushTempVAL(type, 1);
+			Global.PSEG.emit(new SVM_LOAD(addr.objadr.addOffset(addr.offset), type.size()));				
 		}
 	}
 

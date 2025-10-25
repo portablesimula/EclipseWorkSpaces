@@ -10,29 +10,33 @@ import bec.util.Global;
 import bec.util.Type;
 import bec.virtualMachine.SVM_NEG;
 
+/// S-INSTRUCTION: NEG
+///
+/// arithmetic_instruction ::= neg
+/// 
+/// force TOS value; check TOS type(INT,REAL,LREAL);
+/// value(TOS) := - value(TOS);
+/// 
+/// TOS is replaced by a description of the TOS value with its sign inverted.
+/// 
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/NEG.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public abstract class NEG extends Instruction {
 	
-	/// S-INSTRUCTION: NEG
-	///
-	/// arithmetic_instruction ::= neg
-	/// 
-	/// force TOS value; check TOS type(INT,REAL,LREAL);
-	/// value(TOS) := - value(TOS);
-	/// 
-	/// TOS is replaced by a description of the TOS value with its sign inverted.
-	/// 
-	/// 
-	/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/NEG.java"><b>Source File</b></a>.
-	/// 
-	/// @author S-Port: Definition of S-code
-	/// @author Øystein Myhre Andersen
+	/// Scans the remaining S-Code (if any) belonging to this instruction.
+	/// Perform the specified stack operations (which may result in code generation).
+	/// Finally: Emit an SVM_NEG instruction.
 	public static void ofScode() {
 		CTStack.forceTosValue();			
 		CTStack.checkTosArith();
 		Type at = CTStack.TOS().type;
-		Global.PSEG.emit(new SVM_NEG());
 		CTStack.pop();
 	    CTStack.pushTempVAL(at, 1);
+	    
+		Global.PSEG.emit(new SVM_NEG());
 	}
 
 }

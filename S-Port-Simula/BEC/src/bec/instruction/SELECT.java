@@ -54,6 +54,8 @@ import bec.util.Tag;
 /// @author Øystein Myhre Andersen
 public abstract class SELECT extends Instruction {
 
+	/// Scans the remaining S-Code (if any) belonging to this instruction.
+	/// Perform the specified stack operations (which may result in code generation).
 	public static void ofScode(int instr) {
 		Tag tag = Tag.ofScode();
 		CTStack.checkTosRef();

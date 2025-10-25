@@ -136,8 +136,8 @@ public class ConstDescr extends Descriptor {
 		if(Scode.accept(Scode.S_FIXREP)) {
 			int fixrep = Scode.inNumber();
 			RecordDescr rec = (RecordDescr) Global.getMeaning(cnst.type.tag);
-			int count = rec.size + rec.nbrep * fixrep;
-			fixrepTail = rec.nbrep * fixrep;
+			int count = rec.size + rec.rep0size * fixrep;
+			fixrepTail = rec.rep0size * fixrep;
 		}
 
 		int repCount = (Scode.accept(Scode.S_REP)) ? Scode.inNumber() : 1;

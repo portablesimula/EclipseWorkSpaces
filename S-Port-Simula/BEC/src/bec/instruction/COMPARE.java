@@ -11,34 +11,38 @@ import bec.util.Relation;
 import bec.util.Type;
 import bec.virtualMachine.SVM_COMPARE;
 
+/// S-INSTRUCTION: COMPARE
+///
+/// arithmetic_instruction ::= compare relation
+/// 
+/// force TOS value; force SOS value;
+/// check relation;
+/// pop; pop;
+/// push( VAL, BOOL, "value(SOS) rel value(TOS)" );
+/// 
+/// TOS and SOS replaced by a description of the boolean result of evaluating the relation. SOS is always
+/// the left operand, i.e. SOS rel TOS.
+/// 
+/// relation ::= ?lt | ?le | ?eq | ?ge | ?gt | ?ne
+///
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/COMPARE.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public abstract class COMPARE extends Instruction {
 
-	/// S-INSTRUCTION: COMPARE
-	///
-	/// arithmetic_instruction ::= compare relation
-	/// 
-	/// force TOS value; force SOS value;
-	/// check relation;
-	/// pop; pop;
-	/// push( VAL, BOOL, "value(SOS) rel value(TOS)" );
-	/// 
-	/// TOS and SOS replaced by a description of the boolean result of evaluating the relation. SOS is always
-	/// the left operand, i.e. SOS rel TOS.
-	/// 
-	/// relation ::= ?lt | ?le | ?eq | ?ge | ?gt | ?ne
-	///
-	/// 
-	/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/COMPARE.java"><b>Source File</b></a>.
-	/// 
-	/// @author S-Port: Definition of S-code
-	/// @author Øystein Myhre Andersen
+	/// Scans the remaining S-Code (if any) belonging to this instruction.
+	/// Perform the specified stack operations (which may result in code generation).
+	/// Finally: Emit an SVM_COMPARE instruction.
 	public static void ofScode() {
 		Relation relation = Relation.ofScode();
 		CTStack.forceTosValue();
 		CTStack.checkTypesEqual(); CTStack.checkSosValue();	
 		CTStack.pop(); CTStack.pop();
-		Global.PSEG.emit(new SVM_COMPARE(relation));
 		CTStack.pushTempVAL(Type.T_BOOL, 1);
+		
+		Global.PSEG.emit(new SVM_COMPARE(relation));
 	}	
 
 }

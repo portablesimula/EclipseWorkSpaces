@@ -7,22 +7,24 @@ package bec.instruction;
 
 import bec.compileTimeStack.CTStack;
 
+/// S-INSTRUCTION: EMPTY
+///
+/// stack_instruction ::= empty
+///
+/// * check stack empty;
+///
+/// This instruction is intended as a debugging aid,
+/// it is recommended that the condition is checked always.
+/// 
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/EMPTY.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public abstract class EMPTY extends Instruction {
 	
-	/// S-INSTRUCTION: EMPTY
-	///
-	/// stack_instruction ::= empty
-	///
-	/// * check stack empty;
-	///
-	/// This instruction is intended as a debugging aid,
-	/// it is recommended that the condition is checked always.
-	/// 
-	/// 
-	/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/EMPTY.java"><b>Source File</b></a>.
-	/// 
-	/// @author S-Port: Definition of S-code
-	/// @author Øystein Myhre Andersen
+	/// Scans the remaining S-Code (if any) belonging to this instruction.
+	/// Check stack empty.
 	public static void ofScode() {
 		CTStack.checkStackEmpty();
 	}

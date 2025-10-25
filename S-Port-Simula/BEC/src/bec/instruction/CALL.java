@@ -22,30 +22,32 @@ import bec.virtualMachine.SVM_PRECALL;
 import bec.virtualMachine.SVM_LOADC;
 import bec.virtualMachine.SVM_CALL_SYS;
 
+/// S-INSTRUCTION: CALL
+///
+/// call_instruction
+/// 		::= connect_profile <parameter_eval>*
+/// 				connect_routine
+/// 
+/// 		connect_profile
+/// 			::= precall profile:tag
+/// 			::= asscall profile:tag
+/// 			::= repcall n:byte profile:tag
+/// 
+/// 		connect_routine ::= call body:tag | <instruction>+ call-tos
+/// 
+/// 		parameter_eval
+/// 			::= <instruction>+ asspar
+/// 			::= <instruction>+ assrep n:byte
+/// 
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/CALL.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public abstract class CALL extends Instruction {
 	
-	/// S-INSTRUCTION: CALL
-	///
-	/// call_instruction
-	/// 		::= connect_profile <parameter_eval>*
-	/// 				connect_routine
-	/// 
-	/// 		connect_profile
-	/// 			::= precall profile:tag
-	/// 			::= asscall profile:tag
-	/// 			::= repcall n:byte profile:tag
-	/// 
-	/// 		connect_routine ::= call body:tag | <instruction>+ call-tos
-	/// 
-	/// 		parameter_eval
-	/// 			::= <instruction>+ asspar
-	/// 			::= <instruction>+ assrep n:byte
-	/// 
-	/// 
-	/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/CALL.java"><b>Source File</b></a>.
-	/// 
-	/// @author S-Port: Definition of S-code
-	/// @author Øystein Myhre Andersen
+	/// Treat a complete Call Instruction including parameters stacking and
+	/// finally emit a SVM_CALL instruction.
 	public static void ofScode(int nParStacked) {
 		int profileTag = Scode.ofScode();
 		Scode.inputInstr();

@@ -196,10 +196,12 @@ public class CTStack {
 		}
 	}
 
-	public static void checkSosType2(Type t1, Type t2) {
-		if(SOS().type == t1) ; // OK
-		else if(SOS().type == t2) ; // OK
+	public static Type checkSosType2(Type t1, Type t2) {
+		Type type = SOS().type;
+		if(type == t1) ; // OK
+		else if(type == t2) ; // OK
 		else STKERR("Illegal type of SOS");
+		return type;
 	}
 
 	public static void checkTypesEqual() {

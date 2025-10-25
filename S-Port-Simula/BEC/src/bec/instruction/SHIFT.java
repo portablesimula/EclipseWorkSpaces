@@ -38,14 +38,17 @@ import bec.virtualMachine.SVM_SHIFT;
 /// @author Øystein Myhre Andersen
 public abstract class SHIFT extends Instruction {
 
+	/// Scans the remaining S-Code (if any) belonging to this instruction.
+	/// Perform the specified stack operations (which may result in code generation).
+	/// Finally: Emit an SVM_SHIFT instruction.
 	public static void ofScode(int instr) {
 		CTStack.forceTosValue();			
 		CTStack.checkTosInt(); CTStack.checkSosInt();
 		CTStackItem tos = CTStack.TOS();
-	    Global.PSEG.emit(new SVM_SHIFT(instr));
-		CTStack.pop();
-		CTStack.pop();
+		CTStack.pop(); CTStack.pop();
 	    CTStack.pushTempVAL(tos.type, 1);
+	    
+	    Global.PSEG.emit(new SVM_SHIFT(instr));
 	}
 
 }

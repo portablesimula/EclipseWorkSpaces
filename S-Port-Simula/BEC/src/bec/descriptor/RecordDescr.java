@@ -43,7 +43,7 @@ import bec.util.Type;
 /// @author Øystein Myhre Andersen
 public class RecordDescr extends Descriptor {
 	public int size;      // Record size information
-	public int nbrep;     // Size of rep(0) attribute
+	public int rep0size;     // Size of rep(0) attribute
 	boolean infoType;
 
 	// NOT SAVED
@@ -92,7 +92,7 @@ public class RecordDescr extends Descriptor {
 		while(Scode.accept(Scode.S_ATTR)) {
 			Attribute attr = new Attribute(comnSize);
 			comnSize = comnSize + attr.allocSize();
-			if(attr.repCount == 0) rec.nbrep = attr.size;
+			if(attr.repCount == 0) rec.rep0size = attr.size;
 			rec.attributes.add(attr);
 		}
 		rec.size = comnSize;
@@ -189,7 +189,7 @@ public class RecordDescr extends Descriptor {
 		oupt.writeKind(kind);
 		tag.write(oupt);
 		oupt.writeShort(size);
-		oupt.writeShort(nbrep);
+		oupt.writeShort(rep0size);
 		oupt.writeBoolean(infoType);
 	}
 
@@ -197,7 +197,7 @@ public class RecordDescr extends Descriptor {
 		Tag tag = Tag.read(inpt);
 		RecordDescr rec = new RecordDescr(Kind.K_RecordDescr, tag);
 		rec.size = inpt.readShort();
-		rec.nbrep = inpt.readShort();
+		rec.rep0size = inpt.readShort();
 		rec.infoType = inpt.readBoolean();
 		if(Option.ATTR_INPUT_TRACE) IO.println("RecordDescr.Read: " + rec);
 		return rec;

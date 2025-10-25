@@ -48,12 +48,14 @@ import bec.value.ObjectAddress;
 /// @author Øystein Myhre Andersen
 public abstract class REMOTE extends Instruction {
 	
+	/// Scans the remaining S-Code (if any) belonging to this instruction.
+	/// Perform the specified stack operations (which may result in code generation).
 	public static void ofScode(int instr) {
 		Tag tag = Tag.ofScode();
+		Attribute attr = (Attribute) tag.getMeaning();
+		
 		CTStack.forceTosValue();			
 		CTStack.checkTosType(Type.T_OADDR);
-		CTStack.forceTosValue();
-		Attribute attr = (Attribute) tag.getMeaning();
 		CTStack.pop();
 		
 		ObjectAddress memAddr = ObjectAddress.ofRemoteAddr();

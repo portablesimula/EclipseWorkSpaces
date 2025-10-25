@@ -38,14 +38,15 @@ import bec.value.ObjectAddress;
 /// @author Øystein Myhre Andersen
 public abstract class REFER extends Instruction {
 
+	/// Scans the remaining S-Code (if any) belonging to this instruction.
+	/// Perform the specified stack operations (which may result in code generation).
 	public static void ofScode() {
 		Type type = Type.ofScode();
+		
 		CTStack.forceTosValue();			
 		CTStack.checkTosType(Type.T_GADDR);
-		AddressItem adr = new AddressItem(type, 0, ObjectAddress.ofReferAddr());
         CTStack.pop(); 
-        CTStack.push(adr);			
-
+        CTStack.push(new AddressItem(type, 0, ObjectAddress.ofReferAddr()));			
 	}
 
 }

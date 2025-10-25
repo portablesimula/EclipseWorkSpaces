@@ -136,7 +136,7 @@ public class Variable extends Descriptor {
 			if(Scode.accept(Scode.S_FIXREP)) {
 				int fixrep = Scode.inNumber();
 				RecordDescr rec = (RecordDescr) Global.getMeaning(var.type.tag);
-				count = count + rec.nbrep * fixrep;
+				count = count + rec.rep0size * fixrep;
 			}
 			if(count == 0) Util.IERR("");
 			seg.emitDefaultValue(count, var.repCount);
