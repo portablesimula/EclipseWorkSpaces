@@ -36,7 +36,7 @@ public class Range {
 	}
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		oupt.writeKind(Scode.S_RANGE);
+		oupt.writeByte(Scode.S_RANGE);
 		oupt.writeInt(low);
 		oupt.writeInt(high);
 	}

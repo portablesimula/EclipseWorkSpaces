@@ -160,8 +160,8 @@ public class Signatur implements Externalizable {
 //			oupt.writeShort(imports.size());
 //			for(Declaration decl:imports) decl.write(oupt);
 //		} else oupt.writeShort(0);
-//		if(export==null) oupt.writeKind(Kind.kNull); else export.write(oupt);
-//		if(exit==null) oupt.writeKind(Kind.kNull); else exit.write(oupt);
+//		if(export==null) oupt.writeByte(Kind.kNull); else export.write(oupt);
+//		if(exit==null) oupt.writeByte(Kind.kNull); else exit.write(oupt);
 //		//Util.TRACE_OUTPUT("END Write Record: "+identifier);
 //	}
 //

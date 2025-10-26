@@ -640,23 +640,23 @@ public class Type implements Externalizable {
 	
 //	public static void writeNullType(AttributeOutput oupt) throws IOException {
 //		Util.TRACE_OUTPUT("BEGIN Write NullType:");
-//		oupt.writeKind(Kind.kType);
+//		oupt.writeByte(Kind.kType);
 //		oupt.writeByte(0);
 //		//Util.TRACE_OUTPUT("END Write Type: "+this);		
 //	}
 //	
 //	public void writeType(AttributeOutput oupt) throws IOException {
 //		Util.TRACE_OUTPUT("BEGIN Write Type: "+this);
-//		oupt.writeKind(Kind.kType);
+//		oupt.writeByte(Kind.kType);
 //		oupt.writeByte(keyWord);
 //		//Util.TRACE_OUTPUT("END Write Type: "+this);
 //	}
 //	
 //	public static Type readType(AttributeInput inpt) throws IOException, ClassNotFoundException {
-//		int kind=inpt.readKind();
+//		int kind=inpt.readUnsignedByte();
 //		switch(kind) {
 //			case Kind.kType:
-//				int keyWord=inpt.readByte();
+//				int keyWord=inpt.readUnsignedByte();
 //				if(keyWord==0) return(null); 
 //				Type type=new Type();
 //				type.keyWord=keyWord;
@@ -690,7 +690,7 @@ public class Type implements Externalizable {
 //		int kind=inpt.readShort();
 //		switch(kind) {
 //			case Kind.kType:
-//				int keyWord=inpt.readByte();
+//				int keyWord=inpt.readUnsignedByte();
 //				if(keyWord==0) return(null); 
 //				Type type=new Type();
 //				type.keyWord=keyWord;
@@ -717,7 +717,7 @@ public class Type implements Externalizable {
 
 	@Override
 	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-		keyWord=in.readByte();
+		keyWord=in.readUnsignedByte();
 	}
 
 }

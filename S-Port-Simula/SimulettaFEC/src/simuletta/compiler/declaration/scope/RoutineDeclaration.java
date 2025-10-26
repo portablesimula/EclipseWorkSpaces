@@ -220,7 +220,7 @@ public class RoutineDeclaration extends DeclarationScope implements Externalizab
 //	@Override
 //	public void write(AttributeOutput oupt) throws IOException {
 //		Util.TRACE_OUTPUT("BEGIN Write RoutineDeclaration: "+identifier);
-//		oupt.writeKind(Kind.kRoutine);
+//		oupt.writeByte(Kind.kRoutine);
 //		oupt.writeShort(lineNumber);
 //		oupt.writeIdent(identifier);
 //		getTag().writeTag(oupt);
@@ -237,7 +237,7 @@ public class RoutineDeclaration extends DeclarationScope implements Externalizab
 //		rut.lineNumber=inpt.readShort();
 //		rut.identifier=inpt.readIdent();
 //		rut.setTag(inpt.readTag());
-//		rut.kind=inpt.readByte();
+//		rut.kind=inpt.readUnsignedByte();
 //		rut.signatur=Signatur.createAndReadSignatur(inpt);
 //		rut.bodyTag=inpt.readTag();
 //		int nDecl=inpt.readShort();
@@ -271,7 +271,7 @@ public class RoutineDeclaration extends DeclarationScope implements Externalizab
 		lineNumber=in.readShort();
 		identifier=(String) in.readObject();
 		setTag(Tag.readTag(in));
-		kind=in.readByte();
+		kind=in.readUnsignedByte();
 //		signatur=Signatur.createAndReadSignatur(inpt);
 		signatur=(Signatur) in.readObject();
 		declarationList=(Vector<Declaration>) in.readObject();

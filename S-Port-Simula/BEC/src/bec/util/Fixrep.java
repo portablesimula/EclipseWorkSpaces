@@ -34,7 +34,7 @@ public class Fixrep {
 	}
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		oupt.writeKind(Scode.S_FIXREP);
+		oupt.writeByte(Scode.S_FIXREP);
 		oupt.writeShort(rep);
 	}
 

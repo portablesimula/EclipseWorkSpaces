@@ -108,11 +108,11 @@ public class BooleanValue extends Value {
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
-		oupt.writeKind((value)?Scode.S_TRUE:Scode.S_FALSE);
+		oupt.writeByte((value)?Scode.S_TRUE:Scode.S_FALSE);
 	}
 
 	public static BooleanValue read(AttributeInputStream inpt) throws IOException {
-		return new BooleanValue(inpt.readKind() == Scode.S_TRUE);
+		return new BooleanValue(inpt.readUnsignedByte() == Scode.S_TRUE);
 	}
 
 

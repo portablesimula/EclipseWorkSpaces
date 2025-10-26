@@ -182,7 +182,7 @@ public class ProgramAddress extends Value {
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
-		oupt.writeKind(Scode.S_C_PADDR);
+		oupt.writeByte(Scode.S_C_PADDR);
 		type.write(oupt);
 		oupt.writeString(segID);
 		oupt.writeShort(ofst);

@@ -186,7 +186,7 @@ public class RecordDescr extends Descriptor {
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("RecordDescr.Write: " + this);
-		oupt.writeKind(kind);
+		oupt.writeByte(kind);
 		tag.write(oupt);
 		oupt.writeShort(size);
 		oupt.writeShort(rep0size);

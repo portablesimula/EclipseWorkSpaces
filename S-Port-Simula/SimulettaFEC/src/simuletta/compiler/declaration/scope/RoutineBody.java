@@ -181,7 +181,7 @@ public class RoutineBody extends DeclarationScope implements Externalizable {
 //	@Override
 //	public void write(AttributeOutput oupt) throws IOException {
 //		Util.TRACE_OUTPUT("BEGIN Write RoutineBody: ");
-//		oupt.writeKind(Kind.kRoutineBody);
+//		oupt.writeByte(Kind.kRoutineBody);
 //		oupt.writeShort(lineNumber);
 //		oupt.writeIdent(identifier);
 //		getTag().writeTag(oupt);

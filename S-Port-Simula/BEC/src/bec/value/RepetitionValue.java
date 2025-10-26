@@ -166,7 +166,7 @@ public class RepetitionValue extends Value {
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
-//		oupt.writeKind(Scode.S_C_???);
+//		oupt.writeByte(Scode.S_C_???);
 		Util.IERR("TEST DETTE");
 		oupt.writeShort(values.size());
 		for(Value value:values) {

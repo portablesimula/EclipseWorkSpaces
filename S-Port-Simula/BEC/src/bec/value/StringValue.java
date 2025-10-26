@@ -41,7 +41,7 @@ public class StringValue extends Value {
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
-		oupt.writeKind(Scode.S_STRING);
+		oupt.writeByte(Scode.S_STRING);
 		oupt.writeString(addr.segID);
 		oupt.writeShort(addr.ofst);
 		

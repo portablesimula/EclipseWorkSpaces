@@ -647,10 +647,10 @@ begin
 %-X %+D  when C_STR:  SMB_TRC:=inonoff
 %-X      when C_SLG:  SET_LOGFILE(inonoff)
 %-X      when C_SSS:  repeat prompt("Number of lines (0..255): ",0);
-%-X                          x:=readByte;
+%-X                          x:=readUnsignedByte;
 %-X                   while errstat<>0 do endrepeat;   bio.pgsize:=x;
 %-X      when C_SSM:  repeat prompt("Code: ",H_SSM);
-%-X                          bio.GCval:=SYSMODE:=readByte;
+%-X                          bio.GCval:=SYSMODE:=readUnsignedByte;
 %-X                   while errstat<>0 do endrepeat;
 %-X                   GCutil(16);
 %-X      when C_SLM:  LSTMODE:=inonoff
@@ -2388,7 +2388,7 @@ end;
 %-X       endif;
 %-X end;
 
-%-X routine readByte; export range(0:255) byte;
+%-X routine readUnsignedByte; export range(0:255) byte;
 %-X begin if number
 %-X       then byte:=innumber;
 %-X            if (0<=byte) and (byte<=maxrnk) and (errstat=0)

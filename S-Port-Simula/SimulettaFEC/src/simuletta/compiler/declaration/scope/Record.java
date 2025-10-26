@@ -351,7 +351,7 @@ public class Record extends DeclarationScope implements Externalizable {
 //	@Override
 //	public void write(AttributeOutput oupt) throws IOException {
 //		Util.TRACE_OUTPUT("BEGIN Write Record: "+identifier);
-//		oupt.writeKind(Kind.kRecord);
+//		oupt.writeByte(Kind.kRecord);
 //		oupt.writeShort(lineNumber);
 //		oupt.writeIdent(identifier);
 //		getTag().writeTag(oupt);

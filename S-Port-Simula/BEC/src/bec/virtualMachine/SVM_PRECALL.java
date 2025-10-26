@@ -67,7 +67,7 @@ public class SVM_PRECALL extends SVM_Instruction {
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
-		oupt.writeOpcode(opcode);
+		oupt.writeByte(opcode);
 		oupt.writeString(rutIdent);
 		oupt.writeShort(nParSlots);
 		oupt.writeShort(exportSize);

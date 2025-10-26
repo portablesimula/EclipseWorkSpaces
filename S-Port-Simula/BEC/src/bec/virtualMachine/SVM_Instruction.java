@@ -85,7 +85,7 @@ public class SVM_Instruction {
 	}
 	
 	public static SVM_Instruction readObject(AttributeInputStream inpt) throws IOException {
-		int opcode = inpt.readKind();
+		int opcode = inpt.readUnsignedByte();
 //		IO.println("SVM_Instruction.read: opcode="+edOpcode(opcode));
 		switch(opcode) {
 			case iADD:		return SVM_ADD.read(inpt);

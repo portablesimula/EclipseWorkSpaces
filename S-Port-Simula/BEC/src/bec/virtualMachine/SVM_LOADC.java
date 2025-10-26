@@ -128,7 +128,7 @@ public class SVM_LOADC extends SVM_Instruction {
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
-		oupt.writeOpcode(opcode);
+		oupt.writeByte(opcode);
 		oupt.writeShort(typeTag);
 		if(value != null) {
 			oupt.writeBoolean(true);

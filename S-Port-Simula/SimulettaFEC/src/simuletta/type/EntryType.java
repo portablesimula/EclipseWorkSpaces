@@ -39,7 +39,7 @@ public class EntryType extends Type implements Externalizable {
 //	@Override
 //	public void writeType(AttributeOutput oupt) throws IOException {
 //		Util.TRACE_OUTPUT("BEGIN Write Type: "+this);
-//		oupt.writeKind(Kind.kEntry);
+//		oupt.writeByte(Kind.kEntry);
 //		oupt.writeByte(keyWord);
 //		oupt.writeIdent(qual);
 //		//Util.TRACE_OUTPUT("END Write Type: "+this);
@@ -47,7 +47,7 @@ public class EntryType extends Type implements Externalizable {
 //	
 //	public static Type readEntryType(AttributeInput inpt) throws IOException, ClassNotFoundException {
 //		EntryType entry=new EntryType();
-//		entry.keyWord=inpt.readByte();
+//		entry.keyWord=inpt.readUnsignedByte();
 //		entry.qual=inpt.readIdent();
 //		return(entry);
 //	}
@@ -63,7 +63,7 @@ public class EntryType extends Type implements Externalizable {
 //	
 //	public static Type readEntryType(ObjectInput inpt) throws IOException, ClassNotFoundException {
 //		EntryType entry=new EntryType();
-//		entry.keyWord=inpt.readByte();
+//		entry.keyWord=inpt.readUnsignedByte();
 //		entry.qual=(String) inpt.readObject();
 //		return(entry);
 //	}
@@ -78,7 +78,7 @@ public class EntryType extends Type implements Externalizable {
 
 	@Override
 	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-		keyWord=in.readByte();
+		keyWord=in.readUnsignedByte();
 		qual=(String) in.readObject();
 	}
 

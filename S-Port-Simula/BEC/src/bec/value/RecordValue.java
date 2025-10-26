@@ -234,28 +234,28 @@ public class RecordValue extends Value {
 		int expectedSize = inpt.readShort();
 		tag = Tag.read(inpt);
 		attrValues = new Vector<Value>();
-		int kind = inpt.readKind();
+		int kind = inpt.readUnsignedByte();
 		while(kind != Scode.S_ENDRECORD) {
 			Value value = Value.read(kind, inpt);
 			attrValues.add(value);
-			kind = inpt.readKind();
+			kind = inpt.readUnsignedByte();
 		}
 		if(attrValues.size() != expectedSize) Util.IERR("TRAP: expected size="+expectedSize+"  read size="+attrValues.size());
 	}
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
-		oupt.writeKind(Scode.S_C_RECORD);
+		oupt.writeByte(Scode.S_C_RECORD);
 		oupt.writeShort(attrValues.size());
 		tag.write(oupt);
 		for(Value value:attrValues) {
 			if(value != null) {
 				value.write(oupt);
 			} else {
-				oupt.writeKind(Scode.S_NULL);
+				oupt.writeByte(Scode.S_NULL);
 			}
 		}
-		oupt.writeKind(Scode.S_ENDRECORD);
+		oupt.writeByte(Scode.S_ENDRECORD);
 	}
 
 	public static RecordValue read(AttributeInputStream inpt) throws IOException {

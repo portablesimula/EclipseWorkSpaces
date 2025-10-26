@@ -50,7 +50,7 @@ public abstract class Mnemonic {
 //	}
 //
 //	public static Mnemonic createAndRead(AttributeInput inpt) throws ClassNotFoundException, IOException {
-//		int kind=inpt.readKind();
+//		int kind=inpt.readUnsignedByte();
 //		switch(kind) {
 //			case Kind.kLiteral: return(LiteralMnemonic.readLiteral(inpt));
 //			case Kind.kMacro:   return(MacroDefinition.readMacro(inpt));

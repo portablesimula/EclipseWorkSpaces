@@ -40,7 +40,7 @@ public class RefType extends Type implements Externalizable {
 //	@Override
 //	public void writeType(AttributeOutput oupt) throws IOException {
 //		Util.TRACE_OUTPUT("BEGIN Write Type: "+this);
-//		oupt.writeKind(Kind.kRef);
+//		oupt.writeByte(Kind.kRef);
 //		oupt.writeByte(keyWord);
 //		oupt.writeIdent(qual);
 //		//Util.TRACE_OUTPUT("END Write Type: "+this);
@@ -48,7 +48,7 @@ public class RefType extends Type implements Externalizable {
 //	
 //	public static Type readRefType(AttributeInput inpt) throws IOException, ClassNotFoundException {
 //		RefType ref=new RefType();
-//		ref.keyWord=inpt.readByte();
+//		ref.keyWord=inpt.readUnsignedByte();
 //		ref.qual=inpt.readIdent();
 //		return(ref);
 //	}
@@ -64,7 +64,7 @@ public class RefType extends Type implements Externalizable {
 //	
 //	public static Type readRefType(ObjectInput inpt) throws IOException, ClassNotFoundException {
 //		RefType ref=new RefType();
-//		ref.keyWord=inpt.readByte();
+//		ref.keyWord=inpt.readUnsignedByte();
 //		ref.qual=(String) inpt.readObject();
 //		return(ref);
 //	}
@@ -79,7 +79,7 @@ public class RefType extends Type implements Externalizable {
 
 	@Override
 	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-		keyWord=in.readByte();
+		keyWord=in.readUnsignedByte();
 		qual=(String) in.readObject();
 	}
 

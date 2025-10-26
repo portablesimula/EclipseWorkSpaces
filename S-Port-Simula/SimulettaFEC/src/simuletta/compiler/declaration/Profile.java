@@ -173,7 +173,7 @@ public class Profile extends Declaration implements Externalizable {
 //	@Override
 //	public void write(AttributeOutput oupt) throws IOException {
 //		Util.TRACE_OUTPUT("BEGIN Write Record: "+identifier);
-//		oupt.writeKind(Kind.kProfile);
+//		oupt.writeByte(Kind.kProfile);
 //		oupt.writeShort(lineNumber);
 //		oupt.writeIdent(identifier);
 //		getTag().writeTag(oupt);

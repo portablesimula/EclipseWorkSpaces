@@ -95,7 +95,7 @@ public class SVM_RETURN extends SVM_Instruction {
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
-		oupt.writeOpcode(opcode);
+		oupt.writeByte(opcode);
 		oupt.writeString(rutID);
 		returAddr.write(oupt);
 	}

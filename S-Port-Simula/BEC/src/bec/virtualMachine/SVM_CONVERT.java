@@ -234,7 +234,7 @@ public class SVM_CONVERT extends SVM_Instruction {
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
-		oupt.writeOpcode(opcode);
+		oupt.writeByte(opcode);
 		oupt.writeShort(fromType);
 		oupt.writeShort(toType);
 	}

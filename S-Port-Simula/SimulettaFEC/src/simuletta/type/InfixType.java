@@ -42,7 +42,7 @@ public class InfixType extends Type implements Externalizable {
 //	@Override
 //	public void writeType(AttributeOutput oupt) throws IOException {
 //		Util.TRACE_OUTPUT("BEGIN Write Type: "+this);
-//		oupt.writeKind(Kind.kInfix);
+//		oupt.writeByte(Kind.kInfix);
 //		oupt.writeByte(keyWord);
 //		oupt.writeIdent(qual);
 //		oupt.writeShort(repCount);
@@ -51,7 +51,7 @@ public class InfixType extends Type implements Externalizable {
 //	
 //	public static Type readInfixType(AttributeInput inpt) throws IOException, ClassNotFoundException {
 //		InfixType infix=new InfixType();
-//		infix.keyWord=inpt.readByte();
+//		infix.keyWord=inpt.readUnsignedByte();
 //		infix.qual=inpt.readIdent();
 //		infix.repCount=inpt.readShort();
 //		return(infix);
@@ -69,7 +69,7 @@ public class InfixType extends Type implements Externalizable {
 //	
 //	public static Type readInfixType(ObjectInput inpt) throws IOException, ClassNotFoundException {
 //		InfixType infix=new InfixType();
-//		infix.keyWord=inpt.readByte();
+//		infix.keyWord=inpt.readUnsignedByte();
 //		infix.qual=(String) inpt.readObject();
 //		infix.repCount=inpt.readShort();
 //		return(infix);
@@ -86,7 +86,7 @@ public class InfixType extends Type implements Externalizable {
 
 	@Override
 	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-		keyWord=in.readByte();
+		keyWord=in.readUnsignedByte();
 		qual=(String) in.readObject();
 		repCount=in.readShort();
 	}

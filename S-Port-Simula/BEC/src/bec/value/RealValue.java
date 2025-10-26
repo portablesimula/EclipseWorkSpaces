@@ -159,7 +159,7 @@ public class RealValue extends Value {
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
-		oupt.writeKind(Scode.S_C_REAL);
+		oupt.writeByte(Scode.S_C_REAL);
 		oupt.writeFloat(value);
 	}
 

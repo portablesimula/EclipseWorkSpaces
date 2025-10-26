@@ -243,8 +243,8 @@ public final class Token {
 	public static Token readToken(ObjectInput inpt) throws IOException, ClassNotFoundException {
 		Token token=new Token();
 		token.text=(String) inpt.readObject();
-		token.keyWord=inpt.readByte();
-		int kind=inpt.readByte();
+		token.keyWord=inpt.readUnsignedByte();
+		int kind=inpt.readUnsignedByte();
 		switch(kind) {
 			case vNull: break;
 			case vString: token.value=inpt.readObject(); break;

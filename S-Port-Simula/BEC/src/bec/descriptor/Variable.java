@@ -160,7 +160,7 @@ public class Variable extends Descriptor {
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("Variable.Write: " + this);
-		oupt.writeKind(kind); // K_GLOBAL, K_LOCAL, K_IMPORT, K_EXPORT, K_EXIT, K_RETUR
+		oupt.writeByte(kind); // K_GLOBAL, K_LOCAL, K_IMPORT, K_EXPORT, K_EXIT, K_RETUR
 		tag.write(oupt);
 		type.write(oupt);
 		oupt.writeShort(repCount);

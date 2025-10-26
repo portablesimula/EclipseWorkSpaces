@@ -39,7 +39,7 @@ public class RangeType extends Type implements Externalizable {
 //	@Override
 //	public void writeType(AttributeOutput oupt) throws IOException {
 //		Util.TRACE_OUTPUT("BEGIN Write Type: "+this);
-//		oupt.writeKind(Kind.kRange);
+//		oupt.writeByte(Kind.kRange);
 //		oupt.writeByte(keyWord);
 //		oupt.writeShort(lower);
 //		oupt.writeShort(upper);
@@ -48,7 +48,7 @@ public class RangeType extends Type implements Externalizable {
 //	
 //	public static Type readRangeType(AttributeInput inpt) throws IOException, ClassNotFoundException {
 //		RangeType range=new RangeType();
-//		range.keyWord=inpt.readByte();
+//		range.keyWord=inpt.readUnsignedByte();
 //		range.lower=inpt.readShort();
 //		range.upper=inpt.readShort();
 //		return(range);
@@ -66,7 +66,7 @@ public class RangeType extends Type implements Externalizable {
 //	
 //	public static Type readRangeType(ObjectInput inpt) throws IOException, ClassNotFoundException {
 //		RangeType range=new RangeType();
-//		range.keyWord=inpt.readByte();
+//		range.keyWord=inpt.readUnsignedByte();
 //		range.lower=inpt.readShort();
 //		range.upper=inpt.readShort();
 //		return(range);
@@ -83,7 +83,7 @@ public class RangeType extends Type implements Externalizable {
 
 	@Override
 	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-		keyWord=in.readByte();
+		keyWord=in.readUnsignedByte();
 		lower=in.readShort();
 		upper=in.readShort();
 	}

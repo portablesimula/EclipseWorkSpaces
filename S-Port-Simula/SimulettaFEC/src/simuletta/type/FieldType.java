@@ -40,7 +40,7 @@ public class FieldType extends Type implements Externalizable {
 //	@Override
 //	public void writeType(AttributeOutput oupt) throws IOException {
 //		Util.TRACE_OUTPUT("BEGIN Write Type: "+this);
-//		oupt.writeKind(Kind.kField);
+//		oupt.writeByte(Kind.kField);
 //		oupt.writeByte(keyWord);
 //		oupt.writeType(type);
 //		//Util.TRACE_OUTPUT("END Write Type: "+this);
@@ -48,7 +48,7 @@ public class FieldType extends Type implements Externalizable {
 //	
 //	public static Type readFieldType(AttributeInput inpt) throws IOException, ClassNotFoundException {
 //		FieldType field=new FieldType();
-//		field.keyWord=inpt.readByte();
+//		field.keyWord=inpt.readUnsignedByte();
 //		field.type=inpt.readType();
 //		return(field);
 //	}
@@ -64,7 +64,7 @@ public class FieldType extends Type implements Externalizable {
 //	
 //	public static Type readFieldType(ObjectInput inpt) throws IOException, ClassNotFoundException {
 //		FieldType field=new FieldType();
-//		field.keyWord=inpt.readByte();
+//		field.keyWord=inpt.readUnsignedByte();
 //		field.type=Type.readType(inpt);
 //		return(field);
 //	}
@@ -79,7 +79,7 @@ public class FieldType extends Type implements Externalizable {
 
 	@Override
 	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-		keyWord=in.readByte();
+		keyWord=in.readUnsignedByte();
 		type=(Type) in.readObject();
 	}
 	

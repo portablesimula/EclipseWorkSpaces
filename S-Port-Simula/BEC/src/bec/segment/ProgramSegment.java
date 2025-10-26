@@ -93,13 +93,13 @@ public class ProgramSegment extends Segment {
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE)
 			IO.println("ProgramSegment.Write: " + this + ", Size=" + instructions.size());
-		oupt.writeKind(segmentKind);
+		oupt.writeByte(segmentKind);
 		oupt.writeString(ident);
 		oupt.writeShort(instructions.size());
 		for(int i=0;i<instructions.size();i++) {
 			SVM_Instruction val = instructions.get(i);
 			if(val == null)
-				 oupt.writeKind(Scode.S_NULL);
+				 oupt.writeByte(Scode.S_NULL);
 			else val.write(oupt);
 		}
 	}

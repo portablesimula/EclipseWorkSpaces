@@ -30,10 +30,10 @@ public class AttributeInput {
 //    }
 //
 //	
-//    public final byte readByte() throws IOException {
+//    public final byte readUnsignedByte() throws IOException {
 //        int ch = in.read();
 //        if (ch < 0) throw new EOFException();
-//    	if(TESTING) IO.println("AttributeDataInputStream.readByte: "+ch);
+//    	if(TESTING) IO.println("AttributeDataInputStream.readUnsignedByte: "+ch);
 //        return (byte)(ch);
 //    }
 //
@@ -117,7 +117,7 @@ public class AttributeInput {
 //
 //    private int kind=0;
 //	
-//    public final byte readKind() throws IOException {
+//    public final byte readUnsignedByte() throws IOException {
 //    	if(AttributeOutput.USE_SYNCMARK) {
 //            int b1=in.read();
 //            int b2=in.read();
@@ -126,7 +126,7 @@ public class AttributeInput {
 //        kind = in.read();
 //        if (kind < 0) throw new EOFException();
 //    	if(TESTING)
-//    		IO.println("AttributeDataInputStream.readKind: "+kind);
+//    		IO.println("AttributeDataInputStream.readUnsignedByte: "+kind);
 //        return (byte)(kind);
 //    }
 //    
@@ -147,7 +147,7 @@ public class AttributeInput {
 //	
 //	public String readIdent() throws IOException {
 //		StringBuilder sb=new StringBuilder();
-//        int len = readByte();
+//        int len = readUnsignedByte();
 //        for (int i = 0 ; i < len ; i++) {
 //        	sb.append(readChar());
 //        }

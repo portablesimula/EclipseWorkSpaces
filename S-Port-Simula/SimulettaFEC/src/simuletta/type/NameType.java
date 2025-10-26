@@ -40,7 +40,7 @@ public class NameType extends Type implements Externalizable {
 //	@Override
 //	public void writeType(AttributeOutput oupt) throws IOException {
 //		Util.TRACE_OUTPUT("BEGIN Write Type: "+this);
-//		oupt.writeKind(Kind.kName);
+//		oupt.writeByte(Kind.kName);
 //		oupt.writeByte(keyWord);
 //		oupt.writeType(type);
 //		//Util.TRACE_OUTPUT("END Write Type: "+this);
@@ -48,7 +48,7 @@ public class NameType extends Type implements Externalizable {
 //	
 //	public static Type readNameType(AttributeInput inpt) throws IOException, ClassNotFoundException {
 //		NameType name=new NameType();
-//		name.keyWord=inpt.readByte();
+//		name.keyWord=inpt.readUnsignedByte();
 //		name.type=inpt.readType();
 //		return(name);
 //	}
@@ -64,7 +64,7 @@ public class NameType extends Type implements Externalizable {
 //	
 //	public static Type readNameType(ObjectInput inpt) throws IOException, ClassNotFoundException {
 //		NameType name=new NameType();
-//		name.keyWord=inpt.readByte();
+//		name.keyWord=inpt.readUnsignedByte();
 ////		name.type=inpt.readType();
 //		name.type=Type.readType(inpt);
 //		return(name);
@@ -80,7 +80,7 @@ public class NameType extends Type implements Externalizable {
 
 	@Override
 	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-		keyWord=in.readByte();
+		keyWord=in.readUnsignedByte();
 		type=(Type) in.readObject();
 	}
 

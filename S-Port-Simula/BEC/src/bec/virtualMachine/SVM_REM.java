@@ -67,7 +67,7 @@ public class SVM_REM extends SVM_Instruction {
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
-		oupt.writeKind(SVM_Instruction.iREM);
+		oupt.writeByte(SVM_Instruction.iREM);
 	}
 
 	public static SVM_REM read(AttributeInputStream inpt) throws IOException {

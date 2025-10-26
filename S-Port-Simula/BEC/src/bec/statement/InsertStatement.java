@@ -94,7 +94,7 @@ public class InsertStatement {
 		if(Option.verbose) IO.println("INSERT " + fileName);
 		if(Option.ATTR_INPUT_TRACE) IO.println("ATTRIBUTE INPUT: " + fileName);
 		AttributeInputStream inpt = new AttributeInputStream(new FileInputStream(fileName));
-		int kind = inpt.readKind();
+		int kind = inpt.readUnsignedByte();
 		if(kind != Kind.K_Module) Util.IERR("Missing MODULE");
 		String modident = inpt.readString();
 		String modcheck = inpt.readString();
@@ -104,7 +104,7 @@ public class InsertStatement {
 //	       ------ Read Descriptors ------
 		LOOP:while(true) {
 			int prevKind = kind;
-			kind = inpt.readKind();
+			kind = inpt.readUnsignedByte();
 //			IO.println("InsertStatement.readDescriptors'LOOP: " + Kind.edKind(kind));
 			
 			if(kind == Kind.K_EndModule) break LOOP;

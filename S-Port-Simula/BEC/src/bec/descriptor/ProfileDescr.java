@@ -230,7 +230,7 @@ public class ProfileDescr extends Descriptor {
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("ProfileDescr.Write: " + this);
-		oupt.writeKind(kind);
+		oupt.writeByte(kind);
 		tag.write(oupt);
 		oupt.writeShort(pKind);
 		oupt.writeString(this.dsegIdent());

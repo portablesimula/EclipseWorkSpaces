@@ -125,7 +125,7 @@ public class Value {
 	}
 	
 	private static Value read1(AttributeInputStream inpt) throws IOException {
-		int kind = inpt.readKind();
+		int kind = inpt.readUnsignedByte();
 //		IO.println("Value.read: kind="+Scode.edInstr(kind));
 		switch(kind) {
 			case Scode.S_NULL:		return null;

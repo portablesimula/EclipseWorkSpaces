@@ -148,7 +148,7 @@ public class Type {
 
 	public static void writeRECTYPES(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("writeRECTYPES: ");
-		oupt.writeKind(Kind.K_RECTYPES);
+		oupt.writeByte(Kind.K_RECTYPES);
 		oupt.writeShort(RECTYPES.size());
 		for(Type type:RECTYPES) {
 //			oupt.writeTagID(type.tag);

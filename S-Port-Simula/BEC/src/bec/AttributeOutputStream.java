@@ -11,7 +11,6 @@ import java.io.OutputStream;
 
 import bec.descriptor.Kind;
 import bec.util.Scode;
-import bec.virtualMachine.SVM_Instruction;
 
 /// Attribute Output Stream.
 /// 
@@ -29,9 +28,9 @@ public class AttributeOutputStream {
 
 	public void close() throws IOException { oupt.flush(); oupt.close(); }
 
-    public void writeKind(int i) throws IOException {
-		if(TRACE) IO.println("AttributeOutputStream.writeKind: "+i+':'+Kind.edKind(i));
-		if(i > Scode.S_max || i < 0) throw new IllegalArgumentException("Argument = "+i);
+    public void writeByte(int i) throws IOException {
+//		if(TRACE) IO.println("AttributeOutputStream.writeByte: "+i+':'+Kind.edKind(i));
+//		if(i > Scode.S_max || i < 0) throw new IllegalArgumentException("Argument = "+i);
 		oupt.writeByte(i);
 	}
 
@@ -40,13 +39,13 @@ public class AttributeOutputStream {
 //		if(i > Scode.S_max || i < 0) throw new IllegalArgumentException("Argument = "+i);
 //		oupt.writeByte(i);
 //	}
-
-    public void writeOpcode(int i) throws IOException {
-		if(TRACE) IO.println("AttributeOutputStream.writeOpcode: "+i+':'+SVM_Instruction.edOpcode(i));
-		if(i > SVM_Instruction.iMax || i <= 0) throw new IllegalArgumentException("Argument = "+i);
-		oupt.writeByte(i);
-	}
-
+//
+//    public void writeByte(int i) throws IOException {
+//		if(TRACE) IO.println("AttributeOutputStream.writeByte: "+i+':'+SVM_Instruction.edOpcode(i));
+//		if(i > SVM_Instruction.iMax || i <= 0) throw new IllegalArgumentException("Argument = "+i);
+//		oupt.writeByte(i);
+//	}
+//
 //    public void writeTag(int i) throws IOException {
 //		if(TRACE) IO.println("AttributeOutputStream.writeTag: "+Scode.edTag(i));
 //		oupt.writeShort(i);

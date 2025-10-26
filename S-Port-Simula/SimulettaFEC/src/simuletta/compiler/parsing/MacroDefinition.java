@@ -92,7 +92,7 @@ public class MacroDefinition extends Mnemonic implements Externalizable {
 //	@Override
 //	public void write(AttributeOutput oupt) throws IOException {
 //		Util.TRACE_OUTPUT("BEGIN Write MacroDefinition: "+identifier);
-//		oupt.writeKind(Kind.kMacro);
+//		oupt.writeByte(Kind.kMacro);
 //		oupt.writeIdent(identifier);
 //		oupt.writeShort(nPar);
 //		oupt.writeShort(elts.size()); // nToken

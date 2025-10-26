@@ -305,7 +305,7 @@ public class VariableDeclaration extends Declaration implements Externalizable {
 //	@Override
 //	public void write(AttributeOutput oupt) throws IOException {
 //		Util.TRACE_OUTPUT("BEGIN Write Variable: "+identifier);
-//		oupt.writeKind(Kind.kVariable);
+//		oupt.writeByte(Kind.kVariable);
 //		oupt.writeShort(lineNumber);
 //		oupt.writeIdent(identifier);
 //		oupt.writeTag(getTag());

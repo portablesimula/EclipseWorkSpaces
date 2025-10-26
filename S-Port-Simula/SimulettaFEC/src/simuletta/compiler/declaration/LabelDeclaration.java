@@ -94,7 +94,7 @@ public class LabelDeclaration extends Declaration implements Externalizable {
 //	@Override
 //	public void write(AttributeOutput oupt) throws IOException {
 //		Util.TRACE_OUTPUT("BEGIN Write LabelDeclaration: "+identifier);
-//		oupt.writeKind(Kind.kLabel);
+//		oupt.writeByte(Kind.kLabel);
 //		oupt.writeShort(lineNumber);
 //		oupt.writeIdent(identifier);
 //		getTag().writeTag(oupt);

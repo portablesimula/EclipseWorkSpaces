@@ -98,17 +98,17 @@ public class SVM_JUMPIF extends SVM_JUMP {
 		super(inpt);
 		this.opcode = SVM_Instruction.iJUMPIF;
 		this.relation = Relation.read(inpt);
-		this.typeSize = inpt.readKind();
+		this.typeSize = inpt.readUnsignedByte();
 		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
-		oupt.writeOpcode(opcode);
+		oupt.writeByte(opcode);
 		destination.write(oupt);
 		relation.write(oupt);
-		oupt.writeKind(typeSize);
+		oupt.writeByte(typeSize);
 	}
 
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {

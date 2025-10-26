@@ -91,8 +91,8 @@ public class AttributeOutput {
 //
 //
 //	
-//    public final void writeKind(int v) throws IOException {
-//    	if(TESTING) IO.println("AttributeDataOutputStream.writeKind: "+v);
+//    public final void writeByte(int v) throws IOException {
+//    	if(TESTING) IO.println("AttributeDataOutputStream.writeByte: "+v);
 //    	if(USE_SYNCMARK) {
 //            out.write(91);
 //            out.write(92);

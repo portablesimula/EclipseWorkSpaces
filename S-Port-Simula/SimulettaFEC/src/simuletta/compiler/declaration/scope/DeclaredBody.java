@@ -189,7 +189,7 @@ public class DeclaredBody extends DeclarationScope implements Externalizable {
 //	@Override
 //	public void write(AttributeOutput oupt) throws IOException {
 //		Util.TRACE_OUTPUT("BEGIN Write DeclaredBody: ");
-//		oupt.writeKind(Kind.kDeclaredBody);
+//		oupt.writeByte(Kind.kDeclaredBody);
 //		oupt.writeShort(lineNumber);
 //		oupt.writeIdent(identifier);
 //		getTag().writeTag(oupt);

@@ -80,12 +80,12 @@ public class SVM_SHIFT extends SVM_Instruction {
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
-		oupt.writeOpcode(opcode);
-		oupt.writeKind(instr);
+		oupt.writeByte(opcode);
+		oupt.writeByte(instr);
 	}
 
 	public static SVM_SHIFT read(AttributeInputStream inpt) throws IOException {
-		SVM_SHIFT instr = new SVM_SHIFT(inpt.readKind());
+		SVM_SHIFT instr = new SVM_SHIFT(inpt.readUnsignedByte());
 		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
 		return instr;
 	}

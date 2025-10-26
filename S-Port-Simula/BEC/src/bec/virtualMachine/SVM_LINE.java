@@ -51,13 +51,13 @@ public class SVM_LINE extends SVM_Instruction {
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
-		oupt.writeKind(iLINE);
-		oupt.writeKind(type+1);
+		oupt.writeByte(iLINE);
+		oupt.writeByte(type+1);
 		oupt.writeShort(sourceLine);
 	}
 
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {
-		int type = inpt.readKind() - 1;
+		int type = inpt.readUnsignedByte() - 1;
 		int sourceline = inpt.readShort();
 		SVM_LINE instr = new SVM_LINE(type, sourceline);
 		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);

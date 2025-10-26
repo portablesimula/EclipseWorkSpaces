@@ -950,12 +950,12 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
-		oupt.writeOpcode(opcode);
-		oupt.writeKind(kind);
+		oupt.writeByte(opcode);
+		oupt.writeByte(kind);
 	}
 
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {
-		SVM_CALL_SYS instr = new SVM_CALL_SYS(inpt.readKind());
+		SVM_CALL_SYS instr = new SVM_CALL_SYS(inpt.readUnsignedByte());
 		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
 		return instr;
 	}

@@ -161,13 +161,13 @@ public class DataSegment extends Segment {
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("DataSegment.Write: " + this + ", Size=" + values.size());
-		oupt.writeKind(segmentKind);
+		oupt.writeByte(segmentKind);
 		oupt.writeString(ident);
 		oupt.writeShort(values.size());
 		for(int i=0;i<values.size();i++) {
 			Value val = values.get(i);
 			if(val == null)
-				 oupt.writeKind(Scode.S_NULL);
+				 oupt.writeByte(Scode.S_NULL);
 			else val.write(oupt);
 		}
 	}

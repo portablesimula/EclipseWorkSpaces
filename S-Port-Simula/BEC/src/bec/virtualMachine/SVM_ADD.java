@@ -55,7 +55,7 @@ public class SVM_ADD extends SVM_Instruction {
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
-		oupt.writeOpcode(opcode);
+		oupt.writeByte(opcode);
 	}
 
 	public static SVM_ADD read(AttributeInputStream inpt) throws IOException {

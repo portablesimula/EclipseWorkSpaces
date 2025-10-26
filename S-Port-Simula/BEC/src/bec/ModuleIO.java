@@ -51,7 +51,7 @@ public class ModuleIO {
 		if(Global.outputDIR==null || Global.outputDIR.isEmpty()) Util.IERR("No Output Directory Specified");
 //		AttributeOutputStream modoupt = new AttributeOutputStream(new FileOutputStream(Global.getAttrFileName(Global.modident, ".svm")));
 		AttributeOutputStream modoupt = new AttributeOutputStream(new FileOutputStream(Global.outputDIR+Global.modident+".svm"));
-		modoupt.writeKind(Kind.K_Module);
+		modoupt.writeByte(Kind.K_Module);
 		modoupt.writeString(Global.modident);
 		modoupt.writeString(Global.modcheck);
 
@@ -69,7 +69,7 @@ public class ModuleIO {
 		Global.PSEG.write(modoupt);
 
 //		writePreamble();
-		modoupt.writeKind(Kind.K_EndModule);
+		modoupt.writeByte(Kind.K_EndModule);
 		
 		if(Option.ATTR_OUTPUT_TRACE)
 			IO.println("**************   Endof  -  Output-module  " + Global.modident + "  " + Global.modcheck + "   **************");

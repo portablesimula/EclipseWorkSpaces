@@ -155,7 +155,7 @@ public class LongRealValue extends Value {
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
-		oupt.writeKind(Scode.S_C_LREAL);
+		oupt.writeByte(Scode.S_C_LREAL);
 		oupt.writeDouble(value);
 	}
 

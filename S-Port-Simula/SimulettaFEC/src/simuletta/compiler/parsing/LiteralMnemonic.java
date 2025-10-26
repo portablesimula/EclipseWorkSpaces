@@ -37,7 +37,7 @@ public class LiteralMnemonic extends Mnemonic implements Externalizable {
 //	@Override
 //	public void write(AttributeOutput oupt) throws IOException {
 //		Util.TRACE_OUTPUT("BEGIN Write LiteralMnemonic: "+identifier);
-//		oupt.writeKind(Kind.kLiteral);
+//		oupt.writeByte(Kind.kLiteral);
 //		oupt.writeIdent(identifier);
 //		oupt.writeToken(token);
 //		//Util.TRACE_OUTPUT("END Write LiteralMnemonic: "+identifier);

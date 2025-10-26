@@ -196,7 +196,7 @@ public abstract class Declaration extends SyntaxClass {
 //	}
 //
 //	public static Declaration createAndRead(AttributeInput inpt) throws ClassNotFoundException, IOException {
-//		int kind=inpt.readKind();
+//		int kind=inpt.readUnsignedByte();
 //		switch(kind) {
 //			case Kind.kNull:         return(null);
 //			case Kind.kRecord:       return(Record.createAndReadRecord(inpt));

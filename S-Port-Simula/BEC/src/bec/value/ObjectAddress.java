@@ -342,7 +342,7 @@ public class ObjectAddress extends Value {
 	// ***********************************************************************************************
 	private ObjectAddress(AttributeInputStream inpt) throws IOException {
 		this.type = Type.T_OADDR;
-		kind = inpt.readKind();
+		kind = inpt.readUnsignedByte();
 		segID = inpt.readString();
 		ofst = inpt.readShort();
 		indexed = inpt.readBoolean();
@@ -350,12 +350,12 @@ public class ObjectAddress extends Value {
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
-		oupt.writeKind(Scode.S_C_OADDR);
+		oupt.writeByte(Scode.S_C_OADDR);
 		writeBody(oupt);
 	}
 
 	public void writeBody(AttributeOutputStream oupt) throws IOException {
-		oupt.writeKind(kind);
+		oupt.writeByte(kind);
 		oupt.writeString(segID);
 		oupt.writeShort(ofst);
 		oupt.writeBoolean(indexed);

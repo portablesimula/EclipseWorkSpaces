@@ -56,7 +56,7 @@ public class SVM_MULT extends SVM_Instruction {
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
-		oupt.writeKind(SVM_Instruction.iMULT);
+		oupt.writeByte(SVM_Instruction.iMULT);
 	}
 
 	public static SVM_MULT read(AttributeInputStream inpt) throws IOException {

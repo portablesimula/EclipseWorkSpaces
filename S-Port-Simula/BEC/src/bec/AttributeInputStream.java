@@ -30,14 +30,15 @@ public class AttributeInputStream {
 
 	public void close() throws IOException { inpt.close(); }
     
-    public int readKind() throws IOException {
-    	int kind = inpt.readByte() & 0xFF;
-    	if(TRACE) IO.println("AttributeInputStream.readKind: "+kind+':'+Kind.edKind(kind));
-    	return kind;
+    public int readUnsignedByte() throws IOException {
+//    	int kind = inpt.readUnsignedByte() & 0xFF;
+    	int b = inpt.readUnsignedByte();
+//    	if(TRACE) IO.println("AttributeInputStream.readUnsignedByte: "+kind+':'+Kind.edKind(kind));
+    	return b;
 	}
     
 //    public void readInstr() throws IOException {
-//    	curinstr = inpt.readByte() & 0xFF;
+//    	curinstr = inpt.readUnsignedByte() & 0xFF;
 //    	if(TRACE) IO.println("AttributeInputStream.readInstr: "+curinstr+':'+Scode.edInstr(curinstr));
 //	}
 //

@@ -163,7 +163,7 @@ public class RoutineDescr extends Descriptor {
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("RoutineDescr.Write: " + this);
-		oupt.writeKind(kind);
+		oupt.writeByte(kind);
 		if(prftag != null) {
 			oupt.writeBoolean(true);
 			prftag.write(oupt);

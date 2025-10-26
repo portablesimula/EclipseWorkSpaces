@@ -56,7 +56,7 @@ public class SVM_GOTO extends SVM_Instruction {
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
-		oupt.writeOpcode(opcode);
+		oupt.writeByte(opcode);
 	}
 
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {

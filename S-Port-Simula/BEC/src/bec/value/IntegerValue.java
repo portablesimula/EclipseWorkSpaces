@@ -272,7 +272,7 @@ public class IntegerValue extends Value {
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
-		oupt.writeKind(Scode.S_C_INT);
+		oupt.writeByte(Scode.S_C_INT);
 		type.write(oupt);
 		oupt.writeInt(value);
 	}

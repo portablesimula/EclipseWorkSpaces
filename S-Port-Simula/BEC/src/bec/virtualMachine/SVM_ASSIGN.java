@@ -97,7 +97,7 @@ public class SVM_ASSIGN extends SVM_Instruction {
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		if(objadr == null) Util.IERR("");
-		oupt.writeOpcode(opcode);
+		oupt.writeByte(opcode);
 		oupt.writeBoolean(update);
 		objadr.writeBody(oupt);
 		oupt.writeShort(size);

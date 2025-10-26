@@ -81,7 +81,7 @@ public class LabelDescr extends Descriptor {
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("IntDescr.Write: " + this);
-		oupt.writeKind(kind);
+		oupt.writeByte(kind);
 		tag.write(oupt);
 		if(adr != null) {
 			oupt.writeBoolean(true);
