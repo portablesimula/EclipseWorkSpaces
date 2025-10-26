@@ -16,7 +16,6 @@ import bec.util.Util;
 import bec.value.ProgramAddress;
 import bec.virtualMachine.SVM_JUMP;
 import bec.virtualMachine.SVM_JUMPIF;
-import bec.virtualMachine.SVM_NOOP;
 
 /// S-INSTRUCTION: IF
 ///
@@ -77,7 +76,7 @@ public abstract class SkipifConstruction {
 		// FIXUP:
 		SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(END_LABEL.getOfst());
 		instr.setDestination(Global.PSEG.nextAddress());
-      	Global.PSEG.emit(new SVM_NOOP());			
+//     	Global.PSEG.emit(new SVM_NOOP());			
 		Global.ifDepth--;
 	}
 }

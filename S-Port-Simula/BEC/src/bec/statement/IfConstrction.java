@@ -16,7 +16,6 @@ import bec.util.Util;
 import bec.value.ProgramAddress;
 import bec.virtualMachine.SVM_JUMP;
 import bec.virtualMachine.SVM_JUMPIF;
-import bec.virtualMachine.SVM_NOOP;
 
 /// S-INSTRUCTION: IF
 ///
@@ -138,7 +137,7 @@ public abstract class IfConstrction {
 			// FIXUP:
 			SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(IF_LABEL.getOfst());
 			instr.setDestination(Global.PSEG.nextAddress());
-	      	Global.PSEG.emit(new SVM_NOOP());
+//	      	Global.PSEG.emit(new SVM_NOOP());
 
 			Scode.inputInstr();
 			S_Module.programElements();
@@ -161,12 +160,12 @@ public abstract class IfConstrction {
 			// FIXUP:
 			SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(ELSE_LABEL.getOfst());
 			instr.setDestination(Global.PSEG.nextAddress());
-	      	Global.PSEG.emit(new SVM_NOOP());		
+//	      	Global.PSEG.emit(new SVM_NOOP());		
 		} else {
 			// FIXUP:
 			SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(IF_LABEL.getOfst());
 			instr.setDestination(Global.PSEG.nextAddress());
-	      	Global.PSEG.emit(new SVM_NOOP());			
+//	      	Global.PSEG.emit(new SVM_NOOP());			
 		}
 		
 		if(ELSE_Stack != null) {

@@ -18,7 +18,6 @@ import bec.util.Util;
 import bec.value.FixupAddress;
 import bec.value.ProgramAddress;
 import bec.value.Value;
-import bec.virtualMachine.SVM_NOOP;
 
 /// Label descriptor.
 ///
@@ -62,7 +61,7 @@ public class LabelDescr extends Descriptor {
 			fix.setAddress(Global.PSEG.nextAddress());
 		}
 		lab.adr = Global.PSEG.nextAddress();
-      	Global.PSEG.emit(new SVM_NOOP());
+//      	Global.PSEG.emit(new SVM_NOOP());
 		CTStack.checkStackEmpty();
 		return lab;
 	}

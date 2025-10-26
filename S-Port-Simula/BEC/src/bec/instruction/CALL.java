@@ -17,7 +17,6 @@ import bec.util.Scode;
 import bec.util.Type;
 import bec.util.Util;
 import bec.virtualMachine.SVM_CALL;
-import bec.virtualMachine.SVM_NOOP;
 import bec.virtualMachine.SVM_PRECALL;
 import bec.virtualMachine.SVM_LOADC;
 import bec.virtualMachine.SVM_CALL_SYS;
@@ -79,13 +78,13 @@ public abstract class CALL extends Instruction {
 			if(Scode.curinstr == Scode.S_ASSPAR) {
 				Scode.inputInstr();
 				putPar(pitem,1);
-		      	Global.PSEG.emit(new SVM_NOOP());
+//		      	Global.PSEG.emit(new SVM_NOOP());
 			}
 			else if(Scode.curinstr == Scode.S_ASSREP) {
 				int nRep = Scode.inByte();
 				Scode.inputInstr();
 				putPar(pitem,nRep);
-		      	Global.PSEG.emit(new SVM_NOOP());
+//		      	Global.PSEG.emit(new SVM_NOOP());
 			}
 			else if(Scode.curinstr == Scode.S_CALL_TOS) {
 				CALL_TOS = true;
@@ -110,7 +109,7 @@ public abstract class CALL extends Instruction {
 	    		Global.PSEG.emit(new SVM_CALL(rut.getAddress(), spec.returSlot));
 	    	}
 	    }
-		Global.PSEG.emit(new SVM_NOOP());
+//		Global.PSEG.emit(new SVM_NOOP());
 	    if(! (CTStack.TOS() instanceof ProfileItem)) {
 			CTStack.dumpStack("CALL.ofScode: ");
 	    	Util.IERR("CALL.ofScode: Missing ProfileItem on TOS");
