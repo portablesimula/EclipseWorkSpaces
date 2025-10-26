@@ -1,3 +1,8 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec.virtualMachine;
 
 import java.io.IOException;
@@ -23,6 +28,11 @@ import bec.value.Value;
 /// See: SVM_PUSHLEN and SVM_RERSTORE
 /// See also S-Port - Definition of S-code - sect. 7. INTERMEDIATE RESULTS.
 ///
+///
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/virtualMachine/SVM_AND.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public class SVM_RESTORE extends SVM_Instruction {
 
 	private static final boolean DEBUG = false;

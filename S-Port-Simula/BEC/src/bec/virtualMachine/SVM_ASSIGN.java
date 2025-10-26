@@ -1,3 +1,8 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec.virtualMachine;
 
 import java.io.IOException;
@@ -38,6 +43,11 @@ import bec.value.Value;
 /// 
 /// Finally, the remembered values are successively stored in address resadr, resadr+1, ... and upwards
 /// and, if UPDATE operation, the values are pushed back onto the Runtime stack.
+///
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/virtualMachine/SVM_ASSIGN.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public class SVM_ASSIGN extends SVM_Instruction {
 	private final boolean update; // false: ASSIGN, true: UPDATE
 	private final ObjectAddress objadr;

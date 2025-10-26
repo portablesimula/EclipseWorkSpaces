@@ -1,10 +1,14 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec.virtualMachine;
 
 import java.io.IOException;
 
 import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
-import bec.segment.Segment;
 import bec.util.Global;
 import bec.util.Option;
 import bec.value.ObjectAddress;
@@ -30,6 +34,11 @@ import bec.value.Value;
 /// 
 /// Finally, the values in address resadr, resadr+1, ... and upwards are loaded and pushed onto the Runtime stack.
 ///
+///
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/virtualMachine/SVM_LOAD.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public class SVM_LOAD extends SVM_Instruction {
 	private final ObjectAddress objadr;
 	private final int size;

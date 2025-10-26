@@ -1,3 +1,8 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec.virtualMachine;
 
 import java.io.IOException;
@@ -8,9 +13,14 @@ import bec.util.Global;
 import bec.util.Option;
 import bec.value.ProgramAddress;
 
-/**
- * Enter a Routine by pushing local variables onto the runtime stack.
- */
+/// SVM-INSTRUCTION: ENTER
+/// 
+/// Enter a Routine by pushing local variables onto the runtime stack.
+///
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/virtualMachine/SVM_AND.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public class SVM_ENTER extends SVM_Instruction {
 	private final String rutIdent;
 	private final int localSize;

@@ -1,3 +1,8 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec.virtualMachine;
 
 import java.io.IOException;
@@ -18,6 +23,11 @@ import bec.value.ObjectAddress;
 /// The 'result' is calculated as result = new ObjectAddress(sos.segID, sos.offset + tos)
 /// Then the 'result' is pushed onto the Runtime Stack.
 ///
+///
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/virtualMachine/SVM_INCO.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public class SVM_INCO extends SVM_Instruction {
 
 	public SVM_INCO() {

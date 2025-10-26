@@ -1,3 +1,8 @@
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
+/// 
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package bec.virtualMachine;
 
 import java.io.IOException;
@@ -5,7 +10,6 @@ import bec.AttributeInputStream;
 import bec.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Option;
-import bec.util.Util;
 
 /// SVM-INSTRUCTION: PRECALL rutIdent nParSlots exportSize importSize
 /// 
@@ -14,6 +18,11 @@ import bec.util.Util;
 ///		..., value1, value2, ... , value'size
 ///
 ///
+///
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/virtualMachine/SVM_AND.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public class SVM_PRECALL extends SVM_Instruction {
 	private final String rutIdent;
 	private final int nParSlots;
