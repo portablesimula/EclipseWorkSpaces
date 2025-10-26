@@ -151,7 +151,9 @@ public class Type {
 		oupt.writeKind(Kind.K_RECTYPES);
 		oupt.writeShort(RECTYPES.size());
 		for(Type type:RECTYPES) {
-			oupt.writeTagID(type.tag);
+//			oupt.writeTagID(type.tag);
+			oupt.writeString(Scode.TAGIDENT.get(type.tag));
+			oupt.writeShort(type.tag);
 			oupt.writeShort(type.size);
 		}
 	}
@@ -159,7 +161,10 @@ public class Type {
 	public static void readRECTYPES(AttributeInputStream inpt) throws IOException {
 		int n = inpt.readShort();
 		for(int i=0;i<n;i++) {
-			int tag = inpt.readTagID();
+//			int tag = inpt.readTagID();
+	    	String ident = inpt.readString();
+	    	int tag = inpt.readShort();
+	    	Scode.TAGIDENT.set(tag, ident);
 			int size = inpt.readShort();
 			Type type = new Type(tag, size);
 			
@@ -172,11 +177,11 @@ public class Type {
 	}
 
 	public void write(AttributeOutputStream oupt) throws IOException {
-		oupt.writeTag(tag);
+		oupt.writeShort(tag);
 	}
 
 	public static Type read(AttributeInputStream inpt) throws IOException {
-		int tag = inpt.readTag();
+		int tag = inpt.readShort();
 //		IO.println("NEW Type(inpt): " + Scode.edInstr(tag));
 		Type type = TMAP.get(tag);
 		if(type == null) Util.IERR("SJEKK DETTE");

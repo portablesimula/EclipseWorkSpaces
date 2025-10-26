@@ -99,7 +99,7 @@ public class ProgramSegment extends Segment {
 		for(int i=0;i<instructions.size();i++) {
 			SVM_Instruction val = instructions.get(i);
 			if(val == null)
-				 oupt.writeInstr(Scode.S_NULL);
+				 oupt.writeKind(Scode.S_NULL);
 			else val.write(oupt);
 		}
 	}

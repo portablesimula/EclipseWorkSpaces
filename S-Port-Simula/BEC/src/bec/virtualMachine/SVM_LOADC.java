@@ -119,7 +119,7 @@ public class SVM_LOADC extends SVM_Instruction {
 	// ***********************************************************************************************
 	private SVM_LOADC(AttributeInputStream inpt) throws IOException {
 		this.opcode = SVM_Instruction.iPUSHC;
-		this.typeTag = inpt.readTag();
+		this.typeTag = inpt.readShort();
 		boolean present = inpt.readBoolean();
 		this.value = (! present)? null : Value.read(inpt);
 		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
@@ -129,7 +129,7 @@ public class SVM_LOADC extends SVM_Instruction {
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeOpcode(opcode);
-		oupt.writeTag(typeTag);
+		oupt.writeShort(typeTag);
 		if(value != null) {
 			oupt.writeBoolean(true);
 //			IO.println("SVM_LOADC.write: "+value);

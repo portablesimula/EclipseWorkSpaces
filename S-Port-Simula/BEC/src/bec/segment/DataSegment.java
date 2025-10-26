@@ -167,7 +167,7 @@ public class DataSegment extends Segment {
 		for(int i=0;i<values.size();i++) {
 			Value val = values.get(i);
 			if(val == null)
-				 oupt.writeInstr(Scode.S_NULL);
+				 oupt.writeKind(Scode.S_NULL);
 			else val.write(oupt);
 		}
 	}

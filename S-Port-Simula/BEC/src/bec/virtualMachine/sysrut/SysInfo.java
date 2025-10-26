@@ -70,6 +70,7 @@ public abstract class SysInfo {
 		int result = 0;
 		switch(index) {
 			case 1: // The minimum size of this work area.
+//				result = 1500000; break;
 				result = 150000; break;
 //				result = 1500; break;
 			case 2: // The extension/contraction step size.
@@ -97,7 +98,7 @@ public abstract class SysInfo {
 				    // Info=1 signals termination of g.c. (see 5.2).
 				if(Option.execVerbose) {
 					String more = (inform == 0)? " Begin" : " Endof";
-					IO.println("SVM_SYSCALL.gviinf: index=" + index + ", inform=" + inform + more + " Garbage Collection");
+					Util.println("SVM_SYSCALL.gviinf: index=" + index + ", inform=" + inform + more + " Garbage Collection");
 				}
 				break;
 			default: Util.IERR(""+index);

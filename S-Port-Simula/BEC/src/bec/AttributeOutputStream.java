@@ -35,11 +35,11 @@ public class AttributeOutputStream {
 		oupt.writeByte(i);
 	}
 
-    public void writeInstr(int i) throws IOException {
-		if(TRACE) IO.println("AttributeOutputStream.writeInstr: "+i+':'+Scode.edInstr(i));
-		if(i > Scode.S_max || i < 0) throw new IllegalArgumentException("Argument = "+i);
-		oupt.writeByte(i);
-	}
+//    public void writeInstr(int i) throws IOException {
+//		if(TRACE) IO.println("AttributeOutputStream.writeInstr: "+i+':'+Scode.edInstr(i));
+//		if(i > Scode.S_max || i < 0) throw new IllegalArgumentException("Argument = "+i);
+//		oupt.writeByte(i);
+//	}
 
     public void writeOpcode(int i) throws IOException {
 		if(TRACE) IO.println("AttributeOutputStream.writeOpcode: "+i+':'+SVM_Instruction.edOpcode(i));
@@ -47,16 +47,16 @@ public class AttributeOutputStream {
 		oupt.writeByte(i);
 	}
 
-    public void writeTag(int i) throws IOException {
-		if(TRACE) IO.println("AttributeOutputStream.writeTag: "+Scode.edTag(i));
-		oupt.writeShort(i);
-	}
-
-    public void writeTagID(int i) throws IOException {
-		if(TRACE) IO.println("AttributeOutputStream.writeTag: "+Scode.edTag(i));
-		writeString(Scode.TAGIDENT.get(i));
-		oupt.writeShort(i);
-	}
+//    public void writeTag(int i) throws IOException {
+//		if(TRACE) IO.println("AttributeOutputStream.writeTag: "+Scode.edTag(i));
+//		oupt.writeShort(i);
+//	}
+//
+//    public void writeTagID(int i) throws IOException {
+//		if(TRACE) IO.println("AttributeOutputStream.writeTag: "+Scode.edTag(i));
+//		writeString(Scode.TAGIDENT.get(i));
+//		oupt.writeShort(i);
+//	}
 	
     public void writeBoolean(boolean b) throws IOException {
 		if(TRACE) IO.println("AttributeOutputStream.writeBoolean: "+b);

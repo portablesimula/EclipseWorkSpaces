@@ -36,24 +36,24 @@ public class AttributeInputStream {
     	return kind;
 	}
     
-    public void readInstr() throws IOException {
-    	curinstr = inpt.readByte() & 0xFF;
-    	if(TRACE) IO.println("AttributeInputStream.readInstr: "+curinstr+':'+Scode.edInstr(curinstr));
-	}
-
-    public int readTagID() throws IOException {
-    	String ident = readString();
-    	int tag = inpt.readShort();
-    	Scode.TAGIDENT.set(tag, ident);
-		if(TRACE) IO.println("AttributeInputStream.readTag: "+Scode.edTag(tag));
-		return tag;
-	}
-
-    public int readTag() throws IOException {
-    	int tag = inpt.readShort();
-		if(TRACE) IO.println("AttributeInputStream.readTag: "+Scode.edTag(tag));
-		return tag;
-	}
+//    public void readInstr() throws IOException {
+//    	curinstr = inpt.readByte() & 0xFF;
+//    	if(TRACE) IO.println("AttributeInputStream.readInstr: "+curinstr+':'+Scode.edInstr(curinstr));
+//	}
+//
+//    public int readTagID() throws IOException {
+//    	String ident = readString();
+//    	int tag = inpt.readShort();
+//    	Scode.TAGIDENT.set(tag, ident);
+//		if(TRACE) IO.println("AttributeInputStream.readTag: "+Scode.edTag(tag));
+//		return tag;
+//	}
+//
+//    public int readTag() throws IOException {
+//    	int tag = inpt.readShort();
+//		if(TRACE) IO.println("AttributeInputStream.readTag: "+Scode.edTag(tag));
+//		return tag;
+//	}
 	
     public boolean readBoolean() throws IOException {
     	boolean b = inpt.readBoolean();
