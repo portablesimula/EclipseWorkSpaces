@@ -127,6 +127,8 @@ public final class ProgramModule extends Statement {
 		}
 	}
 	
+	/// Parse Simula Program by expecting a Statement.
+	/// @return the Program Statement.
 	private DeclarationScope doParseProgram() {
 		BlockDeclaration mainBlock = new MaybeBlockDeclaration(Global.sourceName);
 		mainBlock.isMainModule = true;
