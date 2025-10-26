@@ -16,25 +16,23 @@ import static simuletta.compiler.common.S_Instructions.*;
 import simuletta.utilities.Option;
 import simuletta.utilities.Util;
 
-/**
- * Binary Operation.
- * 
- * <pre>
- * Syntax:
- * 
- *	binary_operation
- * 		 ::= expression binary_operator factor
- * 
- *	binary_operator
- *		::= + | - | * | / | rem
- *		::= and | or | xor | imp | eqv
- *		::= <> | < | <= | = | >= | > * 
- *
- * </pre>
- * 
- * @author Øystein Myhre Andersen
- * 
- */
+///  Binary Operation.
+///  
+///  <pre>
+///  Syntax:
+///  
+/// 	binary_operation
+///  		 ::= expression binary_operator factor
+///  
+/// 	binary_operator
+/// 		::= + | - | * | / | rem
+/// 		::= and | or | xor | imp | eqv
+/// 		::= <> | < | <= | = | >= | > 
+/// 
+///  </pre>
+///  
+///  @author Øystein Myhre Andersen
+///  
 public class BinaryOperation extends Expression {
 //	public int lineNumber;    // From SyntaxClass
 	int opr;

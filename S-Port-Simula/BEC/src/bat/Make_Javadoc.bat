@@ -1,4 +1,4 @@
-rem *** Call Javadoc for Simula
+rem *** Call Javadoc for S-Port Back-end-Compiler
 
 java -version
 pause

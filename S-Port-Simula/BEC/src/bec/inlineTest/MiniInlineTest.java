@@ -1,10 +1,9 @@
 package bec.inlineTest;
 
+import bec.BecCompiler;
 import bec.util.Option;
 
 import java.util.Vector;
-
-import bec.BecCompiler;
 
 public class MiniInlineTest {
 	
