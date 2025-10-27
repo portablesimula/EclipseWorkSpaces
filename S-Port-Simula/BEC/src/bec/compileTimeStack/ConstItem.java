@@ -21,7 +21,7 @@ public class ConstItem extends TempItem {
 	/// @param type the type of the Constant value
 	/// @param value the Constant value
 	public ConstItem(Type type, Value value) {
-		super(CTStackItem.Mode.VAL, type, 0);
+		super(type);
 		this.value = value;
 	}
 	

@@ -152,16 +152,14 @@ public class CTStack {
 	
 	/// Push a Compile-time stack item onto the Compile-time stack.
 	/// @param item a Compile-time stack item
-	public static void push(CTStackItem item) {
+	private static void push(CTStackItem item) {
 		stack.push(item);
 	}
 	
-	public static void pushTempItem(Type type, int count) {
-		push(new TempItem(CTStackItem.Mode.VAL, type, count));
-	}
-	
+	/// Push a Temp item onto the Compile-time stack.
+	/// @param type the type
 	public static void pushTempItem(Type type) {
-		push(new TempItem(CTStackItem.Mode.VAL, type, 1));
+		push(new TempItem(type));
 	}
 	
 //	public static void pushTempREF(Type type, int count) {

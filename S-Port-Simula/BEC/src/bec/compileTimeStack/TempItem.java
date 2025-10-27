@@ -14,21 +14,19 @@ import bec.util.Type;
 /// 
 /// @author Øystein Myhre Andersen
 public class TempItem extends CTStackItem {
-	int count;
 	
-	public TempItem(Mode mode, Type type, int count) {
-		this.mode = mode;
+	public TempItem(Type type) {
+		this.mode = Mode.VAL;
 		this.type = type;
-		this.count = count;
 	}
 
 	@Override
 	public CTStackItem copy() {
-		return new TempItem(mode, type, count);
+		return new TempItem(type);
 	}
 
 	@Override
 	public String toString() {
-		return edMode() + "TEMP: " + Scode.edTag(type.tag) + ", count=" + count;
+		return edMode() + "TEMP: " + Scode.edTag(type.tag);
 	}
 }
