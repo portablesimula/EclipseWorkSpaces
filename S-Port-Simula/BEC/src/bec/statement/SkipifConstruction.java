@@ -8,6 +8,7 @@ package bec.statement;
 import bec.S_Module;
 import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.CTStackItem;
+import bec.instruction.FETCH;
 import bec.util.Global;
 import bec.util.NamedStack;
 import bec.util.Relation;
@@ -54,7 +55,7 @@ public abstract class SkipifConstruction {
 	
 	/// Treat a complete Skipif Statement.
 	public static void ofScode() {
-		CTStack.forceTosValue(); CTStack.checkTypesEqual(); CTStack.checkSosValue();
+		FETCH.doFetch(); CTStack.checkTypesEqual(); CTStack.checkSosValue();
 		Relation relation = Relation.ofScode();
 		CTStackItem tos = CTStack.pop();
 		CTStack.pop();

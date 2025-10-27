@@ -46,7 +46,7 @@ public abstract class DSIZE extends Instruction {
 		RecordDescr fixrec = (RecordDescr) tag.getMeaning();
 		int n = fixrec.rep0size;
 		if(n == 0) Util.IERR("Illegal DSIZE on: " + fixrec);
-		CTStack.forceTosValue(); CTStack.checkTosInt();
+		FETCH.doFetch(); CTStack.checkTosInt();
 		CTStack.pop();
 		CTStack.pushTempItem(Type.T_SIZE);
 		

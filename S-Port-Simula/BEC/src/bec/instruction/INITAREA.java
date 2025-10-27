@@ -34,7 +34,7 @@ public abstract class INITAREA extends Instruction {
 		@SuppressWarnings("unused")
 		Type type = Type.ofScode();
 
-		CTStack.forceTosValue();			
+		FETCH.doFetch();			
 		CTStack.checkTosType(Type.T_OADDR);
 		
 //		Global.PSEG.emit(new SVM_NOOP());

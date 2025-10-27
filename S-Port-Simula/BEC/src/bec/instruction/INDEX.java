@@ -46,7 +46,7 @@ public abstract class INDEX extends Instruction {
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit SVM instructions.
 	public static void ofScode(int instr) {
-		CTStack.forceTosValue();			
+		FETCH.doFetch();			
 		CTStack.checkTosInt(); CTStack.checkSosRef();
 		if(! (CTStack.TOS() instanceof TempItem)) Util.IERR("");
 		CTStack.pop();
@@ -61,7 +61,7 @@ public abstract class INDEX extends Instruction {
 			}
 			adr.objadr.indexed = true;
 		}			
-		if(instr == Scode.S_INDEXV) CTStack.forceTosValue();
+		if(instr == Scode.S_INDEXV) FETCH.doFetch();
 	}
 	
 

@@ -37,7 +37,7 @@ public abstract class COMPARE extends Instruction {
 	/// Finally: Emit an SVM_COMPARE instruction.
 	public static void ofScode() {
 		Relation relation = Relation.ofScode();
-		CTStack.forceTosValue();
+		FETCH.doFetch();
 		CTStack.checkTypesEqual(); CTStack.checkSosValue();	
 		CTStack.pop(); CTStack.pop();
 		CTStack.pushTempItem(Type.T_BOOL);

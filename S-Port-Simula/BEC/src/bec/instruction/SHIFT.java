@@ -42,7 +42,7 @@ public abstract class SHIFT extends Instruction {
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_SHIFT instruction.
 	public static void ofScode(int instr) {
-		CTStack.forceTosValue();			
+		FETCH.doFetch();			
 		CTStack.checkTosInt(); CTStack.checkSosInt();
 		CTStackItem tos = CTStack.TOS();
 		CTStack.pop(); CTStack.pop();

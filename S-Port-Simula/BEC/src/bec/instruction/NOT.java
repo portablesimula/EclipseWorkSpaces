@@ -31,15 +31,10 @@ public abstract class NOT extends Instruction {
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_NOT instruction.
 	public static void ofScode() {
-		CTStack.forceTosValue();			
+		FETCH.doFetch();			
 		CTStackItem tos = CTStack.TOS();
 	    
 	    Type at = tos.type;
-//	    if(at != Type.T_BOOL) {
-//		    at = CTStack.arithType(at, Type.T_INT);
-//		    CTStack.checkTosArith();
-//		    if( at == Type.T_REAL || at == Type.T_LREAL) Util.IERR("");
-//	    }
 	    if(at != Type.T_BOOL)
 	    	CTStack.checkTosType(Type.T_INT);
 		CTStack.pop();

@@ -7,9 +7,9 @@ package bec.compileTimeStack;
 
 import java.util.Stack;
 
-import bec.instruction.FETCH;
 import bec.util.Global;
 import bec.util.NamedStack;
+import bec.util.Option;
 import bec.util.Scode;
 import bec.util.Type;
 import bec.util.Util;
@@ -152,32 +152,35 @@ public class CTStack {
 	
 	/// Push a Compile-time stack item onto the Compile-time stack.
 	/// @param item a Compile-time stack item
-	private static void push(CTStackItem item) {
+	public static void push(CTStackItem item) {
 		stack.push(item);
 	}
 	
-	/// Push a Temp item onto the Compile-time stack.
+	/// Push a TempItem onto the Compile-time stack.
 	/// @param type the type
 	public static void pushTempItem(Type type) {
 		push(new TempItem(type));
 	}
 	
-//	public static void pushTempREF(Type type, int count) {
-//		push(new TempItem(CTStackItem.Mode.REF, type, count));
-//	}
-	
+	/// Push a ConstItem onto the Compile-time stack.
+	/// @param type the type
+	/// @param value the constant value
 	public static void pushCoonst(Type type, Value value) {
 		push(new ConstItem(type, value));
 	}
 	
+	/// Pop an item off the Compiler-time stack.
+	/// @return the item popped
 	public static CTStackItem pop() {
 		return stack.pop();
 	}
 	
+	/// Push a copy of TOS onto the Compile-time stack.
 	public static void dup() {
 		stack.push(TOS().copy());
 	}
 	
+	/// Utility: Print Stack related error message and exit.
 	private static void STKERR(String msg) {
 		IO.println("\nERROR: " + msg + " ================================================");
 		CTStack.dumpStack("STKERR: ");
@@ -185,63 +188,72 @@ public class CTStack {
 		Util.IERR("FORCED EXIT: " + msg);
 	}
 
-	public static void forceTosValue() {
-		FETCH.doFetch();
-	}
-
+	/// Convenient method: checkTosRef
 	public static void checkTosRef() {
-		checkRef(TOS());
+		if(Option.debugMode)
+			if(! (TOS() instanceof AddressItem)) STKERR("CheckTosRef fails: " + TOS());
 	}
 
+	/// Convenient method: checkSosRef
 	public static void checkSosRef() {
-		checkRef(SOS());	
+		if(Option.debugMode)
+			if(! (SOS() instanceof AddressItem)) STKERR("CheckTosRef fails: " + SOS());
 	}
 
-	private static void checkRef(CTStackItem s) {
-		if(! (s instanceof AddressItem)) STKERR("CheckRef fails: " + s);
-	}
-
+	/// Convenient method: checkSosValue
 	public static void checkSosValue() {
-		if(SOS() instanceof AddressItem) STKERR("CheckSosValue fails");
+		if(Option.debugMode) if(SOS() instanceof AddressItem) STKERR("CheckSosValue fails");
 	}
 
+	/// Convenient method: checkTosType
+	/// @param type the type to be checked for
 	public static void checkTosType(Type t) {
-		if(TOS().type != t) STKERR("Illegal type of TOS: " + TOS().type + " expected: " + t);
+		if(Option.debugMode) if(TOS().type != t) STKERR("Illegal type of TOS: " + TOS().type + " expected: " + t);
 	}
 
+	/// Convenient method: checkSosType
+	/// @param type the type to be checked for
 	public static void checkSosType(Type t) {
-		if(SOS().type != t) STKERR("Illegal type of TOS");
+		if(Option.debugMode) 
+			if(SOS().type != t) STKERR("Illegal type of TOS");
 	}
 
+	/// Convenient method: checkTosInt
 	public static void checkTosInt() {
-		switch(TOS().type.tag) {
+		if(Option.debugMode) switch(TOS().type.tag) {
 			case Scode.TAG_INT, Scode.TAG_SINT: break; 
 			default: STKERR("Illegal type of TOS");
 		}
 	}
 
+	/// Convenient method: checkTosArith
 	public static void checkTosArith() {
-		switch(TOS().type.tag) {
+		if(Option.debugMode) switch(TOS().type.tag) {
 			case Scode.TAG_INT, Scode.TAG_SINT, Scode.TAG_REAL, Scode.TAG_LREAL: break; 
 			default: STKERR("Illegal type of TOS");
 		}
 	}
 
+	/// Convenient method: checkSosInt
 	public static void checkSosInt() {
-		switch(SOS().type.tag) {
+		if(Option.debugMode) switch(SOS().type.tag) {
 			case Scode.TAG_INT, Scode.TAG_SINT: break; 
 			default: STKERR("Illegal type of xTOS");
 		}
 	}
 
+	/// Convenient method: checkSosArith
 	public static void checkSosArith() {
-		Type type = SOS().type;
-		switch(type.tag) {
-			case Scode.TAG_INT, Scode.TAG_SINT, Scode.TAG_REAL, Scode.TAG_LREAL: break; 
-			default: STKERR("Illegal type of SOS: " + type);
+		if(Option.debugMode) {
+			Type type = SOS().type;
+			switch(type.tag) {
+				case Scode.TAG_INT, Scode.TAG_SINT, Scode.TAG_REAL, Scode.TAG_LREAL: break; 
+				default: STKERR("Illegal type of SOS: " + type);
+			}
 		}
 	}
 
+	/// Convenient method: checkSosType2
 	public static Type checkSosType2(Type t1, Type t2) {
 		Type type = SOS().type;
 		if(type == t1) ; // OK
@@ -250,68 +262,42 @@ public class CTStack {
 		return type;
 	}
 
+	/// Convenient method: checkTypesEqual
 	public static void checkTypesEqual() {
-		Type t1 = TOS().type;
-		Type t2 = SOS().type;
-		if(t1 == t2) return;
-		t1 = arithType(t1,t1); t2 = arithType(t2,t2);
-		if(t1 == t2) return;
-		if(arithType(t1,t2).tag == Type.T_INT.tag) return;
-		Type.dumpTypes("checkTypesEqual: ");
-		STKERR("Different types of TOS=" + t1 + " and SOS=" + t2);
+		if(Option.debugMode) {
+			Type t1 = TOS().type;
+			Type t2 = SOS().type;
+			if(t1 == t2) return;
+			switch(t1.tag) {
+		      case Scode.TAG_INT, Scode.TAG_SINT:
+		    	  switch(t2.tag) {
+			    	  case Scode.TAG_INT, Scode.TAG_SINT:  return;
+		    	  }
+			}
+			Type.dumpTypes("checkTypesEqual: ");
+			STKERR("Different types of TOS=" + t1 + " and SOS=" + t2);
+		}
 	}
 
+	/// Convenient method: checkStackEmpty
 	public static void checkStackEmpty() {
-		if(stack.size() != 0) {
+		if(Option.debugMode) if(stack.size() != 0) {
 			STKERR("Stack should be empty");
 			stack = new NamedStack<CTStackItem>("ERR");
 		}
 	}
 
+	/// Debug utility: dumpStack
+	/// @param title the title og the dump printout
 	public static void dumpStack(String title) {
 		stack.dumpStack(0, title);
 	}
 
+	/// Debug utility: dumpStack
+	/// @param level the indent level of the dump printout
+	/// @param title the title of the dump printout
 	public static void dumpStack(int level, String title) {
 		stack.dumpStack(level, title);
-	}
-
-	public static Type arithType(Type t1, Type t2) { // export range(0:MaxType) ct;
-		switch(t1.tag) {
-		      case Scode.TAG_LREAL:
-		    	  switch(t2.tag) {
-			    	  case Scode.TAG_LREAL: return Type.T_LREAL;
-			    	  case Scode.TAG_REAL:  return Type.T_LREAL;
-			    	  case Scode.TAG_INT:   return Type.T_LREAL;
-			    	  case Scode.TAG_SINT:  return Type.T_LREAL;
-			    	  default: return t1;
-		    	  }
-		      case Scode.TAG_REAL:
-		    	  switch(t2.tag) {
-			    	  case Scode.TAG_LREAL: return Type.T_LREAL;
-			    	  case Scode.TAG_REAL:  return Type.T_REAL;
-			    	  case Scode.TAG_INT:   return Type.T_REAL;
-			    	  case Scode.TAG_SINT:  return Type.T_REAL;
-			    	  default: return t1;
-		    	  }
-		      case Scode.TAG_INT:
-		    	  switch(t2.tag) {
-			    	  case Scode.TAG_LREAL: return Type.T_LREAL;
-			    	  case Scode.TAG_REAL:  return Type.T_REAL;
-			    	  case Scode.TAG_INT:   return Type.T_INT;
-			    	  case Scode.TAG_SINT:  return Type.T_INT;
-			    	  default: return t1;
-		    	  }
-		      case Scode.TAG_SINT:
-		    	  switch(t2.tag) {
-			    	  case Scode.TAG_LREAL: return Type.T_LREAL;
-			    	  case Scode.TAG_REAL:  return Type.T_REAL;
-			    	  case Scode.TAG_INT:   return Type.T_INT;
-			    	  case Scode.TAG_SINT:  return Type.T_SINT;
-			    	  default: return t1;
-		    	  }
-		      default: return t1;
-		}
 	}
 
 }

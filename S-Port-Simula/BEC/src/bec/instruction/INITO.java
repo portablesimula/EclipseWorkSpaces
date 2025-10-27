@@ -32,7 +32,7 @@ public abstract class INITO extends Instruction {
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_INITO instruction.
 	public static void ofScode() {
-		CTStack.forceTosValue(); CTStack.checkTosType(Type.T_OADDR);
+		FETCH.doFetch(); CTStack.checkTosType(Type.T_OADDR);
 		CTStack.pop();
 		
 		Global.PSEG.emit(new SVM_INITO());

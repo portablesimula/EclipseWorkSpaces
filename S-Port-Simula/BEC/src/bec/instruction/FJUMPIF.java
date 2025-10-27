@@ -46,7 +46,7 @@ public abstract class FJUMPIF extends Instruction {
 
 //		CTStack.checkTypesEqual();
 //		CTStack.checkSosValue();
-		CTStack.forceTosValue();
+		FETCH.doFetch();
 		CTStack.checkSosValue(); CTStack.checkTypesEqual();
 		CTStackItem tos = CTStack.pop();
 		CTStack.pop();

@@ -36,7 +36,7 @@ public abstract class UPDATE extends Instruction {
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_ASSIGN instruction.
 	public static void ofScode() {
-		CTStack.forceTosValue(); CTStack.checkSosRef(); CTStack.checkTypesEqual();
+		FETCH.doFetch(); CTStack.checkSosRef(); CTStack.checkTypesEqual();
 		CTStackItem tos = CTStack.pop();
 		AddressItem sos = (AddressItem) CTStack.pop();
 		CTStack.pushTempItem(tos.type);

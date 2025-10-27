@@ -8,6 +8,7 @@ package bec.statement;
 import bec.S_Module;
 import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.CTStackItem;
+import bec.instruction.FETCH;
 import bec.util.Global;
 import bec.util.NamedStack;
 import bec.util.Relation;
@@ -92,7 +93,7 @@ public abstract class IfConstrction {
 		// defined later) if the relation is false. A copy of the complete state of the S-compiler's stack is saved as
 		// the "if-stack".
 		
-		CTStack.forceTosValue();
+		FETCH.doFetch();
 		CTStack.checkTypesEqual();
 		CTStack.checkSosValue();
 		Relation relation = Relation.ofScode();
@@ -123,7 +124,7 @@ public abstract class IfConstrction {
 			// 	An unconditional forward branch is generated to an "end-label" (to be defined later). A copy is made of
 			// 	the complete state of the stack and this is saved as the "else-stack", then the stack is restored to the state
 			// 	saved as the "if-stack". Finally the "else-label" (used by if) is located at the current program point.
-			CTStack.forceTosValue();
+			FETCH.doFetch();
 			ELSE_Stack = CTStack.copy("ELSE-Stack-Copy-"+Global.ifDepth);
 			CTStack.reestablish(IF_Stack);
 			if(DEBUG) {
@@ -155,7 +156,7 @@ public abstract class IfConstrction {
 		// identical. After the merge the saved stack is deleted.
 		// If no else-part was processed the "else-label", otherwise the "end-label", is located at the current
 		// program point.
-		CTStack.forceTosValue();
+		FETCH.doFetch();
 		if(ELSE_LABEL != null) {
 			// FIXUP:
 			SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(ELSE_LABEL.getOfst());

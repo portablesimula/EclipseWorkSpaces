@@ -33,7 +33,7 @@ public abstract class ZEROAREA extends Instruction {
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_CALL_SYS(ZEROAREA) instruction.
 	public static void ofScode() {
-		CTStack.forceTosValue(); CTStack.checkTosType(Type.T_OADDR);
+		FETCH.doFetch(); CTStack.checkTosType(Type.T_OADDR);
 		CTStack.checkSosValue(); CTStack.checkSosType(Type.T_OADDR);
 		Global.PSEG.emit(new SVM_CALL_SYS(SVM_CALL_SYS.P_ZEROAREA));
 		CTStack.pop();

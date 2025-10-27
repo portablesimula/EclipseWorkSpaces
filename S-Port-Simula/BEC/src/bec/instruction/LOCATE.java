@@ -53,7 +53,7 @@ public abstract class LOCATE extends Instruction {
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: If TOS.type = GADDR then emit an SVM_ADD instruction.
 	public static void ofScode() {
-		CTStack.forceTosValue(); CTStack.checkTosType(Type.T_AADDR); CTStack.checkSosValue();
+		FETCH.doFetch(); CTStack.checkTosType(Type.T_AADDR); CTStack.checkSosValue();
 		Type sosType = CTStack.checkSosType2(Type.T_OADDR,Type.T_GADDR);
 		CTStack.pop(); CTStack.pop();
 		CTStack.pushTempItem(Type.T_GADDR);

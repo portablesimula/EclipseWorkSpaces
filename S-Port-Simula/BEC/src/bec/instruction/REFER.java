@@ -43,7 +43,7 @@ public abstract class REFER extends Instruction {
 	public static void ofScode() {
 		Type type = Type.ofScode();
 		
-		CTStack.forceTosValue();			
+		FETCH.doFetch();			
 		CTStack.checkTosType(Type.T_GADDR);
         CTStack.pop(); 
         CTStack.push(new AddressItem(type, 0, ObjectAddress.ofReferAddr()));			

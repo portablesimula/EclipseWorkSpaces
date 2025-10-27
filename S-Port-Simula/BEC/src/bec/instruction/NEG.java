@@ -30,7 +30,7 @@ public abstract class NEG extends Instruction {
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_NEG instruction.
 	public static void ofScode() {
-		CTStack.forceTosValue();			
+		FETCH.doFetch();			
 		CTStack.checkTosArith();
 		Type at = CTStack.TOS().type;
 		CTStack.pop();

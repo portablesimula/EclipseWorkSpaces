@@ -36,7 +36,7 @@ public abstract class DIV extends Instruction {
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_DIV instruction.
 	public static void ofScode() {
-		CTStack.forceTosValue(); CTStack.checkTosArith();
+		FETCH.doFetch(); CTStack.checkTosArith();
 		CTStack.checkSosValue(); CTStack.checkTypesEqual();
 		CTStackItem tos = CTStack.pop(); CTStack.pop();
 	    CTStack.pushTempItem(tos.type);

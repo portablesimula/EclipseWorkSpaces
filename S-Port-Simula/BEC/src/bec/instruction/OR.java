@@ -37,7 +37,7 @@ public abstract class OR extends Instruction {
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_OR instruction.
 	public static void ofScode() {
-		CTStack.forceTosValue();
+		FETCH.doFetch();
 		CTStackItem tos = CTStack.TOS();
 	    CTStack.checkSosValue(); CTStack.checkTypesEqual();
 	    Type at = tos.type;

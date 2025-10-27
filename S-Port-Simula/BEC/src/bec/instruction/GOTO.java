@@ -32,7 +32,7 @@ public abstract class GOTO extends Instruction {
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_GOTO instruction.
 	public static void ofScode() {
-		CTStack.forceTosValue();			
+		FETCH.doFetch();			
 		CTStack.checkTosType(Type.T_PADDR);
 		CTStack.pop();
 		CTStack.checkStackEmpty();

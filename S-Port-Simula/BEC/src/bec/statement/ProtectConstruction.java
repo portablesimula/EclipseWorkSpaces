@@ -7,6 +7,7 @@ package bec.statement;
 
 import bec.S_Module;
 import bec.compileTimeStack.CTStack;
+import bec.instruction.FETCH;
 import bec.instruction.Instruction;
 import bec.util.Global;
 import bec.util.Scode;
@@ -59,7 +60,8 @@ public class ProtectConstruction {
 	/// TOS is popped.
 	private static void doSAVE() {
 		CTStack.checkTosType(Type.T_OADDR);
-		CTStack.forceTosValue();
+		
+		FETCH.doFetch();
 		CTStack.pop();
 		CTStack.SAVE("SAVE");
 		
@@ -84,7 +86,7 @@ public class ProtectConstruction {
 	/// TOS is popped.
 	private static void doRESTORE() {
 		CTStack.checkTosRef(); CTStack.checkTosType(Type.T_OADDR);
-		CTStack.forceTosValue();
+		FETCH.doFetch();
 		CTStack.pop();
 		CTStack.checkStackEmpty();
 		CTStack.RESTORE();

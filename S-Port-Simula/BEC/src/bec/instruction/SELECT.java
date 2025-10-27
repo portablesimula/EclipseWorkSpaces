@@ -65,7 +65,7 @@ public abstract class SELECT extends Instruction {
 		adr.offset = adr.offset + attr.rela;
 		adr.type = attr.type;
 		adr.size = attr.size;
-		if(instr == Scode.S_SELECTV) CTStack.forceTosValue();
+		if(instr == Scode.S_SELECTV) FETCH.doFetch();
 	}
 
 }

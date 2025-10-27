@@ -35,7 +35,7 @@ public abstract class ASSIGN extends Instruction {
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_ASSIGN instruction.
 	public static void ofScode() {
-		CTStack.checkSosRef(); CTStack.checkTypesEqual(); CTStack.forceTosValue();
+		CTStack.checkSosRef(); CTStack.checkTypesEqual(); FETCH.doFetch();
 		@SuppressWarnings("unused")
 		CTStackItem tos = CTStack.pop();
 		AddressItem sos = (AddressItem) CTStack.pop();

@@ -33,7 +33,7 @@ public abstract class SETO extends Instruction {
 	/// Finally: Emit an SVM_SETO instruction.
 	public static void ofScode() {
 		CTStack.checkTosType(Type.T_OADDR);
-		CTStack.forceTosValue(); CTStack.pop();
+		FETCH.doFetch(); CTStack.pop();
 		
 		Global.PSEG.emit(new SVM_SETO());
 	}

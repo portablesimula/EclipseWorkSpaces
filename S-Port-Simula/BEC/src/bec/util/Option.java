@@ -10,6 +10,7 @@ public abstract class Option {
 //	public static final boolean TESTING_INDEXED = true;	
 
 	public static boolean INLINE_TESTING = false;
+	public static boolean debugMode = false;
 	public static boolean verbose = false;
 	public static boolean execVerbose = false;
 	public static boolean nopopup = false;

@@ -44,7 +44,7 @@ public abstract class BJUMPIF extends Instruction {
 		Relation relation = Relation.ofScode();
 		int destination = Scode.inByte();
 
-		CTStack.forceTosValue();
+		FETCH.doFetch();
 		CTStack.checkSosValue(); CTStack.checkTypesEqual();
 		CTStackItem tos = CTStack.pop();
 		CTStack.pop();

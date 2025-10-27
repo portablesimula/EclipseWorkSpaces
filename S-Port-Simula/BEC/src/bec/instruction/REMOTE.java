@@ -54,7 +54,7 @@ public abstract class REMOTE extends Instruction {
 		Tag tag = Tag.ofScode();
 		Attribute attr = (Attribute) tag.getMeaning();
 		
-		CTStack.forceTosValue();			
+		FETCH.doFetch();			
 		CTStack.checkTosType(Type.T_OADDR);
 		CTStack.pop();
 		
@@ -63,7 +63,7 @@ public abstract class REMOTE extends Instruction {
 		CTStack.push(adr);
 		
         if(instr == Scode.S_REMOTEV) {
-        	CTStack.forceTosValue();
+        	FETCH.doFetch();
         }
 	}
 

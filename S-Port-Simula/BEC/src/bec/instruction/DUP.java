@@ -41,7 +41,7 @@ public abstract class DUP extends Instruction {
 		if(tos instanceof AddressItem addr) {
 			ObjectAddress oaddr = addr.objadr.addOffset(addr.offset);
 			Global.PSEG.emit(new SVM_DUP(sizeOnStack(oaddr)));
-			CTStack.forceTosValue();
+			FETCH.doFetch();
 		} else {
 			Global.PSEG.emit(new SVM_DUP(tos.type.size()));
 		}

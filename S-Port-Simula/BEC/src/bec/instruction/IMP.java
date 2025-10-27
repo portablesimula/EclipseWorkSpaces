@@ -35,7 +35,7 @@ public abstract class IMP extends Instruction {
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_IMP instruction.
 	public static void ofScode() {
-		CTStack.forceTosValue();
+		FETCH.doFetch();
 		CTStackItem tos = CTStack.TOS();
 	    CTStack.checkSosValue(); CTStack.checkTypesEqual();
 	    Type at = tos.type;

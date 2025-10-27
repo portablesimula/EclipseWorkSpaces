@@ -58,7 +58,7 @@ public abstract class CALL extends Instruction {
 		
 		int nParSlots = 0;
 		for(int i=0;i<nParStacked;i++) {
-			CTStack.forceTosValue();
+			FETCH.doFetch();
 			CTStackItem par = CTStack.pop();
 			nParSlots = nParSlots + par.type.size();
 		}
@@ -142,7 +142,7 @@ public abstract class CALL extends Instruction {
 			CONVERT.doConvert(parType);
 		}
 		
-		if(CTStack.TOS() instanceof AddressItem) CTStack.forceTosValue();
+		if(CTStack.TOS() instanceof AddressItem) FETCH.doFetch();
 		CTStack.pop();
 		
 		if(nrep > 1) { // Then: Treat rest of rep-par ---

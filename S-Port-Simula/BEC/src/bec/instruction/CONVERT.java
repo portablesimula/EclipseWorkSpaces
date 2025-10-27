@@ -31,7 +31,7 @@ public abstract class CONVERT extends Instruction {
 	/// Finally: Call 'doConvert' to test and possibly Emit an SVM_COMPARE instruction.
 	public static void ofScode() {
 		Type toType = Type.ofScode();
-		CTStack.forceTosValue();
+		FETCH.doFetch();
 		doConvert(toType);
 	}
 	

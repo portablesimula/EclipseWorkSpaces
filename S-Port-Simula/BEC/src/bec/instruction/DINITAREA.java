@@ -38,7 +38,7 @@ public abstract class DINITAREA extends Instruction {
 	/// Finally: Emit an SVM_POPK instruction.
 	@SuppressWarnings("unused")
 	public static void ofScode() {
-		CTStack.forceTosValue(); CTStack.checkTosType(Type.T_OADDR);
+		FETCH.doFetch(); CTStack.checkTosType(Type.T_OADDR);
 		CTStack.checkSosValue(); CTStack.checkSosType(Type.T_INT);
 		Type type = Type.ofScode();
 		Scode.expect(Scode.S_FIXREP);

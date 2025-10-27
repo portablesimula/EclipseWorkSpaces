@@ -35,7 +35,7 @@ public abstract class DECO extends Instruction {
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_DECO instruction.
 	public static void ofScode() {
-		CTStack.forceTosValue(); CTStack.checkTosType(Type.T_SIZE);
+		FETCH.doFetch(); CTStack.checkTosType(Type.T_SIZE);
 		CTStack.checkSosValue(); CTStack.checkSosType(Type.T_OADDR);
 		CTStack.pop(); CTStack.pop();
 	    CTStack.pushTempItem(Type.T_OADDR);
