@@ -27,6 +27,7 @@ public class ConstItem extends TempItem {
 	
 	@Override
 	public String toString() {
-		return edMode() + "CNST: " +type + " " + value;
+//		return edMode() + "CNST: " +type + " " + value;
+		return "CNST: " +type + " " + value;
 	}
 }

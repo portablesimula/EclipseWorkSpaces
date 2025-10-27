@@ -23,7 +23,7 @@ public class AddressItem extends CTStackItem {
 	/// @param objadr object address
 	///
 	public AddressItem(Type type, int offset, ObjectAddress objadr) {
-		this.mode = Mode.REF;
+//		this.mode = Mode.REF;
 		this.type = type;
 		this.size = type.size();
 		this.objadr = objadr;
@@ -41,7 +41,8 @@ public class AddressItem extends CTStackItem {
 		if(objadr.indexed) s += "+IDX";
 		s =  s  + "]";
 		if(objadr.kind == ObjectAddress.REMOTE_ADDR) s = s + " withRemoteBase";
-		return edMode() + "ADDR: " + s;
+//		return edMode() + "ADDR: " + s;
+		return "ADDR: " + s;
 	}
 
 }

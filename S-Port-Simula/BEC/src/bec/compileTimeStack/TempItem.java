@@ -16,7 +16,7 @@ import bec.util.Type;
 public class TempItem extends CTStackItem {
 	
 	public TempItem(Type type) {
-		this.mode = Mode.VAL;
+//		this.mode = Mode.VAL;
 		this.type = type;
 	}
 
@@ -27,6 +27,7 @@ public class TempItem extends CTStackItem {
 
 	@Override
 	public String toString() {
-		return edMode() + "TEMP: " + Scode.edTag(type.tag);
+//		return edMode() + "TEMP: " + Scode.edTag(type.tag);
+		return "TEMP: " + Scode.edTag(type.tag);
 	}
 }

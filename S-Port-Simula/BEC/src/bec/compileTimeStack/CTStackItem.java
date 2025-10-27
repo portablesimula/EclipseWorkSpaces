@@ -16,7 +16,7 @@ import bec.util.Util;
 public abstract class CTStackItem {
 	
 	public enum Mode { VAL, REF, PROFILE }
-	public Mode mode;
+//	private Mode mode;
 	public Type type;
 	public int size;
 	
@@ -25,15 +25,15 @@ public abstract class CTStackItem {
 		return null;
 	}
 	
-	public String edMode() {
-		if(mode == null) return("NULL    ");
-		switch(mode) {
-			case PROFILE: return("PRF ");
-			case REF:     return("REF ");
-			case VAL:     return("VAL ");
-		}
-		Util.IERR("");
-		return null;
-	}
+//	public String edMode() {
+//		if(mode == null) return("NULL    ");
+//		switch(mode) {
+//			case PROFILE: return("PRF ");
+//			case REF:     return("REF ");
+//			case VAL:     return("VAL ");
+//		}
+//		Util.IERR("");
+//		return null;
+//	}
 
 }

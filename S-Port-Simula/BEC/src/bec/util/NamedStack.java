@@ -7,8 +7,6 @@ package bec.util;
 
 import java.util.Stack;
 
-import bec.compileTimeStack.CTStackItem;
-
 @SuppressWarnings("serial")
 public class NamedStack<E> extends Stack<E> {
 	private String ident;
@@ -37,10 +35,6 @@ public class NamedStack<E> extends Stack<E> {
 			lead = indent + "        TOS: ";
 			for(int i=this.size()-1;i>=0;i--) {
 				E item = this.get(i);
-//				String mode = item.edMode();
-//				if(item instanceof ProfileItem) IO.println(lead+"PROFILE:  " + item);
-//				else if(item instanceof AddressItem) IO.println(lead+"REF:      " + item);
-//				else IO.println(lead+"VAL:      " + item.getClass().getSimpleName() + "  " + item);
 				IO.println(lead + item);
 				lead = indent + "             ";					
 			}

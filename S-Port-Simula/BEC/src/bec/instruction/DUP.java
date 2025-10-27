@@ -36,7 +36,7 @@ public abstract class DUP extends Instruction {
 	public static void ofScode() {
 		CTStack.dup();
 		CTStackItem tos = CTStack.TOS();
-		tos.mode = Mode.VAL;
+//		tos.mode = Mode.VAL;
 		
 		if(tos instanceof AddressItem addr) {
 			ObjectAddress oaddr = addr.objadr.addOffset(addr.offset);

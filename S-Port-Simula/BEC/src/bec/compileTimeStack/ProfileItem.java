@@ -19,7 +19,7 @@ public class ProfileItem extends CTStackItem {
 	public int nasspar;
 	
 	public ProfileItem(Type tagVoid, ProfileDescr spec) {
-		this.mode = Mode.PROFILE;
+//		this.mode = Mode.PROFILE;
 		this.type = tagVoid;
 		this.spc = spec;
 		this.nasspar = 0;
@@ -33,7 +33,8 @@ public class ProfileItem extends CTStackItem {
 	}
 
 	public String toString() {
-		return edMode() + "PROF: " + spc;
+//		return edMode() + "PROF: " + spc;
+		return "PROF: " + spc;
 	}
 
 }
