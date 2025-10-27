@@ -7,8 +7,8 @@ package bec.descriptor;
 
 import java.io.IOException;
 
-import bec.AttributeOutputStream;
 import bec.instruction.Instruction;
+import bec.util.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Tag;
 import bec.util.Util;

@@ -7,8 +7,6 @@ package bec.util;
 
 import java.io.IOException;
 
-import bec.AttributeInputStream;
-import bec.AttributeOutputStream;
 import bec.descriptor.Descriptor;
 import bec.statement.InsertStatement;
 

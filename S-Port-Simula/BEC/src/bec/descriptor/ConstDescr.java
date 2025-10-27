@@ -8,8 +8,8 @@ package bec.descriptor;
 import java.io.IOException;
 import java.util.Vector;
 
-import bec.AttributeInputStream;
-import bec.AttributeOutputStream;
+import bec.util.AttributeInputStream;
+import bec.util.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Option;
 import bec.util.Type;

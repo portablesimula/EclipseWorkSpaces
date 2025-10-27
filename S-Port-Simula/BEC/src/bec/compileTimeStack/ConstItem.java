@@ -14,13 +14,18 @@ import bec.value.Value;
 /// 
 /// @author Øystein Myhre Andersen
 public class ConstItem extends TempItem {
+	/// The Constant value
 	public Value value;
 
+	/// Value item to be pushed onto the Compile-time Stack.
+	/// @param type the type of the Constant value
+	/// @param value the Constant value
 	public ConstItem(Type type, Value value) {
 		super(CTStackItem.Mode.VAL, type, 0);
 		this.value = value;
 	}
 	
+	@Override
 	public String toString() {
 		return edMode() + "CNST: " +type + " " + value;
 	}

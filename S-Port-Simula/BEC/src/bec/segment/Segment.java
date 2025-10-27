@@ -8,8 +8,8 @@ package bec.segment;
 import java.io.IOException;
 import java.util.HashMap;
 
-import bec.AttributeOutputStream;
 import bec.descriptor.Kind;
+import bec.util.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Relation;
 import bec.util.Scode;

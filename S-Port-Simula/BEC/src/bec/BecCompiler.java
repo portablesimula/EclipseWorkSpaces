@@ -23,10 +23,10 @@ import bec.util.Util;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class BecCompiler {
-	String programHead;
-	static String scodeSource;
 	
+	/// Main method 
 	public static void main(String[] argv) {
+		String scodeSource = null;
 		// Parse command line arguments.
 		for(int i=0;i<argv.length;i++) {
 			String arg=argv[i];
@@ -69,10 +69,7 @@ public class BecCompiler {
 		}
 	}
 
-
-	/**
-	 * Print synopsis of standard options
-	 */
+	/// Print synopsis of standard options
 	private static void help() {
 		IO.println("");
 		IO.println("Usage: java -jar CommonBEC.jar  [options]  ScodeFile ");
@@ -95,16 +92,16 @@ public class BecCompiler {
 	}
 
 
-	/**
-	 * S-program ::= program program_head:string
-	 * 						 program_body endprogram
-	 * 
-	 * 	program_body 
-	 * 		::= interface_module
-	 * 		::= macro_definition_module
-	 * 		::= <module_definition>*
-	 * 		::= main <local_quantity>* <program_element>*
-	 */
+	/// S-program ::= program program_head:string
+	/// 						 program_body
+	///               endprogram
+	/// 
+	/// 	program_body 
+	/// 		::= interface_module
+	/// 		::= macro_definition_module
+	/// 		::= <module_definition>*
+	/// 		::= main <local_quantity>* <program_element>*
+	///
 	public BecCompiler(String scodeSource) {
 		if(Option.verbose) Util.println("BEC: Start BecCompiler with " + scodeSource);
 		Global.scodeSource = scodeSource;
@@ -137,6 +134,7 @@ public class BecCompiler {
 		}
 	}
 	
+	/// Utility: printStackTrace
 	private static void printStackTrace() {
 		StackTraceElement[] elts = Thread.currentThread().getStackTrace();
 		for(StackTraceElement elt:elts) {

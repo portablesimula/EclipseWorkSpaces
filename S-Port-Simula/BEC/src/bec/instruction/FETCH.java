@@ -44,7 +44,7 @@ public abstract class FETCH extends Instruction {
 	public static void doFetch() {
 		if(CTStack.TOS() instanceof AddressItem addr) {
 			Type type = addr.type;
-			CTStack.pop(); CTStack.pushTempVAL(type, 1);
+			CTStack.pop(); CTStack.pushTempItem(type);
 			Global.PSEG.emit(new SVM_LOAD(addr.objadr.addOffset(addr.offset), type.size()));				
 		}
 	}

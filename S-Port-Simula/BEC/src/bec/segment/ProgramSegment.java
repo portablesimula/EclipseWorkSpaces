@@ -8,9 +8,9 @@ package bec.segment;
 import java.io.IOException;
 import java.util.Vector;
 
-import bec.AttributeInputStream;
-import bec.AttributeOutputStream;
 import bec.descriptor.Kind;
+import bec.util.AttributeInputStream;
+import bec.util.AttributeOutputStream;
 import bec.util.Option;
 import bec.util.Scode;
 import bec.util.Type;

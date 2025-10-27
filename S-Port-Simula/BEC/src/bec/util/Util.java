@@ -15,9 +15,9 @@ import java.lang.reflect.Method;
 
 public class Util {
 
-	public static void setLine(Type type) {
-		Scode.curline = Scode.inNumber();
-	}
+//	public static void setLine(Type type) {
+//		Scode.curline = Scode.inNumber();
+//	}
 
 	public static void ITRC(String id, String msg) {
 		if(Option.SCODE_INPUT_TRACE) {

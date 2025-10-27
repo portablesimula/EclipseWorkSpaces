@@ -41,7 +41,7 @@ public abstract class REM extends Instruction {
 		CTStack.forceTosValue(); CTStack.checkTosArith();
 		CTStack.checkSosValue(); CTStack.checkTypesEqual();
 		CTStackItem tos = CTStack.pop(); CTStack.pop();
-	    CTStack.pushTempVAL(tos.type, 1);
+	    CTStack.pushTempItem(tos.type);
 
 		Global.PSEG.emit(new SVM_REM());
 	}

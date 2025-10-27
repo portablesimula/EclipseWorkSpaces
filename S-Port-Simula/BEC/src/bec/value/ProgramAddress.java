@@ -7,14 +7,14 @@ package bec.value;
 
 import java.io.IOException;
 
-import bec.AttributeInputStream;
-import bec.AttributeOutputStream;
 import bec.descriptor.Descriptor;
 import bec.descriptor.LabelDescr;
 import bec.descriptor.RoutineDescr;
 import bec.segment.DataSegment;
 import bec.segment.ProgramSegment;
 import bec.segment.Segment;
+import bec.util.AttributeInputStream;
+import bec.util.AttributeOutputStream;
 import bec.util.EndProgram;
 import bec.util.Global;
 import bec.util.Option;

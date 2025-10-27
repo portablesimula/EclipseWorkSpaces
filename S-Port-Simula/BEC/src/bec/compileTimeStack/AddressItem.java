@@ -17,20 +17,17 @@ public class AddressItem extends CTStackItem {
 	public ObjectAddress objadr;
 	public int offset;
 	
+	/// Address item to be pushed onto the Compile-time Stack.
+	/// @param type the type of the object addressed
+	/// @param offset an extra offset
+	/// @param objadr object address
+	///
 	public AddressItem(Type type, int offset, ObjectAddress objadr) {
 		this.mode = Mode.REF;
 		this.type = type;
 		this.size = type.size();
 		this.objadr = objadr;
 		this.offset = offset;
-	}
-	
-	public boolean getIndexed() {
-		return objadr.indexed;
-	}
-	
-	public void setIndexed(boolean val) {
-		objadr.indexed = val;
 	}
 
 	@Override
@@ -41,7 +38,7 @@ public class AddressItem extends CTStackItem {
 	@Override
 	public String toString() {
 		String s = "" + type + " AT " + objadr + "[" + offset;
-		if(getIndexed()) s += "+IDX";
+		if(objadr.indexed) s += "+IDX";
 		s =  s  + "]";
 		if(objadr.kind == ObjectAddress.REMOTE_ADDR) s = s + " withRemoteBase";
 		return edMode() + "ADDR: " + s;

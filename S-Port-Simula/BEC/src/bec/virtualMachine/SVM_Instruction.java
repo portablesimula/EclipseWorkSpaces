@@ -7,9 +7,9 @@ package bec.virtualMachine;
 
 import java.io.IOException;
 
-import bec.AttributeInputStream;
-import bec.AttributeOutputStream;
 import bec.instruction.CALL;
+import bec.util.AttributeInputStream;
+import bec.util.AttributeOutputStream;
 import bec.util.Util;
 
 @SuppressWarnings("unused")

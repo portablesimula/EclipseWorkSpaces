@@ -7,9 +7,6 @@ package bec.util;
 
 import java.io.IOException;
 
-import bec.AttributeInputStream;
-import bec.AttributeOutputStream;
-
 public class Fixrep {
 	int rep;
 	

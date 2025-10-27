@@ -56,7 +56,7 @@ public abstract class LOCATE extends Instruction {
 		CTStack.forceTosValue(); CTStack.checkTosType(Type.T_AADDR); CTStack.checkSosValue();
 		Type sosType = CTStack.checkSosType2(Type.T_OADDR,Type.T_GADDR);
 		CTStack.pop(); CTStack.pop();
-		CTStack.pushTempVAL(Type.T_GADDR, 1);
+		CTStack.pushTempItem(Type.T_GADDR);
 		
 		if(sosType == Type.T_GADDR)
 			Global.PSEG.emit(new SVM_ADD());

@@ -43,7 +43,7 @@ public abstract class DEREF extends Instruction {
 	public static void ofScode() {
 		CTStack.checkTosRef();
 		AddressItem tos = (AddressItem) CTStack.pop();
-		CTStack.pushTempVAL(Type.T_GADDR, 2);
+		CTStack.pushTempItem(Type.T_GADDR, 2);
 
 		Global.PSEG.emit(new SVM_LOADA(tos.objadr, tos.offset));			
 	}

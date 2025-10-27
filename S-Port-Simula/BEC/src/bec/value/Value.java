@@ -7,9 +7,9 @@ package bec.value;
 
 import java.io.IOException;
 
-import bec.AttributeInputStream;
-import bec.AttributeOutputStream;
 import bec.segment.DataSegment;
+import bec.util.AttributeInputStream;
+import bec.util.AttributeOutputStream;
 import bec.util.Scode;
 import bec.util.Type;
 import bec.util.Util;

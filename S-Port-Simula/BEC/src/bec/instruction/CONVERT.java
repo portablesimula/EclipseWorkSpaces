@@ -41,7 +41,7 @@ public abstract class CONVERT extends Instruction {
 		Type fromtype = TOS.type;
 		if(totype != fromtype) {
 			Global.PSEG.emit(new SVM_CONVERT(fromtype.tag, totype.tag));
-			CTStack.pop(); CTStack.pushTempVAL(totype, 1);
+			CTStack.pop(); CTStack.pushTempItem(totype);
 			TOS.type = totype;
 		}
 	}

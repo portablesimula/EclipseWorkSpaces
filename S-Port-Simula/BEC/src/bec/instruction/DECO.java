@@ -38,7 +38,7 @@ public abstract class DECO extends Instruction {
 		CTStack.forceTosValue(); CTStack.checkTosType(Type.T_SIZE);
 		CTStack.checkSosValue(); CTStack.checkSosType(Type.T_OADDR);
 		CTStack.pop(); CTStack.pop();
-	    CTStack.pushTempVAL(Type.T_OADDR, 1);
+	    CTStack.pushTempItem(Type.T_OADDR);
 	    
 		Global.PSEG.emit(new SVM_DECO());
 	}

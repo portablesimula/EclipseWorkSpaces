@@ -44,7 +44,7 @@ public abstract class OR extends Instruction {
 	    if(at != Type.T_BOOL)
 	    	CTStack.checkTosType(Type.T_INT);
 		CTStack.pop(); CTStack.pop();
-	    CTStack.pushTempVAL(at, 1);
+	    CTStack.pushTempItem(at);
 	    
 		Global.PSEG.emit(new SVM_OR());
 	}

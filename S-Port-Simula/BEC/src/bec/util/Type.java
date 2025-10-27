@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Vector;
 
-import bec.AttributeInputStream;
-import bec.AttributeOutputStream;
 import bec.descriptor.Kind;
 import bec.descriptor.RecordDescr;
 

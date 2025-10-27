@@ -7,9 +7,9 @@ package bec.descriptor;
 
 import java.io.IOException;
 
-import bec.AttributeInputStream;
-import bec.AttributeOutputStream;
 import bec.compileTimeStack.CTStack;
+import bec.util.AttributeInputStream;
+import bec.util.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Option;
 import bec.util.Tag;

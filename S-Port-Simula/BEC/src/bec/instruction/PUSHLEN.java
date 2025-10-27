@@ -44,7 +44,7 @@ public abstract class PUSHLEN extends Instruction {
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_PUSHLEN instruction.
 	public static void ofScode() {
-		CTStack.pushTempVAL(Type.T_SIZE, 1);
+		CTStack.pushTempItem(Type.T_SIZE);
 		
 		Global.PSEG.emit(new SVM_PUSHLEN());
 	}

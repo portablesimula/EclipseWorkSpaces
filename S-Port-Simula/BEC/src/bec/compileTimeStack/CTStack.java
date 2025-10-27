@@ -21,18 +21,29 @@ import bec.value.Value;
 /// 
 /// @author Øystein Myhre Andersen
 public class CTStack {
+	/// Current Compil-time Stack.
 	private static NamedStack<CTStackItem> stack = new NamedStack<CTStackItem>("MAIN");
+	
+	/// Stack of saved SAVE-RESTORE Stacks
 	private static Stack<NamedStack<CTStackItem>> saveStack = new Stack<NamedStack<CTStackItem>>();
+	
+	/// Stack of saved BSEG-ESEG Stacks
 	private static Stack<NamedStack<CTStackItem>> bsegStack = new Stack<NamedStack<CTStackItem>>();
 	
+	/// Returns the Stack ident
+	/// @return the Stack ident
 	public static String ident() {
 		return stack.ident();
 	}
 
+	/// Returns the current Stack
+	/// @return the current Stack
 	public static NamedStack<CTStackItem> current() {
 		return stack;
 	}
 	
+	/// Returns copy of the current Stack
+	/// @return copy of the current Stack
 	public static NamedStack<CTStackItem> copy(String ident) {
 		NamedStack<CTStackItem> copy = new NamedStack<CTStackItem>(ident);
 		for(CTStackItem item:stack) {
@@ -41,6 +52,8 @@ public class CTStack {
 		return copy;
 	}
 
+	/// Reestablish the current Stack.
+	/// @param saved the saved Stack to be reestablished
 	public static void reestablish(NamedStack<CTStackItem> saved) {
 		stack = new NamedStack<CTStackItem>(saved.ident());
 		for(CTStackItem item:saved) {
@@ -48,6 +61,14 @@ public class CTStack {
 		}
 	}
 	
+	/// Returns true if the two specified Stacks are equal to one another.
+	///
+	/// Two Stacks are considered equal if they contain the same number of elements,
+	/// and all corresponding pairs of elements in the two arrays are equal.
+	///
+	/// @param stack1 one Stack to be tested for equality
+	/// @param stack2 the other Stack to be tested for equality
+	/// @return true if the two Stacks are equal
 	public static boolean equals(NamedStack<CTStackItem> stack1, NamedStack<CTStackItem> stack2) {
 		if(stack1.size() != stack2.size()) return false;
 		for(int i=0;i<stack1.size();i++) {
@@ -62,6 +83,8 @@ public class CTStack {
 		return true;
 	}
 
+	/// Utility for the protect_statement.
+	///
 	/// * remember stack;
 	/// * purge stack;
 	public static void SAVE(String ident) {
@@ -69,10 +92,16 @@ public class CTStack {
 		stack = new NamedStack<CTStackItem>(ident);
 	}
 
+	/// Utility for the protect_statement.
+	///
+	///  * check stack empty;
+	///  * reestablish stack remembered at corresponding SAVE;
 	public static void RESTORE() {
 		stack = saveStack.pop();
 	}
 
+	/// Utility for the segment_instruction.
+	///
 	/// * remember stack;
 	/// * purge stack;
 	public static void BSEG(String ident) {
@@ -80,19 +109,28 @@ public class CTStack {
 		stack = new NamedStack<CTStackItem>(ident);
 	}
 
+	/// Utility for the segment_instruction.
+	///
+	///  * check stack empty;
+	///  * reestablish stack remembered at corresponding BSEG;
 	public static void ESEG() {
+		checkStackEmpty();
 		stack = bsegStack.pop();
 	}
 	
-	public static CTStackItem TOS() { // Top of Compile-time stack
+	/// Returns the Top of the Compile-time stack
+	/// @return the Top of the Compile-time stack
+	public static CTStackItem TOS() {
 		if(stack.size() < 1) {
 			stack.dumpStack("CTSTACK UNDERFLOW at TOS");
-			Util.IERR("CTSTACK UNDERFLOW at SOS");
+			Util.IERR("CTSTACK UNDERFLOW at TOS");
 		}
 		return stack.getLast();
 	}
 	
-	public static CTStackItem SOS() { // Second of Compile-time stack
+	/// Returns the Second of the Compile-time stack
+	/// @return the Second of the Compile-time stack
+	public static CTStackItem SOS() {
 		if(stack.size() < 2) {
 			stack.dumpStack("CTSTACK UNDERFLOW at SOS");
 			Util.IERR("CTSTACK UNDERFLOW at SOS");
@@ -100,25 +138,35 @@ public class CTStack {
 		return stack.get(stack.size()-2);
 	}
 	
+	/// Returns the indexed item of the Compile-time stack
+	/// @return the indexed item of the Compile-time stack
 	public static CTStackItem getItem(int i) {
 		return stack.get(i);
 	}
 	
+	/// Returns the size of the Compile-time stack
+	/// @return the size of the Compile-time stack
 	public static int size() {
 		return stack.size();
 	}
 	
-	public static void push(CTStackItem s) {
-		stack.push(s);
+	/// Push a Compile-time stack item onto the Compile-time stack.
+	/// @param item a Compile-time stack item
+	public static void push(CTStackItem item) {
+		stack.push(item);
 	}
 	
-	public static void pushTempVAL(Type type, int count) {
+	public static void pushTempItem(Type type, int count) {
 		push(new TempItem(CTStackItem.Mode.VAL, type, count));
 	}
 	
-	public static void pushTempREF(Type type, int count) {
-		push(new TempItem(CTStackItem.Mode.REF, type, count));
+	public static void pushTempItem(Type type) {
+		push(new TempItem(CTStackItem.Mode.VAL, type, 1));
 	}
+	
+//	public static void pushTempREF(Type type, int count) {
+//		push(new TempItem(CTStackItem.Mode.REF, type, count));
+//	}
 	
 	public static void pushCoonst(Type type, Value value) {
 		push(new ConstItem(type, value));

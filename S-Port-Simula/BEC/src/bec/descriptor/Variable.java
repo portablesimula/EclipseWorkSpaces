@@ -7,10 +7,10 @@ package bec.descriptor;
 
 import java.io.IOException;
 
-import bec.AttributeInputStream;
-import bec.AttributeOutputStream;
 import bec.instruction.CALL;
 import bec.segment.DataSegment;
+import bec.util.AttributeInputStream;
+import bec.util.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Option;
 import bec.util.Type;

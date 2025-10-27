@@ -5,7 +5,6 @@
 /// page: https://creativecommons.org/licenses/by/4.0/
 package bec;
 
-import java.io.IOException;
 import java.util.Vector;
 
 import bec.compileTimeStack.CTStack;
@@ -31,25 +30,24 @@ import bec.util.Util;
 /// @author Øystein Myhre Andersen
 public class InterfaceModule extends S_Module {
 	
-	/**
-	 * 	interface_module
-	 * 		::= global module module_id:string checkcode:string
-	 * 					<global interface>* tag_list
-	 * 					body < init global:tag type repetition_value >*
-	 * 			endmodule
-	 * 
-	 * 		global_interface
-	 * 			::= record_descriptor
-	 * 			::= constant_definition < system sid:string >?
-	 * 			::= global_definition < system sid:string >?
-	 * 			::= routine_profile
-	 * 			::= info_setting
-	 * 
-	 * 				global_definition ::= global internal:newtag quantity_descriptor
-	 * 
-	 * 		tag_list ::= < tag internal:tag external:number >+
-	 * 
-	 */
+	/// 	interface_module
+	/// 		::= global module module_id:string checkcode:string
+	/// 					<global interface>* tag_list
+	/// 					body < init global:tag type repetition_value >*
+	/// 			endmodule
+	/// 
+	/// 		global_interface
+	/// 			::= record_descriptor
+	/// 			::= constant_definition < system sid:string >?
+	/// 			::= global_definition < system sid:string >?
+	/// 			::= routine_profile
+	/// 			::= info_setting
+	/// 
+	/// 				global_definition ::= global internal:newtag quantity_descriptor
+	/// 
+	/// 		tag_list ::= < tag internal:tag external:number >+
+	/// 
+	///
 	public InterfaceModule() {
 		Global.currentModule = this;
 		Scode.inputInstr();
@@ -66,7 +64,6 @@ public class InterfaceModule extends S_Module {
 		Global.routineSegments = new Vector<Segment>();
 		LOOP: while(true) {
 			Scode.inputInstr();
-//			IO.println("InterfaceModule'LOOP: Curinstr="+Scode.edInstr(Scode.curinstr));
 			switch(Scode.curinstr) {
 				case Scode.S_GLOBAL:	Variable.ofGlobal(Global.DSEG); break;
 				case Scode.S_CONSTSPEC: ConstDescr.ofConstSpec(); break;
@@ -79,7 +76,6 @@ public class InterfaceModule extends S_Module {
 				case Scode.S_STMT:		CTStack.checkStackEmpty(); setLine(Kind.qSTM); break;
 				case Scode.S_SETSWITCH:	setSwitch(); break;
 				case Scode.S_INFO:		Util.WARNING("Unknown info: " + Scode.inString());
-//				case Scode.S_INSERT, Scode.S_SYSINSERT: Combine; TERMINATE
 				default: break LOOP;
 			}
 		}
@@ -97,32 +93,10 @@ public class InterfaceModule extends S_Module {
 			if(xtag > nXtag) nXtag = xtag;
 		}
 			
-			
-		try {
-			ModuleIO.outputModule(nXtag);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			Util.IERR("");
-		}
-
-//		Tag.dumpITAGTABLE("MONITOR.interfaceModule'END: ");
-//		Tag.dumpXTAGTABLE("MONITOR.interfaceModule'END: ");
-//		DataType.dumpDataTypes("MONITOR.interfaceModule'END: ");
-//		Global.DSEG.dump("MONITOR.interfaceModule'END: ");
-//		Global.CSEG.dump("MONITOR.interfaceModule'END: ");
-//		Global.dumpDISPL("MONITOR.interfaceModule'END: ");
-//		Scode.dumpTAGIDENTS("MONITOR.interfaceModule'END: ");
-//		Type.dumpTypes("MONITOR.interfaceModule'END: ");
+		outputModule(nXtag);
 		if(Scode.curinstr != Scode.S_BODY) Util.IERR("Illegal termination of module head");
 		Scode.inputInstr();
-//	%+SC    repeat InputInstr while CurInstr=S_INIT
-//	%+SC    do IERR("InterfaceModule: Init values is not supported");
-//	%+SC       InTag(%wrd%); intype; SkipRepValue;
-//	%+SC    endrepeat;
-
 		if(Scode.curinstr != Scode.S_ENDMODULE) Util.IERR("Improper termination of module");
 	}
 	
-
 }

@@ -48,7 +48,7 @@ public abstract class DSIZE extends Instruction {
 		if(n == 0) Util.IERR("Illegal DSIZE on: " + fixrec);
 		CTStack.forceTosValue(); CTStack.checkTosInt();
 		CTStack.pop();
-		CTStack.pushTempVAL(Type.T_SIZE, 1);
+		CTStack.pushTempItem(Type.T_SIZE);
 		
 		if(n > 1) {
 			Global.PSEG.emit(new SVM_LOADC(Type.T_INT, IntegerValue.of(Type.T_INT, n)));

@@ -9,10 +9,10 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import bec.AttributeInputStream;
-import bec.AttributeOutputStream;
 import bec.descriptor.Kind;
 import bec.segment.DataSegment;
+import bec.util.AttributeInputStream;
+import bec.util.AttributeOutputStream;
 import bec.util.EndProgram;
 import bec.util.Global;
 import bec.util.Option;

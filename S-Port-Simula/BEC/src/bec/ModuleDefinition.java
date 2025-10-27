@@ -5,7 +5,6 @@
 /// page: https://creativecommons.org/licenses/by/4.0/
 package bec;
 
-import java.io.IOException;
 import java.util.Vector;
 
 import bec.compileTimeStack.CTStack;
@@ -23,7 +22,6 @@ import bec.statement.InsertStatement;
 import bec.util.Array;
 import bec.util.Global;
 import bec.util.Scode;
-import bec.util.Tag;
 import bec.util.Util;
 
 /// This is an implementation of S-Code Module definition.
@@ -34,28 +32,27 @@ import bec.util.Util;
 /// @author Øystein Myhre Andersen
 public class ModuleDefinition extends S_Module {
 	
-	/**
-	 * 	module_definition ::= module module_id:string check_code:string
-	 * 							visible_existing
-	 * 							body <local_quantity>* <program_element>* endmodule
-	 * 
-	 * 		visible_existing ::= <visible>* tag_list | existing
-	 * 
-	 * 			visible
-	 * 				::= record_descriptor | routine_profile
-	 * 				::= routine_specification | label_specification
-	 * 				::= constant_specification | insert_statement
-	 * 				::= info_setting
-	 * 
-	 * 			tag_list ::= < tag internal:tag external:number >+
-	 * 
-	 * 			local_quantity
-	 * 				::= local var:newtag quantity_descriptor
-	 * 				::= constant_definition                                             // DETTE ER NYTT
-	 * 
-	 *				constant_definition                                                 // DETTE ER NYTT
-	 *					::= const const:spectag quantity_descriptor repetition_value    // DETTE ER NYTT
-	 */
+	/// 	module_definition ::= module module_id:string check_code:string
+	/// 							visible_existing
+	/// 							body <local_quantity>* <program_element>* endmodule
+	/// 
+	/// 		visible_existing ::= <visible>* tag_list | existing
+	/// 
+	/// 			visible
+	/// 				::= record_descriptor | routine_profile
+	/// 				::= routine_specification | label_specification
+	/// 				::= constant_specification | insert_statement
+	/// 				::= info_setting
+	/// 
+	/// 			tag_list ::= < tag internal:tag external:number >+
+	/// 
+	/// 			local_quantity
+	/// 				::= local var:newtag quantity_descriptor
+	/// 				::= constant_definition                                       // Extension to S-Code
+	/// 
+	///				constant_definition                                               // Extension to S-Code
+	///					::= const const:spectag quantity_descriptor repetition_value  // Extension to S-Code
+	///
 	public ModuleDefinition() {
 		Global.currentModule = this;
 		Global.modident = Scode.inString();
@@ -81,7 +78,6 @@ public class ModuleDefinition extends S_Module {
 			int xtag = Scode.inNumber();
 			Global.iTAGTAB.set(xtag, itag); // Index xTag --> value iTag
 			Global.xTAGTAB.set(itag, xtag); // Index iTag --> value xTag
-//			IO.println("MONITOR: xtag="+xtag+"  itag="+itag);
 			Scode.inputInstr();
 			if(xtag > nXtag) nXtag = xtag;
 		}
@@ -89,54 +85,31 @@ public class ModuleDefinition extends S_Module {
 		if(Scode.curinstr != Scode.S_BODY) Util.IERR("Illegal termination of module head");
 		Scode.inputInstr();
 
-		while(Scode.curinstr == Scode.S_INIT) {
-			//%+SC       InTag(%wrd%); intype; SkipRepValue;
+		while(Scode.curinstr == Scode.S_INIT)
 			Util.IERR("InterfaceModule: Init values is not supported");
-		}
 
-//		IO.println("ModuleDefinition: curinstr="+Scode.edInstr(Scode.curinstr));
 		LOOP: while(true) {
 			switch(Scode.curinstr) {
 				case Scode.S_CONST: ConstDescr.ofConstDef(); break;
-				case Scode.S_LOCAL:
-					Variable.ofGlobal(Global.DSEG);
-//					Global.DSEG.dump("ModuleDefinition: ");
-//					Util.IERR("SJEKK DETTE");
-					break;
-				default:
-//					IO.println("ModuleDefinition'LOOP: Terminated by: " + Scode.edInstr(Scode.curinstr));
-					break LOOP;
+				case Scode.S_LOCAL: Variable.ofGlobal(Global.DSEG); break;
+				default: break LOOP;
 			}
 			Scode.inputInstr();
-//			IO.println("ModuleDefinition: +++++++++++++ REPEAT: "+Scode.edInstr(Scode.curinstr));
 		}
-
-		programElements();
-
-		if(Scode.curinstr != Scode.S_ENDMODULE) Util.IERR("Improper termination of module: "+Scode.edInstr(Scode.curinstr));
-
-//		Tag.dumpITAGTABLE("MONITOR.moduleDefinition'END: ");
-//		Tag.dumpXTAGTABLE("MONITOR.moduleDefinition'END: ");
-//		DataType.dumpDataTypes("MONITOR.moduleDefinition'END: ");
-//		Global.DSEG.dump("MONITOR.moduleDefinition'END: ");
-//		Global.CSEG.dump("MONITOR.moduleDefinition'END: ");
-//		Global.dumpDISPL("MONITOR.moduleDefinition'END: ");
-//		Scode.dumpTAGIDENTS("MONITOR.moduleDefinition'END: ");
 		
-		try { ModuleIO.outputModule(nXtag);
-		} catch (IOException e) { e.printStackTrace(); Util.IERR(""); }
+		programElements();
+		if(Scode.curinstr != Scode.S_ENDMODULE) Util.IERR("Improper termination of module: "+Scode.edInstr(Scode.curinstr));
+		outputModule(nXtag);
 	}
 
 
-	/**
-	 * 	visible
-	 * 		::= record_descriptor | routine_profile
-	 * 		::= routine_specification | label_specification
-	 * 		::= constant_specification | insert_statement
-	 * 		::= info_setting
-	 */
+	/// 	visible
+	/// 		::= record_descriptor | routine_profile
+	/// 		::= routine_specification | label_specification
+	/// 		::= constant_specification | insert_statement
+	/// 		::= info_setting
+	///
 	private static boolean viisible() {
-//		IO.println("MONITOR.viisible: CurInstr="+Scode.edInstr(Scode.curinstr));
 		switch(Scode.curinstr) {
 			case Scode.S_CONSTSPEC:		ConstDescr.ofConstSpec(); break;
 			case Scode.S_CONST:			ConstDescr.ofConstDef(); break;
@@ -152,7 +125,6 @@ public class ModuleDefinition extends S_Module {
 			case Scode.S_SETSWITCH:		setSwitch(); break;
 			case Scode.S_INFO:			Util.WARNING("Unknown info: " + Scode.inString());
 			default:
-//				IO.println("MONITOR.viisible: CurInstr="+Scode.edInstr(Scode.curinstr) + " TERMINATES VIISIBLE");
 				return false;
 		}
 		return true;

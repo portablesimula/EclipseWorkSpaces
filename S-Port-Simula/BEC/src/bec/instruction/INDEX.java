@@ -52,14 +52,14 @@ public abstract class INDEX extends Instruction {
 		CTStack.pop();
 		AddressItem adr = (AddressItem) CTStack.TOS();
 		int size = adr.size;
-		if(adr.getIndexed()) {
+		if(adr.objadr.indexed) {
 			Util.IERR("IMPOSSIBLE");
 		} else {
 			if(size > 1) {
 				Global.PSEG.emit(new SVM_LOADC(Type.T_INT, IntegerValue.of(Type.T_INT, size)));
 				Global.PSEG.emit(new SVM_MULT());
 			}
-			adr.setIndexed(true);
+			adr.objadr.indexed = true;
 		}			
 		if(instr == Scode.S_INDEXV) CTStack.forceTosValue();
 	}

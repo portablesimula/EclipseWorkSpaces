@@ -35,7 +35,7 @@ public abstract class DIST extends Instruction {
 		CTStack.forceTosValue(); CTStack.checkTosType(Type.T_OADDR);
 		CTStack.checkSosValue(); CTStack.checkSosType(Type.T_OADDR);
 		CTStack.pop(); CTStack.pop();
-	    CTStack.pushTempVAL(Type.T_SIZE, 1);
+	    CTStack.pushTempItem(Type.T_SIZE);
 	    
 		Global.PSEG.emit(new SVM_DIST());
 	}

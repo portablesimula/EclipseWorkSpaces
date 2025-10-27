@@ -120,7 +120,7 @@ public abstract class CALL extends Instruction {
 		Variable export = spec.getExport();
 		if(export != null) {
 			Type returnType = export.type;
-			CTStack.pushTempVAL(returnType, 1);
+			CTStack.pushTempItem(returnType);
 		}
 	}
 	

@@ -34,7 +34,7 @@ public abstract class GETO extends Instruction {
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_GETO instruction.
 	public static void ofScode() {
-		CTStack.pushTempVAL(Type.T_OADDR, 1);
+		CTStack.pushTempItem(Type.T_OADDR);
 		Global.PSEG.emit(new SVM_GETO());
 	}
 

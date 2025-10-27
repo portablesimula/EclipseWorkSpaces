@@ -46,7 +46,7 @@ public abstract class SHIFT extends Instruction {
 		CTStack.checkTosInt(); CTStack.checkSosInt();
 		CTStackItem tos = CTStack.TOS();
 		CTStack.pop(); CTStack.pop();
-	    CTStack.pushTempVAL(tos.type, 1);
+	    CTStack.pushTempItem(tos.type);
 	    
 	    Global.PSEG.emit(new SVM_SHIFT(instr));
 	}
