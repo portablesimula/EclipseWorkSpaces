@@ -72,9 +72,9 @@ public class ProfileDescr extends Descriptor {
 	private static final boolean DEBUG = false;
 	
 	//	NOT SAVED:
-	private Vector<Variable> imports;
-	public Variable export;
-	public Variable exit;
+//	private Vector<Variable> imports;
+//	public Variable export;
+//	public Variable exit;
 	
 	public int bodyTag;    // peculiar
 	private String nature; // peculiar
@@ -124,7 +124,7 @@ public class ProfileDescr extends Descriptor {
 			Tag rtag = Tag.ofScode();
 			String xid = Scode.inString();
 			@SuppressWarnings("unused")
-			RoutineDescr rut = new RoutineDescr(Kind.K_IntRoutine, rtag, null);
+			RoutineDescr rut = new RoutineDescr(rtag, null);
 			prf.pKind = SVM_CALL_SYS.getKnownKind(xid);
 		} else if(Scode.nextByte() == Scode.S_SYSTEM) {
 			 //	peculiar ::= system body:newtag sid:string
@@ -132,48 +132,53 @@ public class ProfileDescr extends Descriptor {
 			Tag rtag = Tag.ofScode();
 			String xid = Scode.inString();
 			@SuppressWarnings("unused")
-			RoutineDescr rut = new RoutineDescr(Kind.K_IntRoutine, rtag, null);
+			RoutineDescr rut = new RoutineDescr(rtag, null);
 			prf.pKind = SVM_CALL_SYS.getSysKind(xid);
 		}
-		prf.imports = new Vector<Variable>();
+		
+		Vector<Variable> imports;
+		Variable export = null;
+		Variable exit = null;
+
+		imports = new Vector<Variable>();
 		prf.params = new Vector<Tag>();
 
 		Scode.inputInstr();
 		while(Scode.curinstr == Scode.S_IMPORT) {
 			Variable par = null;
 			par = Variable.ofIMPORT();				
-			prf.imports.add(par);
+			imports.add(par);
 			prf.params.add(par.tag);
 			Scode.inputInstr();
 		}
 		if(Scode.curinstr == Scode.S_EXIT) {
-			prf.exit = Variable.ofEXIT();
+			exit = Variable.ofEXIT();
 			Scode.inputInstr();
 		} else if(Scode.curinstr == Scode.S_EXPORT) {
-			prf.export = Variable.ofEXPORT();				
-			prf.exportTag = prf.export.tag;
+			export = Variable.ofEXPORT();				
+			prf.exportTag = export.tag;
 			Scode.inputInstr();
 		}
-		if(prf.exit == null) prf.exit = Variable.ofRETUR(prf.returSlot);
+		if(exit == null) exit = Variable.ofRETUR(prf.returSlot);
 		if(Scode.curinstr != Scode.S_ENDPROFILE)
 			Util.IERR("Missing ENDPROFILE. Got " + Scode.edInstr(Scode.curinstr));
 		
 		// Allocate StackFrame
 		int rela = 0;
-		if(prf.export != null) {
-			prf.export.address = ObjectAddress.ofRelFrameAddr(rela);
-			prf.exportSize = prf.export.type.size();
+		if(export != null) {
+			export.address = ObjectAddress.ofRelFrameAddr(rela);
+			prf.exportSize = export.type.size();
 			rela += prf.exportSize;
 		}
-		for(Variable par:prf.imports) {
+		for(Variable par:imports) {
 			par.address = ObjectAddress.ofRelFrameAddr(rela);
 			rela += par.type.size() * par.repCount;
 		}
 		// Allocate Return address
 		prf.returSlot = ObjectAddress.ofRelFrameAddr(rela++);
 		
-		if(prf.exit != null) {
-			prf.exit.address = prf.returSlot;
+		if(exit != null) {
+			exit.address = prf.returSlot;
 		}
 		
 		if(DEBUG) {
@@ -239,7 +244,8 @@ public class ProfileDescr extends Descriptor {
 		oupt.writeShort(params.size());
 		for(Tag par:params) par.write(oupt);
 		returSlot.write(oupt);
-		if(export != null) {
+//		if(export != null) {
+		if(exportTag != null) {
 			oupt.writeBoolean(true);
 			exportTag.write(oupt);
 			oupt.writeShort(exportSize);

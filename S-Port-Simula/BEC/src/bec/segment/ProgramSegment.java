@@ -22,7 +22,7 @@ import bec.virtualMachine.SVM_Instruction;
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/segment/ProgramSegment.java"><b>Source File</b></a>.
 /// 
 /// @author Øystein Myhre Andersen
-public class ProgramSegment extends Segment {
+public final class ProgramSegment extends Segment {
 	public Vector<SVM_Instruction> instructions;
 
 	public ProgramSegment(String ident, int segmentKind) {
@@ -73,6 +73,7 @@ public class ProgramSegment extends Segment {
 		IO.println("========================== " + title + ident + " END  ==========================");
 	}
 
+	@Override
 	public String toString() {
 		return "ProgramSegment \"" + ident + '"';
 	}
@@ -93,6 +94,7 @@ public class ProgramSegment extends Segment {
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE)
 			IO.println("ProgramSegment.Write: " + this + ", Size=" + instructions.size());
+		if(instructions.size() == 0) return;
 		oupt.writeByte(segmentKind);
 		oupt.writeString(ident);
 		oupt.writeShort(instructions.size());

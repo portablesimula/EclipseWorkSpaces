@@ -24,12 +24,17 @@ import bec.virtualMachine.SVM_SWITCH;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class SwitchDescr extends Descriptor {
+	
+	/// The size of this Switch
 	int size;
+	
+	/// The Destination Table of this Switch
 	public ProgramAddress[] DESTAB;
 	
-	///  forward_jump ::= switch switch:newtag size:number
-	private SwitchDescr(int kind, Tag tag) {
-		super(kind, tag);
+	/// Create a new SwitchDescr with the given 'tag'
+	/// @param tag used to lookup descriptors
+	private SwitchDescr(Tag tag) {
+		super(Kind.K_SwitchDescr, tag);
 		size = Scode.inNumber();
 		DESTAB = new ProgramAddress[size];
 		CTStack.checkTosInt();
@@ -37,15 +42,13 @@ public class SwitchDescr extends Descriptor {
     	Global.PSEG.emit(new SVM_SWITCH(DESTAB));
 	}
 	
+	/// Scans the remaining S-Code (if any) belonging to this descriptor.
+	/// Then construct a new Attribute instance.
+	/// @return an SwitchDescr instance.
 	public static SwitchDescr ofScode() {
 		Tag tag = Tag.ofScode();
-		SwitchDescr sw = new SwitchDescr(Kind.K_SwitchDescr, tag);
+		SwitchDescr sw = new SwitchDescr(tag);
 		return sw;
-	}
-	
-	@Override
-	public void print(final String indent) {
-		IO.println(indent + toString());
 	}
 	
 	public String toString() {

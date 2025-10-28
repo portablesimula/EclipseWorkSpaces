@@ -7,7 +7,6 @@ package bec.descriptor;
 
 import java.io.IOException;
 
-import bec.instruction.CALL;
 import bec.segment.DataSegment;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
@@ -54,14 +53,25 @@ import bec.value.Value;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class Variable extends Descriptor {
+	
+	/// The address of this Variable
 	public ObjectAddress address;
+	
+	/// The Type of this Variable
 	public Type type;
+	
+	/// The repCount of this Variable
 	public int repCount;
 
+	/// Create a new Attribute with the given 'tag'
+	/// @param tag used to lookup descriptors
 	private Variable(int kind, Tag tag) {
 		super(kind, tag);
 	}
 	
+	/// Scans the remaining S-Code (if any) belonging to this descriptor.
+	/// Then construct a new Variable instance.
+	/// @return an Variable instance.
 	public static Variable ofIMPORT() {
 		Tag tag = Tag.ofScode();
 		Variable var = new Variable(Kind.K_Import, tag);
@@ -70,6 +80,9 @@ public class Variable extends Descriptor {
 		return var;
 	}
 	
+	/// Scans the remaining S-Code (if any) belonging to this descriptor.
+	/// Then construct a new Variable instance.
+	/// @return an Variable instance.
 	public static Variable ofEXPORT() {
 		Tag tag = Tag.ofScode();
 		Variable var = new Variable(Kind.K_Export, tag);
@@ -78,6 +91,9 @@ public class Variable extends Descriptor {
 		return var;
 	}
 	
+	/// Scans the remaining S-Code (if any) belonging to this descriptor.
+	/// Then construct a new Variable instance.
+	/// @return an Variable instance.
 	public static Variable ofEXIT() {
 		Tag tag = Tag.ofScode();
 		Variable var = new Variable(Kind.K_Exit, tag);
@@ -85,6 +101,9 @@ public class Variable extends Descriptor {
 		return var;
 	}
 	
+	/// Scans the remaining S-Code (if any) belonging to this descriptor.
+	/// Then construct a new Variable instance.
+	/// @return an Variable instance.
 	public static Variable ofRETUR(ObjectAddress returAddr) {
 		Variable var = new Variable(Kind.K_Retur, null);
 		var.type = Type.T_PADDR;
@@ -92,6 +111,9 @@ public class Variable extends Descriptor {
 		return var;
 	}
 	
+	/// Scans the remaining S-Code (if any) belonging to this descriptor.
+	/// Then construct a new Variable instance.
+	/// @return an Variable instance.
 	public static Variable ofLocal(int rela) {
 		Tag tag = Tag.ofScode();
 		Variable var = new Variable(Kind.K_LocalVar, tag);
@@ -101,6 +123,9 @@ public class Variable extends Descriptor {
 		return var;
 	}
 	
+	/// Scans the remaining S-Code (if any) belonging to this descriptor.
+	/// Then construct a new Variable instance.
+	/// @return an Variable instance.
 	public static Variable ofGlobal(DataSegment seg) {
 		Tag tag = Tag.ofScode();
 		Variable var = new Variable(Kind.K_GlobalVar, tag);
@@ -143,21 +168,17 @@ public class Variable extends Descriptor {
 		}
 		return var;
 	}
-
-	@Override
-	public void print(final String indent) {
-		IO.println(indent + this);
-	}
 	
+	@Override
 	public String toString() {
-		String s = "Variable " +Kind.edKind(kind) + " " + tag + ", type=" + type + ", repCount=" + repCount+ " " + address;
-		return s;
+		return "Variable " +Kind.edKind(kind) + " " + tag + ", type=" + type + ", repCount=" + repCount+ " " + address;
 	}
 
 	// ***********************************************************************************************
 	// *** Attribute File I/O
 	// ***********************************************************************************************
 
+	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("Variable.Write: " + this);
 		oupt.writeByte(kind); // K_GLOBAL, K_LOCAL, K_IMPORT, K_EXPORT, K_EXIT, K_RETUR

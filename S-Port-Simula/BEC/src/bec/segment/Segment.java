@@ -22,7 +22,7 @@ import bec.value.ProgramAddress;
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/segment/Segment.java"><b>Source File</b></a>.
 /// 
 /// @author Øystein Myhre Andersen
-public class Segment { // extends Descriptor {
+public abstract class Segment { // extends Descriptor {
 	public String ident;
 	protected int segmentKind; // K_SEG_DATA, K_SEG_CONST, K_SEG_CODE
 	private int segmentIndex;
@@ -47,9 +47,6 @@ public class Segment { // extends Descriptor {
 	public static Segment lookup(String ident) {
 		Segment seg = Global.SEGMAP.get(ident);
 		if(seg == null) {
-//			find("PSEG_FIL_FOPEN:BODY").dump("Segment.lookup: ");
-//			Global.PSEG.dump("Segment.lookup: ");
-//			Segment.listAll();
 			Util.IERR("Can't find Segment \"" + ident + '"');
 		}
 		return seg;
@@ -123,63 +120,9 @@ public class Segment { // extends Descriptor {
 		}
 	}
 	
+	@Override
 	public String toString() {
 		return Kind.edKind(segmentKind) + ':' + segmentKind + " \"" + ident + '"';
-	}
-
-	
-	// ***********************************************************************************************
-	// *** TESTING
-	// ***********************************************************************************************
-
-	public static void main(String[] args) {
-		IO.println("BEGIN TEST Segment.compare: ");
-		Global.SEGMAP = new HashMap<String, Segment>();
-		Global.CSEG = new DataSegment("CSEG", Kind.K_SEG_CONST);
-		Global.DSEG = new DataSegment("DSEG", Kind.K_SEG_DATA);
-		
-		ProgramAddress seg1Low  = new ProgramAddress(Type.T_PADDR, "DSEG", 12);
-		ProgramAddress seg1High = new ProgramAddress(Type.T_PADDR, "DSEG", 99);
-		ProgramAddress seg2Low  = new ProgramAddress(Type.T_PADDR, "CSEG", 12);
-		ProgramAddress seg2High = new ProgramAddress(Type.T_PADDR, "CSEG", 99);
-		int nErr = 0;
-
-		nErr += TEST(seg1Low, Scode.S_LT, seg1High, true);
-		nErr += TEST(seg1Low, Scode.S_LE, seg1High, true);
-		nErr += TEST(seg1Low, Scode.S_EQ, seg1High, false);
-		nErr += TEST(seg1Low, Scode.S_GE, seg1High, false);
-		nErr += TEST(seg1Low, Scode.S_GT, seg1High, false);
-		nErr += TEST(seg1Low, Scode.S_NE, seg1High, true);
-
-		nErr += TEST(null, Scode.S_EQ, seg1High, false);
-		nErr += TEST(null, Scode.S_NE, seg1High, true);
-
-		nErr += TEST(seg1Low, Scode.S_EQ, null, false);
-		nErr += TEST(seg1Low, Scode.S_NE, null, true);
-		
-		nErr += TEST(null, Scode.S_LT, null, false);
-		nErr += TEST(null, Scode.S_LE, null, true);
-		nErr += TEST(null, Scode.S_EQ, null, true);
-		nErr += TEST(null, Scode.S_GE, null, true);
-		nErr += TEST(null, Scode.S_GT, null, false);
-		nErr += TEST(null, Scode.S_NE, null, false);
-
-		nErr += TEST(seg2Low, Scode.S_EQ, seg1High, false);
-		nErr += TEST(seg2Low, Scode.S_NE, seg1High, true);
-		
-		IO.println("ENDOF TEST Segment.compare: nErr = " + nErr);		
-	}
-	
-	private static int TEST(ProgramAddress LHS, int relation, ProgramAddress RHS, boolean expected) {
-		String LHSegID = (LHS == null)? null : ((ProgramAddress)LHS).segID;
-		int lhs = (LHS == null)? 0 : ((ProgramAddress)LHS).getOfst();
-		String RHSegID = (RHS == null)? null : ((ProgramAddress)RHS).segID;
-		int rhs = (RHS == null)? 0 : ((ProgramAddress)RHS).getOfst();
-		if(Segment.compare(LHSegID, lhs, relation, RHSegID, rhs) != expected) {
-			IO.println("ERROR: " + LHS + " " + Scode.edInstr(relation) + " " + RHS + " ==> " + (! expected));
-			return 1;
-		}
-		return 0;
 	}
 
 

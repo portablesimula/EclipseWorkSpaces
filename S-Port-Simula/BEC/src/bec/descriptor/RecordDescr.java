@@ -58,24 +58,9 @@ public class RecordDescr extends Descriptor {
 		super(Kind.K_RecordDescr, tag);
 	}
 	
-/**
- *	record_descriptor
- *		::= record record_tag:newtag <record_info>?
- *			<prefix_part>? common_part
- *			<alternate_part>*
- *			endrecord 
- *
- *	record_info	::= info "TYPE" | info "DYNAMIC"
- *	prefix_part	::= prefix resolved_structure
- *	common_part	::= <attribute_definition>*
- *	alternate_part ::= alt <attribute_definition>*
- *		attribute_definition ::= attr attr:newtag quantity_descriptor
- *		resolved_structure ::= structured_type < fixrep count:ordinal >?
- *			structured_type ::= record_tag:tag
- *
- *		quantity_descriptor ::= resolved_type < Rep count:number >?
- * 
- */
+	/// Scans the remaining S-Code (if any) belonging to this descriptor.
+	/// Then construct a new RecordDescr instance.
+	/// @return an Attribute instance.
 	public static RecordDescr ofScode() {
 		RecordDescr rec = new RecordDescr(Tag.ofScode());
 		int comnSize = 0;
@@ -146,16 +131,16 @@ public class RecordDescr extends Descriptor {
 	}
 
 
-	
-	/**
-	 *	alternate_part ::= alt <attribute_definition>*
-	 *		attribute_definition ::= attr attr:newtag quantity_descriptor
-	 *		resolved_structure ::= structured_type < fixrep count:ordinal >?
-	 *			structured_type ::= record_tag:tag
-	 *
-	 *		quantity_descriptor ::= resolved_type < Rep count:number >?
-	 * 
-	 */
+	/// AlternatePart.
+	///
+	///	alternate_part ::= alt <attribute_definition>*
+	///		attribute_definition ::= attr attr:newtag quantity_descriptor
+	///		resolved_structure ::= structured_type < fixrep count:ordinal >?
+	///			structured_type ::= record_tag:tag
+	///
+	///		quantity_descriptor ::= resolved_type < Rep count:number >?
+	/// 
+	///
 	class AlternatePart {
 		Vector<Attribute> attributes;
 		
@@ -177,7 +162,6 @@ public class RecordDescr extends Descriptor {
 					first = false;
 				}
 				else IO.println(indent + "    " + attr);
-
 			}
 		}
 	}	
@@ -186,6 +170,7 @@ public class RecordDescr extends Descriptor {
 	// *** Attribute File I/O
 	// ***********************************************************************************************
 
+	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("RecordDescr.Write: " + this);
 		oupt.writeByte(kind);
@@ -203,6 +188,5 @@ public class RecordDescr extends Descriptor {
 		if(Option.ATTR_INPUT_TRACE) IO.println("RecordDescr.Read: " + rec);
 		return rec;
 	}
-
 
 }

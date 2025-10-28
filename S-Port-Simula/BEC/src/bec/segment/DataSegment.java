@@ -25,7 +25,7 @@ import bec.value.Value;
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/segment/DataSegment.java"><b>Source File</b></a>.
 /// 
 /// @author Øystein Myhre Andersen
-public class DataSegment extends Segment {
+public final class DataSegment extends Segment {
 	Vector<Value> values;
 	private int guard = -1;
 	
@@ -140,6 +140,7 @@ public class DataSegment extends Segment {
 		IO.println("==================== " + title + ident + " END  ====================");
 	}
 	
+	@Override
 	public String toString() {
 		if(segmentKind == Kind.K_SEG_CONST)
 			return "ConstSegment \"" + ident + '"';
@@ -161,6 +162,7 @@ public class DataSegment extends Segment {
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("DataSegment.Write: " + this + ", Size=" + values.size());
+		if(values.size() == 0) return;
 		oupt.writeByte(segmentKind);
 		oupt.writeString(ident);
 		oupt.writeShort(values.size());

@@ -41,7 +41,7 @@ public abstract class Descriptor extends Instruction {
 	/// @param indent number of spaces leading the lines
 	///
 	public void print(final String indent) {
-		Util.IERR("Method printTree need a redefinition in "+this.getClass().getSimpleName());
+		IO.println(indent + this);
 	}
 
 	// ***********************************************************************************************

@@ -46,61 +46,63 @@ import bec.virtualMachine.SVM_RETURN;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class RoutineDescr extends Descriptor {
+	
+	/// The ProgramSegment with this routine code.
 	ProgramSegment PSEG;
+	
 	private ProgramAddress adr;
+	
+	/// The corresponding Profile tag
 	public Tag prftag;
-	DataSegment DSEG; // With LOCAL Variables
+	
+	/// DataSegment with LOCAL Variables
+	DataSegment DSEG;
+	
+	/// The local Variables
 	Vector<Tag> locals;
+	
+	/// The size of the local Variables on the Frame
 	public int localFrameSize;
 	
 	private static final boolean DEBUG = false;
 
-	public RoutineDescr(int kind, Tag tag, Tag prftag) {
-		super(kind, tag);
+	/// Create a new RoutineDescr with the given tags
+	/// @param tag used to lookup descriptors
+	/// @param prftag the corresponding Profile tag
+	public RoutineDescr(Tag tag, Tag prftag) {
+		super(Kind.K_IntRoutine, tag);
 		this.prftag = prftag;
 		this.locals = new Vector<Tag>();
 	}
 	
+	/// Returns the address of this RoutineDescr
+	/// @return the address of this RoutineDescr
 	public ProgramAddress getAddress() {
-//		if(adr == null)	adr = new FixupAddress(Type.T_PADDR, this);
 		if(adr == null)	adr = new FixupAddress(Type.T_RADDR, this);
 		return adr;
 	}
 	
-	public String toString() {
-		return "Routine " + tag + ", profile:" + prftag + ", adr:" + adr;
-	}
-	
-	/**
-	 * routine_specification
-	 *		::= routinespec body:newtag profile:tag
-	 * @return
-	 */
+	/// Scans the remaining S-Code (if any) belonging to this descriptor.
+	/// Then construct a new Attribute instance.
+	/// @return an RoutineDescr instance.
 	public static RoutineDescr ofRoutineSpec() {
 		Tag tag = Tag.ofScode();
 		Tag prftag = Tag.ofScode();
 		RoutineDescr rut = (RoutineDescr) Global.DISPL.get(tag.val);
 		if(rut != null) Util.IERR("");
-		rut = new RoutineDescr(Kind.K_IntRoutine, tag, prftag);
-//		rut.adr = null;
-//		Util.IERR("TEST DETTE");
+		rut = new RoutineDescr(tag, prftag);
 		return rut;
 	}
 
-	/**
-	 * 	routine_definition
-	 * 		::= routine body:spectag profile:tag
-	 *			 <local_quantity>* <instruction>* endroutine
-	 *
-	 *		local_quantity
-	 *			::= local var:newtag quantity_descriptor
-	 */
+	/// Scans the remaining S-Code (if any) belonging to this descriptor.
+	/// Then construct a new Attribute instance.
+	/// @return an RoutineDescr instance.
 	public static void ofRoutineDef() {
 		Tag tag = Tag.ofScode();
 		Tag prftag = Tag.ofScode();
 		
 		RoutineDescr rut = (RoutineDescr) Global.DISPL.get(tag.val);
-		if(rut == null) rut = new RoutineDescr(Kind.K_IntRoutine, tag, prftag);
+		if(rut == null) rut = new RoutineDescr(tag, prftag);
 		String modID = (Global.moduleID == null)? "" : (Global.moduleID + '_');
 		String id = modID + tag.ident();
 		
@@ -156,11 +158,17 @@ public class RoutineDescr extends Descriptor {
 		
 		Global.PSEG = prevPSEG;
 	}
+	
+	@Override
+	public String toString() {
+		return "Routine " + tag + ", profile:" + prftag + ", adr:" + adr;
+	}
 
 	// ***********************************************************************************************
 	// *** Attribute File I/O
 	// ***********************************************************************************************
 
+	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("RoutineDescr.Write: " + this);
 		oupt.writeByte(kind);
@@ -186,7 +194,7 @@ public class RoutineDescr extends Descriptor {
 		if(present) prftag = Tag.read(inpt);
 		
 		Tag tag = Tag.read(inpt);
-		RoutineDescr rut = new RoutineDescr(Kind.K_IntRoutine, tag, prftag);
+		RoutineDescr rut = new RoutineDescr(tag, prftag);
 		present = inpt.readBoolean();
 		if(present) {
 			rut.adr = (ProgramAddress) Value.read(inpt);
