@@ -15,8 +15,9 @@ import bec.util.Type;
 /// @author Øystein Myhre Andersen
 public class TempItem extends CTStackItem {
 	
+	/// Temp item to be pushed onto the Compile-time Stack.
+	/// @param type the type of the object addressed
 	public TempItem(Type type) {
-//		this.mode = Mode.VAL;
 		this.type = type;
 	}
 
@@ -27,7 +28,6 @@ public class TempItem extends CTStackItem {
 
 	@Override
 	public String toString() {
-//		return edMode() + "TEMP: " + Scode.edTag(type.tag);
 		return "TEMP: " + Scode.edTag(type.tag);
 	}
 }

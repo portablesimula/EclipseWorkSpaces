@@ -35,7 +35,7 @@ import bec.util.Util;
 /// 
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
-public class Instruction {
+public abstract class Instruction {
 		
 	public static void inInstructions() {
 		LOOP:while(true) {

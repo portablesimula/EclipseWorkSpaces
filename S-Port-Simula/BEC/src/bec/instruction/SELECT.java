@@ -64,7 +64,6 @@ public abstract class SELECT extends Instruction {
 		AddressItem adr = (AddressItem) CTStack.TOS();
 		adr.offset = adr.offset + attr.rela;
 		adr.type = attr.type;
-		adr.size = attr.size;
 		if(instr == Scode.S_SELECTV) FETCH.doFetch();
 	}
 

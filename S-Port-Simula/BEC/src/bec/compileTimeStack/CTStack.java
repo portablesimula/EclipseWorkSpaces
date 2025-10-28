@@ -20,7 +20,7 @@ import bec.value.Value;
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/compileTimeStack/CTStack.java"><b>Source File</b></a>.
 /// 
 /// @author Øystein Myhre Andersen
-public class CTStack {
+public final class CTStack {
 	/// Current Compil-time Stack.
 	private static NamedStack<CTStackItem> stack = new NamedStack<CTStackItem>("MAIN");
 	

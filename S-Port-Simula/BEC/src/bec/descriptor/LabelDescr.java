@@ -38,47 +38,61 @@ import bec.value.Value;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class LabelDescr extends Descriptor {
+	
+	/// The address of this LabelDescr
 	private ProgramAddress adr;
 
-	private LabelDescr(int kind, Tag tag) {
-		super(kind, tag);
+	/// Create a new LabelDescr with the given 'tag'
+	/// @param tag used to lookup descriptors
+	private LabelDescr(Tag tag) {
+		super(Kind.K_IntLabel, tag);
 	}
 	
+	/// Scans the remaining S-Code (if any) belonging to this descriptor.
+	/// Then construct a new LabelDescr instance.
+	/// @return an LabelDescr instance.
 	public static LabelDescr ofLabelSpec() {
 		Tag tag = Tag.ofScode();
 		LabelDescr lab = (LabelDescr) Global.DISPL.get(tag.val);
 		if(lab != null) Util.IERR("");
-		lab = new LabelDescr(Kind.K_IntLabel,tag);
+		lab = new LabelDescr(tag);
 		lab.adr = null;
 		return lab;
 	}
 	
+	/// Scans the remaining S-Code (if any) belonging to this descriptor.
+	/// Then construct a new LabelDescr instance.
+	/// @return an LabelDescr instance.
 	public static LabelDescr ofLabelDef(Tag tag) {
 		LabelDescr lab = (LabelDescr) Global.DISPL.get(tag.val);
 		if(lab == null) {
-			lab = new LabelDescr(Kind.K_IntLabel,tag);
+			lab = new LabelDescr(tag);
 		} else if(lab.adr instanceof FixupAddress fix) {
 			fix.setAddress(Global.PSEG.nextAddress());
 		}
 		lab.adr = Global.PSEG.nextAddress();
-//      	Global.PSEG.emit(new SVM_NOOP());
+//     	Global.PSEG.emit(new SVM_NOOP());
 		CTStack.checkStackEmpty();
 		return lab;
 	}
 	
+	/// Returns the address of this LabelDescr
+	/// @return the address of this LabelDescr
 	public ProgramAddress getAddress() {
 		if(adr == null)	adr = new FixupAddress(Type.T_PADDR, this);
 		return adr;
 	}
 	
+	@Override
 	public String toString() {
-		return "IntDescr " + Kind.edKind(kind) + " " + tag + " " + adr;
+		return "LabelDescr " + tag + " " + adr;
 	}
 
 	// ***********************************************************************************************
 	// *** Attribute File I/O
 	// ***********************************************************************************************
 
+	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("IntDescr.Write: " + this);
 		oupt.writeByte(kind);
@@ -91,9 +105,9 @@ public class LabelDescr extends Descriptor {
 		}
 	}
 
-	public static LabelDescr read(AttributeInputStream inpt, int kind) throws IOException {
+	public static LabelDescr read(AttributeInputStream inpt) throws IOException {
 		Tag tag = Tag.read(inpt);
-		LabelDescr lab = new LabelDescr(kind, tag);
+		LabelDescr lab = new LabelDescr(tag);
 		boolean present = inpt.readBoolean();
 		if(present) lab.adr = (ProgramAddress) Value.read(inpt);
 		if(Option.ATTR_INPUT_TRACE) IO.println("LabelDescr.Read: " + lab);

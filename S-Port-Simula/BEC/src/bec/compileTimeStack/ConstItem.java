@@ -13,7 +13,7 @@ import bec.value.Value;
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/compileTimeStack/ConstItem.java"><b>Source File</b></a>.
 /// 
 /// @author Øystein Myhre Andersen
-public class ConstItem extends TempItem {
+public final class ConstItem extends TempItem {
 	/// The Constant value
 	public Value value;
 
@@ -27,7 +27,6 @@ public class ConstItem extends TempItem {
 	
 	@Override
 	public String toString() {
-//		return edMode() + "CNST: " +type + " " + value;
 		return "CNST: " +type + " " + value;
 	}
 }

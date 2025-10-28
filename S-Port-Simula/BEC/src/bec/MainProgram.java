@@ -25,7 +25,7 @@ import bec.virtualMachine.RTUtil;
 /// 
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
-public class MainProgram extends S_Module {
+public final class MainProgram extends S_Module {
 	
 	/// 	MainPprogram ::= main <local_quantity>* <program_element>*
 	/// 

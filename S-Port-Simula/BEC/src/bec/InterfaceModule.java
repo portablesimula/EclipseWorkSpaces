@@ -28,7 +28,7 @@ import bec.util.Util;
 /// 
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
-public class InterfaceModule extends S_Module {
+public final class InterfaceModule extends S_Module {
 	
 	/// 	interface_module
 	/// 		::= global module module_id:string checkcode:string

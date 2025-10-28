@@ -97,6 +97,7 @@ public class InsertStatement {
 		int kind = inpt.readUnsignedByte();
 		if(kind != Kind.K_Module) Util.IERR("Missing MODULE");
 		String modident = inpt.readString();
+		@SuppressWarnings("unused")
 		String modcheck = inpt.readString();
 //		IO.println("**************   Begin  -  Input-module  " + modident + "  " + modcheck + "   **************");
 		if(! modident.equalsIgnoreCase(modid)) Util.IERR("WRONG modident");
@@ -115,7 +116,7 @@ public class InsertStatement {
 				case Kind.K_SEG_CODE:		ProgramSegment.readObject(inpt); break;
 				case Kind.K_Coonst:			ConstDescr.read(inpt); break;
 				case Kind.K_RecordDescr:	RecordDescr.read(inpt); break;
-				case Kind.K_Attribute:		Attribute.read(inpt, kind); break;
+				case Kind.K_Attribute:		Attribute.read(inpt); break;
 				case Kind.K_GlobalVar:		Variable.read(inpt, kind); break;
 				case Kind.K_LocalVar:		Variable.read(inpt, kind); break;
 				case Kind.K_ProfileDescr:	ProfileDescr.read(inpt); break;
@@ -124,7 +125,7 @@ public class InsertStatement {
 				case Kind.K_Exit:			Variable.read(inpt, kind); break;
 				case Kind.K_Retur:			Variable.read(inpt, kind); break;
 				case Kind.K_IntRoutine:		RoutineDescr.read(inpt); break;
-				case Kind.K_IntLabel:		LabelDescr.read(inpt, kind); break;
+				case Kind.K_IntLabel:		LabelDescr.read(inpt); break;
 				default: Util.IERR("MISSING: " + Kind.edKind(kind) + ", prevKind=" + Kind.edKind(prevKind));
 			}
 		}

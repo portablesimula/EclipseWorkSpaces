@@ -52,8 +52,10 @@ public class RecordDescr extends Descriptor {
 	Vector<Attribute> attributes;
 	Vector<AlternatePart> alternateParts;
 	
-	private RecordDescr(int kind, Tag tag) {
-		super(kind, tag);
+	/// Create a new RecordDescr with the given 'tag'
+	/// @param tag used to lookup descriptors
+	private RecordDescr(Tag tag) {
+		super(Kind.K_RecordDescr, tag);
 	}
 	
 /**
@@ -75,7 +77,7 @@ public class RecordDescr extends Descriptor {
  * 
  */
 	public static RecordDescr ofScode() {
-		RecordDescr rec = new RecordDescr(Kind.K_RecordDescr,Tag.ofScode());
+		RecordDescr rec = new RecordDescr(Tag.ofScode());
 		int comnSize = 0;
 			
 		if(Scode.accept(Scode.S_INFO)) {
@@ -90,9 +92,9 @@ public class RecordDescr extends Descriptor {
 		}
 		rec.attributes = new Vector<Attribute>();
 		while(Scode.accept(Scode.S_ATTR)) {
-			Attribute attr = new Attribute(comnSize);
+			Attribute attr = Attribute.ofScode(comnSize);
 			comnSize = comnSize + attr.allocSize();
-			if(attr.repCount == 0) rec.rep0size = attr.size;
+			if(attr.repCount == 0) rec.rep0size = attr.size();
 			rec.attributes.add(attr);
 		}
 		rec.size = comnSize;
@@ -102,7 +104,7 @@ public class RecordDescr extends Descriptor {
 			rec.alternateParts.add(alt);
 			int altSize = comnSize;
 			while(Scode.accept(Scode.S_ATTR)) {
-				Attribute attr = new Attribute(altSize);
+				Attribute attr = Attribute.ofScode(altSize);
 				altSize = altSize + attr.allocSize();
 				alt.attributes.add(attr);
 			}
@@ -163,7 +165,7 @@ public class RecordDescr extends Descriptor {
 	
 		public int size() {
 			int n = 0;
-			for(Attribute attr:attributes) n = n + attr.size;
+			for(Attribute attr:attributes) n = n + attr.size();
 			return n;
 		}
 		
@@ -194,8 +196,7 @@ public class RecordDescr extends Descriptor {
 	}
 
 	public static RecordDescr read(AttributeInputStream inpt) throws IOException {
-		Tag tag = Tag.read(inpt);
-		RecordDescr rec = new RecordDescr(Kind.K_RecordDescr, tag);
+		RecordDescr rec = new RecordDescr(Tag.read(inpt));
 		rec.size = inpt.readShort();
 		rec.rep0size = inpt.readShort();
 		rec.infoType = inpt.readBoolean();

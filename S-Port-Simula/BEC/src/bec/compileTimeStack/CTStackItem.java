@@ -6,7 +6,6 @@
 package bec.compileTimeStack;
 
 import bec.util.Type;
-import bec.util.Util;
 
 /// Compile time Stack Item.
 /// 
@@ -14,25 +13,13 @@ import bec.util.Util;
 /// 
 /// @author Øystein Myhre Andersen
 public abstract class CTStackItem {
-	
-	public enum Mode { VAL, REF, PROFILE }
-//	private Mode mode;
 	public Type type;
-	public int size;
 	
-	public CTStackItem copy() {
-		Util.IERR("Method 'copy' need a redefinition in " + this.getClass().getSimpleName());
-		return null;
-	}
-	
-//	public String edMode() {
-//		if(mode == null) return("NULL    ");
-//		switch(mode) {
-//			case PROFILE: return("PRF ");
-//			case REF:     return("REF ");
-//			case VAL:     return("VAL ");
-//		}
-//		Util.IERR("");
+	/// Returns a copy of this stack item
+	/// @return a copy of this stack item
+	public abstract CTStackItem copy();
+//	public CTStackItem copy() {
+//		Util.IERR("Method 'copy' need a redefinition in " + this.getClass().getSimpleName());
 //		return null;
 //	}
 

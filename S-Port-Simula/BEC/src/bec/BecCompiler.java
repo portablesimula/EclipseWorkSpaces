@@ -22,7 +22,7 @@ import bec.util.Util;
 /// 
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
-public class BecCompiler {
+public final class BecCompiler {
 	
 	/// Main method 
 	public static void main(String[] argv) {

@@ -53,7 +53,7 @@ public abstract class CALL extends Instruction {
 		
 		ProfileDescr spec = (ProfileDescr) Global.DISPL.get(profileTag);
 		if(spec == null) Util.IERR(""+Scode.edTag(profileTag));
-		ProfileItem pitem = new ProfileItem(Type.T_VOID,spec);
+		ProfileItem pitem = new ProfileItem(spec);
 		pitem.nasspar = nParStacked;
 		
 		int nParSlots = 0;

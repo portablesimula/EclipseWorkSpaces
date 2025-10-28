@@ -13,7 +13,7 @@ import bec.value.ObjectAddress;
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/compileTimeStack/AddressItem.java"><b>Source File</b></a>.
 /// 
 /// @author Øystein Myhre Andersen
-public class AddressItem extends CTStackItem {
+public final class AddressItem extends CTStackItem {
 	public ObjectAddress objadr;
 	public int offset;
 	
@@ -23,11 +23,13 @@ public class AddressItem extends CTStackItem {
 	/// @param objadr object address
 	///
 	public AddressItem(Type type, int offset, ObjectAddress objadr) {
-//		this.mode = Mode.REF;
 		this.type = type;
-		this.size = type.size();
 		this.objadr = objadr;
 		this.offset = offset;
+	}
+	
+	public int size() {
+		return type.size();
 	}
 
 	@Override
@@ -41,7 +43,6 @@ public class AddressItem extends CTStackItem {
 		if(objadr.indexed) s += "+IDX";
 		s =  s  + "]";
 		if(objadr.kind == ObjectAddress.REMOTE_ADDR) s = s + " withRemoteBase";
-//		return edMode() + "ADDR: " + s;
 		return "ADDR: " + s;
 	}
 

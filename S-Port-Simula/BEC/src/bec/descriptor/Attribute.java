@@ -11,7 +11,6 @@ import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
 import bec.util.Option;
 import bec.util.Type;
-import bec.util.Util;
 import bec.util.Scode;
 import bec.util.Tag;
 
@@ -22,38 +21,59 @@ import bec.util.Tag;
 /// attribute_definition
 ///		::= attr attr:newtag quantity_descriptor
 ///
+///		quantity_descriptor ::= resolved_type < Rep count:number >?
+///
+///			resolved_type
+///				::= resolved_structure | simple_type
+///				::= INT range lower:number upper:number
+///				::= SINT
+///
+///				resolved_structure ::= structured_type < fixrep count:ordinal >?
+///
+///					structured_type ::= record_tag:tag
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/descriptor/Attribute.java"><b>Source File</b></a>.
 /// 
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
-public class Attribute extends Descriptor {
+public final class Attribute extends Descriptor {
+	
+	/// The type of this Attribute
 	public Type type;
+	
+	/// The relative address of this attribute within a Record.
 	public int rela;
-	public int size;
+	
+	/// The repetition count
 	public int repCount;
-	
-	private Attribute(int kind, Tag tag, Type type) {
-		super(kind, tag);
-		this.type = type;
-		if(type == null) Util.IERR("NEW Attribute: Missing type");
-	}
-	
-	public Attribute(int rela) {
-		super(Kind.K_Attribute, Tag.ofScode());
-		this.rela = rela;
-		this.type = Type.ofScode();
-		this.size = type.size();
-		this.repCount = (Scode.accept(Scode.S_REP)) ? Scode.inNumber() : 1;
+
+	/// Create a new Attribute with the given 'tag'
+	/// @param tag used to lookup descriptors
+	private Attribute(Tag tag) {
+		super(Kind.K_Attribute, tag);
 	}
 
-	public static Attribute ofLocalVariable(Tag tag, Type type) {
-		Util.IERR("DETTE MÅ RETTES");
-		return new Attribute(Kind.K_LocalVar, tag, type);
+	/// Scans the remaining S-Code (if any) belonging to this descriptor.
+	/// Then construct a new Attribute instance.
+	/// @return an Attribute instance.
+	public static Attribute ofScode(int rela) {
+		Attribute attr = new Attribute(Tag.ofScode());
+		attr.type = Type.ofScode();
+		attr.rela = rela;
+		attr.repCount = (Scode.accept(Scode.S_REP)) ? Scode.inNumber() : 1;
+		return attr;
 	}
 	
+	/// Returns the size of this attribute
+	/// @return the size of this attribute
+	public int size() {
+		return type.size();
+	}
+	
+	/// Returns size * repcount
+	/// @return size * repcount
 	public int allocSize() {
-		return size * repCount;
+		return type.size() * repCount;
 	}
 	
 	@Override
@@ -63,7 +83,7 @@ public class Attribute extends Descriptor {
 	
 	@Override
 	public String toString() {
-		return "Attribute: " + tag + " rela=" + rela + ", size=" + size + ", repCount=" + repCount;
+		return "Attribute: " + tag + " rela=" + rela + ", repCount=" + repCount;
 	}
 
 	// ***********************************************************************************************
@@ -79,19 +99,17 @@ public class Attribute extends Descriptor {
 		
 		oupt.writeShort(rela);
 		oupt.writeShort(repCount);
-		oupt.writeShort(size);
 	}
 
-	public static Attribute read(AttributeInputStream inpt, int kind) throws IOException {
-		Tag tag = Tag.read(inpt);
-		Type type = Type.read(inpt);
-		
-		Attribute loc = new Attribute(kind, tag, type);
-		loc.rela = inpt.readShort();
-		loc.repCount = inpt.readShort();
-		loc.size = inpt.readShort();
-		if(Option.ATTR_INPUT_TRACE) IO.println("LocDescr.Read: " + loc);
-		return loc;
+	/// Reads an Attribute from the given input.
+	/// @param inpt the input stream
+	public static Attribute read(AttributeInputStream inpt) throws IOException {
+		Attribute attr = new Attribute(Tag.read(inpt));
+		attr.type = Type.read(inpt);
+		attr.rela = inpt.readShort();
+		attr.repCount = inpt.readShort();
+		if(Option.ATTR_INPUT_TRACE) IO.println("attrDescr.Read: " + attr);
+		return attr;
 	}
 
 

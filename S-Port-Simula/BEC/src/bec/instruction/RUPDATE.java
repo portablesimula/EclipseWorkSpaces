@@ -35,7 +35,7 @@ public abstract class RUPDATE extends Instruction {
 		CTStack.checkTosRef(); CTStack.checkSosValue(); CTStack.checkTypesEqual();
 		AddressItem adr = (AddressItem) CTStack.pop();
 		FETCH.doFetch();			
-		Global.PSEG.emit(new SVM_STORE(adr.objadr.addOffset(adr.offset), adr.size)); // Store into adr			
+		Global.PSEG.emit(new SVM_STORE(adr.objadr.addOffset(adr.offset), adr.size())); // Store into adr			
 	}
 
 }

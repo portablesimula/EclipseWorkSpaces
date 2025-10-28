@@ -30,7 +30,7 @@ import bec.util.Util;
 /// 
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
-public class ModuleDefinition extends S_Module {
+public final class ModuleDefinition extends S_Module {
 	
 	/// 	module_definition ::= module module_id:string check_code:string
 	/// 							visible_existing

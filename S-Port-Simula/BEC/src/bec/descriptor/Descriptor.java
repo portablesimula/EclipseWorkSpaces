@@ -20,22 +20,26 @@ import bec.util.Util;
 /// 
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
-public class Descriptor extends Instruction {
-	int kind;  // Object kind code
+public abstract class Descriptor extends Instruction {
+	
+	/// Object kind code
+	int kind;  
+	
+	/// The tag. Used to lookup descriptors
 	public Tag tag; 
 
+	/// Create a new Descriptor
+	/// @param kind the Object kind code
+	/// @param tag used to lookup descriptors
 	public  Descriptor(int kind, Tag tag) {
 		this.kind = kind;
 		this.tag = tag;
 		if(tag != null) Global.intoDisplay(this, tag.val);
 	}
 	
-
-	/**
-	 * Utility print method.
-	 * 
-	 * @param indent number of spaces leading the lines
-	 */
+	/// Utility print method.
+	/// @param indent number of spaces leading the lines
+	///
 	public void print(final String indent) {
 		Util.IERR("Method printTree need a redefinition in "+this.getClass().getSimpleName());
 	}

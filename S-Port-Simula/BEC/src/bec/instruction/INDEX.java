@@ -51,7 +51,7 @@ public abstract class INDEX extends Instruction {
 		if(! (CTStack.TOS() instanceof TempItem)) Util.IERR("");
 		CTStack.pop();
 		AddressItem adr = (AddressItem) CTStack.TOS();
-		int size = adr.size;
+		int size = adr.size();
 		if(adr.objadr.indexed) {
 			Util.IERR("IMPOSSIBLE");
 		} else {

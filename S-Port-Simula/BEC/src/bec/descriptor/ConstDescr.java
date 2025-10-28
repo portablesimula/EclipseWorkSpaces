@@ -63,56 +63,35 @@ import bec.value.Value;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class ConstDescr extends Descriptor {
+
+	/// The type of this ConstDescr
 	public Type type;
+	
+	/// The address of this ConstDescr
 	private ObjectAddress address;
+	
+	/// The values of this ConstDescr
 	private Vector<RepetitionValue> values;
+	
+	/// The fixrepTail of this ConstDescr
 	public static int fixrepTail;
 	
-	private ConstDescr(int kind, Tag tag) {
-		super(kind, tag);
+	/// Create a new ConstDescr with the given 'tag'
+	/// @param tag used to lookup descriptors
+	private ConstDescr(Tag tag) {
+		super(Kind.K_Coonst, tag);
 		this.values = new Vector<RepetitionValue>();
 	}
 
-//	%title ***   C o n s t   and   C o n s t s p e c   ***
-	/**
-	 * constant_declaration
-	 * 		::= constant_specification | constant_definition
-	 * 
-	 *	constant_specification
-	 *		::= constspec const:newtag quantity_descriptor
-	 *
-	 *	constant_definition
-	 *		::= const const:spectag quantity_descriptor repetition_value
-	 *
-	 *		quantity_descriptor ::= resolved_type < Rep count:number >?
-	 *
-	 *			resolved_type
-	 *				::= resolved_structure | simple_type
-	 *				::= INT range lower:number upper:number
-	 *				::= SINT
-	 *
-	 *				resolved_structure ::= structured_type < fixrep count:ordinal >?
-	 *
-	 *					structured_type ::= record_tag:tag
-	 *
-	 *		repetition_value
-	 *			::= <boolean_value>+
-	 *			::= <character_value>+ | text_value
-	 *			::= <integer_value>+ | <size_value>+
-	 *			::= <real_value>+ | <longreal_value>+
-	 *			::= <attribute_address>+ | <object_address>+
-	 *			::= <general_address>+ | <program_address>+
-	 *			::= <routine_address>+ | <record_value>+
-	 *
-	 *			text_value
-	 *				::= text long_string
-	 */
+	/// Scans the remaining S-Code (if any) belonging to this descriptor.
+	/// Then construct a new ConstDescr instance.
+	/// @return an ConstDescr instance.
 	public static ConstDescr ofConstSpec() {
 		Tag tag = Tag.ofScode();
 		ConstDescr cnst = (ConstDescr) Global.DISPL.get(tag.val);
 		if(cnst != null) Util.IERR("New CONSPEC but cnst="+cnst);
 		
-		cnst = new ConstDescr(Kind.K_Coonst, tag);
+		cnst = new ConstDescr(tag);
 		cnst.type = Type.ofScode();
 		
 		if(Scode.accept(Scode.S_FIXREP)) {
@@ -124,11 +103,14 @@ public class ConstDescr extends Descriptor {
 		
 	}
 	
+	/// Scans the remaining S-Code (if any) belonging to this descriptor.
+	/// Then construct a new ConstDescr instance.
+	/// @return an ConstDescr instance.
 	public static ConstDescr ofConstDef() {
 		Tag tag = Tag.ofScode();
 		ConstDescr cnst = (ConstDescr) Global.DISPL.get(tag.val);
 		if(cnst == null) {
-			cnst = new ConstDescr(Kind.K_Coonst, tag);
+			cnst = new ConstDescr(tag);
 		}
 		cnst.type = Type.ofScode();
 		
@@ -153,6 +135,8 @@ public class ConstDescr extends Descriptor {
 		}		return cnst;
 	}
 	
+	/// Returns the address of this ConstDescr
+	/// @return the address of this ConstDescr
 	public ObjectAddress getAddress() {
 		if(address == null)	address = new FixupOADDR(Type.T_PADDR, this);
 		return address;
@@ -176,6 +160,7 @@ public class ConstDescr extends Descriptor {
 		}
 	}
 	
+	@Override
 	public String toString() {
 		if(address != null) {
 			 return "CONST " + tag + " " + address;
@@ -188,6 +173,7 @@ public class ConstDescr extends Descriptor {
 	// *** Attribute File I/O
 	// ***********************************************************************************************
 
+	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("CONST.Write: " + this);
 		oupt.writeByte(kind);
@@ -196,9 +182,11 @@ public class ConstDescr extends Descriptor {
 		address.write(oupt);
 	}
 
+	/// Reads an ConstDescr from the given input.
+	/// @param inpt the input stream
 	public static ConstDescr read(AttributeInputStream inpt) throws IOException {
 		Tag tag = Tag.read(inpt);
-		ConstDescr cns = new ConstDescr(Kind.K_Coonst, tag);
+		ConstDescr cns = new ConstDescr(tag);
 		cns.type = Type.read(inpt);
 		cns.address = (ObjectAddress) Value.read(inpt);
 		return(cns);

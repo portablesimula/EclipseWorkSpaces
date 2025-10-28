@@ -8,7 +8,6 @@ package bec.instruction;
 import bec.compileTimeStack.AddressItem;
 import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.CTStackItem;
-import bec.compileTimeStack.CTStackItem.Mode;
 import bec.util.Global;
 import bec.util.Util;
 import bec.value.ObjectAddress;
@@ -36,7 +35,6 @@ public abstract class DUP extends Instruction {
 	public static void ofScode() {
 		CTStack.dup();
 		CTStackItem tos = CTStack.TOS();
-//		tos.mode = Mode.VAL;
 		
 		if(tos instanceof AddressItem addr) {
 			ObjectAddress oaddr = addr.objadr.addOffset(addr.offset);

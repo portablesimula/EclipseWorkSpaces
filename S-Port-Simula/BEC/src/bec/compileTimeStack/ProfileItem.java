@@ -6,35 +6,37 @@
 package bec.compileTimeStack;
 
 import bec.descriptor.ProfileDescr;
-import bec.util.Type;
 
 /// Profile Item.
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/compileTimeStack/ProfileItem.java"><b>Source File</b></a>.
 /// 
 /// @author Øystein Myhre Andersen
-public class ProfileItem extends CTStackItem {
-	Type type;
+public final class ProfileItem extends CTStackItem {
+	
+	/// The associated ProfileDescr
 	public ProfileDescr spc;
+	
+	/// Number of parameters treated so far.
 	public int nasspar;
 	
-	public ProfileItem(Type tagVoid, ProfileDescr spec) {
-//		this.mode = Mode.PROFILE;
-		this.type = tagVoid;
+	/// Profile item to be pushed onto the Compile-time Stack.
+	/// @param the associated ProfileDescr
+	public ProfileItem(ProfileDescr spec) {
 		this.spc = spec;
 		this.nasspar = 0;
 	}
 
 	@Override
 	public CTStackItem copy() {
-		ProfileItem addr = new ProfileItem(type, spc);
+		ProfileItem addr = new ProfileItem(spc);
 		addr.nasspar = nasspar;
 		return addr;
 	}
 
+	@Override
 	public String toString() {
-//		return edMode() + "PROF: " + spc;
-		return "PROF: " + spc;
+		return "PROF: " + spc + ", nasspar=" + nasspar;
 	}
 
 }

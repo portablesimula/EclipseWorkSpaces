@@ -8,9 +8,7 @@ package bec.descriptor;
 import java.io.IOException;
 import java.util.Vector;
 
-import bec.instruction.CALL;
 import bec.segment.DataSegment;
-import bec.segment.Segment;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
 import bec.util.Global;
@@ -49,12 +47,26 @@ import bec.virtualMachine.SVM_CALL_SYS;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class ProfileDescr extends Descriptor {
-	public int pKind; // Peculiar Profile Kind
+	
+	/// Peculiar Profile Kind
+	public int pKind;
+	
+	/// The parameters
 	public Vector<Tag> params;
+	
+	/// The Export tag
 	private Tag exportTag;
+	
+	/// The retur value slot address
 	public ObjectAddress returSlot;
+	
+	/// The data segment for the routine code
 	public DataSegment DSEG;
-	public int exportSize; // Size of Export slot
+	
+	/// The size of Export slot
+	public int exportSize;
+	
+	/// Size of Frame on RTStack
 	public int frameSize; // Size of Frame
 	
 	private static final boolean DEBUG = false;
@@ -68,8 +80,10 @@ public class ProfileDescr extends Descriptor {
 	private String nature; // peculiar
 	public String ident;   // peculiar
 	
-	private ProfileDescr(int kind, Tag tag) {
-		super(kind, tag);
+	/// Create a new ProfileDescr with the given 'tag'
+	/// @param tag used to lookup descriptors
+	private ProfileDescr(Tag tag) {
+		super(Kind.K_ProfileDescr, tag);
 	}
 	
 	public String getSimpleName() {
@@ -87,27 +101,12 @@ public class ProfileDescr extends Descriptor {
 
 	}
 
-	/**
-	 * 	routine_profile
-	 * 		 ::= profile profile:newtag <peculiar>?
-	 * 			   <import_definition>* <export or exit>? endprofile
-	 * 
-	 * 		peculiar
-	 * 			::= known body:newtag kid:string
-	 * 			::= system body:newtag sid:string
-	 * 			::= external body:newtag nature:string xid:string
-	 * 			::= interface pid:string
-	 * 
-	 * 		import_definition
-	 * 			::= import parm:newtag quantity_descriptor
-	 * 
-	 * 		export_or_exit
-	 * 			::= export parm:newtag resolved_type
-	 * 			::= exit return:newtag
-	 */
+	/// Scans the remaining S-Code (if any) belonging to this descriptor.
+	/// Then construct a new ProfileDescr instance.
+	/// @return an ProfileDescr instance.
 	public static ProfileDescr ofScode() {
 		Tag ptag = Tag.ofScode();
-		ProfileDescr prf = new ProfileDescr(Kind.K_ProfileDescr, ptag);
+		ProfileDescr prf = new ProfileDescr(ptag);
 		if(Scode.nextByte() == Scode.S_EXTERNAL) {
 			 // peculiar ::= external body:newtag nature:string xid:string
 			Scode.inputInstr();
@@ -202,6 +201,7 @@ public class ProfileDescr extends Descriptor {
 		IO.println(indent + "ENDPROFILE  FrameHeadSize="+frameSize);	
 	}
 	
+	@Override
 	public String toString() {
 		String profile = "PROFILE " + tag;
 		switch(kind) {
@@ -228,6 +228,7 @@ public class ProfileDescr extends Descriptor {
 	// *** Attribute File I/O
 	// ***********************************************************************************************
 
+	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("ProfileDescr.Write: " + this);
 		oupt.writeByte(kind);
@@ -246,8 +247,7 @@ public class ProfileDescr extends Descriptor {
 	}
 
 	public static ProfileDescr read(AttributeInputStream inpt) throws IOException {
-		Tag tag = Tag.read(inpt);
-		ProfileDescr prf = new ProfileDescr(Kind.K_ProfileDescr, tag);
+		ProfileDescr prf = new ProfileDescr(Tag.read(inpt));
 		if(Option.ATTR_INPUT_TRACE) IO.println("BEGIN ProfileDescr.Read: " + prf);
 		prf.pKind = inpt.readShort();
 		String segID = inpt.readString();
