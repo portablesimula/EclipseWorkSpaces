@@ -191,6 +191,9 @@ public class Variable extends Descriptor {
 		} else oupt.writeBoolean(false);
 	}
 
+	/// Reads a Variable from the given input.
+	/// @param inpt the input stream
+	/// @param kind the Variable kind: Import, Export, Exit, Retur, LovalVar
 	public static Variable read(AttributeInputStream inpt, int kind) throws IOException {
 		Tag tag = Tag.read(inpt);
 		Variable var = new Variable(kind, tag);

@@ -252,6 +252,8 @@ public class ProfileDescr extends Descriptor {
 		} else oupt.writeBoolean(false);
 	}
 
+	/// Reads a ProfileDescr from the given input.
+	/// @param inpt the input stream
 	public static ProfileDescr read(AttributeInputStream inpt) throws IOException {
 		ProfileDescr prf = new ProfileDescr(Tag.read(inpt));
 		if(Option.ATTR_INPUT_TRACE) IO.println("BEGIN ProfileDescr.Read: " + prf);

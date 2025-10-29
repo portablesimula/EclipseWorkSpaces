@@ -105,6 +105,8 @@ public class LabelDescr extends Descriptor {
 		}
 	}
 
+	/// Reads a LabelDescr from the given input.
+	/// @param inpt the input stream
 	public static LabelDescr read(AttributeInputStream inpt) throws IOException {
 		Tag tag = Tag.read(inpt);
 		LabelDescr lab = new LabelDescr(tag);

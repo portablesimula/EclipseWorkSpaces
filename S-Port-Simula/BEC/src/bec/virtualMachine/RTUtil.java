@@ -315,7 +315,7 @@ public class RTUtil {
 	}
 	
 	public static void dumpCurins() {
-		DataSegment rt = (DataSegment) Segment.find("DSEG_RT");
+		DataSegment rt = (DataSegment) Segment.lookup("DSEG_RT");
 		ObjectAddress curins = (ObjectAddress) rt.load(0);
 		IO.println("RTUtil.dumpCurins: curins=" + curins);
 		if(curins != null) RTUtil.printEntity(curins);
@@ -323,7 +323,7 @@ public class RTUtil {
 	}
 	
 	public static void printCurins() {
-		DataSegment rt = (DataSegment) Segment.find("DSEG_RT");
+		DataSegment rt = (DataSegment) Segment.lookup("DSEG_RT");
 		ObjectAddress curins = (ObjectAddress) rt.load(0);
 		RTUtil.printEntity(curins);
 		IO.println("==================================");

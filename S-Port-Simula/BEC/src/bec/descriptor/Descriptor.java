@@ -48,6 +48,8 @@ public abstract class Descriptor extends Instruction {
 	// *** Attribute File I/O
 	// ***********************************************************************************************
 
+	/// Writes a Descriptor to the given output.
+	/// @param oupt the output stream
 	public void write(AttributeOutputStream oupt) throws IOException {
 		Util.IERR("Method 'write' needs a redefinition in "+this.getClass().getSimpleName());
 	}

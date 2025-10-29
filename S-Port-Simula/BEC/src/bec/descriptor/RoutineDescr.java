@@ -188,6 +188,8 @@ public class RoutineDescr extends Descriptor {
 		for(Tag local:locals) local.write(oupt);
 	}
 
+	/// Reads a RoutineDescr from the given input.
+	/// @param inpt the input stream
 	public static RoutineDescr read(AttributeInputStream inpt) throws IOException {
 		Tag prftag = null;
 		boolean present = inpt.readBoolean();

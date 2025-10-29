@@ -180,6 +180,8 @@ public class RecordDescr extends Descriptor {
 		oupt.writeBoolean(infoType);
 	}
 
+	/// Reads a RecordDescr from the given input.
+	/// @param inpt the input stream
 	public static RecordDescr read(AttributeInputStream inpt) throws IOException {
 		RecordDescr rec = new RecordDescr(Tag.read(inpt));
 		rec.size = inpt.readShort();

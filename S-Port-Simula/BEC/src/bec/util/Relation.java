@@ -64,6 +64,10 @@ public class Relation {
 		return this;
 	}
 	
+	/// Compare two Values according to this relation.
+	/// @param lhs the left hand Value
+	/// @param rhs the right hand Value
+	/// @return true if the relation holds
 	public boolean compare(Value lhs, Value rhs) {
 		boolean res = false;
 		if(lhs != null) {
@@ -84,6 +88,11 @@ public class Relation {
 		return res;
 	}
 	
+	/// Compare two integer values according to the given relation.
+	/// @param lhs the left hand value
+	/// @param relation one of: LT, LE, EQ, GE, GT, NE
+	/// @param rhs the right hand value
+	/// @return true if the relation holds
 	public static boolean compare(int LHS, int relation, int RHS) {
 		boolean res = false;
 		switch(relation) {

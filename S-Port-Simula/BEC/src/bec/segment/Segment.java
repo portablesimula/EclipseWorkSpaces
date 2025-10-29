@@ -6,44 +6,45 @@
 package bec.segment;
 
 import java.io.IOException;
-import java.util.HashMap;
-
 import bec.descriptor.Kind;
 import bec.util.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Relation;
 import bec.util.Scode;
-import bec.util.Type;
 import bec.util.Util;
-import bec.value.ProgramAddress;
 
 /// Segment.
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/segment/Segment.java"><b>Source File</b></a>.
 /// 
 /// @author Øystein Myhre Andersen
-public abstract class Segment { // extends Descriptor {
+public abstract class Segment {
+	
+	/// Segment ident
 	public String ident;
-	protected int segmentKind; // K_SEG_DATA, K_SEG_CONST, K_SEG_CODE
-	private int segmentIndex;
-	private static int SEQU = 1;
+	
+	/// K_SEG_DATA, K_SEG_CONST, K_SEG_CODE
+	protected int segmentKind;
+	
+	/// Segment Sequence number
+	private int sequ;
+	
+	/// Used to generate Segment Sequence numbers
+	private static int SEQU = 0x10000;
 
+	/// Segment constructor.
+	/// @param ident the Segment ident
+	/// @param segmentKind K_SEG_DATA, K_SEG_CONST, K_SEG_CODE
 	public Segment(String ident, int segmentKind) {
 		if(Global.SEGMAP.get(ident) != null) Util.IERR("Segment allready defined: " + ident);
 		this.ident = ident.toUpperCase();
 		Global.SEGMAP.put(this.ident, this);
 		this.segmentKind = segmentKind;
-		this.segmentIndex = SEQU++;
-	}
-	
-	public int segIndex() {
-		return this.segmentIndex;
+		this.sequ = SEQU++;
 	}
 
-	public static Segment find(String ident) {
-		return Global.SEGMAP.get(ident);
-	}
-
+	/// Lookup Segment by its ident
+	/// @return the Segment found
 	public static Segment lookup(String ident) {
 		Segment seg = Global.SEGMAP.get(ident);
 		if(seg == null) {
@@ -52,21 +53,22 @@ public abstract class Segment { // extends Descriptor {
 		return seg;
 	}
 
-	public static int getIndex(String ident) {
-		Segment seg = Global.SEGMAP.get(ident);
-		if(seg == null) {
-			return 0;
-		}
-		return seg.segmentIndex;
-	}
-
-	
-	public static boolean compare(String LHSegID, int lhs, int relation, String RHSegID, int rhs) {
+	/// Compare two Segment addresses according to the given relation.
+	/// @param LHSegID the left hand Segment ident
+	/// @param lhSegOfst the left hand Segment address offset
+	/// @param relation one of: LT, LE, EQ, GE, GT, NE
+	/// @param RHSegID the right hand Segment ident
+	/// @param rhSegOfst the right hand Segment address offset
+	/// @return true if the relation holds
+	public static boolean compare(String LHSegID, int lhSegOfst, int relation, String RHSegID, int rhSegOfst) {
 		if(equals(LHSegID, RHSegID)) {
-			return Relation.compare(lhs, relation, rhs);
+			return Relation.compare(lhSegOfst, relation, rhSegOfst);
 		} else {
-			int LHS = lhs + Segment.getIndex(LHSegID) << 16;
-			int RHS = rhs + Segment.getIndex(RHSegID) << 16;
+			// IO.println("Segment.compare: " + LHSegID + ":" + lhSegOfst + "  " + Scode.edInstr(relation) + "  " + RHSegID + ":" + rhSegOfst);
+			Segment LHSeg = Global.SEGMAP.get(LHSegID);
+			Segment RHSeg = Global.SEGMAP.get(RHSegID);
+			int LHS = lhSegOfst + ((LHSeg == null)?0:LHSeg.sequ);
+			int RHS = lhSegOfst + ((RHSeg == null)?0:RHSeg.sequ);
 			boolean res = false;
 			switch(relation) {
 				case Scode.S_LT: res = LHS <  RHS; break;
@@ -77,48 +79,40 @@ public abstract class Segment { // extends Descriptor {
 				case Scode.S_NE: res = LHS != RHS; break;
 				//default: Util.IERR("");
 			}
-//			IO.println("Segment.compare: " + LHS + " " + Scode.edInstr(relation) + " " + RHS + " ==> " + res);
-//			Util.IERR("");
 			return res;		
 		}
 	}
 	
+	/// Returns true if the two specified Strings are equal to one another. 
+	/// @param s1 one String to be tested for equality
+	/// @param s2 the other String to be tested for equality
+	/// @return true if the two Strings are equal
 	private static boolean equals(String s1, String s2) {
 		if(s1 == null) return s2 == null;
 		return s1.equals(s2);
 	}
-
-//	public static void writeSegments(AttributeOutputStream oupt) {
-//		listAll();
-//		try {
-//			for(Segment seg:SEGMAP.values()) {
-//				if(!seg.inserted)
-//					seg.write(oupt);
-//			}
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//			Util.IERR("");
+	
+//	public static void listAll() {
+//		for(Segment seg:Global.SEGMAP.values()) {
+//			IO.println("   " + seg);
 //		}
-////		Util.IERR("");
 //	}
-	
-	public static void listAll() {
-		for(Segment seg:Global.SEGMAP.values()) {
-			IO.println("   " + seg);
-		}
-	}
 
-	public void dump(String title) {
-	}
+	/// Utility: Segment dump
+	/// @param title the printout title
+	public abstract void dump(String title);
 	
-	public void dump(String title,int from,int to) {
-	}
+	/// Utility: Segment dump
+	/// @param title the printout title
+	/// @param from Segment index
+	/// @param to Segment index
+	public abstract void dump(String title,int from,int to);
 	
-	public static void dumpAll(String title) {
-		for(Segment seg:Global.SEGMAP.values()) {
-			seg.dump(title);
-		}
-	}
+//	public static void dumpAll(String title) {
+//		for(Segment seg:Global.SEGMAP.values()) {
+//			seg.dump(title);
+//		}
+//	}
 	
 	@Override
 	public String toString() {
@@ -130,14 +124,10 @@ public abstract class Segment { // extends Descriptor {
 	// *** Attribute File I/O
 	// ***********************************************************************************************
 
+	/// Writes a Segment to the given output.
+	/// @param oupt the output stream
 	public void write(AttributeOutputStream oupt) throws IOException {
 		Util.IERR("Method 'write' needs a redefinition in "+this.getClass().getSimpleName());
 	}
-
-//	public static Descriptor read(AttributeInputStream inpt, int kind) throws IOException {
-//		Util.IERR("Static Method 'readObject' needs a redefiniton");
-//		return(null);
-//	}
-
 
 }
