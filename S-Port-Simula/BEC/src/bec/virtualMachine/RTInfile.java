@@ -13,9 +13,9 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import bec.scode.Type;
 import bec.util.Global;
 import bec.util.Option;
-import bec.util.Type;
 import bec.util.Util;
 import bec.value.IntegerValue;
 import bec.value.ObjectAddress;

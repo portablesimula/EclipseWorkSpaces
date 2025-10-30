@@ -10,8 +10,8 @@ import bec.compileTimeStack.CTStack;
 import bec.descriptor.ConstDescr;
 import bec.descriptor.Descriptor;
 import bec.descriptor.Variable;
-import bec.util.Scode;
-import bec.util.Tag;
+import bec.scode.Sinstr;
+import bec.scode.Tag;
 import bec.util.Util;
 import bec.value.ObjectAddress;
 
@@ -47,7 +47,7 @@ public abstract class PUSH extends Instruction {
 				ObjectAddress oaddr = (ObjectAddress) cns.getAddress().copy();
 				CTStack.push(new AddressItem(cns.type,0,oaddr));
 		} else Util.IERR("");
-        if(instr == Scode.S_PUSHV) FETCH.doFetch();
+        if(instr == Sinstr.S_PUSHV) FETCH.doFetch();
 	}
 
 }

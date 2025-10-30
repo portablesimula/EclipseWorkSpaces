@@ -6,9 +6,9 @@
 package bec.descriptor;
 
 import bec.compileTimeStack.CTStack;
+import bec.scode.Scode;
+import bec.scode.Tag;
 import bec.util.Global;
-import bec.util.Scode;
-import bec.util.Tag;
 import bec.value.ProgramAddress;
 import bec.virtualMachine.SVM_SWITCH;
 

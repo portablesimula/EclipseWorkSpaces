@@ -10,14 +10,13 @@ import java.io.IOException;
 import bec.descriptor.ConstDescr;
 import bec.descriptor.Descriptor;
 import bec.descriptor.Variable;
+import bec.scode.Sinstr;
+import bec.scode.Tag;
+import bec.scode.Type;
 import bec.segment.Segment;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
-import bec.util.Global;
 import bec.util.Option;
-import bec.util.Scode;
-import bec.util.Tag;
-import bec.util.Type;
 import bec.util.Util;
 
 public class GeneralAddress extends Value {
@@ -103,7 +102,7 @@ public class GeneralAddress extends Value {
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
-		oupt.writeByte(Scode.S_C_GADDR);
+		oupt.writeByte(Sinstr.S_C_GADDR);
 		base.write(oupt);
 		oupt.writeShort(ofst);
 	}

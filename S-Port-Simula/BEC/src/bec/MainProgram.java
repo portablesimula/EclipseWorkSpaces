@@ -8,13 +8,14 @@ package bec;
 import java.util.Vector;
 
 import bec.descriptor.Kind;
+import bec.scode.Scode;
+import bec.scode.Sinstr;
 import bec.segment.DataSegment;
 import bec.segment.ProgramSegment;
 import bec.segment.Segment;
 import bec.util.EndProgram;
 import bec.util.Global;
 import bec.util.Option;
-import bec.util.Scode;
 import bec.util.Util;
 import bec.value.ProgramAddress;
 import bec.virtualMachine.RTUtil;
@@ -55,7 +56,7 @@ public final class MainProgram extends S_Module {
 		if(Global.PROGID == null) Global.PROGID = Global.modident;
 		Global.routineSegments = new Vector<Segment>();
 
-		while(Scode.nextByte() == Scode.S_LOCAL) {
+		while(Scode.nextByte() == Sinstr.S_LOCAL) {
 			Scode.inputInstr(); 
 			Util.IERR("NOT IMPL");
 		}
@@ -69,7 +70,7 @@ public final class MainProgram extends S_Module {
 			Global.PSEG.dump("END MainProgram: ");
 		}
 	
-		if(Scode.curinstr != Scode.S_ENDPROGRAM)
+		if(Scode.curinstr != Sinstr.S_ENDPROGRAM)
 			Util.IERR("Illegal termination of program");
 		
 		try {

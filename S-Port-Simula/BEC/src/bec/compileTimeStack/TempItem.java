@@ -5,8 +5,8 @@
 /// page: https://creativecommons.org/licenses/by/4.0/
 package bec.compileTimeStack;
 
-import bec.util.Scode;
-import bec.util.Type;
+import bec.scode.Scode;
+import bec.scode.Type;
 
 /// Temp Item.
 /// 

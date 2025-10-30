@@ -5,7 +5,7 @@
 /// page: https://creativecommons.org/licenses/by/4.0/
 package bec.compileTimeStack;
 
-import bec.util.Type;
+import bec.scode.Type;
 import bec.value.Value;
 
 /// Constant Item.

@@ -7,13 +7,14 @@ package bec.value;
 
 import java.io.IOException;
 
+import bec.scode.Scode;
+import bec.scode.Sinstr;
+import bec.scode.Type;
 import bec.segment.DataSegment;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Option;
-import bec.util.Scode;
-import bec.util.Type;
 import bec.util.Util;
 
 public class TextValue extends Value {
@@ -31,7 +32,7 @@ public class TextValue extends Value {
 	 * text_value ::= text long_string
 	 */
 	public static TextValue ofScode() {
-//		IO.println("TextValue.parse: curinstr=" + Scode.edInstr(Scode.curinstr));
+//		IO.println("TextValue.parse: curinstr=" + Sinstr.edInstr(Scode.curinstr));
 //		String textValue = Scode.inLongString();
 
 		TextValue txtval = new TextValue();
@@ -73,23 +74,14 @@ public class TextValue extends Value {
 	// *** Attribute File I/O
 	// ***********************************************************************************************
 	private TextValue(AttributeInputStream inpt) throws IOException {
-//		IO.println("BEGIN TextValue.read: " + this);
 		this.type = Type.T_TEXT;
-//		length = inpt.readShort();
-//		addr = (ObjectAddress) Value.read(inpt);
 		textValue = inpt.readString();
 		if(Option.ATTR_INPUT_TRACE) IO.println("TextValue.read: " + this);
-//		IO.println("NEW TextValue: " + this);
-//		Util.IERR("SJEKK DETTE");
 	}
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
-		oupt.writeByte(Scode.S_TEXT);
-//		IO.println("TextValue.write: addr.segID=" + addr.segID);
-//		Util.IERR("");
-//		oupt.writeShort(length);
-//		addr.write(oupt);
+		oupt.writeByte(Sinstr.S_TEXT);
 		oupt.writeString(textValue);
 	}
 

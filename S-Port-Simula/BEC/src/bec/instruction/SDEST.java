@@ -7,9 +7,9 @@ package bec.instruction;
 
 import bec.compileTimeStack.CTStack;
 import bec.descriptor.SwitchDescr;
+import bec.scode.Scode;
+import bec.scode.Tag;
 import bec.util.Global;
-import bec.util.Scode;
-import bec.util.Tag;
 import bec.util.Util;
 
 /// S-INSTRUCTION: SDEST

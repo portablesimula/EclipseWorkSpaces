@@ -10,14 +10,14 @@ import java.io.IOException;
 import bec.descriptor.ConstDescr;
 import bec.descriptor.Descriptor;
 import bec.descriptor.Variable;
+import bec.scode.Sinstr;
+import bec.scode.Tag;
+import bec.scode.Type;
 import bec.segment.DataSegment;
 import bec.segment.Segment;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
 import bec.util.Option;
-import bec.util.Scode;
-import bec.util.Tag;
-import bec.util.Type;
 import bec.util.Util;
 import bec.virtualMachine.CallStackFrame;
 import bec.virtualMachine.RTStack;
@@ -293,14 +293,14 @@ public class ObjectAddress extends Value {
 //		int RHS = (other == null)? 0 : ((ObjectAddress)other).getOfst();
 //		boolean res = false;
 //		switch(relation) {
-//			case Scode.S_LT: res = LHS <  RHS; break;
-//			case Scode.S_LE: res = LHS <= RHS; break;
-//			case Scode.S_EQ: res = LHS == RHS; break;
-//			case Scode.S_GE: res = LHS >= RHS; break;
-//			case Scode.S_GT: res = LHS >  RHS; break;
-//			case Scode.S_NE: res = LHS != RHS; break;
+//			case Sinstr.S_LT: res = LHS <  RHS; break;
+//			case Sinstr.S_LE: res = LHS <= RHS; break;
+//			case Sinstr.S_EQ: res = LHS == RHS; break;
+//			case Sinstr.S_GE: res = LHS >= RHS; break;
+//			case Sinstr.S_GT: res = LHS >  RHS; break;
+//			case Sinstr.S_NE: res = LHS != RHS; break;
 //		}
-////		IO.println("IntegerValue.compare: " + LHS + " " + Scode.edInstr(relation) + " " + RHS + " ==> " + res);
+////		IO.println("IntegerValue.compare: " + LHS + " " + Sinstr.edInstr(relation) + " " + RHS + " ==> " + res);
 ////		Util.IERR("");
 //		return res;
 //	}
@@ -350,7 +350,7 @@ public class ObjectAddress extends Value {
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
-		oupt.writeByte(Scode.S_C_OADDR);
+		oupt.writeByte(Sinstr.S_C_OADDR);
 		writeBody(oupt);
 	}
 

@@ -7,9 +7,9 @@ package bec.instruction;
 
 import bec.compileTimeStack.CTStack;
 import bec.descriptor.RecordDescr;
+import bec.scode.Tag;
+import bec.scode.Type;
 import bec.util.Global;
-import bec.util.Tag;
-import bec.util.Type;
 import bec.util.Util;
 import bec.value.IntegerValue;
 import bec.virtualMachine.SVM_ADD;

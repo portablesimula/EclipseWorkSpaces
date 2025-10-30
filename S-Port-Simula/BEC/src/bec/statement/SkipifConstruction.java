@@ -9,10 +9,11 @@ import bec.S_Module;
 import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.CTStackItem;
 import bec.instruction.FETCH;
+import bec.scode.Relation;
+import bec.scode.Scode;
+import bec.scode.Sinstr;
 import bec.util.Global;
 import bec.util.NamedStack;
-import bec.util.Relation;
-import bec.util.Scode;
 import bec.util.Util;
 import bec.value.ProgramAddress;
 import bec.virtualMachine.SVM_JUMP;
@@ -68,7 +69,7 @@ public abstract class SkipifConstruction {
 		Scode.inputInstr();
 		S_Module.programElements();
 
-		if(Scode.curinstr != Scode.S_ENDSKIP) Util.IERR("Missing ENDSKIP: " + Scode.edInstr(Scode.curinstr));
+		if(Scode.curinstr != Sinstr.S_ENDSKIP) Util.IERR("Missing ENDSKIP: " + Sinstr.edInstr(Scode.curinstr));
 		
 		// * endskip
 		// * check stack empty; restore skip-stack;

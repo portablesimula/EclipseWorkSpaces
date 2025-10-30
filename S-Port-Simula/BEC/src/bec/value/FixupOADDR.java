@@ -6,7 +6,7 @@
 package bec.value;
 
 import bec.descriptor.Descriptor;
-import bec.util.Type;
+import bec.scode.Type;
 
 public class FixupOADDR extends ObjectAddress {
 	Descriptor descr; // ConstDescr

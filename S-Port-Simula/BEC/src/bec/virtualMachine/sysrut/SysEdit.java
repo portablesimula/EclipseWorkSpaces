@@ -10,7 +10,7 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.Stack;
 
-import bec.util.Type;
+import bec.scode.Type;
 import bec.util.Util;
 import bec.value.GeneralAddress;
 import bec.value.IntegerValue;

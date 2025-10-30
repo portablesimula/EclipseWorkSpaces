@@ -7,11 +7,11 @@ package bec.compileTimeStack;
 
 import java.util.Stack;
 
+import bec.scode.Tag;
+import bec.scode.Type;
 import bec.util.Global;
 import bec.util.NamedStack;
 import bec.util.Option;
-import bec.util.Scode;
-import bec.util.Type;
 import bec.util.Util;
 import bec.value.Value;
 
@@ -221,7 +221,7 @@ public final class CTStack {
 	/// Convenient method: checkTosInt
 	public static void checkTosInt() {
 		if(Option.debugMode) switch(TOS().type.tag) {
-			case Scode.TAG_INT, Scode.TAG_SINT: break; 
+			case Tag.TAG_INT, Tag.TAG_SINT: break; 
 			default: STKERR("Illegal type of TOS");
 		}
 	}
@@ -229,7 +229,7 @@ public final class CTStack {
 	/// Convenient method: checkTosArith
 	public static void checkTosArith() {
 		if(Option.debugMode) switch(TOS().type.tag) {
-			case Scode.TAG_INT, Scode.TAG_SINT, Scode.TAG_REAL, Scode.TAG_LREAL: break; 
+			case Tag.TAG_INT, Tag.TAG_SINT, Tag.TAG_REAL, Tag.TAG_LREAL: break; 
 			default: STKERR("Illegal type of TOS");
 		}
 	}
@@ -237,7 +237,7 @@ public final class CTStack {
 	/// Convenient method: checkSosInt
 	public static void checkSosInt() {
 		if(Option.debugMode) switch(SOS().type.tag) {
-			case Scode.TAG_INT, Scode.TAG_SINT: break; 
+			case Tag.TAG_INT, Tag.TAG_SINT: break; 
 			default: STKERR("Illegal type of xTOS");
 		}
 	}
@@ -247,7 +247,7 @@ public final class CTStack {
 		if(Option.debugMode) {
 			Type type = SOS().type;
 			switch(type.tag) {
-				case Scode.TAG_INT, Scode.TAG_SINT, Scode.TAG_REAL, Scode.TAG_LREAL: break; 
+				case Tag.TAG_INT, Tag.TAG_SINT, Tag.TAG_REAL, Tag.TAG_LREAL: break; 
 				default: STKERR("Illegal type of SOS: " + type);
 			}
 		}
@@ -269,9 +269,9 @@ public final class CTStack {
 			Type t2 = SOS().type;
 			if(t1 == t2) return;
 			switch(t1.tag) {
-		      case Scode.TAG_INT, Scode.TAG_SINT:
+		      case Tag.TAG_INT, Tag.TAG_SINT:
 		    	  switch(t2.tag) {
-			    	  case Scode.TAG_INT, Scode.TAG_SINT:  return;
+			    	  case Tag.TAG_INT, Tag.TAG_SINT:  return;
 		    	  }
 			}
 			Type.dumpTypes("checkTypesEqual: ");
@@ -288,7 +288,7 @@ public final class CTStack {
 	}
 
 	/// Debug utility: dumpStack
-	/// @param title the title og the dump printout
+	/// @param title the title of the dump printout
 	public static void dumpStack(final String title) {
 		stack.dumpStack(0, title);
 	}

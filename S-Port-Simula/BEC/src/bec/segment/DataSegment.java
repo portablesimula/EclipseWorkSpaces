@@ -9,11 +9,11 @@ import java.io.IOException;
 import java.util.Vector;
 
 import bec.descriptor.Kind;
+import bec.scode.Sinstr;
+import bec.scode.Type;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
 import bec.util.Option;
-import bec.util.Scode;
-import bec.util.Type;
 import bec.util.Util;
 import bec.value.IntegerValue;
 import bec.value.ObjectAddress;
@@ -169,7 +169,7 @@ public final class DataSegment extends Segment {
 		for(int i=0;i<values.size();i++) {
 			Value val = values.get(i);
 			if(val == null)
-				 oupt.writeByte(Scode.S_NULL);
+				 oupt.writeByte(Sinstr.S_NULL);
 			else val.write(oupt);
 		}
 	}

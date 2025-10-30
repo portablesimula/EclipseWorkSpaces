@@ -17,14 +17,14 @@ import java.io.OutputStream;
 public class AttributeOutputStream extends DataOutputStream{
 
 	/// Create a new AttributeOutputStream
-    public AttributeOutputStream(OutputStream oupt) throws IOException {
+    public AttributeOutputStream(final OutputStream oupt) throws IOException {
     	super(oupt);
     }
 
     /// Write a String to the underlying OutputStream.
     /// If argument 's' is null a length -1 is written informing
     /// AttributeInputStream.readString to return null.
-    public void writeString(String s) throws IOException {
+    public void writeString(final String s) throws IOException {
 		if(s == null) {
 			super.writeShort(-1);
 		} else {

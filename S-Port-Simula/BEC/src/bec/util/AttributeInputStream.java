@@ -17,7 +17,7 @@ import java.io.InputStream;
 public class AttributeInputStream extends DataInputStream {
 
 	/// Create a new AttributeInputStream
-    public AttributeInputStream(InputStream inpt) throws IOException {
+    public AttributeInputStream(final InputStream inpt) throws IOException {
     	super(inpt);
     }
 

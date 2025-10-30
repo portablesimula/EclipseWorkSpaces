@@ -7,12 +7,13 @@ package bec.virtualMachine;
 
 import java.io.IOException;
 
+import bec.scode.Scode;
+import bec.scode.Tag;
+import bec.scode.Type;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Option;
-import bec.util.Scode;
-import bec.util.Type;
 import bec.util.Util;
 import bec.value.GeneralAddress;
 import bec.value.IntegerValue;
@@ -95,9 +96,9 @@ public class SVM_CONVERT extends SVM_Instruction {
 	public void execute() {
 		Value fromValue = null;
 		switch(fromType) {
-			case Scode.TAG_OADDR: fromValue = RTStack.popOADDR(); break;
-			case Scode.TAG_GADDR: fromValue = RTStack.popGADDR(); break;
-			default:			  fromValue = RTStack.pop();
+			case Tag.TAG_OADDR: fromValue = RTStack.popOADDR(); break;
+			case Tag.TAG_GADDR: fromValue = RTStack.popGADDR(); break;
+			default:			fromValue = RTStack.pop();
 		}
 		Value toValue = convValue(fromValue, fromType, toType);
 		RTStack.push(toValue);
@@ -109,107 +110,107 @@ public class SVM_CONVERT extends SVM_Instruction {
 		Value toValue = null;
 		boolean ILL = false;
 		switch(fromtype) {
-			case Scode.TAG_CHAR: {
+			case Tag.TAG_CHAR: {
 				IntegerValue fromval = (IntegerValue)fromValue;
 				int val = (fromval == null)? 0 : fromval.value;
 				switch(totype) {
-					case Scode.TAG_SINT:  toValue = IntegerValue.of(Type.T_SINT, val); break;
-					case Scode.TAG_INT:   toValue = IntegerValue.of(Type.T_INT, val); break;
-					case Scode.TAG_REAL:  toValue = RealValue.of(val); break;
-					case Scode.TAG_LREAL: toValue = LongRealValue.of(val); break;
+					case Tag.TAG_SINT:  toValue = IntegerValue.of(Type.T_SINT, val); break;
+					case Tag.TAG_INT:   toValue = IntegerValue.of(Type.T_INT, val); break;
+					case Tag.TAG_REAL:  toValue = RealValue.of(val); break;
+					case Tag.TAG_LREAL: toValue = LongRealValue.of(val); break;
 					default: ILL = true;
 				}
 				break;
 			}
-			case Scode.TAG_SINT: {
+			case Tag.TAG_SINT: {
 				IntegerValue fromval = (IntegerValue)fromValue;
 				int val = (fromval == null)? 0 : fromval.value;
 				switch(totype) {
-					case Scode.TAG_CHAR:  toValue = IntegerValue.of(Type.T_CHAR, val); break;
-					case Scode.TAG_INT:   toValue = IntegerValue.of(Type.T_INT, val); break;
-					case Scode.TAG_SIZE:  toValue = IntegerValue.of(Type.T_SIZE, val); break;
-					case Scode.TAG_REAL:  toValue = RealValue.of(val); break;
-					case Scode.TAG_LREAL: toValue = LongRealValue.of(val); break;
+					case Tag.TAG_CHAR:  toValue = IntegerValue.of(Type.T_CHAR, val); break;
+					case Tag.TAG_INT:   toValue = IntegerValue.of(Type.T_INT, val); break;
+					case Tag.TAG_SIZE:  toValue = IntegerValue.of(Type.T_SIZE, val); break;
+					case Tag.TAG_REAL:  toValue = RealValue.of(val); break;
+					case Tag.TAG_LREAL: toValue = LongRealValue.of(val); break;
 					default: ILL = true;
 				}
 				break;
 			}
-			case Scode.TAG_INT: {
+			case Tag.TAG_INT: {
 				IntegerValue fromval = (IntegerValue)fromValue;
 				int val = (fromval == null)? 0 : fromval.value;
 				switch(totype) {
-					case Scode.TAG_CHAR:  toValue = IntegerValue.of(Type.T_CHAR, val); break;
-					case Scode.TAG_SINT:  toValue = IntegerValue.of(Type.T_SINT, val); break;
-					case Scode.TAG_SIZE:  toValue = IntegerValue.of(Type.T_SIZE, val); break;
-					case Scode.TAG_REAL:  toValue = RealValue.of(val); break;
-					case Scode.TAG_LREAL: toValue = LongRealValue.of(val); break;
+					case Tag.TAG_CHAR:  toValue = IntegerValue.of(Type.T_CHAR, val); break;
+					case Tag.TAG_SINT:  toValue = IntegerValue.of(Type.T_SINT, val); break;
+					case Tag.TAG_SIZE:  toValue = IntegerValue.of(Type.T_SIZE, val); break;
+					case Tag.TAG_REAL:  toValue = RealValue.of(val); break;
+					case Tag.TAG_LREAL: toValue = LongRealValue.of(val); break;
 					default: ILL = true;
 				}
 				break;
 			}
-			case Scode.TAG_REAL: {
+			case Tag.TAG_REAL: {
 				float val = (fromValue == null)? 0 : fromValue.toFloat();
 				if(val >0) {
 					int newVal = (int)(val+0.5);
 					switch(totype) {
-						case Scode.TAG_CHAR:  toValue = IntegerValue.of(Type.T_CHAR, newVal); break;
-						case Scode.TAG_SINT:  toValue = IntegerValue.of(Type.T_SINT, newVal); break;
-						case Scode.TAG_INT:   toValue = IntegerValue.of(Type.T_INT, newVal); break;
-						case Scode.TAG_LREAL: toValue = LongRealValue.of(val); break;
+						case Tag.TAG_CHAR:  toValue = IntegerValue.of(Type.T_CHAR, newVal); break;
+						case Tag.TAG_SINT:  toValue = IntegerValue.of(Type.T_SINT, newVal); break;
+						case Tag.TAG_INT:   toValue = IntegerValue.of(Type.T_INT, newVal); break;
+						case Tag.TAG_LREAL: toValue = LongRealValue.of(val); break;
 						default: ILL = true;
 					}
 				} else {
 					int newVal = - (int)((-val)+0.5);
 					switch(totype) {
-						case Scode.TAG_CHAR:  toValue = IntegerValue.of(Type.T_CHAR, newVal); break;
-						case Scode.TAG_SINT:  toValue = IntegerValue.of(Type.T_SINT, newVal); break;
-						case Scode.TAG_INT:   toValue = IntegerValue.of(Type.T_INT, newVal); break;
-						case Scode.TAG_LREAL: toValue = LongRealValue.of(val); break;
+						case Tag.TAG_CHAR:  toValue = IntegerValue.of(Type.T_CHAR, newVal); break;
+						case Tag.TAG_SINT:  toValue = IntegerValue.of(Type.T_SINT, newVal); break;
+						case Tag.TAG_INT:   toValue = IntegerValue.of(Type.T_INT, newVal); break;
+						case Tag.TAG_LREAL: toValue = LongRealValue.of(val); break;
 						default: ILL = true;
 					}
 				}
 				break;
 			}
-			case Scode.TAG_LREAL: {
+			case Tag.TAG_LREAL: {
 				LongRealValue fromval = (LongRealValue)fromValue;
 				double val = (fromval == null)? 0 : fromval.value;
 				if(val > 0) {
 				int newVal = (int)(val+0.5);
 					switch(totype) {
-						case Scode.TAG_CHAR: toValue = IntegerValue.of(Type.T_CHAR, newVal); break;
-						case Scode.TAG_SINT: toValue = IntegerValue.of(Type.T_SINT, newVal); break;
-						case Scode.TAG_INT:  toValue = IntegerValue.of(Type.T_INT, newVal); break;
-						case Scode.TAG_REAL: toValue = RealValue.of((float)val); break;
+						case Tag.TAG_CHAR: toValue = IntegerValue.of(Type.T_CHAR, newVal); break;
+						case Tag.TAG_SINT: toValue = IntegerValue.of(Type.T_SINT, newVal); break;
+						case Tag.TAG_INT:  toValue = IntegerValue.of(Type.T_INT, newVal); break;
+						case Tag.TAG_REAL: toValue = RealValue.of((float)val); break;
 						default: ILL = true;
 					}
 				} else {
 					int newVal = - (int)((-val)+0.5);
 					switch(totype) {
-						case Scode.TAG_CHAR: toValue = IntegerValue.of(Type.T_CHAR, newVal); break;
-						case Scode.TAG_SINT: toValue = IntegerValue.of(Type.T_SINT, newVal); break;
-						case Scode.TAG_INT:  toValue = IntegerValue.of(Type.T_INT, newVal); break;
-						case Scode.TAG_REAL: toValue = RealValue.of((float)val); break;
+						case Tag.TAG_CHAR: toValue = IntegerValue.of(Type.T_CHAR, newVal); break;
+						case Tag.TAG_SINT: toValue = IntegerValue.of(Type.T_SINT, newVal); break;
+						case Tag.TAG_INT:  toValue = IntegerValue.of(Type.T_INT, newVal); break;
+						case Tag.TAG_REAL: toValue = RealValue.of((float)val); break;
 						default: ILL = true;
 					}	
 				}
 				break;
 			}
-			case Scode.TAG_OADDR: {
+			case Tag.TAG_OADDR: {
 				// An object address OADDR may be converted to a general address GADDR.
 				// In that case the object address is extended with an empty attribute address
 				// and the pair comprises the result.
-				if(totype == Scode.TAG_GADDR) {
+				if(totype == Tag.TAG_GADDR) {
 					toValue = new GeneralAddress((ObjectAddress) fromValue, 0);
 				} else ILL = true;
 	
 			} break;
-			case Scode.TAG_GADDR: {
+			case Tag.TAG_GADDR: {
 				// Conversion from a GADDR to OADDR (AADDR) means: take the object address (attribute address)
 				// part of the general address and return as result.			
 				GeneralAddress gaddr = (GeneralAddress) fromValue;
 				switch(totype) {
-					case Scode.TAG_OADDR:  toValue = gaddr.base; break;
-					case Scode.TAG_AADDR:  toValue = IntegerValue.of(Type.T_AADDR, gaddr.ofst); break;
+					case Tag.TAG_OADDR:  toValue = gaddr.base; break;
+					case Tag.TAG_AADDR:  toValue = IntegerValue.of(Type.T_AADDR, gaddr.ofst); break;
 					default: ILL = true;
 				}			
 			} break;

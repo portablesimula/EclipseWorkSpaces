@@ -13,9 +13,11 @@ import bec.descriptor.Display;
 import bec.descriptor.ProfileDescr;
 import bec.descriptor.RoutineDescr;
 import bec.descriptor.Variable;
+import bec.scode.Scode;
+import bec.scode.Sinstr;
+import bec.scode.Tag;
+import bec.scode.Type;
 import bec.util.Global;
-import bec.util.Scode;
-import bec.util.Type;
 import bec.util.Util;
 import bec.virtualMachine.SVM_CALL;
 import bec.virtualMachine.SVM_PRECALL;
@@ -49,7 +51,7 @@ public abstract class CALL extends Instruction {
 	/// Treat a complete Call Instruction including parameters stacking and
 	/// finally emit a SVM_CALL instruction.
 	public static void ofScode(int nParStacked) {
-		int profileTag = Scode.ofScode();
+		int profileTag = Scode.inTag();
 		Scode.inputInstr();
 		
 		ProfileDescr spec = (ProfileDescr) Display.get(profileTag);
@@ -74,20 +76,20 @@ public abstract class CALL extends Instruction {
 		
 		boolean CALL_TOS = false;
 		
-		LOOP:while(Scode.curinstr != Scode.S_CALL) {
+		LOOP:while(Scode.curinstr != Sinstr.S_CALL) {
 			Instruction.inInstructions();
-			if(Scode.curinstr == Scode.S_ASSPAR) {
+			if(Scode.curinstr == Sinstr.S_ASSPAR) {
 				Scode.inputInstr();
 				putPar(pitem,1);
 //		      	Global.PSEG.emit(new SVM_NOOP());
 			}
-			else if(Scode.curinstr == Scode.S_ASSREP) {
+			else if(Scode.curinstr == Sinstr.S_ASSREP) {
 				int nRep = Scode.inByte();
 				Scode.inputInstr();
 				putPar(pitem,nRep);
 //		      	Global.PSEG.emit(new SVM_NOOP());
 			}
-			else if(Scode.curinstr == Scode.S_CALL_TOS) {
+			else if(Scode.curinstr == Sinstr.S_CALL_TOS) {
 				CALL_TOS = true;
 				break LOOP;
 			}
@@ -101,7 +103,7 @@ public abstract class CALL extends Instruction {
 	    	Global.PSEG.emit(SVM_CALL.ofTOS(spec.returSlot));
 	    	CTStack.pop();
 	    } else {
-			int bodyTag = Scode.ofScode();
+			int bodyTag = Scode.inTag();
 	    	if(spec.pKind > 0) {
 	    		Global.PSEG.emit(new SVM_CALL_SYS(spec.pKind));
 	    	} else {
@@ -151,8 +153,8 @@ public abstract class CALL extends Instruction {
 				CTStackItem TOS = CTStack.pop();
 				if(TOS instanceof AddressItem) Util.IERR("MODE mismatch below TOS");
 				if(TOS.type != parType) {
-					if(TOS.type.tag == Scode.TAG_INT && parType.tag == Scode.TAG_SINT) ; // OK
-					else if(TOS.type.tag == Scode.TAG_SINT && parType.tag == Scode.TAG_INT) ; // OK
+					if(TOS.type.tag == Tag.TAG_INT && parType.tag == Tag.TAG_SINT) ; // OK
+					else if(TOS.type.tag == Tag.TAG_SINT && parType.tag == Tag.TAG_INT) ; // OK
 					else Util.IERR("TYPE mismatch below TOS -- ASSREP: TOS.type="+TOS.type+"  parType="+parType);
 				}
 			}

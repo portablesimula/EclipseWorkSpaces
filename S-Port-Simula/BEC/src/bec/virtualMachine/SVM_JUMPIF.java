@@ -7,12 +7,12 @@ package bec.virtualMachine;
 
 import java.io.IOException;
 
+import bec.scode.Relation;
+import bec.scode.Sinstr;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Option;
-import bec.util.Relation;
-import bec.util.Scode;
 import bec.util.Util;
 import bec.value.ProgramAddress;
 import bec.value.Value;
@@ -69,15 +69,15 @@ public class SVM_JUMPIF extends SVM_JUMP {
 			for(int i=0;i<typeSize;i++) TOS[i] = RTStack.pop();
 			for(int i=0;i<typeSize;i++) SOS[i] = RTStack.pop();
 			boolean equals = true;
-			Relation eqRel = new Relation(Scode.S_EQ);
+			Relation eqRel = new Relation(Sinstr.S_EQ);
 			LOOP:for(int i=0;i<typeSize;i++) {
 				if(! eqRel.compare(SOS[i], TOS[i])) {
 					equals = false; break LOOP;
 				}
 			}
 			switch(relation.relation) {
-				case Scode.S_EQ: doJump = equals; break;
-				case Scode.S_NE: doJump = ! equals; break;
+				case Sinstr.S_EQ: doJump = equals; break;
+				case Sinstr.S_NE: doJump = ! equals; break;
 				default: Util.IERR("");
 			}
 		}

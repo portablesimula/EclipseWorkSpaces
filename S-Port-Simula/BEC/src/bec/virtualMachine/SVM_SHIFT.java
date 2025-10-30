@@ -7,11 +7,11 @@ package bec.virtualMachine;
 
 import java.io.IOException;
 
+import bec.scode.Sinstr;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Option;
-import bec.util.Scode;
 import bec.value.Value;
 
 /// SVM-INSTRUCTION: SHIFT opr
@@ -54,11 +54,11 @@ public class SVM_SHIFT extends SVM_Instruction {
 		if(DEBUG) {
 			if(tos != null)	IO.println("SVM_SHIFT: TOS: " + tos.getClass().getSimpleName() + "  " + tos);
 			if(sos != null)	IO.println("SVM_SHIFT: SOS: " + sos.getClass().getSimpleName() + "  " + sos);
-			IO.println("SVM_SHIFT: " + sos + " " + Scode.edInstr(instr) + " " + tos);
+			IO.println("SVM_SHIFT: " + sos + " " + Sinstr.edInstr(instr) + " " + tos);
 		}
 		Value res = (sos == null)? null : sos.shift(instr, tos);
 		if(DEBUG)
-			IO.println("SVM_SHIFT: " + sos + " " + Scode.edInstr(instr)+ " " + tos + " ==> " + res);
+			IO.println("SVM_SHIFT: " + sos + " " + Sinstr.edInstr(instr)+ " " + tos + " ==> " + res);
 		RTStack.push(res);
 		Global.PSC.addOfst(1);
 	}
@@ -66,10 +66,10 @@ public class SVM_SHIFT extends SVM_Instruction {
 	@Override	
 	public String toString() {
 		switch(instr) {
-			case Scode.S_LSHIFTA: return("LSHIFTA");
-			case Scode.S_LSHIFTL: return("LSHIFTL");
-			case Scode.S_RSHIFTA: return("RSHIFTA");
-			case Scode.S_RSHIFTL: return("RSHIFTL");
+			case Sinstr.S_LSHIFTA: return("LSHIFTA");
+			case Sinstr.S_LSHIFTL: return("LSHIFTL");
+			case Sinstr.S_RSHIFTA: return("RSHIFTA");
+			case Sinstr.S_RSHIFTL: return("RSHIFTL");
 		}
 		return "SHIFT    ";
 	}

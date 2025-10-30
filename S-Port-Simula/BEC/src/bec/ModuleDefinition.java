@@ -15,13 +15,14 @@ import bec.descriptor.ProfileDescr;
 import bec.descriptor.RecordDescr;
 import bec.descriptor.RoutineDescr;
 import bec.descriptor.Variable;
+import bec.scode.Scode;
+import bec.scode.Sinstr;
 import bec.segment.DataSegment;
 import bec.segment.ProgramSegment;
 import bec.segment.Segment;
 import bec.statement.InsertStatement;
 import bec.util.Array;
 import bec.util.Global;
-import bec.util.Scode;
 import bec.util.Util;
 
 /// This is an implementation of S-Code Module definition.
@@ -73,8 +74,8 @@ public final class ModuleDefinition extends S_Module {
 		Global.iTAGTAB = new Array<Integer>();
 		Global.xTAGTAB = new Array<Integer>();
 		int nXtag = 0;
-		while(Scode.curinstr == Scode.S_TAG) {
-			int itag = Scode.ofScode();
+		while(Scode.curinstr == Sinstr.S_TAG) {
+			int itag = Scode.inTag();
 			int xtag = Scode.inNumber();
 			Global.iTAGTAB.set(xtag, itag); // Index xTag --> value iTag
 			Global.xTAGTAB.set(itag, xtag); // Index iTag --> value xTag
@@ -82,23 +83,23 @@ public final class ModuleDefinition extends S_Module {
 			if(xtag > nXtag) nXtag = xtag;
 		}
 
-		if(Scode.curinstr != Scode.S_BODY) Util.IERR("Illegal termination of module head");
+		if(Scode.curinstr != Sinstr.S_BODY) Util.IERR("Illegal termination of module head");
 		Scode.inputInstr();
 
-		while(Scode.curinstr == Scode.S_INIT)
+		while(Scode.curinstr == Sinstr.S_INIT)
 			Util.IERR("InterfaceModule: Init values is not supported");
 
 		LOOP: while(true) {
 			switch(Scode.curinstr) {
-				case Scode.S_CONST: ConstDescr.ofConstDef(); break;
-				case Scode.S_LOCAL: Variable.ofGlobal(Global.DSEG); break;
+				case Sinstr.S_CONST: ConstDescr.ofConstDef(); break;
+				case Sinstr.S_LOCAL: Variable.ofGlobal(Global.DSEG); break;
 				default: break LOOP;
 			}
 			Scode.inputInstr();
 		}
 		
 		programElements();
-		if(Scode.curinstr != Scode.S_ENDMODULE) Util.IERR("Improper termination of module: "+Scode.edInstr(Scode.curinstr));
+		if(Scode.curinstr != Sinstr.S_ENDMODULE) Util.IERR("Improper termination of module: "+Sinstr.edInstr(Scode.curinstr));
 		outputModule(nXtag);
 	}
 
@@ -112,19 +113,19 @@ public final class ModuleDefinition extends S_Module {
 	/// @result true if a 'visible' was encountered
 	private static boolean viisible() {
 		switch(Scode.curinstr) {
-			case Scode.S_CONSTSPEC:		ConstDescr.ofConstSpec(); break;
-			case Scode.S_CONST:			ConstDescr.ofConstDef(); break;
-			case Scode.S_LABELSPEC:		LabelDescr.ofLabelSpec(); break;
-			case Scode.S_RECORD:		RecordDescr.ofScode(); break;
-			case Scode.S_PROFILE:		ProfileDescr.ofScode(); break;
-			case Scode.S_ROUTINESPEC:	RoutineDescr.ofRoutineSpec(); break;
-			case Scode.S_INSERT:		new InsertStatement(false); break;
-			case Scode.S_SYSINSERT:		new InsertStatement(true); break;
-			case Scode.S_LINE:			setLine(0); break;
-			case Scode.S_DECL:			CTStack.checkStackEmpty(); setLine(Kind.qDCL); break;
-			case Scode.S_STMT:			CTStack.checkStackEmpty(); setLine(Kind.qSTM); break;
-			case Scode.S_SETSWITCH:		setSwitch(); break;
-			case Scode.S_INFO:			Util.WARNING("Unknown info: " + Scode.inString());
+			case Sinstr.S_CONSTSPEC:		ConstDescr.ofConstSpec(); break;
+			case Sinstr.S_CONST:			ConstDescr.ofConstDef(); break;
+			case Sinstr.S_LABELSPEC:		LabelDescr.ofLabelSpec(); break;
+			case Sinstr.S_RECORD:		RecordDescr.ofScode(); break;
+			case Sinstr.S_PROFILE:		ProfileDescr.ofScode(); break;
+			case Sinstr.S_ROUTINESPEC:	RoutineDescr.ofRoutineSpec(); break;
+			case Sinstr.S_INSERT:		new InsertStatement(false); break;
+			case Sinstr.S_SYSINSERT:		new InsertStatement(true); break;
+			case Sinstr.S_LINE:			setLine(0); break;
+			case Sinstr.S_DECL:			CTStack.checkStackEmpty(); setLine(Kind.qDCL); break;
+			case Sinstr.S_STMT:			CTStack.checkStackEmpty(); setLine(Kind.qSTM); break;
+			case Sinstr.S_SETSWITCH:		setSwitch(); break;
+			case Sinstr.S_INFO:			Util.WARNING("Unknown info: " + Scode.inString());
 			default:
 				return false;
 		}

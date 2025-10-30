@@ -5,11 +5,11 @@
 /// page: https://creativecommons.org/licenses/by/4.0/
 package bec.virtualMachine;
 
+import bec.scode.Type;
 import bec.segment.DataSegment;
 import bec.segment.Segment;
 import bec.util.Global;
 import bec.util.Option;
-import bec.util.Type;
 import bec.util.Util;
 import bec.value.IntegerValue;
 import bec.value.ObjectAddress;

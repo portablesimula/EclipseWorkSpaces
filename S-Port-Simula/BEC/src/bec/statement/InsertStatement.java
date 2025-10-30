@@ -16,13 +16,13 @@ import bec.descriptor.ProfileDescr;
 import bec.descriptor.RecordDescr;
 import bec.descriptor.RoutineDescr;
 import bec.descriptor.Variable;
+import bec.scode.Scode;
+import bec.scode.Type;
 import bec.segment.DataSegment;
 import bec.segment.ProgramSegment;
 import bec.util.AttributeInputStream;
 import bec.util.Global;
 import bec.util.Option;
-import bec.util.Scode;
-import bec.util.Type;
 import bec.util.Util;
 
 /// S-INSTRUCTION: IF
@@ -64,8 +64,8 @@ public class InsertStatement {
 		modid = Scode.inString();
 		String check = Scode.inString();
 		String extid = Scode.inString();
-		bias = Scode.ofScode();
-		int limit = Scode.ofScode();
+		bias = Scode.inTag();
+		int limit = Scode.inTag();
 
 		if(Option.ATTR_INPUT_TRACE)
 			IO.println("**************   Begin  -  Input-module  " + modid + "  " + check + "   **************");

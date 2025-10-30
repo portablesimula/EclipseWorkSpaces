@@ -6,9 +6,9 @@
 package bec.instruction;
 
 import bec.compileTimeStack.CTStack;
+import bec.scode.Relation;
+import bec.scode.Type;
 import bec.util.Global;
-import bec.util.Relation;
-import bec.util.Type;
 import bec.virtualMachine.SVM_COMPARE;
 
 /// S-INSTRUCTION: COMPARE

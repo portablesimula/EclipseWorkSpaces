@@ -8,19 +8,16 @@ package bec.value;
 import java.io.IOException;
 
 import bec.descriptor.Attribute;
-import bec.descriptor.Variable;
+import bec.scode.Relation;
+import bec.scode.Scode;
+import bec.scode.Sinstr;
+import bec.scode.Tag;
+import bec.scode.Type;
 import bec.segment.DataSegment;
-import bec.segment.Segment;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
-import bec.util.Global;
 import bec.util.Option;
-import bec.util.Relation;
-import bec.util.Scode;
-import bec.util.Tag;
-import bec.util.Type;
 import bec.util.Util;
-import bec.virtualMachine.RTUtil;
 
 public class IntegerValue extends Value {
 	public int value;
@@ -180,14 +177,14 @@ public class IntegerValue extends Value {
 		return Relation.compare(LHS, relation, RHS);
 //		boolean res = false;
 //		switch(relation) {
-//			case Scode.S_LT: res = LHS <  RHS; break;
-//			case Scode.S_LE: res = LHS <= RHS; break;
-//			case Scode.S_EQ: res = LHS == RHS; break;
-//			case Scode.S_GE: res = LHS >= RHS; break;
-//			case Scode.S_GT: res = LHS >  RHS; break;
-//			case Scode.S_NE: res = LHS != RHS; break;
+//			case Sinstr.S_LT: res = LHS <  RHS; break;
+//			case Sinstr.S_LE: res = LHS <= RHS; break;
+//			case Sinstr.S_EQ: res = LHS == RHS; break;
+//			case Sinstr.S_GE: res = LHS >= RHS; break;
+//			case Sinstr.S_GT: res = LHS >  RHS; break;
+//			case Sinstr.S_NE: res = LHS != RHS; break;
 //		}
-////		IO.println("IntegerValue.compare: " + LHS + " " + Scode.edInstr(relation) + " " + RHS + " ==> " + res);
+////		IO.println("IntegerValue.compare: " + LHS + " " + Sinstr.edInstr(relation) + " " + RHS + " ==> " + res);
 ////		Util.IERR("");
 //		return res;
 	}
@@ -199,16 +196,16 @@ public class IntegerValue extends Value {
 	public Value shift(int instr, Value other) {
 		int LHS = this.value;
 		int RHS = (other == null)? 0 : ((IntegerValue)other).value;
-//		IO.println("IntegerValue.shift: " + LHS + " " + Scode.edInstr(instr) + " " + RHS);
+//		IO.println("IntegerValue.shift: " + LHS + " " + Sinstr.edInstr(instr) + " " + RHS);
 		int res = 0;
 		switch(instr) {
-		case Scode.S_LSHIFTA,
-			 Scode.S_LSHIFTL: res = LHS << RHS; break;
-		case Scode.S_RSHIFTA: res = LHS >> RHS; break;
-		case Scode.S_RSHIFTL: res = LHS >>> RHS; break;
+		case Sinstr.S_LSHIFTA,
+			 Sinstr.S_LSHIFTL: res = LHS << RHS; break;
+		case Sinstr.S_RSHIFTA: res = LHS >> RHS; break;
+		case Sinstr.S_RSHIFTL: res = LHS >>> RHS; break;
 		default: Util.IERR("");
 		}
-//		IO.println("IntegerValue.shift: " + LHS + " " + Scode.edInstr(instr) + " " + RHS + " ==> " + res);
+//		IO.println("IntegerValue.shift: " + LHS + " " + Sinstr.edInstr(instr) + " " + RHS + " ==> " + res);
 //		Util.IERR("");
 		return IntegerValue.of(type.T_INT, res);
 	}
@@ -216,10 +213,10 @@ public class IntegerValue extends Value {
 	public String toString() {
 		if(type == null) return ""+value;
 		switch(type.tag) {
-			case Scode.TAG_INT:   return "INT:"   + value;
-			case Scode.TAG_CHAR:  return "CHAR:"  + (char)value;
-			case Scode.TAG_SIZE:  return "SIZE:"  + value;
-			case Scode.TAG_AADDR: return "FIELD:" + value;
+			case Tag.TAG_INT:   return "INT:"   + value;
+			case Tag.TAG_CHAR:  return "CHAR:"  + (char)value;
+			case Tag.TAG_SIZE:  return "SIZE:"  + value;
+			case Tag.TAG_AADDR: return "FIELD:" + value;
 			default: return "C-" +type + " " + value; 
 		}
 	}
@@ -231,23 +228,23 @@ public class IntegerValue extends Value {
 //	public static void main(String[] args) {
 //		int nErr = 0;
 //		IntegerValue v44 = IntegerValue.of(Type.T_INT, 44);
-//		nErr += TEST(v44, Scode.S_LT, null, false);
-//		nErr += TEST(v44, Scode.S_LT, v44, false);	
+//		nErr += TEST(v44, Sinstr.S_LT, null, false);
+//		nErr += TEST(v44, Sinstr.S_LT, v44, false);	
 //		
-//		nErr += TEST(v44, Scode.S_LE, null, false);
-//		nErr += TEST(v44, Scode.S_LE, v44, true);
+//		nErr += TEST(v44, Sinstr.S_LE, null, false);
+//		nErr += TEST(v44, Sinstr.S_LE, v44, true);
 //		
-//		nErr += TEST(v44, Scode.S_EQ, null, false);
-//		nErr += TEST(v44, Scode.S_EQ, v44, true);
+//		nErr += TEST(v44, Sinstr.S_EQ, null, false);
+//		nErr += TEST(v44, Sinstr.S_EQ, v44, true);
 //		
-//		nErr += TEST(v44, Scode.S_GE, null, true);
-//		nErr += TEST(v44, Scode.S_GE, v44, true);	
+//		nErr += TEST(v44, Sinstr.S_GE, null, true);
+//		nErr += TEST(v44, Sinstr.S_GE, v44, true);	
 //		
-//		nErr += TEST(v44, Scode.S_GT, null, true);
-//		nErr += TEST(v44, Scode.S_GT, v44, false);	
+//		nErr += TEST(v44, Sinstr.S_GT, null, true);
+//		nErr += TEST(v44, Sinstr.S_GT, v44, false);	
 //		
-//		nErr += TEST(v44, Scode.S_NE, null, true);
-//		nErr += TEST(v44, Scode.S_NE, v44, false);
+//		nErr += TEST(v44, Sinstr.S_NE, null, true);
+//		nErr += TEST(v44, Sinstr.S_NE, v44, false);
 //		
 //		IO.println("Number of errors: " + nErr);
 //	}
@@ -255,7 +252,7 @@ public class IntegerValue extends Value {
 //	private static int TEST(IntegerValue lhs, int relation, IntegerValue rhs, boolean expected) {
 //		boolean b = lhs.compare(relation, rhs);
 //		if(b != expected) {
-//			IO.println("ERROR: " + lhs + " " + Scode.edInstr(relation) + " " + rhs + " ==> " + b);
+//			IO.println("ERROR: " + lhs + " " + Sinstr.edInstr(relation) + " " + rhs + " ==> " + b);
 //			return 1;
 //		}
 //		return 0;
@@ -272,7 +269,7 @@ public class IntegerValue extends Value {
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
-		oupt.writeByte(Scode.S_C_INT);
+		oupt.writeByte(Sinstr.S_C_INT);
 		type.write(oupt);
 		oupt.writeInt(value);
 	}

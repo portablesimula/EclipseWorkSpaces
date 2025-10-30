@@ -16,6 +16,10 @@ import bec.descriptor.ProfileDescr;
 import bec.descriptor.RoutineDescr;
 import bec.descriptor.Variable;
 import bec.instruction.Instruction;
+import bec.scode.Scode;
+import bec.scode.Sinstr;
+import bec.scode.Tag;
+import bec.scode.Type;
 import bec.segment.Segment;
 import bec.statement.IfConstrction;
 import bec.statement.InsertStatement;
@@ -24,9 +28,6 @@ import bec.statement.SkipifConstruction;
 import bec.util.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Option;
-import bec.util.Scode;
-import bec.util.Tag;
-import bec.util.Type;
 import bec.util.Util;
 import bec.virtualMachine.SVM_LINE;
 
@@ -50,16 +51,16 @@ public abstract class S_Module {
 	public static void programElements() {
 		LOOP: while(true) {
 			switch(Scode.curinstr) {
-				case Scode.S_LABELSPEC ->	LabelDescr.ofLabelSpec();
-				case Scode.S_LABEL ->		LabelDescr.ofLabelDef(Tag.ofScode());
-				case Scode.S_PROFILE ->		ProfileDescr.ofScode();
-				case Scode.S_ROUTINE ->		RoutineDescr.ofRoutineDef();
-				case Scode.S_IF ->			IfConstrction.ofScode();
-				case Scode.S_SKIPIF ->		SkipifConstruction.ofScode();
-				case Scode.S_SAVE ->		ProtectConstruction.ofStatement();
-				case Scode.S_INSERT ->		new InsertStatement(false);
-				case Scode.S_SYSINSERT ->	new InsertStatement(true);
-				case Scode.S_LOCAL ->		Variable.ofGlobal(Global.DSEG);
+				case Sinstr.S_LABELSPEC ->	LabelDescr.ofLabelSpec();
+				case Sinstr.S_LABEL ->		LabelDescr.ofLabelDef(Tag.ofScode());
+				case Sinstr.S_PROFILE ->		ProfileDescr.ofScode();
+				case Sinstr.S_ROUTINE ->		RoutineDescr.ofRoutineDef();
+				case Sinstr.S_IF ->			IfConstrction.ofScode();
+				case Sinstr.S_SKIPIF ->		SkipifConstruction.ofScode();
+				case Sinstr.S_SAVE ->		ProtectConstruction.ofStatement();
+				case Sinstr.S_INSERT ->		new InsertStatement(false);
+				case Sinstr.S_SYSINSERT ->	new InsertStatement(true);
+				case Sinstr.S_LOCAL ->		Variable.ofGlobal(Global.DSEG);
 				default -> { if(! Instruction.inInstruction()) break LOOP; }
 			}
 			Scode.inputInstr();

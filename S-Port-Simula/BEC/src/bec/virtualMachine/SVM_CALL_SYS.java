@@ -10,13 +10,13 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import bec.descriptor.Kind;
+import bec.scode.Type;
 import bec.segment.DataSegment;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
 import bec.util.EndProgram;
 import bec.util.Global;
 import bec.util.Option;
-import bec.util.Type;
 import bec.util.Util;
 import bec.value.BooleanValue;
 import bec.value.IntegerValue;

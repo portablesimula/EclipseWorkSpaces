@@ -7,9 +7,9 @@ package bec.instruction;
 
 import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.CTStackItem;
+import bec.scode.Relation;
+import bec.scode.Scode;
 import bec.util.Global;
-import bec.util.Relation;
-import bec.util.Scode;
 import bec.util.Util;
 import bec.virtualMachine.SVM_JUMPIF;
 

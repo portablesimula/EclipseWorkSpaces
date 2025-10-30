@@ -8,8 +8,8 @@ package bec.instruction;
 import bec.compileTimeStack.AddressItem;
 import bec.compileTimeStack.CTStack;
 import bec.descriptor.Attribute;
-import bec.util.Scode;
-import bec.util.Tag;
+import bec.scode.Sinstr;
+import bec.scode.Tag;
 
 /// S-INSTRUCTION: SELECT
 ///
@@ -64,7 +64,7 @@ public abstract class SELECT extends Instruction {
 		AddressItem adr = (AddressItem) CTStack.TOS();
 		adr.offset = adr.offset + attr.rela;
 		adr.type = attr.type;
-		if(instr == Scode.S_SELECTV) FETCH.doFetch();
+		if(instr == Sinstr.S_SELECTV) FETCH.doFetch();
 	}
 
 }

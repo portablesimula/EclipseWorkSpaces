@@ -5,10 +5,10 @@
 /// page: https://creativecommons.org/licenses/by/4.0/
 package bec.descriptor;
 
+import bec.scode.Scode;
+import bec.scode.Type;
 import bec.util.Array;
 import bec.util.Option;
-import bec.util.Scode;
-import bec.util.Type;
 import bec.util.Util;
 
 /// Display.

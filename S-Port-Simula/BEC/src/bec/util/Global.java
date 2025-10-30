@@ -6,41 +6,32 @@
 package bec.util;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
 import bec.S_Module;
-import bec.descriptor.Descriptor;
 import bec.segment.DataSegment;
 import bec.segment.ProgramSegment;
 import bec.segment.Segment;
 import bec.value.ProgramAddress;
 
+/// Global variables.
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/util/Global.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public class Global {
 	
-//	public static ConsoleNewEdition console;
-//	public static RTS_ConsolePanel console;
+	public static void init(final String scodeSource) {
+		Global.scodeSource = scodeSource;
+		Global.SEGMAP = new HashMap<String, Segment>();
+		Global.ifDepth = 0;		
+	}
+	
 	public static Terminal console;
-//	public static Writer consoleWriter; // = Reflect.getConsoleWriter();
-//	public static Reader consoleReader; // = Reflect.getConsoleReader();
-	
-	public static Vector<Segment> routineSegments;
-	
-	public static ProgramAddress PSC; // ProgramSequenceControl during execute
-	public static boolean duringEXEC() { return PSC != null; }
-//	public static HashMap<String, Segment> SEGMAP;
-	public static Map<String, Segment> SEGMAP;
-
 	public static S_Module currentModule;
-
-//	public static Array<SyntaxClass> Display = new Array<SyntaxClass>();
-//	public static SyntaxClass getMeaning(int tag) {
-//		SyntaxClass x = Display.get(tag);
-//		if(x == null) Util.IERR("Missing meaning: " + Scode.edTag(tag));
-//		return(x);
-//	}
-	
-	
 	public static String scodeSource;	// S-Code source file name
 	public static String progIdent;		// S-Code PROG String
 	public static String moduleID;		// S-Module ident String or MAIN
@@ -56,16 +47,18 @@ public class Global {
 
 	public static Array<Integer> iTAGTAB; // Index xTag --> value iTag (during Module I/O)
 	public static Array<Integer> xTAGTAB; // Index iTag --> value xTag (during Module I/O)
-
-//	public static boolean insideRoutine;  // Inside Routine Body indicator
+	public static ProgramAddress[] DESTAB = new ProgramAddress[64];
+	public static int ifDepth;
 
 	public static DataSegment CSEG; // Constant Segment
 	public static DataSegment TSEG; // Constant TextValue Segment
 	public static DataSegment DSEG; 
 	public static ProgramSegment PSEG; // Current PSEG
+	public static Vector<Segment> routineSegments;
 
-	public static ProgramAddress[] DESTAB = new ProgramAddress[64];
-	public static int ifDepth;
+	public static ProgramAddress PSC; // ProgramSequenceControl during execute
+	public static boolean duringEXEC() { return PSC != null; }
+	public static Map<String, Segment> SEGMAP;
 
 	public static String getSourceID() {
 		File file = new File(scodeSource);
@@ -79,7 +72,6 @@ public class Global {
 		if(modident == null) {
 			int p = scodeSource.indexOf('.');
 			String s = scodeSource.substring(0, p);
-//			Util.IERR(s + ".svm");
 			return s + suffix;
 		} else {
 			return rtsDir + modident + suffix;

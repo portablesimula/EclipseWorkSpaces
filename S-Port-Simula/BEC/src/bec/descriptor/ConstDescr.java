@@ -8,13 +8,14 @@ package bec.descriptor;
 import java.io.IOException;
 import java.util.Vector;
 
+import bec.scode.Scode;
+import bec.scode.Sinstr;
+import bec.scode.Tag;
+import bec.scode.Type;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Option;
-import bec.util.Type;
-import bec.util.Scode;
-import bec.util.Tag;
 import bec.util.Util;
 import bec.value.FixupOADDR;
 import bec.value.ObjectAddress;
@@ -94,11 +95,11 @@ public class ConstDescr extends Descriptor {
 		cnst = new ConstDescr(tag);
 		cnst.type = Type.ofScode();
 		
-		if(Scode.accept(Scode.S_FIXREP)) {
+		if(Scode.accept(Sinstr.S_FIXREP)) {
 			Scode.inNumber();
 		}
 
-		int repCount = (Scode.accept(Scode.S_REP)) ? Scode.inNumber() : 1;
+		int repCount = (Scode.accept(Sinstr.S_REP)) ? Scode.inNumber() : 1;
 		return cnst;
 		
 	}
@@ -115,14 +116,14 @@ public class ConstDescr extends Descriptor {
 		cnst.type = Type.ofScode();
 		
 		fixrepTail = 0;
-		if(Scode.accept(Scode.S_FIXREP)) {
+		if(Scode.accept(Sinstr.S_FIXREP)) {
 			int fixrep = Scode.inNumber();
 			RecordDescr rec = (RecordDescr) Display.getMeaning(cnst.type.tag);
 			int count = rec.size + rec.rep0size * fixrep;
 			fixrepTail = rec.rep0size * fixrep;
 		}
 
-		int repCount = (Scode.accept(Scode.S_REP)) ? Scode.inNumber() : 1;
+		int repCount = (Scode.accept(Sinstr.S_REP)) ? Scode.inNumber() : 1;
 		
 		if(cnst.address instanceof FixupOADDR fix) {
 			fix.setAddress(Global.CSEG.nextAddress());

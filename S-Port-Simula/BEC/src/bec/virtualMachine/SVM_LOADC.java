@@ -7,12 +7,13 @@ package bec.virtualMachine;
 
 import java.io.IOException;
 
+import bec.scode.Scode;
+import bec.scode.Tag;
+import bec.scode.Type;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Option;
-import bec.util.Scode;
-import bec.util.Type;
 import bec.util.Util;
 import bec.value.GeneralAddress;
 import bec.value.IntegerValue;
@@ -56,10 +57,10 @@ public class SVM_LOADC extends SVM_Instruction {
 	@Override
 	public void execute() {
 		switch(typeTag) {
-			case Scode.TAG_BOOL, Scode.TAG_CHAR, Scode.TAG_INT, Scode.TAG_SINT, Scode.TAG_REAL, Scode.TAG_LREAL,
-			     Scode.TAG_SIZE, Scode.TAG_AADDR, Scode.TAG_PADDR, Scode.TAG_RADDR:
+			case Tag.TAG_BOOL, Tag.TAG_CHAR, Tag.TAG_INT, Tag.TAG_SINT, Tag.TAG_REAL, Tag.TAG_LREAL,
+			     Tag.TAG_SIZE, Tag.TAG_AADDR, Tag.TAG_PADDR, Tag.TAG_RADDR:
 					RTStack.push(value); break;
-			case Scode.TAG_OADDR:
+			case Tag.TAG_OADDR:
 				
 				ObjectAddress oaddr = (ObjectAddress) value;
 				if(oaddr != null && oaddr.segID == null) {
@@ -70,10 +71,10 @@ public class SVM_LOADC extends SVM_Instruction {
 				}
 				
 				RTStack.push(value); break;
-			case Scode.TAG_TEXT:
+			case Tag.TAG_TEXT:
 				Util.IERR("IMPOSSIBLE");
 				break;
-			case Scode.TAG_STRING:
+			case Tag.TAG_STRING:
 				StringValue sval = (StringValue) value;
 				IntegerValue lng = IntegerValue.of(Type.T_INT, sval.lng);
 				RTStack.push(sval.addr);
@@ -81,7 +82,7 @@ public class SVM_LOADC extends SVM_Instruction {
 				RTStack.push(lng);
 				if(DEBUG) RTStack.dumpRTStack("SVM_LOADC.execute: ");
 				break;
-			case Scode.TAG_GADDR:
+			case Tag.TAG_GADDR:
 				if(value == null) {
 					RTStack.push(null);
 					RTStack.push(null);

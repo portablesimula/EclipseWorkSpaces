@@ -6,8 +6,8 @@
 package bec.instruction;
 
 import bec.compileTimeStack.CTStack;
+import bec.scode.Scode;
 import bec.util.Global;
-import bec.util.Scode;
 import bec.util.Util;
 import bec.value.ProgramAddress;
 import bec.virtualMachine.SVM_JUMP;

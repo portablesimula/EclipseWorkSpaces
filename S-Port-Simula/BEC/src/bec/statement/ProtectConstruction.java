@@ -9,9 +9,10 @@ import bec.S_Module;
 import bec.compileTimeStack.CTStack;
 import bec.instruction.FETCH;
 import bec.instruction.Instruction;
+import bec.scode.Scode;
+import bec.scode.Sinstr;
+import bec.scode.Type;
 import bec.util.Global;
-import bec.util.Scode;
-import bec.util.Type;
 import bec.util.Util;
 import bec.virtualMachine.SVM_RESTORE;
 import bec.virtualMachine.SVM_SAVE;
@@ -37,8 +38,8 @@ public class ProtectConstruction {
 		
 		Scode.inputInstr();
 		S_Module.programElements();
-//		IO.println("ProtectConstruction.ofStatement: " + Scode.edInstr(Scode.curinstr));
-		if(Scode.curinstr != Scode.S_RESTORE)
+//		IO.println("ProtectConstruction.ofStatement: " + Sinstr.edInstr(Scode.curinstr));
+		if(Scode.curinstr != Sinstr.S_RESTORE)
 			Util.IERR("Improper termination of protect-construction");
 		doRESTORE();
 	}
@@ -102,7 +103,7 @@ public class ProtectConstruction {
 		
 		do Scode.inputInstr(); while(Instruction.inInstruction());
 
-		if(Scode.curinstr != Scode.S_RESTORE)
+		if(Scode.curinstr != Sinstr.S_RESTORE)
 			Util.IERR("Improper termination of protect-construction");
 		doRESTORE();
 	}

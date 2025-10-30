@@ -8,9 +8,9 @@ package bec.instruction;
 import bec.compileTimeStack.AddressItem;
 import bec.compileTimeStack.CTStack;
 import bec.descriptor.Attribute;
-import bec.util.Scode;
-import bec.util.Tag;
-import bec.util.Type;
+import bec.scode.Sinstr;
+import bec.scode.Tag;
+import bec.scode.Type;
 import bec.value.ObjectAddress;
 
 /// S-INSTRUCTION: REMOTE
@@ -62,7 +62,7 @@ public abstract class REMOTE extends Instruction {
 		AddressItem adr = new AddressItem(attr.type, attr.rela, memAddr);
 		CTStack.push(adr);
 		
-        if(instr == Scode.S_REMOTEV) {
+        if(instr == Sinstr.S_REMOTEV) {
         	FETCH.doFetch();
         }
 	}

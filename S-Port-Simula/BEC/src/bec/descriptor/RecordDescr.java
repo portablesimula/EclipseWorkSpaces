@@ -8,12 +8,13 @@ package bec.descriptor;
 import java.io.IOException;
 import java.util.Vector;
 
+import bec.scode.Scode;
+import bec.scode.Sinstr;
+import bec.scode.Tag;
+import bec.scode.Type;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
 import bec.util.Option;
-import bec.util.Scode;
-import bec.util.Tag;
-import bec.util.Type;
 
 /// Record descriptor.
 ///
@@ -64,37 +65,37 @@ public class RecordDescr extends Descriptor {
 		RecordDescr rec = new RecordDescr(Tag.ofScode());
 		int comnSize = 0;
 			
-		if(Scode.accept(Scode.S_INFO)) {
+		if(Scode.accept(Sinstr.S_INFO)) {
 			@SuppressWarnings("unused")
 			String info = Scode.inString();
 			rec.infoType = true;
 		}
-		if(Scode.accept(Scode.S_PREFIX)) {
-			rec.prefixTag = Scode.ofScode();
+		if(Scode.accept(Sinstr.S_PREFIX)) {
+			rec.prefixTag = Scode.inTag();
 			RecordDescr prefix = rec.getPrefix(rec.prefixTag);
 			comnSize = prefix.size;
 		}
 		rec.attributes = new Vector<Attribute>();
-		while(Scode.accept(Scode.S_ATTR)) {
+		while(Scode.accept(Sinstr.S_ATTR)) {
 			Attribute attr = Attribute.ofScode(comnSize);
 			comnSize = comnSize + attr.allocSize();
 			if(attr.repCount == 0) rec.rep0size = attr.size();
 			rec.attributes.add(attr);
 		}
 		rec.size = comnSize;
-		while(Scode.accept(Scode.S_ALT)) {
+		while(Scode.accept(Sinstr.S_ALT)) {
 			if(rec.alternateParts == null) rec.alternateParts = new Vector<AlternatePart>();
 			AlternatePart alt = rec.new AlternatePart();
 			rec.alternateParts.add(alt);
 			int altSize = comnSize;
-			while(Scode.accept(Scode.S_ATTR)) {
+			while(Scode.accept(Sinstr.S_ATTR)) {
 				Attribute attr = Attribute.ofScode(altSize);
 				altSize = altSize + attr.allocSize();
 				alt.attributes.add(attr);
 			}
 			rec.size = Math.max(rec.size, altSize);
 		}
-		Scode.expect(Scode.S_ENDRECORD);
+		Scode.expect(Sinstr.S_ENDRECORD);
 		Type.newRecType(rec);
 		return rec;
 	}

@@ -7,7 +7,7 @@ package bec.instruction;
 
 import bec.compileTimeStack.CTStack;
 import bec.descriptor.Display;
-import bec.util.Tag;
+import bec.scode.Tag;
 
 /// S-INSTRUCTION: DELETE
 ///

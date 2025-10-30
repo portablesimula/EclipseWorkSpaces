@@ -9,10 +9,11 @@ import bec.S_Module;
 import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.CTStackItem;
 import bec.instruction.FETCH;
+import bec.scode.Relation;
+import bec.scode.Scode;
+import bec.scode.Sinstr;
 import bec.util.Global;
 import bec.util.NamedStack;
-import bec.util.Relation;
-import bec.util.Scode;
 import bec.util.Util;
 import bec.value.ProgramAddress;
 import bec.virtualMachine.SVM_JUMP;
@@ -115,7 +116,7 @@ public abstract class IfConstrction {
 		
 		Scode.inputInstr();
 		S_Module.programElements();
-		if(Scode.curinstr == Scode.S_ELSE) {
+		if(Scode.curinstr == Sinstr.S_ELSE) {
 			// else
 			// 	* force TOS value;
 			// 	* remember stack as "else-stack";
@@ -143,7 +144,7 @@ public abstract class IfConstrction {
 			Scode.inputInstr();
 			S_Module.programElements();
 		}
-		if(Scode.curinstr != Scode.S_ENDIF) Util.IERR("Missing ENDIF: " + Scode.edInstr(Scode.curinstr));
+		if(Scode.curinstr != Sinstr.S_ENDIF) Util.IERR("Missing ENDIF: " + Sinstr.edInstr(Scode.curinstr));
 		// endif
 		// * force TOS value;
 		// * merge current stack with "else-stack" if it exists, otherwise "if-stack";

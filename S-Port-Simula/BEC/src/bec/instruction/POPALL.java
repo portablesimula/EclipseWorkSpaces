@@ -6,7 +6,7 @@
 package bec.instruction;
 
 import bec.compileTimeStack.CTStack;
-import bec.util.Scode;
+import bec.scode.Scode;
 
 /// S-INSTRUCTION: POPALL
 ///

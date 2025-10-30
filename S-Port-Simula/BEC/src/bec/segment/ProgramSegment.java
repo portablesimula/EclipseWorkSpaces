@@ -9,11 +9,11 @@ import java.io.IOException;
 import java.util.Vector;
 
 import bec.descriptor.Kind;
+import bec.scode.Sinstr;
+import bec.scode.Type;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
 import bec.util.Option;
-import bec.util.Scode;
-import bec.util.Type;
 import bec.value.ProgramAddress;
 import bec.virtualMachine.SVM_Instruction;
 
@@ -106,7 +106,7 @@ public final class ProgramSegment extends Segment {
 		for(int i=0;i<instructions.size();i++) {
 			SVM_Instruction val = instructions.get(i);
 			if(val == null)
-				 oupt.writeByte(Scode.S_NULL);
+				 oupt.writeByte(Sinstr.S_NULL);
 			else val.write(oupt);
 		}
 	}

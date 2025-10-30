@@ -5,9 +5,13 @@
 /// page: https://creativecommons.org/licenses/by/4.0/
 package bec.util;
 
+/// Options.
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/util/Option.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public abstract class Option {
-	
-//	public static final boolean TESTING_INDEXED = true;	
 
 	public static boolean INLINE_TESTING = false;
 	public static boolean debugMode = false;

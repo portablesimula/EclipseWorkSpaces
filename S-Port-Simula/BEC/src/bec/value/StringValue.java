@@ -7,11 +7,11 @@ package bec.value;
 
 import java.io.IOException;
 
+import bec.scode.Sinstr;
+import bec.scode.Type;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
 import bec.util.Option;
-import bec.util.Scode;
-import bec.util.Type;
 
 public class StringValue extends Value {
 	public ObjectAddress addr;
@@ -41,7 +41,7 @@ public class StringValue extends Value {
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
-		oupt.writeByte(Scode.S_STRING);
+		oupt.writeByte(Sinstr.S_STRING);
 		oupt.writeString(addr.segID);
 		oupt.writeShort(addr.ofst);
 		

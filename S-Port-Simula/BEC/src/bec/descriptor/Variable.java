@@ -7,14 +7,15 @@ package bec.descriptor;
 
 import java.io.IOException;
 
+import bec.scode.Scode;
+import bec.scode.Sinstr;
+import bec.scode.Tag;
+import bec.scode.Type;
 import bec.segment.DataSegment;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Option;
-import bec.util.Type;
-import bec.util.Scode;
-import bec.util.Tag;
 import bec.util.Util;
 import bec.value.IntegerValue;
 import bec.value.LongRealValue;
@@ -76,7 +77,7 @@ public class Variable extends Descriptor {
 		Tag tag = Tag.ofScode();
 		Variable var = new Variable(Kind.K_Import, tag);
 		var.type = Type.ofScode();
-		var.repCount = (Scode.accept(Scode.S_REP)) ? Scode.inNumber() : 1;
+		var.repCount = (Scode.accept(Sinstr.S_REP)) ? Scode.inNumber() : 1;
 		return var;
 	}
 	
@@ -87,7 +88,7 @@ public class Variable extends Descriptor {
 		Tag tag = Tag.ofScode();
 		Variable var = new Variable(Kind.K_Export, tag);
 		var.type = Type.ofScode();
-		var.repCount = (Scode.accept(Scode.S_REP)) ? Scode.inNumber() : 1;
+		var.repCount = (Scode.accept(Sinstr.S_REP)) ? Scode.inNumber() : 1;
 		return var;
 	}
 	
@@ -118,7 +119,7 @@ public class Variable extends Descriptor {
 		Tag tag = Tag.ofScode();
 		Variable var = new Variable(Kind.K_LocalVar, tag);
 		var.type = Type.ofScode();
-		var.repCount = (Scode.accept(Scode.S_REP)) ? Scode.inNumber() : 1;
+		var.repCount = (Scode.accept(Sinstr.S_REP)) ? Scode.inNumber() : 1;
 		var.address = ObjectAddress.ofRelFrameAddr(rela);
 		return var;
 	}
@@ -130,9 +131,9 @@ public class Variable extends Descriptor {
 		Tag tag = Tag.ofScode();
 		Variable var = new Variable(Kind.K_GlobalVar, tag);
 		var.type = Type.ofScode();
-		var.repCount = (Scode.accept(Scode.S_REP)) ? Scode.inNumber() : 1;
+		var.repCount = (Scode.accept(Sinstr.S_REP)) ? Scode.inNumber() : 1;
 		var.address = seg.nextAddress();
-		if(Scode.accept(Scode.S_SYSTEM)) {
+		if(Scode.accept(Sinstr.S_SYSTEM)) {
 			String system = Scode.inString();
 			Value value = null;
 			if(system.equalsIgnoreCase("CURINS")) value = null;//new ObjectAddress(true);
@@ -158,7 +159,7 @@ public class Variable extends Descriptor {
 			Global.DSEG.emit(value);
 		} else {
 			int count = var.type.size();
-			if(Scode.accept(Scode.S_FIXREP)) {
+			if(Scode.accept(Sinstr.S_FIXREP)) {
 				int fixrep = Scode.inNumber();
 				RecordDescr rec = (RecordDescr) Display.getMeaning(var.type.tag);
 				count = count + rec.rep0size * fixrep;

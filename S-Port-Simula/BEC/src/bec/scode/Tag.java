@@ -3,23 +3,61 @@
 /// 
 /// You find a copy of the License on the following
 /// page: https://creativecommons.org/licenses/by/4.0/
-package bec.util;
+package bec.scode;
 
 import java.io.IOException;
 
 import bec.descriptor.Descriptor;
 import bec.descriptor.Display;
 import bec.statement.InsertStatement;
+import bec.util.AttributeInputStream;
+import bec.util.AttributeOutputStream;
+import bec.util.Global;
+import bec.util.Option;
 
+/// Tag.
+///
+/// 
+/// 	tag
+///			::= An ordinal (the "tag-value") associated with a descriptor. See section 2.4.
+///			::= The number zero followed by an ordinal (the "tag value") and an identifying string.
+///
+///	The second form is intended for debugging purposes and is used to associate an identification
+///	with the tag.
+///
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/scode/Tag.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public class Tag {
-	public int val;
 	
+	/// Tag's value
+	public int val;
+
+	public final static int TAG_VOID  = 0;
+	public final static int TAG_BOOL  = 1;
+	public final static int TAG_CHAR  = 2;
+	public final static int	TAG_INT   = 3;
+	public final static int TAG_SINT  = 4;
+	public final static int TAG_REAL  = 5;
+	public final static int TAG_LREAL = 6;
+	public final static int TAG_AADDR = 7;
+	public final static int TAG_OADDR = 8;
+	public final static int TAG_GADDR = 9;
+	public final static int TAG_PADDR = 10;
+	public final static int TAG_RADDR = 11;
+	public final static int TAG_SIZE  = 12;
+	public final static int TAG_TEXT  = 13;
+	public final static int T_max=13; // Max value of predefined type
+	public final static int TAG_STRING  = 32;
+
 	public Tag(int val) {
 		this.val = val;
 	}
 	
 	public static Tag ofScode() {
-		return new Tag(Scode.ofScode());
+		return new Tag(Scode.inTag());
 	}
 	
 	public String ident() {
@@ -33,7 +71,7 @@ public class Tag {
 	private static int xTag(int t) { // export range(0:MaxType) tx;
 		Integer xx = Global.xTAGTAB.get(t);
 		int tx = (xx == null)? 0 : xx;
-		return tx + Scode.T_max + 1;
+		return tx + T_max + 1;
 	}
 	
 	public static void dumpITAGTABLE(String title) {
@@ -56,9 +94,8 @@ public class Tag {
 	
 	private static int chgInType(int tx) { // Used by Tag.read
 		int t = 0;
-		if(tx <= Scode.T_max) t = tx; else {
-//			t = tx - Scode.T_max + InsertStatement.current.bias - 2;
-			t = tx - Scode.T_max + InsertStatement.current.bias - 1;
+		if(tx <= T_max) t = tx; else {
+			t = tx - T_max + InsertStatement.current.bias - 1;
 		}
 		if(Option.ATTR_INPUT_TRACE)
 			IO.println("chgInType xTag:" + tx + " ==> " + Scode.edTag(t));

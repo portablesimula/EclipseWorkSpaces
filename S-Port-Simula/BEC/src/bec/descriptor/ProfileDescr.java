@@ -8,13 +8,14 @@ package bec.descriptor;
 import java.io.IOException;
 import java.util.Vector;
 
+import bec.scode.Scode;
+import bec.scode.Sinstr;
+import bec.scode.Tag;
 import bec.segment.DataSegment;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Option;
-import bec.util.Scode;
-import bec.util.Tag;
 import bec.util.Util;
 import bec.value.ObjectAddress;
 import bec.value.Value;
@@ -107,18 +108,18 @@ public class ProfileDescr extends Descriptor {
 	public static ProfileDescr ofScode() {
 		Tag ptag = Tag.ofScode();
 		ProfileDescr prf = new ProfileDescr(ptag);
-		if(Scode.nextByte() == Scode.S_EXTERNAL) {
+		if(Scode.nextByte() == Sinstr.S_EXTERNAL) {
 			 // peculiar ::= external body:newtag nature:string xid:string
 			Scode.inputInstr();
 			Tag.ofScode();
 			Scode.inString();
 			Util.IERR("External Routines is not part of this implementation");
-		} else if(Scode.nextByte() == Scode.S_INTERFACE) {
+		} else if(Scode.nextByte() == Sinstr.S_INTERFACE) {
 			 // peculiar ::= interface pid:string
 			Scode.inputInstr();
 			String xid = Scode.inString();
 			prf.pKind = SVM_CALL_SYS.getSysKind(xid);
-		} else if(Scode.nextByte() == Scode.S_KNOWN) {
+		} else if(Scode.nextByte() == Sinstr.S_KNOWN) {
 			// peculiar	::= known body:newtag kid:string
 			Scode.inputInstr();
 			Tag rtag = Tag.ofScode();
@@ -126,7 +127,7 @@ public class ProfileDescr extends Descriptor {
 			@SuppressWarnings("unused")
 			RoutineDescr rut = new RoutineDescr(rtag, null);
 			prf.pKind = SVM_CALL_SYS.getKnownKind(xid);
-		} else if(Scode.nextByte() == Scode.S_SYSTEM) {
+		} else if(Scode.nextByte() == Sinstr.S_SYSTEM) {
 			 //	peculiar ::= system body:newtag sid:string
 			Scode.inputInstr();
 			Tag rtag = Tag.ofScode();
@@ -144,24 +145,24 @@ public class ProfileDescr extends Descriptor {
 		prf.params = new Vector<Tag>();
 
 		Scode.inputInstr();
-		while(Scode.curinstr == Scode.S_IMPORT) {
+		while(Scode.curinstr == Sinstr.S_IMPORT) {
 			Variable par = null;
 			par = Variable.ofIMPORT();				
 			imports.add(par);
 			prf.params.add(par.tag);
 			Scode.inputInstr();
 		}
-		if(Scode.curinstr == Scode.S_EXIT) {
+		if(Scode.curinstr == Sinstr.S_EXIT) {
 			exit = Variable.ofEXIT();
 			Scode.inputInstr();
-		} else if(Scode.curinstr == Scode.S_EXPORT) {
+		} else if(Scode.curinstr == Sinstr.S_EXPORT) {
 			export = Variable.ofEXPORT();				
 			prf.exportTag = export.tag;
 			Scode.inputInstr();
 		}
 		if(exit == null) exit = Variable.ofRETUR(prf.returSlot);
-		if(Scode.curinstr != Scode.S_ENDPROFILE)
-			Util.IERR("Missing ENDPROFILE. Got " + Scode.edInstr(Scode.curinstr));
+		if(Scode.curinstr != Sinstr.S_ENDPROFILE)
+			Util.IERR("Missing ENDPROFILE. Got " + Sinstr.edInstr(Scode.curinstr));
 		
 		// Allocate StackFrame
 		int rela = 0;
@@ -193,10 +194,10 @@ public class ProfileDescr extends Descriptor {
 	public void print(final String indent) {
 		String profile = "PROFILE " + tag;
 		switch(kind) {
-		case Scode.S_KNOWN ->     profile += " KNOWN "     + Scode.edTag(bodyTag) + " \"" + ident + '"';
-		case Scode.S_SYSTEM ->    profile += " SYSTEM "    + Scode.edTag(bodyTag) + " " + ident;
-		case Scode.S_EXTERNAL ->  profile += " EXTERNAL "  + Scode.edTag(bodyTag) + " " + nature + " " + ident;
-		case Scode.S_INTERFACE -> profile += " INTERFACE " + ident;
+		case Sinstr.S_KNOWN ->     profile += " KNOWN "     + Scode.edTag(bodyTag) + " \"" + ident + '"';
+		case Sinstr.S_SYSTEM ->    profile += " SYSTEM "    + Scode.edTag(bodyTag) + " " + ident;
+		case Sinstr.S_EXTERNAL ->  profile += " EXTERNAL "  + Scode.edTag(bodyTag) + " " + nature + " " + ident;
+		case Sinstr.S_INTERFACE -> profile += " INTERFACE " + ident;
 		}
 		IO.println(indent + profile);
 		if(exportTag != null) IO.println(indent + "   " + exportTag.getMeaning());
@@ -210,10 +211,10 @@ public class ProfileDescr extends Descriptor {
 	public String toString() {
 		String profile = "PROFILE " + tag;
 		switch(kind) {
-			case Scode.S_KNOWN ->     profile += " KNOWN " + Scode.edTag(bodyTag) + " \"" + ident + '"';
-			case Scode.S_SYSTEM ->    profile += " SYSTEM " + Scode.edTag(bodyTag) + " " + ident;
-			case Scode.S_EXTERNAL ->  profile += " EXTERNAL " + Scode.edTag(bodyTag) + " " + nature + " " + ident;
-			case Scode.S_INTERFACE -> profile += " INTERFACE " + ident;
+			case Sinstr.S_KNOWN ->     profile += " KNOWN " + Scode.edTag(bodyTag) + " \"" + ident + '"';
+			case Sinstr.S_SYSTEM ->    profile += " SYSTEM " + Scode.edTag(bodyTag) + " " + ident;
+			case Sinstr.S_EXTERNAL ->  profile += " EXTERNAL " + Scode.edTag(bodyTag) + " " + nature + " " + ident;
+			case Sinstr.S_INTERFACE -> profile += " INTERFACE " + ident;
 		}
 		profile += " DSEG=" + DSEG;
 		if(params != null) {

@@ -13,6 +13,8 @@ import java.io.Writer;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import bec.scode.Scode;
+
 public class Util {
 
 //	public static void setLine(Type type) {

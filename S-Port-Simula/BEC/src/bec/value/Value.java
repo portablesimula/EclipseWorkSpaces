@@ -7,11 +7,11 @@ package bec.value;
 
 import java.io.IOException;
 
+import bec.scode.Sinstr;
+import bec.scode.Type;
 import bec.segment.DataSegment;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
-import bec.util.Scode;
-import bec.util.Type;
 import bec.util.Util;
 
 public class Value {
@@ -129,42 +129,42 @@ public class Value {
 	
 	private static Value read1(AttributeInputStream inpt) throws IOException {
 		int kind = inpt.readUnsignedByte();
-//		IO.println("Value.read: kind="+Scode.edInstr(kind));
+//		IO.println("Value.read: kind="+Sinstr.edInstr(kind));
 		switch(kind) {
-			case Scode.S_NULL:		return null;
-			case Scode.S_TRUE:		return BooleanValue.of(true);
-			case Scode.S_FALSE:		return BooleanValue.of(false);
-			case Scode.S_C_INT, Scode.S_C_CHAR, Scode.S_C_SIZE, Scode.S_C_AADDR: return IntegerValue.read(inpt);
-			case Scode.S_C_REAL:	return RealValue.read(inpt);
-			case Scode.S_C_LREAL:	return LongRealValue.read(inpt);
-			case Scode.S_TEXT:		return TextValue.read(inpt);
-			case Scode.S_STRING:	return StringValue.read(inpt);
-			case Scode.S_C_RECORD:	return RecordValue.read(inpt);
-			case Scode.S_C_OADDR:	return ObjectAddress.read(inpt);
-			case Scode.S_C_GADDR:	return GeneralAddress.read(inpt);
-			case Scode.S_C_PADDR, Scode.S_C_RADDR: return ProgramAddress.read(inpt);
-//			case Scode.S_C_DOT:		return DotAddress.read(inpt);
-			default: Util.IERR("MISSING: " + Scode.edInstr(kind)); return null;
+			case Sinstr.S_NULL:		return null;
+			case Sinstr.S_TRUE:		return BooleanValue.of(true);
+			case Sinstr.S_FALSE:		return BooleanValue.of(false);
+			case Sinstr.S_C_INT, Sinstr.S_C_CHAR, Sinstr.S_C_SIZE, Sinstr.S_C_AADDR: return IntegerValue.read(inpt);
+			case Sinstr.S_C_REAL:	return RealValue.read(inpt);
+			case Sinstr.S_C_LREAL:	return LongRealValue.read(inpt);
+			case Sinstr.S_TEXT:		return TextValue.read(inpt);
+			case Sinstr.S_STRING:	return StringValue.read(inpt);
+			case Sinstr.S_C_RECORD:	return RecordValue.read(inpt);
+			case Sinstr.S_C_OADDR:	return ObjectAddress.read(inpt);
+			case Sinstr.S_C_GADDR:	return GeneralAddress.read(inpt);
+			case Sinstr.S_C_PADDR, Sinstr.S_C_RADDR: return ProgramAddress.read(inpt);
+//			case Sinstr.S_C_DOT:		return DotAddress.read(inpt);
+			default: Util.IERR("MISSING: " + Sinstr.edInstr(kind)); return null;
 		}
 	}
 	
 	public static Value read(int kind, AttributeInputStream inpt) throws IOException {
-//		IO.println("Value.read: kind="+Scode.edInstr(kind));
+//		IO.println("Value.read: kind="+Sinstr.edInstr(kind));
 		switch(kind) {
-			case Scode.S_NULL:		return null;
-			case Scode.S_TRUE:		return BooleanValue.of(true);
-			case Scode.S_FALSE:		return BooleanValue.of(false);
-			case Scode.S_C_INT, Scode.S_C_CHAR, Scode.S_C_SIZE, Scode.S_C_AADDR: return IntegerValue.read(inpt);
-			case Scode.S_C_REAL:	return RealValue.read(inpt);
-			case Scode.S_C_LREAL:	return LongRealValue.read(inpt);
-			case Scode.S_TEXT:		return TextValue.read(inpt);
-			case Scode.S_STRING:	return StringValue.read(inpt);
-			case Scode.S_C_RECORD:	return RecordValue.read(inpt);
-			case Scode.S_C_OADDR:	return ObjectAddress.read(inpt);
-			case Scode.S_C_GADDR:	return GeneralAddress.read(inpt);
-			case Scode.S_C_PADDR, Scode.S_C_RADDR: return ProgramAddress.read(inpt);
-//			case Scode.S_C_DOT:		return DotAddress.read(inpt);
-			default: Util.IERR("MISSING: " + Scode.edInstr(kind)); return null;
+			case Sinstr.S_NULL:		return null;
+			case Sinstr.S_TRUE:		return BooleanValue.of(true);
+			case Sinstr.S_FALSE:		return BooleanValue.of(false);
+			case Sinstr.S_C_INT, Sinstr.S_C_CHAR, Sinstr.S_C_SIZE, Sinstr.S_C_AADDR: return IntegerValue.read(inpt);
+			case Sinstr.S_C_REAL:	return RealValue.read(inpt);
+			case Sinstr.S_C_LREAL:	return LongRealValue.read(inpt);
+			case Sinstr.S_TEXT:		return TextValue.read(inpt);
+			case Sinstr.S_STRING:	return StringValue.read(inpt);
+			case Sinstr.S_C_RECORD:	return RecordValue.read(inpt);
+			case Sinstr.S_C_OADDR:	return ObjectAddress.read(inpt);
+			case Sinstr.S_C_GADDR:	return GeneralAddress.read(inpt);
+			case Sinstr.S_C_PADDR, Sinstr.S_C_RADDR: return ProgramAddress.read(inpt);
+//			case Sinstr.S_C_DOT:		return DotAddress.read(inpt);
+			default: Util.IERR("MISSING: " + Sinstr.edInstr(kind)); return null;
 		}
 	}
 

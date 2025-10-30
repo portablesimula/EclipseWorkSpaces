@@ -9,9 +9,10 @@ import bec.descriptor.Attribute;
 import bec.descriptor.ConstDescr;
 import bec.descriptor.Descriptor;
 import bec.descriptor.Variable;
-import bec.util.Scode;
-import bec.util.Tag;
-import bec.util.Type;
+import bec.scode.Scode;
+import bec.scode.Sinstr;
+import bec.scode.Tag;
+import bec.scode.Type;
 import bec.util.Util;
 
 public abstract class DotAddress {
@@ -33,16 +34,16 @@ public abstract class DotAddress {
 			Attribute attr = (Attribute) aTag.getMeaning();
 			offset += attr.rela;
 			Scode.inputInstr();
-		} while (Scode.curinstr == Scode.S_C_DOT);
+		} while (Scode.curinstr == Sinstr.S_C_DOT);
 
 		int terminator = Scode.curinstr;
 		Tag globalOrConstTag = Tag.ofScode();
 		switch(terminator) {
-			case Scode.S_C_AADDR:{
+			case Sinstr.S_C_AADDR:{
 				Attribute attr = (Attribute) globalOrConstTag.getMeaning();
 				return IntegerValue.of(Type.T_AADDR, offset + attr.rela);
 			}
-			case Scode.S_C_GADDR:{
+			case Sinstr.S_C_GADDR:{
 				Descriptor descr = globalOrConstTag.getMeaning();
 				if(descr instanceof Variable var) {
 					return new GeneralAddress(var.address, offset);

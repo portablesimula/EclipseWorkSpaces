@@ -8,9 +8,9 @@ package bec.instruction;
 import bec.compileTimeStack.AddressItem;
 import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.TempItem;
+import bec.scode.Sinstr;
+import bec.scode.Type;
 import bec.util.Global;
-import bec.util.Scode;
-import bec.util.Type;
 import bec.util.Util;
 import bec.value.IntegerValue;
 import bec.virtualMachine.SVM_LOADC;
@@ -61,7 +61,7 @@ public abstract class INDEX extends Instruction {
 			}
 			adr.objadr.indexed = true;
 		}			
-		if(instr == Scode.S_INDEXV) FETCH.doFetch();
+		if(instr == Sinstr.S_INDEXV) FETCH.doFetch();
 	}
 	
 

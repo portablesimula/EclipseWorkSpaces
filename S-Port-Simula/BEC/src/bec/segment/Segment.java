@@ -7,10 +7,10 @@ package bec.segment;
 
 import java.io.IOException;
 import bec.descriptor.Kind;
+import bec.scode.Relation;
+import bec.scode.Sinstr;
 import bec.util.AttributeOutputStream;
 import bec.util.Global;
-import bec.util.Relation;
-import bec.util.Scode;
 import bec.util.Util;
 
 /// Segment.
@@ -64,19 +64,19 @@ public abstract class Segment {
 		if(equals(LHSegID, RHSegID)) {
 			return Relation.compare(lhSegOfst, relation, rhSegOfst);
 		} else {
-			// IO.println("Segment.compare: " + LHSegID + ":" + lhSegOfst + "  " + Scode.edInstr(relation) + "  " + RHSegID + ":" + rhSegOfst);
+			// IO.println("Segment.compare: " + LHSegID + ":" + lhSegOfst + "  " + Sinstr.edInstr(relation) + "  " + RHSegID + ":" + rhSegOfst);
 			Segment LHSeg = Global.SEGMAP.get(LHSegID);
 			Segment RHSeg = Global.SEGMAP.get(RHSegID);
 			int LHS = lhSegOfst + ((LHSeg == null)?0:LHSeg.sequ);
 			int RHS = lhSegOfst + ((RHSeg == null)?0:RHSeg.sequ);
 			boolean res = false;
 			switch(relation) {
-				case Scode.S_LT: res = LHS <  RHS; break;
-				case Scode.S_LE: res = LHS <= RHS; break;
-				case Scode.S_EQ: res = LHS == RHS; break;
-				case Scode.S_GE: res = LHS >= RHS; break;
-				case Scode.S_GT: res = LHS >  RHS; break;
-				case Scode.S_NE: res = LHS != RHS; break;
+				case Sinstr.S_LT: res = LHS <  RHS; break;
+				case Sinstr.S_LE: res = LHS <= RHS; break;
+				case Sinstr.S_EQ: res = LHS == RHS; break;
+				case Sinstr.S_GE: res = LHS >= RHS; break;
+				case Sinstr.S_GT: res = LHS >  RHS; break;
+				case Sinstr.S_NE: res = LHS != RHS; break;
 				//default: Util.IERR("");
 			}
 			return res;		

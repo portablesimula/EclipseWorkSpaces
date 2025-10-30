@@ -7,14 +7,13 @@ package bec.value;
 
 import java.io.IOException;
 
+import bec.scode.Scode;
+import bec.scode.Sinstr;
+import bec.scode.Type;
 import bec.segment.DataSegment;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
-import bec.util.Global;
 import bec.util.Option;
-import bec.util.Scode;
-import bec.util.Type;
-import bec.util.Util;
 
 public class LongRealValue extends Value {
 	public double value;
@@ -123,12 +122,12 @@ public class LongRealValue extends Value {
 		double RHS = (other == null)? 0 : other.toDouble();
 		boolean res = false;
 		switch(relation) {
-			case Scode.S_LT: res = LHS <  RHS; break;
-			case Scode.S_LE: res = LHS <= RHS; break;
-			case Scode.S_EQ: res = LHS == RHS; break;
-			case Scode.S_GE: res = LHS >= RHS; break;
-			case Scode.S_GT: res = LHS >  RHS; break;
-			case Scode.S_NE: res = LHS != RHS; break;
+			case Sinstr.S_LT: res = LHS <  RHS; break;
+			case Sinstr.S_LE: res = LHS <= RHS; break;
+			case Sinstr.S_EQ: res = LHS == RHS; break;
+			case Sinstr.S_GE: res = LHS >= RHS; break;
+			case Sinstr.S_GT: res = LHS >  RHS; break;
+			case Sinstr.S_NE: res = LHS != RHS; break;
 		}
 //		Util.IERR("");
 		return res;
@@ -155,7 +154,7 @@ public class LongRealValue extends Value {
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
-		oupt.writeByte(Scode.S_C_LREAL);
+		oupt.writeByte(Sinstr.S_C_LREAL);
 		oupt.writeDouble(value);
 	}
 

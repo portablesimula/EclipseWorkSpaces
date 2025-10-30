@@ -12,14 +12,15 @@ import bec.descriptor.Attribute;
 import bec.descriptor.ConstDescr;
 import bec.descriptor.Display;
 import bec.descriptor.RecordDescr;
+import bec.scode.Scode;
+import bec.scode.Sinstr;
+import bec.scode.Tag;
+import bec.scode.Type;
 import bec.segment.DataSegment;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Option;
-import bec.util.Scode;
-import bec.util.Tag;
-import bec.util.Type;
 import bec.util.Util;
 
 public class RecordValue extends Value {
@@ -35,7 +36,7 @@ public class RecordValue extends Value {
 	public static RecordValue ofString(ObjectAddress addr, IntegerValue lng) {
 		RecordValue recValue = new RecordValue();
 		recValue.type = Type.T_STRING;
-		recValue.tag = new Tag(Scode.TAG_STRING);
+		recValue.tag = new Tag(Tag.TAG_STRING);
 		recValue.attrValues.add(addr);
 		recValue.attrValues.add(null);
 //		recValue.attrValues.add(IntegerValue.of(Type.T_INT, 0));
@@ -65,7 +66,7 @@ public class RecordValue extends Value {
 		for(int i=0;i<rec.size;i++)
 			 recValue.attrValues.add(null);
 		
-		while(Scode.accept(Scode.S_ATTR)) {
+		while(Scode.accept(Sinstr.S_ATTR)) {
 			Tag tag = Tag.ofScode();
 			Type type = Type.ofScode();
 			RepetitionValue atrvalue = RepetitionValue.ofScode();
@@ -100,7 +101,7 @@ public class RecordValue extends Value {
 //			Util.IERR("");
 		}
 		
-		Scode.expect(Scode.S_ENDRECORD);
+		Scode.expect(Sinstr.S_ENDRECORD);
 		
 //		if(Scode.inputTrace > 3) printTree(0);
 		RecordDescr recordDescr = (RecordDescr) Display.get(recValue.tag.val);
@@ -113,7 +114,7 @@ public class RecordValue extends Value {
 //		int LHS = this.value;
 //		int RHS = (other == null)? 0 : ((IntegerValue)other).value;
 //		return Relation.compare(LHS, relation, RHS);
-		IO.println("RecordValue.compare: " + this + " " + Scode.edInstr(relation) + " " + other);
+		IO.println("RecordValue.compare: " + this + " " + Sinstr.edInstr(relation) + " " + other);
 ////		Util.IERR("");
 //		return res;
 		Util.IERR("Method 'compare' need a redefinition in " + this.getClass().getSimpleName());
@@ -236,7 +237,7 @@ public class RecordValue extends Value {
 		tag = Tag.read(inpt);
 		attrValues = new Vector<Value>();
 		int kind = inpt.readUnsignedByte();
-		while(kind != Scode.S_ENDRECORD) {
+		while(kind != Sinstr.S_ENDRECORD) {
 			Value value = Value.read(kind, inpt);
 			attrValues.add(value);
 			kind = inpt.readUnsignedByte();
@@ -246,17 +247,17 @@ public class RecordValue extends Value {
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
-		oupt.writeByte(Scode.S_C_RECORD);
+		oupt.writeByte(Sinstr.S_C_RECORD);
 		oupt.writeShort(attrValues.size());
 		tag.write(oupt);
 		for(Value value:attrValues) {
 			if(value != null) {
 				value.write(oupt);
 			} else {
-				oupt.writeByte(Scode.S_NULL);
+				oupt.writeByte(Sinstr.S_NULL);
 			}
 		}
-		oupt.writeByte(Scode.S_ENDRECORD);
+		oupt.writeByte(Sinstr.S_ENDRECORD);
 	}
 
 	public static RecordValue read(AttributeInputStream inpt) throws IOException {

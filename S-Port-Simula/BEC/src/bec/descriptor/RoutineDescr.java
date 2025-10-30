@@ -10,6 +10,10 @@ import java.util.Vector;
 
 import bec.compileTimeStack.CTStack;
 import bec.instruction.Instruction;
+import bec.scode.Scode;
+import bec.scode.Sinstr;
+import bec.scode.Tag;
+import bec.scode.Type;
 import bec.segment.DataSegment;
 import bec.segment.ProgramSegment;
 import bec.segment.Segment;
@@ -17,9 +21,6 @@ import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Option;
-import bec.util.Scode;
-import bec.util.Tag;
-import bec.util.Type;
 import bec.util.Util;
 import bec.value.FixupAddress;
 import bec.value.ProgramAddress;
@@ -125,7 +126,7 @@ public class RoutineDescr extends Descriptor {
 			prf.print("RoutineDescr.ofRoutineDef: ");			
 		}
 		
-		while(Scode.curinstr == Scode.S_LOCAL) {
+		while(Scode.curinstr == Sinstr.S_LOCAL) {
 			Variable local = Variable.ofLocal(rela);
 			if(Option.TRACE_ALLOC_FRAME) {
 				IO.println("RoutineDescr.ofRoutineDef:    LOCAL " + local);
@@ -143,7 +144,7 @@ public class RoutineDescr extends Descriptor {
 	
 		while(Instruction.inInstruction()) { Scode.inputInstr(); }
 	
-		if(Scode.curinstr != Scode.S_ENDROUTINE) Util.IERR("Missing - endroutine");
+		if(Scode.curinstr != Sinstr.S_ENDROUTINE) Util.IERR("Missing - endroutine");
 		CTStack.checkStackEmpty();
 		if(DEBUG) prf.print("RoutineDescr.ofRoutineDef: ");
 		Global.PSEG.emit(new SVM_RETURN(prftag.ident(), prf.returSlot));

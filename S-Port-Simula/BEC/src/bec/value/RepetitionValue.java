@@ -8,12 +8,13 @@ package bec.value;
 import java.io.IOException;
 import java.util.Vector;
 
+import bec.scode.Scode;
+import bec.scode.Sinstr;
+import bec.scode.Type;
 import bec.segment.DataSegment;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
 import bec.util.Option;
-import bec.util.Scode;
-import bec.util.Type;
 import bec.util.Util;
 
 public class RepetitionValue extends Value {
@@ -73,28 +74,28 @@ public class RepetitionValue extends Value {
 		Value value = null;
 		Vector<Value> values = new Vector<Value>();
 		LOOP:while(true) {
-//			IO.println("RepetitionValue.ofScode: "+Scode.edInstr(Scode.nextByte()));
+//			IO.println("RepetitionValue.ofScode: "+Sinstr.edInstr(Scode.nextByte()));
 			switch(Scode.nextByte()) {
-				case Scode.S_TEXT:     Scode.inputInstr(); type = Type.T_TEXT;  values.add(TextValue.ofScode()); break; // LOOP;
-				case Scode.S_C_INT:    Scode.inputInstr(); type = Type.T_INT;   values.add(IntegerValue.ofScode_INT()); break;
-				case Scode.S_C_CHAR:   Scode.inputInstr(); type = Type.T_CHAR;  values.add(IntegerValue.ofScode_CHAR()); break;
-				case Scode.S_C_SIZE:   Scode.inputInstr(); type = Type.T_SIZE;  values.add(IntegerValue.ofScode_SIZE()); break;
-				case Scode.S_C_REAL:   Scode.inputInstr(); type = Type.T_REAL;  values.add(RealValue.ofScode()); break;
-				case Scode.S_C_LREAL:  Scode.inputInstr(); type = Type.T_LREAL; values.add(LongRealValue.ofScode()); break;
-				case Scode.S_TRUE:     Scode.inputInstr(); type = Type.T_BOOL;  values.add(BooleanValue.of(true)); break;
-				case Scode.S_FALSE:    Scode.inputInstr(); type = Type.T_BOOL;  values.add(BooleanValue.of(false)); break;
-				case Scode.S_NOSIZE:   Scode.inputInstr(); type = Type.T_SIZE;  values.add(null); break;
-				case Scode.S_ANONE:    Scode.inputInstr(); type = Type.T_AADDR; values.add(null); break;
-				case Scode.S_NOWHERE:  Scode.inputInstr(); type = Type.T_PADDR; values.add(null); break;
-				case Scode.S_NOBODY:   Scode.inputInstr(); type = Type.T_RADDR; values.add(null); break;
-				case Scode.S_ONONE:    Scode.inputInstr(); type = Type.T_OADDR; values.add(null); break;
-				case Scode.S_GNONE:    Scode.inputInstr(); type = Type.T_GADDR; values.add(null); values.add(null); break;
-				case Scode.S_C_AADDR:  Scode.inputInstr(); type = Type.T_AADDR; values.add(IntegerValue.ofScode_AADDR()); break;
-				case Scode.S_C_PADDR:  Scode.inputInstr(); type = Type.T_PADDR; values.add(ProgramAddress.ofScode(Type.T_PADDR)); break;
-				case Scode.S_C_RADDR:  Scode.inputInstr(); type = Type.T_RADDR; values.add(ProgramAddress.ofScode(Type.T_RADDR)); break;
-				case Scode.S_C_OADDR:  Scode.inputInstr(); type = Type.T_OADDR; values.add(ObjectAddress.ofScode()); break;
-				case Scode.S_C_RECORD: Scode.inputInstr(); value = RecordValue.ofScode(); values.add(value); type = value.type; break;
-				case Scode.S_C_DOT:
+				case Sinstr.S_TEXT:     Scode.inputInstr(); type = Type.T_TEXT;  values.add(TextValue.ofScode()); break; // LOOP;
+				case Sinstr.S_C_INT:    Scode.inputInstr(); type = Type.T_INT;   values.add(IntegerValue.ofScode_INT()); break;
+				case Sinstr.S_C_CHAR:   Scode.inputInstr(); type = Type.T_CHAR;  values.add(IntegerValue.ofScode_CHAR()); break;
+				case Sinstr.S_C_SIZE:   Scode.inputInstr(); type = Type.T_SIZE;  values.add(IntegerValue.ofScode_SIZE()); break;
+				case Sinstr.S_C_REAL:   Scode.inputInstr(); type = Type.T_REAL;  values.add(RealValue.ofScode()); break;
+				case Sinstr.S_C_LREAL:  Scode.inputInstr(); type = Type.T_LREAL; values.add(LongRealValue.ofScode()); break;
+				case Sinstr.S_TRUE:     Scode.inputInstr(); type = Type.T_BOOL;  values.add(BooleanValue.of(true)); break;
+				case Sinstr.S_FALSE:    Scode.inputInstr(); type = Type.T_BOOL;  values.add(BooleanValue.of(false)); break;
+				case Sinstr.S_NOSIZE:   Scode.inputInstr(); type = Type.T_SIZE;  values.add(null); break;
+				case Sinstr.S_ANONE:    Scode.inputInstr(); type = Type.T_AADDR; values.add(null); break;
+				case Sinstr.S_NOWHERE:  Scode.inputInstr(); type = Type.T_PADDR; values.add(null); break;
+				case Sinstr.S_NOBODY:   Scode.inputInstr(); type = Type.T_RADDR; values.add(null); break;
+				case Sinstr.S_ONONE:    Scode.inputInstr(); type = Type.T_OADDR; values.add(null); break;
+				case Sinstr.S_GNONE:    Scode.inputInstr(); type = Type.T_GADDR; values.add(null); values.add(null); break;
+				case Sinstr.S_C_AADDR:  Scode.inputInstr(); type = Type.T_AADDR; values.add(IntegerValue.ofScode_AADDR()); break;
+				case Sinstr.S_C_PADDR:  Scode.inputInstr(); type = Type.T_PADDR; values.add(ProgramAddress.ofScode(Type.T_PADDR)); break;
+				case Sinstr.S_C_RADDR:  Scode.inputInstr(); type = Type.T_RADDR; values.add(ProgramAddress.ofScode(Type.T_RADDR)); break;
+				case Sinstr.S_C_OADDR:  Scode.inputInstr(); type = Type.T_OADDR; values.add(ObjectAddress.ofScode()); break;
+				case Sinstr.S_C_RECORD: Scode.inputInstr(); value = RecordValue.ofScode(); values.add(value); type = value.type; break;
+				case Sinstr.S_C_DOT:
 //					Scode.inputInstr(); values.add(DotAddress.ofScode()); break;
 					Scode.inputInstr();
 					Value dotAddr = DotAddress.ofScode();
@@ -110,7 +111,7 @@ public class RepetitionValue extends Value {
 						values.add(aaddr);
 					} else Util.IERR(""+dotAddr.getClass().getSimpleName());
 					break;
-				case Scode.S_C_GADDR:
+				case Sinstr.S_C_GADDR:
 					type = Type.T_GADDR;
 					Scode.inputInstr();
 					GeneralAddress gaddr = GeneralAddress.ofScode();
@@ -118,7 +119,7 @@ public class RepetitionValue extends Value {
 					values.add(IntegerValue.of(Type.T_INT, gaddr.ofst));
 					break;
 				default:
-//					IO.println("RepetitionValue.ofScode: TERMINATED BY "+Scode.edInstr(Scode.nextByte()));
+//					IO.println("RepetitionValue.ofScode: TERMINATED BY "+Sinstr.edInstr(Scode.nextByte()));
 					break LOOP;
 			}
 		}
@@ -166,7 +167,7 @@ public class RepetitionValue extends Value {
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
-//		oupt.writeByte(Scode.S_C_???);
+//		oupt.writeByte(Sinstr.S_C_???);
 		Util.IERR("TEST DETTE");
 		oupt.writeShort(values.size());
 		for(Value value:values) {

@@ -6,9 +6,10 @@
 package bec.instruction;
 
 import bec.compileTimeStack.CTStack;
+import bec.scode.Scode;
+import bec.scode.Sinstr;
+import bec.scode.Type;
 import bec.util.Global;
-import bec.util.Scode;
-import bec.util.Type;
 import bec.virtualMachine.SVM_POPK;
 
 /// S-INSTRUCTION: DINITAREA
@@ -41,7 +42,7 @@ public abstract class DINITAREA extends Instruction {
 		FETCH.doFetch(); CTStack.checkTosType(Type.T_OADDR);
 		CTStack.checkSosValue(); CTStack.checkSosType(Type.T_INT);
 		Type type = Type.ofScode();
-		Scode.expect(Scode.S_FIXREP);
+		Scode.expect(Sinstr.S_FIXREP);
 		int fixrep = Scode.inNumber();
 		CTStack.pop();
 		

@@ -3,7 +3,7 @@
 /// 
 /// You find a copy of the License on the following
 /// page: https://creativecommons.org/licenses/by/4.0/
-package bec.util;
+package bec.scode;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -11,7 +11,17 @@ import java.util.Vector;
 
 import bec.descriptor.Kind;
 import bec.descriptor.RecordDescr;
+import bec.util.AttributeInputStream;
+import bec.util.AttributeOutputStream;
+import bec.util.Option;
+import bec.util.Util;
 
+/// Type.
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/scode/Type.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public class Type {
 	public  int tag;
 	private int size;  // Size of type in basic cells
@@ -37,10 +47,9 @@ public class Type {
 	 *
 	 */
 	public static Type ofScode() {
-		int tag = Scode.ofScode();
-		if(tag == Scode.TAG_INT) {
-			if(Scode.accept(Scode.S_RANGE)) {
-				//range = new Range();
+		int tag = Scode.inTag();
+		if(tag == Tag.TAG_INT) {
+			if(Scode.accept(Sinstr.S_RANGE)) {
 				Scode.inNumber(); // low
 				Scode.inNumber(); // high
 			}
@@ -75,16 +84,16 @@ public class Type {
 	}
 
 	public boolean isSimple() {
-		return tag <= Scode.TAG_SIZE;
+		return tag <= Tag.TAG_SIZE;
 	}
 
 	public boolean isRecordType() {
-		return tag > Scode.T_max;
+		return tag > Tag.T_max;
 	}
 	
 	public boolean isArithmetic() {
 		switch(tag) {
-		case Scode.TAG_INT, Scode.TAG_REAL, Scode.TAG_LREAL: return true;
+		case Tag.TAG_INT, Tag.TAG_REAL, Tag.TAG_LREAL: return true;
 		}
 		return false;
 	}
@@ -100,21 +109,21 @@ public class Type {
 		RECTYPES = new Vector<Type>();		
 
 		// type                    tag         size )
-		T_VOID   = newBasType(Scode.TAG_VOID,   0   );
-		T_TEXT   = newBasType(Scode.TAG_TEXT,   3   );
-		T_STRING = newBasType(Scode.TAG_STRING, 3   );
-		T_BOOL   = newBasType(Scode.TAG_BOOL,   1   );
-		T_CHAR   = newBasType(Scode.TAG_CHAR,   1   );
-		T_INT    = newBasType(Scode.TAG_INT,    1   );
-		T_SINT   = newBasType(Scode.TAG_SINT,   1   );
-		T_REAL   = newBasType(Scode.TAG_REAL,   1   );
-		T_LREAL  = newBasType(Scode.TAG_LREAL,  1   );
-		T_SIZE   = newBasType(Scode.TAG_SIZE,   1   );
-		T_OADDR  = newBasType(Scode.TAG_OADDR,  1   );
-		T_AADDR  = newBasType(Scode.TAG_AADDR,  1   );
-		T_GADDR  = newBasType(Scode.TAG_GADDR,  2   );
-		T_PADDR  = newBasType(Scode.TAG_PADDR,  1   );
-		T_RADDR  = newBasType(Scode.TAG_RADDR,  1   );
+		T_VOID   = newBasType(Tag.TAG_VOID,   0   );
+		T_TEXT   = newBasType(Tag.TAG_TEXT,   3   );
+		T_STRING = newBasType(Tag.TAG_STRING, 3   );
+		T_BOOL   = newBasType(Tag.TAG_BOOL,   1   );
+		T_CHAR   = newBasType(Tag.TAG_CHAR,   1   );
+		T_INT    = newBasType(Tag.TAG_INT,    1   );
+		T_SINT   = newBasType(Tag.TAG_SINT,   1   );
+		T_REAL   = newBasType(Tag.TAG_REAL,   1   );
+		T_LREAL  = newBasType(Tag.TAG_LREAL,  1   );
+		T_SIZE   = newBasType(Tag.TAG_SIZE,   1   );
+		T_OADDR  = newBasType(Tag.TAG_OADDR,  1   );
+		T_AADDR  = newBasType(Tag.TAG_AADDR,  1   );
+		T_GADDR  = newBasType(Tag.TAG_GADDR,  2   );
+		T_PADDR  = newBasType(Tag.TAG_PADDR,  1   );
+		T_RADDR  = newBasType(Tag.TAG_RADDR,  1   );
 	}
 
 	private static Type newBasType(int tag, int size) {
@@ -166,7 +175,7 @@ public class Type {
 			int size = inpt.readShort();
 			Type type = new Type(tag, size);
 			
-			if(tag == Scode.TAG_STRING) ; // OK Predefinert
+			if(tag == Tag.TAG_STRING) ; // OK Predefinert
 			else if(TMAP.get(tag) ==null) {
 				TMAP.put(tag, type);
 				RECTYPES.add(type);
@@ -180,7 +189,7 @@ public class Type {
 
 	public static Type read(AttributeInputStream inpt) throws IOException {
 		int tag = inpt.readShort();
-//		IO.println("NEW Type(inpt): " + Scode.edInstr(tag));
+//		IO.println("NEW Type(inpt): " + Sinstr.edInstr(tag));
 		Type type = TMAP.get(tag);
 		if(type == null) Util.IERR("SJEKK DETTE");
 		return type;

@@ -7,12 +7,13 @@ package bec.descriptor;
 
 import java.io.IOException;
 
+import bec.scode.Scode;
+import bec.scode.Sinstr;
+import bec.scode.Tag;
+import bec.scode.Type;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
 import bec.util.Option;
-import bec.util.Type;
-import bec.util.Scode;
-import bec.util.Tag;
 
 /// Attribute descriptor.
 ///
@@ -60,7 +61,7 @@ public final class Attribute extends Descriptor {
 		Attribute attr = new Attribute(Tag.ofScode());
 		attr.type = Type.ofScode();
 		attr.rela = rela;
-		attr.repCount = (Scode.accept(Scode.S_REP)) ? Scode.inNumber() : 1;
+		attr.repCount = (Scode.accept(Sinstr.S_REP)) ? Scode.inNumber() : 1;
 		return attr;
 	}
 	

@@ -5,14 +5,13 @@
 /// page: https://creativecommons.org/licenses/by/4.0/
 package bec;
 
-import java.util.HashMap;
 import bec.descriptor.Display;
-import bec.segment.Segment;
+import bec.scode.Scode;
+import bec.scode.Sinstr;
+import bec.scode.Type;
 import bec.util.Terminal;
 import bec.util.Global;
 import bec.util.Option;
-import bec.util.Scode;
-import bec.util.Type;
 import bec.util.Util;
 
 /// This is an implementation of a S-Code Back-end Compiler (BEC).
@@ -103,27 +102,25 @@ public final class BecCompiler {
 	///
 	public BecCompiler(final String scodeSource) {
 		if(Option.verbose) Util.println("BEC: Start BecCompiler with " + scodeSource);
-		Global.scodeSource = scodeSource;
+		Global.init(scodeSource);
 		Display.init();
-		Global.SEGMAP = new HashMap<String, Segment>();
-		Global.ifDepth = 0;
-		Scode.initScode();
+		Scode.init();
 		Type.init();
 
 		Scode.inputInstr();
-		if(Scode.curinstr == Scode.S_PROGRAM) {
+		if(Scode.curinstr == Sinstr.S_PROGRAM) {
 	  		Global.progIdent = Scode.inString();
 			Scode.inputInstr();
-			if(Scode.curinstr == Scode.S_GLOBAL) {
+			if(Scode.curinstr == Sinstr.S_GLOBAL) {
 				new InterfaceModule();
 				Scode.inputInstr();
 			}
-			while(Scode.curinstr == Scode.S_MODULE) {
+			while(Scode.curinstr == Sinstr.S_MODULE) {
 				new ModuleDefinition();
 				Scode.inputInstr();
 				Util.println("*** WARNING: SCode file written to " + scodeSource);
 			}
-			if(Scode.curinstr == Scode.S_MAIN) {
+			if(Scode.curinstr == Sinstr.S_MAIN) {
 				new MainProgram();
 			}
 		} else Util.IERR("Illegal S-Program");

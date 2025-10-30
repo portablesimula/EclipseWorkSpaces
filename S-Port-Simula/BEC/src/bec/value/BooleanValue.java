@@ -7,12 +7,13 @@ package bec.value;
 
 import java.io.IOException;
 
+import bec.scode.Scode;
+import bec.scode.Sinstr;
+import bec.scode.Type;
 import bec.segment.DataSegment;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
 import bec.util.Option;
-import bec.util.Scode;
-import bec.util.Type;
 import bec.util.Util;
 
 public class BooleanValue extends Value {
@@ -90,8 +91,8 @@ public class BooleanValue extends Value {
 		boolean RHS = (other == null)? false : ((BooleanValue)other).value;
 		boolean res = false;
 		switch(relation) {
-			case Scode.S_EQ: res = LHS == RHS; break;
-			case Scode.S_NE: res = LHS != RHS; break;
+			case Sinstr.S_EQ: res = LHS == RHS; break;
+			case Sinstr.S_NE: res = LHS != RHS; break;
 			default: Util.IERR("Undefined relation");
 		}
 		return res;
@@ -108,11 +109,11 @@ public class BooleanValue extends Value {
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
-		oupt.writeByte((value)?Scode.S_TRUE:Scode.S_FALSE);
+		oupt.writeByte((value)?Sinstr.S_TRUE:Sinstr.S_FALSE);
 	}
 
 	public static BooleanValue read(AttributeInputStream inpt) throws IOException {
-		return new BooleanValue(inpt.readUnsignedByte() == Scode.S_TRUE);
+		return new BooleanValue(inpt.readUnsignedByte() == Sinstr.S_TRUE);
 	}
 
 

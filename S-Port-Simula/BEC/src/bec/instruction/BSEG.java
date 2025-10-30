@@ -7,10 +7,10 @@ package bec.instruction;
 
 import bec.S_Module;
 import bec.compileTimeStack.CTStack;
-import bec.descriptor.Kind;
+import bec.scode.Scode;
+import bec.scode.Sinstr;
 import bec.segment.ProgramSegment;
 import bec.util.Global;
-import bec.util.Scode;
 import bec.util.Util;
 
 /// S-INSTRUCTION: BSEG
@@ -63,7 +63,7 @@ public abstract class BSEG extends Instruction {
 
 		CTStack.BSEG("BSEG");
 			S_Module.programElements();
-			if(Scode.curinstr != Scode.S_ESEG) Util.IERR("Missing ESEG, Got " + Scode.edInstr(Scode.curinstr));
+			if(Scode.curinstr != Sinstr.S_ESEG) Util.IERR("Missing ESEG, Got " + Sinstr.edInstr(Scode.curinstr));
 		CTStack.ESEG();
 		
 		Global.routineSegments.add(Global.PSEG);

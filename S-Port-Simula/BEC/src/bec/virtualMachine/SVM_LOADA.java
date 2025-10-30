@@ -7,11 +7,11 @@ package bec.virtualMachine;
 
 import java.io.IOException;
 
+import bec.scode.Type;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
 import bec.util.Global;
 import bec.util.Option;
-import bec.util.Type;
 import bec.value.IntegerValue;
 import bec.value.ObjectAddress;
 

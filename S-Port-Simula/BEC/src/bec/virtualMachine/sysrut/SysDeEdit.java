@@ -6,7 +6,7 @@
 
 package bec.virtualMachine.sysrut;
 
-import bec.util.Type;
+import bec.scode.Type;
 import bec.value.IntegerValue;
 import bec.value.LongRealValue;
 import bec.virtualMachine.RTStack;

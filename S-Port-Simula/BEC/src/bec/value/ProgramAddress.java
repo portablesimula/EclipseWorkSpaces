@@ -10,6 +10,9 @@ import java.io.IOException;
 import bec.descriptor.Descriptor;
 import bec.descriptor.LabelDescr;
 import bec.descriptor.RoutineDescr;
+import bec.scode.Sinstr;
+import bec.scode.Tag;
+import bec.scode.Type;
 import bec.segment.DataSegment;
 import bec.segment.ProgramSegment;
 import bec.segment.Segment;
@@ -18,13 +21,9 @@ import bec.util.AttributeOutputStream;
 import bec.util.EndProgram;
 import bec.util.Global;
 import bec.util.Option;
-import bec.util.Scode;
-import bec.util.Tag;
-import bec.util.Type;
 import bec.util.Util;
 import bec.virtualMachine.CallStackFrame;
 import bec.virtualMachine.RTStack;
-import bec.virtualMachine.RTUtil;
 import bec.virtualMachine.SVM_CALL;
 import bec.virtualMachine.SVM_CALL_SYS;
 import bec.virtualMachine.SVM_Instruction;
@@ -182,7 +181,7 @@ public class ProgramAddress extends Value {
 
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
-		oupt.writeByte(Scode.S_C_PADDR);
+		oupt.writeByte(Sinstr.S_C_PADDR);
 		type.write(oupt);
 		oupt.writeString(segID);
 		oupt.writeShort(ofst);

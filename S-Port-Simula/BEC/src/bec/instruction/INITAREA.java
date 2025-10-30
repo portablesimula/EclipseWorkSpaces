@@ -6,7 +6,7 @@
 package bec.instruction;
 
 import bec.compileTimeStack.CTStack;
-import bec.util.Type;
+import bec.scode.Type;
 
 /// S-INSTRUCTION: INITAREA
 ///
