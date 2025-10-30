@@ -44,7 +44,7 @@ public final class CTStack {
 	
 	/// Returns copy of the current Stack
 	/// @return copy of the current Stack
-	public static NamedStack<CTStackItem> copy(String ident) {
+	public static NamedStack<CTStackItem> copy(final String ident) {
 		NamedStack<CTStackItem> copy = new NamedStack<CTStackItem>(ident);
 		for(CTStackItem item:stack) {
 			copy.add(item.copy());
@@ -54,7 +54,7 @@ public final class CTStack {
 
 	/// Reestablish the current Stack.
 	/// @param saved the saved Stack to be reestablished
-	public static void reestablish(NamedStack<CTStackItem> saved) {
+	public static void reestablish(final NamedStack<CTStackItem> saved) {
 		stack = new NamedStack<CTStackItem>(saved.ident());
 		for(CTStackItem item:saved) {
 			stack.add(item.copy());
@@ -69,7 +69,7 @@ public final class CTStack {
 	/// @param stack1 one Stack to be tested for equality
 	/// @param stack2 the other Stack to be tested for equality
 	/// @return true if the two Stacks are equal
-	public static boolean equals(NamedStack<CTStackItem> stack1, NamedStack<CTStackItem> stack2) {
+	public static boolean equals(final NamedStack<CTStackItem> stack1, final NamedStack<CTStackItem> stack2) {
 		if(stack1.size() != stack2.size()) return false;
 		for(int i=0;i<stack1.size();i++) {
 			CTStackItem itm1 = stack1.get(i);
@@ -87,7 +87,7 @@ public final class CTStack {
 	///
 	/// * remember stack;
 	/// * purge stack;
-	public static void SAVE(String ident) {
+	public static void SAVE(final String ident) {
 		saveStack.push(stack);
 		stack = new NamedStack<CTStackItem>(ident);
 	}
@@ -104,7 +104,7 @@ public final class CTStack {
 	///
 	/// * remember stack;
 	/// * purge stack;
-	public static void BSEG(String ident) {
+	public static void BSEG(final String ident) {
 		bsegStack.push(stack);
 		stack = new NamedStack<CTStackItem>(ident);
 	}
@@ -140,7 +140,7 @@ public final class CTStack {
 	
 	/// Returns the indexed item of the Compile-time stack
 	/// @return the indexed item of the Compile-time stack
-	public static CTStackItem getItem(int i) {
+	public static CTStackItem getItem(final int i) {
 		return stack.get(i);
 	}
 	
@@ -152,20 +152,20 @@ public final class CTStack {
 	
 	/// Push a Compile-time stack item onto the Compile-time stack.
 	/// @param item a Compile-time stack item
-	public static void push(CTStackItem item) {
+	public static void push(final CTStackItem item) {
 		stack.push(item);
 	}
 	
 	/// Push a TempItem onto the Compile-time stack.
 	/// @param type the type
-	public static void pushTempItem(Type type) {
+	public static void pushTempItem(final Type type) {
 		push(new TempItem(type));
 	}
 	
 	/// Push a ConstItem onto the Compile-time stack.
 	/// @param type the type
 	/// @param value the constant value
-	public static void pushCoonst(Type type, Value value) {
+	public static void pushCoonst(final Type type, final Value value) {
 		push(new ConstItem(type, value));
 	}
 	
@@ -181,7 +181,7 @@ public final class CTStack {
 	}
 	
 	/// Utility: Print Stack related error message and exit.
-	private static void STKERR(String msg) {
+	private static void STKERR(final String msg) {
 		IO.println("\nERROR: " + msg + " ================================================");
 		CTStack.dumpStack("STKERR: ");
 		Global.PSEG.dump("STKERR: ");
@@ -207,7 +207,7 @@ public final class CTStack {
 
 	/// Convenient method: checkTosType
 	/// @param type the type to be checked for
-	public static void checkTosType(Type t) {
+	public static void checkTosType(final Type t) {
 		if(Option.debugMode) if(TOS().type != t) STKERR("Illegal type of TOS: " + TOS().type + " expected: " + t);
 	}
 
@@ -254,7 +254,7 @@ public final class CTStack {
 	}
 
 	/// Convenient method: checkSosType2
-	public static Type checkSosType2(Type t1, Type t2) {
+	public static Type checkSosType2(final Type t1, final Type t2) {
 		Type type = SOS().type;
 		if(type == t1) ; // OK
 		else if(type == t2) ; // OK
@@ -289,14 +289,14 @@ public final class CTStack {
 
 	/// Debug utility: dumpStack
 	/// @param title the title og the dump printout
-	public static void dumpStack(String title) {
+	public static void dumpStack(final String title) {
 		stack.dumpStack(0, title);
 	}
 
 	/// Debug utility: dumpStack
 	/// @param level the indent level of the dump printout
 	/// @param title the title of the dump printout
-	public static void dumpStack(int level, String title) {
+	public static void dumpStack(final int level, final String title) {
 		stack.dumpStack(level, title);
 	}
 

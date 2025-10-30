@@ -17,7 +17,6 @@ import bec.util.Type;
 import bec.util.Util;
 import bec.value.IntegerValue;
 import bec.value.ObjectAddress;
-import bec.value.TextValue;
 import bec.value.Value;
 
 /// Data Segment.
@@ -26,62 +25,85 @@ import bec.value.Value;
 /// 
 /// @author Øystein Myhre Andersen
 public final class DataSegment extends Segment {
-	Vector<Value> values;
-	private int guard = -1;
 	
-	private static final boolean DEBUG = false;
+	/// The set of values in this DataSegment.
+	Vector<Value> values;
+	
+//	private int guard = -1;
 
-	public DataSegment(String ident, int segmentKind) {
+	/// DataSegment constructor.
+	/// @param ident the Segment ident
+	/// @param segmentKind K_SEG_DATA, K_SEG_CONST
+	public DataSegment(final String ident, final int segmentKind) {
 		super(ident, segmentKind);
 		this.ident = ident.toUpperCase();
 		this.segmentKind = segmentKind;
 		values = new Vector<Value>();
 	}
 	
-	public void addGuard(int ofst) {
-		guard = ofst;
-	}
+//	public void addGuard(int ofst) {
+//		guard = ofst;
+//	}
 	
-	public ObjectAddress ofOffset(int ofst) {
+	/// Returns the ObjectAddress with the given offset
+	/// @param ofst the offset
+	/// @return the ObjectAddress with the given offset
+	public ObjectAddress ofOffset(final int ofst) {
 		return ObjectAddress.ofSegAddr(this,ofst);
 	}
 	
+	/// Returns the next ObjectAddress
+	/// @return the next ObjectAddress
 	public ObjectAddress nextAddress() {
 		return ObjectAddress.ofSegAddr(this,values.size());
 	}
 	
+	/// Returns the size of this DataSegment
+	/// @return the size of this DataSegment
 	public int size() {
 		return values.size();
 	}
 	
-	public void store(int index, Value value) {
-		if(index == guard) Util.IERR("FATAL ERROR: Attempt to change Guarded location: "+ObjectAddress.ofSegAddr(this, index)+" from "+values.get(index)+" to "+value);
+	/// Store a value into this DataSegment at the given index
+	/// @param index the index
+	/// @param value the value
+	public void store(final int index, final Value value) {
+//		if(index == guard) Util.IERR("FATAL ERROR: Attempt to change Guarded location: "+ObjectAddress.ofSegAddr(this, index)+" from "+values.get(index)+" to "+value);
 		values.set(index, value);
 	}
 	
-	public Value load(int index) {
+	/// Load a value from this DataSegment at the given index
+	/// @param index the index
+	/// @return the value at the given index
+	public Value load(final int index) {
 		return values.get(index);
 	}
 	
+	/// Emit a value by adding it to this DataSegment.
+	/// @param value value to be added
 	public ObjectAddress emit(final Value value) {
 		ObjectAddress addr = nextAddress();
 		values.add(value);
 		if(Option.PRINT_GENERATED_SVM_DATA)
-			listData("                                 ==> ", value, addr.getOfst());
+			listData("                                 ==> ", addr.getOfst());
 		return addr;
 	}
 
-	private void listData(String indent, Value value, int idx) {
+	/// Listing utility: List a DataSegment entry
+	/// @param indent indentation String
+	/// @param idx index to the value
+	private void listData(final String indent, final int idx) {
 		String line = ident + "[" + idx + "] ";
 		while(line.length() < 8) line = " " +line;
-		String val = ""+value;
-//		while(val.length() < 50) val = val + ' ';
+		String val = ""+values.get(idx);
 		IO.println(indent + line + val);
 		
 	}
 
-	public void emitDefaultValue(int size, int repCount) {
-//		IO.println("DataSegment.emitDefaultValue: size="+size);
+	/// Emit default value by emiting the necessary number of null values.
+	/// @param size the value size
+	/// @param repCount the repetition count
+	public void emitDefaultValue(final int size, final int repCount) {
 		if(repCount < 1) Util.IERR("");
 		boolean option = Option.PRINT_GENERATED_SVM_DATA;
 		int LIMIT = 30;
@@ -96,6 +118,8 @@ public final class DataSegment extends Segment {
 		Option.PRINT_GENERATED_SVM_DATA = option;
 	}
 	
+	/// Emit the characters in the given String
+	/// @param chars the String
 	public ObjectAddress emitChars(final String chars) {
 		ObjectAddress addr = nextAddress();
 		int n = chars.length();
@@ -104,30 +128,14 @@ public final class DataSegment extends Segment {
 		}
 		return addr;
 	}
-	
-	public ObjectAddress emitRepText() {
-		Vector<TextValue> texts = new Vector<TextValue>();
-		do { Scode.inputInstr(); texts.add(TextValue.ofScode());
-		} while(Scode.nextByte() == Scode.S_TEXT);
-		ObjectAddress addr = nextAddress();
-		int n = texts.size();
-		for(int i=0;i<n;i++) {
-			TextValue tval = texts.get(i);
-			if(DEBUG) IO.println("DataSegment.emitRepText["+i+"]: "+tval);
-			tval.emit(this);
-		}
-		return addr;
-	}
-
-
 
 	@Override
-	public void dump(String title) {
+	public void dump(final String title) {
 		dump(title,0,values.size());
 	}
 	
 	@Override
-	public void dump(String title,int from,int to) {
+	public void dump(final String title,int from,int to) {
 		if(values.size() == 0) return;
 		IO.println("==================== " + title + ident + " DUMP ====================" + this.hashCode());
 		for(int i=from;i<to;i++) {
@@ -150,17 +158,9 @@ public final class DataSegment extends Segment {
 	// ***********************************************************************************************
 	// *** Attribute File I/O
 	// ***********************************************************************************************
-	private DataSegment(String ident, int segmentKind, AttributeInputStream inpt) throws IOException {
-		super(ident, segmentKind);
-		values = new Vector<Value>();
-		int n = inpt.readShort();
-		for(int i=0;i<n;i++) {
-			values.add(Value.read(inpt));
-		}
-	}
 
 	@Override
-	public void write(AttributeOutputStream oupt) throws IOException {
+	public void write(final AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("DataSegment.Write: " + this + ", Size=" + values.size());
 		if(values.size() == 0) return;
 		oupt.writeByte(segmentKind);
@@ -174,9 +174,15 @@ public final class DataSegment extends Segment {
 		}
 	}
 
-	public static DataSegment readObject(AttributeInputStream inpt, int segmentKind) throws IOException {
+	public static DataSegment readObject(final AttributeInputStream inpt, final int segmentKind) throws IOException {
 		String ident = inpt.readString();
-		DataSegment seg = new DataSegment(ident, segmentKind, inpt);
+		DataSegment seg = new DataSegment(ident, segmentKind);
+
+		int n = inpt.readShort();
+		for(int i=0;i<n;i++) {
+			seg.values.add(Value.read(inpt));
+		}
+		
 		if(Option.ATTR_INPUT_TRACE) IO.println("DataSegment.Read: " + seg);
 		if(Option.ATTR_INPUT_DUMP) seg.dump("DataSegment.readObject: ");
 		return seg;

@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import bec.descriptor.Descriptor;
+import bec.descriptor.Display;
 import bec.descriptor.Kind;
 import bec.descriptor.LabelDescr;
 import bec.descriptor.ProfileDescr;
@@ -103,14 +104,15 @@ public abstract class S_Module {
 	/// The intention is that the Front End Compiler will produce decl and stmt
 	/// instructions, while line instructions will occur in the code for the Run-Time System.
 	///
-	protected static void setLine(int type) {
+	/// @param type one of: decl, stmt, line
+	protected static void setLine(final int type) {
 		Global.curline = Scode.inNumber();
 		Global.PSEG.emit(new SVM_LINE(type, Global.curline));
 	}
 
 	/// Output Module.
 	/// @param nXtag number of external tags
-	protected static void outputModule(int nXtag) {
+	protected static void outputModule(final int nXtag) {
 		if(Option.ATTR_OUTPUT_TRACE)
 			IO.println("**************   Begin  -  Output-module  " + Global.modident + "  " + Global.modcheck + "   **************");
 		if(Global.outputDIR==null || Global.outputDIR.isEmpty()) Util.IERR("No Output Directory Specified");
@@ -126,7 +128,7 @@ public abstract class S_Module {
 
 			for(int i=0;i<=nXtag;i++) {
 				int tx = Global.iTAGTAB.get(i);
-				Descriptor d = Global.DISPL.get(tx);
+				Descriptor d = Display.get(tx);
 				if(d == null) Util.IERR("External tag " + i + " = Tag " + tx + " is not defined (OutModule)");
 				d.write(modoupt);
 			}

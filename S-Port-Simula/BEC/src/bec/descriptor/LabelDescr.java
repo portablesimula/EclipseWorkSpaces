@@ -53,7 +53,7 @@ public class LabelDescr extends Descriptor {
 	/// @return an LabelDescr instance.
 	public static LabelDescr ofLabelSpec() {
 		Tag tag = Tag.ofScode();
-		LabelDescr lab = (LabelDescr) Global.DISPL.get(tag.val);
+		LabelDescr lab = (LabelDescr) Display.get(tag.val);
 		if(lab != null) Util.IERR("");
 		lab = new LabelDescr(tag);
 		lab.adr = null;
@@ -63,8 +63,8 @@ public class LabelDescr extends Descriptor {
 	/// Scans the remaining S-Code (if any) belonging to this descriptor.
 	/// Then construct a new LabelDescr instance.
 	/// @return an LabelDescr instance.
-	public static LabelDescr ofLabelDef(Tag tag) {
-		LabelDescr lab = (LabelDescr) Global.DISPL.get(tag.val);
+	public static LabelDescr ofLabelDef(final Tag tag) {
+		LabelDescr lab = (LabelDescr) Display.get(tag.val);
 		if(lab == null) {
 			lab = new LabelDescr(tag);
 		} else if(lab.adr instanceof FixupAddress fix) {
@@ -93,7 +93,7 @@ public class LabelDescr extends Descriptor {
 	// ***********************************************************************************************
 
 	@Override
-	public void write(AttributeOutputStream oupt) throws IOException {
+	public void write(final AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("IntDescr.Write: " + this);
 		oupt.writeByte(kind);
 		tag.write(oupt);
@@ -107,7 +107,7 @@ public class LabelDescr extends Descriptor {
 
 	/// Reads a LabelDescr from the given input.
 	/// @param inpt the input stream
-	public static LabelDescr read(AttributeInputStream inpt) throws IOException {
+	public static LabelDescr read(final AttributeInputStream inpt) throws IOException {
 		Tag tag = Tag.read(inpt);
 		LabelDescr lab = new LabelDescr(tag);
 		boolean present = inpt.readBoolean();

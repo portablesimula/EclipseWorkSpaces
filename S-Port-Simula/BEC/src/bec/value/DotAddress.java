@@ -9,7 +9,6 @@ import bec.descriptor.Attribute;
 import bec.descriptor.ConstDescr;
 import bec.descriptor.Descriptor;
 import bec.descriptor.Variable;
-import bec.util.Global;
 import bec.util.Scode;
 import bec.util.Tag;
 import bec.util.Type;
@@ -31,11 +30,8 @@ public abstract class DotAddress {
 		
 		do {
 			Tag aTag = Tag.ofScode();
-//			Descriptor descr = Global.getMeaning(aTag);
-//			IO.println("DotAddress.ofScode: descr=" + descr);
-			Attribute attr = (Attribute) Global.getMeaning(aTag);
+			Attribute attr = (Attribute) aTag.getMeaning();
 			offset += attr.rela;
-//			IO.println("DotAddress.ofScode: " + attr + "  offset="+offset);
 			Scode.inputInstr();
 		} while (Scode.curinstr == Scode.S_C_DOT);
 
@@ -43,22 +39,14 @@ public abstract class DotAddress {
 		Tag globalOrConstTag = Tag.ofScode();
 		switch(terminator) {
 			case Scode.S_C_AADDR:{
-				Attribute attr = (Attribute) Global.getMeaning(globalOrConstTag);
-//				IO.println("DotAddress.ofScode: AADDR: " + attr + "  offset="+(offset+attr.rela) + " = " + offset + " + " + attr.rela);
-//				IO.println("DotAddress.ofScode: NEXT INSTR: " + Scode.edInstr(Scode.nextByte()));
-//				Util.IERR("SJEKK DETTE");
+				Attribute attr = (Attribute) globalOrConstTag.getMeaning();
 				return IntegerValue.of(Type.T_AADDR, offset + attr.rela);
 			}
 			case Scode.S_C_GADDR:{
-//				Variable var = (Variable) Global.getMeaning(globalOrConstTag);
-//				return new GeneralAddress(var.address, offset);
-				Descriptor descr = Global.getMeaning(globalOrConstTag);
-				if(descr == null) Util.IERR("IMPOSSIBLE: TESTING FAILED");
+				Descriptor descr = globalOrConstTag.getMeaning();
 				if(descr instanceof Variable var) {
-//					IO.println("DotAddress.ofScode: var.address="+var.address);
 					return new GeneralAddress(var.address, offset);
 				} else if(descr instanceof ConstDescr cns) {
-//					IO.println("DotAddress.ofScode: cns.address="+cns.address);
 					return new GeneralAddress(cns.getAddress(), offset);
 				}
 				Util.IERR("NOT IMPL: " + descr.getClass().getSimpleName());

@@ -27,11 +27,10 @@ import bec.virtualMachine.SVM_SAVE;
 /// @author Øystein Myhre Andersen
 public class ProtectConstruction {
 
-	/**
-	 * protect_statement ::= save <program_element>* restore
-	 * 
-	 * End-Condition: Scode'nextByte = First byte after RESTORE  ???
-	 */
+	/// protect_statement ::= save <program_element>* restore
+	/// 
+	/// End-Condition: Scode'nextByte = First byte after RESTORE  ???
+	///
 	public static void ofStatement() {
 		// ProtectConstruction(true)
 		doSAVE();
@@ -94,11 +93,10 @@ public class ProtectConstruction {
 		Global.PSEG.emit(new SVM_RESTORE());
 	}
 
-	/**
-	 * protect_instruction ::= save <instruction>* restore
-	 * 
-	 * End-Condition: Scode'nextByte = First byte after RESTORE  ???
-	 */
+	/// protect_instruction ::= save <instruction>* restore
+	/// 
+	/// End-Condition: Scode'nextByte = First byte after RESTORE  ???
+	///
 	public static void ofInstruction() {
 		doSAVE();
 		
@@ -109,6 +107,7 @@ public class ProtectConstruction {
 		doRESTORE();
 	}
 	
+	@Override
 	public String toString() {
 		return "SAVE "; // + lab;
 	}

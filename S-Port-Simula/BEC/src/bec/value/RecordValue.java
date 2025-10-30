@@ -10,6 +10,7 @@ import java.util.Vector;
 
 import bec.descriptor.Attribute;
 import bec.descriptor.ConstDescr;
+import bec.descriptor.Display;
 import bec.descriptor.RecordDescr;
 import bec.segment.DataSegment;
 import bec.util.AttributeInputStream;
@@ -58,7 +59,7 @@ public class RecordValue extends Value {
 	public static RecordValue ofScode() {
 		RecordValue recValue = new RecordValue();
 		recValue.tag = Tag.ofScode();
-		RecordDescr rec = (RecordDescr) Global.getMeaning(recValue.tag);
+		RecordDescr rec = (RecordDescr) recValue.tag.getMeaning();
 		if(DEBUG) IO.println("RecordValue.ofScode: rec.size="+rec.size);
 		
 		for(int i=0;i<rec.size;i++)
@@ -68,7 +69,7 @@ public class RecordValue extends Value {
 			Tag tag = Tag.ofScode();
 			Type type = Type.ofScode();
 			RepetitionValue atrvalue = RepetitionValue.ofScode();
-			Attribute attr = (Attribute) Global.getMeaning(tag);
+			Attribute attr = (Attribute) tag.getMeaning();
 			if(DEBUG) IO.println("RecordValue.ofScode: "+attr);
 			
 			if(attr.repCount == 0) {
@@ -102,7 +103,7 @@ public class RecordValue extends Value {
 		Scode.expect(Scode.S_ENDRECORD);
 		
 //		if(Scode.inputTrace > 3) printTree(0);
-		RecordDescr recordDescr = (RecordDescr) Global.DISPL.get(recValue.tag.val);
+		RecordDescr recordDescr = (RecordDescr) Display.get(recValue.tag.val);
 		recValue.type = Type.lookupType(recordDescr);
 //		IO.println("RecordValue.ofScode: type = " + recValue.type);
 		return recValue;

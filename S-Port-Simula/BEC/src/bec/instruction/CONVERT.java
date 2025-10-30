@@ -36,7 +36,7 @@ public abstract class CONVERT extends Instruction {
 	}
 	
 	/// Test and possibly Emit an SVM_CONVERT instruction.
-	public static void doConvert(Type totype) {
+	public static void doConvert(final Type totype) {
 		CTStackItem TOS = CTStack.TOS();
 		Type fromtype = TOS.type;
 		if(totype != fromtype) {

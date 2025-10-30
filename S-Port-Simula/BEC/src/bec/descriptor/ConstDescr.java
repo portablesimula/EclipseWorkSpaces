@@ -78,7 +78,7 @@ public class ConstDescr extends Descriptor {
 	
 	/// Create a new ConstDescr with the given 'tag'
 	/// @param tag used to lookup descriptors
-	private ConstDescr(Tag tag) {
+	private ConstDescr(final Tag tag) {
 		super(Kind.K_Coonst, tag);
 		this.values = new Vector<RepetitionValue>();
 	}
@@ -88,7 +88,7 @@ public class ConstDescr extends Descriptor {
 	/// @return an ConstDescr instance.
 	public static ConstDescr ofConstSpec() {
 		Tag tag = Tag.ofScode();
-		ConstDescr cnst = (ConstDescr) Global.DISPL.get(tag.val);
+		ConstDescr cnst = (ConstDescr) Display.get(tag.val);
 		if(cnst != null) Util.IERR("New CONSPEC but cnst="+cnst);
 		
 		cnst = new ConstDescr(tag);
@@ -108,7 +108,7 @@ public class ConstDescr extends Descriptor {
 	/// @return an ConstDescr instance.
 	public static ConstDescr ofConstDef() {
 		Tag tag = Tag.ofScode();
-		ConstDescr cnst = (ConstDescr) Global.DISPL.get(tag.val);
+		ConstDescr cnst = (ConstDescr) Display.get(tag.val);
 		if(cnst == null) {
 			cnst = new ConstDescr(tag);
 		}
@@ -117,7 +117,7 @@ public class ConstDescr extends Descriptor {
 		fixrepTail = 0;
 		if(Scode.accept(Scode.S_FIXREP)) {
 			int fixrep = Scode.inNumber();
-			RecordDescr rec = (RecordDescr) Global.getMeaning(cnst.type.tag);
+			RecordDescr rec = (RecordDescr) Display.getMeaning(cnst.type.tag);
 			int count = rec.size + rec.rep0size * fixrep;
 			fixrepTail = rec.rep0size * fixrep;
 		}
@@ -174,7 +174,7 @@ public class ConstDescr extends Descriptor {
 	// ***********************************************************************************************
 
 	@Override
-	public void write(AttributeOutputStream oupt) throws IOException {
+	public void write(final AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("CONST.Write: " + this);
 		oupt.writeByte(kind);
 		tag.write(oupt);
@@ -184,7 +184,7 @@ public class ConstDescr extends Descriptor {
 
 	/// Reads an ConstDescr from the given input.
 	/// @param inpt the input stream
-	public static ConstDescr read(AttributeInputStream inpt) throws IOException {
+	public static ConstDescr read(final AttributeInputStream inpt) throws IOException {
 		Tag tag = Tag.read(inpt);
 		ConstDescr cns = new ConstDescr(tag);
 		cns.type = Type.read(inpt);

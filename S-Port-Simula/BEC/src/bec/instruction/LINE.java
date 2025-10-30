@@ -27,7 +27,7 @@ public abstract class LINE extends Instruction {
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_LINE instruction.
-	public static void ofScode(int kind) {
+	public static void ofScode(final int kind) {
 		Scode.curline = Scode.inNumber();	
 		
 		if(kind==2)

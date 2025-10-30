@@ -18,9 +18,5 @@ public abstract class CTStackItem {
 	/// Returns a copy of this stack item
 	/// @return a copy of this stack item
 	public abstract CTStackItem copy();
-//	public CTStackItem copy() {
-//		Util.IERR("Method 'copy' need a redefinition in " + this.getClass().getSimpleName());
-//		return null;
-//	}
 
 }

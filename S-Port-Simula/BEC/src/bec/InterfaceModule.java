@@ -59,7 +59,7 @@ public final class InterfaceModule extends S_Module {
 		Global.CSEG = new DataSegment("CSEG_" + sourceID, Kind.K_SEG_CONST);
 		Global.TSEG = new DataSegment("TSEG_" + sourceID, Kind.K_SEG_CONST);
 		Global.DSEG = new DataSegment("DSEG_" + sourceID, Kind.K_SEG_DATA);
-		Global.PSEG = new ProgramSegment("PSEG_" + sourceID, Kind.K_SEG_CODE);
+		Global.PSEG = new ProgramSegment("PSEG_" + sourceID);
 		if(Global.PROGID == null) Global.PROGID = Global.modident;
 		Global.routineSegments = new Vector<Segment>();
 		LOOP: while(true) {

@@ -6,9 +6,8 @@
 package bec;
 
 import java.util.HashMap;
-import bec.descriptor.Descriptor;
+import bec.descriptor.Display;
 import bec.segment.Segment;
-import bec.util.Array;
 import bec.util.Terminal;
 import bec.util.Global;
 import bec.util.Option;
@@ -102,10 +101,10 @@ public final class BecCompiler {
 	/// 		::= <module_definition>*
 	/// 		::= main <local_quantity>* <program_element>*
 	///
-	public BecCompiler(String scodeSource) {
+	public BecCompiler(final String scodeSource) {
 		if(Option.verbose) Util.println("BEC: Start BecCompiler with " + scodeSource);
 		Global.scodeSource = scodeSource;
-		Global.DISPL = new Array<Descriptor>();
+		Display.init();
 		Global.SEGMAP = new HashMap<String, Segment>();
 		Global.ifDepth = 0;
 		Scode.initScode();

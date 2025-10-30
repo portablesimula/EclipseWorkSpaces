@@ -6,9 +6,8 @@
 package bec.instruction;
 
 import bec.compileTimeStack.CTStack;
-import bec.util.Global;
+import bec.descriptor.Display;
 import bec.util.Tag;
-import bec.util.Type;
 
 /// S-INSTRUCTION: DELETE
 ///
@@ -33,11 +32,7 @@ public abstract class DELETE extends Instruction {
 	public static void ofScode() {
 		Tag tag = Tag.ofScode();
 		CTStack.checkStackEmpty();
-		int startTag = tag.val;
-		for (int t = startTag; t < Global.DISPL.size(); t++) {
-			Global.DISPL.set(t, null);
-			Type.removeFromTMAP(t);
-		}
+		Display.delete(tag.val);
 	}
 
 }

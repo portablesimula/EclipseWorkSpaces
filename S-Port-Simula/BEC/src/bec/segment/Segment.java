@@ -35,7 +35,7 @@ public abstract class Segment {
 	/// Segment constructor.
 	/// @param ident the Segment ident
 	/// @param segmentKind K_SEG_DATA, K_SEG_CONST, K_SEG_CODE
-	public Segment(String ident, int segmentKind) {
+	public Segment(final String ident, final int segmentKind) {
 		if(Global.SEGMAP.get(ident) != null) Util.IERR("Segment allready defined: " + ident);
 		this.ident = ident.toUpperCase();
 		Global.SEGMAP.put(this.ident, this);
@@ -45,7 +45,7 @@ public abstract class Segment {
 
 	/// Lookup Segment by its ident
 	/// @return the Segment found
-	public static Segment lookup(String ident) {
+	public static Segment lookup(final String ident) {
 		Segment seg = Global.SEGMAP.get(ident);
 		if(seg == null) {
 			Util.IERR("Can't find Segment \"" + ident + '"');
@@ -60,7 +60,7 @@ public abstract class Segment {
 	/// @param RHSegID the right hand Segment ident
 	/// @param rhSegOfst the right hand Segment address offset
 	/// @return true if the relation holds
-	public static boolean compare(String LHSegID, int lhSegOfst, int relation, String RHSegID, int rhSegOfst) {
+	public static boolean compare(final String LHSegID, final int lhSegOfst, final int relation, final String RHSegID, final int rhSegOfst) {
 		if(equals(LHSegID, RHSegID)) {
 			return Relation.compare(lhSegOfst, relation, rhSegOfst);
 		} else {
@@ -87,7 +87,7 @@ public abstract class Segment {
 	/// @param s1 one String to be tested for equality
 	/// @param s2 the other String to be tested for equality
 	/// @return true if the two Strings are equal
-	private static boolean equals(String s1, String s2) {
+	private static boolean equals(final String s1, final String s2) {
 		if(s1 == null) return s2 == null;
 		return s1.equals(s2);
 	}
@@ -100,13 +100,13 @@ public abstract class Segment {
 
 	/// Utility: Segment dump
 	/// @param title the printout title
-	public abstract void dump(String title);
+	public abstract void dump(final String title);
 	
 	/// Utility: Segment dump
 	/// @param title the printout title
 	/// @param from Segment index
 	/// @param to Segment index
-	public abstract void dump(String title,int from,int to);
+	public abstract void dump(final String title, final int from, final int to);
 	
 //	public static void dumpAll(String title) {
 //		for(Segment seg:Global.SEGMAP.values()) {
@@ -126,7 +126,7 @@ public abstract class Segment {
 
 	/// Writes a Segment to the given output.
 	/// @param oupt the output stream
-	public void write(AttributeOutputStream oupt) throws IOException {
+	public void write(final AttributeOutputStream oupt) throws IOException {
 		Util.IERR("Method 'write' needs a redefinition in "+this.getClass().getSimpleName());
 	}
 

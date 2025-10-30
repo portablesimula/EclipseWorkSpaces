@@ -45,7 +45,7 @@ public abstract class DUP extends Instruction {
 		}
 	}
 	
-	private static int sizeOnStack(ObjectAddress oaddr) {
+	private static int sizeOnStack(final ObjectAddress oaddr) {
 		int size =(oaddr.indexed)? 1 : 0;
 		switch(oaddr.kind) {
 			case ObjectAddress.SEGMNT_ADDR: // Stack: nothing + index(?)

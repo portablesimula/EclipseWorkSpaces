@@ -62,7 +62,7 @@ public final class ModuleDefinition extends S_Module {
 		Global.CSEG = new DataSegment("CSEG_" + sourceID, Kind.K_SEG_CONST);
 		Global.TSEG = new DataSegment("TSEG_" + sourceID, Kind.K_SEG_CONST);
 		Global.DSEG = new DataSegment("DSEG_" + sourceID, Kind.K_SEG_DATA);
-		Global.PSEG = new ProgramSegment("PSEG_" + sourceID, Kind.K_SEG_CODE);
+		Global.PSEG = new ProgramSegment("PSEG_" + sourceID);
 		if(Global.PROGID == null) Global.PROGID = Global.modident;
 		Global.routineSegments = new Vector<Segment>();
 
@@ -109,6 +109,7 @@ public final class ModuleDefinition extends S_Module {
 	/// 		::= constant_specification | insert_statement
 	/// 		::= info_setting
 	///
+	/// @result true if a 'visible' was encountered
 	private static boolean viisible() {
 		switch(Scode.curinstr) {
 			case Scode.S_CONSTSPEC:		ConstDescr.ofConstSpec(); break;

@@ -9,6 +9,7 @@ import bec.compileTimeStack.ProfileItem;
 import bec.compileTimeStack.AddressItem;
 import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.CTStackItem;
+import bec.descriptor.Display;
 import bec.descriptor.ProfileDescr;
 import bec.descriptor.RoutineDescr;
 import bec.descriptor.Variable;
@@ -51,7 +52,7 @@ public abstract class CALL extends Instruction {
 		int profileTag = Scode.ofScode();
 		Scode.inputInstr();
 		
-		ProfileDescr spec = (ProfileDescr) Global.DISPL.get(profileTag);
+		ProfileDescr spec = (ProfileDescr) Display.get(profileTag);
 		if(spec == null) Util.IERR(""+Scode.edTag(profileTag));
 		ProfileItem pitem = new ProfileItem(spec);
 		pitem.nasspar = nParStacked;
@@ -104,7 +105,7 @@ public abstract class CALL extends Instruction {
 	    	if(spec.pKind > 0) {
 	    		Global.PSEG.emit(new SVM_CALL_SYS(spec.pKind));
 	    	} else {
-	    		RoutineDescr rut = (RoutineDescr) Global.DISPL.get(bodyTag);
+	    		RoutineDescr rut = (RoutineDescr) Display.get(bodyTag);
 	    		if(rut == null) Util.IERR("Unknown Routine: " + Scode.edTag(bodyTag));
 	    		Global.PSEG.emit(new SVM_CALL(rut.getAddress(), spec.returSlot));
 	    	}
@@ -124,7 +125,7 @@ public abstract class CALL extends Instruction {
 		}
 	}
 	
-	private static int putPar(ProfileItem pItm, int nrep) { // export range(0:255) npop;
+	private static int putPar(final ProfileItem pItm, final int nrep) {
 		Variable param = (Variable) pItm.spc.params.get(pItm.nasspar).getMeaning();
 		Type parType = param.type;
 		int repCount = param.repCount;

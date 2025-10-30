@@ -69,7 +69,7 @@ public class RoutineDescr extends Descriptor {
 	/// Create a new RoutineDescr with the given tags
 	/// @param tag used to lookup descriptors
 	/// @param prftag the corresponding Profile tag
-	public RoutineDescr(Tag tag, Tag prftag) {
+	public RoutineDescr(final Tag tag, final Tag prftag) {
 		super(Kind.K_IntRoutine, tag);
 		this.prftag = prftag;
 		this.locals = new Vector<Tag>();
@@ -88,7 +88,7 @@ public class RoutineDescr extends Descriptor {
 	public static RoutineDescr ofRoutineSpec() {
 		Tag tag = Tag.ofScode();
 		Tag prftag = Tag.ofScode();
-		RoutineDescr rut = (RoutineDescr) Global.DISPL.get(tag.val);
+		RoutineDescr rut = (RoutineDescr) Display.get(tag.val);
 		if(rut != null) Util.IERR("");
 		rut = new RoutineDescr(tag, prftag);
 		return rut;
@@ -101,12 +101,12 @@ public class RoutineDescr extends Descriptor {
 		Tag tag = Tag.ofScode();
 		Tag prftag = Tag.ofScode();
 		
-		RoutineDescr rut = (RoutineDescr) Global.DISPL.get(tag.val);
+		RoutineDescr rut = (RoutineDescr) Display.get(tag.val);
 		if(rut == null) rut = new RoutineDescr(tag, prftag);
 		String modID = (Global.moduleID == null)? "" : (Global.moduleID + '_');
 		String id = modID + tag.ident();
 		
-		rut.PSEG = new ProgramSegment("PSEG_" + id, Kind.K_SEG_CODE);
+		rut.PSEG = new ProgramSegment("PSEG_" + id);
 		ProgramSegment prevPSEG = Global.PSEG; Global.PSEG = rut.PSEG;
 		
 		ProgramAddress rutAddr = new ProgramAddress(Type.T_RADDR, rut.PSEG.ident, 0);
@@ -115,7 +115,7 @@ public class RoutineDescr extends Descriptor {
 		}
 		rut.adr = rutAddr;
 		
-		ProfileDescr prf = (ProfileDescr) Global.DISPL.get(prftag.val);
+		ProfileDescr prf = (ProfileDescr) Display.get(prftag.val);
 		if(prf == null) Util.IERR("Missing Profile " + Scode.edTag(prftag.val));
 
 		Scode.inputInstr();
@@ -169,7 +169,7 @@ public class RoutineDescr extends Descriptor {
 	// ***********************************************************************************************
 
 	@Override
-	public void write(AttributeOutputStream oupt) throws IOException {
+	public void write(final AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("RoutineDescr.Write: " + this);
 		oupt.writeByte(kind);
 		if(prftag != null) {
@@ -190,7 +190,7 @@ public class RoutineDescr extends Descriptor {
 
 	/// Reads a RoutineDescr from the given input.
 	/// @param inpt the input stream
-	public static RoutineDescr read(AttributeInputStream inpt) throws IOException {
+	public static RoutineDescr read(final AttributeInputStream inpt) throws IOException {
 		Tag prftag = null;
 		boolean present = inpt.readBoolean();
 		if(present) prftag = Tag.read(inpt);

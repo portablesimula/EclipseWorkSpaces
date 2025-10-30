@@ -9,7 +9,6 @@ import java.io.IOException;
 
 import bec.instruction.Instruction;
 import bec.util.AttributeOutputStream;
-import bec.util.Global;
 import bec.util.Tag;
 import bec.util.Util;
 
@@ -31,10 +30,10 @@ public abstract class Descriptor extends Instruction {
 	/// Create a new Descriptor
 	/// @param kind the Object kind code
 	/// @param tag used to lookup descriptors
-	public  Descriptor(int kind, Tag tag) {
+	public  Descriptor(final int kind, final Tag tag) {
 		this.kind = kind;
 		this.tag = tag;
-		if(tag != null) Global.intoDisplay(this, tag.val);
+		if(tag != null) Display.intoDisplay(this, tag.val);
 	}
 	
 	/// Utility print method.
@@ -50,7 +49,7 @@ public abstract class Descriptor extends Instruction {
 
 	/// Writes a Descriptor to the given output.
 	/// @param oupt the output stream
-	public void write(AttributeOutputStream oupt) throws IOException {
+	public void write(final AttributeOutputStream oupt) throws IOException {
 		Util.IERR("Method 'write' needs a redefinition in "+this.getClass().getSimpleName());
 	}
 

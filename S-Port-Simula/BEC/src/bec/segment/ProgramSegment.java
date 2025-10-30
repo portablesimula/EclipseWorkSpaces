@@ -23,35 +23,48 @@ import bec.virtualMachine.SVM_Instruction;
 /// 
 /// @author Øystein Myhre Andersen
 public final class ProgramSegment extends Segment {
+	
+	/// The set of instructions in this ProgramSegment.
 	public Vector<SVM_Instruction> instructions;
 
-	public ProgramSegment(String ident, int segmentKind) {
-		super(ident, segmentKind);
+	/// ProgramSegment constructor.
+	/// @param ident the ProgramSegment ident
+	public ProgramSegment(final String ident) {
+		super(ident, Kind.K_SEG_CODE);
 		this.ident = ident.toUpperCase();
-		this.segmentKind = segmentKind;
 		instructions = new Vector<SVM_Instruction>();
 	}
 	
+	/// Returns the next ProgramAddress
+	/// @return the next ProgramAddress
 	public ProgramAddress nextAddress() {
 		return new ProgramAddress(Type.T_PADDR, this.ident, instructions.size());
 	}
 	
-	public SVM_Instruction load(int index) {
-		return instructions.get(index);
+//	public SVM_Instruction load(int index) {
+//		return instructions.get(index);
+//	}
+	
+	/// Emit an instruction by adding it to this ProgramSegment.
+	/// @param instr instr to be added
+	public void emit(final SVM_Instruction instr) {
+		instructions.add(instr);
 	}
 	
-	public void emit(SVM_Instruction value) {
-		instructions.add(value);
-	}
-	
+	/// Listing utility: index to the last listed instruction.
 	private int lastListed;
+	
+	/// Listing utility: list all instructions not yet listed.
 	public void listInstructions() {
 		while(lastListed < instructions.size()) {
 			listIntruction("                                 ==> ",lastListed++);
 		}
 	}
 	
-	public void listIntruction(String indent, int idx) {
+	/// Listing utility: List an instruction
+	/// @param indent indentation String
+	/// @param idx index to the instruction
+	public void listIntruction(final String indent, final int idx) {
 		String line = ident + "[" + idx + "] ";
 		while(line.length() < 8) line = " " +line;
 		String value = ""+instructions.get(idx);
@@ -60,12 +73,12 @@ public final class ProgramSegment extends Segment {
 	}
 	
 	@Override
-	public void dump(String title) {
+	public void dump(final String title) {
 		dump(title,0,instructions.size());
 	}
 	
 	@Override
-	public void dump(String title,int from,int to) {
+	public void dump(final String title, final int from, final int to) {
 		IO.println("========================== " + title + ident + " DUMP ==========================");
 		for(int i=from;i<to;i++) {
 			listIntruction("",i);
@@ -81,17 +94,9 @@ public final class ProgramSegment extends Segment {
 	// ***********************************************************************************************
 	// *** Attribute File I/O
 	// ***********************************************************************************************
-	private ProgramSegment(String ident, int segmentKind, AttributeInputStream inpt) throws IOException {
-		super(ident, segmentKind);
-		instructions = new Vector<SVM_Instruction>();
-		int n = inpt.readShort();
-		for(int i=0;i<n;i++) {
-			instructions.add(SVM_Instruction.readObject(inpt));
-		}
-	}
 
 	@Override
-	public void write(AttributeOutputStream oupt) throws IOException {
+	public void write(final AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE)
 			IO.println("ProgramSegment.Write: " + this + ", Size=" + instructions.size());
 		if(instructions.size() == 0) return;
@@ -106,10 +111,13 @@ public final class ProgramSegment extends Segment {
 		}
 	}
 
-	public static ProgramSegment readObject(AttributeInputStream inpt) throws IOException {
-		int segmentKind = Kind.K_SEG_CODE;
+	public static ProgramSegment readObject(final AttributeInputStream inpt) throws IOException {
 		String ident = inpt.readString();
-		ProgramSegment seg = new ProgramSegment(ident, segmentKind, inpt);
+		ProgramSegment seg = new ProgramSegment(ident);
+		int n = inpt.readShort();
+		for(int i=0;i<n;i++) {
+			seg.instructions.add(SVM_Instruction.readObject(inpt));
+		}
 		if(Option.ATTR_INPUT_TRACE) IO.println("ProgramSegment.Read: " + seg);
 		if(Option.ATTR_INPUT_DUMP) seg.dump("ProgramSegment.readObject: ");
 		return seg;

@@ -49,14 +49,14 @@ public final class Attribute extends Descriptor {
 
 	/// Create a new Attribute with the given 'tag'
 	/// @param tag used to lookup descriptors
-	private Attribute(Tag tag) {
+	private Attribute(final Tag tag) {
 		super(Kind.K_Attribute, tag);
 	}
 
 	/// Scans the remaining S-Code (if any) belonging to this descriptor.
 	/// Then construct a new Attribute instance.
 	/// @return an Attribute instance.
-	public static Attribute ofScode(int rela) {
+	public static Attribute ofScode(final int rela) {
 		Attribute attr = new Attribute(Tag.ofScode());
 		attr.type = Type.ofScode();
 		attr.rela = rela;
@@ -91,7 +91,7 @@ public final class Attribute extends Descriptor {
 	// ***********************************************************************************************
 
 	@Override
-	public void write(AttributeOutputStream oupt) throws IOException {
+	public void write(final AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("LocDescr.Write: " + this);
 		oupt.writeByte(kind);
 		tag.write(oupt);
@@ -103,7 +103,7 @@ public final class Attribute extends Descriptor {
 
 	/// Reads an Attribute from the given input.
 	/// @param inpt the input stream
-	public static Attribute read(AttributeInputStream inpt) throws IOException {
+	public static Attribute read(final AttributeInputStream inpt) throws IOException {
 		Attribute attr = new Attribute(Tag.read(inpt));
 		attr.type = Type.read(inpt);
 		attr.rela = inpt.readShort();

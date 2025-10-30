@@ -14,7 +14,11 @@ import bec.value.ObjectAddress;
 /// 
 /// @author Øystein Myhre Andersen
 public final class AddressItem extends CTStackItem {
+	
+	/// The object address
 	public ObjectAddress objadr;
+	
+	/// The additional offset
 	public int offset;
 	
 	/// Address item to be pushed onto the Compile-time Stack.
@@ -22,14 +26,10 @@ public final class AddressItem extends CTStackItem {
 	/// @param offset an extra offset
 	/// @param objadr object address
 	///
-	public AddressItem(Type type, int offset, ObjectAddress objadr) {
+	public AddressItem(final Type type, final int offset, final ObjectAddress objadr) {
 		this.type = type;
 		this.objadr = objadr;
 		this.offset = offset;
-	}
-	
-	public int size() {
-		return type.size();
 	}
 
 	@Override

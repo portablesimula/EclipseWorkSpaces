@@ -11,7 +11,7 @@ import java.io.InputStream;
 
 /// Attribute Input Stream.
 /// 
-/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/AttributeInputStream.java"><b>Source File</b></a>.
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/util/AttributeInputStream.java"><b>Source File</b></a>.
 /// 
 /// @author Øystein Myhre Andersen
 public class AttributeInputStream extends DataInputStream {

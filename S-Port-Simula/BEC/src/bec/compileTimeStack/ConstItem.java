@@ -14,13 +14,14 @@ import bec.value.Value;
 /// 
 /// @author Øystein Myhre Andersen
 public final class ConstItem extends TempItem {
+	
 	/// The Constant value
 	public Value value;
 
 	/// Value item to be pushed onto the Compile-time Stack.
 	/// @param type the type of the Constant value
 	/// @param value the Constant value
-	public ConstItem(Type type, Value value) {
+	public ConstItem(final Type type, final Value value) {
 		super(type);
 		this.value = value;
 	}

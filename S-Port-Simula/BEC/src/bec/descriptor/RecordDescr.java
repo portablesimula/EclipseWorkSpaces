@@ -10,7 +10,6 @@ import java.util.Vector;
 
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
-import bec.util.Global;
 import bec.util.Option;
 import bec.util.Scode;
 import bec.util.Tag;
@@ -54,7 +53,7 @@ public class RecordDescr extends Descriptor {
 	
 	/// Create a new RecordDescr with the given 'tag'
 	/// @param tag used to lookup descriptors
-	private RecordDescr(Tag tag) {
+	private RecordDescr(final Tag tag) {
 		super(Kind.K_RecordDescr, tag);
 	}
 	
@@ -100,8 +99,8 @@ public class RecordDescr extends Descriptor {
 		return rec;
 	}
 	
-	private RecordDescr getPrefix(int prefixTag) {
-		RecordDescr prefix = (RecordDescr) Global.DISPL.get(prefixTag);
+	private RecordDescr getPrefix(final int prefixTag) {
+		RecordDescr prefix = (RecordDescr) Display.get(prefixTag);
 		return prefix;
 	}
 		
@@ -171,7 +170,7 @@ public class RecordDescr extends Descriptor {
 	// ***********************************************************************************************
 
 	@Override
-	public void write(AttributeOutputStream oupt) throws IOException {
+	public void write(final AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("RecordDescr.Write: " + this);
 		oupt.writeByte(kind);
 		tag.write(oupt);
@@ -182,7 +181,7 @@ public class RecordDescr extends Descriptor {
 
 	/// Reads a RecordDescr from the given input.
 	/// @param inpt the input stream
-	public static RecordDescr read(AttributeInputStream inpt) throws IOException {
+	public static RecordDescr read(final AttributeInputStream inpt) throws IOException {
 		RecordDescr rec = new RecordDescr(Tag.read(inpt));
 		rec.size = inpt.readShort();
 		rec.rep0size = inpt.readShort();

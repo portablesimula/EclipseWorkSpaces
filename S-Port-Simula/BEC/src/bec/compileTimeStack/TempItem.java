@@ -17,7 +17,7 @@ public class TempItem extends CTStackItem {
 	
 	/// Temp item to be pushed onto the Compile-time Stack.
 	/// @param type the type of the object addressed
-	public TempItem(Type type) {
+	public TempItem(final Type type) {
 		this.type = type;
 	}
 

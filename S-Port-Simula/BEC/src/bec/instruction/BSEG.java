@@ -59,7 +59,7 @@ public abstract class BSEG extends Instruction {
 		Scode.inputInstr();
 		
 		ProgramSegment prevPSEG = Global.PSEG;
-		Global.PSEG = new ProgramSegment(Global.getSourceID()+"_BSEG_" + SEQU++, Kind.K_SEG_CODE);
+		Global.PSEG = new ProgramSegment(Global.getSourceID()+"_BSEG_" + SEQU++);
 
 		CTStack.BSEG("BSEG");
 			S_Module.programElements();

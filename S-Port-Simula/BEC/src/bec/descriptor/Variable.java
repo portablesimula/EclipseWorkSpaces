@@ -65,7 +65,7 @@ public class Variable extends Descriptor {
 
 	/// Create a new Attribute with the given 'tag'
 	/// @param tag used to lookup descriptors
-	private Variable(int kind, Tag tag) {
+	private Variable(final int kind, final Tag tag) {
 		super(kind, tag);
 	}
 	
@@ -104,7 +104,7 @@ public class Variable extends Descriptor {
 	/// Scans the remaining S-Code (if any) belonging to this descriptor.
 	/// Then construct a new Variable instance.
 	/// @return an Variable instance.
-	public static Variable ofRETUR(ObjectAddress returAddr) {
+	public static Variable ofRETUR(final ObjectAddress returAddr) {
 		Variable var = new Variable(Kind.K_Retur, null);
 		var.type = Type.T_PADDR;
 		var.address = returAddr;
@@ -114,7 +114,7 @@ public class Variable extends Descriptor {
 	/// Scans the remaining S-Code (if any) belonging to this descriptor.
 	/// Then construct a new Variable instance.
 	/// @return an Variable instance.
-	public static Variable ofLocal(int rela) {
+	public static Variable ofLocal(final int rela) {
 		Tag tag = Tag.ofScode();
 		Variable var = new Variable(Kind.K_LocalVar, tag);
 		var.type = Type.ofScode();
@@ -126,7 +126,7 @@ public class Variable extends Descriptor {
 	/// Scans the remaining S-Code (if any) belonging to this descriptor.
 	/// Then construct a new Variable instance.
 	/// @return an Variable instance.
-	public static Variable ofGlobal(DataSegment seg) {
+	public static Variable ofGlobal(final DataSegment seg) {
 		Tag tag = Tag.ofScode();
 		Variable var = new Variable(Kind.K_GlobalVar, tag);
 		var.type = Type.ofScode();
@@ -160,7 +160,7 @@ public class Variable extends Descriptor {
 			int count = var.type.size();
 			if(Scode.accept(Scode.S_FIXREP)) {
 				int fixrep = Scode.inNumber();
-				RecordDescr rec = (RecordDescr) Global.getMeaning(var.type.tag);
+				RecordDescr rec = (RecordDescr) Display.getMeaning(var.type.tag);
 				count = count + rec.rep0size * fixrep;
 			}
 			if(count == 0) Util.IERR("");
@@ -179,7 +179,7 @@ public class Variable extends Descriptor {
 	// ***********************************************************************************************
 
 	@Override
-	public void write(AttributeOutputStream oupt) throws IOException {
+	public void write(final AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("Variable.Write: " + this);
 		oupt.writeByte(kind); // K_GLOBAL, K_LOCAL, K_IMPORT, K_EXPORT, K_EXIT, K_RETUR
 		tag.write(oupt);
@@ -194,7 +194,7 @@ public class Variable extends Descriptor {
 	/// Reads a Variable from the given input.
 	/// @param inpt the input stream
 	/// @param kind the Variable kind: Import, Export, Exit, Retur, LovalVar
-	public static Variable read(AttributeInputStream inpt, int kind) throws IOException {
+	public static Variable read(final AttributeInputStream inpt, int kind) throws IOException {
 		Tag tag = Tag.read(inpt);
 		Variable var = new Variable(kind, tag);
 		var.type = Type.read(inpt);

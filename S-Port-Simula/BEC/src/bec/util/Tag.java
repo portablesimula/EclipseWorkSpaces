@@ -8,6 +8,7 @@ package bec.util;
 import java.io.IOException;
 
 import bec.descriptor.Descriptor;
+import bec.descriptor.Display;
 import bec.statement.InsertStatement;
 
 public class Tag {
@@ -26,7 +27,7 @@ public class Tag {
 	}
 	
 	public Descriptor getMeaning() {
-		return Global.getMeaning(this);
+		return Display.getMeaning(this.val);
 	}
 	
 	private static int xTag(int t) { // export range(0:MaxType) tx;

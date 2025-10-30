@@ -40,66 +40,6 @@ public class Global {
 //		return(x);
 //	}
 	
-	public static Array<Descriptor> DISPL;
-	public static Descriptor getMeaning(Tag tag) {
-		Descriptor x = DISPL.get(tag.val);
-		if(x == null) Util.IERR("Missing meaning: " + tag);
-		return(x);
-	}
-	public static Descriptor getMeaning(int tag) {
-		Descriptor x = DISPL.get(tag);
-		if(x == null) Util.IERR("Missing meaning: " + tag);
-		return(x);
-	}
-	
-	public static void intoDisplay(Descriptor d, int tag) {
-		if(tag != 0) {
-			
-//			if(tag == 54) Util.IERR("");
-			
-			Descriptor prev = DISPL.get(tag);
-			if(prev == null) ; // OK
-			else if(prev != d) {
-				dumpDISPL("Global.intoDisplay: ");
-				Util.IERR("Display-entry is already defined: " + Scode.edTag(tag) + "  " + prev);
-			}
-			DISPL.set(tag, d);
-			if(Option.traceMode != 0) IO.println("Display(" + Scode.edTag(tag) + ") = " +d);
-		}
-		if(d == null) Util.IERR("");
-//		if(tag == 313) {
-//			IO.println("Global.intoDisplay: "+Scode.edTag(tag) + "  " + d);
-//		}
-	}
-
-	public static void dumpDISPL(String title) {
-//		IO.println("============ "+title+" BEGIN Dump DISPL ================");
-//		for(int i=32;i<DISPL.size();i++) {
-//			Descriptor elt =DISPL.get(i);
-//			IO.println("  " + i + ": " + elt);
-//		}
-//		IO.println("============ "+title+"ENDOF Dump DISPL ================");
-		dumpDISPL(title, 32);
-	}
-
-	public static void dumpDISPL(String title, int startTag) {
-		IO.println("============ "+title+" BEGIN Dump DISPL ================");
-		for(int i=startTag;i<DISPL.size();i++) {
-			Descriptor elt =DISPL.get(i);
-			IO.println("  " + i + ": " + elt);
-		}
-		IO.println("============ "+title+"ENDOF Dump DISPL ================");
-	}
-
-	public static void dumpDisplay(String title) {
-		IO.println("============ "+title+" BEGIN Dump Display ================");
-//		for(int i=0;i<Display.size();i++) {
-//			SyntaxClass elt =Display.get(i);
-//			IO.println("  " + i + ": " + elt);
-//		}
-		Util.IERR("");
-		IO.println("============ "+title+"ENDOF Dump Display ================");
-	}
 	
 	public static String scodeSource;	// S-Code source file name
 	public static String progIdent;		// S-Code PROG String

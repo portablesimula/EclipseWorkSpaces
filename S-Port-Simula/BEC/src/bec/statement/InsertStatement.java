@@ -40,32 +40,32 @@ import bec.util.Util;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class InsertStatement {
+	
+	// The Module ident
     String modid;
-    String check;
-    String extid;
+
+    /// The tag bias
     public int bias;
-    int limit;
     
+    /// The current InsertStatement
     public static InsertStatement current;
 
-    /**
-     * insert_statement
-     * 		::= insert module_id:string check_code:string
-     * 			external_id:string tagbase:newtag taglimit:newtag
-     * 
-     * 		::= sysinsert module_id:string check_code:string
-     * 			external_id:string tagbase:newtag taglimit:newtag
-     * 
-     * @param sysmod when SYSINSERT
-     * @throws IOException 
-     * @throws  
-     */
-	public InsertStatement(boolean sysmod) {
+    /// insert_statement
+    /// 		::= insert module_id:string check_code:string
+    /// 			external_id:string tagbase:newtag taglimit:newtag
+    /// 
+    /// 		::= sysinsert module_id:string check_code:string
+    /// 			external_id:string tagbase:newtag taglimit:newtag
+    /// 
+    /// @param sysmod when SYSINSERT
+    ///
+	@SuppressWarnings("unused")
+	public InsertStatement(final boolean sysmod) {
 		modid = Scode.inString();
-		check = Scode.inString();
-		extid = Scode.inString();
+		String check = Scode.inString();
+		String extid = Scode.inString();
 		bias = Scode.ofScode();
-		limit = Scode.ofScode();
+		int limit = Scode.ofScode();
 
 		if(Option.ATTR_INPUT_TRACE)
 			IO.println("**************   Begin  -  Input-module  " + modid + "  " + check + "   **************");
@@ -79,15 +79,14 @@ public class InsertStatement {
 		}
 		if(Option.ATTR_INPUT_TRACE)
 			IO.println("**************   Endof  -  Input-module  " + modid + "  " + check + "   **************");
-//		Global.dumpDISPL("END INSERT: ");
-//		Util.IERR("");
 	}
 	
-	private void readDescriptors(boolean sysmod) throws IOException {
+	/// Read all Descriptors
+    /// @param sysmod when SYSINSERT
+	private void readDescriptors(final boolean sysmod) throws IOException {
 		String fileName = null;
 		if(sysmod) {
 			fileName = Global.rtsDir+modid+".svm";
-//			Util.IERR(""+modid+"  "+Global.rtsDir);
 		} else {
 			fileName = Global.getAttrFileName(modid, ".svm");
 		}
@@ -99,14 +98,12 @@ public class InsertStatement {
 		String modident = inpt.readString();
 		@SuppressWarnings("unused")
 		String modcheck = inpt.readString();
-//		IO.println("**************   Begin  -  Input-module  " + modident + "  " + modcheck + "   **************");
 		if(! modident.equalsIgnoreCase(modid)) Util.IERR("WRONG modident");
 		
-//	       ------ Read Descriptors ------
+	    //   ------ Read Descriptors ------
 		LOOP:while(true) {
 			int prevKind = kind;
 			kind = inpt.readUnsignedByte();
-//			IO.println("InsertStatement.readDescriptors'LOOP: " + Kind.edKind(kind));
 			
 			if(kind == Kind.K_EndModule) break LOOP;
 			switch(kind) {

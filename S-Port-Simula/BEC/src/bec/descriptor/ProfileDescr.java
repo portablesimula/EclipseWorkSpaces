@@ -82,7 +82,7 @@ public class ProfileDescr extends Descriptor {
 	
 	/// Create a new ProfileDescr with the given 'tag'
 	/// @param tag used to lookup descriptors
-	private ProfileDescr(Tag tag) {
+	private ProfileDescr(final Tag tag) {
 		super(Kind.K_ProfileDescr, tag);
 	}
 	
@@ -234,7 +234,7 @@ public class ProfileDescr extends Descriptor {
 	// ***********************************************************************************************
 
 	@Override
-	public void write(AttributeOutputStream oupt) throws IOException {
+	public void write(final AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("ProfileDescr.Write: " + this);
 		oupt.writeByte(kind);
 		tag.write(oupt);
@@ -254,7 +254,7 @@ public class ProfileDescr extends Descriptor {
 
 	/// Reads a ProfileDescr from the given input.
 	/// @param inpt the input stream
-	public static ProfileDescr read(AttributeInputStream inpt) throws IOException {
+	public static ProfileDescr read(final AttributeInputStream inpt) throws IOException {
 		ProfileDescr prf = new ProfileDescr(Tag.read(inpt));
 		if(Option.ATTR_INPUT_TRACE) IO.println("BEGIN ProfileDescr.Read: " + prf);
 		prf.pKind = inpt.readShort();

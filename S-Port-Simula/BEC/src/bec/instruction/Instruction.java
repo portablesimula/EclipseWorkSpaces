@@ -44,6 +44,7 @@ public abstract class Instruction {
 		}
 	}
 
+	/// @result true if a 'visible' was encountered
 	public static boolean inInstruction() {
 		switch(Scode.curinstr) {
 			case Scode.S_CONSTSPEC ->   ConstDescr.ofConstSpec();

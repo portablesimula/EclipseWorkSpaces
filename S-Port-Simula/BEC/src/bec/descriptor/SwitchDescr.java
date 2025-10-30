@@ -33,7 +33,7 @@ public class SwitchDescr extends Descriptor {
 	
 	/// Create a new SwitchDescr with the given 'tag'
 	/// @param tag used to lookup descriptors
-	private SwitchDescr(Tag tag) {
+	private SwitchDescr(final Tag tag) {
 		super(Kind.K_SwitchDescr, tag);
 		size = Scode.inNumber();
 		DESTAB = new ProgramAddress[size];
