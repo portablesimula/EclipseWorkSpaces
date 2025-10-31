@@ -1,6 +1,6 @@
 package bec.inlineTest;
 
-import bec.util.Global;
+import bec.Global;
 
 public class Pick_RTS_Source {
 	

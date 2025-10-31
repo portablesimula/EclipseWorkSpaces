@@ -7,11 +7,11 @@ package bec.compileTimeStack;
 
 import java.util.Stack;
 
+import bec.Global;
+import bec.Option;
 import bec.scode.Tag;
 import bec.scode.Type;
-import bec.util.Global;
 import bec.util.NamedStack;
-import bec.util.Option;
 import bec.util.Util;
 import bec.value.Value;
 

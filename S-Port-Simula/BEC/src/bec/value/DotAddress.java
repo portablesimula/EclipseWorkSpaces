@@ -15,17 +15,27 @@ import bec.scode.Tag;
 import bec.scode.Type;
 import bec.util.Util;
 
+/// DotAddress.
+/// 
+/// 	attribute_address
+/// 		::= < c-dot attribute:tag >* c-aaddr attribute:tag
+/// 		::= anone
+/// 
+/// 	general_address
+/// 		::= < c-dot attr:tag >* c-gaddr global_or_const:tag
+/// 		::= gnone
+///
+///
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/value/DotAddress.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public abstract class DotAddress {
 	
-	/**
-	 * 	attribute_address
-	 * 		::= < c-dot attribute:tag >* c-aaddr attribute:tag
-	 * 		::= anone
-	 * 
-	 * 	general_address
-	 * 		::= < c-dot attr:tag >* c-gaddr global_or_const:tag
-	 * 		::= gnone
-	 */
+	/// Scans the remaining S-Code belonging to this instruction.
+	/// For Attribute addresses create an IntegerValue of type AADDR.
+	/// For General addresses create an GeneralAddress object.
+	/// Finally: Return a newly created Value.
 	public static Value ofScode() {
 		int offset = 0;
 		

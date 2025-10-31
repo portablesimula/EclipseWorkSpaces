@@ -3,22 +3,23 @@
 /// 
 /// You find a copy of the License on the following
 /// page: https://creativecommons.org/licenses/by/4.0/
-package bec.util;
+package bec;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
-import bec.S_Module;
 import bec.segment.DataSegment;
 import bec.segment.ProgramSegment;
 import bec.segment.Segment;
+import bec.util.Array;
+import bec.util.Terminal;
 import bec.value.ProgramAddress;
 
 /// Global variables.
 /// 
-/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/util/Global.java"><b>Source File</b></a>.
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/Global.java"><b>Source File</b></a>.
 /// 
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen

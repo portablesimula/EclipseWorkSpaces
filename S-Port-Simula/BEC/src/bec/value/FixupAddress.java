@@ -8,18 +8,23 @@ package bec.value;
 import bec.descriptor.Descriptor;
 import bec.scode.Type;
 
+/// BooleanValue.
+/// 
+///		boolean_value ::= true | false
+///
+///
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/value/FixupAddress.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public class FixupAddress extends ProgramAddress {
-	Descriptor descr; // LabelDescr or RoutineDescr
 	
 	public FixupAddress(Type type, Descriptor descr) {
 		super(type, null, 0);
-		this.descr = descr;
 	}
 
 	public void setAddress(ProgramAddress paddr) {
-//		IO.println("FixupAddress.setAddress: "+paddr+"  "+paddr.segID);
 		this.segID = paddr.segID;
-//		this.ofst = paddr.ofst;
 		this.setOfst(paddr.getOfst());
 	}
 }

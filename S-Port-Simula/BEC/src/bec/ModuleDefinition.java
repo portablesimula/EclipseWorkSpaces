@@ -22,7 +22,6 @@ import bec.segment.ProgramSegment;
 import bec.segment.Segment;
 import bec.statement.InsertStatement;
 import bec.util.Array;
-import bec.util.Global;
 import bec.util.Util;
 
 /// This is an implementation of S-Code Module definition.

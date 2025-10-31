@@ -20,7 +20,6 @@ import bec.segment.DataSegment;
 import bec.segment.ProgramSegment;
 import bec.segment.Segment;
 import bec.util.Array;
-import bec.util.Global;
 import bec.util.Util;
 
 /// This is an implementation of S-Code Interface Module definition.

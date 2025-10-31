@@ -14,8 +14,6 @@ import bec.segment.DataSegment;
 import bec.segment.ProgramSegment;
 import bec.segment.Segment;
 import bec.util.EndProgram;
-import bec.util.Global;
-import bec.util.Option;
 import bec.util.Util;
 import bec.value.ProgramAddress;
 import bec.virtualMachine.RTUtil;

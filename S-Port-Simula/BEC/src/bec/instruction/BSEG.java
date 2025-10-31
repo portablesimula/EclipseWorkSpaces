@@ -5,12 +5,12 @@
 /// page: https://creativecommons.org/licenses/by/4.0/
 package bec.instruction;
 
+import bec.Global;
 import bec.S_Module;
 import bec.compileTimeStack.CTStack;
 import bec.scode.Scode;
 import bec.scode.Sinstr;
 import bec.segment.ProgramSegment;
-import bec.util.Global;
 import bec.util.Util;
 
 /// S-INSTRUCTION: BSEG

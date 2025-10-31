@@ -26,8 +26,6 @@ import bec.statement.InsertStatement;
 import bec.statement.ProtectConstruction;
 import bec.statement.SkipifConstruction;
 import bec.util.AttributeOutputStream;
-import bec.util.Global;
-import bec.util.Option;
 import bec.util.Util;
 import bec.virtualMachine.SVM_LINE;
 

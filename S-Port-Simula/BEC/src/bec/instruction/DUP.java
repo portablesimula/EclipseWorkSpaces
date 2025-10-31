@@ -5,10 +5,10 @@
 /// page: https://creativecommons.org/licenses/by/4.0/
 package bec.instruction;
 
+import bec.Global;
 import bec.compileTimeStack.AddressItem;
 import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.CTStackItem;
-import bec.util.Global;
 import bec.util.Util;
 import bec.value.ObjectAddress;
 import bec.virtualMachine.SVM_DUP;

@@ -1,8 +1,8 @@
 package bec.inlineTest;
 
 import bec.BecCompiler;
-import bec.util.Global;
-import bec.util.Option;
+import bec.Global;
+import bec.Option;
 
 public class InlineTest {
 	

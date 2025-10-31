@@ -8,12 +8,12 @@ package bec.segment;
 import java.io.IOException;
 import java.util.Vector;
 
+import bec.Option;
 import bec.descriptor.Kind;
 import bec.scode.Sinstr;
 import bec.scode.Type;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
-import bec.util.Option;
 import bec.value.ProgramAddress;
 import bec.virtualMachine.SVM_Instruction;
 

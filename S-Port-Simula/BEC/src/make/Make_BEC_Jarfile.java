@@ -1,7 +1,7 @@
 package make;
 
 import java.io.File;
-import bec.util.Util;
+import java.io.IOException;
 
 public class Make_BEC_Jarfile {
 	private final static String RELEASE_HOME  = "C:/SPORT";
@@ -17,11 +17,26 @@ public class Make_BEC_Jarfile {
 			releaseHome.mkdirs();
 			String compilerManifest=SportBEC_ROOT+"/src/make/CompilerManifest.MF";
 			
-			Util.exec("jar", "cmf", compilerManifest, RELEASE_HOME+"/CommonBEC.jar", "-C", COMPILER_BIN, "./bec");
-			Util.exec("jar", "-tvf", RELEASE_HOME+"/CommonBEC.jar");
+			exec("jar", "cmf", compilerManifest, RELEASE_HOME+"/CommonBEC.jar", "-C", COMPILER_BIN, "./bec");
+			exec("jar", "-tvf", RELEASE_HOME+"/CommonBEC.jar");
 			
 			IO.println("Make_BEC_Jarfile - DONE: " + RELEASE_HOME + "/CommonBEC.jar");
 		} catch(Exception e) { e.printStackTrace(); }
+	}
+
+	
+	// ***************************************************************
+	// *** EXECUTE OS COMMAND
+	// ***************************************************************
+	public static int exec(String... cmd) throws IOException {
+		String cmdLine="";
+		for(int i=0;i<cmd.length;i++) cmdLine=cmdLine+" "+cmd[i];
+        IO.println("Make_BEC_Jarfile.exec: command ="+cmdLine);
+		ProcessBuilder processBuilder = new ProcessBuilder(cmd);
+		processBuilder.inheritIO();
+		try { Process process = processBuilder.start();
+			  return process.waitFor();
+		} catch(Exception e) { e.printStackTrace(); return -1; }
 	}
 
 }

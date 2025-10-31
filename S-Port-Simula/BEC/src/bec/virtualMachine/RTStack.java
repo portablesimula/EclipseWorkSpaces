@@ -8,8 +8,8 @@ package bec.virtualMachine;
 import java.util.Stack;
 import java.util.Vector;
 
-import bec.util.Global;
-import bec.util.Option;
+import bec.Global;
+import bec.Option;
 import bec.util.Util;
 import bec.value.GeneralAddress;
 import bec.value.IntegerValue;

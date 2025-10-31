@@ -5,6 +5,7 @@
 /// page: https://creativecommons.org/licenses/by/4.0/
 package bec.statement;
 
+import bec.Global;
 import bec.S_Module;
 import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.CTStackItem;
@@ -12,7 +13,6 @@ import bec.instruction.FETCH;
 import bec.scode.Relation;
 import bec.scode.Scode;
 import bec.scode.Sinstr;
-import bec.util.Global;
 import bec.util.NamedStack;
 import bec.util.Util;
 import bec.value.ProgramAddress;

@@ -5,12 +5,12 @@
 /// page: https://creativecommons.org/licenses/by/4.0/
 package bec.instruction;
 
+import bec.Global;
 import bec.compileTimeStack.AddressItem;
 import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.TempItem;
 import bec.scode.Sinstr;
 import bec.scode.Type;
-import bec.util.Global;
 import bec.util.Util;
 import bec.value.IntegerValue;
 import bec.virtualMachine.SVM_LOADC;

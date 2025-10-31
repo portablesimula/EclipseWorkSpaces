@@ -10,7 +10,7 @@ package make;
 import java.util.Vector;
 
 import bec.BecCompiler;
-import bec.util.Option;
+import bec.Option;
 
 public final class RunSingle_SML_TestBatch {
 	private static long startTimeMs = System.currentTimeMillis();

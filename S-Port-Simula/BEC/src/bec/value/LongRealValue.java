@@ -7,13 +7,13 @@ package bec.value;
 
 import java.io.IOException;
 
+import bec.Option;
 import bec.scode.Scode;
 import bec.scode.Sinstr;
 import bec.scode.Type;
 import bec.segment.DataSegment;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
-import bec.util.Option;
 
 public class LongRealValue extends Value {
 	public double value;

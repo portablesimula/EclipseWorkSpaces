@@ -7,38 +7,48 @@ package bec.value;
 
 import java.io.IOException;
 
-import bec.scode.Scode;
+import bec.Option;
 import bec.scode.Sinstr;
 import bec.scode.Type;
 import bec.segment.DataSegment;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
-import bec.util.Option;
 import bec.util.Util;
 
+/// BooleanValue.
+/// 
+///		boolean_value ::= true | false
+///
+///
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/value/BooleanValue.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public class BooleanValue extends Value {
 	public boolean value;
-	
-	/**
-	 * boolean_value ::= true | false
-	 */
-	private BooleanValue(boolean value) {
+
+	/// Construct a new BooleanValue
+	/// @param value true or false
+	private BooleanValue(final boolean value) {
 		this.type = Type.T_BOOL;
 		this.value = value;
 	}
 	
-	public static BooleanValue of(boolean value) {
+	/// Create an Object to represent a boolean value.
+	/// true: new BooleanValue, otherwise null
+	/// @param value true or false
+	public static BooleanValue of(final boolean value) {
 		if(value) return new BooleanValue(true);
 		return null;
 	}
 	
 	@Override
-	public void emit(DataSegment dseg) {
+	public void emit(final DataSegment dseg) {
 		dseg.emit(this);
 	}
 	
 	@Override
-	public Value and(Value other) {
+	public Value and(final Value other) {
 		if(other == null) return BooleanValue.of(value == false);
 //		if(other == null) return this;
 		BooleanValue val2 = (BooleanValue) other;
@@ -48,7 +58,7 @@ public class BooleanValue extends Value {
 	}
 
 	@Override
-	public BooleanValue or(Value other) {
+	public BooleanValue or(final Value other) {
 		if(other == null) return this;
 		BooleanValue val2 = (BooleanValue) other;
 		boolean res = value | val2.value;
@@ -57,7 +67,7 @@ public class BooleanValue extends Value {
 	}
 
 	@Override
-	public BooleanValue xor(Value other) {
+	public BooleanValue xor(final Value other) {
 		if(other == null) return this;
 		BooleanValue val2 = (BooleanValue) other;
 		boolean res = value ^ val2.value;
@@ -66,7 +76,7 @@ public class BooleanValue extends Value {
 	}
 
 	@Override
-	public BooleanValue imp(Value other) {
+	public BooleanValue imp(final Value other) {
 		// true imp false  ==> false  otherwise  true
 		boolean res = true;
 		if(this.value) {
@@ -77,7 +87,7 @@ public class BooleanValue extends Value {
 	}
 
 	@Override
-	public BooleanValue eqv(Value other) {
+	public BooleanValue eqv(final Value other) {
 		if(other == null) return this;
 		BooleanValue val2 = (BooleanValue) other;
 		boolean res = value == val2.value;
@@ -86,7 +96,7 @@ public class BooleanValue extends Value {
 	}
 
 	@Override
-	public boolean compare(int relation, Value other) {
+	public boolean compare(final int relation, final Value other) {
 		boolean LHS = this.value;
 		boolean RHS = (other == null)? false : ((BooleanValue)other).value;
 		boolean res = false;
@@ -107,12 +117,15 @@ public class BooleanValue extends Value {
 	// *** Attribute File I/O
 	// ***********************************************************************************************
 
-	public void write(AttributeOutputStream oupt) throws IOException {
+	@Override
+	public void write(final AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
 		oupt.writeByte((value)?Sinstr.S_TRUE:Sinstr.S_FALSE);
 	}
 
-	public static BooleanValue read(AttributeInputStream inpt) throws IOException {
+	/// Reads a BooleanValue from the given input.
+	/// @return the BooleanValue read
+	public static BooleanValue read(final AttributeInputStream inpt) throws IOException {
 		return new BooleanValue(inpt.readUnsignedByte() == Sinstr.S_TRUE);
 	}
 

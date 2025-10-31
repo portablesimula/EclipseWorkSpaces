@@ -7,13 +7,13 @@ package bec.descriptor;
 
 import java.io.IOException;
 
+import bec.Global;
+import bec.Option;
 import bec.compileTimeStack.CTStack;
 import bec.scode.Tag;
 import bec.scode.Type;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
-import bec.util.Global;
-import bec.util.Option;
 import bec.util.Util;
 import bec.value.FixupAddress;
 import bec.value.ProgramAddress;

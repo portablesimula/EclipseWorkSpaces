@@ -5,6 +5,7 @@
 /// page: https://creativecommons.org/licenses/by/4.0/
 package bec.statement;
 
+import bec.Global;
 import bec.S_Module;
 import bec.compileTimeStack.CTStack;
 import bec.instruction.FETCH;
@@ -12,7 +13,6 @@ import bec.instruction.Instruction;
 import bec.scode.Scode;
 import bec.scode.Sinstr;
 import bec.scode.Type;
-import bec.util.Global;
 import bec.util.Util;
 import bec.virtualMachine.SVM_RESTORE;
 import bec.virtualMachine.SVM_SAVE;

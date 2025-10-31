@@ -7,6 +7,7 @@ package bec.value;
 
 import java.io.IOException;
 
+import bec.Option;
 import bec.descriptor.ConstDescr;
 import bec.descriptor.Descriptor;
 import bec.descriptor.Variable;
@@ -17,7 +18,6 @@ import bec.segment.DataSegment;
 import bec.segment.Segment;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
-import bec.util.Option;
 import bec.util.Util;
 import bec.virtualMachine.CallStackFrame;
 import bec.virtualMachine.RTStack;

@@ -11,6 +11,8 @@ import java.io.IOException;
 import bec.descriptor.ConstDescr;
 import bec.descriptor.Kind;
 import bec.descriptor.LabelDescr;
+import bec.Global;
+import bec.Option;
 import bec.descriptor.Attribute;
 import bec.descriptor.ProfileDescr;
 import bec.descriptor.RecordDescr;
@@ -21,8 +23,6 @@ import bec.scode.Type;
 import bec.segment.DataSegment;
 import bec.segment.ProgramSegment;
 import bec.util.AttributeInputStream;
-import bec.util.Global;
-import bec.util.Option;
 import bec.util.Util;
 
 /// S-INSTRUCTION: IF

@@ -6,9 +6,9 @@
 
 package bec.virtualMachine.sysrut;
 
+import bec.Option;
 import bec.scode.Type;
 import bec.segment.Segment;
-import bec.util.Option;
 import bec.util.Util;
 import bec.value.IntegerValue;
 import bec.value.ObjectAddress;

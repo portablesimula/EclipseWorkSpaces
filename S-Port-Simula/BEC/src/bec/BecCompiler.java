@@ -10,8 +10,6 @@ import bec.scode.Scode;
 import bec.scode.Sinstr;
 import bec.scode.Type;
 import bec.util.Terminal;
-import bec.util.Global;
-import bec.util.Option;
 import bec.util.Util;
 
 /// This is an implementation of a S-Code Back-end Compiler (BEC).

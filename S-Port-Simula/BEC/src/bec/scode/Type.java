@@ -9,23 +9,58 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Vector;
 
+import bec.Option;
 import bec.descriptor.Kind;
 import bec.descriptor.RecordDescr;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
-import bec.util.Option;
 import bec.util.Util;
 
 /// Type.
 /// 
+///		type
+///			::= structured_type | simple_type | range_type
+///
+///			simple_type ::= BOOL | CHAR | INT | REAL | LREAL | SIZE | OADDR | AADDR | GADDR | PADDR | RADDR
+/// 
+///			structured_type ::= record_tag:tag
+///
+///			range_type
+///				::= INT range lower:number upper:number  -- NOTE: DETTE ER NYTT
+///				::= SINT                                 -- NOTE: DETTE ER NYTT
+///
+///
+///		resolved_type
+///			::= resolved_structure
+///			::= simple_type
+///			::= INT Range lower:number upper:number
+///			::= SINT
+///
+/// Any data quantity must belong to some type. The type will define the internal structure of the quantity
+/// as well as the operations that may be performed upon it. Types are used as generators in global,
+/// constant, local or parameter definitions and as specificators in quantity descriptors. Each type defines a
+/// descriptor (of the same type), this descriptor cannot be used on the stack, thus types cannot be used
+/// dynamically as e.g. parameters.
+///
+/// The distinction between resolved and non-resolved type is made because of the indefinite repetition,
+/// which may occur in structured types. Such a type cannot be used as a generator, or in further type
+/// definition, without determining the actual number of elements in the repetition.
+///
+///
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/scode/Type.java"><b>Source File</b></a>.
 /// 
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class Type {
+	
+	/// The type tag index
 	public  int tag;
-	private int size;  // Size of type in basic cells
-	private int rep0size;  // Size of rep 0 attribute in basic cells
+	
+	/// The size of type in basic cells
+	private int size;
+	
+	/// The size of the 'REP 0' attribute in basic cells
+	private int rep0size;
 
 	private static HashMap<Integer, Type> TMAP;
 	private static Vector<Type> RECTYPES;
@@ -33,19 +68,16 @@ public class Type {
 	public static Type T_INT,   T_SINT,  T_REAL,   T_LREAL, T_SIZE;
 	public static Type T_OADDR, T_AADDR, T_GADDR,  T_PADDR, T_RADDR;
 	
+	/// Construct a new Type
+	/// @param tag the type tag index
+	/// @param size the size of type in basic cells
+	private Type(final int tag, final int size) {
+		this.tag = tag;
+		this.size = size;
+	}
 
-	/**
-	 *	 type ::= structured_type | simple_type | range_type
-	 * 
-	 *	 	simple_type ::= BOOL | CHAR | INT | REAL | LREAL | SIZE | OADDR | AADDR | GADDR | PADDR | RADDR
-	 * 
-	 *	 	structured_type ::= record_tag:tag
-	 *
-	 *		 range_type
-	 *			::= INT range lower:number upper:number  -- NOTE: DETTE ER NYTT
-	 *			::= SINT                                 -- NOTE: DETTE ER NYTT
-	 *
-	 */
+	/// Scans the remaining S-Code (if any) belonging to this instruction.
+	/// Finally: Return a new Type.
 	public static Type ofScode() {
 		int tag = Scode.inTag();
 		if(tag == Tag.TAG_INT) {
@@ -60,37 +92,44 @@ public class Type {
 		}
 		return type;
 	}
-	
-	private Type(int tag, int size) {
-		this.tag = tag;
-		this.size = size;
-	}
 
-	public static Type lookupType(RecordDescr rec) {
+	/// Returns the Type corresponding to the given RecordDescr
+	/// @param rec a RecordDescr
+	/// @return the Type corresponding to the given RecordDescr
+	public static Type lookupType(final RecordDescr rec) {
 		Type type = TMAP.get(rec.tag.val);
 		if(type == null) Util.IERR("Type.recType: UNKNOWN: " + rec);
 		return type;
 	}
 
-	public static void newRecType(RecordDescr rec) {
+	/// Define a new Record Type
+	/// @param rec a RecordDescr
+	public static void newRecType(final RecordDescr rec) {
 		Type type = new Type(rec.tag.val, rec.size);
 		type.rep0size = rec.rep0size;
 		TMAP.put(rec.tag.val, type);
 		RECTYPES.add(type);
 	}
 	
-	public static void removeFromTMAP(int tag) {
+	/// Utility: removeFromTMAP
+	public static void removeFromTMAP(final int tag) {
 		TMAP.remove(tag);
 	}
 
+	/// Returns true when Simple Type
+	/// @return true when Simple Type
 	public boolean isSimple() {
 		return tag <= Tag.TAG_SIZE;
 	}
 
+	/// Returns true when RecordTag
+	/// @return true when RecordTag
 	public boolean isRecordType() {
 		return tag > Tag.T_max;
 	}
 	
+	/// Returns true when INT, REAL, LREAL
+	/// @return true when INT, REAL, LREAL
 	public boolean isArithmetic() {
 		switch(tag) {
 		case Tag.TAG_INT, Tag.TAG_REAL, Tag.TAG_LREAL: return true;
@@ -98,12 +137,14 @@ public class Type {
 		return false;
 	}
 	
-	
+	/// Returns the size of type in basic cells
+	/// @return the size of type in basic cells
 	public int size() {
 		return size;
 	}
 	
 	
+	/// Initiate Type data
 	public static void init() {
 		TMAP = new HashMap<Integer, Type>();
 		RECTYPES = new Vector<Type>();		
@@ -126,14 +167,19 @@ public class Type {
 		T_RADDR  = newBasType(Tag.TAG_RADDR,  1   );
 	}
 
-	private static Type newBasType(int tag, int size) {
+	/// Create a new Base Type
+	/// @param tag the type tag index
+	/// @param size the size of type in basic cells
+	/// @return a new Type
+	private static Type newBasType(final int tag, final int size) {
 		Type type = new Type(tag, size);
-//		if(tag == 2497) Util.IERR("");
 		TMAP.put(tag, type);
 		return type;
 	}
 
-	public static void dumpTypes(String title) {
+	/// Debug utility: dumpTypes
+	/// @param title the title of the dump printout
+	public static void dumpTypes(final String title) {
 		IO.println("============ "+title+" BEGIN Dump Types ================");
 		for(Integer type:TMAP.keySet()) {
 			IO.println("TTAB["+type+"] = " + TMAP.get(type));
@@ -145,6 +191,7 @@ public class Type {
 		IO.println("============ "+title+" ENDOF Dump Types ================");
 	}
 	
+	@Override
 	public String toString() {
 		return Scode.edTag(tag) + " size=" + size + ", rep0size=" + rep0size;
 	}
@@ -153,7 +200,9 @@ public class Type {
 	// *** Attribute File I/O
 	// ***********************************************************************************************
 
-	public static void writeRECTYPES(AttributeOutputStream oupt) throws IOException {
+	/// Writes the Record Types to the given output.
+	/// @param oupt the output stream
+	public static void writeRECTYPES(final AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("writeRECTYPES: ");
 		oupt.writeByte(Kind.K_RECTYPES);
 		oupt.writeShort(RECTYPES.size());
@@ -165,7 +214,9 @@ public class Type {
 		}
 	}
 
-	public static void readRECTYPES(AttributeInputStream inpt) throws IOException {
+	/// Reads the Record Types from the given input.
+	/// @param inpt the input stream
+	public static void readRECTYPES(final AttributeInputStream inpt) throws IOException {
 		int n = inpt.readShort();
 		for(int i=0;i<n;i++) {
 //			int tag = inpt.readTagID();
@@ -183,11 +234,16 @@ public class Type {
 		}
 	}
 
-	public void write(AttributeOutputStream oupt) throws IOException {
+	/// Writes this Type to the given output.
+	/// @param oupt the output stream
+	public void write(final AttributeOutputStream oupt) throws IOException {
 		oupt.writeShort(tag);
 	}
 
-	public static Type read(AttributeInputStream inpt) throws IOException {
+	/// Reads a Type from the given input.
+	/// @param inpt the input stream
+	/// @return the Type read
+	public static Type read(final AttributeInputStream inpt) throws IOException {
 		int tag = inpt.readShort();
 //		IO.println("NEW Type(inpt): " + Sinstr.edInstr(tag));
 		Type type = TMAP.get(tag);

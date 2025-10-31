@@ -7,12 +7,12 @@ package bec.virtualMachine;
 
 import java.io.IOException;
 
+import bec.Global;
+import bec.Option;
 import bec.scode.Relation;
 import bec.scode.Sinstr;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
-import bec.util.Global;
-import bec.util.Option;
 import bec.util.Util;
 import bec.value.ProgramAddress;
 import bec.value.Value;

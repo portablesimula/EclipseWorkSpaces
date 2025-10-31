@@ -6,11 +6,12 @@
 package bec.segment;
 
 import java.io.IOException;
+
+import bec.Global;
 import bec.descriptor.Kind;
 import bec.scode.Relation;
 import bec.scode.Sinstr;
 import bec.util.AttributeOutputStream;
-import bec.util.Global;
 import bec.util.Util;
 
 /// Segment.

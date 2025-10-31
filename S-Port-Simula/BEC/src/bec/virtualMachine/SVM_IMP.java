@@ -5,7 +5,7 @@
 /// page: https://creativecommons.org/licenses/by/4.0/
 package bec.virtualMachine;
 
-import bec.util.Global;
+import bec.Global;
 import bec.value.BooleanValue;
 import bec.value.Value;
 

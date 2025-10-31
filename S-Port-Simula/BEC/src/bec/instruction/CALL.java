@@ -6,6 +6,7 @@
 package bec.instruction;
 
 import bec.compileTimeStack.ProfileItem;
+import bec.Global;
 import bec.compileTimeStack.AddressItem;
 import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.CTStackItem;
@@ -17,7 +18,6 @@ import bec.scode.Scode;
 import bec.scode.Sinstr;
 import bec.scode.Tag;
 import bec.scode.Type;
-import bec.util.Global;
 import bec.util.Util;
 import bec.virtualMachine.SVM_CALL;
 import bec.virtualMachine.SVM_PRECALL;

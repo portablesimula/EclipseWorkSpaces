@@ -1,8 +1,8 @@
 package bec.instruction;
 
+import bec.Global;
 import bec.compileTimeStack.CTStack;
 import bec.scode.Type;
-import bec.util.Global;
 import bec.virtualMachine.SVM_INCO;
 
 /// S-INSTRUCTION: INCO

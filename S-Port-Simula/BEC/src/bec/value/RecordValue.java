@@ -8,6 +8,8 @@ package bec.value;
 import java.io.IOException;
 import java.util.Vector;
 
+import bec.Global;
+import bec.Option;
 import bec.descriptor.Attribute;
 import bec.descriptor.ConstDescr;
 import bec.descriptor.Display;
@@ -19,8 +21,6 @@ import bec.scode.Type;
 import bec.segment.DataSegment;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
-import bec.util.Global;
-import bec.util.Option;
 import bec.util.Util;
 
 public class RecordValue extends Value {

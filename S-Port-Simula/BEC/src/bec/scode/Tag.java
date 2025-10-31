@@ -7,13 +7,13 @@ package bec.scode;
 
 import java.io.IOException;
 
+import bec.Global;
+import bec.Option;
 import bec.descriptor.Descriptor;
 import bec.descriptor.Display;
 import bec.statement.InsertStatement;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
-import bec.util.Global;
-import bec.util.Option;
 
 /// Tag.
 ///
@@ -52,28 +52,40 @@ public class Tag {
 	public final static int T_max=13; // Max value of predefined type
 	public final static int TAG_STRING  = 32;
 
+	/// Create a new Tag with the given Tag val
 	public Tag(int val) {
 		this.val = val;
 	}
 	
+	/// Scans the remaining S-Code (if any) belonging to this instruction.
+	/// Finally: Return a new Tag.
 	public static Tag ofScode() {
 		return new Tag(Scode.inTag());
 	}
 	
+	/// Returns the Tag ident
+	/// @return the Tag ident
 	public String ident() {
 		return Scode.TAGIDENT.get(val);
 	}
 	
+	/// Returns the Meaning of this Tag
+	/// @return the Meaning of this Tag
 	public Descriptor getMeaning() {
 		return Display.getMeaning(this.val);
 	}
 	
-	private static int xTag(int t) { // export range(0:MaxType) tx;
+	/// Returns the external tag
+	/// @return the external tag
+	/// @param t the internal tag index
+	private static int xTag(final int t) { // export range(0:MaxType) tx;
 		Integer xx = Global.xTAGTAB.get(t);
 		int tx = (xx == null)? 0 : xx;
 		return tx + T_max + 1;
 	}
 	
+	/// Debug utility: dumpITAGTABLE
+	/// @param title the title of the dump printout
 	public static void dumpITAGTABLE(String title) {
 		IO.println("============ "+title+" BEGIN Dump iTAGTABLE ================");
 		for(int i=0;i<Global.iTAGTAB.size();i++) {
@@ -84,6 +96,8 @@ public class Tag {
 		IO.println("============ "+title+" ENDOF Dump iTAGTABLE ================");
 	}
 	
+	/// Debug utility: dumpXTAGTABLE
+	/// @param title the title of the dump printout
 	public static void dumpXTAGTABLE(String title) {
 		IO.println("============ "+title+" BEGIN Dump xTAGTABLE ================");
 		for(int i=32;i<Global.xTAGTAB.size();i++) {
@@ -92,17 +106,20 @@ public class Tag {
 		IO.println("============ "+title+" ENDOF Dump xTAGTABLE ================");
 	}
 	
-	private static int chgInType(int tx) { // Used by Tag.read
+	/// Utility: chgInType - used by Tag.read
+	/// @param tx external Tag index
+	/// @return the corresponding internal Tag index
+	private static int chgInType(final int tx) {
 		int t = 0;
 		if(tx <= T_max) t = tx; else {
 			t = tx - T_max + InsertStatement.current.bias - 1;
 		}
 		if(Option.ATTR_INPUT_TRACE)
 			IO.println("chgInType xTag:" + tx + " ==> " + Scode.edTag(t));
-//		Util.IERR("SJEKK DETTE");
 		return t;
 	}
 
+	@Override
 	public String toString() {
 		return Scode.edTag(val);
 	}
@@ -112,12 +129,15 @@ public class Tag {
 	// *** Attribute File I/O
 	// ***********************************************************************************************
 
-	public void write(AttributeOutputStream oupt) throws IOException {
+	/// Writes a Tag to the given output.
+	/// @param oupt the output stream
+	public void write(final AttributeOutputStream oupt) throws IOException {
 		oupt.writeString(Scode.TAGIDENT.get(val));
 		oupt.writeShort(xTag(val));
 	}
 	
-
+	/// Reads a Tag from the given input.
+	/// @param inpt the input stream
 	public static Tag read(AttributeInputStream inpt) throws IOException {
 		String ident = inpt.readString();
 		int tag = inpt.readShort();

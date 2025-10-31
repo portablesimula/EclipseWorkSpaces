@@ -7,6 +7,8 @@ package bec.descriptor;
 
 import java.io.IOException;
 
+import bec.Global;
+import bec.Option;
 import bec.scode.Scode;
 import bec.scode.Sinstr;
 import bec.scode.Tag;
@@ -14,8 +16,6 @@ import bec.scode.Type;
 import bec.segment.DataSegment;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
-import bec.util.Global;
-import bec.util.Option;
 import bec.util.Util;
 import bec.value.IntegerValue;
 import bec.value.LongRealValue;

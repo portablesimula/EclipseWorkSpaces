@@ -8,6 +8,8 @@ package bec.descriptor;
 import java.io.IOException;
 import java.util.Vector;
 
+import bec.Global;
+import bec.Option;
 import bec.compileTimeStack.CTStack;
 import bec.instruction.Instruction;
 import bec.scode.Scode;
@@ -19,8 +21,6 @@ import bec.segment.ProgramSegment;
 import bec.segment.Segment;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
-import bec.util.Global;
-import bec.util.Option;
 import bec.util.Util;
 import bec.value.FixupAddress;
 import bec.value.ProgramAddress;

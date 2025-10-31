@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.Stack;
 
-import bec.util.Global;
+import bec.Global;
 import bec.util.Util;
 
 /// A Simple Scanner.

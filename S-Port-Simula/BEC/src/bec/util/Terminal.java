@@ -6,6 +6,7 @@
 package bec.util;
 
 import java.awt.Color;
+
 import java.awt.Font;
 import java.awt.TextArea;
 import java.awt.event.KeyAdapter;
@@ -19,6 +20,11 @@ import java.io.Writer;
 
 import javax.swing.JFrame;
 
+/// Terminal.
+/// 
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/util/Terminal.java"><b>Source File</b></a>.
+/// 
+/// @author Øystein Myhre Andersen
 @SuppressWarnings("serial")
 public class Terminal extends JFrame {
 
@@ -70,6 +76,8 @@ public class Terminal extends JFrame {
 		terminal.println("ENDOF TESTING Terminal");
 	}
 	
+	/// Create a new Terminal
+	/// @param title the title of the Terminal frame
 	public Terminal(String title) {
 		setTitle(title);
 		setSize(1000, 700);
@@ -93,16 +101,20 @@ public class Terminal extends JFrame {
 	    setVisible(true);
 	}
 
+	/// Writes a string to this Terminal.
+	/// @param s the String to write
 	public void print(final String s) {
 		write(s);
 	}
 	
+	/// Writes a string to this Terminal and terminate the line.
+	/// @param s the String to write
 	public void println(final String s) {
 		write(s + '\n');
 	}
 
 	/// Write a string
-	/// @param s a string to write
+	/// @param s the string to write
 	public void write(final String s) {
 		Terminal.textArea.append(s);
 	}
@@ -115,7 +127,8 @@ public class Terminal extends JFrame {
 		return (keyin);
 	}
 
-	
+	/// Reads a line 
+	/// @return the line String read
 	public String readLine() {
 		StringBuilder sb = new StringBuilder();
 		char c = read();

@@ -244,31 +244,9 @@ public class Util {
         if(Option.verbose) IO.println("SIM.Util.exec: command ="+cmdLine);
 		ProcessBuilder processBuilder = new ProcessBuilder(cmd);
 		processBuilder.inheritIO();
-//		processBuilder.redirectErrorStream();
 		try {
 			Process process = processBuilder.start();
-//			BufferedReader reader = process.inputReader(); // Process' output
-//			BufferedReader errOut = process.errorReader(); // Process' error output
-//			String line = null;
-//			while((line = reader.readLine()) != null) {
-//			    IO.println(line);
-//				if(Global.consolePanel != null) {
-//					Global.consolePanel.write(line + '\n');
-//				}
-//			}
-//			while((line = errOut.readLine()) != null) {
-//			    IO.println(line);
-//				if(Global.consolePanel != null) {
-//					Global.consolePanel.write(line + '\n');
-//				}
-//			}
-//			
-////			boolean terminated = process.waitFor(5, TimeUnit.MINUTES);
-////			if(! terminated) Util.IERR("SIM.Util.exec: Process Execution didn't terminate: " + cmdLine);
-////			int exitCode = process.exitValue();
-			
 			int exitCode = process.waitFor();
-			
 			if(Option.verbose) IO.println("SIM.Util.exec: exitCode = "+exitCode);
 			return exitCode;
 		} catch(Exception e) {

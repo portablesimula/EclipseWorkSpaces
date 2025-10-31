@@ -5,11 +5,11 @@
 /// page: https://creativecommons.org/licenses/by/4.0/
 package bec.instruction;
 
+import bec.Global;
 import bec.compileTimeStack.CTStack;
 import bec.descriptor.RecordDescr;
 import bec.scode.Tag;
 import bec.scode.Type;
-import bec.util.Global;
 import bec.util.Util;
 import bec.value.IntegerValue;
 import bec.virtualMachine.SVM_ADD;

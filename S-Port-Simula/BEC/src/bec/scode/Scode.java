@@ -5,11 +5,11 @@
 /// page: https://creativecommons.org/licenses/by/4.0/
 package bec.scode;
 
+import bec.Global;
+import bec.Option;
 import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.CTStackItem;
 import bec.util.Array;
-import bec.util.Global;
-import bec.util.Option;
 import bec.util.Util;
 
 import java.io.FileInputStream;

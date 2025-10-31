@@ -8,9 +8,9 @@ package bec.virtualMachine.sysrut;
 
 import java.util.Vector;
 
+import bec.Global;
+import bec.Option;
 import bec.scode.Type;
-import bec.util.Global;
-import bec.util.Option;
 import bec.util.Util;
 import bec.value.IntegerValue;
 import bec.value.ObjectAddress;

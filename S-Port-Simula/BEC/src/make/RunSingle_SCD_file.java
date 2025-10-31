@@ -8,7 +8,7 @@
 package make;
 
 import bec.BecCompiler;
-import bec.util.Option;
+import bec.Option;
 
 public final class RunSingle_SCD_file {
 	

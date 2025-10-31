@@ -5,9 +5,9 @@
 /// page: https://creativecommons.org/licenses/by/4.0/
 package bec.instruction;
 
+import bec.Global;
 import bec.compileTimeStack.AddressItem;
 import bec.compileTimeStack.CTStack;
-import bec.util.Global;
 import bec.virtualMachine.SVM_STORE;
 
 /// S-INSTRUCTION: RUPDATE
