@@ -6,7 +6,7 @@
 package bec.compileTimeStack;
 
 import bec.scode.Type;
-import bec.value.Value;
+import svm.value.Value;
 
 /// Constant Item.
 /// 

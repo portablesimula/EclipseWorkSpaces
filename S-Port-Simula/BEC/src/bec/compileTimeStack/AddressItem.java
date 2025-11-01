@@ -6,7 +6,7 @@
 package bec.compileTimeStack;
 
 import bec.scode.Type;
-import bec.value.ObjectAddress;
+import svm.value.ObjectAddress;
 
 /// Address Item.
 /// 

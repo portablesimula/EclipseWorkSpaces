@@ -9,7 +9,7 @@ import bec.Global;
 import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.CTStackItem;
 import bec.scode.Type;
-import bec.virtualMachine.SVM_EQV;
+import svm.instruction.SVM_EQV;
 
 /// S-INSTRUCTION: EQV
 ///

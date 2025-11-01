@@ -15,9 +15,9 @@ import bec.scode.Scode;
 import bec.scode.Sinstr;
 import bec.util.NamedStack;
 import bec.util.Util;
-import bec.value.ProgramAddress;
-import bec.virtualMachine.SVM_JUMP;
-import bec.virtualMachine.SVM_JUMPIF;
+import svm.instruction.SVM_JUMP;
+import svm.instruction.SVM_JUMPIF;
+import svm.value.ProgramAddress;
 
 /// S-INSTRUCTION: IF
 ///
@@ -137,7 +137,7 @@ public abstract class IfConstrction {
 			Global.PSEG.emit(new SVM_JUMP(null));
 			
 			// FIXUP:
-			SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(IF_LABEL.getOfst());
+			SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(IF_LABEL.ofst);
 			instr.setDestination(Global.PSEG.nextAddress());
 //	      	Global.PSEG.emit(new SVM_NOOP());
 
@@ -160,12 +160,12 @@ public abstract class IfConstrction {
 		FETCH.doFetch();
 		if(ELSE_LABEL != null) {
 			// FIXUP:
-			SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(ELSE_LABEL.getOfst());
+			SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(ELSE_LABEL.ofst);
 			instr.setDestination(Global.PSEG.nextAddress());
 //	      	Global.PSEG.emit(new SVM_NOOP());		
 		} else {
 			// FIXUP:
-			SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(IF_LABEL.getOfst());
+			SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(IF_LABEL.ofst);
 			instr.setDestination(Global.PSEG.nextAddress());
 //	      	Global.PSEG.emit(new SVM_NOOP());			
 		}

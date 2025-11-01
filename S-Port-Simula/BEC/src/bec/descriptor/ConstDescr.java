@@ -17,10 +17,9 @@ import bec.scode.Type;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
 import bec.util.Util;
-import bec.value.FixupOADDR;
-import bec.value.ObjectAddress;
-import bec.value.RepetitionValue;
-import bec.value.Value;
+import svm.value.ObjectAddress;
+import svm.value.RepetitionValue;
+import svm.value.Value;
 
 /// Constant descriptor.
 ///
@@ -125,21 +124,21 @@ public class ConstDescr extends Descriptor {
 
 		int repCount = (Scode.accept(Sinstr.S_REP)) ? Scode.inNumber() : 1;
 		
-		if(cnst.address instanceof FixupOADDR fix) {
-			fix.setAddress(Global.CSEG.nextAddress());
-		}
-		cnst.address = Global.CSEG.nextAddress();
+		if(cnst.address != null) {
+			cnst.address.fixupAddress(Global.CSEG.nextAddress());
+		} else cnst.address = Global.CSEG.nextAddress();
 		for(int i=0;i<repCount;i++) {
 			RepetitionValue value = RepetitionValue.ofScode();
 			cnst.values.add(value);
 			value.emit(Global.CSEG);
-		}		return cnst;
+		}
+		return cnst;
 	}
 	
 	/// Returns the address of this ConstDescr
 	/// @return the address of this ConstDescr
 	public ObjectAddress getAddress() {
-		if(address == null)	address = new FixupOADDR(Type.T_PADDR, this);
+		if(address == null)	address = ObjectAddress.ofFixup();
 		return address;
 	}
 	

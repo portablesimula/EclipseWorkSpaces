@@ -19,10 +19,10 @@ import bec.scode.Sinstr;
 import bec.scode.Tag;
 import bec.scode.Type;
 import bec.util.Util;
-import bec.virtualMachine.SVM_CALL;
-import bec.virtualMachine.SVM_PRECALL;
-import bec.virtualMachine.SVM_LOADC;
-import bec.virtualMachine.SVM_CALL_SYS;
+import svm.instruction.SVM_CALL;
+import svm.instruction.SVM_CALL_SYS;
+import svm.instruction.SVM_LOADC;
+import svm.instruction.SVM_PRECALL;
 
 /// S-INSTRUCTION: CALL
 ///

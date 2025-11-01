@@ -9,7 +9,7 @@ import bec.Global;
 import bec.compileTimeStack.AddressItem;
 import bec.compileTimeStack.CTStack;
 import bec.scode.Type;
-import bec.virtualMachine.SVM_LOAD;
+import svm.instruction.SVM_LOAD;
 
 /// S-INSTRUCTION: FETCH
 ///

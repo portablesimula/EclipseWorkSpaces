@@ -16,11 +16,11 @@ import bec.descriptor.RoutineDescr;
 import bec.descriptor.Variable;
 import bec.scode.Scode;
 import bec.scode.Sinstr;
-import bec.segment.DataSegment;
-import bec.segment.ProgramSegment;
-import bec.segment.Segment;
 import bec.util.Array;
 import bec.util.Util;
+import svm.segment.DataSegment;
+import svm.segment.ProgramSegment;
+import svm.segment.Segment;
 
 /// This is an implementation of S-Code Interface Module definition.
 /// 

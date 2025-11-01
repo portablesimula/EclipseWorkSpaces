@@ -10,13 +10,13 @@ import java.util.Vector;
 import bec.descriptor.Kind;
 import bec.scode.Scode;
 import bec.scode.Sinstr;
-import bec.segment.DataSegment;
-import bec.segment.ProgramSegment;
-import bec.segment.Segment;
 import bec.util.EndProgram;
 import bec.util.Util;
-import bec.value.ProgramAddress;
-import bec.virtualMachine.RTUtil;
+import svm.RTUtil;
+import svm.segment.DataSegment;
+import svm.segment.ProgramSegment;
+import svm.segment.Segment;
+import svm.value.ProgramAddress;
 
 /// This is an implementation of S-Code Main Program definition.
 /// 

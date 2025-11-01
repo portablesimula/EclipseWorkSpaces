@@ -10,8 +10,8 @@ import bec.S_Module;
 import bec.compileTimeStack.CTStack;
 import bec.scode.Scode;
 import bec.scode.Sinstr;
-import bec.segment.ProgramSegment;
 import bec.util.Util;
+import svm.segment.ProgramSegment;
 
 /// S-INSTRUCTION: BSEG
 ///

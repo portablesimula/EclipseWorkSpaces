@@ -20,14 +20,14 @@ import bec.scode.Scode;
 import bec.scode.Sinstr;
 import bec.scode.Tag;
 import bec.scode.Type;
-import bec.segment.Segment;
 import bec.statement.IfConstrction;
 import bec.statement.InsertStatement;
 import bec.statement.ProtectConstruction;
 import bec.statement.SkipifConstruction;
 import bec.util.AttributeOutputStream;
 import bec.util.Util;
-import bec.virtualMachine.SVM_LINE;
+import svm.instruction.SVM_LINE;
+import svm.segment.Segment;
 
 /// This is an implementation of S-Code Module.
 /// 

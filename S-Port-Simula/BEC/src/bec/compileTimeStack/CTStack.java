@@ -13,7 +13,7 @@ import bec.scode.Tag;
 import bec.scode.Type;
 import bec.util.NamedStack;
 import bec.util.Util;
-import bec.value.Value;
+import svm.value.Value;
 
 /// Compile time Stack.
 /// 

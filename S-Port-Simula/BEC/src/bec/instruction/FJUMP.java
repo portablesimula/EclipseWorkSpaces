@@ -9,7 +9,7 @@ import bec.Global;
 import bec.compileTimeStack.CTStack;
 import bec.scode.Scode;
 import bec.util.Util;
-import bec.virtualMachine.SVM_JUMP;
+import svm.instruction.SVM_JUMP;
 
 /// S-INSTRUCTION: fjump
 ///

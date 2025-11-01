@@ -9,7 +9,7 @@ import bec.Global;
 import bec.compileTimeStack.CTStack;
 import bec.scode.Relation;
 import bec.scode.Type;
-import bec.virtualMachine.SVM_COMPARE;
+import svm.instruction.SVM_COMPARE;
 
 /// S-INSTRUCTION: COMPARE
 ///

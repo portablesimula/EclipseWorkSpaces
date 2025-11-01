@@ -8,7 +8,7 @@ package bec.instruction;
 import bec.Global;
 import bec.compileTimeStack.CTStack;
 import bec.scode.Type;
-import bec.virtualMachine.SVM_INITO;
+import svm.instruction.SVM_INITO;
 
 /// S-INSTRUCTION: INITO
 ///

@@ -10,8 +10,8 @@ import bec.compileTimeStack.AddressItem;
 import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.CTStackItem;
 import bec.util.Util;
-import bec.value.ObjectAddress;
-import bec.virtualMachine.SVM_DUP;
+import svm.instruction.SVM_DUP;
+import svm.value.ObjectAddress;
 
 /// S-INSTRUCTION: DUP
 ///

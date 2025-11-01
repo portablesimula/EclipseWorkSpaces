@@ -10,7 +10,7 @@ import java.io.IOException;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
 import bec.util.Util;
-import bec.value.Value;
+import svm.value.Value;
 
 /// Relation.
 /// 

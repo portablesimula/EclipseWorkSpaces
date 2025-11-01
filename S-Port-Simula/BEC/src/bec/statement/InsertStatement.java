@@ -20,10 +20,10 @@ import bec.descriptor.RoutineDescr;
 import bec.descriptor.Variable;
 import bec.scode.Scode;
 import bec.scode.Type;
-import bec.segment.DataSegment;
-import bec.segment.ProgramSegment;
 import bec.util.AttributeInputStream;
 import bec.util.Util;
+import svm.segment.DataSegment;
+import svm.segment.ProgramSegment;
 
 /// S-INSTRUCTION: IF
 ///

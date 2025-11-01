@@ -13,7 +13,7 @@ import bec.descriptor.Variable;
 import bec.scode.Sinstr;
 import bec.scode.Tag;
 import bec.util.Util;
-import bec.value.ObjectAddress;
+import svm.value.ObjectAddress;
 
 /// S-INSTRUCTION: PUSH
 ///

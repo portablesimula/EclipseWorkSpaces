@@ -8,7 +8,7 @@ package bec.instruction;
 import bec.Global;
 import bec.compileTimeStack.CTStack;
 import bec.scode.Scode;
-import bec.virtualMachine.SVM_LINE;
+import svm.instruction.SVM_LINE;
 
 /// S-INSTRUCTION: LINE
 ///

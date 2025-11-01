@@ -9,7 +9,7 @@ import bec.Global;
 import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.ProfileItem;
 import bec.util.Util;
-import bec.virtualMachine.SVM_POPK;
+import svm.instruction.SVM_POPK;
 
 /// S-INSTRUCTION: POP
 ///

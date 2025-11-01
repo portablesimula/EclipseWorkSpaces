@@ -11,8 +11,8 @@ import bec.compileTimeStack.CTStackItem;
 import bec.scode.Relation;
 import bec.scode.Scode;
 import bec.util.Util;
-import bec.value.ProgramAddress;
-import bec.virtualMachine.SVM_JUMPIF;
+import svm.instruction.SVM_JUMPIF;
+import svm.value.ProgramAddress;
 
 /// S-INSTRUCTION: BJUMPIF
 ///

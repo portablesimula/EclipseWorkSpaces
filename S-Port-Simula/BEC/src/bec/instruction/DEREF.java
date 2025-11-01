@@ -9,7 +9,7 @@ import bec.Global;
 import bec.compileTimeStack.AddressItem;
 import bec.compileTimeStack.CTStack;
 import bec.scode.Type;
-import bec.virtualMachine.SVM_LOADA;
+import svm.instruction.SVM_LOADA;
 
 /// S-INSTRUCTION: DEREF
 ///

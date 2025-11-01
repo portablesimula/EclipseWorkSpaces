@@ -17,7 +17,8 @@ public class Make_BEC_Jarfile {
 			releaseHome.mkdirs();
 			String compilerManifest=SportBEC_ROOT+"/src/make/CompilerManifest.MF";
 			
-			exec("jar", "cmf", compilerManifest, RELEASE_HOME+"/CommonBEC.jar", "-C", COMPILER_BIN, "./bec");
+//			exec("jar", "cmf", compilerManifest, RELEASE_HOME+"/CommonBEC.jar", "-C", COMPILER_BIN, "./bec");
+			exec("jar", "cmf", compilerManifest, RELEASE_HOME+"/CommonBEC.jar", "-C", COMPILER_BIN, "./bec", "-C", COMPILER_BIN, "./svm");
 			exec("jar", "-tvf", RELEASE_HOME+"/CommonBEC.jar");
 			
 			IO.println("Make_BEC_Jarfile - DONE: " + RELEASE_HOME + "/CommonBEC.jar");

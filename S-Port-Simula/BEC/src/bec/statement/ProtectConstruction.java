@@ -14,8 +14,8 @@ import bec.scode.Scode;
 import bec.scode.Sinstr;
 import bec.scode.Type;
 import bec.util.Util;
-import bec.virtualMachine.SVM_RESTORE;
-import bec.virtualMachine.SVM_SAVE;
+import svm.instruction.SVM_RESTORE;
+import svm.instruction.SVM_SAVE;
 
 /// S-INSTRUCTION: IF
 ///

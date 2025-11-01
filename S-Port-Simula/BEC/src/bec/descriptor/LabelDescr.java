@@ -15,9 +15,8 @@ import bec.scode.Type;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
 import bec.util.Util;
-import bec.value.FixupAddress;
-import bec.value.ProgramAddress;
-import bec.value.Value;
+import svm.value.ProgramAddress;
+import svm.value.Value;
 
 /// Label descriptor.
 ///
@@ -44,8 +43,9 @@ public class LabelDescr extends Descriptor {
 
 	/// Create a new LabelDescr with the given 'tag'
 	/// @param tag used to lookup descriptors
-	private LabelDescr(Tag tag) {
+	private LabelDescr(Tag tag, ProgramAddress adr) {
 		super(Kind.K_IntLabel, tag);
+		this.adr = adr;
 	}
 	
 	/// Scans the remaining S-Code (if any) belonging to this descriptor.
@@ -55,22 +55,23 @@ public class LabelDescr extends Descriptor {
 		Tag tag = Tag.ofScode();
 		LabelDescr lab = (LabelDescr) Display.get(tag.val);
 		if(lab != null) Util.IERR("");
-		lab = new LabelDescr(tag);
-		lab.adr = null;
+		lab = new LabelDescr(tag, null);
 		return lab;
 	}
 	
 	/// Scans the remaining S-Code (if any) belonging to this descriptor.
-	/// Then construct a new LabelDescr instance.
-	/// @return an LabelDescr instance.
+	/// Then construct or update the LabelDescr.
+	/// @return the LabelDescr instance.
 	public static LabelDescr ofLabelDef(final Tag tag) {
 		LabelDescr lab = (LabelDescr) Display.get(tag.val);
+		ProgramAddress paddr = Global.PSEG.nextAddress();
 		if(lab == null) {
-			lab = new LabelDescr(tag);
-		} else if(lab.adr instanceof FixupAddress fix) {
-			fix.setAddress(Global.PSEG.nextAddress());
-		}
-		lab.adr = Global.PSEG.nextAddress();
+			lab = new LabelDescr(tag, paddr);
+		} else {
+			if(lab.adr != null) {
+				lab.adr.fixupAddress(paddr.segID, paddr.ofst);
+			} else lab.adr = paddr;
+	}
 //     	Global.PSEG.emit(new SVM_NOOP());
 		CTStack.checkStackEmpty();
 		return lab;
@@ -79,7 +80,7 @@ public class LabelDescr extends Descriptor {
 	/// Returns the address of this LabelDescr
 	/// @return the address of this LabelDescr
 	public ProgramAddress getAddress() {
-		if(adr == null)	adr = new FixupAddress(Type.T_PADDR, this);
+		if(adr == null)	adr = ProgramAddress.ofFixup(Type.T_PADDR);
 		return adr;
 	}
 	
@@ -109,7 +110,7 @@ public class LabelDescr extends Descriptor {
 	/// @param inpt the input stream
 	public static LabelDescr read(final AttributeInputStream inpt) throws IOException {
 		Tag tag = Tag.read(inpt);
-		LabelDescr lab = new LabelDescr(tag);
+		LabelDescr lab = new LabelDescr(tag, null);
 		boolean present = inpt.readBoolean();
 		if(present) lab.adr = (ProgramAddress) Value.read(inpt);
 		if(Option.ATTR_INPUT_TRACE) IO.println("LabelDescr.Read: " + lab);

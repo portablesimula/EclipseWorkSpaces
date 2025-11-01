@@ -8,7 +8,7 @@ package bec.instruction;
 import bec.Global;
 import bec.compileTimeStack.AddressItem;
 import bec.compileTimeStack.CTStack;
-import bec.virtualMachine.SVM_STORE;
+import svm.instruction.SVM_STORE;
 
 /// S-INSTRUCTION: RUPDATE
 ///

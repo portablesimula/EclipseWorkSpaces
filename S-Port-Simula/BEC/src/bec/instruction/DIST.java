@@ -8,7 +8,7 @@ package bec.instruction;
 import bec.Global;
 import bec.compileTimeStack.CTStack;
 import bec.scode.Type;
-import bec.virtualMachine.SVM_DIST;
+import svm.instruction.SVM_DIST;
 
 /// S-INSTRUCTION: DIST
 ///

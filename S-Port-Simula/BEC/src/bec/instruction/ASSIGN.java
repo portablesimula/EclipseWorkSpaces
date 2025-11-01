@@ -9,7 +9,7 @@ import bec.Global;
 import bec.compileTimeStack.AddressItem;
 import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.CTStackItem;
-import bec.virtualMachine.SVM_ASSIGN;
+import svm.instruction.SVM_ASSIGN;
 
 /// S-INSTRUCTION: ASSIGN
 ///

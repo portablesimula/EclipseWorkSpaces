@@ -13,15 +13,15 @@ import bec.scode.Scode;
 import bec.scode.Sinstr;
 import bec.scode.Tag;
 import bec.scode.Type;
-import bec.segment.DataSegment;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
 import bec.util.Util;
-import bec.value.IntegerValue;
-import bec.value.LongRealValue;
-import bec.value.ObjectAddress;
-import bec.value.RealValue;
-import bec.value.Value;
+import svm.segment.DataSegment;
+import svm.value.IntegerValue;
+import svm.value.LongRealValue;
+import svm.value.ObjectAddress;
+import svm.value.RealValue;
+import svm.value.Value;
 
 /// Global or local Variable.
 ///

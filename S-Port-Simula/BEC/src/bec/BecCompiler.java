@@ -54,7 +54,7 @@ public final class BecCompiler {
 		try {
 			new BecCompiler(scodeSource);
 		} catch(Throwable e) {
-			Util.println("BecCompiler.main: BEC GOT Exception: " + e.getClass().getSimpleName());
+			Util.println("BecCompiler.main: BEC GOT Exception: " + e.getClass().getSimpleName() + "  " + e.getMessage());
 			Thread.dumpStack();
 			printStackTrace();
 			if(Global.console != null) {

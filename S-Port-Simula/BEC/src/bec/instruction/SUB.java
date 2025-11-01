@@ -8,7 +8,7 @@ package bec.instruction;
 import bec.Global;
 import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.CTStackItem;
-import bec.virtualMachine.SVM_SUB;
+import svm.instruction.SVM_SUB;
 
 /// S-INSTRUCTION: SUB
 ///

@@ -10,12 +10,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
-import bec.segment.DataSegment;
-import bec.segment.ProgramSegment;
-import bec.segment.Segment;
 import bec.util.Array;
 import bec.util.Terminal;
-import bec.value.ProgramAddress;
+import svm.segment.DataSegment;
+import svm.segment.ProgramSegment;
+import svm.segment.Segment;
+import svm.value.ProgramAddress;
 
 /// Global variables.
 /// 

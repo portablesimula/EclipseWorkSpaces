@@ -12,9 +12,9 @@ import bec.compileTimeStack.TempItem;
 import bec.scode.Sinstr;
 import bec.scode.Type;
 import bec.util.Util;
-import bec.value.IntegerValue;
-import bec.virtualMachine.SVM_LOADC;
-import bec.virtualMachine.SVM_MULT;
+import svm.instruction.SVM_LOADC;
+import svm.instruction.SVM_MULT;
+import svm.value.IntegerValue;
 
 /// S-INSTRUCTION: INDEX
 ///

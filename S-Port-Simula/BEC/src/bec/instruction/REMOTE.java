@@ -11,7 +11,7 @@ import bec.descriptor.Attribute;
 import bec.scode.Sinstr;
 import bec.scode.Tag;
 import bec.scode.Type;
-import bec.value.ObjectAddress;
+import svm.value.ObjectAddress;
 
 /// S-INSTRUCTION: REMOTE
 ///

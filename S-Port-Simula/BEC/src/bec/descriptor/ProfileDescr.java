@@ -13,13 +13,13 @@ import bec.Option;
 import bec.scode.Scode;
 import bec.scode.Sinstr;
 import bec.scode.Tag;
-import bec.segment.DataSegment;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
 import bec.util.Util;
-import bec.value.ObjectAddress;
-import bec.value.Value;
-import bec.virtualMachine.SVM_CALL_SYS;
+import svm.instruction.SVM_CALL_SYS;
+import svm.segment.DataSegment;
+import svm.value.ObjectAddress;
+import svm.value.Value;
 
 /// Profile descriptor.
 ///

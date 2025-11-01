@@ -10,7 +10,7 @@ import bec.compileTimeStack.CTStack;
 import bec.scode.Scode;
 import bec.scode.Sinstr;
 import bec.scode.Type;
-import bec.virtualMachine.SVM_POPK;
+import svm.instruction.SVM_POPK;
 
 /// S-INSTRUCTION: DINITAREA
 ///

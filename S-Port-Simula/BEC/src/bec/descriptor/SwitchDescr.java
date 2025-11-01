@@ -9,8 +9,8 @@ import bec.Global;
 import bec.compileTimeStack.CTStack;
 import bec.scode.Scode;
 import bec.scode.Tag;
-import bec.value.ProgramAddress;
-import bec.virtualMachine.SVM_SWITCH;
+import svm.instruction.SVM_SWITCH;
+import svm.value.ProgramAddress;
 
 /// Switch.
 ///

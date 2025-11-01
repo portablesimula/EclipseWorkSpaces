@@ -15,9 +15,9 @@ import bec.scode.Scode;
 import bec.scode.Sinstr;
 import bec.util.NamedStack;
 import bec.util.Util;
-import bec.value.ProgramAddress;
-import bec.virtualMachine.SVM_JUMP;
-import bec.virtualMachine.SVM_JUMPIF;
+import svm.instruction.SVM_JUMP;
+import svm.instruction.SVM_JUMPIF;
+import svm.value.ProgramAddress;
 
 /// S-INSTRUCTION: IF
 ///
@@ -76,7 +76,7 @@ public abstract class SkipifConstruction {
 		CTStack.reestablish(SKIP_Stack);
 		
 		// FIXUP:
-		SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(END_LABEL.getOfst());
+		SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(END_LABEL.ofst);
 		instr.setDestination(Global.PSEG.nextAddress());
 //     	Global.PSEG.emit(new SVM_NOOP());			
 		Global.ifDepth--;

@@ -8,7 +8,7 @@ package bec.instruction;
 import bec.compileTimeStack.AddressItem;
 import bec.compileTimeStack.CTStack;
 import bec.scode.Type;
-import bec.value.ObjectAddress;
+import svm.value.ObjectAddress;
 
 /// S-INSTRUCTION: ADD
 ///

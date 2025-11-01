@@ -9,8 +9,8 @@ import bec.Global;
 import bec.compileTimeStack.CTStack;
 import bec.scode.Scode;
 import bec.util.Util;
-import bec.value.ProgramAddress;
-import bec.virtualMachine.SVM_JUMP;
+import svm.instruction.SVM_JUMP;
+import svm.value.ProgramAddress;
 
 /// S-INSTRUCTION: FDEST
 ///
@@ -39,7 +39,7 @@ public abstract class FDEST extends Instruction {
 		ProgramAddress addr = Global.DESTAB[destination];
 		if(addr == null) Util.IERR("Destination is undefined");
 		Global.DESTAB[destination] = null;
-		SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(addr.getOfst());
+		SVM_JUMP instr = (SVM_JUMP) Global.PSEG.instructions.get(addr.ofst);
 		instr.setDestination(Global.PSEG.nextAddress());
 //     	Global.PSEG.emit(new SVM_NOOP());
 	}

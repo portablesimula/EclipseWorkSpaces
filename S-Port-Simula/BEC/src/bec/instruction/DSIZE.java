@@ -11,10 +11,10 @@ import bec.descriptor.RecordDescr;
 import bec.scode.Tag;
 import bec.scode.Type;
 import bec.util.Util;
-import bec.value.IntegerValue;
-import bec.virtualMachine.SVM_ADD;
-import bec.virtualMachine.SVM_MULT;
-import bec.virtualMachine.SVM_LOADC;
+import svm.instruction.SVM_ADD;
+import svm.instruction.SVM_LOADC;
+import svm.instruction.SVM_MULT;
+import svm.value.IntegerValue;
 
 /// S-INSTRUCTION: DSIZE
 ///

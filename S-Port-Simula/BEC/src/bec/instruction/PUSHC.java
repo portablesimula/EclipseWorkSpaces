@@ -12,19 +12,19 @@ import bec.scode.Scode;
 import bec.scode.Sinstr;
 import bec.scode.Type;
 import bec.util.Util;
-import bec.value.BooleanValue;
-import bec.value.DotAddress;
-import bec.value.GeneralAddress;
-import bec.value.IntegerValue;
-import bec.value.LongRealValue;
-import bec.value.ObjectAddress;
-import bec.value.ProgramAddress;
-import bec.value.RealValue;
-import bec.value.RecordValue;
-import bec.value.StringValue;
-import bec.value.TextValue;
-import bec.value.Value;
-import bec.virtualMachine.SVM_LOADC;
+import svm.instruction.SVM_LOADC;
+import svm.value.BooleanValue;
+import svm.value.DotAddress;
+import svm.value.GeneralAddress;
+import svm.value.IntegerValue;
+import svm.value.LongRealValue;
+import svm.value.ObjectAddress;
+import svm.value.ProgramAddress;
+import svm.value.RealValue;
+import svm.value.RecordValue;
+import svm.value.StringValue;
+import svm.value.TextValue;
+import svm.value.Value;
 
 /// S-INSTRUCTION: PUSHC
 ///

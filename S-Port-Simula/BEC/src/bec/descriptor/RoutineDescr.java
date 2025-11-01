@@ -16,17 +16,16 @@ import bec.scode.Scode;
 import bec.scode.Sinstr;
 import bec.scode.Tag;
 import bec.scode.Type;
-import bec.segment.DataSegment;
-import bec.segment.ProgramSegment;
-import bec.segment.Segment;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
 import bec.util.Util;
-import bec.value.FixupAddress;
-import bec.value.ProgramAddress;
-import bec.value.Value;
-import bec.virtualMachine.SVM_ENTER;
-import bec.virtualMachine.SVM_RETURN;
+import svm.instruction.SVM_ENTER;
+import svm.instruction.SVM_RETURN;
+import svm.segment.DataSegment;
+import svm.segment.ProgramSegment;
+import svm.segment.Segment;
+import svm.value.ProgramAddress;
+import svm.value.Value;
 
 /// Routine descriptor.
 ///
@@ -79,7 +78,7 @@ public class RoutineDescr extends Descriptor {
 	/// Returns the address of this RoutineDescr
 	/// @return the address of this RoutineDescr
 	public ProgramAddress getAddress() {
-		if(adr == null)	adr = new FixupAddress(Type.T_RADDR, this);
+		if(adr == null)	adr = ProgramAddress.ofFixup(Type.T_RADDR);
 		return adr;
 	}
 	
@@ -110,11 +109,9 @@ public class RoutineDescr extends Descriptor {
 		rut.PSEG = new ProgramSegment("PSEG_" + id);
 		ProgramSegment prevPSEG = Global.PSEG; Global.PSEG = rut.PSEG;
 		
-		ProgramAddress rutAddr = new ProgramAddress(Type.T_RADDR, rut.PSEG.ident, 0);
-		if(rut.adr instanceof FixupAddress fix) {
-			fix.setAddress(rutAddr);
-		}
-		rut.adr = rutAddr;
+		if(rut.adr != null) {
+			rut.adr.fixupAddress(rut.PSEG.ident, 0);
+		} else rut.adr = new ProgramAddress(Type.T_RADDR, rut.PSEG.ident, 0);
 		
 		ProfileDescr prf = (ProfileDescr) Display.get(prftag.val);
 		if(prf == null) Util.IERR("Missing Profile " + Scode.edTag(prftag.val));
@@ -122,7 +119,7 @@ public class RoutineDescr extends Descriptor {
 		Scode.inputInstr();
 		int rela = prf.frameSize;
 		if(Option.TRACE_ALLOC_FRAME) {
-			IO.println("\nRoutineDescr.ofRoutineDef: ALLOC LOCALS for "+rutAddr+" First rela="+rela);
+			IO.println("\nRoutineDescr.ofRoutineDef: ALLOC LOCALS for "+rut.adr+" First rela="+rela);
 			prf.print("RoutineDescr.ofRoutineDef: ");			
 		}
 		
