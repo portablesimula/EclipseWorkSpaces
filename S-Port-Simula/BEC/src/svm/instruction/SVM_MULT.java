@@ -27,7 +27,7 @@ import svm.value.Value;
 /// 'tos' and 'sos' must be of the same arithmetic type, i.e. int, float or double.
 ///
 ///
-/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/virtualMachine/SVM_MULT.java"><b>Source File</b></a>.
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/instruction/SVM_MULT.java"><b>Source File</b></a>.
 /// 
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen

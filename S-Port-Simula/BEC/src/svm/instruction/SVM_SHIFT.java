@@ -34,7 +34,7 @@ import svm.value.Value;
 /// RSHIFTL: Unsigned Right Shift  >>> It is the same as the signed right shift, but the vacant leftmost position is filled with 0 instead of the sign bit.
 ///
 ///
-/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/virtualMachine/SVM_SHIFT.java"><b>Source File</b></a>.
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/instruction/SVM_SHIFT.java"><b>Source File</b></a>.
 /// 
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen

@@ -14,26 +14,27 @@ import bec.util.AttributeOutputStream;
 import svm.RTStack;
 import svm.value.Value;
 
-/// SVM-INSTRUCTION: AND
-/// 
+/// SVM-INSTRUCTION: AND.
+/// <pre>
 /// 	Runtime Stack
 /// 	   ..., sos, tos →
 /// 	   ..., result
-///
+/// </pre>
 /// The 'tos' and 'sos' are popped off the Runtime stack.
-/// The 'result' is calculated as result = sos and tos.
-/// Then the 'result' is pushed onto the Runtime Stack.
+/// <br>The 'result' is calculated as result = sos and tos.
+/// <br>Then the 'result' is pushed onto the Runtime Stack.
 /// 
 /// 'tos' and 'sos' must be of the same type, boolean or int.
 /// 
 /// The 'and' operation is defined by the following matrix:
-/// 
+/// <pre>
 ///       AND
-/// 	a  \  b  true   false
+///     a  \  b  true   false
 ///     true     true   false
 ///     false    false  false
+/// </pre>
 ///
-/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/virtualMachine/SVM_AND.java"><b>Source File</b></a>.
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/instruction/SVM_AND.java"><b>Source File</b></a>.
 /// 
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen

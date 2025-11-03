@@ -14,19 +14,19 @@ import bec.util.AttributeOutputStream;
 import svm.RTStack;
 import svm.value.Value;
 
-/// SVM-INSTRUCTION: ADD
-/// 
+/// SVM-INSTRUCTION: ADD.
+/// <pre>
 /// 	Runtime Stack
 /// 	   ..., sos, tos →
 /// 	   ..., result
-///
+/// </pre>
 /// The 'tos' and 'sos' are popped off the Runtime stack.
-/// The 'result' is calculated as result = sos + tos.
-/// Then the 'result' is pushed onto the Runtime Stack.
+/// <br>The 'result' is calculated as result = sos + tos.
+/// <br>Then the 'result' is pushed onto the Runtime Stack.
 /// 
 /// 'tos' and 'sos' must be of the same arithmetic type, i.e. int, float or double.
 ///
-/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/virtualMachine/SVM_ADD.java"><b>Source File</b></a>.
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/instruction/SVM_ADD.java"><b>Source File</b></a>.
 /// 
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen

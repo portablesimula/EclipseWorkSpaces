@@ -17,35 +17,37 @@ import svm.RTStack;
 import svm.value.ObjectAddress;
 import svm.value.Value;
 
-/// SVM-INSTRUCTION: ASSIGN objadr size
-/// 
+/// SVM-INSTRUCTION: ASSIGN and UPDATE.
+///
+/// ASSIGN objadr size
+/// <pre>
 ///	  Runtime Stack
 ///		..., oaddr(?), offset(?), index(?), value1, value2, ... , value'size →
 ///		...
-///
-/// SVM-INSTRUCTION: UPDATE objadr size
-/// 
+/// </pre>
+/// UPDATE objadr size
+/// <pre>
 ///   Runtime Stack
 ///		..., oaddr(?), offset(?), index(?), value1, value2, ... , value'size →
 ///		..., value1, value2, ... , value'size
-///
+/// </pre>
 ///
 /// First, the values are popped off the Runtime stack and remembered.
-/// Then, if the 'objadr.indexed' flag is set, the 'index' is popped off and added to 'objadr'.
-/// Then Force 'objadr' unstacked. Ie. pop off any stacked part and form the resulting address 'resadr'.
+/// <br>Then, if the 'objadr.indexed' flag is set, the 'index' is popped off and added to 'objadr'.
+/// <br>Then Force 'objadr' unstacked. Ie. pop off any stacked part and form the resulting address 'resadr'.
 /// 
 /// The unstacking of the 'objadr' depend on its address kind:
-///
+/// <pre>
 /// - REMOTE_ADDR: object address 'oaddr' is popped of the Runtime stack.
 ///                resadr := oaddr + objadr.offset
 /// - REFER_ADDR:  'offset' and object address 'oaddr' is popped of the Runtime stack.
 ///                resadr := oaddr + objadr.offset + offset
 /// - Otherwise:   resadr := objadr
-/// 
+/// </pre>
 /// Finally, the remembered values are successively stored in address resadr, resadr+1, ... and upwards
-/// and, if UPDATE operation, the values are pushed back onto the Runtime stack.
+/// <br>and, if UPDATE operation, the values are pushed back onto the Runtime stack.
 ///
-/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/virtualMachine/SVM_ASSIGN.java"><b>Source File</b></a>.
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/instruction/SVM_ASSIGN.java"><b>Source File</b></a>.
 /// 
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
