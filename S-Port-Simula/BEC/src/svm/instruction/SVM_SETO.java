@@ -1,8 +1,8 @@
-///
-/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/instruction/SVM_AND.java"><b>Source File</b></a>.
+/// (CC) This work is licensed under a Creative Commons
+/// Attribution 4.0 International License.
 /// 
-/// @author S-Port: Definition of S-code
-/// @author Øystein Myhre Andersen
+/// You find a copy of the License on the following
+/// page: https://creativecommons.org/licenses/by/4.0/
 package svm.instruction;
 
 import java.io.IOException;

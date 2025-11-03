@@ -21,8 +21,8 @@ import svm.value.ObjectAddress;
 /// 	   ..., result
 ///
 /// The size 'tos' and the oaddr 'sos' are popped off the Runtime stack.
-/// The 'result' is calculated as result = new ObjectAddress(sos.segID, sos.offset + tos)
-/// Then the 'result' is pushed onto the Runtime Stack.
+/// <br>The 'result' is calculated as result = new ObjectAddress(sos.segID, sos.offset + tos)
+/// <br>Then the 'result' is pushed onto the Runtime Stack.
 ///
 ///
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/instruction/SVM_INCO.java"><b>Source File</b></a>.

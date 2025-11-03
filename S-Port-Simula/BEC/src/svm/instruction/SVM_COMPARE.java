@@ -18,18 +18,18 @@ import svm.value.Value;
 
 /// SVM-INSTRUCTION: COMPARE relation
 /// 
-/// 		relation ::= ?lt | ?le | ?eq | ?ge | ?gt | ?ne
+///	relation ::= ?lt | ?le | ?eq | ?ge | ?gt | ?ne
 /// 
 /// 	Runtime Stack
 /// 	   ..., sos, tos →
 /// 	   ..., result
 ///
 /// The 'tos' and 'sos' are popped off the Runtime stack.
-/// The 'result' is calculated as result = sos relation tos.
-/// Then the boolean 'result' is pushed onto the Runtime Stack.
+/// <br>The 'result' is calculated as result = sos relation tos.
+/// <br>Then the boolean 'result' is pushed onto the Runtime Stack.
 /// 
 /// 'tos' and 'sos' must be of the same arithmetic type, i.e. int, float or double,
-/// or boolean, in which case: relation ::= ?eq | ?ne
+/// <br>or boolean, in which case: relation ::= ?eq | ?ne
 ///
 ///
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/instruction/SVM_COMPARE.java"><b>Source File</b></a>.

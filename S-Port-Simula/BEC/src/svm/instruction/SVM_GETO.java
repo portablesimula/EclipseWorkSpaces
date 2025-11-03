@@ -21,11 +21,11 @@ import svm.value.ObjectAddress;
 /// 	   ..., next
 ///
 /// Push 'next' pointer of an earlier registered save-object.
-/// In case the 'next' being onone, no more pointers and the scan 
-/// of the save-object should be terminated.
+/// <br>In case the 'next' being onone, no more pointers and the scan 
+/// <br>of the save-object should be terminated.
 ///
 /// If more pointers the SAVE-INDEX is updated.
-/// In case the "next" pointer is onone, the pointer is skipped.
+/// <br>In case the "next" pointer is onone, the pointer is skipped.
 ///
 /// See: SVM_INITO and SVM_SETO.
 ///

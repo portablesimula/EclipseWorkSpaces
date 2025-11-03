@@ -23,8 +23,8 @@ import svm.value.ObjectAddress;
 /// 	   ..., result
 ///
 /// The 'tos' and 'sos' are popped off the Runtime stack.
-/// The 'result' is calculated as result = sos - tos.
-/// Then the 'result' is pushed onto the Runtime Stack.
+/// <br>The 'result' is calculated as result = sos - tos.
+/// <br>Then the 'result' is pushed onto the Runtime Stack.
 /// 
 /// 'tos' and 'sos' must be of the type oaddr.
 ///

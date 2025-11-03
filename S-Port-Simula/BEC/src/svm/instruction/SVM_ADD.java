@@ -14,12 +14,12 @@ import bec.util.AttributeOutputStream;
 import svm.RTStack;
 import svm.value.Value;
 
-/// SVM-INSTRUCTION: ADD.
-/// <pre>
+/// SVM-INSTRUCTION: ADD
+///
 /// 	Runtime Stack
 /// 	   ..., sos, tos →
 /// 	   ..., result
-/// </pre>
+///
 /// The 'tos' and 'sos' are popped off the Runtime stack.
 /// <br>The 'result' is calculated as result = sos + tos.
 /// <br>Then the 'result' is pushed onto the Runtime Stack.

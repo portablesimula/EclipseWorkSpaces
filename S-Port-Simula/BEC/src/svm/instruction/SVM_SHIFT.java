@@ -28,11 +28,12 @@ import svm.value.Value;
 /// 'tos' and 'sos' must be of type int.
 /// 
 /// The operation depends on the 'opr' parameter:
+/// <pre>
 ///	LSHIFTA: Signed Left Shift     << The left shift operator moves all bits by a given number of bits to the left.
 /// LSHIFTL: Unsigned Left Shift   << The left shift operator moves all bits by a given number of bits to the left.
 /// RSHIFTA: Signed Right Shift    >> The right shift operator moves all bits by a given number of bits to the right.
 /// RSHIFTL: Unsigned Right Shift  >>> It is the same as the signed right shift, but the vacant leftmost position is filled with 0 instead of the sign bit.
-///
+/// </pre>
 ///
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/instruction/SVM_SHIFT.java"><b>Source File</b></a>.
 /// 

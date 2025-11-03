@@ -17,20 +17,20 @@ import svm.RTStack;
 import svm.value.ObjectAddress;
 import svm.value.Value;
 
-/// SVM-INSTRUCTION: ASSIGN and UPDATE.
+/// SVM-INSTRUCTION: ASSIGN and UPDATE
 ///
 /// ASSIGN objadr size
-/// <pre>
+///
 ///	  Runtime Stack
 ///		..., oaddr(?), offset(?), index(?), value1, value2, ... , value'size →
 ///		...
-/// </pre>
+///
 /// UPDATE objadr size
-/// <pre>
+///
 ///   Runtime Stack
 ///		..., oaddr(?), offset(?), index(?), value1, value2, ... , value'size →
 ///		..., value1, value2, ... , value'size
-/// </pre>
+///
 ///
 /// First, the values are popped off the Runtime stack and remembered.
 /// <br>Then, if the 'objadr.indexed' flag is set, the 'index' is popped off and added to 'objadr'.

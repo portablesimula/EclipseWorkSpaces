@@ -17,22 +17,22 @@ import svm.value.Value;
 
 /// SVM-INSTRUCTION: LOAD objadr size
 /// 
-///	  Runtime Stack
-///		..., oaddr(?), offset(?), index(?) →
-///		..., value1, value2, ... , value'size
+///		Runtime Stack
+///			..., oaddr(?), offset(?), index(?) →
+///			..., value1, value2, ... , value'size
 ///
 ///
 /// First, if the 'objadr.indexed' flag is set, the 'index' is popped off and added to 'objadr'.
-/// Then Force 'objadr' unstacked. Ie. pop off any stacked part and form the resulting address 'resadr'.
+/// <br>Then Force 'objadr' unstacked. Ie. pop off any stacked part and form the resulting address 'resadr'.
 /// 
 /// The unstacking of the 'objadr' depend on its address kind:
-///
+/// <pre>
 /// - REMOTE_ADDR: object address 'oaddr' is popped of the Runtime stack.
 ///                resadr := oaddr + objadr.offset
 /// - REFER_ADDR:  'offset' and object address 'oaddr' is popped of the Runtime stack.
 ///                resadr := oaddr + objadr.offset + offset
 /// - Otherwise:   resadr := objadr
-/// 
+/// </pre>
 /// Finally, the values in address resadr, resadr+1, ... and upwards are loaded and pushed onto the Runtime stack.
 ///
 ///

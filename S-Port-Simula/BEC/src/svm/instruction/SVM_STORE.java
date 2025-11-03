@@ -17,25 +17,25 @@ import svm.value.Value;
 
 /// SVM-INSTRUCTION: STORE objadr size
 /// 
-///	  Runtime Stack
-///		..., value1, value2, ... , value'size, oaddr(?), offset(?), index(?) →
-///		..., value1, value2, ... , value'size
+///		Runtime Stack
+///			..., value1, value2, ... , value'size, oaddr(?), offset(?), index(?) →
+///			..., value1, value2, ... , value'size
 ///
 ///
 /// First, the values are popped off the Runtime stack and remembered.
-/// If the 'objadr.indexed' flag is set, the 'index' is popped off and added to 'objadr'.
-/// Then Force 'objadr' unstacked. Ie. pop off any stacked part and form the resulting address 'resadr'.
+/// <br>If the 'objadr.indexed' flag is set, the 'index' is popped off and added to 'objadr'.
+/// <br>Then Force 'objadr' unstacked. Ie. pop off any stacked part and form the resulting address 'resadr'.
 /// 
 /// The unstacking of the 'objadr' depend on its address kind:
-///
+/// <pre>
 /// - REMOTE_ADDR: object address 'oaddr' is popped of the Runtime stack.
 ///                resadr := oaddr + objadr.offset
 /// - REFER_ADDR:  'offset' and object address 'oaddr' is popped of the Runtime stack.
 ///                resadr := oaddr + objadr.offset + offset
 /// - Otherwise:   resadr := objadr
-/// 
+/// </pre>
 /// Finally, the values are successively stored in address resadr, resadr+1, ... and upwards
-/// without removing them from the Runtime stack.
+/// <br>without removing them from the Runtime stack.
 ///
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/instruction/SVM_STORE.java"><b>Source File</b></a>.
 /// 

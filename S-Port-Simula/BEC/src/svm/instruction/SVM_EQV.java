@@ -14,17 +14,17 @@ import svm.value.Value;
 /// 	Runtime Stack
 /// 	   ..., sos, tos →
 /// 	   ..., result
-///
+/// 
 /// The 'tos' and 'sos' are popped off the Runtime stack.
-/// The 'result' is calculated as result = sos and tos.
-/// Then the 'result' is pushed onto the Runtime Stack.
+/// <br>The 'result' is calculated as result = sos and tos.
+/// <br>Then the 'result' is pushed onto the Runtime Stack.
 /// 
 /// 'tos' and 'sos' must be of the same type, boolean or int.
 /// 
 /// The 'eqv' operation is defined by the following matrix:
-/// 
+///
 ///       EQV
-/// 	a  \  b  true   false
+///     a  \  b  true   false
 ///     true     true   false
 ///     false    false  true
 ///

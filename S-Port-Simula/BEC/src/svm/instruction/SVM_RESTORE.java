@@ -20,9 +20,9 @@ import svm.value.Value;
 
 /// SVM-INSTRUCTION: SAVE
 /// 
-///	  Runtime Stack
-///		oaddr →
-///		value1, value2, ... , value'size  
+///		Runtime Stack
+///			oaddr →
+///			value1, value2, ... , value'size  
 ///
 /// The oaddr of a save-object is popped off the Runtime stack.
 /// Then the complete Runtime stack is restored from the save-object.
@@ -31,7 +31,7 @@ import svm.value.Value;
 /// See also S-Port - Definition of S-code - sect. 7. INTERMEDIATE RESULTS.
 ///
 ///
-/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/instruction/SVM_AND.java"><b>Source File</b></a>.
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/instruction/SVM_RESTORE.java"><b>Source File</b></a>.
 /// 
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen

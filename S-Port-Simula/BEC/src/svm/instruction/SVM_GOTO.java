@@ -21,7 +21,7 @@ import svm.value.ProgramAddress;
 /// 	   - empty
 ///
 /// The paddr is popped of the Runtim stack.
-/// Then Program Sequence Control PCS := paddr
+/// <br>Then Program Sequence Control PCS := paddr
 ///
 ///
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/instruction/SVM_GOTO.java"><b>Source File</b></a>.

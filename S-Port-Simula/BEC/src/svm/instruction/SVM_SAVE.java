@@ -20,9 +20,9 @@ import svm.value.Value;
 
 /// SVM-INSTRUCTION: SAVE
 /// 
-///	  Runtime Stack
-///		value1, value2, ... , value'size, oaddr →
-///		- empty
+///		Runtime Stack
+///			value1, value2, ... , value'size, oaddr →
+///			- empty
 ///
 /// The oaddr of a save-object is popped off the Runtime stack.
 /// Then the complete Runtime stack is saved within the save-object.

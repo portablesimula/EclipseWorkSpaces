@@ -16,9 +16,9 @@ import svm.RTStack;
 
 /// SVM-INSTRUCTION: POPK n
 /// 
-///	  Runtime Stack
-///		..., value1, value2, ... , value'n →
-///		...,
+///		Runtime Stack
+///			..., value1, value2, ... , value'n →
+///			...,
 ///
 /// The 'n' values on the top of the Runtime stack is popped off and forgotten.
 ///

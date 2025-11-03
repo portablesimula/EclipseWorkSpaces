@@ -30,8 +30,8 @@ import svm.value.Value;
 /// 	   ..., result
 ///
 /// The 'tos' is popped off the Runtime stack.
-/// The 'result' is calculated by converting tos 'toType'.
-/// Then the 'result' is pushed onto the Runtime Stack.
+/// <br>The 'result' is calculated by converting tos 'toType'.
+/// <br>Then the 'result' is pushed onto the Runtime Stack.
 /// 
 /// Not all conversions are valid, see the table below.
 /// An attempt to perform an invalid conversion is an error.
@@ -45,7 +45,7 @@ import svm.value.Value;
 ///
 /// REAL (LREAL) to INT conversion is performed after the rule: INT = entier( REAL + 0.5 ).
 ///
-///
+/// <pre>
 ///                             L         A    O    G    P    R
 ///    to:  B    C         R    R    S    A    A    A    A    A
 ///         O    H    I    E    E    I    D    D    D    D    D
@@ -77,7 +77,7 @@ import svm.value.Value;
 ///  		information due to truncation.
 ///
 ///  	blank - always illegal.
-///
+/// </pre>
 ///
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/instruction/SVM_CONVERT.java"><b>Source File</b></a>.
 /// 

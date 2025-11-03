@@ -18,9 +18,9 @@ import svm.value.IntegerValue;
 
 /// SVM-INSTRUCTION: PUSHLEN
 /// 
-///	  Runtime Stack
-///		... →
-///		..., size
+///		Runtime Stack
+///			... →
+///			..., size
 ///
 ///	The size of the Runtime stack is pushed onto the Runtime stack.
 ///

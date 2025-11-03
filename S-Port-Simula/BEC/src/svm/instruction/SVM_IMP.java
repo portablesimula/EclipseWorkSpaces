@@ -17,18 +17,18 @@ import svm.value.Value;
 /// 	   ..., result
 ///
 /// The 'tos' and 'sos' are popped off the Runtime stack.
-/// The 'result' is calculated as result = sos imp tos.
-/// Then the 'result' is pushed onto the Runtime Stack.
+/// <br>The 'result' is calculated as result = sos imp tos.
+/// <br>Then the 'result' is pushed onto the Runtime Stack.
 /// 
 /// 'tos' and 'sos' must be of the same type, boolean or int.
 /// 
 /// The 'imp' operation is defined by the following matrix:
-/// 
+///
 ///       IMP
-/// 	a  \  b  true   false
+///     a  \  b  true   false
 ///     true     true   false
 ///     false    true   true
-///
+/// 
 ///
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/instruction/SVM_IMP.java"><b>Source File</b></a>.
 /// 

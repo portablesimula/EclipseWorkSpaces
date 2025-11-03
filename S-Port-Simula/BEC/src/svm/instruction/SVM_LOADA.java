@@ -18,26 +18,26 @@ import svm.value.ObjectAddress;
 
 /// SVM-INSTRUCTION: LOADA objadr size
 /// 
-///	  Runtime Stack
-///		..., oaddr(?), offset(?), index(?) →
-///		..., resadr, ofst
+///		Runtime Stack
+///			..., oaddr(?), offset(?), index(?) →
+///			..., resadr, ofst
 ///
 /// First, if the 'objadr.indexed' flag is set, the 'index' is popped off the Runtime stack and added to 'offset'.
 ///
 /// Then Force 'objadr' unstacked. Ie. pop off any stacked part and form the resulting address 'resadr'.
 /// 
 /// The unstacking of the 'objadr' depend on its address kind:
-///
+/// <pre>
 /// - REMOTE_ADDR: object address 'oaddr' is popped of the Runtime stack.
 ///                resadr := oaddr + objadr.offset
 /// - REFER_ADDR:  'offset' and object address 'oaddr' is popped of the Runtime stack.
 ///                resadr := oaddr + objadr.offset + offset
 /// - Otherwise:   resadr := objadr
-/// 
+/// </pre>
 /// Finally, 'resadr' and 'offset' are pushed onto the Runtime stack.
 ///
 ///
-/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/instruction/SVM_AND.java"><b>Source File</b></a>.
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/instruction/SVM_LOADA.java"><b>Source File</b></a>.
 /// 
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen

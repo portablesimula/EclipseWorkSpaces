@@ -34,6 +34,12 @@ import svm.value.ObjectAddress;
 import svm.value.ProgramAddress;
 import svm.value.Value;
 
+/// SVM-INSTRUCTION: SVM_CALL_SYS
+///
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/instruction/SVM_CALL_SYS.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public class SVM_CALL_SYS extends SVM_Instruction {
 	private final int kind;
 

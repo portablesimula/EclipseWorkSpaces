@@ -17,10 +17,10 @@ import svm.value.ProgramAddress;
 import svm.value.Value;
 
 /// SVM-INSTRUCTION: CALL rutadr returSlot
-/// 
+///
 ///	  Runtime Stack
-///		..., value1, value2, ... , value'n →
-///		..., value1, value2, ... , value'size
+///		..., value1, value2, ... , value'nPar →
+///		..., value1, value2, ... , value'exportSize
 ///
 ///
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/instruction/SVM_CALL.java"><b>Source File</b></a>.

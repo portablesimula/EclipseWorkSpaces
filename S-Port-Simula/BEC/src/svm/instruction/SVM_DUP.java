@@ -15,9 +15,9 @@ import svm.RTStack;
 
 /// SVM-INSTRUCTION: DUP n
 /// 
-///	  Runtime Stack
-///		..., value1, value2, ... , value'n →
-///		..., value1, value2, ... , value'n, value1, value2, ... , value'n
+///		Runtime Stack
+///			..., value1, value2, ... , value'n →
+///			..., value1, value2, ... , value'n, value1, value2, ... , value'n
 ///
 /// A duplicate of the 'n' top values are is pushed onto the Runtime stack.
 ///

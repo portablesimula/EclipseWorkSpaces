@@ -25,9 +25,9 @@ import svm.value.Value;
 
 /// SVM-INSTRUCTION: LOAD typeTag value
 /// 
-///	  Runtime Stack
-///		... →
-///		..., value1, value2, ... , value'size
+///		Runtime Stack
+///			... →
+///			..., value1, value2, ... , value'size
 ///
 /// The the values are loaded and pushed onto the Runtime stack.
 /// The number of values are type dependent.
