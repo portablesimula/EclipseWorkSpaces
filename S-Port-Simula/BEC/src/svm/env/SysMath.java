@@ -4,7 +4,7 @@
 /// You find a copy of the License on the following
 /// page: https://creativecommons.org/licenses/by/4.0/
 
-package svm.rts.sysrut;
+package svm.env;
 
 import bec.scode.Type;
 import bec.util.Util;
@@ -14,23 +14,63 @@ import svm.value.IntegerValue;
 import svm.value.LongRealValue;
 import svm.value.RealValue;
 
+/// Mathematical library procedures
+///
+/// The following mathematical library routines are defined to cover the same standard procedures in SIMULA.
+///
+/// These routines may change the value of the global variable status to one of the values given in appendix C.
+///
+/// The routines correspond to the similarly named SIMULA Standard functions.
+///
+///
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/rts/stsrut/SysMath.java"><b>Source File</b></a>.
+/// 
+/// @author Simula Standard
+/// @author S-Port: The Environment Interface
+/// @author Øystein Myhre Andersen
 public abstract class SysMath {
 
 
-//	 Visible sysroutine("RADDEP") RADDEP;
-//	 import real arg; export real val  end;
+	/// Real Addepsilon
+	///
+	///		Visible sysroutine("RADDEP") RADDEP;
+	///		import real arg; export real val  end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., arg →
+	/// 	   ..., result
+	///
+	/// The result is the value of the argument incremented by the smallest positive value,
+	/// such that the result is not equal to the argument within the precision of the implementation.
+	///
+	/// Thus, for all positive values of "eps",
+	///
+	///		E-eps <= subepsilon(E) < E < addepsilon(E) <= E+eps
+	///
 	public static void raddep() {
 		SVM_CALL_SYS.ENTER("RADDEP: ", 1, 1); // exportSize, importSize
 		float val = RTStack.popReal();
-//		IO.println("SysMath.RADDEP: inp="+val);
 		val = Math.nextUp(val);
-//		IO.println("SysMath.RADDEP: out="+val);
 		RTStack.push(RealValue.of(val));
 		SVM_CALL_SYS.EXIT("RADDEP: ");
 	}
 
-//	 Visible sysroutine("DADDEP") DADDEP;
-//	 import long real arg; export long real val  end;
+	/// Long real Addepsilon
+	///
+	///		Visible sysroutine("DADDEP") DADDEP;
+	///		import long real arg; export long real val  end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., arg →
+	/// 	   ..., result
+	///
+	/// The result is the value of the argument incremented by the smallest positive value,
+	/// such that the result is not equal to the argument within the precision of the implementation.
+	///
+	/// Thus, for all positive values of "eps",
+	///
+	///		E-eps <= subepsilon(E) < E < addepsilon(E) <= E+eps
+	///
 	public static void daddep() {
 		SVM_CALL_SYS.ENTER("DADDEP: ", 1, 1); // exportSize, importSize
 		double val = RTStack.popLongReal();
@@ -39,8 +79,22 @@ public abstract class SysMath {
 		SVM_CALL_SYS.EXIT("DADDEP: ");
 	}
 
-//	 Visible sysroutine("RSUBEP") RSUBEP;
-//	 import real arg; export real val  end;
+	/// Real Subepsilon
+	///
+	///		Visible sysroutine("RSUBEP") RSUBEP;
+	///		import real arg; export real val  end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., arg →
+	/// 	   ..., result
+	///
+	/// The result is the value of the argument decremented by the smallest positive value,
+	/// such that the result is not equal to the argument within the precision of the implementation.
+	///
+	/// Thus, for all positive values of "eps",
+	///
+	///		E-eps <= subepsilon(E) < E < addepsilon(E) <= E+eps
+	///
 	public static void rsubep() {
 		SVM_CALL_SYS.ENTER("RSUBEP: ", 1, 1); // exportSize, importSize
 		float val = RTStack.popReal();
@@ -49,8 +103,22 @@ public abstract class SysMath {
 		SVM_CALL_SYS.EXIT("RSUBEP: ");
 	}
 
-//	 Visible sysroutine("DSUBEP") DSUBEP;
-//	 import long real arg; export long real val  end;
+	/// Long real Subepsilon
+	///
+	///		Visible sysroutine("DSUBEP") DSUBEP;
+	///		import long real arg; export long real val  end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., arg →
+	/// 	   ..., result
+	///
+	/// The result is the value of the argument decremented by the smallest positive value,
+	/// such that the result is not equal to the argument within the precision of the implementation.
+	///
+	/// Thus, for all positive values of "eps",
+	///
+	///		E-eps <= subepsilon(E) < E < addepsilon(E) <= E+eps
+	///
 	public static void dsubep() {
 		SVM_CALL_SYS.ENTER("DSUBEP: ", 1, 1); // exportSize, importSize
 		double val = RTStack.popLongReal();
@@ -59,8 +127,17 @@ public abstract class SysMath {
 		SVM_CALL_SYS.EXIT("DSUBEP: ");
 	}
 
-//	 Visible sysroutine("IIPOWR") IIPOWR; --- v:=b**x
-//	 import integer b,x; export integer v  end;
+	/// Integer raised to the integer power
+	///
+	///		Visible sysroutine("IIPOWR") IIPOWR; --- v:=b**x
+	///		import integer b,x; export integer v  end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., b, x →
+	/// 	   ..., result
+	///
+	/// The result is the value of the argument 'b' raised to the 'x' power
+	///
 	public static void iipowr() {
 		SVM_CALL_SYS.ENTER("IIPOWR: ", 1, 2); // exportSize, importSize
 		int x = RTStack.popInt();
@@ -70,17 +147,27 @@ public abstract class SysMath {
 		SVM_CALL_SYS.EXIT("IIPOWR: ");
 	}
 
-	/// Visible sysroutine("MODULO") MOD;
-	/// import integer x,y; export integer val  end;
+	/// Integer modulo operation
+	///
+	///	 Visible sysroutine("MODULO") MOD;
+	///	 import integer x,y; export integer val  end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., x, y →
+	/// 	   ..., result
 	///
 	/// The modulo operator in Java, denoted by the percent sign (%),
 	/// calculates the remainder of a division operation.
-	/// It is used with the following syntax:
+	/// <br>It is used with the following syntax:
+	///
 	///		 operand1 % operand2,
-	///	 where operand1 is the dividend and operand2 is the divisor.
+	///
+	/// where operand1 is the dividend and operand2 is the divisor.
+	///
 	/// The result is the remainder when operand1 is divided by operand2. 
 	///
 	/// Simula Standard:
+	///
 	///		integer procedure mod(i,j); integer i,j; begin
 	///			integer res;
 	///			res := i - (i//j)*j;
@@ -88,7 +175,7 @@ public abstract class SysMath {
 	///			else if sign(res) <> sign(j) then res+j
 	///			else res
 	///		end mod;
-	///The result is the mathematical modulo value of the parameters.
+	///The result is the mathematical modulo value of the arguments.
 	public static void modulo() {
 		SVM_CALL_SYS.ENTER("MODULO: ", 1, 2); // exportSize, importSize
 		int y = RTStack.popInt();
@@ -102,9 +189,13 @@ public abstract class SysMath {
 		RTStack.push(IntegerValue.of(Type.T_INT, res));
 		SVM_CALL_SYS.EXIT("MODULO: ");
 	}
-	private static int sign(int i) {
-		if(i < 0) return -1;
-		if(i > 0) return +1;
+	
+	/// Utility: sign
+	/// @param arg the argument
+	/// @return +1 if arg > 0, otherwise -1
+	private static int sign(int arg) {
+		if(arg < 0) return -1;
+		if(arg > 0) return +1;
 		return 0;
 	}
 
@@ -132,8 +223,17 @@ public abstract class SysMath {
 		return((int)res);
 	}
 
-//	 Visible sysroutine("RIPOWR") RIPOWR; --- v:=b**x
-//	 import real b; integer x; export real v  end;
+	/// Real raised to the integer power
+	///
+	///		Visible sysroutine("RIPOWR") RIPOWR; --- v:=b**x
+	///		import real b; integer x; export real v  end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., b, x →
+	/// 	   ..., result
+	///
+	/// The result is the value of the argument 'b' raised to the 'x' power
+	///
 	public static void ripowr() {
 		SVM_CALL_SYS.ENTER("RIPOWR: ", 1, 2); // exportSize, importSize
 		int x = RTStack.popInt();
@@ -143,12 +243,19 @@ public abstract class SysMath {
 		SVM_CALL_SYS.EXIT("RIPOWR: ");
 	}
 
-//	 Visible sysroutine("RRPOWR") RRPOWR; --- v:=b**x
-//	 import real b,x; export real v  end;
+	/// Real raised to the real power
+	///
+	///		Visible sysroutine("RRPOWR") RRPOWR; --- v:=b**x
+	///		import real b; real x; export real v  end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., b, x →
+	/// 	   ..., result
+	///
+	/// The result is the value of the argument 'b' raised to the 'x' power
+	///
 	public static void rrpowr() {
 		SVM_CALL_SYS.ENTER("RRPOWR: ", 1, 2); // exportSize, importSize
-//		double x = RTStack.popLongReal();
-//		double b = RTStack.popLongReal();
 		float x = RTStack.popReal();
 		float b = RTStack.popReal();
 		float res = (float) Math.pow(b, x);
@@ -156,11 +263,17 @@ public abstract class SysMath {
 		SVM_CALL_SYS.EXIT("RRPOWR: ");
 	}
 
-//	 Visible sysroutine("RDPOWR") RDPOWR; --- v:=b**x
-//	 import real b; long real x; export long real v  end;
-
-//	 Visible sysroutine("DIPOWR") DIPOWR; --- v:=b**x
-//	 import long real b; integer x; export long real v  end;
+	/// Long real raised to the integer power
+	///
+	///		Visible sysroutine("DIPOWR") DIPOWR; --- v:=b**x
+	///		import long real b; integer x; export long real v  end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., b, x →
+	/// 	   ..., result
+	///
+	/// The result is the value of the argument 'b' raised to the 'x' power
+	///
 	public static void dipowr() {
 		SVM_CALL_SYS.ENTER("DIPOWR: ", 1, 2); // exportSize, importSize
 		int x = RTStack.popInt();
@@ -170,11 +283,17 @@ public abstract class SysMath {
 		SVM_CALL_SYS.EXIT("DIPOWR: ");
 	}
 
-//	 Visible sysroutine("DRPOWR") DRPOWR; --- v:=b**x
-//	 import long real b; real x; export real v  end; -- NOTE: real result
-//
-//	 Visible sysroutine("DDPOWR") DDPOWR; --- v:=b**x
-//	 import long real b,x; export long real v  end;
+	/// Long real raised to the long real power
+	///
+	///		Visible sysroutine("DDPOWR") DDPOWR; --- v:=b**x
+	///		import long real b; long real x; export long real v  end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., b, x →
+	/// 	   ..., result
+	///
+	/// The result is the value of the argument 'b' raised to the 'x' power
+	///
 	public static void ddpowr() {
 		SVM_CALL_SYS.ENTER("DDPOWR: ", 1, 2); // exportSize, importSize
 		double x = RTStack.popLongReal();

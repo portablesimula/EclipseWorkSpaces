@@ -14,6 +14,12 @@ import java.io.RandomAccessFile;
 import svm.RTUtil;
 import svm.rts.RTFileAction._CreateAction;
 
+/// RTDirectBytefile
+///
+///
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/rts/RTDirectBytefile.java"><b>Source File</b></a>.
+/// 
+/// @author Øystein Myhre Andersen
 public class RTDirectBytefile extends RTByteFile {
 	
 	/// The underlying RandomAccessFile used.

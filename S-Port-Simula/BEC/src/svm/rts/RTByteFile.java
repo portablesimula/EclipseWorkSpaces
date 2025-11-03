@@ -5,24 +5,16 @@
 /// page: https://creativecommons.org/licenses/by/4.0/
 package svm.rts;
 
-import bec.util.Util;
-import svm.value.ObjectAddress;
-
+/// RTByteFile
+///
+///
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/rts/RTByteFile.java"><b>Source File</b></a>.
+/// 
+/// @author Øystein Myhre Andersen
 public class RTByteFile extends RTFile {
 
 	public RTByteFile(String spec, int type, String action) {
 		super(spec, type, action);
 	}
-
-//	public void outimage(String image) { // Needs redefinition
-//		Util.IERR("Routine outimage need a redefinition in "+this.getClass().getSimpleName());
-//	}
-//
-//	public int inimage(ObjectAddress chrAddr, int nchr) {
-//		Util.IERR("Routine inimage need a redefinition in "+this.getClass().getSimpleName());
-//		return 0;
-//	}
-
-
 
 }
