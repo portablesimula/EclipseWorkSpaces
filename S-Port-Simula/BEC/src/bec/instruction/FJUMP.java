@@ -11,13 +11,14 @@ import bec.scode.Scode;
 import bec.util.Util;
 import svm.instruction.SVM_JUMP;
 
-/// S-INSTRUCTION: fjump
-///
+/// S-INSTRUCTION: FJUMP.
+/// <pre>
 /// forward_jump ::= fjump destination:newindex
 /// 
 /// check stack empty;
-/// 
+/// </pre>
 /// The destination must be undefined,otherwise: error.
+///
 /// A jump to the (as yet unknown) program point is generated, and the destination becomes defined.
 /// 
 /// 

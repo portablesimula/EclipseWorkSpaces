@@ -13,8 +13,8 @@ import bec.scode.Tag;
 import bec.scode.Type;
 import svm.value.ObjectAddress;
 
-/// S-INSTRUCTION: REMOTE
-///
+/// S-INSTRUCTION: REMOTE.
+/// <pre>
 ///  addressing_instruction ::= remote attribute:tag | remotev attribute:tag
 ///  
 ///  remote attr:tag
@@ -23,12 +23,12 @@ import svm.value.ObjectAddress;
 ///  push( REF, attr.TYPE, BASE = value(TOS), OFFSET = attr.OFFSET" );
 ///  
 ///  If instruction remotev: force TOS value.
-///
+/// </pre>
 ///  This instruction uses one step of indirection. The value is considered to be the address of an
 ///  object of the type 'REC' in which attr is an attribute. TOS is replaced by a descriptor of the
 ///  designated component of that object. Note again that no qualification check is implied (neither
 ///  could it be done).
-///  
+///  <pre>
 ///          (TOS) -------- > OADDR VALUE ---------->.=====================.
 ///                                                  |-----.
 ///                                                  |     |               |
@@ -40,7 +40,7 @@ import svm.value.ObjectAddress;
 ///                                                  |      '======'       |
 ///                                                  |                     |
 ///                                                  '====================='
-/// 
+/// </pre>
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/REMOTE.java"><b>Source File</b></a>.
 /// 

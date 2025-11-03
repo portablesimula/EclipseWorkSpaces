@@ -24,10 +24,10 @@ import svm.instruction.SVM_CALL_SYS;
 import svm.instruction.SVM_LOADC;
 import svm.instruction.SVM_PRECALL;
 
-/// S-INSTRUCTION: CALL
-///
+/// S-INSTRUCTION: CALL.
+/// <pre>
 /// call_instruction
-/// 		::= connect_profile <parameter_eval>*
+/// 		::= connect_profile < parameter_eval >*
 /// 				connect_routine
 /// 
 /// 		connect_profile
@@ -35,12 +35,12 @@ import svm.instruction.SVM_PRECALL;
 /// 			::= asscall profile:tag
 /// 			::= repcall n:byte profile:tag
 /// 
-/// 		connect_routine ::= call body:tag | <instruction>+ call-tos
+/// 		connect_routine ::= call body:tag | < instruction >+ call-tos
 /// 
 /// 		parameter_eval
-/// 			::= <instruction>+ asspar
-/// 			::= <instruction>+ assrep n:byte
-/// 
+/// 			::= < instruction >+ asspar
+/// 			::= < instruction >+ assrep n:byte
+/// </pre>
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/CALL.java"><b>Source File</b></a>.
 /// 

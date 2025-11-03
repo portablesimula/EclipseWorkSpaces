@@ -12,13 +12,14 @@ import bec.util.Util;
 import svm.instruction.SVM_JUMP;
 import svm.value.ProgramAddress;
 
-/// S-INSTRUCTION: FDEST
-///
+/// S-INSTRUCTION: FDEST.
+/// <pre>
 /// forward_destination ::= fdest destination:index
 /// 
 /// check stack empty;
-/// 
+/// </pre>
 /// The destination must have been defined by a fjump or fjumpif instruction, otherwise: error.
+///
 /// The current program point becomes the destination of the jump-instruction and the destination becomes
 /// undefined.
 /// 

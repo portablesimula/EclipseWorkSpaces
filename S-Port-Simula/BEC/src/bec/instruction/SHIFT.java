@@ -10,8 +10,8 @@ import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.CTStackItem;
 import svm.instruction.SVM_SHIFT;
 
-/// S-INSTRUCTION: SHIFT
-///  
+/// S-INSTRUCTION: SHIFT.
+/// <pre>  
 ///  arithmetic_instruction ::= lshiftl | lshifta | rshiftl | rshiftl   (dyadic)
 ///
 ///  force TOS value; check TOS type(INT);
@@ -20,7 +20,7 @@ import svm.instruction.SVM_SHIFT;
 ///  
 ///  pop; pop;
 ///  push( VAL, type, "value(SOS) op value(TOS)" );
-///  
+///  </pre>
 ///  SOS and TOS are replaced by a description of the value of the application of the operator. The
 ///  type of the result is the same as the type of the operands. SOS is always the left operand, i.e.
 ///  SOS op TOS. All arithmetic on subranges of INT should be performed in full integer arithmetic. 
@@ -29,7 +29,6 @@ import svm.instruction.SVM_SHIFT;
 ///  - lshifta  Extension to S-Code: Left shift arithm.
 ///  - rshiftl  Extension to S-Code: Right shift logical
 ///  - rshifta  Extension to S-Code: Right shift arithm.
-
 /// 
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/SHIFT.java"><b>Source File</b></a>.

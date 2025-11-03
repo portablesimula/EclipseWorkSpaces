@@ -11,19 +11,20 @@ import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.CTStackItem;
 import svm.instruction.SVM_ASSIGN;
 
-/// S-INSTRUCTION: UPDATE
-///
+/// S-INSTRUCTION: UPDATE.
+/// <pre>
 ///  assign_instruction ::= update (dyadic)
 ///
 ///  force TOS value;
 ///  check SOS ref; check types identical;
 ///  force SOS value;
 ///  pop;
-/// 
-///  Code is generated to transfer the value described by TOS to the location designated by SOS.
-///  TOS must be evaluated and any deferred code generation involving TOS must take place before
-///  the update code is generated. Note that only TOS is popped and the new TOS is modified to
-///  describe the value assigned.
+/// </pre>
+/// Code is generated to transfer the value described by TOS to the location designated by SOS.
+/// TOS must be evaluated and any deferred code generation involving TOS must take place before
+/// the update code is generated.
+///
+/// Note that only TOS is popped and the new TOS is modified to describe the value assigned.
 /// 
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/UPDATE.java"><b>Source File</b></a>.

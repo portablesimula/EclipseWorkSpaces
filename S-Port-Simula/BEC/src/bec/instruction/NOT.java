@@ -11,13 +11,14 @@ import bec.compileTimeStack.CTStackItem;
 import bec.scode.Type;
 import svm.instruction.SVM_NOT;
 
-/// S-INSTRUCTION: NOT
-///
+/// S-INSTRUCTION: NOT.
+/// <pre>
 /// arithmetic_instruction ::= not
 /// 
 /// force TOS value; check TOS type(BOOL,INT);
 /// 
 /// value(TOS) := not value(TOS);
+/// </pre>
 /// TOS is replaced by a description of the negated TOS value.
 /// 
 /// 

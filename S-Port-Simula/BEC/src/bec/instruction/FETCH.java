@@ -11,8 +11,8 @@ import bec.compileTimeStack.CTStack;
 import bec.scode.Type;
 import svm.instruction.SVM_LOAD;
 
-/// S-INSTRUCTION: FETCH
-///
+/// S-INSTRUCTION: FETCH.
+/// <pre>
 /// addressing_instruction ::= fetch
 /// 
 /// force TOS value;
@@ -26,7 +26,7 @@ import svm.instruction.SVM_LOAD;
 ///      The resulting            .============.
 ///          TOS -----------------|---> VALUE  |
 ///      after fetch              '============'
-/// 
+/// </pre>
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/FETCH.java"><b>Source File</b></a>.
 /// 

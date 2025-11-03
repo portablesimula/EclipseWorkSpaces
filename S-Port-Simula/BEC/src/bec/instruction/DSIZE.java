@@ -16,8 +16,8 @@ import svm.instruction.SVM_LOADC;
 import svm.instruction.SVM_MULT;
 import svm.value.IntegerValue;
 
-/// S-INSTRUCTION: DSIZE
-///
+/// S-INSTRUCTION: DSIZE.
+/// <pre>
 /// addressing_instruction ::= dsize structured_type
 /// 
 ///		structured_type ::= record_tag:tag
@@ -27,9 +27,9 @@ import svm.value.IntegerValue;
 /// force TOS value; check TOS type(INT);
 /// pop;
 /// push( VAL, SIZE, "size(type with mod. rep.count)" );
-/// 
+/// </pre>
 /// The structured type must be prefixed with a "DYNAMIC" type (see 4.3.6),
-/// and it must contain an indefinite repetition, otherwise: error.
+/// <br>and it must contain an indefinite repetition, otherwise: error.
 /// 
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/DSIZE.java"><b>Source File</b></a>.

@@ -11,8 +11,8 @@ import bec.compileTimeStack.CTStackItem;
 import bec.scode.Type;
 import svm.instruction.SVM_XOR;
 
-/// S-INSTRUCTION: XOR
-///
+/// S-INSTRUCTION: XOR.
+/// <pre>
 /// arithmetic_instruction ::= xor (dyadic)
 /// 
 /// force TOS value; check TOS type(BOOL,INT);
@@ -20,9 +20,9 @@ import svm.instruction.SVM_XOR;
 /// check types equal;
 /// pop; pop;
 /// push( VAL, BOOL, "value(SOS) xor value(TOS)" );
-/// 
+/// </pre>
 /// TOS and SOS are replaced by a description of the result of applying the operator.
-/// Note that SOS is the left operand.
+/// <br>Note that SOS is the left operand.
 /// 
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/XOR.java"><b>Source File</b></a>.

@@ -15,9 +15,9 @@ import svm.value.ProgramAddress;
 /// Switch.
 ///
 /// S-CODE:
-///
+/// <pre>
 ///	 forward_jump ::= switch switch:newtag size:number
-///
+/// </pre>
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/descriptor/SwitchDescr.java"><b>Source File</b></a>.
 /// 

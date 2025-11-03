@@ -11,8 +11,8 @@ import bec.compileTimeStack.CTStackItem;
 import bec.scode.Type;
 import svm.instruction.SVM_IMP;
 
-/// S-INSTRUCTION: IMP
-///
+/// S-INSTRUCTION: IMP.
+/// <pre>
 /// arithmetic_instruction ::= imp (dyadic)
 /// 
 /// force TOS value; check TOS type(BOOL,INT);
@@ -20,8 +20,9 @@ import svm.instruction.SVM_IMP;
 /// check types equal;
 /// pop; pop;
 /// push( VAL, BOOL, "value(SOS) imp value(TOS)" );
-/// 
+/// </pre>
 /// TOS and SOS are replaced by a description of the result of applying the operator.
+///
 /// Note that SOS is the left operand.
 /// 
 /// 

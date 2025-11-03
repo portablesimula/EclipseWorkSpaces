@@ -24,10 +24,10 @@ import svm.value.Value;
 /// Profile descriptor.
 ///
 /// S-CODE:
-///
+/// <pre>
 ///	routine_profile
-///		 ::= profile profile:newtag <peculiar>?
-///			   <import_definition>* <export or exit>? endprofile
+///		 ::= profile profile:newtag < peculiar >?
+///			   < import_definition >* < export or exit >? endprofile
 ///
 ///		peculiar
 ///			::= known body:newtag kid:string
@@ -41,7 +41,7 @@ import svm.value.Value;
 ///		export_or_exit
 ///			::= export parm:newtag resolved_type
 ///			::= exit return:newtag
-/// 
+/// </pre>
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/descriptor/ProfileDescr.java"><b>Source File</b></a>.
 /// 

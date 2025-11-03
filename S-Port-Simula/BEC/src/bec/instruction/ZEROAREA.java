@@ -10,17 +10,17 @@ import bec.compileTimeStack.CTStack;
 import bec.scode.Type;
 import svm.instruction.SVM_CALL_SYS;
 
-/// S-INSTRUCTION: ZEROAREA
-///
+/// S-INSTRUCTION: ZEROAREA.
+/// <pre>
 /// area_initialisation ::= zeroarea
 /// 
 /// zeroarea (dyadic)
 /// force TOS value; check TOS type(OADDR);
 /// force SOS value; check SOS type(OADDR);
 /// pop;
-/// 
+/// </pre>
 /// TOS and SOS must be OADDR, otherwise error.
-/// The area between SOS and TOS (SOS included, TOS not) is to be zero-filled, and TOS is popped.
+/// <br>The area between SOS and TOS (SOS included, TOS not) is to be zero-filled, and TOS is popped.
 /// 
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/ZEROAREA.java"><b>Source File</b></a>.

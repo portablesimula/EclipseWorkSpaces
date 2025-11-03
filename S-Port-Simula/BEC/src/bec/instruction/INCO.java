@@ -5,15 +5,15 @@ import bec.compileTimeStack.CTStack;
 import bec.scode.Type;
 import svm.instruction.SVM_INCO;
 
-/// S-INSTRUCTION: INCO
-///
+/// S-INSTRUCTION: INCO.
+/// <pre>
 /// addressing_instruction ::= inco (dyadic)
 ///
 /// force TOS value; check TOS type(SIZE);
 /// force SOS value; check SOS type(OADDR);
 /// pop; pop;
 /// push( VAL, OADDR, "value(SOS) +/- value(TOS)" );
-/// 
+/// </pre>
 /// The two top elements are replaced by a descriptor of
 /// the object address RESULT defined through the equation
 ///

@@ -19,51 +19,52 @@ import svm.instruction.SVM_JUMP;
 import svm.instruction.SVM_JUMPIF;
 import svm.value.ProgramAddress;
 
-/// S-INSTRUCTION: IF
-///
+/// S-INSTRUCTION: IF.
+/// <pre>
 ///	if_statement
-///		::= if relation <program_element>* else_part
+///		::= if relation < program_element >* else_part
 ///
 ///		relation ::= ?lt | ?le | ?eq | ?ge | ?gt | ?ne
 ///
 ///		else_part
-///			::= else <program_element>* endif
+///			::= else < program_element >* endif
 ///			::= endif
 ///
 ///	if_instruction
-///		::= if relation <instruction>* i_else_part
+///		::= if relation < instruction >* i_else_part
 ///
 ///
 ///		i_else_part
-///			::= else <instruction>* endif
+///			::= else < instruction >* endif
 ///			::= endif
-/// 
+/// </pre>
 ///
+/// <pre>
 /// if relation
-/// * force TOS value; force SOS value;
-/// * check relation;
-/// * pop; pop;
-/// * remember stack as "if-stack";
-///
+///   * force TOS value; force SOS value;
+///   * check relation;
+///   * pop; pop;
+///   * remember stack as "if-stack";
+/// </pre>
 /// The generated code will compute the value of the relation, and transfer control to an "else-label" (to be
 /// defined later) if the relation is false. A copy of the complete state of the S-compiler's stack is saved as
 /// the "if-stack".
 ///
-///
+/// <pre>
 /// else
-/// 	* force TOS value;
-/// 	* remember stack as "else-stack";
-/// 	* reestablish stack saved as "if-stack";
+///   * force TOS value;
+///   * remember stack as "else-stack";
+///   * reestablish stack saved as "if-stack";
+/// </pre>
+///	An unconditional forward branch is generated to an "end-label" (to be defined later). A copy is made of
+///	the complete state of the stack and this is saved as the "else-stack", then the stack is restored to the state
+///	saved as the "if-stack". Finally the "else-label" (used by if) is located at the current program point.
 ///
-/// 	An unconditional forward branch is generated to an "end-label" (to be defined later). A copy is made of
-/// 	the complete state of the stack and this is saved as the "else-stack", then the stack is restored to the state
-/// 	saved as the "if-stack". Finally the "else-label" (used by if) is located at the current program point.
-///
-///
+/// <pre>
 /// endif
-/// * force TOS value;
-/// * merge current stack with "else-stack" if it exists, otherwise "if-stack";
-///
+///   * force TOS value;
+///   * merge current stack with "else-stack" if it exists, otherwise "if-stack";
+/// </pre>
 /// The current stack and the saved stack are merged. The saved stack will be the "if-stack" if no else-part
 /// has been processed, otherwise it will be the "else-stack". The merge takes each corresponding pair of
 /// stack items and forces them to be identical by applying fetch operations when necessary - this process

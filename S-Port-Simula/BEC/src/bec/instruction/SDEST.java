@@ -12,14 +12,15 @@ import bec.scode.Scode;
 import bec.scode.Tag;
 import bec.util.Util;
 
-/// S-INSTRUCTION: SDEST
-///
+/// S-INSTRUCTION: SDEST.
+/// <pre>
 ///  forward_destination ::= sdest switch:tag which:number
 ///  
 ///  check stack empty;
-///  
+///  </pre>
 ///  The tag must have been defined in a switch instruction, and the number must be within the range
 ///  defined by the corresponding switch instruction, otherwise: error.
+///
 ///  The destination "D(which)" of the switch instruction defining the tag is located at the current program
 ///  point.
 /// 

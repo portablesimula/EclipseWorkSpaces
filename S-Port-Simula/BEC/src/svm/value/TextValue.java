@@ -31,7 +31,7 @@ public class TextValue extends Value {
 	public String textValue;
 	
 	/// Construct a new TextValue with the given parameter string
-	/// @param the text value string
+	/// @param the textValue value string
 	private TextValue(final String textValue) {
 		this.type = Type.T_TEXT;
 		this.textValue = textValue;

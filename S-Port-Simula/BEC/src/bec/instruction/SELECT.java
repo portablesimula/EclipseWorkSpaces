@@ -11,8 +11,8 @@ import bec.descriptor.Attribute;
 import bec.scode.Sinstr;
 import bec.scode.Tag;
 
-/// S-INSTRUCTION: SELECT
-///
+/// S-INSTRUCTION: SELECT.
+/// <pre>
 ///  addressing_instruction ::= select attribute:tag | selectv attribute:tag
 ///  
 ///  check TOS ref;
@@ -22,11 +22,12 @@ import bec.scode.Tag;
 ///  (note that the BASE component of TOS is unchanged)
 ///
 ///  If instruction selectv: force TOS value.
-///
+/// </pre>
 ///  The area described by TOS is considered to be holding a record of the type, say 'REC', in which
 ///  the instruction argument attr is an attribute. TOS is modified to describe the designated
 ///  component of that record. Note that no qualification check is implied, i.e. TOS.TYPE may be
 ///  different from 'REC'.
+///<pre>
 ///  
 ///        BASE ---------------------------> .============================.
 ///                                          |-----.                      |
@@ -46,7 +47,7 @@ import bec.scode.Tag;
 ///                                          |     .==================.   |
 ///                                          |                            |
 ///                                          .============================.
-/// 
+/// </pre>
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/SELECT.java"><b>Source File</b></a>.
 /// 

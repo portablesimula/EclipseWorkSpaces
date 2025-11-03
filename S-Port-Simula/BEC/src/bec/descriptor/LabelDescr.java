@@ -21,7 +21,7 @@ import svm.value.Value;
 /// Label descriptor.
 ///
 /// S-CODE:
-///
+/// <pre>
 /// label_declaration
 ///		::= label_specification | label_definition
 ///
@@ -30,7 +30,7 @@ import svm.value.Value;
 ///
 /// 	label_definition
 ///			::= label label:spectag
-/// 
+/// </pre>
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/descriptor/LabelDescr.java"><b>Source File</b></a>.
 /// 

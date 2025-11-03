@@ -22,7 +22,7 @@ import svm.value.Value;
 /// 	   - empty
 ///
 /// The 'index' is popped of the Runtim stack.
-/// Then Program Sequence Control PCS := destab[index]
+/// Then Program Sequence Control PCS := destab(index)
 ///
 /// The 'destab' is an array of Program Addresses.
 ///

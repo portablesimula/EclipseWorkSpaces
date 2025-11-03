@@ -26,7 +26,7 @@ import svm.value.ProgramAddress;
 /// @author Øystein Myhre Andersen
 public final class MainProgram extends S_Module {
 	
-	/// 	MainPprogram ::= main <local_quantity>* <program_element>*
+	/// 	MainPprogram ::= main <local_quantity>* < program_element >*
 	/// 
 	/// 		local_quantity ::= local var:newtag quantity_descriptor
 	/// 
@@ -73,7 +73,7 @@ public final class MainProgram extends S_Module {
 		
 		try {
 			if(Option.verbose) Util.println("\n\nBEC: NEW MainProgram: BEGIN EXECUTE: " + mainEntry);
-			RTUtil.INIT();
+			RTUtil.init();
 			Global.PSC = mainEntry;
 			while(true) {
 				Global.PSC.execute();

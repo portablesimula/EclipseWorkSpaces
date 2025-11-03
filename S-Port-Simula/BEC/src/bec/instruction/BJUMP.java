@@ -12,14 +12,14 @@ import bec.util.Util;
 import svm.instruction.SVM_JUMP;
 import svm.value.ProgramAddress;
 
-/// S-INSTRUCTION: BJUMP
-///
+/// S-INSTRUCTION: BJUMP.
+/// <pre>
 /// backward_jump ::= bjump destination:index
 /// 
 /// check stack empty;
-/// 
+/// </pre>
 /// The destination must have been defined in a bdest instruction, otherwise: error.
-/// A jump to the referenced program point is generated, and the destination becomes undefined.
+/// <br>A jump to the referenced program point is generated, and the destination becomes undefined.
 /// 
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/BJUMP.java"><b>Source File</b></a>.

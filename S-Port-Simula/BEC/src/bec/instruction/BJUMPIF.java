@@ -14,8 +14,8 @@ import bec.util.Util;
 import svm.instruction.SVM_JUMPIF;
 import svm.value.ProgramAddress;
 
-/// S-INSTRUCTION: BJUMPIF
-///
+/// S-INSTRUCTION: BJUMPIF.
+/// <pre>
 /// backward_jump ::= bjumpif relation destination:index (dyadic)
 /// 
 /// relation ::= ?lt | ?le | ?eq | ?ge | ?gt | ?ne
@@ -23,11 +23,11 @@ import svm.value.ProgramAddress;
 /// force TOS value; force SOS value;
 /// check relation;
 /// pop; pop;
-/// 
+/// </pre>
 /// The destination must be defined by a bdest instruction, and TOS and SOS must be of the same
 /// permissible resolved types with regard to relation, otherwise: error.
-/// A conditional jump sequence will be generated, branching only if the relation evaluates true. The
-/// destination becomes undefined.
+/// <br>A conditional jump sequence will be generated, branching only if the relation evaluates true.
+/// <br>The destination becomes undefined.
 /// 
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/BJUMPIF.java"><b>Source File</b></a>.

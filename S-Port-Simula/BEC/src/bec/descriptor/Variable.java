@@ -26,7 +26,7 @@ import svm.value.Value;
 /// Global or local Variable.
 ///
 /// S-CODE:
-///
+/// <pre>
 /// 	global_definition ::= global internal:newtag quantity_descriptor
 /// 
 /// 	local_quantity ::= local var:newtag quantity_descriptor
@@ -47,7 +47,7 @@ import svm.value.Value;
 /// 	 		resolved_structure ::= structured_type < fixrep count:ordinal >?
 ///  
 ///  				structured_type ::= record_tag:tag
-///
+/// </pre>
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/descriptor/Variable.java"><b>Source File</b></a>.
 /// 

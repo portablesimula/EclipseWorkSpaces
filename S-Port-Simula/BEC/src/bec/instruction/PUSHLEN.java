@@ -10,14 +10,14 @@ import bec.compileTimeStack.CTStack;
 import bec.scode.Type;
 import svm.instruction.SVM_PUSHLEN;
 
-/// S-INSTRUCTION: PUSHLEN
-///
+/// S-INSTRUCTION: PUSHLEN.
+/// <pre>
 /// stack_instruction ::= pushlen
 /// 
 /// pushlen
 /// 
 /// push( VAL, SIZE, "temporary area.LENGTH" );
-///
+/// </pre>
 ///
 ///	An implicit eval is performed.
 ///

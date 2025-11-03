@@ -25,15 +25,15 @@ import bec.util.Util;
 import svm.segment.DataSegment;
 import svm.segment.ProgramSegment;
 
-/// S-INSTRUCTION: IF
-///
+/// S-INSTRUCTION: INSERT.
+/// <pre>
 /// insert_statement
 /// 		::= insert module_id:string check_code:string
 /// 			external_id:string tagbase:newtag taglimit:newtag
 /// 
 /// 		::= sysinsert module_id:string check_code:string
 /// 			external_id:string tagbase:newtag taglimit:newtag
-///
+/// </pre>
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/statement/InsertStatement.java"><b>Source File</b></a>.
 /// 
@@ -50,14 +50,8 @@ public class InsertStatement {
     /// The current InsertStatement
     public static InsertStatement current;
 
-    /// insert_statement
-    /// 		::= insert module_id:string check_code:string
-    /// 			external_id:string tagbase:newtag taglimit:newtag
-    /// 
-    /// 		::= sysinsert module_id:string check_code:string
-    /// 			external_id:string tagbase:newtag taglimit:newtag
-    /// 
-    /// @param sysmod when SYSINSERT
+    /// Construct a new InsertStatement with the given parameter.
+    /// @param sysmod true: when SYSINSERT
     ///
 	@SuppressWarnings("unused")
 	public InsertStatement(final boolean sysmod) {
@@ -81,8 +75,8 @@ public class InsertStatement {
 			IO.println("**************   Endof  -  Input-module  " + modid + "  " + check + "   **************");
 	}
 	
-	/// Read all Descriptors
-    /// @param sysmod when SYSINSERT
+	/// Read all Segments, Descriptors and Data Types
+    /// @param sysmod true: when SYSINSERT
 	private void readDescriptors(final boolean sysmod) throws IOException {
 		String fileName = null;
 		if(sysmod) {

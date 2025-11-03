@@ -8,16 +8,18 @@ package bec.instruction;
 import bec.compileTimeStack.CTStack;
 import bec.scode.Scode;
 
-/// S-INSTRUCTION: POPALL
-///
+/// S-INSTRUCTION: POPALL.
+/// <pre>
 /// popall N:byte
 ///  - perform pop n times;
 ///  - check stack empty;
-///  
+/// </pre>
 /// Pop N items off the stack. The stack should then be empty, otherwise: error.
+///
 /// This instruction gives a short way of emptying the stack, together with the control of the
-/// number of elements that was on the stack. Profiles cannot be deleted from the stack by pop,
-/// only by deleting the complete stack through popall.
+/// number of elements that was on the stack.
+///
+/// Profiles cannot be deleted from the stack by pop, only by deleting the complete stack through popall.
 /// 
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/POPALL.java"><b>Source File</b></a>.

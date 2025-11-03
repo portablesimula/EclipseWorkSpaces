@@ -10,15 +10,15 @@ import bec.compileTimeStack.CTStack;
 import bec.scode.Type;
 import svm.instruction.SVM_GOTO;
 
-/// S-INSTRUCTION: GOTO
-///
+/// S-INSTRUCTION: GOTO.
+/// <pre>
 /// goto_instruction ::= goto
 /// 
 /// goto_statement ::= goto
 /// 
 /// force TOS value; check TOS type(PADDR);
 /// pop; check stack empty;
-/// 
+/// </pre>
 /// TOS is popped and instructions generated to perform the control transfer.
 /// 
 /// 

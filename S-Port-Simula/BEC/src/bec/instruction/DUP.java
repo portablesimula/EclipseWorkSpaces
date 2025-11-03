@@ -13,13 +13,13 @@ import bec.util.Util;
 import svm.instruction.SVM_DUP;
 import svm.value.ObjectAddress;
 
-/// S-INSTRUCTION: DUP
-///
+/// S-INSTRUCTION: DUP.
+/// <pre>
 /// stack_instruction ::= dup
 /// 
 /// push( TOS );
 /// force TOS value;
-/// 
+/// </pre>
 /// A duplicate of TOS is pushed onto the stack and forced into value mode.
 /// 
 /// 

@@ -10,18 +10,18 @@ import bec.compileTimeStack.CTStack;
 import bec.scode.Type;
 import svm.instruction.SVM_ADD;
 
-/// S-INSTRUCTION: LOCATE
-///
+/// S-INSTRUCTION: LOCATE.
+/// <pre>
 /// addressing_instruction ::= locate (dyadic)
 ///
 /// force TOS value; check TOS type(AADDR);
 /// force SOS value; check SOS type(OADDR,GADDR);
 /// pop; pop;
 /// push( VAL, GADDR, "value(SOS).BASE, value(SOS).OFFSET++value(TOS)" );
-/// 
+/// </pre>
 /// SOS and TOS are replaced by a description of the general address value
 /// formed by "addition" of the two original addresses.
-/// 
+/// <pre>
 ///                               .===========================.
 ///                               |                           |
 ///                               |                           |
@@ -41,7 +41,7 @@ import svm.instruction.SVM_ADD;
 ///                               |                           |
 ///                               |                           |
 ///                               '==========================='
-/// 
+/// </pre>
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/LOCATE.java"><b>Source File</b></a>.
 /// 

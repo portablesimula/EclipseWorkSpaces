@@ -11,12 +11,12 @@ import bec.compileTimeStack.CTStack;
 import bec.scode.Type;
 import svm.instruction.SVM_LOADA;
 
-/// S-INSTRUCTION: DEREF
-///
+/// S-INSTRUCTION: DEREF.
+/// <pre>
 /// addressing_instruction ::= deref
 /// 
-/// 
 /// check TOS ref;
+///
 /// TOS.MODE := VAL; TOS.TYPE := GADDR;
 /// TOS is modified to describe the address of the area.
 /// 
@@ -29,7 +29,7 @@ import svm.instruction.SVM_LOADA;
 ///  after deref             '=================='        |        |
 ///                                                      |        |
 ///                                                      '========'
-/// 
+/// </pre>
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/DEREF.java"><b>Source File</b></a>.
 /// 

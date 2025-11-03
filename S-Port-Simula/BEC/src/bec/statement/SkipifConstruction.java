@@ -19,31 +19,35 @@ import svm.instruction.SVM_JUMP;
 import svm.instruction.SVM_JUMPIF;
 import svm.value.ProgramAddress;
 
-/// S-INSTRUCTION: IF
-///
-/// skip_statement ::= skipif relation <program_element>/// endskip
+/// S-INSTRUCTION: SKIPIF.
+/// <pre>
+/// skip_statement ::= skipif relation < program_element >* endskip
 /// 
-/// skip_instruction ::= skipif relation <instruction>* endskip
+/// skip_instruction ::= skipif relation < instruction >* endskip
 /// 
 ///		relation ::= ?lt | ?le | ?eq | ?ge | ?gt | ?ne
-/// 
+/// </pre>
 /// The skip_statement is intended to be used where a transfer of control is to be generated without altering
 /// the state of the stack, commonly to report error conditions during expression evaluation. The skip
 /// instruction is the form the statement takes inside routine bodies.
 /// 
+/// <pre>
 /// skipif relation
-/// force TOS value; force SOS value;
-/// check relation;
-/// pop; pop;
-/// save skip-stack;
-/// 
+/// * force TOS value; force SOS value;
+/// * check relation;
+/// * pop; pop;
+/// * save skip-stack;
+/// </pre>
+///
 /// The generated code will compute the relation, and control is transferred to an "end-label" (to be defined
 /// later), if the relation is true. A copy of the complete state of the S- compiler`s stack is saved as the
 /// "skip-stack".
 /// 
+///<pre>
 /// endskip
-/// check stack empty; restore skip-stack;
-/// 
+/// * check stack empty; restore skip-stack;
+/// </pre>
+///
 /// The "end-label" is located at the current program point, and the "skip-stack" is restored as the current
 /// stack.
 ///

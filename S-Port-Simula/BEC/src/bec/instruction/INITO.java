@@ -10,13 +10,13 @@ import bec.compileTimeStack.CTStack;
 import bec.scode.Type;
 import svm.instruction.SVM_INITO;
 
-/// S-INSTRUCTION: INITO
-///
+/// S-INSTRUCTION: INITO.
+/// <pre>
 /// temp_control ::= t-inito
 /// 
 /// force TOS value; check TOS type(OADDR);
 /// pop;
-/// 
+/// </pre>
 /// Code is generated to initialise a scan of the save-object described by TOS,
 /// i.e. SAVE-OBJECT is set to refer to the object, and SAVE-INDEX is initialized.
 /// TOS is popped.

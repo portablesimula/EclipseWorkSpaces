@@ -7,14 +7,14 @@ package bec.instruction;
 
 import bec.compileTimeStack.CTStack;
 
-/// S-INSTRUCTION: EMPTY
-///
+/// S-INSTRUCTION: EMPTY.
+/// <pre>
 /// stack_instruction ::= empty
 ///
 /// * check stack empty;
-///
+/// </pre>
 /// This instruction is intended as a debugging aid,
-/// it is recommended that the condition is checked always.
+/// <br>it is recommended that the condition is checked always.
 /// 
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/EMPTY.java"><b>Source File</b></a>.

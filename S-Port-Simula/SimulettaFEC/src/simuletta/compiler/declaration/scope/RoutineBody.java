@@ -44,7 +44,7 @@ import simuletta.utilities.Util;
  *		RoutineSpecification ::= ROUTINESPEC body:newtag profile:tag
  *  
  *		RoutineDefinition ::= ROUTINE body:spectag profile:tag
- *								<local_quantity>* <instruction>* ENDROUTINE
+ *								<local_quantity>* < instruction >* ENDROUTINE
  * 
  *			local_quantity ::= local var:newtag quantity_descriptor
  *

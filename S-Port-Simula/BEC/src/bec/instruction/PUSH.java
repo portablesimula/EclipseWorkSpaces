@@ -15,18 +15,19 @@ import bec.scode.Tag;
 import bec.util.Util;
 import svm.value.ObjectAddress;
 
-/// S-INSTRUCTION: PUSH
-///
+/// S-INSTRUCTION: PUSH.
+/// <pre>
 /// stack_instruction ::= push obj:tag | pushv obj:tag
 ///
 /// * push( REF, obj.TYPE, obj.BASE, obj.OFFSET );
 ///
+/// If instruction pushv: force TOS value.
+/// </pre>
 /// Obj must refer to a defined global, local or constant quantity, otherwise: error.
+///
 /// Observe that routine parameters and exit tags are local quantities.
 ///
 /// A copy of the descriptor is pushed onto the stack.
-///
-/// If instruction pushv: force TOS value.
 /// 
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/PUSH.java"><b>Source File</b></a>.

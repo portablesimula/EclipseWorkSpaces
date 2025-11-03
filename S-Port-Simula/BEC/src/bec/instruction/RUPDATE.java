@@ -10,14 +10,14 @@ import bec.compileTimeStack.AddressItem;
 import bec.compileTimeStack.CTStack;
 import svm.instruction.SVM_STORE;
 
-/// S-INSTRUCTION: RUPDATE
-///
+/// S-INSTRUCTION: RUPDATE.
+/// <pre>
 ///  assign_instruction ::= rupdate (dyadic)
 ///  
 ///  check TOS ref;
 ///  force SOS value; check types identical;
 ///  pop;
-///  
+///  </pre>
 ///  This instruction (“reverse update”) works almost like update with the sole exception that the
 ///  roles of TOS and SOS are interchanged, i.e. the value transfer is from SOS to TOS.
 /// 

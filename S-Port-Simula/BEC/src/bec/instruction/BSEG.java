@@ -13,33 +13,33 @@ import bec.scode.Sinstr;
 import bec.util.Util;
 import svm.segment.ProgramSegment;
 
-/// S-INSTRUCTION: BSEG
-///
+/// S-INSTRUCTION: BSEG.
+/// <pre>
 ///   * remember stack;
 ///   * purge stack;
-///
+/// </pre>
 /// The current program point is remembered together with the complete state of the stack, the "bsegstack".
 /// Some new segment is designated the current program point, together with a new, empty stack.
 ///
-/// S-INSTRUCTION: ESEG
-///
+/// S-INSTRUCTION: ESEG.
+/// <pre>
 ///  * check stack empty;
 ///  * reestablish stack remembered at corresponding bseg;
-///
+/// </pre>
 /// The "bseg-stack" is restored together with the saved program point.
 ///
 ///
 /// SEGMENTATION CONTROL.
-///
+/// <pre>
 /// segment_instruction
-///		::= bseg <program_element>* eseg
-///
+///		::= bseg < program_element >* eseg
+/// </pre>
 /// This instruction specifies that the enclosed program elements are out of sequence, i.e. the code
 /// generated must either be located elsewhere or it must be preceded by an unconditional jump instruction
 /// leading to the program point following eseg. The segment instruction is illegal within routine bodies.
 ///
 /// Note that all jump/destination sets must be fully enclosed within a segment.
-/// The bseg and eseg have similar effects on the stack as save and restore (chapter 7).
+/// <br>The bseg and eseg have similar effects on the stack as save and restore (chapter 7).
 ///
 /// More info in: S-Port: Definition of S-code sectn. 12. SEGMENTATION CONTROL
 /// 

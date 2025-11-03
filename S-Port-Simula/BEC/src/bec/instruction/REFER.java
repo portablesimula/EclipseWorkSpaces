@@ -10,15 +10,15 @@ import bec.compileTimeStack.CTStack;
 import bec.scode.Type;
 import svm.value.ObjectAddress;
 
-/// S-INSTRUCTION: ADD
-///
+/// S-INSTRUCTION: REFER.
+/// <pre>
 ///  refer resolved_type
 ///  
 ///  force TOS value; check TOS type(GADDR);
 ///  TOS.MODE := REF; TOS.TYPE := type;
-///  
+///  </pre>
 ///  TOS is modified to describe a quantity of the given type, at the address described by TOS.
-///  
+///  <pre>
 ///                            =================
 ///        (TOS) ==============|==> GADDR VALUE –|----------.
 ///                            =================            |
@@ -30,9 +30,9 @@ import svm.value.ObjectAddress;
 ///                                                         |    of    |
 ///                                                         |  "type"  |
 ///                                                         '=========='
+/// </pre>
 /// 
-/// 
-/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/ADD.java"><b>Source File</b></a>.
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/REFER.java"><b>Source File</b></a>.
 /// 
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen

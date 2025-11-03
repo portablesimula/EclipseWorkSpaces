@@ -11,14 +11,14 @@ import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.CTStackItem;
 import svm.instruction.SVM_ASSIGN;
 
-/// S-INSTRUCTION: ASSIGN
-///
+/// S-INSTRUCTION: ASSIGN.
+/// <pre>
 /// assign_instruction ::= assign (dyadic)
 /// 
 /// - force TOS value;
 /// - check SOS ref; check types identical;
 /// - pop; pop;
-/// 
+/// </pre>
 /// Code is generated to transfer the value described by TOS to the location designated by SOS.
 /// This implies that the stack elements must be evaluated, and that any code generation involving
 /// TOS or SOS, that has been deferred for optimisation purposes, must take place before the

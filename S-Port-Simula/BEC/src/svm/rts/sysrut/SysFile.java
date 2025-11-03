@@ -63,7 +63,7 @@ public abstract class SysFile {
 			default: Util.IERR("");
 		}
 //		IO.println("SVM_SYSCALL.gdspec: index=" + index + ", result=" +result);
-		RTUtil.move(result, itemAddr, result.length());
+		RTUtil.move(result, itemAddr);
 
 		RTStack.push(IntegerValue.of(Type.T_INT, result.length()));
 		SVM_CALL_SYS.EXIT("GDSPEC: ");

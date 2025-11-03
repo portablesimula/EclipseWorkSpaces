@@ -11,6 +11,7 @@ import java.util.Stack;
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/util/NamedStack.java"><b>Source File</b></a>.
 /// 
+/// @param <E> Type of stack elements
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 @SuppressWarnings("serial")
@@ -20,7 +21,7 @@ public class NamedStack<E> extends Stack<E> {
 	private String ident;
 	
 	/// Create a NamedStack with the given ident.
-	/// @param the Stack ident
+	/// @param ident the Stack ident
 	public NamedStack(final String ident) {
 		this.ident = ident;
 	}

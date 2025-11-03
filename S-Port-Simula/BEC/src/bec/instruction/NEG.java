@@ -10,13 +10,13 @@ import bec.compileTimeStack.CTStack;
 import bec.scode.Type;
 import svm.instruction.SVM_NEG;
 
-/// S-INSTRUCTION: NEG
-///
+/// S-INSTRUCTION: NEG.
+/// <pre>
 /// arithmetic_instruction ::= neg
 /// 
 /// force TOS value; check TOS type(INT,REAL,LREAL);
 /// value(TOS) := - value(TOS);
-/// 
+/// </pre>
 /// TOS is replaced by a description of the TOS value with its sign inverted.
 /// 
 /// 

@@ -202,12 +202,12 @@ public class Type {
 
 	/// Writes the Record Types to the given output.
 	/// @param oupt the output stream
+    /// @throws IOException if an I/O error occurs
 	public static void writeRECTYPES(final AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("writeRECTYPES: ");
 		oupt.writeByte(Kind.K_RECTYPES);
 		oupt.writeShort(RECTYPES.size());
 		for(Type type:RECTYPES) {
-//			oupt.writeTagID(type.tag);
 			oupt.writeString(Scode.TAGIDENT.get(type.tag));
 			oupt.writeShort(type.tag);
 			oupt.writeShort(type.size);
@@ -216,10 +216,10 @@ public class Type {
 
 	/// Reads the Record Types from the given input.
 	/// @param inpt the input stream
+    /// @throws IOException if an I/O error occurs
 	public static void readRECTYPES(final AttributeInputStream inpt) throws IOException {
 		int n = inpt.readShort();
 		for(int i=0;i<n;i++) {
-//			int tag = inpt.readTagID();
 	    	String ident = inpt.readString();
 	    	int tag = inpt.readShort();
 	    	Scode.TAGIDENT.set(tag, ident);
@@ -236,6 +236,7 @@ public class Type {
 
 	/// Writes this Type to the given output.
 	/// @param oupt the output stream
+    /// @throws IOException if an I/O error occurs
 	public void write(final AttributeOutputStream oupt) throws IOException {
 		oupt.writeShort(tag);
 	}
@@ -243,9 +244,9 @@ public class Type {
 	/// Reads a Type from the given input.
 	/// @param inpt the input stream
 	/// @return the Type read
+    /// @throws IOException if an I/O error occurs
 	public static Type read(final AttributeInputStream inpt) throws IOException {
 		int tag = inpt.readShort();
-//		IO.println("NEW Type(inpt): " + Sinstr.edInstr(tag));
 		Type type = TMAP.get(tag);
 		if(type == null) Util.IERR("SJEKK DETTE");
 		return type;

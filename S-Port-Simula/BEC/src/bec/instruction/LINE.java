@@ -10,13 +10,13 @@ import bec.compileTimeStack.CTStack;
 import bec.scode.Scode;
 import svm.instruction.SVM_LINE;
 
-/// S-INSTRUCTION: LINE
-///
+/// S-INSTRUCTION: LINE.
+/// <pre>
 /// 	info_setting
 /// 		::= decl line:number
 /// 		::= line line:number
 /// 		::= stmt line:number
-/// 
+/// </pre>
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/LINE.java"><b>Source File</b></a>.
 /// 

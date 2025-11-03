@@ -11,8 +11,8 @@ import bec.compileTimeStack.CTStackItem;
 import bec.scode.Type;
 import svm.instruction.SVM_OR;
 
-/// S-INSTRUCTION: OR
-///
+/// S-INSTRUCTION: OR.
+/// <pre>
 /// arithmetic_instruction ::= or (dyadic)
 /// 
 /// force TOS value; check TOS type(BOOL,INT);
@@ -21,10 +21,10 @@ import svm.instruction.SVM_OR;
 /// 
 /// pop; pop;
 /// push( VAL, type, "value(SOS) or value(TOS)" );
-/// 
-/// SOS and TOS are replaced by a description of the value of the application of the operator. The
-/// type of the result is the same as the type of the operands. SOS is always the left operand, i.e.
-/// SOS or TOS. All arithmetic on subranges of INT should be performed in full integer arithmetic. 
+/// </pre>
+/// SOS and TOS are replaced by a description of the value of the application of the operator.
+/// <br>The type of the result is the same as the type of the operands.
+/// <br>SOS is always the left operand, i.e. Result := SOS or TOS.
 /// 
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/OR.java"><b>Source File</b></a>.

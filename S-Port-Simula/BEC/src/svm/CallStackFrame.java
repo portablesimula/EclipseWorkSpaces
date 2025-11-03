@@ -9,19 +9,22 @@ import svm.value.ProgramAddress;
 import svm.value.Value;
 
 /// CallStackFrame.
-/// 
+/// <pre>
 ///	FRAME:
-///		EXPORT ?
-///		IMPORT
-///		...
-///		IMPORT
-///		RETURN ADDRESS
-///		LOCAL
-///		...
-///		LOCAL
+///		EXPORT ?  -------.  FRAME HEAD
+///		IMPORT           |
+///		...              |
+///		IMPORT           |
+///		RETURN ADDRESS   |
+///		LOCAL            |
+///		...              |
+///		LOCAL -----------'
+///		STACK -----------.  LOCAL STACK
+///		...              |
+///		STACK -----------'
+/// </pre>
 ///
-///
-/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/compileTimeStack/AddressItem.java"><b>Source File</b></a>.
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/CallStackFrame.java"><b>Source File</b></a>.
 /// 
 /// @author Øystein Myhre Andersen
 public class CallStackFrame {
@@ -29,13 +32,26 @@ public class CallStackFrame {
 	/// Routine ident
 	public String ident;
 	
+	/// The Routine Address
+	public ProgramAddress rutAddr;
+	
 	/// The Runtime Stack index
 	public int rtStackIndex;
+	
+	/// The Export size
 	public int exportSize;
+	
+	/// The Inport size
 	public int importSize;
-	public ProgramAddress curAddr;
+	
+	/// The locals size
 	public int localSize;
 	
+	/// Construct a new CallStackFrame with the given parameters
+	/// @param ident The Routine ident
+	/// @param rtStackIndex The Runtime Stack index
+	/// @param exportSize The Export size
+	/// @param importSize The Inport size
 	public CallStackFrame(final String ident, int rtStackIndex, int exportSize, int importSize) {
 		this.ident = ident;
 		this.rtStackIndex = rtStackIndex;
@@ -43,19 +59,17 @@ public class CallStackFrame {
 		this.importSize = importSize;
 	}
 
+	/// Returns the Frame Head size
+	/// @return the Frame Head size
 	public int headSize() {
 		return exportSize + importSize + 1 + localSize; 
 	}
 	
+	/// Returns the return address
+	/// @return the return address
 	public ProgramAddress returnAddress() {
 		int idx = rtStackIndex + exportSize + importSize;
 		return (ProgramAddress) RTStack.load(idx);
-	}
-	
-	public ProgramAddress callAddress() {
-		ProgramAddress addr = returnAddress();
-		addr.ofst--;
-		return addr;
 	}
 
 	@Override
@@ -63,6 +77,8 @@ public class CallStackFrame {
 		return ident + ": rtStackIndex=" + rtStackIndex + ", exportSize=" + exportSize + ", importSize=" + importSize + ", localSize=" + localSize;
 	}
 
+	/// Listing utility: Edit the CallStackFrame as a single line
+	/// @return the CallStackFrame as a single line
 	public String toLine() {
 		StringBuilder sb = new StringBuilder();
 		int idx = rtStackIndex;
@@ -84,7 +100,8 @@ public class CallStackFrame {
 		return sb.toString();
 	}
 
-	public void print(String title) {
+	/// Print the CallStackFrame
+	public void print() {
 		String indent = "            ";
 		try {
 			int idx = rtStackIndex;
@@ -107,13 +124,15 @@ public class CallStackFrame {
 		} catch(Exception e) {}
 	}
 
+	/// Dump the CallStackFrame
+	/// @param title the title of the dump printout
 	public void dump(String title) {
 		CallStackFrame callStackTop = RTStack.callStack_TOP();
 		IO.println("==================== " + title + " RTFrame'DUMP ====================");
-		IO.println("   ROUTINE: " + curAddr + " callStackTop.rtStackIndex=" + callStackTop.rtStackIndex);
-		print(title);
+		IO.println("   ROUTINE: " + rutAddr + " callStackTop.rtStackIndex=" + callStackTop.rtStackIndex);
+		print();
 		IO.println("==================== " + title + " RTFrame' END  ====================");
-		if(curAddr != null) curAddr.segment().dump(title);
+		if(rutAddr != null) rutAddr.segment().dump(title);
 	}
 
 }

@@ -13,8 +13,8 @@ import bec.scode.Scode;
 import bec.util.Util;
 import svm.instruction.SVM_JUMPIF;
 
-/// S-INSTRUCTION: FJUMPIF
-///
+/// S-INSTRUCTION: FJUMPIF.
+/// <pre>
 /// forward_jump ::= fjumpif relation destination:newindex
 /// 
 /// relation ::= ?lt | ?le | ?eq | ?ge | ?gt | ?ne
@@ -22,9 +22,10 @@ import svm.instruction.SVM_JUMPIF;
 /// force TOS value; force SOS value;
 /// check relation;
 /// pop; pop;
-/// 
+/// </pre>
 /// The destination must be undefined, and TOS and SOS must be of the same permissible resolved type
 /// with regard to the relation given, otherwise: error.
+///
 /// A conditional forward jump sequence will be generated, branching only if the relation (see chapter 9)
 /// evaluates true. The destination will refer to an undefined program point to be located later (by fdest).
 /// 

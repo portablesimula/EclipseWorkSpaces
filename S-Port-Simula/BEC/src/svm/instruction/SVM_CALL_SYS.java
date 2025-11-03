@@ -156,7 +156,7 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 			RTStack.printCallTrace("SVM_CALLSYS.EXIT: ");
 		CallStackFrame top = RTStack.callStack.pop();
 		if(Option.EXEC_TRACE > 2) {
-			RTStack.callStack_TOP().dump(ident+"RETURN: Called from " + top.curAddr);		
+			RTStack.callStack_TOP().dump(ident+"RETURN: Called from " + top.rutAddr);		
 		}
 	}
 	

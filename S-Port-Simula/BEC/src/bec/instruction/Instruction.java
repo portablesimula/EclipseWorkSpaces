@@ -16,8 +16,8 @@ import bec.statement.ProtectConstruction;
 import bec.statement.SkipifConstruction;
 import bec.util.Util;
 
-/// S-INSTRUCTION:
-///
+/// S-INSTRUCTION.
+/// <pre>
 /// instruction
 /// 		::= constant_declaration
 /// 		::= record_descriptor | routine_specification
@@ -30,7 +30,7 @@ import bec.util.Util;
 /// 		::= segment_instruction | call_instruction
 /// 		::= area_initialisation | eval_instruction
 /// 		::= info_setting | macro_call
-/// 
+/// </pre> 
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/Instruction.java"><b>Source File</b></a>.
 /// 
@@ -45,7 +45,8 @@ public abstract class Instruction {
 		}
 	}
 
-	/// @result true if a 'visible' was encountered
+	/// Returns true if a 'visible' was encountered
+	/// @return true if a 'visible' was encountered
 	public static boolean inInstruction() {
 		switch(Scode.curinstr) {
 			case Sinstr.S_CONSTSPEC ->   ConstDescr.ofConstSpec();

@@ -10,14 +10,14 @@ import bec.compileTimeStack.CTStack;
 import bec.scode.Scode;
 import bec.util.Util;
 
-/// S-INSTRUCTION: BDEST
-///
+/// S-INSTRUCTION: BDEST.
+/// <pre>
 /// backward_destination ::= bdest destination:newindex
 /// 
 /// check stack empty;
-/// 
+/// </pre>
 /// The destination must be undefined, otherwise: error.
-/// The destination is defined to refer to the current program point.
+/// <br>The destination is defined to refer to the current program point.
 /// 
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/BDEST.java"><b>Source File</b></a>.

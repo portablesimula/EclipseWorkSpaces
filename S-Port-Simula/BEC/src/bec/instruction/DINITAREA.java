@@ -12,16 +12,17 @@ import bec.scode.Sinstr;
 import bec.scode.Type;
 import svm.instruction.SVM_POPK;
 
-/// S-INSTRUCTION: DINITAREA
-///
+/// S-INSTRUCTION: DINITAREA.
+/// <pre>
 /// dinitarea structured_type (dyadic)
 ///
 /// force TOS value; check TOS type(INT);
 /// force SOS value; check SOS type(OADDR);
 /// pop;
-/// 
+/// </pre>
 /// TOS.TYPE must be INT, SOS.TYPE must be OADDR, and the structured type must contain an
 /// indefinite repetition, otherwise: error.
+///
 /// The value of TOS is used to resolve the type, i.e fixing the number of elements in the indefinite
 /// repetition, following that the evaluation proceeds exactly as for initarea.
 /// 

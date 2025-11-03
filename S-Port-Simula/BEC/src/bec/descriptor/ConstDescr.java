@@ -24,7 +24,7 @@ import svm.value.Value;
 /// Constant descriptor.
 ///
 /// S-CODE:
-///
+/// <pre>
 /// constant_declaration
 /// 		::= constant_specification | constant_definition
 /// 
@@ -46,17 +46,17 @@ import svm.value.Value;
 ///					structured_type ::= record_tag:tag
 ///
 ///		repetition_value
-///			::= <boolean_value>+
-///			::= <character_value>+ | text_value
-///			::= <integer_value>+ | <size_value>+
-///			::= <real_value>+ | <longreal_value>+
-///			::= <attribute_address>+ | <object_address>+
-///			::= <general_address>+ | <program_address>+
-///			::= <routine_address>+ | <record_value>+
+///			::= boolean_value+
+///			::= character_value+ | text_value
+///			::= integer_value+ | size_value+
+///			::= real_value+ | longreal_value+
+///			::= attribute_address+ | object_address+
+///			::= general_address+ | program_address+
+///			::= routine_address+ | record_value+
 ///
 ///			text_value
 ///				::= text long_string
-/// 
+/// </pre>
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/descriptor/ConstDescr.java"><b>Source File</b></a>.
 /// 

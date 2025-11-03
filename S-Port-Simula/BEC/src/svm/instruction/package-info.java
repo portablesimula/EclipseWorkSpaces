@@ -1,2 +1,2 @@
-/// S-Port BEC Virtual Machine.
+/// S-Port SVM Instructions.
 package svm.instruction;

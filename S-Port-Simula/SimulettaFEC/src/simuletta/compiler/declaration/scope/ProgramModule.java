@@ -111,7 +111,7 @@ import simuletta.utilities.Util;
  *		ProgramBody	::= interface_module
  *					 |  macro_definition_module
  *					 |  <module_definition>*
- *					 |  MAIN <local_quantity>* <program_element>*
+ *					 |  MAIN <local_quantity>* < program_element >*
  * 
  *			interface_module ::= global module module_id:string check_code:string
  *									<global_interface>* tag_list
@@ -133,7 +133,7 @@ import simuletta.utilities.Util;
  *
  *			module_definition ::= module module_id:string check_code:string
  *									visible_existing
- *									body <local_quantity>* <program_element>* endmodule
+ *									body <local_quantity>* < program_element >* endmodule
  *
  *				visible_existing ::= <visible>* tag_list ! existing
  *

@@ -8,15 +8,13 @@ package bec.instruction;
 import bec.compileTimeStack.CTStack;
 import bec.scode.Type;
 
-/// S-INSTRUCTION: INITAREA
-///
+/// S-INSTRUCTION: INITAREA.
+/// <pre>
 /// initarea resolved_type
 /// force TOS value; check TOS type(OADDR);
 /// 
 /// TOS.TYPE must be OADDR, otherwise: error.
-/// The argument type is imposed upon the area, and the area is initialised according to the table below.
-/// Only the common part of an instance of a structure will be initialised, ignoring both the prefix and any
-/// alternate part(s). The structure is initialised component by component according to the table below.
+/// </pre>
 /// 
 /// NOTE: In this implementation  INITAREA == NOOP
 /// 

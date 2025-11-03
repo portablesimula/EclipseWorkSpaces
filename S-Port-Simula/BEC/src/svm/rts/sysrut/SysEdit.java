@@ -69,15 +69,11 @@ public abstract class SysEdit {
 		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
 		String sval = ""+val;
 		int nchr = sval.length();
-//		IO.println("SysEdit.PUTINT: "+val+" ===> "+sval);
-//		IO.println("SysEdit.PUTINT: itemAddr="+itemAddr);
-//		IO.println("SysEdit.PUTINT: itemNchr="+itemNchr);
-//		IO.println("SysEdit.PUTINT: nchr="+nchr);
 		if(nchr > itemNchr) {
 			RTUtil.set_STATUS(24); // Text string too short
 		} else {
 			int diff = itemNchr - nchr;
-			RTUtil.move(sval, itemAddr.addOffset(diff), nchr);
+			RTUtil.move(sval, itemAddr.addOffset(diff));
 //			IO.println("SysEdit.PUTINT: diff="+diff);
 			IntegerValue blnk = IntegerValue.of(Type.T_CHAR, ' ');
 			for(int i=diff-1;i>=0;i--) itemAddr.store(i, blnk);
@@ -99,7 +95,7 @@ public abstract class SysEdit {
 		String sval = ""+val;
 		int nchr = sval.length();
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
-		RTUtil.move(sval, itemAddr, nchr);
+		RTUtil.move(sval, itemAddr);
 		RTStack.push(IntegerValue.of(Type.T_INT, nchr));
 		SVM_CALL_SYS.EXIT("PUTINT2: ");
 	}
@@ -117,7 +113,7 @@ public abstract class SysEdit {
 		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
 		
 //		String sval = ""+val;
-		String sval = putfrac(itemNchr, val, n);
+		String sval = putfrac(val, n);
 //		IO.println("SysEdit.putfrac: "+val+", n="+n +" ===> "+sval);
 		
 		int nchr = sval.length();
@@ -128,7 +124,7 @@ public abstract class SysEdit {
 			RTUtil.set_STATUS(24); // Text string too short
 		} else {
 			int diff = itemNchr - nchr;
-			RTUtil.move(sval, itemAddr.addOffset(diff), nchr);
+			RTUtil.move(sval, itemAddr.addOffset(diff));
 //			IO.println("SysEdit.PTFRAC: diff="+diff);
 			IntegerValue blnk = IntegerValue.of(Type.T_CHAR, ' ');
 			for(int i=diff-1;i>=0;i--) itemAddr.store(i, blnk);
@@ -145,11 +141,10 @@ public abstract class SysEdit {
 	/// last one following a DECIMAL MARK. The numeric item is an exact
 	/// representation of the number i * 10**(-n).
 	/// 
-	/// @param T the text reference
 	/// @param val an integer value
 	/// @param n number of digits after a decimal mark
 //	public static void putfrac(final RTS_TXT T, final int val, final int n) {
-	private static String putfrac(final int lng, final int val, final int n) {
+	private static String putfrac(final int val, final int n) {
 		int v; // Scaled value (abs)
 		int d; // Number of digits written
 		int r; // Remaining digits in current group
@@ -244,7 +239,7 @@ public abstract class SysEdit {
 			RTUtil.set_STATUS(24); // Text string too short
 		} else {
 			int diff = itemNchr - nchr;
-			RTUtil.move(sval, itemAddr.addOffset(diff), nchr);
+			RTUtil.move(sval, itemAddr.addOffset(diff));
 			IntegerValue blnk = IntegerValue.of(Type.T_CHAR, ' ');
 			for(int i=diff-1;i>=0;i--) itemAddr.store(i, blnk);
 		}
@@ -269,7 +264,7 @@ public abstract class SysEdit {
 		sval = sval.replace(',', '.').replace('E', '&');
 		int nchr = sval.length();
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
-		RTUtil.move(sval, itemAddr, nchr);
+		RTUtil.move(sval, itemAddr);
 		RTStack.push(IntegerValue.of(Type.T_INT, nchr));
 		SVM_CALL_SYS.EXIT("PTREAL2: ");
 	}
@@ -293,7 +288,7 @@ public abstract class SysEdit {
 			RTUtil.set_STATUS(24); // Text string too short
 		} else {
 			int diff = itemNchr - nchr;
-			RTUtil.move(sval, itemAddr.addOffset(diff), nchr);
+			RTUtil.move(sval, itemAddr.addOffset(diff));
 			IntegerValue blnk = IntegerValue.of(Type.T_CHAR, ' ');
 			for(int i=diff-1;i>=0;i--) itemAddr.store(i, blnk);
 		}
@@ -317,7 +312,7 @@ public abstract class SysEdit {
 		sval = sval.replace(',', '.').replace('E', '&');
 		int nchr = sval.length();
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
-		RTUtil.move(sval, itemAddr, nchr);
+		RTUtil.move(sval, itemAddr);
 		RTStack.push(IntegerValue.of(Type.T_INT, nchr));
 		SVM_CALL_SYS.EXIT("PLREAL2: ");
 	}
@@ -341,7 +336,7 @@ public abstract class SysEdit {
 			RTUtil.set_STATUS(24); // Text string too short
 		} else {
 			int diff = itemNchr - nchr;
-			RTUtil.move(sval, itemAddr.addOffset(diff), nchr);
+			RTUtil.move(sval, itemAddr.addOffset(diff));
 			IntegerValue blnk = IntegerValue.of(Type.T_CHAR, ' ');
 			for(int i=diff-1;i>=0;i--) itemAddr.store(i, blnk);
 		}
@@ -365,7 +360,7 @@ public abstract class SysEdit {
 		sval = sval.replace(',', '.');
 		int nchr = sval.length();
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
-		RTUtil.move(sval, itemAddr, nchr);
+		RTUtil.move(sval, itemAddr);
 		RTStack.push(IntegerValue.of(Type.T_INT, nchr));
 		SVM_CALL_SYS.EXIT("PUTFIX2: ");
 	}
@@ -389,7 +384,7 @@ public abstract class SysEdit {
 			RTUtil.set_STATUS(24); // Text string too short
 		} else {
 			int diff = itemNchr - nchr;
-			RTUtil.move(sval, itemAddr.addOffset(diff), nchr);
+			RTUtil.move(sval, itemAddr.addOffset(diff));
 			IntegerValue blnk = IntegerValue.of(Type.T_CHAR, ' ');
 			for(int i=diff-1;i>=0;i--) itemAddr.store(i, blnk);
 		}
@@ -413,7 +408,7 @@ public abstract class SysEdit {
 		sval = sval.replace(',', '.');
 		int nchr = sval.length();
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
-		RTUtil.move(sval, itemAddr, nchr);
+		RTUtil.move(sval, itemAddr);
 		RTStack.push(IntegerValue.of(Type.T_INT, nchr));
 		SVM_CALL_SYS.EXIT("PUTFIX2: ");
 	}
@@ -433,7 +428,7 @@ public abstract class SysEdit {
 		String sval = "0x" + Integer.toHexString(val).toUpperCase();
 		int nchr = sval.length();
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
-		RTUtil.move(sval, itemAddr, nchr);
+		RTUtil.move(sval, itemAddr);
 		RTStack.push(IntegerValue.of(Type.T_INT, nchr));
 		SVM_CALL_SYS.EXIT("PUTHEX: ");
 	}
@@ -453,7 +448,7 @@ public abstract class SysEdit {
 		String sval = ""+val;
 		int nchr = sval.length();
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
-		RTUtil.move(sval, itemAddr, nchr);
+		RTUtil.move(sval, itemAddr);
 		RTStack.push(IntegerValue.of(Type.T_INT, nchr));
 		SVM_CALL_SYS.EXIT("PUTSIZE: ");
 	}
@@ -472,7 +467,7 @@ public abstract class SysEdit {
 		String sval = (val == null)? "NONE" : ""+val;
 		int nchr = sval.length();
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
-		RTUtil.move(sval, itemAddr, nchr);
+		RTUtil.move(sval, itemAddr);
 		RTStack.push(IntegerValue.of(Type.T_INT, nchr));
 		SVM_CALL_SYS.EXIT("PTOADR2: ");
 	}
@@ -491,7 +486,7 @@ public abstract class SysEdit {
 		String sval = (val == null)? "NOWHERE" : ""+val;
 		int nchr = sval.length();
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
-		RTUtil.move(sval, itemAddr, nchr);
+		RTUtil.move(sval, itemAddr);
 		RTStack.push(IntegerValue.of(Type.T_INT, nchr));
 		SVM_CALL_SYS.EXIT("PTPADR2: ");
 	}
@@ -510,7 +505,7 @@ public abstract class SysEdit {
 		String sval = (val == null)? "NOBODY" : ""+val;
 		int nchr = sval.length();
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
-		RTUtil.move(sval, itemAddr, nchr);
+		RTUtil.move(sval, itemAddr);
 		RTStack.push(IntegerValue.of(Type.T_INT, nchr));
 		SVM_CALL_SYS.EXIT("PTRADR2	: ");
 	}
@@ -529,7 +524,7 @@ public abstract class SysEdit {
 		String sval = (val == null)? "NOFIELD" : ""+val;
 		int nchr = sval.length();
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
-		RTUtil.move(sval, itemAddr, nchr);
+		RTUtil.move(sval, itemAddr);
 		RTStack.push(IntegerValue.of(Type.T_INT, nchr));
 		SVM_CALL_SYS.EXIT("PTAADR2	: ");
 	}
@@ -550,7 +545,7 @@ public abstract class SysEdit {
 		String sval = (val == null)? "GNONE" : ""+val;
 		int nchr = sval.length();
 		if(nchr > itemNchr) Util.IERR("Editing span edit-buffer");
-		RTUtil.move(sval, itemAddr, nchr);
+		RTUtil.move(sval, itemAddr);
 		RTStack.push(IntegerValue.of(Type.T_INT, nchr));
 		SVM_CALL_SYS.EXIT("PTGADR2	: ");
 	}
@@ -563,7 +558,6 @@ public abstract class SysEdit {
 	/// or an approximation to the value of r, correctly rounded to n decimal places.
 	/// If n<0, a run-time error is caused.
 	/// 
-	/// @param T the text reference
 	/// @param r the long real value to be edited
 	/// @param n the number of digits after decimal sign
 	private static String putfix(double r, int n) {
@@ -590,7 +584,6 @@ public abstract class SysEdit {
 	/// 
 	/// See <b>{@link RTS_TXT#putfix(RTS_TXT,double,int)}</b>
 	/// 
-	/// @param T the text reference
 	/// @param r the real value to be edited
 	/// @param n the number of digits after decimal sign
 	private static String putfix(float r, int n) {
@@ -606,7 +599,6 @@ public abstract class SysEdit {
 	/// a DECIMAL ITEM with an INTEGER ITEM of 1 digit only, and a fraction of n-1
 	/// digits. If n<0 a runtime error is caused.
 	/// 
-	/// @param T the text reference
 	/// @param r the long real value to be edited
 	/// @param n the number of digits after decimal sign
 	private static String putreal(double r, int n) {
@@ -633,7 +625,6 @@ public abstract class SysEdit {
 	/// 
 	/// See <b>{@link RTS_TXT#putreal(RTS_TXT,double,int)}</b>
 	/// 
-	/// @param T the text reference
 	/// @param r the real value to be edited
 	/// @param n the number of digits after decimal sign
 	private static String putreal(float r, int n) {

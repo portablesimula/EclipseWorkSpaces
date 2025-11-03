@@ -10,7 +10,7 @@ import bec.scode.Type;
 
 /// Temp Item.
 /// 
-/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/compileTimeStack/AddressItem.java"><b>Source File</b></a>.
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/compileTimeStack/TempItem.java"><b>Source File</b></a>.
 /// 
 /// @author Øystein Myhre Andersen
 public class TempItem extends CTStackItem {

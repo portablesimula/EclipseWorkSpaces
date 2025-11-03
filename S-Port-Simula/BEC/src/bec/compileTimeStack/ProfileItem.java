@@ -21,7 +21,7 @@ public final class ProfileItem extends CTStackItem {
 	public int nasspar;
 	
 	/// Profile item to be pushed onto the Compile-time Stack.
-	/// @param the associated ProfileDescr
+	/// @param spec the associated ProfileDescr
 	public ProfileItem(final ProfileDescr spec) {
 		this.spc = spec;
 		this.nasspar = 0;

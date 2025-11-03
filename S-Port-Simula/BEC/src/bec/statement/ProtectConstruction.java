@@ -17,10 +17,10 @@ import bec.util.Util;
 import svm.instruction.SVM_RESTORE;
 import svm.instruction.SVM_SAVE;
 
-/// S-INSTRUCTION: IF
-///
-/// protect_statement ::= save <program_element>* restore
-///
+/// S-INSTRUCTION: SAVE - RESTORE.
+/// <pre>
+/// protect_statement ::= save < program_element >* restore
+/// </pre>
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/statement/ProtectConstruction.java"><b>Source File</b></a>.
 /// 
@@ -28,28 +28,25 @@ import svm.instruction.SVM_SAVE;
 /// @author Øystein Myhre Andersen
 public class ProtectConstruction {
 
-	/// protect_statement ::= save <program_element>* restore
-	/// 
-	/// End-Condition: Scode'nextByte = First byte after RESTORE  ???
-	///
+	/// Scans the remaining S-Code belonging to this statement.
+	/// Perform the specified operations (which may result in code generation).
 	public static void ofStatement() {
-		// ProtectConstruction(true)
 		doSAVE();
-		
-		Scode.inputInstr();
-		S_Module.programElements();
-//		IO.println("ProtectConstruction.ofStatement: " + Sinstr.edInstr(Scode.curinstr));
-		if(Scode.curinstr != Sinstr.S_RESTORE)
-			Util.IERR("Improper termination of protect-construction");
+			Scode.inputInstr();
+			S_Module.programElements();
+			if(Scode.curinstr != Sinstr.S_RESTORE)
+				Util.IERR("Improper termination of protect-construction");
 		doRESTORE();
 	}
 	
+	/// doSAVE.
+	/// <pre>
 	/// save
 	/// * force TOS value; check TOS type(OADDR);
 	/// * pop;
 	/// * remember stack;
 	/// * purge stack;
-	///
+	/// </pre>
 	/// TOS describes the address of a save-object. The size of this object is as determined by the
 	/// preceding pushlen. The complete state of the stack is remembered (together with the values of
 	/// ALLOCATED and MARKS) and the compilation continues with an empty stack.
@@ -68,12 +65,14 @@ public class ProtectConstruction {
 		Global.PSEG.emit(new SVM_SAVE());
 	}
 	
-	
+	/// doRESTORE.
+	/// <pre>
 	/// restore
 	/// * check TOS ref; check TOS type(OADDR);
 	/// * push(onone); perform assign;
 	/// * check stack empty;
 	/// * reestablish stack remembered at corresponding save;
+	/// </pre>
 	///
 	/// The stack remembered by the corresponding save is reestablished (together with the attributes
 	/// ALLOCATED and MARKS).
@@ -94,17 +93,13 @@ public class ProtectConstruction {
 		Global.PSEG.emit(new SVM_RESTORE());
 	}
 
-	/// protect_instruction ::= save <instruction>* restore
-	/// 
-	/// End-Condition: Scode'nextByte = First byte after RESTORE  ???
-	///
+	/// Scans the remaining S-Code belonging to this instruction.
+	/// Perform the specified operations (which may result in code generation).
 	public static void ofInstruction() {
 		doSAVE();
-		
-		do Scode.inputInstr(); while(Instruction.inInstruction());
-
-		if(Scode.curinstr != Sinstr.S_RESTORE)
-			Util.IERR("Improper termination of protect-construction");
+			do Scode.inputInstr(); while(Instruction.inInstruction());
+			if(Scode.curinstr != Sinstr.S_RESTORE)
+				Util.IERR("Improper termination of protect-construction");
 		doRESTORE();
 	}
 	

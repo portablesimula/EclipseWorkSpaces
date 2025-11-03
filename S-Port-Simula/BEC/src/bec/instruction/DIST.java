@@ -10,15 +10,15 @@ import bec.compileTimeStack.CTStack;
 import bec.scode.Type;
 import svm.instruction.SVM_DIST;
 
-/// S-INSTRUCTION: DIST
-///
+/// S-INSTRUCTION: DIST.
+/// <pre>
 /// addressing_instruction ::= dist (dyadic)
 ///
 /// force TOS value; check TOS type(OADDR);
 /// force SOS value; check SOS type(OADDR);
 /// pop; pop;
 /// push( VAL, SIZE, "value(SOS) - value(TOS)" );
-/// 
+/// </pre>
 /// TOS and SOS are replaced by a description of the signed distance from TOS to SOS.
 /// 
 /// 

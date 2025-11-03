@@ -9,12 +9,13 @@ import bec.compileTimeStack.CTStack;
 import bec.descriptor.Display;
 import bec.scode.Tag;
 
-/// S-INSTRUCTION: DELETE
-///
+/// S-INSTRUCTION: DELETE.
+/// <pre>
 /// delete_statement ::= delete from:tag
 /// 
 /// check stacks empty;
-/// 
+/// </pre>
+///
 /// All tags defined with values greater than or equal to from:tag are made undefined, i.e. the
 /// corresponding descriptors may be released. The tags become available for reuse. The stack and all
 /// saved stacks must be empty, otherwise: error.

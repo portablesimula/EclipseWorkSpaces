@@ -11,21 +11,21 @@ import bec.scode.Relation;
 import bec.scode.Type;
 import svm.instruction.SVM_COMPARE;
 
-/// S-INSTRUCTION: COMPARE
-///
+/// S-INSTRUCTION: COMPARE.
+/// <pre>
 /// arithmetic_instruction ::= compare relation
+///
+/// 	relation ::= ?lt | ?le | ?eq | ?ge | ?gt | ?ne
 /// 
 /// force TOS value; force SOS value;
 /// check relation;
 /// pop; pop;
 /// push( VAL, BOOL, "value(SOS) rel value(TOS)" );
+/// </pre>
+/// TOS and SOS replaced by a description of the boolean result of evaluating the relation.
+/// <br>SOS is always the left operand, i.e. SOS rel TOS.
 /// 
-/// TOS and SOS replaced by a description of the boolean result of evaluating the relation. SOS is always
-/// the left operand, i.e. SOS rel TOS.
-/// 
-/// relation ::= ?lt | ?le | ?eq | ?ge | ?gt | ?ne
 ///
-/// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/COMPARE.java"><b>Source File</b></a>.
 /// 
 /// @author S-Port: Definition of S-code

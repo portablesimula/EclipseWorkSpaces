@@ -18,7 +18,7 @@ import bec.util.AttributeOutputStream;
 /// Attribute descriptor.
 ///
 /// S-CODE:
-///
+/// <pre>
 /// attribute_definition
 ///		::= attr attr:newtag quantity_descriptor
 ///
@@ -32,7 +32,7 @@ import bec.util.AttributeOutputStream;
 ///				resolved_structure ::= structured_type < fixrep count:ordinal >?
 ///
 ///					structured_type ::= record_tag:tag
-/// 
+/// </pre>
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/descriptor/Attribute.java"><b>Source File</b></a>.
 /// 
 /// @author S-Port: Definition of S-code

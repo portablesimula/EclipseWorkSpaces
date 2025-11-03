@@ -96,7 +96,7 @@ public final class BecCompiler {
 	/// 		::= interface_module
 	/// 		::= macro_definition_module
 	/// 		::= <module_definition>*
-	/// 		::= main <local_quantity>* <program_element>*
+	/// 		::= main <local_quantity>* < program_element >*
 	///
 	public BecCompiler(final String scodeSource) {
 		if(Option.verbose) Util.println("BEC: Start BecCompiler with " + scodeSource);

@@ -44,6 +44,7 @@ public final class Scanner {
 
 	/// Scan source and return the next token: Identifier, Number or Character
 	/// @return next token
+    /// @throws IOException if an I/O error occurs
 	public Object nextToken() throws IOException {
     	while(true)	{
     		if(Character.isLetter(getNext())) return(scanIdentifier());
@@ -62,6 +63,7 @@ public final class Scanner {
 
 	/// Scan source and return an Integer Number
 	/// @return next token
+    /// @throws IOException if an I/O error occurs
     private Integer scanNumber() throws IOException {
        	StringBuilder number=new StringBuilder();
     	
@@ -72,7 +74,7 @@ public final class Scanner {
     	return Integer.decode(number.toString());
     }
 
-	/// Scan source and return an Identifier String
+	/// Scan source and return an Identifier String.
     /// <pre>
     /// Reference-Syntax:
     /// 
@@ -83,7 +85,7 @@ public final class Scanner {
     ///                getNext will return first character after construct
     /// </pre>
     /// @return the resulting identifier
-    /// @throws IOException 
+    /// @throws IOException if an I/O error occurs
     ////
     private String scanIdentifier() throws IOException {
     	StringBuilder name=new StringBuilder();
@@ -107,7 +109,7 @@ public final class Scanner {
     
     /// Returns next input character.
     /// @return next input character
-    /// @throws IOException 
+    /// @throws IOException if an I/O error occurs
     ///
     private int getNext() throws IOException {
     	if(puchBackStack.empty()) {

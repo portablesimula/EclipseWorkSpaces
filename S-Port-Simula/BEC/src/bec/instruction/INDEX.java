@@ -16,8 +16,8 @@ import svm.instruction.SVM_LOADC;
 import svm.instruction.SVM_MULT;
 import svm.value.IntegerValue;
 
-/// S-INSTRUCTION: INDEX
-///
+/// S-INSTRUCTION: INDEX.
+/// <pre>
 /// addressing_instruction ::= ::= index | indexv
 /// 
 /// force TOS value; check TOS type(INT);
@@ -27,7 +27,7 @@ import svm.value.IntegerValue;
 /// TOS.OFFSET := SOS.OFFSET + "SOS.SIZE * value(TOS)"
 ///
 /// If instruction indexv: force TOS value.
-/// 
+/// </pre>
 /// SOS is considered to describe an element of a repetition, and the purpose of the instruction is to
 /// select one of the components of the repetition by indexing relative to the current position. The
 /// effect may perhaps best be understood by considering an infinite array A with elements of

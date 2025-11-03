@@ -26,8 +26,8 @@ import svm.value.StringValue;
 import svm.value.TextValue;
 import svm.value.Value;
 
-/// S-INSTRUCTION: PUSHC
-///
+/// S-INSTRUCTION: PUSHC.
+/// <pre>
 /// stack_instruction ::= pushc value
 /// 
 ///	 value
@@ -65,11 +65,10 @@ import svm.value.Value;
 /// 		::= c-record structured_type
 /// 			<attribute_value>+ endrecord
 /// 
-/// End-Condition: Scode'nextByte = First byte after the value
 /// 
 /// pushc constant:value
 /// push( VAL, constant.TYPE, "value" );
-/// 
+/// </pre>
 /// A descriptor of the given value is pushed onto the stack.
 /// 
 /// 

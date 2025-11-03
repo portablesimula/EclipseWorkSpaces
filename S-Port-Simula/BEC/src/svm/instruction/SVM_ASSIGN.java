@@ -63,17 +63,15 @@ public class SVM_ASSIGN extends SVM_Instruction {
 
 	@Override
 	public void execute() {
-//		try {
-		Vector<Value> values = RTStack.pop(size);
+		Vector<Value> values = RTStack.popx(size);
 		int idx = (! objadr.indexed)? 0 : RTStack.popInt();
 		ObjectAddress addr = objadr.toRTMemAddr();
 		int n = size;
 		for(int i=0;i<size;i++)
 			addr.store(idx + i, values.get((--n)));
-		if(update) RTStack.pushx(values);
-//		} catch(Exception e) {
-//			e.printStackTrace();
-//		}
+		if(update) {
+			RTStack.pushx(values);
+		}
 				
 		Global.PSC.ofst++;
 	}

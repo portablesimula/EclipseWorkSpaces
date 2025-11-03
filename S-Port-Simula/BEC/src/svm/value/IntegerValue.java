@@ -37,8 +37,8 @@ import svm.segment.DataSegment;
 ///			< <radix> R>? <sign>? <digit>+
 ///
 ///		where digit is one of the (ISO coded) decimal digits, and sign may be + or -. The letter R, if included,
-//		signals that the integer is specified with a radix preceding R. The only legal radices are 2, 4, 8 and 16.
-///		If the radix is 16, <digit> may also be one of the (ISO-coded) letters A-F, with the obvious meaning.///
+///		signals that the integer is specified with a radix preceding R. The only legal radices are 2, 4, 8 and 16.
+///		If the radix is 16, <digit> may also be one of the (ISO-coded) letters A-F, with the obvious meaning.
 ///
 ///		Note that an integer literal may not contain spaces.
 ///

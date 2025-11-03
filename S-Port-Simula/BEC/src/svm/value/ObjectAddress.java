@@ -52,7 +52,7 @@ public class ObjectAddress extends Value {
 	public static final int STACK_ADDR  = 5; // Stack relative Address
 	
 	/// Construct a new ObjectAddress with the given parameters
-	/// @param base the address kind
+	/// @param kind the address kind
 	/// @param segID the Segment ident when kind SEGMNT_ADDR
 	/// @param ofst The offset
 	/// @param indexed Signals 'indexed' address. In that case an index offset is pushed to the runtime stack.

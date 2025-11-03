@@ -11,13 +11,13 @@ import bec.compileTimeStack.ProfileItem;
 import bec.util.Util;
 import svm.instruction.SVM_POPK;
 
-/// S-INSTRUCTION: POP
-///
+/// S-INSTRUCTION: POP.
+/// <pre>
 /// stack_instruction ::= pop
 /// 
 /// Pop off TOS;
 /// This instruction is illegal if TOS is a profile description.
-/// 
+/// </pre>
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/POP.java"><b>Source File</b></a>.
 /// 

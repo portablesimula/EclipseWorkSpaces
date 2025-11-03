@@ -1,2 +1,2 @@
-/// S-Port BEC System Routines.
+/// S-Port SVM System Routines.
 package svm.rts.sysrut;

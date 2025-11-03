@@ -11,14 +11,15 @@ import bec.compileTimeStack.CTStackItem;
 import bec.scode.Type;
 import svm.instruction.SVM_CONVERT;
 
-/// S-INSTRUCTION: CONVERT
-///
+/// S-INSTRUCTION: CONVERT.
+/// <pre>
 /// convert_instruction ::= convert simple_type
 /// 
 /// TOS must be of simple type, otherwise: error.
 /// 
-/// The TYPE of TOS is changed to the type specified in the instruction, this may imply code generation.
-/// 
+/// The TYPE of TOS is changed to the type specified in the instruction,
+/// this may imply code generation.
+/// </pre> 
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/CONVERT.java"><b>Source File</b></a>.
 /// 

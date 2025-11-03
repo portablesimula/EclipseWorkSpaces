@@ -34,7 +34,7 @@ public final class ModuleDefinition extends S_Module {
 	
 	/// 	module_definition ::= module module_id:string check_code:string
 	/// 							visible_existing
-	/// 							body <local_quantity>* <program_element>* endmodule
+	/// 							body <local_quantity>* < program_element >* endmodule
 	/// 
 	/// 		visible_existing ::= <visible>* tag_list | existing
 	/// 
@@ -109,7 +109,7 @@ public final class ModuleDefinition extends S_Module {
 	/// 		::= constant_specification | insert_statement
 	/// 		::= info_setting
 	///
-	/// @result true if a 'visible' was encountered
+	/// @return true if a 'visible' was encountered
 	private static boolean viisible() {
 		switch(Scode.curinstr) {
 			case Sinstr.S_CONSTSPEC:		ConstDescr.ofConstSpec(); break;

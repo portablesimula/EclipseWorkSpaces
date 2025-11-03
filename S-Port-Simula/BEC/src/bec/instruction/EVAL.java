@@ -5,10 +5,10 @@
 /// page: https://creativecommons.org/licenses/by/4.0/
 package bec.instruction;
 
-/// S-INSTRUCTION: EVAL
-///
+/// S-INSTRUCTION: EVAL.
+/// <pre>
 /// eval_instruction ::= eval
-///
+/// </pre>
 /// NOTE: In this implementation  EVAL == NOOP
 /// 
 /// 

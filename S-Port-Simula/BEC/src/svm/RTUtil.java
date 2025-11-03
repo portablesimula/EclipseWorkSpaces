@@ -5,7 +5,6 @@
 /// page: https://creativecommons.org/licenses/by/4.0/
 package svm;
 
-import bec.Global;
 import bec.Option;
 import bec.scode.Type;
 import bec.util.Util;
@@ -15,33 +14,47 @@ import svm.value.IntegerValue;
 import svm.value.ObjectAddress;
 import svm.value.Value;
 
+/// Runtime Utilities.
+///
+///
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/RTUtil.java"><b>Source File</b></a>.
+/// 
+/// @author Øystein Myhre Andersen
 public class RTUtil {
-	public static DataSegment DSEG_RT;
-	public static int offset_CURINS = 0;
-	public static int offset_STATUS = 1;
-	public static int offset_ITSIZE = 2;
 	
+	/// Points to RTS-Module RT's DataSegment
+	private static DataSegment DSEG_RT;
+	
+	/// Current Decimal mark character
 	public static int CURRENTDECIMALMARK;
+	
+	/// Current lowten character
 	public static int CURRENTLOWTEN;
 	
-	public static void INIT() {
+	/// Initiate local data
+	public static void init() {
 		DSEG_RT = (DataSegment) Segment.lookup("DSEG_RT");
 		CURRENTDECIMALMARK = '.';
 		CURRENTLOWTEN = '&';
 	}
 	
+	/// Update the 'itemSize' variable in RTS-Module RT.
+	/// @param itemSize the new value
 	public static void set_ITEM_SIZE(int itemSize) {
-//		DSEG_RT.dump("SysDeEdit.set_ITEM_SIZE(1) ", 0, 10);
+		int offset_ITSIZE = 2;
 		DSEG_RT.store(offset_ITSIZE, IntegerValue.of(Type.T_SIZE, itemSize));	
-//		DSEG_RT.dump("SysDeEdit.set_ITEM_SIZE(2) ", 0, 10);
 	}
 	
+	/// Update the 'status' variable in RTS-Module RT.
+	/// @param status the new value
 	public static void set_STATUS(int status) {
 		if(Option.verbose) IO.println("RTUtil.set_STATUS: " + status + "  " + edStatus(status));
-//		Thread.dumpStack();
+		int offset_STATUS = 1;
 		DSEG_RT.store(offset_STATUS, IntegerValue.of(Type.T_INT, status));	
 	}
 	
+	/// Return the String description of the given 'status'
+	/// @param status the status text
 	public static String edStatus(int status) {
 		switch(status) {
 			case 0: return"(not used)";
@@ -197,6 +210,9 @@ public class RTUtil {
 //	       size lng;
 //	 end;
 	
+	/// Returns the length of an Entity
+	/// @param ent the Entity
+	/// @return the length of an Entity
 	public static int length(ObjectAddress ent) {
 		IntegerValue sort = (IntegerValue) ent.addOffset(1).load(0);
 		Value variant = ent.addOffset(3).load(0);
@@ -214,6 +230,8 @@ public class RTUtil {
 		}
 	}
 	
+	/// Debug utility: Dump an Entity
+	/// @param ent the Entity
 	public static void dumpEntity(ObjectAddress ent) {
 		IntegerValue sort = (IntegerValue) ent.addOffset(1).load(0);
 		int lng = length(ent);
@@ -234,6 +252,9 @@ public class RTUtil {
 //	 begin range(0:MAX_BYT)   ncha;
 //	       character          cha(0);
 //	 end;
+	/// Returns the Entity's ident
+	/// @param ent the Entity
+	/// @return the Entity's ident
 	public static String entID(ObjectAddress ent) {
 		try {
 		IntegerValue sort = (IntegerValue) ent.addOffset(1).load(0);
@@ -252,7 +273,11 @@ public class RTUtil {
 		}
 	}
 	
-	public static String edIDT(ObjectAddress idt, int ncha) {
+	/// Returns an 'idfier' String
+	/// @param idr address to the first character
+	/// @param ncha the number of characters
+	/// @return an 'idfier' String
+	private static String edIDT(ObjectAddress idt, int ncha) {
 		StringBuilder sb = new StringBuilder();
 		for(int i=0;i<ncha;i++) {
 			IntegerValue cha = (IntegerValue) idt.addOffset(i).load(0);
@@ -261,6 +286,8 @@ public class RTUtil {
 		return sb.toString();		
 	}
 	
+	/// Debug utility: Print an Entity
+	/// @param ent the Entity
 	public static boolean printEntity(ObjectAddress ent) {
 		ObjectAddress sl = (ObjectAddress) ent.load(0);
 		IntegerValue sort = (IntegerValue) ent.addOffset(1).load(0);
@@ -291,13 +318,7 @@ public class RTUtil {
 				lngVal = (IntegerValue) variant;
 				IO.println(""+ent.addOffset(3) + ": LNG   " + lngVal);
 				IO.println(""+ent.addOffset(4) + ": TXT   \"" + edIDT(ent.addOffset(4), lngVal.value) + '"');
-				
-//				lngVal = (IntegerValue) variant;
-//				lng = lngVal.value + 4;
-//				bdx = 4;
-				
 				lng = 0;
-//				Util.IERR("");
 				break;
 			default:
 				lngVal = (IntegerValue) variant;
@@ -310,18 +331,18 @@ public class RTUtil {
 		for(int i=bdx;i<lng;i++) {
 			IO.println(""+ent.addOffset(i) + ": BODY  " + ent.addOffset(i).load(0));
 		}
-//		IO.println("============ Entity " + edSort(sort.value) + " ============");
 		return true;
 	}
 	
+	/// Debug utility: Dump current instance
 	public static void dumpCurins() {
 		DataSegment rt = (DataSegment) Segment.lookup("DSEG_RT");
 		ObjectAddress curins = (ObjectAddress) rt.load(0);
 		IO.println("RTUtil.dumpCurins: curins=" + curins);
 		if(curins != null) RTUtil.printEntity(curins);
-//		Util.IERR("");
 	}
 	
+	/// Debug utility: Print current instance
 	public static void printCurins() {
 		DataSegment rt = (DataSegment) Segment.lookup("DSEG_RT");
 		ObjectAddress curins = (ObjectAddress) rt.load(0);
@@ -338,11 +359,12 @@ public class RTUtil {
 //          short integer sequ;    -- Sequence number (1,2, ... )
 //    end;
 
+	/// Debug utility: Print a complete Pool
+	/// @param segID the Segment ident of the Pool
 	public static void printPool(String segID) {
 		DataSegment dseg = (DataSegment) Segment.lookup(segID);
 		dseg.dump("POOL_1: " , 0, 40);
 
-//		ObjectAddress pool = new ObjectAddress(segID, 0);
 		ObjectAddress pool = ObjectAddress.ofSegAddr(dseg, 0);
 		ObjectAddress suc = (ObjectAddress) pool.load(0);
 		ObjectAddress nxt = (ObjectAddress) pool.addOffset(1).load(0);
@@ -360,7 +382,6 @@ public class RTUtil {
 		IO.println(""+pool.addOffset(5) + ": MINGAP   " + mingap);
 		IO.println(""+pool.addOffset(6) + ": SEQU     " + sequ);
 		
-//		ObjectAddress ent = new ObjectAddress(segID, 7);
 		ObjectAddress ent = ObjectAddress.ofSegAddr(dseg, 7);
 		
 		try {
@@ -413,13 +434,10 @@ public class RTUtil {
 //	       infix(string)          errmsg;   -- NOT in bioptp'refvec
 //	 end;
 	
+	/// Debug utility: Print BASICIO
 	public static void printBasicIO() {
 		DataSegment dseg = (DataSegment) Segment.lookup("DSEG_RT");
-//		ObjectAddress ent = new ObjectAddress("DSEG_RT", 0);
 		ObjectAddress ent = ObjectAddress.ofSegAddr(dseg, 0);
-		
-//		dseg.dump("BasicIO ", 30, 60);
-		
 		IO.println("============ print BasicIO ============ " + dseg.size());
 		int idx = 30;
 		prt(dseg, ent, " SL      ", idx++);
@@ -494,12 +512,14 @@ public class RTUtil {
 		IO.println("============ endof BasicIO ============");
 	}
 	
+	/// Internal utility
 	private static void prt(DataSegment dseg, ObjectAddress ent, String ident, int ofst) {
 		Value value = dseg.load(ofst);
 		IO.println(""+ent.addOffset(ofst) + ": " + ident + " " + value);
 		
 	}
 	
+	/// Debug utility: Print DSEG_RRT
 	public static void printDSEG_RT() {
 		DataSegment dseg = (DataSegment) Segment.lookup("DSEG_RT");
 //		ObjectAddress ent = new ObjectAddress("DSEG_RT", 0);
@@ -544,6 +564,9 @@ public class RTUtil {
 		IO.println("============ endof DSEG_RT ============");
 	}
 	
+	/// Edit and return the entity sort
+	/// @param sort the entity sort
+	/// @return the entity sort
 	public static String edSort(int sort) {
 		switch(sort) {
 			case S_NOSORT: return("S_NOSORT"); //  no sort
@@ -573,16 +596,23 @@ public class RTUtil {
 		return("UNKNOWN");
 	}
 	
-	
-	public static void move(String src, ObjectAddress dst, int count) {
-		for(int i=0;i<count;i++) {
+	/// Move a String's characters to an area starting at 'dst'
+	/// @param src the source String
+	/// @param dst the start of the destination area
+	public static void move(String src, ObjectAddress dst) {
+		int lng = src.length();
+		for(int i=0;i<lng;i++) {
 			Value x = IntegerValue.of(Type.T_CHAR, src.charAt(i));
 			dst.store(i, x); //into.incrOffset();
 		}
 	}
 	
-	public static void move(ObjectAddress src, ObjectAddress dst, int count) {
-		for(int i=0;i<count;i++) {
+	/// Move values from one area to another.
+	/// @param src the start of the source area
+	/// @param dst the start of the destination area
+	/// @param lng the length of the areas
+	public static void move(ObjectAddress src, ObjectAddress dst, int lng) {
+		for(int i=0;i<lng;i++) {
 			Value x = src.load(i);
 			dst.store(i, x); //into.incrOffset();
 		}

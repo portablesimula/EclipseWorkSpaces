@@ -12,6 +12,7 @@ import java.util.Vector;
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/util/Array.java"><b>Source File</b></a>.
 /// 
+/// @param <E> Type of Array elements
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 @SuppressWarnings("serial")
@@ -32,7 +33,7 @@ public class Array<E> extends Vector<E> {
 	/// If necessary, the size of the underlying Vector is increased.
 	///
 	/// @param index index of the element to replace
-	/// @param element element to be stored at the specified position
+	/// @param elt element to be stored at the specified position
 	/// @return the element previously at the specified position
 	/// @throws ArrayIndexOutOfBoundsException if the index is out of range: index < 0
 	public E set(final int index, final E elt) {

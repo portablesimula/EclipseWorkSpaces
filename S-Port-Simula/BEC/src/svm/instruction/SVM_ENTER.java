@@ -36,15 +36,15 @@ public class SVM_ENTER extends SVM_Instruction {
 	@Override
 	public void execute() {
 		CallStackFrame callStackItem = RTStack.precallStack.pop();
-		ProgramAddress curAddr = Global.PSC.copy();
-		callStackItem.curAddr = curAddr;
+		ProgramAddress rutAddr = Global.PSC.copy();
+		callStackItem.rutAddr = rutAddr;
 		callStackItem.localSize = localSize;
 		RTStack.callStack.push(callStackItem);
 		for(int i=0;i<localSize;i++) {
 			RTStack.push(null);
 		}
 		if(Option.EXEC_TRACE > 2)
-			callStackItem.dump(""+curAddr+": ENTER: " + rutIdent + ", localSize=" + localSize);
+			callStackItem.dump(""+rutAddr+": ENTER: " + rutIdent + ", localSize=" + localSize);
 		if(Option.CALL_TRACE_LEVEL > 0) {
 			RTStack.printCallTrace("SVM_ENTER.execute: ENTER " + rutIdent + ", localSize=" + localSize);
 		}

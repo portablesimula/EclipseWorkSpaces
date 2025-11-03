@@ -30,17 +30,18 @@ import svm.value.Value;
 /// Routine descriptor.
 ///
 /// S-CODE:
-///
+/// <pre>
 /// 	routine_specification
 ///			::= routinespec body:newtag profile:tag
 ///
 /// 	routine_definition
 /// 		::= routine body:spectag profile:tag
-///			 <local_quantity>* <instruction>* en///routine
+///			 < local_quantity >* < instruction >* endroutine
 ///
 ///			local_quantity
 ///				::= local var:newtag quantity_descriptor
-/// 
+/// </pre>
+///
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/descriptor/RoutineDescr.java"><b>Source File</b></a>.
 /// 
 /// @author S-Port: Definition of S-code
@@ -97,7 +98,7 @@ public class RoutineDescr extends Descriptor {
 	/// Scans the remaining S-Code (if any) belonging to this descriptor.
 	/// Then construct a new Attribute instance.
 	/// @return an RoutineDescr instance.
-	public static void ofRoutineDef() {
+	public static RoutineDescr ofRoutineDef() {
 		Tag tag = Tag.ofScode();
 		Tag prftag = Tag.ofScode();
 		
@@ -155,6 +156,7 @@ public class RoutineDescr extends Descriptor {
 		if(rut.PSEG != null) Global.routineSegments.add(rut.PSEG);
 		
 		Global.PSEG = prevPSEG;
+		return rut;
 	}
 	
 	@Override

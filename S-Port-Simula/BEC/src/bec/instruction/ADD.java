@@ -10,8 +10,8 @@ import bec.compileTimeStack.CTStack;
 import bec.compileTimeStack.CTStackItem;
 import svm.instruction.SVM_ADD;
 
-/// S-INSTRUCTION: ADD
-///
+/// S-INSTRUCTION: ADD.
+/// <pre>
 /// arithmetic_instruction ::= add (dyadic)
 /// 
 /// force TOS value; check TOS type(INT,REAL,LREAL);
@@ -20,10 +20,9 @@ import svm.instruction.SVM_ADD;
 /// 
 /// pop; pop;
 /// push( VAL, type, "value(SOS) + value(TOS)" );
-/// 
-/// SOS and TOS are replaced by a description of the value of the application of the operator. The
-/// type of the result is the same as the type of the operands. SOS is always the left operand, i.e.
-/// SOS + TOS. All arithmetic on subranges of INT should be performed in full integer arithmetic. 
+/// </pre>
+/// SOS and TOS are replaced by a description of the value of the application of the operator.
+/// <br>The type of the result is the same as the type of the operands.
 /// 
 /// 
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/bec/instruction/ADD.java"><b>Source File</b></a>.

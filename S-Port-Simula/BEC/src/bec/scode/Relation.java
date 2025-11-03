@@ -96,9 +96,9 @@ public class Relation {
 	}
 	
 	/// Compare two integer values according to the given relation.
-	/// @param lhs the left hand value
+	/// @param LHS the left hand value
 	/// @param relation one of: LT, LE, EQ, GE, GT, NE
-	/// @param rhs the right hand value
+	/// @param RHS the right hand value
 	/// @return true if the relation holds
 	public static boolean compare(final int LHS, final int relation, final int RHS) {
 		boolean res = false;

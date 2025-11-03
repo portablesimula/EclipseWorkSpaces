@@ -21,7 +21,7 @@ import svm.value.Value;
 /// 
 /// @author Øystein Myhre Andersen
 public final class CTStack {
-	/// Current Compil-time Stack.
+	/// Current Compile-time Stack.
 	private static NamedStack<CTStackItem> stack = new NamedStack<CTStackItem>("MAIN");
 	
 	/// Stack of saved SAVE-RESTORE Stacks
@@ -206,13 +206,13 @@ public final class CTStack {
 	}
 
 	/// Convenient method: checkTosType
-	/// @param type the type to be checked for
+	/// @param t the type to be checked for
 	public static void checkTosType(final Type t) {
 		if(Option.debugMode) if(TOS().type != t) STKERR("Illegal type of TOS: " + TOS().type + " expected: " + t);
 	}
 
 	/// Convenient method: checkSosType
-	/// @param type the type to be checked for
+	/// @param t the type to be checked for
 	public static void checkSosType(Type t) {
 		if(Option.debugMode) 
 			if(SOS().type != t) STKERR("Illegal type of TOS");
