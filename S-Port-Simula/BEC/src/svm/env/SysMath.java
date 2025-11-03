@@ -23,7 +23,7 @@ import svm.value.RealValue;
 /// The routines correspond to the similarly named SIMULA Standard functions.
 ///
 ///
-/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/rts/stsrut/SysMath.java"><b>Source File</b></a>.
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/env/SysMath.java"><b>Source File</b></a>.
 /// 
 /// @author Simula Standard
 /// @author S-Port: The Environment Interface
@@ -40,7 +40,7 @@ public abstract class SysMath {
 	/// 	   ..., arg →
 	/// 	   ..., result
 	///
-	/// The result is the value of the argument incremented by the smallest positive value,
+	/// The result, which is pushed onto the Runtime stack, is the value of the argument incremented by the smallest positive value,
 	/// such that the result is not equal to the argument within the precision of the implementation.
 	///
 	/// Thus, for all positive values of "eps",
@@ -64,7 +64,7 @@ public abstract class SysMath {
 	/// 	   ..., arg →
 	/// 	   ..., result
 	///
-	/// The result is the value of the argument incremented by the smallest positive value,
+	/// The result, which is pushed onto the Runtime stack, is the value of the argument incremented by the smallest positive value,
 	/// such that the result is not equal to the argument within the precision of the implementation.
 	///
 	/// Thus, for all positive values of "eps",
@@ -88,7 +88,7 @@ public abstract class SysMath {
 	/// 	   ..., arg →
 	/// 	   ..., result
 	///
-	/// The result is the value of the argument decremented by the smallest positive value,
+	/// The result, which is pushed onto the Runtime stack, is the value of the argument decremented by the smallest positive value,
 	/// such that the result is not equal to the argument within the precision of the implementation.
 	///
 	/// Thus, for all positive values of "eps",
@@ -112,7 +112,7 @@ public abstract class SysMath {
 	/// 	   ..., arg →
 	/// 	   ..., result
 	///
-	/// The result is the value of the argument decremented by the smallest positive value,
+	/// The result, which is pushed onto the Runtime stack, is the value of the argument decremented by the smallest positive value,
 	/// such that the result is not equal to the argument within the precision of the implementation.
 	///
 	/// Thus, for all positive values of "eps",
@@ -136,7 +136,7 @@ public abstract class SysMath {
 	/// 	   ..., b, x →
 	/// 	   ..., result
 	///
-	/// The result is the value of the argument 'b' raised to the 'x' power
+	/// The result, which is pushed onto the Runtime stack, is the value of the argument 'b' raised to the 'x' power
 	///
 	public static void iipowr() {
 		SVM_CALL_SYS.ENTER("IIPOWR: ", 1, 2); // exportSize, importSize
@@ -164,7 +164,7 @@ public abstract class SysMath {
 	///
 	/// where operand1 is the dividend and operand2 is the divisor.
 	///
-	/// The result is the remainder when operand1 is divided by operand2. 
+	/// The result, which is pushed onto the Runtime stack, is the remainder when operand1 is divided by operand2. 
 	///
 	/// Simula Standard:
 	///
@@ -232,7 +232,7 @@ public abstract class SysMath {
 	/// 	   ..., b, x →
 	/// 	   ..., result
 	///
-	/// The result is the value of the argument 'b' raised to the 'x' power
+	/// The result, which is pushed onto the Runtime stack, is the value of the argument 'b' raised to the 'x' power
 	///
 	public static void ripowr() {
 		SVM_CALL_SYS.ENTER("RIPOWR: ", 1, 2); // exportSize, importSize
@@ -252,7 +252,7 @@ public abstract class SysMath {
 	/// 	   ..., b, x →
 	/// 	   ..., result
 	///
-	/// The result is the value of the argument 'b' raised to the 'x' power
+	/// The result, which is pushed onto the Runtime stack, is the value of the argument 'b' raised to the 'x' power
 	///
 	public static void rrpowr() {
 		SVM_CALL_SYS.ENTER("RRPOWR: ", 1, 2); // exportSize, importSize
@@ -272,7 +272,7 @@ public abstract class SysMath {
 	/// 	   ..., b, x →
 	/// 	   ..., result
 	///
-	/// The result is the value of the argument 'b' raised to the 'x' power
+	/// The result, which is pushed onto the Runtime stack, is the value of the argument 'b' raised to the 'x' power
 	///
 	public static void dipowr() {
 		SVM_CALL_SYS.ENTER("DIPOWR: ", 1, 2); // exportSize, importSize
@@ -292,7 +292,7 @@ public abstract class SysMath {
 	/// 	   ..., b, x →
 	/// 	   ..., result
 	///
-	/// The result is the value of the argument 'b' raised to the 'x' power
+	/// The result, which is pushed onto the Runtime stack, is the value of the argument 'b' raised to the 'x' power
 	///
 	public static void ddpowr() {
 		SVM_CALL_SYS.ENTER("DDPOWR: ", 1, 2); // exportSize, importSize
@@ -313,8 +313,17 @@ public abstract class SysMath {
 // Visible sysroutine("DCMARK") DECMRK;
 // import character c  end;
 
-// Visible sysroutine ("RSQROO") RSQROO;
-// import real arg; export real val  end;
+	/// Real Square root
+	///
+	///		Visible sysroutine("RSQROO") RSQROO;
+	///		import real arg; export real val  end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., arg →
+	/// 	   ..., result
+	///
+	/// The result, which is pushed onto the Runtime stack, is the Square root of the argument 'arg'
+	///
 	public static void rsqroo() {
 		SVM_CALL_SYS.ENTER("RSQROO: ", 1, 1); // exportSize, importSize
 		float r = RTStack.popReal();
@@ -323,8 +332,17 @@ public abstract class SysMath {
 		SVM_CALL_SYS.EXIT("RSQROO: ");
 	}
 
-// Visible sysroutine("SQROOT") SQROOT;
-// import long real arg; export long real val  end;
+	/// Long real Square root
+	///
+	///		Visible sysroutine("SQROOT") SQROOT;
+	///		import long real arg; export long real val  end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., arg →
+	/// 	   ..., result
+	///
+	/// The result, which is pushed onto the Runtime stack, is the Square root of the argument 'arg'
+	///
 	public static void sqroot() {
 		SVM_CALL_SYS.ENTER("SQROOT: ", 1, 1); // exportSize, importSize
 		double r = RTStack.popLongReal();
@@ -333,8 +351,17 @@ public abstract class SysMath {
 		SVM_CALL_SYS.EXIT("SQROOT: ");
 	}
 
-// Visible sysroutine ("RLOGAR") RLOGAR;
-// import real arg; export real val  end;
+	/// Real natural logarithm 
+	///
+	///		Visible sysroutine("RLOGAR") RLOGAR;
+	///		import real arg; export real val  end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., arg →
+	/// 	   ..., result
+	///
+	/// The result, which is pushed onto the Runtime stack, is the Logaritms of the argument 'arg'
+	///
 	public static void rlogar() {
 		SVM_CALL_SYS.ENTER("RLOGAR: ", 1, 1); // exportSize, importSize
 		float r = RTStack.popReal();
@@ -343,8 +370,17 @@ public abstract class SysMath {
 		SVM_CALL_SYS.EXIT("RLOGAR: ");
 	}
 
-// Visible sysroutine("LOGARI") LOGARI;
-// import long real arg; export long real val  end;
+	/// Long real  natural logarithm 
+	///
+	///		Visible sysroutine("LOGARI") LOGARI;
+	///		import real arg; export real val  end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., arg →
+	/// 	   ..., result
+	///
+	/// The result, which is pushed onto the Runtime stack, is the Logaritms of the argument 'arg'
+	///
 	public static void logari() {
 		SVM_CALL_SYS.ENTER("LOGARI: ", 1, 1); // exportSize, importSize
 		double r = RTStack.popLongReal();
@@ -356,8 +392,17 @@ public abstract class SysMath {
 // Visible sysroutine("RLOG10") RLOG10;
 // import real arg; export real val  end;
 
-// Visible sysroutine("DLOG10") DLOG10;
-// import long real arg; export long real val  end;
+	/// Real Logaritm base 10
+	///
+	///		Visible sysroutine("DLOG10") DLOG10;
+	///		import real arg; export real val  end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., arg →
+	/// 	   ..., result
+	///
+	/// The result, which is pushed onto the Runtime stack, is the Log10 of the argument 'arg'
+	///
 	public static void dlog10() {
 		SVM_CALL_SYS.ENTER("DLOG10: ", 1, 1); // exportSize, importSize
 		double r = RTStack.popLongReal();
@@ -366,8 +411,17 @@ public abstract class SysMath {
 		SVM_CALL_SYS.EXIT("DLOG10: ");
 	}
 
-// Visible sysroutine ("REXPON") REXPON;
-// import real arg; export real val  end;
+	/// Real Exponentiation
+	///
+	///		Visible sysroutine("REXPON") REXPON;
+	///		import real arg; export real val  end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., arg →
+	/// 	   ..., result
+	///
+	/// The result, which is pushed onto the Runtime stack, is the Exponentiation of the argument 'arg'
+	///
 	public static void rexpon() {
 		SVM_CALL_SYS.ENTER("REXPON: ", 1, 1); // exportSize, importSize
 //		float r = (float) RTStack.popLongReal();
@@ -377,8 +431,17 @@ public abstract class SysMath {
 		SVM_CALL_SYS.EXIT("REXPON: ");
 	}
 
-// Visible sysroutine("EXPONE") EXPONE;
-// import long real arg; export long real val  end;
+	/// Real Exponentiation
+	///
+	///		Visible sysroutine("EXPONE") EXPONE;
+	///		import long real arg; export long real val  end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., arg →
+	/// 	   ..., result
+	///
+	/// The result, which is pushed onto the Runtime stack, is the Exponentiation of the argument 'arg'
+	///
 	public static void expone() {
 		SVM_CALL_SYS.ENTER("EXPONE: ", 1, 1); // exportSize, importSize
 		double r = RTStack.popLongReal();
@@ -387,8 +450,17 @@ public abstract class SysMath {
 		SVM_CALL_SYS.EXIT("EXPONE: ");
 	}
 
-// Visible sysroutine("RSINUS") RSINUS;
-// import real arg; export real val  end;
+	/// Real Sine
+	///
+	///		Visible sysroutine("RSINUS") RSINUS;
+	///		import real arg; export real val  end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., arg →
+	/// 	   ..., result
+	///
+	/// The result, which is pushed onto the Runtime stack, is the Sine of the argument 'arg'
+	///
 	public static void rsinus() {
 		SVM_CALL_SYS.ENTER("RSINUS: ", 1, 1); // exportSize, importSize
 		float r = RTStack.popReal();
@@ -399,6 +471,17 @@ public abstract class SysMath {
 
 // Visible sysroutine("SINUSR") SINUSR;
 // import long real arg; export long real val  end;
+	/// Long real Sine
+	///
+	///		Visible sysroutine("SINUSR") SINUSR;
+	///		import long real arg; export long real val  end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., arg →
+	/// 	   ..., result
+	///
+	/// The result, which is pushed onto the Runtime stack, is the Sine of the argument 'arg'
+	///
 	public static void sinusr() {
 		SVM_CALL_SYS.ENTER("SINUSR: ", 1, 1); // exportSize, importSize
 		double r = RTStack.popLongReal();
@@ -407,8 +490,17 @@ public abstract class SysMath {
 		SVM_CALL_SYS.EXIT("SINUSR: ");
 	}
 
-// Visible sysroutine("RCOSIN") RCOSIN;
-// import real arg; export real val  end;
+	/// Real Cosine
+	///
+	///		Visible sysroutine("RCOSIN") RCOSIN;
+	///		import real arg; export real val  end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., arg →
+	/// 	   ..., result
+	///
+	/// The result, which is pushed onto the Runtime stack, is the Cosine of the argument 'arg'
+	///
 	public static void rcosin() {
 		SVM_CALL_SYS.ENTER("RCOSIN: ", 1, 1); // exportSize, importSize
 		float r = RTStack.popReal();
@@ -417,8 +509,17 @@ public abstract class SysMath {
 		SVM_CALL_SYS.EXIT("RCOSIN: ");
 	}
 
-// Visible sysroutine("COSINU") COSINU;
-// import long real arg; export long real val  end;
+	/// Long real Cosine
+	///
+	///		Visible sysroutine("COSINU") COSINU;
+	///		import real arg; export real val  end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., arg →
+	/// 	   ..., result
+	///
+	/// The result, which is pushed onto the Runtime stack, is the Cosine of the argument 'arg'
+	///
 	public static void cosinu() {
 		SVM_CALL_SYS.ENTER("COSINU: ", 1, 1); // exportSize, importSize
 		double r = RTStack.popLongReal();
@@ -439,8 +540,17 @@ public abstract class SysMath {
 // Visible sysroutine("COTANG") COTANG;
 // import long real arg; export long real val  end;
 
-// Visible sysroutine("RARTAN") RARTAN;
-// import real arg; export real val  end;
+	/// Real Arctangent
+	///
+	///		Visible sysroutine("RARTAN") RARTAN;
+	///		import real arg; export real val  end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., arg →
+	/// 	   ..., result
+	///
+	/// The result, which is pushed onto the Runtime stack, is the Arctangent of the argument 'arg'
+	///
 	public static void rartan() {
 		SVM_CALL_SYS.ENTER("RARTAN: ", 1, 1); // exportSize, importSize
 		float r = RTStack.popReal();
@@ -451,6 +561,17 @@ public abstract class SysMath {
 
 // Visible sysroutine("ARCTAN") ARCTAN;
 // import long real arg; export long real val  end;
+	/// Long real Arctangent
+	///
+	///		Visible sysroutine("RARTAN") RARTAN;
+	///		import long real arg; export long real val  end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., arg →
+	/// 	   ..., result
+	///
+	/// The result, which is pushed onto the Runtime stack, is the Arctangent of the argument 'arg'
+	///
 	public static void arctan() {
 		SVM_CALL_SYS.ENTER("ARCTAN: ", 1, 1); // exportSize, importSize
 		double r = RTStack.popLongReal();

@@ -4,7 +4,7 @@
 /// You find a copy of the License on the following
 /// page: https://creativecommons.org/licenses/by/4.0/
 
-package svm.rts.sysrut;
+package svm.env;
 
 import bec.Option;
 import bec.scode.Type;
@@ -16,6 +16,16 @@ import svm.segment.Segment;
 import svm.value.IntegerValue;
 import svm.value.ObjectAddress;
 
+/// Information from/to the user of the environment
+///
+/// The routines correspond to the similarly named SIMULA Standard functions.
+///
+///
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/env/SysInfo.java"><b>Source File</b></a>.
+/// 
+/// @author Simula Standard
+/// @author S-Port: The Environment Interface
+/// @author Øystein Myhre Andersen
 public abstract class SysInfo {
 
 	/// Visible sysroutine("DMPSEG") DMPSEG;

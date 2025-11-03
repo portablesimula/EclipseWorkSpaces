@@ -4,7 +4,7 @@
 /// You find a copy of the License on the following
 /// page: https://creativecommons.org/licenses/by/4.0/
 
-package svm.rts.sysrut;
+package svm.env;
 
 import bec.scode.Type;
 import svm.RTStack;
