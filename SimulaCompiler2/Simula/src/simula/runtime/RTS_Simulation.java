@@ -483,6 +483,8 @@ public class RTS_Simulation extends RTS_Simset {
 		return sb.toString();
 	}
 	
+	/// Utility: Edit Waiting queue
+	/// @return edited Waiting queue
 	private String ED_QUEUE(final RTS_Head S) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Queue[").append(S.edObjectIdent()).append("]=");
