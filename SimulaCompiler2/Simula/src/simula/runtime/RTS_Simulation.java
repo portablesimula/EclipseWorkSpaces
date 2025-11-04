@@ -446,6 +446,7 @@ public class RTS_Simulation extends RTS_Simset {
 
 	/// Utility: Trace Simulation event
 	/// @param msg the event message
+	/// @param S the Head of the queue
 	void SIM_TRACE_QUEUE(final String msg, final RTS_Head S) {
 		if (RTS_Option.SML_TRACING) {
 			RTS_UTIL.println("Time=" + time() + "  " + msg + ED_QUEUE(S) + "  SQS: Current=" + ED_SQS());
@@ -484,6 +485,7 @@ public class RTS_Simulation extends RTS_Simset {
 	}
 	
 	/// Utility: Edit Waiting queue
+	/// @param S the Head of the queue
 	/// @return edited Waiting queue
 	private String ED_QUEUE(final RTS_Head S) {
 		StringBuilder sb = new StringBuilder();
