@@ -37,7 +37,7 @@ import static java.nio.file.StandardCopyOption.*;
  */
 public final class MakeSetup {
 	public static final String RELEASE_ID = "Simula-2.0";
-	private final static int REVISION = 32;
+	private final static int REVISION = 33;
 	
 	private final static boolean EARLY_ACCESS = true;   // Used to produce an Early Access
 //	private final static boolean EARLY_ACCESS = false;  // Used to produce a Release
