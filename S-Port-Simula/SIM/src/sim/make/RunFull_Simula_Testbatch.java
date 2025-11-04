@@ -249,6 +249,8 @@ public class RunFull_Simula_Testbatch {
 		names.add("simtst163"); // OK: Test Inspect when, when, otherwise (selected)
 //		names.add("simtst164"); // OK: Test Extended Text Procedures
 		names.add("simtst165"); // OK: Activate direct
+		names.add("simtst166"); // OK: Activate before/after
+		names.add("simtst167"); // OK: Activate at/delay
 		
 //		FEC_Option.verbose = true;
 //		fecListing = true;

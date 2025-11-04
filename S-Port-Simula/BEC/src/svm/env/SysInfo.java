@@ -3,18 +3,15 @@
 /// 
 /// You find a copy of the License on the following
 /// page: https://creativecommons.org/licenses/by/4.0/
-
 package svm.env;
 
 import bec.Option;
 import bec.scode.Type;
 import bec.util.Util;
 import svm.RTStack;
-import svm.RTUtil;
 import svm.instruction.SVM_CALL_SYS;
 import svm.segment.Segment;
 import svm.value.IntegerValue;
-import svm.value.ObjectAddress;
 
 /// Information from/to the user of the environment
 ///
@@ -28,28 +25,17 @@ import svm.value.ObjectAddress;
 /// @author Øystein Myhre Andersen
 public abstract class SysInfo {
 
-	/// Visible sysroutine("DMPSEG") DMPSEG;
-	/// import infix(string) segnam; integer start,lng  end;
-
-	/// Visible sysroutine("DMPENT") DMPENT;
-	/// import ref() rtAddr;  end;
-	public static void dmpent() {
-		SVM_CALL_SYS.ENTER("DMPENT: ", 0, 1); // exportSize, importSize
-//		int index = RTStack.popInt();
-		ObjectAddress oaddr = RTStack.popOADDR();
-		IO.println("SVM_SYSCALL.dmpent: "+oaddr);
-		RTUtil.dumpEntity(oaddr);
-//		Util.IERR("");
-		SVM_CALL_SYS.EXIT("DMPENT: ");
-	}
-
-	/// Visible sysroutine("DMPOOL") DMPOOL; -- Dump POOL_n
-	/// import integer n;  end;
-
-	/**
-	 * Visible sysroutine("GINTIN") GINTIN;
-	 *  import range(0:127) index; export integer result  end;
-	 */
+	/// Get integer valued information from the environment
+	///
+	///		Visible sysroutine("GINTIN") GINTIN;
+	///		import range(0:127) index; export integer result  end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., index →
+	/// 	   ..., result
+	///
+	/// The result, which is pushed onto the Runtime stack, is the Square root of the argument 'arg'
+	///
 	public static void getIntinfo() {
 		SVM_CALL_SYS.ENTER("GINTIN: ", 1, 1); // exportSize, importSize
 		int index = RTStack.popInt();

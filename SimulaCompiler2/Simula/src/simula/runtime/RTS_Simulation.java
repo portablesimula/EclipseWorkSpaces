@@ -195,7 +195,7 @@ public class RTS_Simulation extends RTS_Simset {
 	/// </pre>
 	public void passivate() {
 		RTS_Process nxtcur = passivate1();
-		SIM_TRACE("END Passivate Resume[" + nxtcur.edObjectIdent() + ']');
+		SIM_TRACE("END Passivate: ==> Resume[" + nxtcur.edObjectIdent() + ']');
 		resume(nxtcur);
 		SIM_TRACE("END Passivate AFTER Resume[" + nxtcur.edObjectIdent() + ']');
 	}
@@ -204,12 +204,12 @@ public class RTS_Simulation extends RTS_Simset {
 	/// @return next Process
 	RTS_Process passivate1() { // Used directly by Process_.TERMINATE
 		RTS_Process cur = current();
-//		SIM_TRACE("Passivate " + cur.edObjectIdent());
+		SIM_TRACE("Passivate " + cur.edObjectIdent());
 		if (cur != null) {
 			RTS_Ranking.OUT(cur.EVENT);
 			cur.EVENT = null;
 		}
-		SIM_TRACE("Passivate " + cur.edObjectIdent());
+//		SIM_TRACE("Passivate " + cur.edObjectIdent());
 		if (RTS_Ranking.EMPTY(sqs))
 			throw new RTS_SimulaRuntimeError("Cancel,Passivate or Wait empties SQS");
 
@@ -225,8 +225,8 @@ public class RTS_Simulation extends RTS_Simset {
 	/// </pre>
 	/// @param S the head of the set
 	public void wait(final RTS_Head S) {
-//		SIM_TRACE("Wait in Queue " + S);
 		current().into(S);
+		SIM_TRACE_QUEUE("Wait in ", S);
 		passivate();
 		SIM_TRACE("Wait in Queue " + S);
 	}
@@ -282,7 +282,7 @@ public class RTS_Simulation extends RTS_Simset {
 
 	/// Direct activation: (re)activate x
 	/// @param REAC signals reactivation
-	/// @param X the Process to avtivate
+	/// @param X the Process to activate
 	public void ActivateDirect(final boolean REAC, final RTS_Process X) {
 		if (X == null)
 			TRACE_ACTIVATE(REAC, "none");
@@ -409,9 +409,8 @@ public class RTS_Simulation extends RTS_Simset {
 				double EVTIME = Y.EVENT.EVTIME();
 				X.EVENT = new RTS_EVENT_NOTICE(EVTIME, X);
 				if (BEFORE)
-					RTS_Ranking.FOLLOW(X.EVENT, Y.EVENT);
-				else
-					RTS_Ranking.PRECEDE(X.EVENT, Y.EVENT);
+					 RTS_Ranking.PRECEDE(X.EVENT, Y.EVENT);
+				else RTS_Ranking.FOLLOW(X.EVENT, Y.EVENT);
 			}
 			removeEvent(EV);
 			TRACE_ACTIVATE(REAC, X.edObjectIdent() + ((BEFORE) ? " BEFORE " : " AFTER ") + Y.edObjectIdent());
@@ -445,6 +444,14 @@ public class RTS_Simulation extends RTS_Simset {
 		}
 	}
 
+	/// Utility: Trace Simulation event
+	/// @param msg the event message
+	void SIM_TRACE_QUEUE(final String msg, final RTS_Head S) {
+		if (RTS_Option.SML_TRACING) {
+			RTS_UTIL.println("Time=" + time() + "  " + msg + ED_QUEUE(S) + "  SQS: Current=" + ED_SQS());
+		}
+	}
+
 //	/// Utility: Trace Simulation event
 //	/// @param msg the event message
 //	private void DUMP_SQS(final String msg) {
@@ -472,6 +479,17 @@ public class RTS_Simulation extends RTS_Simset {
 			sb.append(sep).append(n.PROC.edObjectIdent()).append('(').append(n.rnk).append(")");
 			n = (RTS_EVENT_NOTICE) RTS_Ranking.SUC(n);
 			sep = ",";
+		}
+		return sb.toString();
+	}
+	
+	private String ED_QUEUE(final RTS_Head S) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Queue[").append(S.edObjectIdent()).append("]=");
+		RTS_Link x = S.first();
+		while(x != null) {
+			sb.append(' ').append(x.edObjectIdent());
+			x = x.suc();
 		}
 		return sb.toString();
 	}

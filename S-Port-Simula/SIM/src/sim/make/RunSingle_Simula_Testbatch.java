@@ -26,8 +26,8 @@ public class RunSingle_Simula_Testbatch {
 		
 //		cmds.add("-FEC:Listing");
 //		cmds.add("-FEC:SCodeTrace");
-		cmds.add("-BEC:SCodeTrace");
-		cmds.add("-BEC:TraceSVM_CODE");
+//		cmds.add("-BEC:SCodeTrace");
+//		cmds.add("-BEC:TraceSVM_CODE");
 //		cmds.add("-BEC:TraceSVM_DATA");
 //		cmds.add("-execTrace");
 //		cmds.add("-callTrace");
@@ -70,7 +70,7 @@ public class RunSingle_Simula_Testbatch {
 //		names.add("adHoc06");
 //		names.add("adHoc07");
 //		names.add("adHoc08");
-		names.add("adHoc09");
+//		names.add("adHoc09");
 
 //		names.add("SimulaTest"); // Simula TestBatch Framework
 //		names.add("simtst00"); // OK:  Empty test
@@ -265,6 +265,8 @@ public class RunSingle_Simula_Testbatch {
 //		names.add("simtst163"); // OK: Test Inspect when, when, otherwise (selected)
 //		names.add("simtst164"); // OK: Test Extended Text Procedures
 //		names.add("simtst165"); // OK: Activate direct
+//		names.add("simtst166"); // OK: Activate before/after
+		names.add("simtst167"); // OK: Activate at/delay
 		
 		for(String name:names) {
 			doCompile(name);

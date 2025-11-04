@@ -101,7 +101,7 @@ public final class RunSingleTest {
 		
 		// *** SIMULA TEST BATCH TIL EKSEKVERING
 		// String name=Global.packetName+"/sim/InspectionSamples.sim";
-//		names.add("SimulaTest.sim"); // Simula TestBatch Framework
+		names.add("SimulaTest.sim"); // Simula TestBatch Framework
 //		names.add("simtst00.sim"); // OK:  Empty test
 //		names.add("simtst01.sim"); // OK:  Meaningless test of conditional statements,
 //		names.add("simtst02.sim"); // OK:  Test boolean operators/expressions
@@ -293,6 +293,8 @@ public final class RunSingleTest {
 //		names.add("simtst163.sim"); // OK: Test Inspect when, when, otherwise (selected)
 //		names.add("simtst164.sim"); // OK: Test Extended Text Procedures
 //		names.add("simtst165.sim"); // OK: Activate direct
+//		names.add("simtst166.sim"); // OK: Activate before/after
+//		names.add("simtst167.sim"); // OK: Activate at/delay
 //		
 //		names.add("RT_ErrorTest.sim"); // Simula TestBatch Framework
 //		names.add("simerr01.sim"); // OK: ILLEGAL GOTO out of an operating Process and into the enclosing System.
@@ -306,15 +308,15 @@ public final class RunSingleTest {
 //		names.add("simerr07.sim"); // OK: Wrong number of paramerters to virtual procedure
 //		names.add("simerr08.sim"); // OK: Illegal assignment. Name parameter is not a variable
 //		names.add("simerr09.sim"); // OK: Read/write access on DirectFile and DirectByteFile
-
-		names.add("single_tst01.sim"); // OK: Single test: L: OutText("...");
-		names.add("single_tst02.sim"); // OK: Single test: OutText("...");
-		names.add("single_tst03.sim"); // OK: Single test: L: if true then OutText("...");
-		names.add("single_tst04.sim"); // OK: Single test: if true then OutText("...");
-		names.add("single_tst05.sim"); // OK: Single test: L: inspect new simset do begin OutText("..."); end
-		names.add("single_tst06.sim"); // OK: Single test: inspect new simset do begin OutText("..."); end
-		names.add("single_tst07.sim"); // OK: Single test: L: while ...
-		names.add("single_tst08.sim"); // OK: Single test: while ...
+//
+//		names.add("single_tst01.sim"); // OK: Single test: L: OutText("...");
+//		names.add("single_tst02.sim"); // OK: Single test: OutText("...");
+//		names.add("single_tst03.sim"); // OK: Single test: L: if true then OutText("...");
+//		names.add("single_tst04.sim"); // OK: Single test: if true then OutText("...");
+//		names.add("single_tst05.sim"); // OK: Single test: L: inspect new simset do begin OutText("..."); end
+//		names.add("single_tst06.sim"); // OK: Single test: inspect new simset do begin OutText("..."); end
+//		names.add("single_tst07.sim"); // OK: Single test: L: while ...
+//		names.add("single_tst08.sim"); // OK: Single test: while ...
 
 		
 		

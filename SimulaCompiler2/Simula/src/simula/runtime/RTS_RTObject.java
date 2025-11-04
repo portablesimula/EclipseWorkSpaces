@@ -104,7 +104,10 @@ public abstract class RTS_RTObject {
 			this._SL = SL;
 			this._CORUT = RTS_Coroutine.getCurrentCoroutine();
 		}
+//		sequ = SEQU++;
 	}
+//	private static int SEQU = 1;
+//	private int sequ;
 
 	
 	// ********************************************************************
@@ -809,6 +812,7 @@ public abstract class RTS_RTObject {
 	public String edObjectIdent() {
 		StringBuilder s = new StringBuilder();
 		s.append(this.getClass().getSimpleName());
+//		return (s.toString() + '#' + sequ);
 		return (s.toString());
 	}
 

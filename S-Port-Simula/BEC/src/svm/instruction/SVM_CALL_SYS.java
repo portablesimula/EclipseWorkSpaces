@@ -27,6 +27,7 @@ import svm.env.SysFile;
 import svm.env.SysInfo;
 import svm.env.SysKnown;
 import svm.env.SysMath;
+import svm.env.SysRut;
 import svm.segment.DataSegment;
 import svm.value.BooleanValue;
 import svm.value.IntegerValue;
@@ -63,7 +64,8 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 			case P_PRINTO:   printo(); break;
 			case P_MOVEIN:   movein(); break;
 
-			case P_DMPENT:   SysInfo.dmpent(); break;
+			case P_DMPENT:   SysRut.dmpent(); break;
+			
 			case P_GINTIN:   SysInfo.getIntinfo(); break;
 			case P_SIZEIN:   SysInfo.sizein(); break;
 			case P_GVIINF:   SysInfo.gviinf(); break;

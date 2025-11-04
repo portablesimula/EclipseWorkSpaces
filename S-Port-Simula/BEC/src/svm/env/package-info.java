@@ -9,14 +9,15 @@
 ///
 /// - 3.1 Initialisation of the environment
 /// - 3.2 Terminate program
+///     - SysRut: Basic and utility environment routines
 /// - 4 INFORMATION FROM THE USER OR THE ENVIRONMENT
-///     - Information from/to the user of the environment
+///     - SysInfo: Information from/to the user of the environment
 /// - 5 Dynamic Storage Administration
 /// - 6 MOVE INFORMATION
 /// - 7 FILE HANDLING
 /// - 8 TEXT PROCEDURES FROM SIMULA
 /// - 9 STANDARD PROCEDURES FROM SIMULA
-///     - Mathematical library procedures
+///     - SysMath: Mathematical library procedures
 /// - 10 EXCEPTION HANDLING
 /// - 11 TOOLS FOR OBSERVATION OF PROGRAM EXECUTION
 package svm.env;
