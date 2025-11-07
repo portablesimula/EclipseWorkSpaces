@@ -6,34 +6,22 @@
 package svm.instruction;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 import bec.Global;
 import bec.Option;
-import bec.descriptor.Kind;
-import bec.scode.Type;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
-import bec.util.EndProgram;
 import bec.util.Util;
 import svm.CallStackFrame;
 import svm.RTStack;
-import svm.RTUtil;
 import svm.env.SysDeEdit;
 import svm.env.SysDraw;
 import svm.env.SysEdit;
 import svm.env.SysFile;
 import svm.env.SysInfo;
-import svm.env.SysKnown;
 import svm.env.SysMath;
-import svm.env.SysRut;
-import svm.segment.DataSegment;
+import svm.env.SysBase;
 import svm.value.BooleanValue;
-import svm.value.IntegerValue;
-import svm.value.ObjectAddress;
 import svm.value.ProgramAddress;
-import svm.value.Value;
 
 /// SVM-INSTRUCTION: SVM_CALL_SYS
 ///
@@ -54,27 +42,27 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 	public void execute() {
 		switch(kind) {
 			case P_VERBOSE:  verbose(); break;
-			case P_INITIA:   initia(); break;
-			case P_DWAREA:   dwarea(); break;
-			case P_ZEROAREA: zeroarea(); break;
-			case P_DATTIM:   dattim(); break;
-			case P_CPUTIM:   cputime(); break;
-			case P_TERMIN:   terminate(); break;
-			case P_STREQL:   stringEqual(); break;
-			case P_PRINTO:   printo(); break;
-			case P_MOVEIN:   movein(); break;
+			case P_INITIA:   SysBase.initia(); break;
+			case P_DWAREA:   SysBase.dwarea(); break;
+			case P_ZEROAREA: SysBase.zeroarea(); break;
+			case P_DATTIM:   SysBase.dattim(); break;
+			case P_CPUTIM:   SysBase.cputime(); break;
+			case P_TERMIN:   SysBase.terminate(); break;
+			case P_STREQL:   SysBase.stringEqual(); break;
+			case P_MOVEIN:   SysBase.movein(); break;
 
-			case P_DMPENT:   SysRut.dmpent(); break;
+			case P_DMPENT:   SysBase.dmpent(); break;
 			
-			case P_GINTIN:   SysInfo.getIntinfo(); break;
-			case P_SIZEIN:   SysInfo.sizein(); break;
-			case P_GVIINF:   SysInfo.gviinf(); break;
+			case P_GINTIN:   SysInfo.getIntInfo(); break;
+			case P_SIZEIN:   SysInfo.getSizeInfo(); break;
+			case P_GVIINF:   SysInfo.giveIntInfo(); break;
 
 			case P_GDSPEC:   SysFile.gdspec(); break;
 			case P_GETLPP:   SysFile.getlpp(); break;
 			case P_OPFILE:   SysFile.opfile(); break;
 			case P_NEWPAG:   SysFile.newpag(); break;
 			case P_CLFILE:   SysFile.clfile(); break;
+			case P_PRINTO:   SysFile.printo(); break;
 			case P_INIMAG:   SysFile.INIMAG(); break;
 			case P_OUTIMA:   SysFile.OUTIMA(); break;
 			case P_BREAKO:   SysFile.BREAKO(); break;
@@ -135,8 +123,8 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 
 			case P_DRAWRP:   SysDraw.drawrp(); break;
 
-			case P_CMOVE:    SysKnown.cmove(); break;
-			case P_CBLNK:    SysKnown.cblnk(); break;
+			case P_CMOVE:    SysBase.cmove(); break;
+			case P_CBLNK:    SysBase.cblnk(); break;
 			default: Util.IERR("SVM_SYSCALL: Unknown System Routine " + edKind(kind));
 		}
 		Global.PSC.ofst++;
@@ -185,200 +173,6 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 		EXIT("VERBOSE: ");
 	}
 	
-	/**
-	 * Visible sysroutine("INITIA") INITIA;
-	 *  import entry(PXCHDL) exchdl  end;
-	 */
-	private void initia() {
-		ENTER("INITIA: ", 0, 1); // exportSize, importSize
-		ProgramAddress exchdl = (ProgramAddress) RTStack.pop();
-		if(Option.verbose) IO.println("SVM_SYSCALL.initia: "+exchdl);
-		EXIT("INITIA: ");
-	}
-	
-	/**
-	 * Visible sysroutine("TERMIN") TERMIN;
-	 *  import range(0:3) code; infix(string) msg  end;
-	 */
-	private void terminate() {
-		ENTER("TERMIN: ", 0, 4); // exportSize, importSize
-		String str = RTStack.popString();
-		int code = RTStack.popInt();
-//		IO.println("SVM_SYSCALL.terminate: "+str+" with exit code " + code);
-//		System.exit(code);
-		if(Option.DUMPS_AT_EXIT) {
-//			Segment.lookup("DSEG_ADHOC02").dump("SVM_SYSCALL.terminate: ");
-			Global.DSEG.dump("SVM_SYSCALL.terminate: FINAL DATA SEGMENT ");
-			Global.CSEG.dump("SVM_SYSCALL.terminate: FINAL CONSTANT SEGMENT ");
-			Global.TSEG.dump("SVM_SYSCALL.terminate: FINAL CONSTANT TEXT SEGMENT ");
-//			Segment.lookup("DSEG_RT").dump("SVM_SYSCALL.terminate: BIOINS", 30, 82);
-//			Segment.lookup("POOL_1").dump("SVM_SYSCALL.terminate: FINAL POOL_1", 0, 20);
-			RTUtil.printPool("POOL_1");
-		}
-
-		throw new EndProgram(code,"SVM_SYSCALL.terminate: "+str+" with exit code " + code);
-	}
-	
-	
-	/**
-	 *  Visible sysroutine("STREQL") STREQL;
-	 *   import infix(string) str1,str2; export boolean res  end;
-	 */
-	private void stringEqual() {
-		ENTER("STREQL: ", 1, 6); // exportSize, importSize
-		String str1 = RTStack.popString();
-		String str2 = RTStack.popString();
-		boolean result = str1.equals(str2);
-//		IO.println("SVM_CALLSYS.stringEqual: " + str1 + " equals " + str2 + " ==> " + result);
-		RTStack.push(BooleanValue.of(result));
-		EXIT("STREQL: " + result);
-	}
-
-
-	/**
-	 *  Visible sysroutine("PRINTO") PRINTO;
-	 *  	 import range(1:MAX_KEY) key; infix(string) image; integer spc;
-	 *  end;
-	 */
-	private void printo() {
-		ENTER("PRINTO: ", 0, 5); // exportSize, importSize
-
-		int spc = RTStack.popInt();
-		int nchr = RTStack.popInt();
-		int ofst = RTStack.popInt();
-		ObjectAddress chradr = (ObjectAddress) RTStack.pop();
-		/*int key = */RTStack.popInt();
-		
-//		chradr.segment().dump("SVM_CALL_SYS.printo: ", 30, chradr.getOfst() + 60);
-
-		ObjectAddress x = chradr.addOffset(ofst);
-		StringBuilder sb = new StringBuilder();
-		for(int i=0;i<nchr;i++) {
-			IntegerValue ival = (IntegerValue) x.load(i);
-			char c = (ival == null)? '.' : ((char) ival.value);
-			sb.append(c);
-		}
-		String res = sb.toString().stripTrailing();
-//		IO.println("SVM_CALL.printo: \""+res+'"');
-		if(Global.console != null)
-			 Global.console.write(res+'\n');
-		else IO.println(res);
-		
-		if(spc != 1) {
-			if(spc < 1) {
-				RTUtil.set_STATUS(19);
-			} else {
-				for(int i=1;i<spc;i++) IO.println();
-			}
-		}
-		
-		EXIT("PRINTO: ");
-	}
-
-	/**
-	 *  Visible sysroutine("MOVEIN") MOVEIN;
-	 *  import ref() from,to; size length  end;
-	 */
-	private void movein() {
-		ENTER("MOVEIN: ", 0, 5); // exportSize, importSize		
-		int lng = RTStack.popInt();
-		ObjectAddress to = RTStack.popOADDR();
-		ObjectAddress from = RTStack.popOADDR();
-//		IO.println("SVM_CALL.movein: from="+from);
-//		IO.println("SVM_CALL.movein: to="+to);
-//		IO.println("SVM_CALL.movein: lng="+lng);
-
-		for(int i=0;i<lng;i++) {
-			Value val = from.load(i);
-//			IO.println("SVM_CALL.movein: idx="+i+", value="+val);
-			to.store(i, val);
-		}
-		EXIT("MOVEIN: ");
-	}
-	
-		
-	/**
-	 *  Visible inline'routine ("ZEROAREA")  ZEROAREA;
-	 * 		import ref() fromAddr, toAddr;
-	 * 
-	 *  The area between fromAddr and toAddr (from included, toAddr not) is to be zero-filled
-	 */
-	private void zeroarea() {
-		ENTER("ZEROAREA: ", 0, 2); // exportSize, importSize
-		ObjectAddress toAddr = RTStack.popOADDR();
-		ObjectAddress fromAddr = RTStack.popOADDR();
-		ObjectAddress from = fromAddr.addOffset(0);
-		ObjectAddress to = toAddr.addOffset(0);
-		if(! from.segID.equals(to.segID)) Util.IERR("");
-		DataSegment dseg = from.segment();
-		int idxFrom = from.ofst;
-		int idxTo = to.ofst;
-//		dseg.dump("SVM_SYSCALL.zeroarea: ", idxFrom, idxTo);
-		for(int i=idxFrom; i<idxTo;i++) {
-			dseg.store(i, null);
-		}
-//		dseg.dump("SVM_SYSCALL.zeroarea: ", idxFrom, idxTo);
-//		Util.IERR("");
-		RTStack.push(null); // ?????
-		EXIT("ZEROAREA: ");
-	}
-	
-	/**
-	 *  Visible sysroutine ("DWAREA")  DWAREA;
-	 * 		import size lng; range(0:255) ano;
-	 *  	export ref() pool  end;
-	 */
-	private void dwarea() {
-		ENTER("DWAREA: ", 1, 2); // exportSize, importSize
-		int warea = RTStack.popInt();
-		int lng = RTStack.popInt();
-//		IO.println("SVM_SYSCALL.dwarea: lng=" + lng + ", warea=" + warea);
-		
-		DataSegment pool = new DataSegment("POOL_" + warea, Kind.K_SEG_DATA);
-		pool.emitDefaultValue(1, lng);
-		RTStack.push(ObjectAddress.ofSegAddr(pool, 0));
-
-//		Util.IERR("");
-		EXIT("DWAREA: ");
-	}
-
-	/// Visible sysroutine("CPUTIM") CPUTIM;
-	/// export long real sec  end;
-	private void cputime() {
-		ENTER("CPUTIM: ", 0, 1); // exportSize, importSize
-		RTStack.push(null);
-		EXIT("CPUTIM: ");
-	}
-	
-	/// Visible sysroutine("DATTIM") DATTIM;
-	/// import infix(string) item; export integer filled  end;
-	///
-	/// The result of a call on the routine will be filled into the string.
-	/// The string should have the following syntax:
-	/// "yyyy-mm-dd hh:nn:ss.ppp""
-	private void dattim() {
-		ENTER("DATTIM: ", 1, 3); // exportSize, importSize
-		int nchr = RTStack.popInt();
-		ObjectAddress oaddr = RTStack.popGADDRasOADDR();
-		
-//		String s = "2025-06-27 08:22:13.123";
-		DateTimeFormatter form = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
-		String s = LocalDateTime.now().format(form);
-		int length = s.length();
-		if(nchr < length) {
-			RTUtil.set_STATUS(24);
-			length = 0;
-		} else {
-			for(int i=0;i<length;i++) {
-				Value val = IntegerValue.of(Type.T_CHAR, s.charAt(i));
-				oaddr.store(i, val);
-			}
-		}
-		RTStack.push(IntegerValue.of(Type.T_INT, length));
-		EXIT("DATTIM: ");
-	}
-
-
 
 	public static int getSysKind(String s) {
 //		IO.println("ProfileDescr.getSysKind: "+s);

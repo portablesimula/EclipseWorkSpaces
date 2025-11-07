@@ -34,9 +34,22 @@ public abstract class SysInfo {
 	/// 	   ..., index →
 	/// 	   ..., result
 	///
-	/// The result, which is pushed onto the Runtime stack, is the Square root of the argument 'arg'
+	/// The parameter index is an integer specifying what information is requested.
+	/// The result will be an integer whose interpretation gives the specified information.
+	/// The result, which is pushed onto the Runtime stack, is given for each value of index as follows:
 	///
-	public static void getIntinfo() {
+	/// <pre>
+	/// Index: Interpretation:
+	///
+	///   19   Should the symbolic debugger SIMOB be entered prior to the execution of the
+	///        program, and at program termination? An answer greater than zero will give this effect.
+	///
+	///   24   How many work areas may be requested (see chapter 5)?
+	///
+	///   33   Result: 0 - no, this is not an interactive execution
+	///                1 - yes, this is an interactive execution
+	/// </pre>
+	public static void getIntInfo() {
 		SVM_CALL_SYS.ENTER("GINTIN: ", 1, 1); // exportSize, importSize
 		int index = RTStack.popInt();
 //		IO.println("SVM_SYSCALL.getIntinfo: "+index);
@@ -54,12 +67,29 @@ public abstract class SysInfo {
 		SVM_CALL_SYS.EXIT("GINTIN: ");
 	}
 	
-	/**
-	 *  Visible sysroutine ("SIZEIN") SIZEIN;
-	 *  	import range(0:127) index; range(0:255) ano;
-	 *  	export size result  end;
-	 */
-	public static void sizein() {
+	/// Get size valued information from the environment
+	///
+	///		Visible sysroutine ("SIZEIN") SIZEIN;
+	///		import range(0:127) index; range(0:255) warea;
+	///		export size result  end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., index, warea →
+	/// 	   ..., result
+	///
+	///		index: Specifies the information requested (se below).
+	///		warea: Identifies the work area in question.
+	///		result: The wanted SIZE, according to the value of Index:
+	///
+	/// <pre>
+	/// Index Result
+	///
+	///   1   The minimum size of this work area.
+	///   2   The extension/contraction step size.
+	///   3   The minimum gap left in this work area after a garbage collection,
+	///       if the area is the current work area.
+	/// </pre>
+	public static void getSizeInfo() {
 		SVM_CALL_SYS.ENTER("SIZEIN: ", 1, 2); // exportSize, importSize
 		int warea = RTStack.popInt();
 		int index = RTStack.popInt();
@@ -82,9 +112,29 @@ public abstract class SysInfo {
 		SVM_CALL_SYS.EXIT("SIZEIN: ");
 	}
 
-	/// Visible sysroutine("GVIINF")  GVIINF;
-	/// import range(0:127) index; integer inform  end;
-	public static void gviinf() {
+	/// Information to the environment
+	///
+	///	The routine give intinfo is defined to submit information from the front-end compiler or the runtime
+	///	system to the environment. This information is gathered from the source input under
+	///
+	///		Visible sysroutine("GVIINF")  GVIINF;
+	///		import range(0:127) index; integer inform  end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., index, inform →
+	/// 	   ...
+	///
+	///	The parameter index is an integer that specifies what information follows.
+	/// Info will be an integer	carrying the following interpretation:
+	///
+	/// <pre>
+	/// Index Interpretation
+	///
+	///   6   Garbage collection information.
+	///          Info=0 signals the start of a garbage collection,
+	///          Info=1 signals termination of g.c. (see 5.2).
+	/// </pre>
+	public static void giveIntInfo() {
 		SVM_CALL_SYS.ENTER("GVIINF: ", 0, 2); // exportSize, importSize
 		int inform = RTStack.popInt();
 		int index = RTStack.popInt();

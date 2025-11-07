@@ -13,24 +13,27 @@ import svm.instruction.SVM_CALL_SYS;
 import svm.value.IntegerValue;
 import svm.value.LongRealValue;
 
+/// De-Editing Routines
+///
+///
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/env/SysDeEdit.java"><b>Source File</b></a>.
+/// 
+/// @author Simula Standard
+/// @author S-Port: The Environment Interface
+/// @author Øystein Myhre Andersen
 public abstract class SysDeEdit {
 
 	/// Scan the input text for an integer item.
 	/// <pre>
 	/// INTEGER-ITEM = SIGN-PART DIGITS
-	/// 
 	///    SIGN-PART = BLANKS [ SIGN ] BLANKS
-	/// 
 	///       SIGN = + | -
-	/// 
-	///       DIGITS = DIGIT { DIGIT }
-	/// 
+	///    DIGITS = DIGIT { DIGIT }
 	///       DIGIT = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 	/// </pre>
+	/// @param T string to be decoded
+	/// @return the INTEGER ITEM string
 	private static String getIntegerItem(String T) {
-		
-		boolean DEBUG = false;
-		
 		StringBuilder sb = new StringBuilder();
 		int pos = 0;
 		char c = 0;
@@ -39,18 +42,15 @@ public abstract class SysDeEdit {
 			if (c != ' ') break LOOP1;
 			pos++;
 		}
-		if(DEBUG) IO.println("SysDeEdit.getIntegerItem(1): \""+T+"\"  pos="+pos);
 		c = T.charAt(pos);
 		if (c == '+' || c == '-') {
 			sb.append(c);
-			if(DEBUG) IO.println("SysDeEdit.getIntegerItem(2): \""+T+"\"  res=\""+sb+"\"  pos="+pos);
 			pos++;
 			LOOP2:while(pos < T.length()) { // SKIP BLANKS
 				c = T.charAt(pos);
 				if (c != ' ') break LOOP2;
 				pos++;
 			}
-			if(DEBUG) IO.println("SysDeEdit.getIntegerItem(3): "+T+"  res=\""+sb+"\"  pos="+pos);
 		}
 		LOOP3:while(pos < T.length()) { // KEEP DIGITS
 			c = T.charAt(pos);
@@ -58,34 +58,35 @@ public abstract class SysDeEdit {
 			sb.append(c);
 			pos++;
 		}
-		if(DEBUG) IO.println("SysDeEdit.getIntegerItem: \""+T+"\", ITEMSIZE="+(pos)+" ===> \""+sb+'"');
 		RTUtil.set_ITEM_SIZE(pos);
 		return (sb.toString());
 	}
 
 	/// Procedure getint.
+	///
+	///		Visible sysroutine("GETINT") GETINT;
+	///		import infix (string) item; export integer res end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., item'addr, item'nchr →
+	/// 	   ..., res
+	///
+	/// The argument item String is popped of the Runtime stack.
+	/// <br>An INTEGER ITEM is located in that String.
+	/// <br>Finally: That ITEM is decoded and pushed onto the Runtime stack.
 	/// <pre>
 	/// INTEGER-ITEM = SIGN-PART DIGITS
-	/// 
 	///    SIGN-PART = BLANKS [ SIGN ] BLANKS
-	/// 
 	///       SIGN = + | -
-	/// 
-	///       DIGITS = DIGIT { DIGIT }
-	/// 
+	///    DIGITS = DIGIT { DIGIT }
 	///       DIGIT = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 	/// </pre>
-	/// The procedure locates an INTEGER ITEM. The function value is
-	/// equal to the corresponding integer.
 	/// 
-	/// Visible sysroutine("GETINT") GETINT;
-	/// import infix (string) item; export integer res end;
 	public static void getint() {
 		SVM_CALL_SYS.ENTER("GETINT: ", 1, 3); // exportSize, importSize
 		String arg = RTStack.popString();
 		String item = getIntegerItem(arg);
 		int res = Integer.parseInt(item);
-//		IO.println("SysEdit.GETINT: item="+item+"  ===>  "+res);
 		RTStack.push(IntegerValue.of(Type.T_INT, res));
 		SVM_CALL_SYS.EXIT("GETINT: ");
 	}
@@ -94,33 +95,21 @@ public abstract class SysDeEdit {
 	/// Scan the input text for a real item.
 	/// <pre>
 	/// REAL-ITEM = DECIMAL-ITEM [ EXPONENT ] | SIGN-PART EXPONENT
-	/// 
 	///    DECIMAL-ITEM = INTEGER-ITEM [ FRACTION ] | SIGN-PART FRACTION
-	/// 
 	///       INTEGER-ITEM = SIGN-PART DIGITS
-	/// 
 	///       FRACTION = DECIMAL-MARK DIGITS
-	/// 
 	///       SIGN-PART = BLANKS [ SIGN ] BLANKS
-	/// 
 	///    EXPONENT = LOWTEN-CHARACTER INTEGER-ITEM
-	/// 
 	///          SIGN = + | -
-	/// 
 	///          DIGITS = DIGIT { DIGIT }
-	/// 
 	///          DIGIT = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
-	/// 
 	///          LOWTEN-CHARACTER = & | ...
-	/// 
 	///          DECIMAL-MARK = . | ,
-	/// 
 	///          BLANKS = { BLANK | TAB }
 	/// </pre>
+	/// @param T string to be decoded
+	/// @return the REAL ITEM string
 	private static String getRealItem(String T) {
-		
-		boolean DEBUG = false;
-		
 		StringBuilder sb = new StringBuilder();
 		char c = 0;
 		int pos = 0;
@@ -129,8 +118,6 @@ public abstract class SysDeEdit {
 			if (c != ' ') break LOOP1;
 			pos++;
 		}
-		if(DEBUG) IO.println("SysDeEdit.getFracItem(1): \""+T+"\"  pos="+pos);
-
 		if (c == '+' || c == '-') {
 			sb.append(c);
 			pos++;
@@ -139,7 +126,6 @@ public abstract class SysDeEdit {
 				if (c != ' ') break LOOP2;
 				pos++;
 			}
-			if(DEBUG) IO.println("SysDeEdit.getIntegerItem(3): "+T+"  res=\""+sb+"\"  pos="+pos);
 		}
 		int lastDigPos = pos;
 		LOOP3:while(pos < T.length()) { // KEEP DIGITS
@@ -154,50 +140,41 @@ public abstract class SysDeEdit {
 			lastDigPos = pos;
 			pos++;
 		}
-		if(DEBUG) IO.println("SysDeEdit.getFracItem: \""+T+"\", ITEMSIZE="+(lastDigPos)+" ===> \""+sb+'"');
 		RTUtil.set_ITEM_SIZE(lastDigPos);
 		return (sb.toString());
 	}
 
 	/// Procedure getreal.
+	///
+	///		Visible sysroutine("GTREAL") GTREAL;
+	///		import infix (string) item; export long real res end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., item'addr, item'nchr →
+	/// 	   ..., res
+	///
+	/// The argument item String is popped of the Runtime stack.
+	/// <br>An REAL ITEM is located in that String.
+	/// <br>Finally: That ITEM is decoded and pushed onto the Runtime stack.
 	/// <pre>
 	/// REAL-ITEM = DECIMAL-ITEM [ EXPONENT ] | SIGN-PART EXPONENT
-	/// 
 	///    DECIMAL-ITEM = INTEGER-ITEM [ FRACTION ] | SIGN-PART FRACTION
-	/// 
 	///       INTEGER-ITEM = SIGN-PART DIGITS
-	/// 
 	///       FRACTION = DECIMAL-MARK DIGITS
-	/// 
 	///       SIGN-PART = BLANKS [ SIGN ] BLANKS
-	/// 
 	///    EXPONENT = LOWTEN-CHARACTER INTEGER-ITEM
-	/// 
 	///          SIGN = + | -
-	/// 
 	///          DIGITS = DIGIT { DIGIT }
-	/// 
 	///          DIGIT = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
-	/// 
 	///          LOWTEN-CHARACTER = & | ...
-	/// 
 	///          DECIMAL-MARK = . | ,
-	/// 
 	///          BLANKS = { BLANK | TAB }
 	/// </pre>
-	/// The procedure locates a REAL ITEM. The function value is equal
-	/// to or approximates to the corresponding number. An INTEGER ITEM
-	/// exceeding a certain implementation-defined range may lose
-	/// precision when converted to long real.
-	/// 
-	/// Visible sysroutine("GTREAL") GTREAL;
-	/// import infix (string) item; export long real res  end;
 	public static void getreal() {
 		SVM_CALL_SYS.ENTER("GTREAL: ", 1, 3); // exportSize, importSize
 		String arg = RTStack.popString();
 		String item = getRealItem(arg);
 		double res = Double.parseDouble(item);
-//		IO.println("SysEdit.GTREAL: item="+item+"  ===>  "+res);
 		RTStack.push(LongRealValue.of(res));
 		SVM_CALL_SYS.EXIT("GTREAL: ");
 	}
@@ -206,19 +183,14 @@ public abstract class SysDeEdit {
 	/// <pre>
 	/// GROUPED-ITEM = SIGN-PART GROUPS [ DECIMAL-MARK GROUPS ]
 	///              | SIGN-PART DECIMAL-MARK GROUPS
-	/// 
-	/// SIGN-PART = BLANKS [ SIGN ] BLANKS
-	/// 
-	/// SIGN = + | -
-	/// 
-	/// GROUPS = DIGITS { BLANK DIGITS } DIGITS = DIGIT { DIGIT }
-	/// 
-	/// DIGIT = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+	/// 	SIGN-PART = BLANKS [ SIGN ] BLANKS
+	/// 		SIGN = + | -
+	/// 	GROUPS = DIGITS { BLANK DIGITS } DIGITS = DIGIT { DIGIT }
+	/// 		DIGIT = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 	/// </pre>
+	/// @param T string to be decoded
+	/// @return the GROUPED ITEM string
 	private static String getFracItem(String T) {
-		
-		boolean DEBUG = false;
-		
 		StringBuilder sb = new StringBuilder();
 		char c = 0;
 		int pos = 0;
@@ -227,18 +199,14 @@ public abstract class SysDeEdit {
 			if (c != ' ') break LOOP1;
 			pos++;
 		}
-		if(DEBUG) IO.println("SysDeEdit.getFracItem(1): \""+T+"\"  pos="+pos);
-		
 		if (c == '+' || c == '-') {
 			sb.append(c);
-			if(DEBUG) IO.println("SysDeEdit.getFracItem(2): \""+T+"\"  res=\""+sb+"\"  pos="+pos);
 			pos++;
 			LOOP2:while(pos < T.length()) { // SKIP BLANKS
 				c = T.charAt(pos);
 				if (c != ' ') break LOOP2;
 				pos++;
 			}
-			if(DEBUG) IO.println("SysDeEdit.getFracItem(3): "+T+"  res=\""+sb+"\"  pos="+pos);
 		}
 		int lastDigPos = pos;
 		LOOP3:while(pos < T.length()) { // KEEP DIGITS
@@ -252,37 +220,43 @@ public abstract class SysDeEdit {
 			else break LOOP3;
 			pos++;
 		}
-		if(DEBUG) IO.println("SysDeEdit.getFracItem: \""+T+"\", ITEMSIZE="+(lastDigPos)+" ===> \""+sb+'"');
 		RTUtil.set_ITEM_SIZE(lastDigPos);
 		return (sb.toString());
 	}
 
 	/// Procedure getfrac.
+	///
+	///		Visible sysroutine("GTFRAC") GTFRAC;
+	///		import infix (string) item; export integer res end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., item'addr, item'nchr →
+	/// 	   ..., res
+	///
+	/// The argument item String is popped of the Runtime stack.
+	/// <br>A GROUPED ITEM is located in that String.
+	/// <br>Finally: That ITEM is decoded and pushed onto the Runtime stack.
+	///
+	/// The digits of a GROUPED ITEM may be interspersed with BLANKS
+	/// and a single DECIMAL MARK which are ignored.
 	/// <pre>
 	/// GROUPED-ITEM = SIGN-PART GROUPS [ DECIMAL-MARK GROUPS ]
 	///              | SIGN-PART DECIMAL-MARK GROUPS
-	/// 
-	/// SIGN-PART = BLANKS [ SIGN ] BLANKS
-	/// 
-	/// SIGN = + | -
-	/// 
-	/// GROUPS = DIGITS { BLANK DIGITS } DIGITS = DIGIT { DIGIT }
-	/// 
-	/// DIGIT = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+	/// 	SIGN-PART = BLANKS [ SIGN ] BLANKS
+	/// 		SIGN = + | -
+	/// 	GROUPS = DIGITS { BLANK DIGITS } DIGITS = DIGIT { DIGIT }
+	/// 		DIGIT = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 	/// </pre>
 	/// The procedure locates a GROUPED ITEM. The function value is
 	/// equal to the resulting integer. The digits of a GROUPED ITEM
 	/// may be interspersed with BLANKS and a single DECIMAL MARK which
 	/// are ignored by the procedure.
 	/// 
-	/// Visible sysroutine("GTFRAC") GTFRAC;
-	/// import infix (string) item; export integer res  end;
 	public static void getfrac() {
 		SVM_CALL_SYS.ENTER("GTFRAC: ", 1, 3); // exportSize, importSize
 		String arg = RTStack.popString();
 		String item = getFracItem(arg);
 		int res = Integer.parseInt(item);
-//		IO.println("SysEdit.GTFRAC: item="+item+"  ===>  "+res);
 		RTStack.push(IntegerValue.of(Type.T_INT, res));
 		SVM_CALL_SYS.EXIT("GTFRAC: ");
 	}

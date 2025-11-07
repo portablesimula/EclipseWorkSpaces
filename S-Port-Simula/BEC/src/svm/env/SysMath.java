@@ -303,15 +303,6 @@ public abstract class SysMath {
 		SVM_CALL_SYS.EXIT("DDPOWR: ");
 	}
 
-	
-// Visible sysroutine("DATTIM") DATTIM;
-// import infix(string) item; export integer filled  end;
-
-// Visible sysroutine("LOWTEN") LTEN;
-// import character c  end;
-
-// Visible sysroutine("DCMARK") DECMRK;
-// import character c  end;
 
 	/// Real Square root
 	///
