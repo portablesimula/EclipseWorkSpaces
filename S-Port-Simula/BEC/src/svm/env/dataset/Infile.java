@@ -21,7 +21,7 @@ import svm.RTUtil;
 import svm.value.IntegerValue;
 import svm.value.ObjectAddress;
 
-public class InfileSpec extends ImageFile {
+public class Infile extends ImageFile {
 	
 	/// The BufferedReader used.
 	private BufferedReader lineReader;
@@ -30,7 +30,7 @@ public class InfileSpec extends ImageFile {
 	private String rest = null;
 
 
-	public InfileSpec(String fileName, int type, String action, int imglng) {
+	public Infile(String fileName, int type, String action, int imglng) {
 		super(fileName, type, action, imglng);
 		File file = fileAction.doCreateAction(fileName);
 		if (!file.exists()) {

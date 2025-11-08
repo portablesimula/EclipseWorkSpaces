@@ -13,13 +13,13 @@ import java.io.InputStream;
 
 import svm.RTUtil;
 
-public class InbytefileSpec extends ByteFile {
+public class Inbytefile extends ByteFile {
 	
 	/// The InputStream used.
 	private InputStream inputStream;
 
 
-	public InbytefileSpec(String fileName, int type, String action, int imglng) {
+	public Inbytefile(String fileName, int type, String action, int imglng) {
 		super(fileName, type, action);
 		File file = fileAction.doCreateAction(fileName);
 		if (!file.exists()) {

@@ -14,12 +14,12 @@ import java.io.OutputStream;
 import bec.util.Util;
 import svm.RTUtil;
 
-public class OutbytefileSpec extends ByteFile {
+public class Outbytefile extends ByteFile {
 	
 	/// The OutputStream used.
 	private OutputStream outputStream;
 
-	public OutbytefileSpec(String fileName, int type, String action, int imglng) {
+	public Outbytefile(String fileName, int type, String action, int imglng) {
 		super(fileName, type, action);
 		File file = fileAction.doCreateAction(fileName);
 		if (!file.exists()) {

@@ -13,11 +13,11 @@ import java.io.IOException;
 import bec.util.Util;
 import svm.RTUtil;
 
-public class OutfileSpec extends ImageFile {
+public class Outfile extends ImageFile {
 	
 	FileWriter writer;
 
-	public OutfileSpec(String fileName, int type, String action, int imglng) {
+	public Outfile(String fileName, int type, String action, int imglng) {
 		super(fileName, type, action, imglng);
 		File file = fileAction.doCreateAction(fileName);
 		if (!file.exists()) {

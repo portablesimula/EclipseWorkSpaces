@@ -5,11 +5,11 @@
 /// page: https://creativecommons.org/licenses/by/4.0/
 package svm.env.dataset;
 
-public class PrintfileSpec extends OutfileSpec {
+public class Printfile extends Outfile {
 	
 //	FileWriter writer;
 
-	public PrintfileSpec(String fileName, int type, String action, int imglng) {
+	public Printfile(String fileName, int type, String action, int imglng) {
 		super(fileName, type, action, imglng);
 //		File file = fileAction.doCreateAction(fileName);
 //		if (!file.exists()) {

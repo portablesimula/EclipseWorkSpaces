@@ -18,11 +18,11 @@ import svm.env.dataset.Dataset;
 import svm.env.dataset.DirectBytefile;
 import svm.env.dataset.Directfile;
 import svm.env.dataset.ImageFile;
-import svm.env.dataset.InbytefileSpec;
-import svm.env.dataset.InfileSpec;
-import svm.env.dataset.OutbytefileSpec;
-import svm.env.dataset.OutfileSpec;
-import svm.env.dataset.PrintfileSpec;
+import svm.env.dataset.Inbytefile;
+import svm.env.dataset.Infile;
+import svm.env.dataset.Outbytefile;
+import svm.env.dataset.Outfile;
+import svm.env.dataset.Printfile;
 import svm.instruction.SVM_CALL_SYS;
 import svm.value.IntegerValue;
 import svm.value.ObjectAddress;
@@ -149,12 +149,12 @@ public abstract class SysFile {
 		else {
 			Dataset fileSpec = null;
 			switch(type) {
-				case Dataset.FIL_INFILE ->		   fileSpec = new InfileSpec        (spec, type, action, imglng);
-				case Dataset.FIL_OUTFILE ->		   fileSpec = new OutfileSpec       (spec, type, action, imglng);
-				case Dataset.FIL_PRINTFILE ->	   fileSpec = new PrintfileSpec     (spec, type, action, imglng);
+				case Dataset.FIL_INFILE ->		   fileSpec = new Infile        (spec, type, action, imglng);
+				case Dataset.FIL_OUTFILE ->		   fileSpec = new Outfile       (spec, type, action, imglng);
+				case Dataset.FIL_PRINTFILE ->	   fileSpec = new Printfile     (spec, type, action, imglng);
 				case Dataset.FIL_DIRECTFILE ->	   fileSpec = new Directfile    (spec, type, action, imglng);
-				case Dataset.FIL_INBYTEFILE ->	   fileSpec = new InbytefileSpec    (spec, type, action, imglng);
-				case Dataset.FIL_OUTBYTEFILE ->    fileSpec = new OutbytefileSpec   (spec, type, action, imglng);
+				case Dataset.FIL_INBYTEFILE ->	   fileSpec = new Inbytefile    (spec, type, action, imglng);
+				case Dataset.FIL_OUTBYTEFILE ->    fileSpec = new Outbytefile   (spec, type, action, imglng);
 				case Dataset.FIL_DIRECTBYTEFILE -> fileSpec = new DirectBytefile(spec, type, action, imglng);
 				default -> Util.IERR(""+Dataset.edFileType(type));
 			}
@@ -279,7 +279,7 @@ public abstract class SysFile {
 		int key = RTStack.popInt();
 		int filled = 0;
 		if(key == Dataset.KEY_SYSIN) {
-			filled = InfileSpec.sysinInimage(chrAddr, nchr);
+			filled = Infile.sysinInimage(chrAddr, nchr);
 		} else if(key > 3) {
 			ImageFile spec = (ImageFile) lookup(key);
 			filled = spec.inimage(chrAddr, nchr);
@@ -385,7 +385,7 @@ public abstract class SysFile {
 		int key = RTStack.popInt();
 		Dataset spec = lookup(key);
 		int byt = 0;
-		if(spec instanceof InbytefileSpec ifile) {
+		if(spec instanceof Inbytefile ifile) {
 			byt =ifile.inbyte();
 		}
 		else if(spec instanceof DirectBytefile dbfile) {
@@ -415,7 +415,7 @@ public abstract class SysFile {
 		int byt = RTStack.popInt();
 		int key = RTStack.popInt();
 		Dataset spec = lookup(key);
-		if(spec instanceof OutbytefileSpec ofile) {
+		if(spec instanceof Outbytefile ofile) {
 			ofile.outbyte(byt);
 		}
 		else if(spec instanceof DirectBytefile dbfile) {

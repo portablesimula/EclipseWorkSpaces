@@ -74,11 +74,6 @@ public class Directfile extends ImageFile {
 			if (fileAction._PURGE) {
 				randomAccessFile.setLength(0);
 				randomAccessFile.close();
-//				File file = new File(FILE_NAME.edText().trim());
-//				if (file.exists()) {
-//					RTS_UTIL.printWarning("Purge " + this.getClass().getSimpleName() + " \"" + file.getName()
-//							+ "\" failed - the underlying OS was unable to perform the delete operation");
-//				}
 			} else
 				randomAccessFile.close();
 			randomAccessFile = null;
@@ -89,39 +84,24 @@ public class Directfile extends ImageFile {
 	}
 
 	public int inimage(ObjectAddress chrAddr, int nchr) {
-//		try {
-//			String line = (rest != null) ? rest : readLine();
-			String line = readLine();
-//			IO.println("RTInfile.inimage: line=\"" + line + '"');
-//			rest = null;
-			if(line == null) {
-				RTUtil.set_STATUS(13); // End of file on input";
-				return 0;
+		String line = readLine();
+		if(line == null) {
+			RTUtil.set_STATUS(13); // End of file on input";
+			return 0;
+		}
+		if(line.length() <= nchr) {
+			for(int i=0;i<line.length();i++) {
+				chrAddr.store(i, IntegerValue.of(Type.T_CHAR, line.charAt(i)));
 			}
-//			if (line != null) {
-//				if (line.length() > lng) {
-//					Util.IERR(this.spec + ": Image too short: input.length=" + line.length() + ", image.length=" + lng);
-//				}
-//				ASGSTR(image, line);
-//			} else {
-//				ASGSTR(image, "" + (char) 25);
-//				_ENDFILE = true;
-//			}
-			if(line.length() <= nchr) {
-				for(int i=0;i<line.length();i++) {
-					chrAddr.store(i, IntegerValue.of(Type.T_CHAR, line.charAt(i)));
-				}
-				return line.length();
-			} else {
-				Util.IERR("");
-			}
-//		} catch (IOException e) {
-////			throw new RTS_SimulaRuntimeError("Inimage failed", e);
-//			Util.IERR("Inimage failed: " + e);
-//		}
+			return line.length();
+		} else {
+			Util.IERR("");
+		}
 		return 0;
 	}
 	
+	/// Utility: read a line from the underlying RandomAccessFile
+	/// @return the line read
 	private String readLine() {
 		StringBuilder sb = new StringBuilder();
 		for(int i=0;i<this.imglng;i++) {
@@ -139,30 +119,25 @@ public class Directfile extends ImageFile {
 	@Override
 	public void outimage(String image) {
 		try {
-//			writer.write(image);
-//			writer.write("\n");
 			randomAccessFile.write(image.getBytes());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//		Util.IERR(""+image);
 	}
 
+	/// Locate the given 'pos' on the underlying RandomAccessFile
+	/// @param pos the position to locate
 	public void locate(int p) {
-//		if (p < 1 | p > MAXLOC)
-//			throw new RTS_SimulaRuntimeError("Locate: Parameter out of range");
-//		else
-			try {
-				randomAccessFile.seek((p - 1) * RECORDSIZE);
-			} catch (IOException e) {
-//				throw new RTS_SimulaRuntimeError("Locate failed", e);
-				RTUtil.set_STATUS(99);
-			}
-//		_LOC = p;
-//		Util.IERR("");
+		try {
+			randomAccessFile.seek((p - 1) * RECORDSIZE);
+		} catch (IOException e) {
+			RTUtil.set_STATUS(99);
+		}
 	}
 	
+	/// Returns the last location
+	/// @return the last location
 	public int lastloc() {
 		try {
 			// the length of this file, measured in bytes.
