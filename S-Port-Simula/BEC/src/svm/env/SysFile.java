@@ -17,7 +17,6 @@ import svm.RTUtil;
 import svm.env.filespec.DirectBytefileSpec;
 import svm.env.filespec.DirectfileSpec;
 import svm.env.filespec.DatasetSpec;
-import svm.env.filespec.FileAction;
 import svm.env.filespec.ImageFileSpec;
 import svm.env.filespec.InbytefileSpec;
 import svm.env.filespec.InfileSpec;
@@ -38,21 +37,41 @@ import svm.value.ObjectAddress;
 /// @author Øystein Myhre Andersen
 public abstract class SysFile {
 	
-	private static Vector<DatasetSpec> rtFiles = new Vector<DatasetSpec>();
+	/// The set of DatasetSpecs
+	private static Vector<DatasetSpec> datasetSpecs = new Vector<DatasetSpec>();
 	
+	/// Add a DatasetSpec to the set of DatasetSpec
+	/// @param spec the DatasetSpec to add
 	private static int addRTFile(DatasetSpec spec) {
-		rtFiles.add(spec);
-		return(rtFiles.size()+3);
+		datasetSpecs.add(spec);
+		return(datasetSpecs.size()+3);
 	}
 	
+	/// Lookup a DatasetSpec by its 'key'
+	/// @param key the DatasetSpec key to use
 	private static DatasetSpec lookup(int key) {
 //		IO.println("SysFile.lookup: key="+key);
-		return rtFiles.get(key-4);
+		return datasetSpecs.get(key-4);
 	}
 	
-	/// Visible sysroutine("GDSPEC") GDSPEC;
-	/// import range(1:3) code; infix(string) spec;
-	/// export integer filled  end;
+	/// Get data set specification of system files
+	///
+	///		Visible sysroutine("GDSPEC") GDSPEC;
+	///		import range(1:3) code; infix(string) spec;
+	///		export integer filled  end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., code, spec'addr, spec'ofst, specnchr →
+	/// 	   ..., filled
+	///
+	/// Depending on 'code', the DatasetSpec String is returned in the given 'spec' and
+	/// the length 'filled' is pushed onto the Runtime stack.
+	///
+	///		Code Dsetspec
+	///		  1  What is the data set specification for SYSIN, the file will be opened as infile.
+	///		  2  What is the data set specification for SYSOUT, the file will be opened as printfile.
+	///		  3  What is the data set specification for SYSTRACE, the file will be opened as printfile.
+	///
 	public static void gdspec() {
 		SVM_CALL_SYS.ENTER("GDSPEC: ", 1, 4); // exportSize, importSize
 		@SuppressWarnings("unused")
@@ -67,17 +86,25 @@ public abstract class SysFile {
 				result = "SYSOUT"; break;
 			case 3: // What is the data set specification for SYSTRACE.
 				result = "SYSTRACE"; break;
-			default: Util.IERR("");
+			default: RTUtil.set_STATUS(19);
 		}
-//		IO.println("SVM_SYSCALL.gdspec: index=" + index + ", result=" +result);
 		RTUtil.move(result, itemAddr);
 
 		RTStack.push(IntegerValue.of(Type.T_INT, result.length()));
 		SVM_CALL_SYS.EXIT("GDSPEC: ");
 	}
 	
-	/// Visible sysroutine("GETLPP") GETLPP;
-	/// import range(1:MAX_KEY) key; export integer lpp end;
+	/// Get lines per page
+	///
+	///		Visible sysroutine("GETLPP") GETLPP;
+	///		import range(1:MAX_KEY) key; export integer lpp end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., key →
+	/// 	   ..., lpp
+	///
+	/// Pop off the argument 'key' and
+	/// <br>push the 'lpp' onto the Runtime stack
 	public static void getlpp() {
 		SVM_CALL_SYS.ENTER("GETLPP: ", 1, 1); // exportSize, importSize
 		@SuppressWarnings("unused")
@@ -86,103 +113,79 @@ public abstract class SysFile {
 		SVM_CALL_SYS.EXIT("GETLPP: ");
 	}
 	
-	/// Visible sysroutine("OPFILE") OPFILE;
-	/// import  infix(string)      spec;   -- dsetspec;
-	///         range(0:MAX_FIL)   type;   -- dsettype;
-	///         infix(string)      action;
-	///         integer            imglmg; -- img_lng;
-	/// export  range(0:MAX_KEY)   key;    -- filekey;
-	/// -- action encoding: (a digit gives the rank of the character, e.g. 0 is NUL)
-	/// --      action == <0 ! 1 >          -- shared/noshared
-	/// --                <0 ! 1 >          -- append/noappend
-	/// --                <0 ! 1 ! 2 >      -- create/nocreate/anycreate
-	/// --                <0 ! 1 ! 2 >      -- readonly/writeonly/readwrite
-	/// --                <0 ! 1 >          -- purge/nopurge
-	/// --                <0 ! 1 ! 2 ! 3 ! 4 ! 5 >
-	/// --                -- rewind/norewind/next/previous/repeat/release
-	/// --                <<char>>          -- bytesize: rank(char) (!0! default)
-	/// --                <<c1><c2>>        -- move:<rank(c1)*256+rank(c2)>
-	/// --                ( <l><string> )*  -- unknown access modes
-	/// --                0                 -- terminating NUL character
-	/// --
-	/// -- The action string will always be at least 10 chars long, encoded
-	/// -- with the predefined modes in the above given sequence (e.g. char
-	/// -- number 3 will always specify the CREATE mode). If no value is given 
-	/// -- for some mode, RTS will insert the appropriate default character
-	/// -- at the relevant position. These defaults are:
-	/// --
-	/// --      in(byte)file:     "!0!!1!!1!!0!!1!!2!!0!!0!!0!!0!!0!"
-	/// --      out(byte)file:    "!1!!1!!2!!1!!1!!2!!0!!0!!0!!0!!0!"
-	/// --      direct(byte)file: "!1!!1!!1!!2!!1!!5!!0!!0!!0!!0!!0!"
-	/// --
-	/// -- If an unknown (i.e. non-Sport-defined) value are given as parameter
-	/// -- to procedure "setaccess", the first character must be '%' (percent),
-	/// -- otherwise "setaccess" returns FALSE (in all other cases it is TRUE).
-	/// -- Accepted values will be concatenated with the standard string, with 
-	/// -- '%' replaced by a character (l) whose rank gives the length of the
-	/// -- string, excluding the overwritten '%'.
-	/// -- The action string is always terminated by the NUL character ('!0!').
-	/// end;
+	/// Open data set
+	///
+	///		Visible sysroutine("OPFILE") OPFILE;
+	///		import infix(string)    spec;   -- dsetspec;
+	///		       range(0:MAX_FIL) type;   -- dsettype;
+	///		       infix(string)    action;
+	///		       integer          imglng; -- img_lng;
+	///		export range(0:MAX_KEY) key;    -- filekey;
+	///		end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., spec, type, action, imglng →
+	/// 	   ..., key
+	///
+	/// A new DatasetSpec is created based upon the arguments.
+	/// That spec is added and the lookup 'key' is returned.
+	/// <pre>
+	///		spec:	Identification of a data set.
+	///		type:	The type code of the corresponding file.
+	///		action:	A copy of the second parameter to the Simula open procedure, see below.
+	///		imglng:	The length of the images in the file.
+	///		Key:	The key associated with the data set, or zero.
+	/// </pre>
 	public static void opfile() {
 		SVM_CALL_SYS.ENTER("OPFILE: ", 1, 8); // exportSize, importSize
-//		RTStack.dumpRTStack("SVM_SYSCALL.opfile: ");
 		int imglng = RTStack.popInt();
-//		IO.println("SVM_SYSCALL.opfile: imglng="+imglng);
 		String action = RTStack.popString();
 		int type = RTStack.popInt();
 		String spec = RTStack.popString();
-//		IO.println("SVM_SYSCALL.opfile: spec="+spec);
-//		IO.println("SVM_SYSCALL.opfile: type="+type);
-//		IO.println("SVM_SYSCALL.opfile: action="+action);
-//		IO.println("SVM_SYSCALL.opfile: imglng="+imglng);
 		int key = 0;
 		if(spec.equalsIgnoreCase("SYSIN"))         key = DatasetSpec.KEY_SYSIN;
 		else if(spec.equalsIgnoreCase("SYSOUT"))   key = DatasetSpec.KEY_SYSOUT;
 		else if(spec.equalsIgnoreCase("SYSTRACE")) key = DatasetSpec.KEY_SYSTRACE;
 		else {
-//			RTFile fileSpec = new RTFile(spec, type, action, imglng);
-//			key = addRTFile(fileSpec);
-			
 			DatasetSpec fileSpec = null;
 			switch(type) {
-				case DatasetSpec.FIL_INFILE ->		  fileSpec = new InfileSpec(spec, type, action, imglng);
-				case DatasetSpec.FIL_OUTFILE ->		  fileSpec = new OutfileSpec(spec, type, action, imglng);
-				case DatasetSpec.FIL_PRINTFILE ->	  fileSpec = new PrintfileSpec(spec, type, action, imglng);
-				case DatasetSpec.FIL_DIRECTFILE ->	  fileSpec = new DirectfileSpec(spec, type, action, imglng);
-				case DatasetSpec.FIL_INBYTEFILE ->	  fileSpec = new InbytefileSpec(spec, type, action, imglng);
-				case DatasetSpec.FIL_OUTBYTEFILE ->    fileSpec = new OutbytefileSpec(spec, type, action, imglng);
+				case DatasetSpec.FIL_INFILE ->		   fileSpec = new InfileSpec        (spec, type, action, imglng);
+				case DatasetSpec.FIL_OUTFILE ->		   fileSpec = new OutfileSpec       (spec, type, action, imglng);
+				case DatasetSpec.FIL_PRINTFILE ->	   fileSpec = new PrintfileSpec     (spec, type, action, imglng);
+				case DatasetSpec.FIL_DIRECTFILE ->	   fileSpec = new DirectfileSpec    (spec, type, action, imglng);
+				case DatasetSpec.FIL_INBYTEFILE ->	   fileSpec = new InbytefileSpec    (spec, type, action, imglng);
+				case DatasetSpec.FIL_OUTBYTEFILE ->    fileSpec = new OutbytefileSpec   (spec, type, action, imglng);
 				case DatasetSpec.FIL_DIRECTBYTEFILE -> fileSpec = new DirectBytefileSpec(spec, type, action, imglng);
 				default -> Util.IERR(""+DatasetSpec.edFileType(type));
 			}
 			key = addRTFile(fileSpec);
 			if(Option.execVerbose) IO.println("SVM_SYSCALL.opfile: key=" + key + ", spec="+spec);
-//			Util.IERR("NOT IMPL");
 		}
 		RTStack.push(IntegerValue.of(Type.T_INT, key));
-//		Util.IERR("");
 		SVM_CALL_SYS.EXIT("OPFILE: ");
 	}
 
-	/// Visible sysroutine("CLFILE") OPFILE;
-	/// import  range(0:MAX_KEY)   key;    -- filekey;
-	///         infix(string)      action;
-	/// end;
-	/// -- see OPFILE for encoding of action string --
+	/// Close data set
+	///
+	///		Visible sysroutine("CLFILE") OPFILE;
+	///		import range(0:MAX_KEY) key;    -- filekey;
+	///		       infix(string) action;
+	///		end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., key, action →
+	/// 	   ...
+	///
+	/// The data set associated with 'key' is closed using the given 'action'.
 	public static void clfile() {
 		SVM_CALL_SYS.ENTER("CLFILE: ", 0, 4); // exportSize, importSize
-//		RTStack.dumpRTStack("SVM_SYSCALL.clfile: ");
 		String action = RTStack.popString();
 		int key = RTStack.popInt();
 		if(key > 3) {
-//			IO.println("SVM_SYSCALL.clfile: key="+key);
-//			IO.println("SVM_SYSCALL.clfile: action="+action);
 			DatasetSpec fileSpec = lookup(key);
-//			IO.println("SVM_SYSCALL.clfile: spec="+spec);
 			fileSpec.clfile();
-			
 			FileAction fileAction = new FileAction(action);
 			fileAction.doPurgeAction(fileSpec.fileName);
-//			Util.IERR("NOT IMPL");
 		}
 		SVM_CALL_SYS.EXIT("CLFILE: ");
 	}
@@ -236,13 +239,21 @@ public abstract class SysFile {
 		SVM_CALL_SYS.EXIT("PRINTO: ");
 	}
 
-	/// Visible sysroutine("INIMAG") fINIMA;
-	/// import range(1:MAX_KEY) key; infix(string) image;
-	/// export integer filled  end;
+	/// Inimage
 	///
-	/// Key: The key associated with the data set.
-	/// Image: Input buffer.
+	///		Visible sysroutine("INIMAG") fINIMA;
+	///		import range(1:MAX_KEY) key; infix(string) image;
+	///		export integer filled  end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., key, image'oaddr, image'ofst, image'nchr →
+	/// 	   ..., filled
+	///
+	/// <pre>
+	/// Key:    The key associated with the data set.
+	/// Image:  Input buffer.
 	/// Filled: The number of characters placed in image.
+	/// </pre>
 	///
 	/// A record is read from the current position of the data set into the image. If the number of characters
 	/// in the record exceeds the image length, the action taken is system dependent:
@@ -263,23 +274,15 @@ public abstract class SysFile {
 	/// above (status 12).
 	public static void INIMAG() {
 		SVM_CALL_SYS.ENTER("INIMAG: ", 1, 4); // exportSize, importSize
-//		String image = RTStack.popString();
 		int nchr = RTStack.popInt();
 		ObjectAddress chrAddr = RTStack.popGADDRasOADDR();
 		int key = RTStack.popInt();
-//		IO.println("SVM_SYSCALL.INIMAG: key="+key);
-//		IO.println("SVM_SYSCALL.INIMAG: nchr="+nchr);
-//		IO.println("SVM_SYSCALL.INIMAG: chrAddr="+chrAddr);
 		int filled = 0;
 		if(key == DatasetSpec.KEY_SYSIN) {
-//			IO.println("SVM_SYSCALL.INIMAG: SYSIN:  nchr="+nchr);
 			filled = InfileSpec.sysinInimage(chrAddr, nchr);
-//			Util.IERR("");
 		} else if(key > 3) {
 			ImageFileSpec spec = (ImageFileSpec) lookup(key);
-//			IO.println("SVM_SYSCALL.INIMAG: spec="+spec);
 			filled = spec.inimage(chrAddr, nchr);
-//			Util.IERR("NOT IMPL");
 		} else {
 			Util.IERR("");
 		}
@@ -287,11 +290,18 @@ public abstract class SysFile {
 		SVM_CALL_SYS.EXIT("INIMAG: ");
 	}
 
-	/// Visible sysroutine("OUTIMA")  fUTIMA;
-	/// import range(1:MAX_KEY) key; infix(string) img  end;
+	/// Outimage
+	///
+	///		Visible sysroutine("OUTIMA")  fUTIMA;
+	///		import range(1:MAX_KEY) key; infix(string) img  end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., key, img'oaddr, img'ofst, img'nchr →
+	/// 	   ...
+	///
 	///
 	///		Key: The key associated with the data set.
-	/// 	img: Output buffer.
+	/// 	img: A string to be output.
 	///
 	/// If the file is of type 2 or 4, image is copied into the record at the current position of the data set, and
 	/// the data set is positioned at the sequentially next record. On printfiles the image is printed from the
@@ -304,24 +314,26 @@ public abstract class SysFile {
 		SVM_CALL_SYS.ENTER("OUTIMA: ", 0, 4); // exportSize, importSize
 		String image = RTStack.popString();
 		int key = RTStack.popInt();
-//		IO.println("SVM_SYSCALL.OUTIMA: key="+key);
-//		IO.println("SVM_SYSCALL.OUTIMA: nchr="+nchr);
-//		IO.println("SVM_SYSCALL.OUTIMA: chrAddr="+chrAddr);
 		if(key == DatasetSpec.KEY_SYSOUT || key == DatasetSpec.KEY_SYSTRACE) {
 			Util.IERR("");
 		} else if(key > 3) {
 			ImageFileSpec spec = (ImageFileSpec) lookup(key);
-//			IO.println("SVM_SYSCALL.OUTIMA: spec="+spec);
 			spec.outimage(image);
-//			Util.IERR("NOT IMPL");
 		} else {
 			Util.IERR("");
 		}
 		SVM_CALL_SYS.EXIT("OUTIMA: ");
 	}
 	
-	/// Visible sysroutine("BREAKO") BREAKO;
-	/// import range(1:MAX_KEY) key; infix(string) img  end;
+	/// Breakoutimage
+	///
+	///		Visible sysroutine("BREAKO") BREAKO;
+	///		import range(1:MAX_KEY) key; infix(string) img  end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., key, img'oaddr, img'ofst, img'nchr →
+	/// 	   ...
+	///
 	///
 	///		Key: The key associated with the data set.
 	/// 	img: A string to be output
@@ -340,33 +352,37 @@ public abstract class SysFile {
 		SVM_CALL_SYS.ENTER("BREAKO: ", 0, 4); // exportSize, importSize
 		String image = RTStack.popString();
 		int key = RTStack.popInt();
-//		IO.println("SVM_SYSCALL.BREAKO: key="+key);
-//		IO.println("SVM_SYSCALL.BREAKO: nchr="+nchr);
-//		IO.println("SVM_SYSCALL.BREAKO: chrAddr="+chrAddr);
 		if(key == DatasetSpec.KEY_SYSOUT || key == DatasetSpec.KEY_SYSTRACE) {
-//			IO.println("SVM_SYSCALL.BREAKO: SYSOUT:  key="+key);
 			if(Global.console != null)
 				 Global.console.write(image);
 			else
 				System.out.print(image);
-//			Util.IERR("");
 		} else if(key > 3) {
 			ImageFileSpec spec = (ImageFileSpec) lookup(key);
-//			IO.println("SVM_SYSCALL.BREAKO: spec="+spec);
 			spec.breakOutimage(image);
-//			Util.IERR("NOT IMPL");
 		} else {
 			Util.IERR("");
 		}
 		SVM_CALL_SYS.EXIT("BREAKO: ");
 	}
 
-	/// Visible sysroutine("INBYTE") fINBYT;
-	/// import range(1:MAX_KEY) key; export range(0:MAX_BYT) byte  end;
+	/// Inbyte
+	///
+	///		Visible sysroutine("INBYTE") fINBYT;
+	///		import range(1:MAX_KEY) key; export range(0:MAX_BYT) byte  end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., key →
+	/// 	   ..., byte
+	///
+	///	One byte is input from the current position of the data set,
+	/// and the data set is positioned at the following byte.
+	///
+	///		Key: The key associated with the data set.
+	///		Byte: Value input.
 	public static void INBYTE() {
 		SVM_CALL_SYS.ENTER("INBYTE: ", 1, 1); // exportSize, importSize
 		int key = RTStack.popInt();
-//		IO.println("SVM_SYSCALL.INBYTE: key="+key);
 		DatasetSpec spec = lookup(key);
 		int byt = 0;
 		if(spec instanceof InbytefileSpec ifile) {
@@ -378,17 +394,26 @@ public abstract class SysFile {
 		else Util.IERR("");
 		RTStack.push(IntegerValue.of(Type.T_INT, byt));
 		SVM_CALL_SYS.EXIT("INBYTE: ");
-//		Util.IERR("");
 	}
 
-	/// Visible sysroutine("OUTBYT") fUTBYT;
-	/// import range(1:MAX_KEY) key; range(0:MAX_BYT) byte  end;
+	/// Outbyte
+	///
+	///		Visible sysroutine("OUTBYT") fUTBYT;
+	///		import range(1:MAX_KEY) key; range(0:MAX_BYT) byte  end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., key, byte →
+	/// 	   ...
+	///
+	///	One byte is output to the current position of the data set,
+	/// and the data set is positioned at the following byte.
+	///
+	///		Key: The key associated with the data set.
+	///		Byte: Value output.
 	public static void OUTBYT() {
 		SVM_CALL_SYS.ENTER("OUTBYT: ", 0, 2); // exportSize, importSize
 		int byt = RTStack.popInt();
 		int key = RTStack.popInt();
-//		IO.println("SVM_SYSCALL.OUTBYT: key="+key);
-//		IO.println("SVM_SYSCALL.OUTBYT: byt="+byt);
 		DatasetSpec spec = lookup(key);
 		if(spec instanceof OutbytefileSpec ofile) {
 			ofile.outbyte(byt);
@@ -398,11 +423,21 @@ public abstract class SysFile {
 		}
 		else Util.IERR("");
 		SVM_CALL_SYS.EXIT("OUTBYT: ");
-//		Util.IERR("");
 	}
 
-	/// Visible sysroutine("NEWPAG") NEWPAG;
-	/// import range(1:MAX_KEY) key; end;
+	/// New page
+	///
+	///		Visible sysroutine("NEWPAG") NEWPAG;
+	///		import range(1:MAX_KEY) key; end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., key →
+	/// 	   ...
+	///
+	///	The top-of-form action is performed on the data set, so that the next image will be printed on the
+	///	first printable line of the following page.
+	///
+	/// This is legal on printfiles only.
 	public static void newpag() {
 		SVM_CALL_SYS.ENTER("NEWPAG: ", 0, 1); // exportSize, importSize
 		int key = RTStack.popInt();
@@ -412,15 +447,26 @@ public abstract class SysFile {
 		SVM_CALL_SYS.EXIT("NEWPAG: ");
 	}
 
-	
-	/// Visible sysroutine("LOCATE") fLOCAT;
-	/// import range(1:MAX_KEY) key; integer loc  end;
+	/// Locate record
+	///
+	///		Visible sysroutine("LOCATE") fLOCAT;
+	///		import range(1:MAX_KEY) key; integer loc  end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., key, loc →
+	/// 	   ...
+	///
+	///	key: The key associated with the data set.
+	///	<br>loc: Indicates the next record (directfile) or byte (directbytefile) position to be accessed.
+	///
+	///	The position of the data set is changed so that the next record read or written will be record number
+	///	loc of the data set (the first record is numbered 1).
+	///
+	/// Locate is legal on directfiles and directbytefiles only
 	public static void LOCATE() {
 		SVM_CALL_SYS.ENTER("LOCATE: ", 0, 2); // exportSize, importSize
 		int loc = RTStack.popInt();
 		int key = RTStack.popInt();
-//		IO.println("SVM_SYSCALL.LOCATE: key="+key);
-//		IO.println("SVM_SYSCALL.LOCATE: loc="+loc);
 		if(key > 3) {
 			DatasetSpec spec = lookup(key);
 			if(spec instanceof DirectfileSpec dfile) {
@@ -432,15 +478,27 @@ public abstract class SysFile {
 			else Util.IERR("");
 		}
 		SVM_CALL_SYS.EXIT("LOCATE: ");
-//		Util.IERR("");
 	}
 
-	/// Visible sysroutine("MAXLOC") MXLOC;
-	/// import range(1:MAX_KEY) key; export integer res  end;
+	/// Maxloc
+	///
+	///		Visible sysroutine("MAXLOC") MXLOC;
+	///		import range(1:MAX_KEY) key; export integer res  end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., key →
+	/// 	   ..., res
+	///
+	///	key: The key associated with the data set.
+	/// <br>res: The result
+	///
+	///	The routine Maxloc will give acces to the maximum value that can be used as parameter to Locate
+	///	on the file referenced by key.
+	///
+	///	Maxloc is legal on directfiles and directbytefiles only.
 	public static void MXLOC() {
 		SVM_CALL_SYS.ENTER("MXLOC: ", 1, 1); // exportSize, importSize
 		int key = RTStack.popInt();
-//		IO.println("SVM_SYSCALL.MXLOC: key="+key);
 		int maxloc = 0;
 		if(key > 3) {
 			DatasetSpec spec = lookup(key);
@@ -454,15 +512,27 @@ public abstract class SysFile {
 		}
 		RTStack.push(IntegerValue.of(Type.T_INT, maxloc));
 		SVM_CALL_SYS.EXIT("MXLOC: ");
-//		Util.IERR("");
 	}
 
-	/// Visible sysroutine("LSTLOC") LSTLOC;
-	/// import range(1:MAX_KEY) key; export integer res  end;
+	/// Last location
+	///
+	///		Visible sysroutine("LSTLOC") LSTLOC;
+	///		import range(1:MAX_KEY) key; export integer res  end;
+	///
+	/// 	Runtime Stack
+	/// 	   ..., key →
+	/// 	   ..., res
+	///
+	///	key: The key associated with the data set.
+	/// <br>res: The result
+	///
+	///	The routine Lstloc will give access to the largest location of
+	/// any written image in the file referenced by key.
+	///
+	///	Lstloc is legal on directfiles and directbytefiles only.
 	public static void LSTLOC() {
 		SVM_CALL_SYS.ENTER("LSTLOC: ", 1, 1); // exportSize, importSize
 		int key = RTStack.popInt();
-//		IO.println("SVM_SYSCALL.LSTLOC: key="+key);
 		int maxloc = 0;
 		if(key > 3) {
 			DatasetSpec spec = lookup(key);
@@ -476,7 +546,6 @@ public abstract class SysFile {
 		}
 		RTStack.push(IntegerValue.of(Type.T_INT, maxloc));
 		SVM_CALL_SYS.EXIT("LSTLOC: ");
-//		Util.IERR("");
 	}
 
 }

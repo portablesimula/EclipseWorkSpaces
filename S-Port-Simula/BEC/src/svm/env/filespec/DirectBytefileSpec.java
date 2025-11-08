@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 import svm.RTUtil;
-import svm.env.filespec.FileAction._CreateAction;
+import svm.env.FileAction._CreateAction;
 
 /// RTDirectBytefile
 ///

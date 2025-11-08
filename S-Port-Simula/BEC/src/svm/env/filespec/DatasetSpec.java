@@ -6,6 +6,7 @@
 package svm.env.filespec;
 
 import bec.util.Util;
+import svm.env.FileAction;
 
 public class DatasetSpec {
 	public String fileName;

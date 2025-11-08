@@ -3,7 +3,7 @@
 /// 
 /// You find a copy of the License on the following
 /// page: https://creativecommons.org/licenses/by/4.0/
-package svm.env.filespec;
+package svm.env;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +14,14 @@ import javax.swing.JFileChooser;
 import bec.util.Util;
 import svm.RTUtil;
 
+/// File Action.
+///
+///
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/env/FileAction.java"><b>Source File</b></a>.
+/// 
+/// @author Simula Standard
+/// @author S-Port: The Environment Interface
+/// @author Øystein Myhre Andersen
 public class FileAction {
 	
 	private static final boolean DEBUG = false;
@@ -25,7 +33,7 @@ public class FileAction {
 	/// the environment. If the value is "nocreate", the associated file must exist
 	/// at "open". The value "anycreate" implies that if the file does exist at
 	/// "open" the file is opened, otherwise a new file is created.
-	protected enum _CreateAction {
+	public enum _CreateAction {
 		/// not applicable
 		NA,
 		/// the associated file must exist at "open"
@@ -38,24 +46,24 @@ public class FileAction {
 	};
 
 	/// CREATE: Action is performed as 'open'
-	protected _CreateAction _CREATE = _CreateAction.NA; // May be Redefined
+	public _CreateAction _CREATE = _CreateAction.NA; // May be Redefined
 
 	/// PURGE: Action is performed at 'close'
 	/// 
 	/// The value "purge" implies that the external file may be deleted by the
 	/// environment when it is closed (in the sense that it becomes inaccessible to
 	/// further program access). The value "nopurge" implies no such deletion.
-	protected boolean _PURGE = false; // True:purge, False:noPurge
+	public boolean _PURGE = false; // True:purge, False:noPurge
 
 	/// If the value is true, input operations can be performed.
 	/// 
 	/// This mode is relevant only for direct files.
-	protected boolean _CANREAD = true;
+	public boolean _CANREAD = true;
 	
 	/// If the value is true, output operations can be performed.
 	/// 
 	/// This mode is relevant only for direct files.
-	protected boolean _CANWRITE = true;
+	public boolean _CANWRITE = true;
 
 	/// The output to the file is added to
 	/// the existing contents of the file.
@@ -66,7 +74,7 @@ public class FileAction {
 	/// contain only the output produced while the file was open.
 	/// 
 	/// The mode is not relevant for in(byte)files.
-	protected boolean _APPEND = false;
+	public boolean _APPEND = false;
 	
 	/// The current character set when encode/decode files.
 	protected Charset _CHARSET = Charset.defaultCharset();
@@ -81,7 +89,7 @@ public class FileAction {
 	/// underlying storage device is updated. For Directfile/DirectBytefile the underlaying Java
 	/// RandomAccessFile will be created open for reading and writing, and also require that every
 	/// update to the file's content or metadata be written synchronously to the underlying storage device.
-	protected boolean _SYNCHRONOUS;
+	public boolean _SYNCHRONOUS;
 
 //	/// Returns true when this file is open.
 //	/// @return true when this file is open
@@ -89,42 +97,45 @@ public class FileAction {
 //		return (_OPEN);
 //	}
 
-	
+	/// Construct and decode a new FileAction based upon the given 'action' string.
+	/// @param action the action string
 	public FileAction(String action) {
 		decodeActions(action);
 	}
 	
-	/// -- action encoding: (a digit gives the rank of the character, e.g. 0 is NUL)
-	/// --      action == <0 ! 1 >          -- shared/noshared
-	/// --                <0 ! 1 >          -- append/noappend
-	/// --                <0 ! 1 ! 2 >      -- create/nocreate/anycreate
-	/// --                <0 ! 1 ! 2 >      -- readonly/writeonly/readwrite
-	/// --                <0 ! 1 >          -- purge/nopurge
-	/// --                <0 ! 1 ! 2 ! 3 ! 4 ! 5 >
-	/// --                -- rewind/norewind/next/previous/repeat/release
-	/// --                <<char>>          -- bytesize: rank(char) (!0! default)
-	/// --                <<c1><c2>>        -- move:<rank(c1)*256+rank(c2)>
-	/// --                ( <l><string> )*  -- unknown access modes
-	/// --                0                 -- terminating NUL character
-	/// --
-	/// -- The action string will always be at least 10 chars long, encoded
-	/// -- with the predefined modes in the above given sequence (e.g. char
-	/// -- number 3 will always specify the CREATE mode). If no value is given 
-	/// -- for some mode, RTS will insert the appropriate default character
-	/// -- at the relevant position. These defaults are:
-	/// --
-	/// --      in(byte)file:     "!0!!1!!1!!0!!1!!2!!0!!0!!0!!0!!0!"
-	/// --      out(byte)file:    "!1!!1!!2!!1!!1!!2!!0!!0!!0!!0!!0!"
-	/// --      direct(byte)file: "!1!!1!!1!!2!!1!!5!!0!!0!!0!!0!!0!"
-	/// --
-	/// -- If an unknown (i.e. non-Sport-defined) value are given as parameter
-	/// -- to procedure "setaccess", the first character must be '%' (percent),
-	/// -- otherwise "setaccess" returns FALSE (in all other cases it is TRUE).
-	/// -- Accepted values will be concatenated with the standard string, with 
-	/// -- '%' replaced by a character (l) whose rank gives the length of the
-	/// -- string, excluding the overwritten '%'.
-	/// -- The action string is always terminated by the NUL character ('!0!').
-	///
+	/// Decode the given 'action' string.
+	/// <pre>
+	/// action encoding: (a digit gives the rank of the character, e.g. 0 is NUL)
+	///      action == <0 ! 1 >          -- shared/noshared
+	///                <0 ! 1 >          -- append/noappend
+	///                <0 ! 1 ! 2 >      -- create/nocreate/anycreate
+	///                <0 ! 1 ! 2 >      -- readonly/writeonly/readwrite
+	///                <0 ! 1 >          -- purge/nopurge
+	///                <0 ! 1 ! 2 ! 3 ! 4 ! 5 >
+	///                -- rewind/norewind/next/previous/repeat/release
+	///                <<char>>          -- bytesize: rank(char) (!0! default)
+	///                <<c1><c2>>        -- move:<rank(c1)*256+rank(c2)>
+	///                ( <l><string> )*  -- unknown access modes
+	///                0                 -- terminating NUL character
+	/// </pre>
+	/// The action string will always be at least 10 chars long, encoded
+	/// with the predefined modes in the above given sequence (e.g. char
+	/// number 3 will always specify the CREATE mode). If no value is given 
+	/// for some mode, RTS will insert the appropriate default character
+	/// at the relevant position. These defaults are:
+	/// <pre>
+	///      in(byte)file:     "!0!!1!!1!!0!!1!!2!!0!!0!!0!!0!!0!"
+	///      out(byte)file:    "!1!!1!!2!!1!!1!!2!!0!!0!!0!!0!!0!"
+	///      direct(byte)file: "!1!!1!!1!!2!!1!!5!!0!!0!!0!!0!!0!"
+	/// </pre>
+	/// If an unknown (i.e. non-Sport-defined) value are given as parameter
+	/// to procedure "setaccess", the first character must be '%' (percent),
+	/// otherwise "setaccess" returns FALSE (in all other cases it is TRUE).
+	/// Accepted values will be concatenated with the standard string, with 
+	/// '%' replaced by a character (l) whose rank gives the length of the
+	/// string, excluding the overwritten '%'.
+	/// The action string is always terminated by the NUL character ('!0!').
+	/// <pre>
 	///                       Files of kind
 	///  Mode:        In-        Out-        Direct-   Takes effect at
 	///  SHARED       shared     noshared    noshared     open
@@ -134,7 +145,7 @@ public class FileAction {
 	///  BYTESIZE:x   *          *           *            open
 	///  REWIND       norewind   norewind    NA           open,close
 	///  PURGE        nopurge    nopurge     nopurge      close
-	///
+	/// </pre>
 	private void decodeActions(String action) {
 		if(action.length() != 10) Util.IERR("NOT IMPL");
 		int chr = getActionChar(action, 0);
@@ -163,20 +174,11 @@ public class FileAction {
 		chr = getActionChar(action, 4);
 		_PURGE = chr != 1;
 		if(DEBUG) IO.println("RTFileAction.decodeActions: purge/nopurge = " + chr + "                ===> PURGE = " + _PURGE);
-
-//		chr = getActionChar(5);
-//		IO.println("RTFileAction.decodeActions: rewind/norewind/next/previous/repeat/release = " + chr);
-//		chr = getActionChar(6);
-//		IO.println("RTFileAction.decodeActions: append/noappend = " + chr);
-//		chr = getActionChar(7);
-//		IO.println("RTFileAction.decodeActions: append/noappend = " + chr);
-//		chr = getActionChar(8);
-//		IO.println("RTFileAction.decodeActions: append/noappend = " + chr);
-//		chr = getActionChar(9);
-//		IO.println("RTFileAction.decodeActions: append/noappend = " + chr);
-//		Util.IERR("");
 	}
 
+	/// Utility: to pick up a character from the 'action' string
+	/// @param action the action string
+	/// @param idx the index
 	private int getActionChar(String action, int idx) {
 		int c = action.charAt(idx);
 		if(c == 46) return 0;
@@ -185,22 +187,17 @@ public class FileAction {
 	
 
 	/// Do the Create action.
+	/// @param fileName the fileName
 	/// @return the File 
 	public File doCreateAction(String fileName) {
 		File file = new File(fileName);
 		try {
-//			if (!file.isAbsolute() && RTS_Option.RUNTIME_USER_DIR.length() > 0) {
-//				file = new File(RTS_Option.RUNTIME_USER_DIR + '/' + FILE_NAME.edText());
-//			}
 			switch (_CREATE) {
 			case NA -> {
 			}
 			case noCreate -> {
 				// If the value is "nocreate", the associated file must exist at "open".
 				if (!file.exists()) {
-//					IO.println("File access mode=noCreate but File \"" + file + "\" does not exist");
-//					RTUtil.set_STATUS(3); // File does not exist
-					
 					File selected = trySelectFile(fileName);
 					if(selected != null) {
 						file = selected;
@@ -227,7 +224,6 @@ public class FileAction {
 				// at "open" the file is opened, otherwise a new file is created.
 				if (!file.exists()) {
 					IO.println("RTFileAction.doCreateAction: " + file + " +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-//					file.mkdirs();
 					boolean success = file.createNewFile();
 					// IO.println("FILE.doCreateAction: Create on "+file+",
 					// success="+success);
@@ -257,27 +253,6 @@ public class FileAction {
 		File file = new File(fileName);
 		if (file.exists())
 			return (file);
-//		if (!file.isAbsolute()) {
-//			File tryFile = new File(RTS_Option.RUNTIME_USER_DIR, fileName);
-//			if (tryFile.exists())
-//				return (tryFile);
-//			File dir = new File(System.getProperty("user.dir", null));
-//			tryFile = new File(dir, fileName);
-//			if (tryFile.exists())
-//				return (tryFile);
-//
-//			File javaClassPath = new File(System.getProperty("java.class.path"));
-//			if (javaClassPath.exists())
-//				try {
-//					dir = javaClassPath.getParentFile().getParentFile();
-//					tryFile = new File(dir, fileName);
-//					if (tryFile.exists())
-//						return (tryFile);
-//				} catch (Throwable e) {
-//		    		if(RTS_Option.VERBOSE) e.printStackTrace();
-//				}
-//		}
-//		JFileChooser fileChooser = new JFileChooser(file.getParent());
 		JFileChooser fileChooser = new JFileChooser(System.getProperty("user.dir", null));
 		fileChooser.setDialogTitle("Can't Open " + fileName + ", select another");
 		int answer = fileChooser.showOpenDialog(null);
@@ -289,6 +264,7 @@ public class FileAction {
 
 	
 	/// Do the Purge action
+	/// @param fileName the fileName
 	public void doPurgeAction(String fileName) {
 		try {
 			File file = new File(fileName.trim());
