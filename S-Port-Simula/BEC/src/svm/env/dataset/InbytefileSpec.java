@@ -3,7 +3,7 @@
 /// 
 /// You find a copy of the License on the following
 /// page: https://creativecommons.org/licenses/by/4.0/
-package svm.env.filespec;
+package svm.env.dataset;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,7 +13,7 @@ import java.io.InputStream;
 
 import svm.RTUtil;
 
-public class InbytefileSpec extends ByteFileSpec {
+public class InbytefileSpec extends ByteFile {
 	
 	/// The InputStream used.
 	private InputStream inputStream;

@@ -3,11 +3,10 @@
 /// 
 /// You find a copy of the License on the following
 /// page: https://creativecommons.org/licenses/by/4.0/
-package svm.env.filespec;
+package svm.env.dataset;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
@@ -17,7 +16,15 @@ import svm.RTUtil;
 import svm.value.IntegerValue;
 import svm.value.ObjectAddress;
 
-public class DirectfileSpec extends ImageFileSpec {
+/// Directfile Bridge.
+///
+///
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/env/dataset/Directfile.java"><b>Source File</b></a>.
+/// 
+/// @author Simula Standard
+/// @author S-Port: The Environment Interface
+/// @author Øystein Myhre Andersen
+public class Directfile extends ImageFile {
 	
 	/// The underlying RandomAccessFile used.
 	private RandomAccessFile randomAccessFile;
@@ -32,34 +39,31 @@ public class DirectfileSpec extends ImageFileSpec {
 	/// procedure "maxloc" gives access to the current MAXLOC value.
 	public int MAXLOC;
 
-	/// The initial value of LAST_LOC
-	private int INITIAL_LAST_LOC;
+//	/// The initial value of LAST_LOC
+//	private int INITIAL_LAST_LOC;
 
-	public DirectfileSpec(String fileName, int type, String action, int imglng) {
+	/// Construct a new DirectfileSpec with the given arguments.
+	/// @param fileName the fileName
+	/// @param fileType the fileType
+	/// @param action the action string
+	/// @param imglng the image length
+	public Directfile(String fileName, int type, String action, int imglng) {
 		super(fileName, type, action, imglng);
 		File file = fileAction.doCreateAction(fileName);
 		if (!file.exists()) {
-//			File selected = trySelectFile(file.getAbsoluteFile().toString());
-//			if (selected != null)
-//				file = selected;
 			RTUtil.set_STATUS(3); // File does not exist;
 			return;
 		}
 		RECORDSIZE = imglng;
 		MAXLOC = Integer.MAX_VALUE - 1;
 		try {
-//			IO.println("NEW RTDirectfile: fileName=" + fileName);
-//			writer = new FileWriter(file, this.fileAction._APPEND);
 			String mode = "rws"; // mode is one of "r", "rw", "rws", or "rwd"
 			if (fileAction._SYNCHRONOUS)
 				mode = "rws";
 			else
 				mode = (fileAction._CANREAD & !fileAction._CANWRITE) ? "r" : "rw";
 			randomAccessFile = new RandomAccessFile(file, mode);
-//			if (fileAction._APPEND)
-//				INITIAL_LAST_LOC = lastloc();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

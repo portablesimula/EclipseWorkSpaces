@@ -3,7 +3,7 @@
 /// 
 /// You find a copy of the License on the following
 /// page: https://creativecommons.org/licenses/by/4.0/
-package svm.env.filespec;
+package svm.env.dataset;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,7 +14,7 @@ import java.io.OutputStream;
 import bec.util.Util;
 import svm.RTUtil;
 
-public class OutbytefileSpec extends ByteFileSpec {
+public class OutbytefileSpec extends ByteFile {
 	
 	/// The OutputStream used.
 	private OutputStream outputStream;

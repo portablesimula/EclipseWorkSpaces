@@ -3,7 +3,7 @@
 /// 
 /// You find a copy of the License on the following
 /// page: https://creativecommons.org/licenses/by/4.0/
-package svm.env.filespec;
+package svm.env.dataset;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -21,7 +21,7 @@ import svm.RTUtil;
 import svm.value.IntegerValue;
 import svm.value.ObjectAddress;
 
-public class InfileSpec extends ImageFileSpec {
+public class InfileSpec extends ImageFile {
 	
 	/// The BufferedReader used.
 	private BufferedReader lineReader;

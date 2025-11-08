@@ -79,7 +79,7 @@ public class FileAction {
 	/// The current character set when encode/decode files.
 	protected Charset _CHARSET = Charset.defaultCharset();
 
-	/// The default BYTESIXE is 8 in this implementation.
+	/// The default BYTESIZE is 8 in this implementation.
 	protected final int _DEFAULT_BYTESIZE = 8;
 	
 	/// The access mode SYNCHRONOUS.

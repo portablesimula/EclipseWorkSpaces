@@ -14,15 +14,15 @@ import bec.scode.Type;
 import bec.util.Util;
 import svm.RTStack;
 import svm.RTUtil;
-import svm.env.filespec.DirectBytefileSpec;
-import svm.env.filespec.DirectfileSpec;
-import svm.env.filespec.DatasetSpec;
-import svm.env.filespec.ImageFileSpec;
-import svm.env.filespec.InbytefileSpec;
-import svm.env.filespec.InfileSpec;
-import svm.env.filespec.OutbytefileSpec;
-import svm.env.filespec.OutfileSpec;
-import svm.env.filespec.PrintfileSpec;
+import svm.env.dataset.Dataset;
+import svm.env.dataset.DirectBytefile;
+import svm.env.dataset.Directfile;
+import svm.env.dataset.ImageFile;
+import svm.env.dataset.InbytefileSpec;
+import svm.env.dataset.InfileSpec;
+import svm.env.dataset.OutbytefileSpec;
+import svm.env.dataset.OutfileSpec;
+import svm.env.dataset.PrintfileSpec;
 import svm.instruction.SVM_CALL_SYS;
 import svm.value.IntegerValue;
 import svm.value.ObjectAddress;
@@ -38,18 +38,18 @@ import svm.value.ObjectAddress;
 public abstract class SysFile {
 	
 	/// The set of DatasetSpecs
-	private static Vector<DatasetSpec> datasetSpecs = new Vector<DatasetSpec>();
+	private static Vector<Dataset> datasetSpecs = new Vector<Dataset>();
 	
 	/// Add a DatasetSpec to the set of DatasetSpec
 	/// @param spec the DatasetSpec to add
-	private static int addRTFile(DatasetSpec spec) {
+	private static int addRTFile(Dataset spec) {
 		datasetSpecs.add(spec);
 		return(datasetSpecs.size()+3);
 	}
 	
 	/// Lookup a DatasetSpec by its 'key'
 	/// @param key the DatasetSpec key to use
-	private static DatasetSpec lookup(int key) {
+	private static Dataset lookup(int key) {
 //		IO.println("SysFile.lookup: key="+key);
 		return datasetSpecs.get(key-4);
 	}
@@ -143,20 +143,20 @@ public abstract class SysFile {
 		int type = RTStack.popInt();
 		String spec = RTStack.popString();
 		int key = 0;
-		if(spec.equalsIgnoreCase("SYSIN"))         key = DatasetSpec.KEY_SYSIN;
-		else if(spec.equalsIgnoreCase("SYSOUT"))   key = DatasetSpec.KEY_SYSOUT;
-		else if(spec.equalsIgnoreCase("SYSTRACE")) key = DatasetSpec.KEY_SYSTRACE;
+		if(spec.equalsIgnoreCase("SYSIN"))         key = Dataset.KEY_SYSIN;
+		else if(spec.equalsIgnoreCase("SYSOUT"))   key = Dataset.KEY_SYSOUT;
+		else if(spec.equalsIgnoreCase("SYSTRACE")) key = Dataset.KEY_SYSTRACE;
 		else {
-			DatasetSpec fileSpec = null;
+			Dataset fileSpec = null;
 			switch(type) {
-				case DatasetSpec.FIL_INFILE ->		   fileSpec = new InfileSpec        (spec, type, action, imglng);
-				case DatasetSpec.FIL_OUTFILE ->		   fileSpec = new OutfileSpec       (spec, type, action, imglng);
-				case DatasetSpec.FIL_PRINTFILE ->	   fileSpec = new PrintfileSpec     (spec, type, action, imglng);
-				case DatasetSpec.FIL_DIRECTFILE ->	   fileSpec = new DirectfileSpec    (spec, type, action, imglng);
-				case DatasetSpec.FIL_INBYTEFILE ->	   fileSpec = new InbytefileSpec    (spec, type, action, imglng);
-				case DatasetSpec.FIL_OUTBYTEFILE ->    fileSpec = new OutbytefileSpec   (spec, type, action, imglng);
-				case DatasetSpec.FIL_DIRECTBYTEFILE -> fileSpec = new DirectBytefileSpec(spec, type, action, imglng);
-				default -> Util.IERR(""+DatasetSpec.edFileType(type));
+				case Dataset.FIL_INFILE ->		   fileSpec = new InfileSpec        (spec, type, action, imglng);
+				case Dataset.FIL_OUTFILE ->		   fileSpec = new OutfileSpec       (spec, type, action, imglng);
+				case Dataset.FIL_PRINTFILE ->	   fileSpec = new PrintfileSpec     (spec, type, action, imglng);
+				case Dataset.FIL_DIRECTFILE ->	   fileSpec = new Directfile    (spec, type, action, imglng);
+				case Dataset.FIL_INBYTEFILE ->	   fileSpec = new InbytefileSpec    (spec, type, action, imglng);
+				case Dataset.FIL_OUTBYTEFILE ->    fileSpec = new OutbytefileSpec   (spec, type, action, imglng);
+				case Dataset.FIL_DIRECTBYTEFILE -> fileSpec = new DirectBytefile(spec, type, action, imglng);
+				default -> Util.IERR(""+Dataset.edFileType(type));
 			}
 			key = addRTFile(fileSpec);
 			if(Option.execVerbose) IO.println("SVM_SYSCALL.opfile: key=" + key + ", spec="+spec);
@@ -182,7 +182,7 @@ public abstract class SysFile {
 		String action = RTStack.popString();
 		int key = RTStack.popInt();
 		if(key > 3) {
-			DatasetSpec fileSpec = lookup(key);
+			Dataset fileSpec = lookup(key);
 			fileSpec.clfile();
 			FileAction fileAction = new FileAction(action);
 			fileAction.doPurgeAction(fileSpec.fileName);
@@ -278,10 +278,10 @@ public abstract class SysFile {
 		ObjectAddress chrAddr = RTStack.popGADDRasOADDR();
 		int key = RTStack.popInt();
 		int filled = 0;
-		if(key == DatasetSpec.KEY_SYSIN) {
+		if(key == Dataset.KEY_SYSIN) {
 			filled = InfileSpec.sysinInimage(chrAddr, nchr);
 		} else if(key > 3) {
-			ImageFileSpec spec = (ImageFileSpec) lookup(key);
+			ImageFile spec = (ImageFile) lookup(key);
 			filled = spec.inimage(chrAddr, nchr);
 		} else {
 			Util.IERR("");
@@ -314,10 +314,10 @@ public abstract class SysFile {
 		SVM_CALL_SYS.ENTER("OUTIMA: ", 0, 4); // exportSize, importSize
 		String image = RTStack.popString();
 		int key = RTStack.popInt();
-		if(key == DatasetSpec.KEY_SYSOUT || key == DatasetSpec.KEY_SYSTRACE) {
+		if(key == Dataset.KEY_SYSOUT || key == Dataset.KEY_SYSTRACE) {
 			Util.IERR("");
 		} else if(key > 3) {
-			ImageFileSpec spec = (ImageFileSpec) lookup(key);
+			ImageFile spec = (ImageFile) lookup(key);
 			spec.outimage(image);
 		} else {
 			Util.IERR("");
@@ -352,13 +352,13 @@ public abstract class SysFile {
 		SVM_CALL_SYS.ENTER("BREAKO: ", 0, 4); // exportSize, importSize
 		String image = RTStack.popString();
 		int key = RTStack.popInt();
-		if(key == DatasetSpec.KEY_SYSOUT || key == DatasetSpec.KEY_SYSTRACE) {
+		if(key == Dataset.KEY_SYSOUT || key == Dataset.KEY_SYSTRACE) {
 			if(Global.console != null)
 				 Global.console.write(image);
 			else
 				System.out.print(image);
 		} else if(key > 3) {
-			ImageFileSpec spec = (ImageFileSpec) lookup(key);
+			ImageFile spec = (ImageFile) lookup(key);
 			spec.breakOutimage(image);
 		} else {
 			Util.IERR("");
@@ -383,12 +383,12 @@ public abstract class SysFile {
 	public static void INBYTE() {
 		SVM_CALL_SYS.ENTER("INBYTE: ", 1, 1); // exportSize, importSize
 		int key = RTStack.popInt();
-		DatasetSpec spec = lookup(key);
+		Dataset spec = lookup(key);
 		int byt = 0;
 		if(spec instanceof InbytefileSpec ifile) {
 			byt =ifile.inbyte();
 		}
-		else if(spec instanceof DirectBytefileSpec dbfile) {
+		else if(spec instanceof DirectBytefile dbfile) {
 			byt = dbfile.inbyte();
 		}
 		else Util.IERR("");
@@ -414,11 +414,11 @@ public abstract class SysFile {
 		SVM_CALL_SYS.ENTER("OUTBYT: ", 0, 2); // exportSize, importSize
 		int byt = RTStack.popInt();
 		int key = RTStack.popInt();
-		DatasetSpec spec = lookup(key);
+		Dataset spec = lookup(key);
 		if(spec instanceof OutbytefileSpec ofile) {
 			ofile.outbyte(byt);
 		}
-		else if(spec instanceof DirectBytefileSpec dbfile) {
+		else if(spec instanceof DirectBytefile dbfile) {
 			dbfile.outbyte(byt);
 		}
 		else Util.IERR("");
@@ -468,11 +468,11 @@ public abstract class SysFile {
 		int loc = RTStack.popInt();
 		int key = RTStack.popInt();
 		if(key > 3) {
-			DatasetSpec spec = lookup(key);
-			if(spec instanceof DirectfileSpec dfile) {
+			Dataset spec = lookup(key);
+			if(spec instanceof Directfile dfile) {
 				dfile.locate(loc);
 			}
-			else if(spec instanceof DirectBytefileSpec dbfile) {
+			else if(spec instanceof DirectBytefile dbfile) {
 				dbfile.locate(loc);
 			}
 			else Util.IERR("");
@@ -501,11 +501,11 @@ public abstract class SysFile {
 		int key = RTStack.popInt();
 		int maxloc = 0;
 		if(key > 3) {
-			DatasetSpec spec = lookup(key);
-			if(spec instanceof DirectfileSpec dfile) {
+			Dataset spec = lookup(key);
+			if(spec instanceof Directfile dfile) {
 				maxloc = dfile.MAXLOC;
 			}
-			else if(spec instanceof DirectBytefileSpec dbfile) {
+			else if(spec instanceof DirectBytefile dbfile) {
 				maxloc = dbfile.MAXLOC;
 			}
 			else Util.IERR("");
@@ -535,11 +535,11 @@ public abstract class SysFile {
 		int key = RTStack.popInt();
 		int maxloc = 0;
 		if(key > 3) {
-			DatasetSpec spec = lookup(key);
-			if(spec instanceof DirectfileSpec dfile) {
+			Dataset spec = lookup(key);
+			if(spec instanceof Directfile dfile) {
 				maxloc = dfile.lastloc();
 			}
-			else if(spec instanceof DirectBytefileSpec dbfile) {
+			else if(spec instanceof DirectBytefile dbfile) {
 				maxloc = dbfile.lastloc();
 			}
 			else Util.IERR("");
