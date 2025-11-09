@@ -31,7 +31,9 @@ import svm.segment.DataSegment;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class LongRealValue extends Value {
-	
+
+	/** Default Constructor */ public LongRealValue() {} 
+
 	/// The double value
 	public double value;
 	
@@ -157,7 +159,9 @@ public class LongRealValue extends Value {
 	}
 
 	/// Reads a BooleanValue from the given input.
+	/// @param inpt the AttributeInputStream
 	/// @return the BooleanValue read
+	/// @throws IOException if IOException occur
 	public static LongRealValue read(final AttributeInputStream inpt) throws IOException {
 		return new LongRealValue(inpt.readDouble());
 	}

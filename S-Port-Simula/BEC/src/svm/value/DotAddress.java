@@ -32,6 +32,8 @@ import bec.util.Util;
 /// @author Øystein Myhre Andersen
 public abstract class DotAddress {
 	
+	/** Default Constructor */ public DotAddress() {} 
+
 	/// Scans the remaining S-Code belonging to this instruction.
 	/// For Attribute addresses create an IntegerValue of type AADDR.
 	/// For General addresses create an GeneralAddress object.

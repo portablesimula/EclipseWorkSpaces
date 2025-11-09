@@ -40,10 +40,12 @@ import svm.value.Value;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class SVM_SHIFT extends SVM_Instruction {
-	int instr;
 	
-	private final boolean DEBUG = false;
+	/// Which shift instruction
+	int instr;
 
+	/// Construct a new SVM_SHIFT instruction
+	/// @param instr which shift instruction
 	public SVM_SHIFT(int instr) {
 		this.opcode = SVM_Instruction.iSHIFT;
 		this.instr = instr;
@@ -53,14 +55,7 @@ public class SVM_SHIFT extends SVM_Instruction {
 	public void execute() {
 		Value tos = RTStack.pop();
 		Value sos = RTStack.pop();
-		if(DEBUG) {
-			if(tos != null)	IO.println("SVM_SHIFT: TOS: " + tos.getClass().getSimpleName() + "  " + tos);
-			if(sos != null)	IO.println("SVM_SHIFT: SOS: " + sos.getClass().getSimpleName() + "  " + sos);
-			IO.println("SVM_SHIFT: " + sos + " " + Sinstr.edInstr(instr) + " " + tos);
-		}
 		Value res = (sos == null)? null : sos.shift(instr, tos);
-		if(DEBUG)
-			IO.println("SVM_SHIFT: " + sos + " " + Sinstr.edInstr(instr)+ " " + tos + " ==> " + res);
 		RTStack.push(res);
 		Global.PSC.ofst++;
 	}
@@ -80,12 +75,17 @@ public class SVM_SHIFT extends SVM_Instruction {
 	// *** Attribute File I/O
 	// ***********************************************************************************************
 
+	@Override	
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeByte(opcode);
 		oupt.writeByte(instr);
 	}
 
+	/// Reads an SVM_SHIFT instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM_SHIFT instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_SHIFT read(AttributeInputStream inpt) throws IOException {
 		SVM_SHIFT instr = new SVM_SHIFT(inpt.readUnsignedByte());
 		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);

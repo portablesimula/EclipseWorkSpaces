@@ -40,7 +40,7 @@ import svm.segment.DataSegment;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class RecordValue extends Value {
-	
+
 	/// The Record Tag
 	public Tag tag;
 	
@@ -190,6 +190,7 @@ public class RecordValue extends Value {
 	
 	/// Construct a RecordValue from reading the given input
 	/// @param inpt the input stream
+	/// @throws IOException if IOException occur
 	private RecordValue(final AttributeInputStream inpt) throws IOException {
 		int expectedSize = inpt.readShort();
 		tag = Tag.read(inpt);
@@ -203,6 +204,7 @@ public class RecordValue extends Value {
 		if(attrValues.size() != expectedSize) Util.IERR("TRAP: expected size="+expectedSize+"  read size="+attrValues.size());
 	}
 
+	@Override
 	public void write(final AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("Value.write: " + this);
 		oupt.writeByte(Sinstr.S_C_RECORD);
@@ -219,7 +221,9 @@ public class RecordValue extends Value {
 	}
 
 	/// Reads a RecordValue from the given input.
+	/// @param inpt the AttributeInputStream
 	/// @return the RecordValue read
+	/// @throws IOException if IOException occur
 	public static RecordValue read(final AttributeInputStream inpt) throws IOException {
 		return new RecordValue(inpt);
 	}

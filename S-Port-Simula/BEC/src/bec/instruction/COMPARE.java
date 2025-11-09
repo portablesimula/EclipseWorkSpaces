@@ -32,6 +32,8 @@ import svm.instruction.SVM_COMPARE;
 /// @author Øystein Myhre Andersen
 public abstract class COMPARE extends Instruction {
 
+	/** Default Constructor */ public COMPARE() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_COMPARE instruction.

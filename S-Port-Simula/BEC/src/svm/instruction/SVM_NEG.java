@@ -33,6 +33,7 @@ import svm.value.Value;
 /// @author Øystein Myhre Andersen
 public class SVM_NEG extends SVM_Instruction {
 
+	/// Construct a new SVM_NEG instruction
 	public SVM_NEG() {
 		this.opcode = SVM_Instruction.iNEG;
 	}
@@ -60,6 +61,10 @@ public class SVM_NEG extends SVM_Instruction {
 		oupt.writeByte(opcode);
 	}
 
+	/// Reads an SVM_NEG instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM_NEG instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {
 		SVM_NEG instr = new SVM_NEG();
 		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);

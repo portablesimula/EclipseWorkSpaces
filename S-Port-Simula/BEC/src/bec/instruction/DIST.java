@@ -28,6 +28,8 @@ import svm.instruction.SVM_DIST;
 /// @author Øystein Myhre Andersen
 public abstract class DIST extends Instruction {
 	
+	/** Default Constructor */ public DIST() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_DIST instruction.

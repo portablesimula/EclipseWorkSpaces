@@ -40,6 +40,7 @@ import svm.value.Value;
 /// @author Øystein Myhre Andersen
 public class SVM_XOR extends SVM_Instruction {
 
+	/// Construct a new SVM_XOR instruction
 	public SVM_XOR() {
 		this.opcode = SVM_Instruction.iXOR;
 	}
@@ -62,11 +63,16 @@ public class SVM_XOR extends SVM_Instruction {
 	// *** Attribute File I/O
 	// ***********************************************************************************************
 
+	@Override	
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeByte(opcode);
 	}
 
+	/// Reads an SVM_XOR instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM_XOR instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_XOR read(AttributeInputStream inpt) throws IOException {
 		SVM_XOR instr = new SVM_XOR();
 		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);

@@ -28,15 +28,25 @@ import svm.value.Value;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class SVM_CALL extends SVM_Instruction {
+	
+	/// The routine address
 	private final ProgramAddress rutAddr;
+	
+	/// The frame slot for the retur address
 	private final ObjectAddress returSlot;
 
+	/// Construct a new SVM_CALL_SYS instruction
+	/// @param rutAddr the routine address
+	/// @param returSlot the frame slot for the return address
 	public SVM_CALL(ProgramAddress rutAddr, ObjectAddress returSlot) {
 		this.opcode = SVM_Instruction.iCALL;
 		this.rutAddr = rutAddr;
 		this.returSlot = returSlot;
 	}
 	
+	/// Returns a new SVM_CALL with the given 'returSlot'
+	/// @param returSlot the frame slot for the return address
+	/// @return a new SVM_CALL with the given 'returSlot'
 	public static SVM_CALL ofTOS(ObjectAddress returSlot) {
 		return new SVM_CALL(null, returSlot);
 	}
@@ -68,6 +78,9 @@ public class SVM_CALL extends SVM_Instruction {
 	// ***********************************************************************************************
 	// *** Attribute File I/O
 	// ***********************************************************************************************
+	/// Construct an SVM_CALL instruction from the given input.
+	/// @param inpt the input stream
+	/// @throws IOException if IOException occur
 	private SVM_CALL(AttributeInputStream inpt) throws IOException {
 		this.opcode = SVM_Instruction.iCALL;
 		this.returSlot = (ObjectAddress) Value.read(inpt);
@@ -87,6 +100,10 @@ public class SVM_CALL extends SVM_Instruction {
 		} else oupt.writeBoolean(false);
 	}
 
+	/// Reads an SVM_CALL instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM_CALL instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {
 		return new SVM_CALL(inpt);
 	}

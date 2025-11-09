@@ -11,9 +11,7 @@ import bec.Global;
 import bec.Option;
 import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
-import bec.util.Util;
 import svm.RTStack;
-import svm.RTUtil;
 import svm.value.IntegerValue;
 import svm.value.ObjectAddress;
 import svm.value.Value;
@@ -37,8 +35,9 @@ import svm.value.Value;
 /// @author Øystein Myhre Andersen
 public class SVM_RESTORE extends SVM_Instruction {
 
-	private static final boolean DEBUG = false;
+//	private static final boolean DEBUG = false;
 
+	/// Construct a new SVM_RESTORE instruction
 	public SVM_RESTORE() {
 		this.opcode = SVM_Instruction.iRESTORE;
 	}
@@ -50,30 +49,32 @@ public class SVM_RESTORE extends SVM_Instruction {
 		Global.PSC.ofst++;
 	}
 	
+	/// Restore the Runtime stack from the SAVENT instance
+	/// @param savePos the object address to the saved stack within a SAVENT instance
 	private static void restoreStack(ObjectAddress savePos) {
 		IntegerValue entitySize = (IntegerValue) savePos.addOffset(SVM_SAVE.sizeOffset - SVM_SAVE.saveEntityHead).load(0);
 		int size = entitySize.value - SVM_SAVE.saveEntityHead;
 		
-		if(DEBUG) {
-			IO.println("RTStack.restoreStack: BEGIN RESTORE ++++++++++++++++++++++++++++++++++++++++");
-			ObjectAddress saveObj = savePos.addOffset(-SVM_SAVE.saveEntityHead);
-			RTUtil.dumpEntity(saveObj);
-			IO.println("RTStack.restoreStack: RESTORE  entitySize = " + entitySize);
-			IO.println("RTStack.restoreStack: RESTORE  Size = " + size);
-		}
+//		if(DEBUG) {
+//			IO.println("RTStack.restoreStack: BEGIN RESTORE ++++++++++++++++++++++++++++++++++++++++");
+//			ObjectAddress saveObj = savePos.addOffset(-SVM_SAVE.saveEntityHead);
+//			RTUtil.dumpEntity(saveObj);
+//			IO.println("RTStack.restoreStack: RESTORE  entitySize = " + entitySize);
+//			IO.println("RTStack.restoreStack: RESTORE  Size = " + size);
+//		}
 
 		for(int i=size-1;i>=0;i--) {
 			Value item = savePos.load(i);
-			if(DEBUG) {
-				IO.println("RTStack.saveStack:    SAVE-RESTORE " + item + " <=== saveObj("+(SVM_SAVE.saveEntityHead + i)+")");
-			}
+//			if(DEBUG) {
+//				IO.println("RTStack.saveStack:    SAVE-RESTORE " + item + " <=== saveObj("+(SVM_SAVE.saveEntityHead + i)+")");
+//			}
 			RTStack.push(item);
 		}
 
-		if(DEBUG) {
-			RTStack.dumpRTStack("RTStack.restoreStack: ");
-			Util.IERR("");
-		}
+//		if(DEBUG) {
+//			RTStack.dumpRTStack("RTStack.restoreStack: ");
+//			Util.IERR("");
+//		}
 	}
 	
 	@Override
@@ -84,10 +85,6 @@ public class SVM_RESTORE extends SVM_Instruction {
 	// ***********************************************************************************************
 	// *** Attribute File I/O
 	// ***********************************************************************************************
-	private SVM_RESTORE(AttributeInputStream inpt) throws IOException {
-		this.opcode = SVM_Instruction.iRESTORE;
-		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
-	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
@@ -95,8 +92,14 @@ public class SVM_RESTORE extends SVM_Instruction {
 		oupt.writeByte(opcode);
 	}
 
+	/// Reads an SVM_RESTORE instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM_RESTORE instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {
-		return new SVM_RESTORE(inpt);
+		SVM_RESTORE instr = new SVM_RESTORE();
+		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
+		return instr;
 	}
 
 }

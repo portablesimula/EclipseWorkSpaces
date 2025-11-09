@@ -31,6 +31,8 @@ import svm.instruction.SVM_XOR;
 /// @author Øystein Myhre Andersen
 public abstract class XOR extends Instruction {
 	
+	/** Default Constructor */ public XOR() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_XOR instruction.

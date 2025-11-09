@@ -62,11 +62,27 @@ public class Type {
 	/// The size of the 'REP 0' attribute in basic cells
 	private int rep0size;
 
+	/// The Type Map
 	private static HashMap<Integer, Type> TMAP;
+	
+	/// The set of Record Types
 	private static Vector<Type> RECTYPES;
-	public static Type T_VOID,  T_TEXT,  T_STRING, T_BOOL,  T_CHAR;
-	public static Type T_INT,   T_SINT,  T_REAL,   T_LREAL, T_SIZE;
-	public static Type T_OADDR, T_AADDR, T_GADDR,  T_PADDR, T_RADDR;
+	
+	/** Basic Type */ public static Type T_VOID;
+	/** Basic Type */ public static Type T_TEXT;
+	/** Basic Type */ public static Type T_STRING;
+	/** Basic Type */ public static Type T_BOOL;
+	/** Basic Type */ public static Type T_CHAR;
+	/** Basic Type */ public static Type T_INT;
+	/** Basic Type */ public static Type T_SINT;
+	/** Basic Type */ public static Type T_REAL;
+	/** Basic Type */ public static Type T_LREAL;
+	/** Basic Type */ public static Type T_SIZE;
+	/** Basic Type */ public static Type T_OADDR;
+	/** Basic Type */ public static Type T_AADDR;
+	/** Basic Type */ public static Type T_GADDR;
+	/** Basic Type */ public static Type T_PADDR;
+	/** Basic Type */ public static Type T_RADDR;
 	
 	/// Construct a new Type
 	/// @param tag the type tag index
@@ -78,6 +94,7 @@ public class Type {
 
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Finally: Return a new Type.
+	/// @return the new Type
 	public static Type ofScode() {
 		int tag = Scode.inTag();
 		if(tag == Tag.TAG_INT) {
@@ -112,6 +129,7 @@ public class Type {
 	}
 	
 	/// Utility: removeFromTMAP
+	/// @param tag the tag
 	public static void removeFromTMAP(final int tag) {
 		TMAP.remove(tag);
 	}

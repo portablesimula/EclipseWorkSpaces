@@ -13,7 +13,6 @@ import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
 import bec.util.Util;
 import svm.RTStack;
-import svm.RTUtil;
 import svm.value.IntegerValue;
 import svm.value.ObjectAddress;
 import svm.value.Value;
@@ -37,8 +36,9 @@ import svm.value.Value;
 /// @author Øystein Myhre Andersen
 public class SVM_SAVE extends SVM_Instruction {
 
-	private static final boolean DEBUG = false;
+//	private static final boolean DEBUG = false;
 
+	/// Construct a new SVM_RETURN instruction
 	public SVM_SAVE() {
 		this.opcode = SVM_Instruction.iSAVE;
 	}
@@ -68,34 +68,33 @@ public class SVM_SAVE extends SVM_Instruction {
 //	 end;
 //	 Visible record savent:inst;
 //	 begin  end;
+	
+	/// The head size of the SAVENT instance
 	public final static int saveEntityHead = 7;
+	
+	/// The offset of the 'lng' attribute in the SAVENT instance
 	public final static int sizeOffset = 3;
+	
+	/// Save the Runtime stack in the SAVENT instance
 	private static void saveStack() {
-//		RTStack.dumpRTStack("RTStack.saveStack: ");
 		ObjectAddress savePos = RTStack.popOADDR();
 		if(savePos == null) {
-//			Util.IERR("");
 		} else {
 			ObjectAddress saveObj = savePos.addOffset(-saveEntityHead);
 			IntegerValue entitySize = (IntegerValue) saveObj.addOffset(sizeOffset).load(0);
 			int size = entitySize.value - saveEntityHead;
 			if(size != RTStack.size()) Util.IERR("");
 			
-			if(DEBUG) {
-//				RTUtil.dumpEntity(saveObj);
-//				IO.println("RTStack.saveStack:    SAVE-RESTORE  entitySize = " + entitySize);
-//				IO.println("RTStack.saveStack:    SAVE-RESTORE  Size = " + size);
-			}
 			for(int i=0;i<size;i++) {
 				Value item = RTStack.pop();
-				if(DEBUG) {
-					IO.println("RTStack.saveStack:    SAVE-RESTORE " + item + " ===> saveObj("+(saveEntityHead + i)+")");
-				}
+//				if(DEBUG) {
+//					IO.println("RTStack.saveStack:    SAVE-RESTORE " + item + " ===> saveObj("+(saveEntityHead + i)+")");
+//				}
 				saveObj.store(saveEntityHead + i, item);
 			}
-			if(DEBUG) {
-				RTUtil.dumpEntity(saveObj);
-			}
+//			if(DEBUG) {
+//				RTUtil.dumpEntity(saveObj);
+//			}
 		}
 	}
 	
@@ -107,10 +106,6 @@ public class SVM_SAVE extends SVM_Instruction {
 	// ***********************************************************************************************
 	// *** Attribute File I/O
 	// ***********************************************************************************************
-	private SVM_SAVE(AttributeInputStream inpt) throws IOException {
-		this.opcode = SVM_Instruction.iSAVE;
-		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
-	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
@@ -118,8 +113,14 @@ public class SVM_SAVE extends SVM_Instruction {
 		oupt.writeByte(opcode);
 	}
 
+	/// Reads an SVM_SAVE instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM_SAVE instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {
-		return new SVM_SAVE(inpt);
+		SVM_SAVE instr = new SVM_SAVE();
+		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
+		return instr;
 	}
 
 }

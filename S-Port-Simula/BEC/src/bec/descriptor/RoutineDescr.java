@@ -51,6 +51,7 @@ public class RoutineDescr extends Descriptor {
 	/// The ProgramSegment with this routine code.
 	ProgramSegment PSEG;
 	
+	/// The Routine address
 	private ProgramAddress adr;
 	
 	/// The corresponding Profile tag
@@ -64,8 +65,6 @@ public class RoutineDescr extends Descriptor {
 	
 	/// The size of the local Variables on the Frame
 	public int localFrameSize;
-	
-	private static final boolean DEBUG = false;
 
 	/// Create a new RoutineDescr with the given tags
 	/// @param tag used to lookup descriptors
@@ -144,7 +143,6 @@ public class RoutineDescr extends Descriptor {
 	
 		if(Scode.curinstr != Sinstr.S_ENDROUTINE) Util.IERR("Missing - endroutine");
 		CTStack.checkStackEmpty();
-		if(DEBUG) prf.print("RoutineDescr.ofRoutineDef: ");
 		Global.PSEG.emit(new SVM_RETURN(prftag.ident(), prf.returSlot));
 		CTStack.checkStackEmpty();
 
@@ -165,7 +163,7 @@ public class RoutineDescr extends Descriptor {
 	}
 
 	// ***********************************************************************************************
-	// *** Attribute File I/O
+	// *** Attribute File I/O 
 	// ***********************************************************************************************
 
 	@Override
@@ -190,6 +188,8 @@ public class RoutineDescr extends Descriptor {
 
 	/// Reads a RoutineDescr from the given input.
 	/// @param inpt the input stream
+	/// @return The RoutineDescr read
+	/// @throws IOException if IOException occur
 	public static RoutineDescr read(final AttributeInputStream inpt) throws IOException {
 		Tag prftag = null;
 		boolean present = inpt.readBoolean();

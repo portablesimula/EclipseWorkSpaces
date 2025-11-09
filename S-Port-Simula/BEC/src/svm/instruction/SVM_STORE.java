@@ -42,9 +42,16 @@ import svm.value.Value;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class SVM_STORE extends SVM_Instruction {
+	
+	/// The target address
 	private final ObjectAddress objadr;
+	
+	/// The value size
 	private final int size;
 	
+	/// Construct a new SVM_STORE instruction
+	/// @param objadr the target address
+	/// @param size the value size
 	public SVM_STORE(ObjectAddress objadr, int size) {
 		this.opcode = SVM_Instruction.iSTORE;
 		this.objadr = objadr;
@@ -64,6 +71,7 @@ public class SVM_STORE extends SVM_Instruction {
 		Global.PSC.ofst++;		
 	}
 	
+	@Override
 	public String toString() {
 		String s = "";
 		if(size > 1) s = ", size=" + size;
@@ -73,6 +81,9 @@ public class SVM_STORE extends SVM_Instruction {
 	// ***********************************************************************************************
 	// *** Attribute File I/O
 	// ***********************************************************************************************
+	/// Construct SVM_STORE instruction from the given input.
+	/// @param inpt the input stream
+	/// @throws IOException if IOException occur
 	private SVM_STORE(AttributeInputStream inpt) throws IOException {
 		this.opcode = SVM_Instruction.iSTORE;
 		this.objadr = ObjectAddress.read(inpt);
@@ -88,6 +99,10 @@ public class SVM_STORE extends SVM_Instruction {
 		oupt.writeShort(size);
 	}
 
+	/// Reads an SVM_STORE instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM_STORE instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {
 		return new SVM_STORE(inpt);
 	}

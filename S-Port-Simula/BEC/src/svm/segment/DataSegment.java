@@ -174,6 +174,10 @@ public final class DataSegment extends Segment {
 		}
 	}
 
+	/// Returns a DataSegment read from the given AttributeInputStream
+	/// @param inpt the AttributeInputStream
+	/// @return a DataSegment read from the given AttributeInputStream
+	/// @throws IOException if IOException occur
 	public static DataSegment readObject(final AttributeInputStream inpt, final int segmentKind) throws IOException {
 		String ident = inpt.readString();
 		DataSegment seg = new DataSegment(ident, segmentKind);

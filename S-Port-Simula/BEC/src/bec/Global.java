@@ -25,42 +25,89 @@ import svm.value.ProgramAddress;
 /// @author Øystein Myhre Andersen
 public class Global {
 	
+	/// Initiate Global data
+	/// @param scodeSource the S-Code source file name
 	public static void init(final String scodeSource) {
 		Global.scodeSource = scodeSource;
 		Global.SEGMAP = new HashMap<String, Segment>();
 		Global.ifDepth = 0;		
 	}
 	
+	/// The Terminal console or null
 	public static Terminal console;
-	public static S_Module currentModule;
-	public static String scodeSource;	// S-Code source file name
-	public static String progIdent;		// S-Code PROG String
-	public static String moduleID;		// S-Module ident String or MAIN
-	public static String modident;   	// Ident of module being defined
-	public static String modcheck;		// Check code of module being defined
-	public static String PROGID;		// Ident of program being defined
 	
+	/// Current S-Module
+	public static S_Module currentModule;
+	
+	// The S-Code source file name
+	public static String scodeSource;
+	
+	/// S-Code PROG String
+	public static String progIdent;
+	
+	/// S-Module ident String or MAIN
+	public static String moduleID;
+	
+   	/// Ident of module being defined
+	public static String modident;
+	
+	/// Check code of module being defined
+	public static String modcheck;
+	
+	/// Ident of program being defined
+	public static String PROGID;
+	
+	/// The Runtime system's directory 
 	public final static String rtsDir = "C:/SPORT/RTS/";
-	public static String outputDIR = rtsDir; // Attributes and SVM-Code output directory
+	
+	/// Attributes and SVM-Code output directory
+	public static String outputDIR = rtsDir;
+	
 	public static int sourceLineNumber;
 	public static int curline;		// Current source line number
-	public static int nTags; // See: INSERT
+	
+	/// Number of tags, see: INSERT
+	public static int nTags;
 
-	public static Array<Integer> iTAGTAB; // Index xTag --> value iTag (during Module I/O)
-	public static Array<Integer> xTAGTAB; // Index iTag --> value xTag (during Module I/O)
+	/// Index xTag --> value iTag (during Module I/O)
+	public static Array<Integer> iTAGTAB;
+	
+	/// Index iTag --> value xTag (during Module I/O)
+	public static Array<Integer> xTAGTAB;
+	
+	/// Destination table
 	public static ProgramAddress[] DESTAB = new ProgramAddress[64];
+	
+	/// Number of nested if
 	public static int ifDepth;
 
-	public static DataSegment CSEG; // Constant Segment
-	public static DataSegment TSEG; // Constant TextValue Segment
+	/// Current constant Segment
+	public static DataSegment CSEG;
+	
+	/// Current constant TextValue Segment
+	public static DataSegment TSEG;
+	
+	/// Current DataSegment
 	public static DataSegment DSEG; 
-	public static ProgramSegment PSEG; // Current PSEG
+	
+	/// Current ProgramSegment
+	public static ProgramSegment PSEG;
+	
+	/// Set of Routine Segments
 	public static Vector<Segment> routineSegments;
 
-	public static ProgramAddress PSC; // ProgramSequenceControl during execute
+	/// ProgramSequenceControl during execute
+	public static ProgramAddress PSC;
+	
+	/// Returns true if during execution
+	/// @return true if during execution
 	public static boolean duringEXEC() { return PSC != null; }
+	
+	/// The Segment Map
 	public static Map<String, Segment> SEGMAP;
 
+	/// Returns the source file ident
+	/// @return the source file ident
 	public static String getSourceID() {
 		File file = new File(scodeSource);
 		String name = file.getName();
@@ -69,6 +116,10 @@ public class Global {
 		return s;
 	}
 
+	/// Returns the Attribute filename based on the arguments
+	/// @param modident the module ident
+	/// @param suffix the suffix string
+	/// @return the Attribute filename based on the arguments
 	public static String getAttrFileName(String modident, String suffix) {
 		if(modident == null) {
 			int p = scodeSource.indexOf('.');

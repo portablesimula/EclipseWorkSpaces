@@ -31,6 +31,7 @@ import svm.value.ObjectAddress;
 /// @author Øystein Myhre Andersen
 public class SVM_INCO extends SVM_Instruction {
 
+	/// Construct a new SVM_INCO instruction
 	public SVM_INCO() {
 		this.opcode = SVM_Instruction.iINCO;
 	}
@@ -53,11 +54,16 @@ public class SVM_INCO extends SVM_Instruction {
 	// *** Attribute File I/O
 	// ***********************************************************************************************
 
+	@Override	
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeByte(opcode);
 	}
 
+	/// Reads an SVM_INCO instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM_INCO instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_INCO read(AttributeInputStream inpt) throws IOException {
 		SVM_INCO instr = new SVM_INCO();
 		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);

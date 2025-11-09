@@ -25,6 +25,10 @@ import svm.segment.DataSegment;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class BooleanValue extends Value {
+	
+	/** Default Constructor */ public BooleanValue() {} 
+
+	/// The value
 	public boolean value;
 
 	/// Construct a new BooleanValue
@@ -124,7 +128,9 @@ public class BooleanValue extends Value {
 	}
 
 	/// Reads a BooleanValue from the given input.
+	/// @param inpt the AttributeInputStream
 	/// @return the BooleanValue read
+	/// @throws IOException if IOException occur
 	public static BooleanValue read(final AttributeInputStream inpt) throws IOException {
 		return new BooleanValue(inpt.readUnsignedByte() == Sinstr.S_TRUE);
 	}

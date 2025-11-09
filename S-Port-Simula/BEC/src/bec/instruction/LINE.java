@@ -24,6 +24,8 @@ import svm.instruction.SVM_LINE;
 /// @author Øystein Myhre Andersen
 public abstract class LINE extends Instruction {
 
+	/** Default Constructor */ public LINE() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_LINE instruction.

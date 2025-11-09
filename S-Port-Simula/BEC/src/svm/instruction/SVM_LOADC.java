@@ -38,11 +38,16 @@ import svm.value.Value;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class SVM_LOADC extends SVM_Instruction {
+	
+	/// The type tag
 	private final int typeTag;
+	
+	/// The constant value
 	private final Value value;
 
-	private final boolean DEBUG = false;
-
+	/// Construct a new SVM_LOADC instruction
+	/// @param type the type
+	/// @param value the constant value
 	public SVM_LOADC(Type type,Value value) {
 		this.opcode = SVM_Instruction.iPUSHC;
 		this.typeTag  = type.tag;
@@ -81,7 +86,6 @@ public class SVM_LOADC extends SVM_Instruction {
 				RTStack.push(sval.addr);
 				RTStack.push(null);
 				RTStack.push(lng);
-				if(DEBUG) RTStack.dumpRTStack("SVM_LOADC.execute: ");
 				break;
 			case Tag.TAG_GADDR:
 				if(value == null) {
@@ -104,8 +108,6 @@ public class SVM_LOADC extends SVM_Instruction {
 					Value val = rval.attrValues.get(i);
 					RTStack.push(val);				
 				}
-				
-				if(DEBUG) RTStack.dumpRTStack("SVM_LOADC.execute: ");
 				break;
 		}
 		Global.PSC.ofst++;
@@ -119,6 +121,9 @@ public class SVM_LOADC extends SVM_Instruction {
 	// ***********************************************************************************************
 	// *** Attribute File I/O
 	// ***********************************************************************************************
+	/// Construct an SVM_LOADC instruction from the given input.
+	/// @param inpt the input stream
+	/// @throws IOException if IOException occur
 	private SVM_LOADC(AttributeInputStream inpt) throws IOException {
 		this.opcode = SVM_Instruction.iPUSHC;
 		this.typeTag = inpt.readShort();
@@ -139,6 +144,10 @@ public class SVM_LOADC extends SVM_Instruction {
 		} else oupt.writeBoolean(false);
 	}
 
+	/// Reads an SVM_LOADC instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM_LOADC instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {
 		return new SVM_LOADC(inpt);
 	}

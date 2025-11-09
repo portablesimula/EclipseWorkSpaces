@@ -12,61 +12,72 @@ import bec.util.AttributeInputStream;
 import bec.util.AttributeOutputStream;
 import bec.util.Util;
 
+/// SVM-INSTRUCTION
+///
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/instruction/SVM_Instruction.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 @SuppressWarnings("unused")
 public class SVM_Instruction {
+
+	/** Default Constructor */ public SVM_Instruction() {} 
+
+	/// The opcode
 	public int opcode;
 
-	public final static int iADD = 1;
-	public final static int iAND = 2;
-	public final static int iOR = 3;
-	public final static int iCALL = 4;
-	public final static int iCOMPARE = 5;
-	public final static int iCONVERT = 6;
-	public final static int iDIV = 7;
-	public final static int iJUMP = 8;
-	public final static int iJUMPIF = 9;
-	public final static int iMULT = 10;
-	public final static int iNEG = 11;
-	public final static int iLOAD = 12;
-	public final static int iPUSHC = 13;
-	public final static int iRETURN = 14;
-//	public final static int iSTORE2REG = 15;
-	public final static int iSTORE = 16;
-	public final static int iREM = 17;
-	public final static int iSUB = 18;
-	public final static int iSWITCH = 19;
-	public final static int iCALLSYS = 20;
-	public final static int iLINE = 21;
-	public final static int iNOOP = 22;
-	public final static int iNOT = 23;
-	public final static int iGOTO = 24;
-	public final static int iPUSHR = 25;
-	public final static int iPRECALL = 26;
-	public final static int iPOPK = 27;
-	public final static int iENTER = 28;
-//	public final static int iREFER_NOT_USED = 29;
-	public final static int iADDREG = 30;
-	public final static int iXOR = 31;
-	public final static int iINITO = 32;
-	public final static int iGETO = 33;
-	public final static int iSETO = 34;
-	public final static int iINCO = 35;
-	public final static int iDECO = 36;
-	public final static int iDIST = 37;
-	public final static int iEQV = 38;
-	public final static int iIMP = 39;
-//	public final static int iDUPA = 40;
-	public final static int iASSIGN = 41;
-	public final static int iPUSHLEN = 42;
-	public final static int iSAVE = 43;
-	public final static int iRESTORE = 44;
-	public final static int iSHIFT = 45;
-	public final static int iDUP = 46;
-	public final static int iLOADA = 47;
+	/** SVM-Instruction */ public final static int iADD = 1;
+	/** SVM-Instruction */ public final static int iAND = 2;
+	/** SVM-Instruction */ public final static int iOR = 3;
+	/** SVM-Instruction */ public final static int iCALL = 4;
+	/** SVM-Instruction */ public final static int iCOMPARE = 5;
+	/** SVM-Instruction */ public final static int iCONVERT = 6;
+	/** SVM-Instruction */ public final static int iDIV = 7;
+	/** SVM-Instruction */ public final static int iJUMP = 8;
+	/** SVM-Instruction */ public final static int iJUMPIF = 9;
+	/** SVM-Instruction */ public final static int iMULT = 10;
+	/** SVM-Instruction */ public final static int iNEG = 11;
+	/** SVM-Instruction */ public final static int iLOAD = 12;
+	/** SVM-Instruction */ public final static int iPUSHC = 13;
+	/** SVM-Instruction */ public final static int iRETURN = 14;
+//	/** SVM-Instruction */ public final static int iSTORE2REG = 15;
+	/** SVM-Instruction */ public final static int iSTORE = 16;
+	/** SVM-Instruction */ public final static int iREM = 17;
+	/** SVM-Instruction */ public final static int iSUB = 18;
+	/** SVM-Instruction */ public final static int iSWITCH = 19;
+	/** SVM-Instruction */ public final static int iCALLSYS = 20;
+	/** SVM-Instruction */ public final static int iLINE = 21;
+	/** SVM-Instruction */ public final static int iNOOP = 22;
+	/** SVM-Instruction */ public final static int iNOT = 23;
+	/** SVM-Instruction */ public final static int iGOTO = 24;
+	/** SVM-Instruction */ public final static int iPUSHR = 25;
+	/** SVM-Instruction */ public final static int iPRECALL = 26;
+	/** SVM-Instruction */ public final static int iPOPK = 27;
+	/** SVM-Instruction */ public final static int iENTER = 28;
+//	/** SVM-Instruction */ public final static int iREFER_NOT_USED = 29;
+	/** SVM-Instruction */ public final static int iADDREG = 30;
+	/** SVM-Instruction */ public final static int iXOR = 31;
+	/** SVM-Instruction */ public final static int iINITO = 32;
+	/** SVM-Instruction */ public final static int iGETO = 33;
+	/** SVM-Instruction */ public final static int iSETO = 34;
+	/** SVM-Instruction */ public final static int iINCO = 35;
+	/** SVM-Instruction */ public final static int iDECO = 36;
+	/** SVM-Instruction */ public final static int iDIST = 37;
+	/** SVM-Instruction */ public final static int iEQV = 38;
+	/** SVM-Instruction */ public final static int iIMP = 39;
+//	/** SVM-Instruction */ public final static int iDUPA = 40;
+	/** SVM-Instruction */ public final static int iASSIGN = 41;
+	/** SVM-Instruction */ public final static int iPUSHLEN = 42;
+	/** SVM-Instruction */ public final static int iSAVE = 43;
+	/** SVM-Instruction */ public final static int iRESTORE = 44;
+	/** SVM-Instruction */ public final static int iSHIFT = 45;
+	/** SVM-Instruction */ public final static int iDUP = 46;
+	/** SVM-Instruction */ public final static int iLOADA = 47;
 	
-	public final static int iMax = 99;
+	/** SVM-Instruction */ public final static int iMax = 99;
 	
 
+	/// Execute this SVM instruction
 	public void execute() {
 		Util.IERR("Method execute need a redefinition in "+this.getClass().getSimpleName());
 	}
@@ -75,15 +86,26 @@ public class SVM_Instruction {
 	// *** Attribute File I/O
 	// ***********************************************************************************************
 
+	/// Write this SVM instruction to the given output.
+	/// @param oupt the output stream
+	/// @throws IOException if IOException occur
 	public void write(AttributeOutputStream oupt) throws IOException {
 		Util.IERR("Method 'write' need a redefinition in " + this.getClass().getSimpleName());
 	}
 
+	/// Reads an SVM instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {
 		Util.IERR("Method 'read' need a redefinition"); // in " + this.getClass().getSimpleName());
 		return null;
 	}
 	
+	/// Reads an SVM instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_Instruction readObject(AttributeInputStream inpt) throws IOException {
 		int opcode = inpt.readUnsignedByte();
 //		IO.println("SVM_Instruction.read: opcode="+edOpcode(opcode));
@@ -117,7 +139,7 @@ public class SVM_Instruction {
 			case iSWITCH:	return SVM_SWITCH.read(inpt);
 			case iLINE:		return SVM_LINE.read(inpt);
 			case iCALLSYS:	return SVM_CALL_SYS.read(inpt);
-			case iNOOP:		return SVM_NOOP.read(inpt);
+//			case iNOOP:		return SVM_NOOP.read(inpt);
 			case iNOT:		return SVM_NOT.read(inpt);
 			case iGOTO:		return SVM_GOTO.read(inpt);
 			case iPRECALL:	return SVM_PRECALL.read(inpt);
@@ -141,6 +163,9 @@ public class SVM_Instruction {
 		return null;
 	}
 	
+	/// Edit the given 'opcode'
+	/// @param opcode the opcode
+	/// @return the edited string
 	public static String edOpcode(int opcode) {
 		switch(opcode) {
 			case iADD:		return "iADD";

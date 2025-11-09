@@ -29,6 +29,8 @@ import svm.value.ObjectAddress;
 /// @author Øystein Myhre Andersen
 public abstract class DUP extends Instruction {
 	
+	/** Default Constructor */ public DUP() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_DUP instruction.

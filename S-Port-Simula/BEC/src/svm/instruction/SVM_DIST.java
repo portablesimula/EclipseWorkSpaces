@@ -35,6 +35,7 @@ import svm.value.ObjectAddress;
 /// @author Øystein Myhre Andersen
 public class SVM_DIST extends SVM_Instruction {
 
+	/// Construct a new SVM_DIST instruction
 	public SVM_DIST() {
 		this.opcode = SVM_Instruction.iDIST;
 	}
@@ -59,11 +60,16 @@ public class SVM_DIST extends SVM_Instruction {
 	// *** Attribute File I/O
 	// ***********************************************************************************************
 
+	@Override	
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeByte(opcode);
 	}
 
+	/// Reads an SVM_DIST instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM_DIST instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_DIST read(AttributeInputStream inpt) throws IOException {
 		SVM_DIST instr = new SVM_DIST();
 		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);

@@ -37,8 +37,12 @@ import svm.value.Value;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class SVM_COMPARE extends SVM_Instruction {
+	
+	/// The relation
 	private final Relation relation;
 	
+	/// Construct a new SVM_CALL_COMPARE instruction
+	/// @param relation the relation
 	public SVM_COMPARE(Relation relation) {
 		this.opcode = SVM_Instruction.iCOMPARE;
 		this.relation = relation;
@@ -68,6 +72,10 @@ public class SVM_COMPARE extends SVM_Instruction {
 		relation.write(oupt);
 	}
 
+	/// Reads an SVM_COMPARE instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM_COMPERE instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {
 		SVM_COMPARE instr = new SVM_COMPARE(Relation.read(inpt));
 		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);

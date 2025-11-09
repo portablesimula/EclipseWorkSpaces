@@ -27,6 +27,8 @@ import svm.instruction.SVM_CONVERT;
 /// @author Øystein Myhre Andersen
 public abstract class CONVERT extends Instruction {
 
+	/** Default Constructor */ public CONVERT() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Call 'doConvert' to test and possibly Emit an SVM_COMPARE instruction.

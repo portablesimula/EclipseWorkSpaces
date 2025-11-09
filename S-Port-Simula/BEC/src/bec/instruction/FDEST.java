@@ -30,6 +30,8 @@ import svm.value.ProgramAddress;
 /// @author Øystein Myhre Andersen
 public abstract class FDEST extends Instruction {
 
+	/** Default Constructor */ public FDEST() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Fixup the corresponding SVM_JUMP instruction.

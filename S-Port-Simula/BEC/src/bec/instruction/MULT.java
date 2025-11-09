@@ -32,6 +32,8 @@ import svm.instruction.SVM_MULT;
 /// @author Øystein Myhre Andersen
 public abstract class MULT extends Instruction {
 
+	/** Default Constructor */ public MULT() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_MULT instruction.

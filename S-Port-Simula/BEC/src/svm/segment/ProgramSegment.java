@@ -111,6 +111,10 @@ public final class ProgramSegment extends Segment {
 		}
 	}
 
+	/// Returns a ProgramSegment read from the given AttributeInputStream
+	/// @param inpt the AttributeInputStream
+	/// @return a ProgramSegment read from the given AttributeInputStream
+	/// @throws IOException if IOException occur
 	public static ProgramSegment readObject(final AttributeInputStream inpt) throws IOException {
 		String ident = inpt.readString();
 		ProgramSegment seg = new ProgramSegment(ident);

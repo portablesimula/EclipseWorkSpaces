@@ -31,6 +31,8 @@ import svm.instruction.SVM_EQV;
 /// @author Øystein Myhre Andersen
 public abstract class EQV extends Instruction {
 	
+	/** Default Constructor */ public EQV() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_EQV instruction.

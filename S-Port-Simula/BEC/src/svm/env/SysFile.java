@@ -37,11 +37,14 @@ import svm.value.ObjectAddress;
 /// @author Øystein Myhre Andersen
 public abstract class SysFile {
 	
+	/** Default Constructor */ public SysFile() {} 
+
 	/// The set of DatasetSpecs
 	private static Vector<Dataset> datasetSpecs = new Vector<Dataset>();
 	
 	/// Add a DatasetSpec to the set of DatasetSpec
 	/// @param spec the DatasetSpec to add
+	/// @return key suitable to lookup the Dataset
 	private static int addRTFile(Dataset spec) {
 		datasetSpecs.add(spec);
 		return(datasetSpecs.size()+3);
@@ -49,6 +52,7 @@ public abstract class SysFile {
 	
 	/// Lookup a DatasetSpec by its 'key'
 	/// @param key the DatasetSpec key to use
+	///@return a DatasetSpec by its 'key'
 	private static Dataset lookup(int key) {
 //		IO.println("SysFile.lookup: key="+key);
 		return datasetSpecs.get(key-4);
@@ -153,9 +157,9 @@ public abstract class SysFile {
 				case Dataset.FIL_OUTFILE ->		   fileSpec = new Outfile       (spec, type, action, imglng);
 				case Dataset.FIL_PRINTFILE ->	   fileSpec = new Printfile     (spec, type, action, imglng);
 				case Dataset.FIL_DIRECTFILE ->	   fileSpec = new Directfile    (spec, type, action, imglng);
-				case Dataset.FIL_INBYTEFILE ->	   fileSpec = new Inbytefile    (spec, type, action, imglng);
-				case Dataset.FIL_OUTBYTEFILE ->    fileSpec = new Outbytefile   (spec, type, action, imglng);
-				case Dataset.FIL_DIRECTBYTEFILE -> fileSpec = new DirectBytefile(spec, type, action, imglng);
+				case Dataset.FIL_INBYTEFILE ->	   fileSpec = new Inbytefile    (spec, type, action);
+				case Dataset.FIL_OUTBYTEFILE ->    fileSpec = new Outbytefile   (spec, type, action);
+				case Dataset.FIL_DIRECTBYTEFILE -> fileSpec = new DirectBytefile(spec, type, action);
 				default -> Util.IERR(""+Dataset.edFileType(type));
 			}
 			key = addRTFile(fileSpec);

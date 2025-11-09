@@ -32,6 +32,8 @@ import svm.instruction.SVM_SUB;
 /// @author Øystein Myhre Andersen
 public abstract class SUB extends Instruction {
 
+	/** Default Constructor */ public SUB() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_SUB instruction.

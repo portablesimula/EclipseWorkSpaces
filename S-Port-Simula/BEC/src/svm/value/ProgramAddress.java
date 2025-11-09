@@ -39,6 +39,9 @@ import svm.segment.Segment;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class ProgramAddress extends Value {
+	
+	/** Default Constructor */ public ProgramAddress() {} 
+
 	/// Segment ident
 	public String segID;
 	
@@ -57,6 +60,7 @@ public class ProgramAddress extends Value {
 	
 	/// Scans the remaining S-Code (if any) belonging to this ProgramAddress Value.
 	/// Then construct a new ProgramAddress instance.
+	/// @param type The address type
 	/// @return that ProgramAddress instance.
 	public static ProgramAddress ofScode(final Type type) {
 		Tag tag = Tag.ofScode();
@@ -68,6 +72,7 @@ public class ProgramAddress extends Value {
 	}
 	
 	/// Create a new Fixup address.
+	/// @param type The address type
 	/// @return an ProgramAddress
 	public static ProgramAddress ofFixup(final Type type) {
 		return new ProgramAddress(type, null, 0);
@@ -187,7 +192,9 @@ public class ProgramAddress extends Value {
 	}
 
 	/// Reads a ObjectAddress from the given input.
+	/// @param inpt the AttributeInputStream
 	/// @return the ObjectAddress read
+	/// @throws IOException if IOException occur
 	public static ProgramAddress read(final AttributeInputStream inpt) throws IOException {
 		Type type = Type.read(inpt);
 		String segID = inpt.readString();

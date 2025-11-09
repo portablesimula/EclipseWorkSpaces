@@ -13,24 +13,32 @@ import java.io.InputStream;
 
 import svm.RTUtil;
 
+/// Inbytefile Bridge.
+///
+///
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/env/dataset/Inbytefile.java"><b>Source File</b></a>.
+/// 
+/// @author Simula Standard
+/// @author S-Port: The Environment Interface
+/// @author Øystein Myhre Andersen
 public class Inbytefile extends ByteFile {
 	
 	/// The InputStream used.
 	private InputStream inputStream;
 
 
-	public Inbytefile(String fileName, int type, String action, int imglng) {
+	/// Construct a new Inbytefile with the given arguments.
+	/// @param fileName the fileName
+	/// @param type the fileType
+	/// @param action the action string
+	public Inbytefile(String fileName, int type, String action) {
 		super(fileName, type, action);
 		File file = fileAction.doCreateAction(fileName);
 		if (!file.exists()) {
-//			File selected = trySelectFile(file.getAbsoluteFile().toString());
-//			if (selected != null)
-//				file = selected;
 			RTUtil.set_STATUS(3); // File does not exist;
 			return;
 		}
 		try {
-//			IO.println("NEW RTInbytefile: fileName=" + fileName);
 			inputStream = new FileInputStream(file);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -49,6 +57,8 @@ public class Inbytefile extends ByteFile {
 		}
 	}
 
+	/// Returns a byte from the underlying InputStream
+	/// @return a byte from the underlying InputStream
 	public int inbyte() {
 		try {
 			// read a single byte

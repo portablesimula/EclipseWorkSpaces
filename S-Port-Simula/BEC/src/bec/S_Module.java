@@ -37,6 +37,8 @@ import svm.segment.Segment;
 /// @author Øystein Myhre Andersen
 public abstract class S_Module {
 
+	/** Default Constructor */ public S_Module() {} 
+
 	/// 	program_element
 	/// 		::= instruction
 	/// 		::= label_declaration

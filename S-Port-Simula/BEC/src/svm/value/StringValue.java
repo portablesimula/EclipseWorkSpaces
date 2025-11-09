@@ -21,6 +21,8 @@ import bec.util.AttributeOutputStream;
 /// @author Øystein Myhre Andersen
 public class StringValue extends Value {
 	
+	/** Default Constructor */ public StringValue() {} 
+
 	/// The address to the characters
 	public ObjectAddress addr;
 	
@@ -56,7 +58,9 @@ public class StringValue extends Value {
 	}
 
 	/// Reads a StringValue from the given input.
+	/// @param inpt the AttributeInputStream
 	/// @return the StringValue read
+	/// @throws IOException if IOException occur
 	public static StringValue read(final AttributeInputStream inpt) throws IOException {
 		String segID = inpt.readString();
 		int ofst = inpt.readShort();

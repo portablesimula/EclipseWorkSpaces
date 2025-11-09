@@ -26,6 +26,8 @@ import bec.util.Util;
 /// @author Øystein Myhre Andersen
 public abstract class BDEST extends Instruction {
 
+	/** Default Constructor */ public BDEST() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Update the destination table.

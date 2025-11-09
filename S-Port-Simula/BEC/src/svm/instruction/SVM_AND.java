@@ -40,6 +40,7 @@ import svm.value.Value;
 /// @author Øystein Myhre Andersen
 public class SVM_AND extends SVM_Instruction {
 
+	/// Construct a new SVM_AND instruction
 	public SVM_AND() {
 		this.opcode = SVM_Instruction.iAND;
 	}
@@ -68,6 +69,10 @@ public class SVM_AND extends SVM_Instruction {
 		oupt.writeByte(opcode);
 	}
 
+	/// Reads an SVM_AND instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM_AND instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {
 		SVM_AND instr = new SVM_AND();
 		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);

@@ -13,24 +13,24 @@ package bec;
 /// @author Øystein Myhre Andersen
 public abstract class Option {
 
-	public static boolean INLINE_TESTING = false;
-	public static boolean debugMode = false;
-	public static boolean verbose = false;
-	public static boolean execVerbose = false;
-	public static boolean nopopup = false;
-	public static int traceMode = 0;
-	public static boolean SCODE_INPUT_TRACE = false;
-	public static boolean TRACE_ALLOC_FRAME = false;
-	public static boolean PRINT_GENERATED_SVM_DATA = false;
-	public static boolean PRINT_GENERATED_SVM_CODE = false;
-	public static boolean ATTR_INPUT_TRACE = false;
-	public static boolean ATTR_OUTPUT_TRACE = false;
-	public static boolean ATTR_INPUT_DUMP = false;
-	public static boolean ATTR_OUTPUT_DUMP = false;
-	public static boolean SEGMENT_INPUT_DUMP = false;
-	public static boolean SEGMENT_OUTPUT_DUMP = false;
-	public static int EXEC_TRACE = 0;
-	public static int CALL_TRACE_LEVEL = 0;
-	public static boolean DUMPS_AT_EXIT = false;
+	/** BEC Option */ public static boolean INLINE_TESTING = false;
+	/** BEC Option */ public static boolean debugMode = false;
+	/** BEC Option */ public static boolean verbose = false;
+	/** BEC Option */ public static boolean execVerbose = false;
+	/** BEC Option */ public static boolean nopopup = false;
+	/** BEC Option */ public static int traceMode = 0;
+	/** BEC Option */ public static boolean SCODE_INPUT_TRACE = false;
+	/** BEC Option */ public static boolean TRACE_ALLOC_FRAME = false;
+	/** BEC Option */ public static boolean PRINT_GENERATED_SVM_DATA = false;
+	/** BEC Option */ public static boolean PRINT_GENERATED_SVM_CODE = false;
+	/** BEC Option */ public static boolean ATTR_INPUT_TRACE = false;
+	/** BEC Option */ public static boolean ATTR_OUTPUT_TRACE = false;
+	/** BEC Option */ public static boolean ATTR_INPUT_DUMP = false;
+	/** BEC Option */ public static boolean ATTR_OUTPUT_DUMP = false;
+	/** BEC Option */ public static boolean SEGMENT_INPUT_DUMP = false;
+	/** BEC Option */ public static boolean SEGMENT_OUTPUT_DUMP = false;
+	/** BEC Option */ public static int EXEC_TRACE = 0;
+	/** BEC Option */ public static int CALL_TRACE_LEVEL = 0;
+	/** BEC Option */ public static boolean DUMPS_AT_EXIT = false;
 
 }

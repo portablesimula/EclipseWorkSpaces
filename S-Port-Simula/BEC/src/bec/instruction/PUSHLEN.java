@@ -40,6 +40,8 @@ import svm.instruction.SVM_PUSHLEN;
 /// @author Øystein Myhre Andersen
 public abstract class PUSHLEN extends Instruction {
 	
+	/** Default Constructor */ public PUSHLEN() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_PUSHLEN instruction.

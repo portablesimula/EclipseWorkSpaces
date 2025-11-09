@@ -49,6 +49,8 @@ import svm.instruction.SVM_ADD;
 /// @author Øystein Myhre Andersen
 public abstract class LOCATE extends Instruction {
 	
+	/** Default Constructor */ public LOCATE() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: If TOS.type = GADDR then emit an SVM_ADD instruction.

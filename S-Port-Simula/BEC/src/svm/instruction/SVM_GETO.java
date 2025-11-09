@@ -35,6 +35,7 @@ import svm.value.ObjectAddress;
 /// @author Øystein Myhre Andersen
 public class SVM_GETO extends SVM_Instruction {
 
+	/// Construct a new SVM_GETO instruction
 	public SVM_GETO() {
 		this.opcode = SVM_Instruction.iGETO;
 	}
@@ -61,6 +62,10 @@ public class SVM_GETO extends SVM_Instruction {
 		oupt.writeByte(opcode);
 	}
 
+	/// Reads an SVM_GETO instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM_GETO instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {
 		SVM_GETO instr = new SVM_GETO();
 		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);

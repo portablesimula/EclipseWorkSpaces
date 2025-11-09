@@ -31,6 +31,8 @@ import bec.util.Util;
 /// @author Øystein Myhre Andersen
 public abstract class SDEST extends Instruction {
 	
+	/** Default Constructor */ public SDEST() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Update the switch destination table.

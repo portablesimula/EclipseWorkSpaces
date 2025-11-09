@@ -42,15 +42,26 @@ import bec.util.AttributeOutputStream;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class RecordDescr extends Descriptor {
-	public int size;      // Record size information
-	public int rep0size;     // Size of rep(0) attribute
+	
+    /// Record size information
+	public int size;
+	
+    /// Size of rep(0) attribute
+	public int rep0size;
+	
+	/// true: INFO TYPE
 	boolean infoType;
 
 	// NOT SAVED
-	String xinfo;
-	int prefixTag;
-	Vector<Attribute> attributes;
-	Vector<AlternatePart> alternateParts;
+	
+	/// The prefix tag
+	private int prefixTag;
+	
+	/// The set of attributes
+	private Vector<Attribute> attributes;
+	
+	/// The set of alternateParts
+	private Vector<AlternatePart> alternateParts;
 	
 	/// Create a new RecordDescr with the given 'tag'
 	/// @param tag used to lookup descriptors
@@ -100,6 +111,9 @@ public class RecordDescr extends Descriptor {
 		return rec;
 	}
 	
+	/// Returns the prefix RecordDescr
+	/// @param prefixTag the prefixTag
+	/// @return the prefix RecordDescr
 	private RecordDescr getPrefix(final int prefixTag) {
 		RecordDescr prefix = (RecordDescr) Display.get(prefixTag);
 		return prefix;
@@ -142,18 +156,24 @@ public class RecordDescr extends Descriptor {
 	/// 
 	///
 	class AlternatePart {
+		/// The set of attributes
 		Vector<Attribute> attributes;
 		
+		/// Construct a new AlternatePart
 		public AlternatePart() {
 			attributes = new Vector<Attribute>();
 		}
 	
+		/// Returns the Alternate size
+		/// @return the Alternate size
 		public int size() {
 			int n = 0;
 			for(Attribute attr:attributes) n = n + attr.size();
 			return n;
 		}
 		
+		/// Utility: print
+		/// @param indent the indent String
 		public void print(final String indent) {
 			boolean first = true;
 			for(Attribute attr:attributes) {
@@ -182,6 +202,8 @@ public class RecordDescr extends Descriptor {
 
 	/// Reads a RecordDescr from the given input.
 	/// @param inpt the input stream
+	/// @return The RecordDescr read
+	/// @throws IOException if IOException occur
 	public static RecordDescr read(final AttributeInputStream inpt) throws IOException {
 		RecordDescr rec = new RecordDescr(Tag.read(inpt));
 		rec.size = inpt.readShort();

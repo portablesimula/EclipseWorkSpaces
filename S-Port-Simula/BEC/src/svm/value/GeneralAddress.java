@@ -30,6 +30,8 @@ import svm.segment.Segment;
 /// @author Øystein Myhre Andersen
 public class GeneralAddress extends Value {
 	
+	/** Default Constructor */ public GeneralAddress() {} 
+
 	/// Base Object address
 	public ObjectAddress base;
 	
@@ -102,7 +104,9 @@ public class GeneralAddress extends Value {
 	}
 
 	/// Reads a GeneralAddress from the given input.
+	/// @param inpt the AttributeInputStream
 	/// @return the GeneralAddress read
+	/// @throws IOException if IOException occur
 	public static GeneralAddress read(final AttributeInputStream inpt) throws IOException {
 		ObjectAddress base = (ObjectAddress) Value.read(inpt);
 		int ofst = inpt.readShort();

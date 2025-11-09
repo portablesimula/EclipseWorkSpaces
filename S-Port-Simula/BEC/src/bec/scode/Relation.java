@@ -21,9 +21,12 @@ import svm.value.Value;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class Relation {
+	
+	/// The S-Code relation
 	public int relation;
 
-	/// Create a new Relation
+	/// Construct a new Relation
+	/// @param relation the S-Code relation
 	public Relation(final int relation) {
 		this.relation = relation;
 	}
@@ -124,12 +127,15 @@ public class Relation {
 
 	/// Writes a Relation to the given output.
 	/// @param oupt the output stream
+	/// @throws IOException if IOException occur
 	public void write(final AttributeOutputStream oupt) throws IOException {
 		oupt.writeShort(relation);
 	}
 
 	/// Reads a Relation from the given input.
 	/// @param inpt the input stream
+	/// @return the Relation read
+	/// @throws IOException if IOException occur
 	public static Relation read(final AttributeInputStream inpt) throws IOException {
 		return new Relation(inpt.readShort());
 	}

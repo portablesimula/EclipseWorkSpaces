@@ -33,8 +33,7 @@ import svm.value.Value;
 /// @author Øystein Myhre Andersen
 public class SVM_SUB extends SVM_Instruction {
 
-	private final boolean DEBUG = false;
-
+	/// Construct a new SVM_SUB instruction
 	public SVM_SUB() {
 		this.opcode = SVM_Instruction.iSUB;
 	}
@@ -44,7 +43,6 @@ public class SVM_SUB extends SVM_Instruction {
 		Value tos = RTStack.pop();
 		Value sos = RTStack.pop();
 		Value res = (sos == null)? ( (tos == null)? null : tos.neg()) : sos.sub(tos);
-		if(DEBUG) IO.println("SVM_SUB: " + sos + " - " + tos + " ==> " + res);
 		RTStack.push(res);
 		Global.PSC.ofst++;
 	}
@@ -64,6 +62,10 @@ public class SVM_SUB extends SVM_Instruction {
 		oupt.writeByte(opcode);
 	}
 
+	/// Reads an SVM_SUB instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM_SUB instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {
 		SVM_SUB instr = new SVM_SUB();
 		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);

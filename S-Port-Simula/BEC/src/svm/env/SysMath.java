@@ -30,6 +30,7 @@ import svm.value.RealValue;
 /// @author Øystein Myhre Andersen
 public abstract class SysMath {
 
+	/** Default Constructor */ public SysMath() {} 
 
 	/// Real Addepsilon
 	///

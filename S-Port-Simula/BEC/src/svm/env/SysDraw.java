@@ -22,6 +22,8 @@ import svm.value.ObjectAddress;
 /// @author Øystein Myhre Andersen
 public abstract class SysDraw {
 
+	/** Default Constructor */ public SysDraw() {} 
+
 	/// Utility constant: 2**31
 	private static final int    TWO_POW_31    = 0x80000000; // 2**31
 

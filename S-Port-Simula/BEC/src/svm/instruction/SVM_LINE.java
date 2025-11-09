@@ -26,9 +26,16 @@ import bec.util.AttributeOutputStream;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class SVM_LINE extends SVM_Instruction {
+	
+	/// The instruction type: 0, DCL, STM
 	private final int type; // 0, DCL, STM
+	
+	/// The sourceLine number
 	private final int sourceLine;
 
+	/// Construct a new SVM_LINE instruction
+	/// @param type the instruction type: 0, DCL, STM
+	/// @param sourceLine the sourceLine number
 	public SVM_LINE(int type, int sourceLine) {
 		this.type = type;
 		this.sourceLine = sourceLine;
@@ -49,6 +56,7 @@ public class SVM_LINE extends SVM_Instruction {
 	// *** Attribute File I/O
 	// ***********************************************************************************************
 
+	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeByte(iLINE);
@@ -56,6 +64,10 @@ public class SVM_LINE extends SVM_Instruction {
 		oupt.writeShort(sourceLine);
 	}
 
+	/// Reads an SVM_LINE instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM_LINE instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {
 		int type = inpt.readUnsignedByte() - 1;
 		int sourceline = inpt.readShort();

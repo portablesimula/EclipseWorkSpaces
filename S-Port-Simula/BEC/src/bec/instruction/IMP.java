@@ -32,6 +32,8 @@ import svm.instruction.SVM_IMP;
 /// @author Øystein Myhre Andersen
 public abstract class IMP extends Instruction {
 	
+	/** Default Constructor */ public IMP() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_IMP instruction.

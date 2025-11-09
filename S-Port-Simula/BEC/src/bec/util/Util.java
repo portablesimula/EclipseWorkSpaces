@@ -16,6 +16,8 @@ import bec.scode.Scode;
 /// @author Øystein Myhre Andersen
 public class Util {
 
+	/** Default Constructor */ public Util() {} 
+
 	/// S-Code input Trace
 	/// @param id trace ident
 	/// @param msg trace message

@@ -32,6 +32,7 @@ import svm.value.Value;
 /// @author Øystein Myhre Andersen
 public class SVM_ADD extends SVM_Instruction {
 
+	/// Construct a new SVM_ADD instruction
 	public SVM_ADD() {
 		this.opcode = SVM_Instruction.iADD;
 	}
@@ -54,11 +55,16 @@ public class SVM_ADD extends SVM_Instruction {
 	// *** Attribute File I/O
 	// ***********************************************************************************************
 
+	@Override	
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeByte(opcode);
 	}
 
+	/// Reads an SVM_ADD instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM_ADD instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_ADD read(AttributeInputStream inpt) throws IOException {
 		SVM_ADD instr = new SVM_ADD();
 		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);

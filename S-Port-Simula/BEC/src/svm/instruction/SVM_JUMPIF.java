@@ -18,7 +18,7 @@ import svm.RTStack;
 import svm.value.ProgramAddress;
 import svm.value.Value;
 
-/// SVM-INSTRUCTION: JUMPIF relation typeSize paddr
+/// SVM-INSTRUCTION: JUMPIF relation size paddr
 /// 
 /// 	Runtime Stack
 /// 	   ..., sos, tos →
@@ -40,38 +40,39 @@ import svm.value.Value;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class SVM_JUMPIF extends SVM_JUMP {
-	private final Relation relation;
-	private final int typeSize;
-
-	private static final boolean DEBUG = false;
 	
-	public SVM_JUMPIF(Relation relation, int typeSize, ProgramAddress destination) {
+	/// The relation
+	private final Relation relation;
+	
+	/// The test value size
+	private final int size;
+	
+	/// Construct a new SVM_JUMP instruction
+	/// @param relation the relation
+	/// @param size the test value size
+	/// @param destination the jump destination address
+	public SVM_JUMPIF(Relation relation, int size, ProgramAddress destination) {
 		super(destination);
 		this.opcode = SVM_Instruction.iJUMPIF;
 		this.relation = relation;
-		this.typeSize =  typeSize;
+		this.size =  size;
 	}
 
 	@Override
 	public void execute() {
 		boolean doJump = false;
-		if(typeSize == 1) {
+		if(size == 1) {
 			Value tos = RTStack.pop();
 			Value sos = RTStack.pop();
-//			IO.println("SVM_JUMPIF: " + tos + "  " + relation + "  " + sos);
 			doJump = relation.compare(sos, tos);
-			if(DEBUG) {
-				String jmp = (doJump)? "DO JUMP" : "NOT JUMP";
-				IO.println("SVM_JUMPIF: " + tos + "  " + relation + "  " + sos + " = " + doJump + "  " + jmp);
-			}
 		} else {
-			Value[] TOS = new Value[typeSize];
-			Value[] SOS = new Value[typeSize];
-			for(int i=0;i<typeSize;i++) TOS[i] = RTStack.pop();
-			for(int i=0;i<typeSize;i++) SOS[i] = RTStack.pop();
+			Value[] TOS = new Value[size];
+			Value[] SOS = new Value[size];
+			for(int i=0;i<size;i++) TOS[i] = RTStack.pop();
+			for(int i=0;i<size;i++) SOS[i] = RTStack.pop();
 			boolean equals = true;
 			Relation eqRel = new Relation(Sinstr.S_EQ);
-			LOOP:for(int i=0;i<typeSize;i++) {
+			LOOP:for(int i=0;i<size;i++) {
 				if(! eqRel.compare(SOS[i], TOS[i])) {
 					equals = false; break LOOP;
 				}
@@ -95,11 +96,14 @@ public class SVM_JUMPIF extends SVM_JUMP {
 	// ***********************************************************************************************
 	// *** Attribute File I/O
 	// ***********************************************************************************************
+	/// Construct an SVM_JUMPIF instruction from the given input.
+	/// @param inpt the input stream
+	/// @throws IOException if IOException occur
 	private SVM_JUMPIF(AttributeInputStream inpt) throws IOException {
 		super(inpt);
 		this.opcode = SVM_Instruction.iJUMPIF;
 		this.relation = Relation.read(inpt);
-		this.typeSize = inpt.readUnsignedByte();
+		this.size = inpt.readUnsignedByte();
 		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
 	}
 
@@ -109,9 +113,13 @@ public class SVM_JUMPIF extends SVM_JUMP {
 		oupt.writeByte(opcode);
 		destination.write(oupt);
 		relation.write(oupt);
-		oupt.writeByte(typeSize);
+		oupt.writeByte(size);
 	}
 
+	/// Reads an SVM_JUMPIF instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM_JUMPIF instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {
 		return new SVM_JUMPIF(inpt);
 	}

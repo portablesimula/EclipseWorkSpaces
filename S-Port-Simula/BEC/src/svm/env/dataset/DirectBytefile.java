@@ -39,10 +39,9 @@ public class DirectBytefile extends ByteFile {
 
 	/// Construct a new DirectBytefileSpec with the given arguments.
 	/// @param fileName the fileName
-	/// @param fileType the fileType
+	/// @param type the fileType
 	/// @param action the action string
-	/// @param imglng the image length
-	public DirectBytefile(String fileName, int type, String action, int imglng) {
+	public DirectBytefile(String fileName, int type, String action) {
 		super(fileName, type, action);
 		File file = fileAction.doCreateAction(fileName);
 		if (!file.exists()) {

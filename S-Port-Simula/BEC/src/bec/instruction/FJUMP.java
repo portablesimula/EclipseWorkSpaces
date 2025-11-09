@@ -28,6 +28,8 @@ import svm.instruction.SVM_JUMP;
 /// @author Øystein Myhre Andersen
 public abstract class FJUMP extends Instruction {
 
+	/** Default Constructor */ public FJUMP() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Update the destination table with the address of the forthcoming SVM_JUMP instruction.

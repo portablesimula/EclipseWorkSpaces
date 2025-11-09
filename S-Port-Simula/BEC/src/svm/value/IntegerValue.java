@@ -48,6 +48,8 @@ import svm.segment.DataSegment;
 /// @author Øystein Myhre Andersen
 public class IntegerValue extends Value {
 	
+	/** Default Constructor */ public IntegerValue() {} 
+
 	/// The int value
 	public int value;
 	
@@ -247,7 +249,9 @@ public class IntegerValue extends Value {
 	}
 
 	/// Reads a IntegerValue from the given input.
+	/// @param inpt the AttributeInputStream
 	/// @return the IntegerValue read
+	/// @throws IOException if IOException occur
 	public static IntegerValue read(final AttributeInputStream inpt) throws IOException {
 		Type type = Type.read(inpt);
 		int value = inpt.readInt();

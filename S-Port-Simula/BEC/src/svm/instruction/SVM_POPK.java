@@ -28,8 +28,12 @@ import svm.RTStack;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class SVM_POPK extends SVM_Instruction {
+	
+	/// The number of stack items to pop
 	private final int n;
 	
+	/// Construct a new SVM_POPK instruction
+	/// @param n the number of stack items to pop
 	public SVM_POPK(int n) {
 		this.opcode = SVM_Instruction.iPOPK;
 		this.n = n;
@@ -51,6 +55,9 @@ public class SVM_POPK extends SVM_Instruction {
 	// ***********************************************************************************************
 	// *** Attribute File I/O
 	// ***********************************************************************************************
+	/// Construct an SVM_POPK instruction from the given input.
+	/// @param inpt the input stream
+	/// @throws IOException if IOException occur
 	private SVM_POPK(AttributeInputStream inpt) throws IOException {
 		this.opcode = SVM_Instruction.iPOPK;
 		this.n = inpt.readShort();
@@ -64,6 +71,10 @@ public class SVM_POPK extends SVM_Instruction {
 		oupt.writeShort(n);
 	}
 
+	/// Reads an SVM_POPK instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM_POPK instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {
 		return new SVM_POPK(inpt);
 	}

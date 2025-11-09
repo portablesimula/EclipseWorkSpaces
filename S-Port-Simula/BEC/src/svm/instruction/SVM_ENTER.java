@@ -24,9 +24,16 @@ import svm.value.ProgramAddress;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class SVM_ENTER extends SVM_Instruction {
+	
+	/// The Routine ident
 	private final String rutIdent;
+	
+	/// The total size of the local variables
 	private final int localSize;
 
+	/// Construct a new SVM_ENTER instruction
+	/// @param rutIdent the Routine ident
+	/// @param localSize the total size of the local variables
 	public SVM_ENTER(String rutIdent, int localSize) {
 		this.opcode = SVM_Instruction.iENTER;
 		this.rutIdent = rutIdent;
@@ -48,25 +55,7 @@ public class SVM_ENTER extends SVM_Instruction {
 		if(Option.CALL_TRACE_LEVEL > 0) {
 			RTStack.printCallTrace("SVM_ENTER.execute: ENTER " + rutIdent + ", localSize=" + localSize);
 		}
-
-//		if(rutIdent.equalsIgnoreCase("PTLFXA")) {
-//			RTUtil.dumpCurins();
-//			Segment.lookup("PSEG_EDIT_PTLFXA:BODY").dump("ENTER: +++++++++++++++++++++++++++++++++++++++++++++", 0, 10);
-////			Util.IERR("");
-//		}
-//		if(rutIdent.equalsIgnoreCase("B_SUB")) {
-//			((DataSegment)Segment.lookup("POOL_1")).addGuard(748);
-////			Util.IERR("");
-//		}
-
-
 		Global.PSC.ofst++;
-//		if(rutIdent.equalsIgnoreCase("OUTTXT")) {
-//			RTUtil.printCurins();
-//			RTUtil.printPool("POOL_1");
-//			Util.IERR("");
-//		}
-//		RTStack.dumpRTStack("SVM_ENTER.execute: ");
 	}
 
 	@Override	
@@ -78,6 +67,7 @@ public class SVM_ENTER extends SVM_Instruction {
 	// *** Attribute File I/O
 	// ***********************************************************************************************
 
+	@Override	
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeByte(opcode);
@@ -85,6 +75,10 @@ public class SVM_ENTER extends SVM_Instruction {
 		oupt.writeShort(localSize);
 	}
 
+	/// Reads an SVM_ENTER instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM_ENTER instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_ENTER read(AttributeInputStream inpt) throws IOException {
 		SVM_ENTER instr = new SVM_ENTER(inpt.readString(), inpt.readShort());
 		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);

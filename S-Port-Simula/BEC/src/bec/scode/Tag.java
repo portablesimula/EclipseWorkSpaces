@@ -35,30 +35,32 @@ public class Tag {
 	/// Tag's value
 	public int val;
 
-	public final static int TAG_VOID  = 0;
-	public final static int TAG_BOOL  = 1;
-	public final static int TAG_CHAR  = 2;
-	public final static int	TAG_INT   = 3;
-	public final static int TAG_SINT  = 4;
-	public final static int TAG_REAL  = 5;
-	public final static int TAG_LREAL = 6;
-	public final static int TAG_AADDR = 7;
-	public final static int TAG_OADDR = 8;
-	public final static int TAG_GADDR = 9;
-	public final static int TAG_PADDR = 10;
-	public final static int TAG_RADDR = 11;
-	public final static int TAG_SIZE  = 12;
-	public final static int TAG_TEXT  = 13;
-	public final static int T_max=13; // Max value of predefined type
-	public final static int TAG_STRING  = 32;
+	/** Basic Tag */ public final static int TAG_VOID  = 0;
+	/** Basic Tag */ public final static int TAG_BOOL  = 1;
+	/** Basic Tag */ public final static int TAG_CHAR  = 2;
+	/** Basic Tag */ public final static int	TAG_INT   = 3;
+	/** Basic Tag */ public final static int TAG_SINT  = 4;
+	/** Basic Tag */ public final static int TAG_REAL  = 5;
+	/** Basic Tag */ public final static int TAG_LREAL = 6;
+	/** Basic Tag */ public final static int TAG_AADDR = 7;
+	/** Basic Tag */ public final static int TAG_OADDR = 8;
+	/** Basic Tag */ public final static int TAG_GADDR = 9;
+	/** Basic Tag */ public final static int TAG_PADDR = 10;
+	/** Basic Tag */ public final static int TAG_RADDR = 11;
+	/** Basic Tag */ public final static int TAG_SIZE  = 12;
+	/** Basic Tag */ public final static int TAG_TEXT  = 13;
+	/** Basic Tag */ public final static int T_max=13; // Max value of predefined type
+	/** Basic Tag */ public final static int TAG_STRING  = 32;
 
 	/// Create a new Tag with the given Tag val
+	/// @param val the Tag value
 	public Tag(int val) {
 		this.val = val;
 	}
 	
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Finally: Return a new Tag.
+	/// @return the new Tag read
 	public static Tag ofScode() {
 		return new Tag(Scode.inTag());
 	}
@@ -131,6 +133,7 @@ public class Tag {
 
 	/// Writes a Tag to the given output.
 	/// @param oupt the output stream
+	/// @throws IOException if IOException occur
 	public void write(final AttributeOutputStream oupt) throws IOException {
 		oupt.writeString(Scode.TAGIDENT.get(val));
 		oupt.writeShort(xTag(val));
@@ -138,6 +141,8 @@ public class Tag {
 	
 	/// Reads a Tag from the given input.
 	/// @param inpt the input stream
+	/// @return the Tag read
+	/// @throws IOException if IOException occur
 	public static Tag read(AttributeInputStream inpt) throws IOException {
 		String ident = inpt.readString();
 		int tag = inpt.readShort();

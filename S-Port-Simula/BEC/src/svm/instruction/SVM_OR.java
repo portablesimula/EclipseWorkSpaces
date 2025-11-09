@@ -40,6 +40,7 @@ import svm.value.Value;
 /// @author Øystein Myhre Andersen
 public class SVM_OR extends SVM_Instruction {
 
+	/// Construct a new SVM_OR instruction
 	public SVM_OR() {
 		this.opcode = SVM_Instruction.iOR;
 	}
@@ -62,11 +63,16 @@ public class SVM_OR extends SVM_Instruction {
 	// *** Attribute File I/O
 	// ***********************************************************************************************
 
+	@Override	
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeByte(opcode);
 	}
 
+	/// Reads an SVM_OR instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM_OR instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_OR read(AttributeInputStream inpt) throws IOException {
 		SVM_OR instr = new SVM_OR();
 		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);

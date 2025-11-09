@@ -5,42 +5,23 @@
 /// page: https://creativecommons.org/licenses/by/4.0/
 package svm.env.dataset;
 
+/// Printfile Bridge.
+///
+///
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/env/dataset/Printfile.java"><b>Source File</b></a>.
+/// 
+/// @author Simula Standard
+/// @author S-Port: The Environment Interface
+/// @author Øystein Myhre Andersen
 public class Printfile extends Outfile {
-	
-//	FileWriter writer;
 
+	/// Construct a new Printfile with the given arguments.
+	/// @param fileName the fileName
+	/// @param type the fileType
+	/// @param action the action string
+	/// @param imglng the image length
 	public Printfile(String fileName, int type, String action, int imglng) {
 		super(fileName, type, action, imglng);
-//		File file = fileAction.doCreateAction(fileName);
-//		if (!file.exists()) {
-////			File selected = trySelectFile(file.getAbsoluteFile().toString());
-////			if (selected != null)
-////				file = selected;
-//			RTUtil.set_STATUS(3); // File does not exist;
-//			return;
-//		}
-//		try {
-//			IO.println("NEW RTPrintfile: fileName=" + fileName);
-//			writer = new FileWriter(file, this.fileAction._APPEND);
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 	}
-
-//	@Override
-//	public void outimage(String image) {
-//		try {
-//			writer.write(image);
-//			writer.write("\n");
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-////		Util.IERR(""+image);
-//	}
 
 }

@@ -184,6 +184,8 @@ public class ConstDescr extends Descriptor {
 
 	/// Reads an ConstDescr from the given input.
 	/// @param inpt the input stream
+	/// @return The ConstDescr read
+	/// @throws IOException if IOException occur
 	public static ConstDescr read(final AttributeInputStream inpt) throws IOException {
 		Tag tag = Tag.read(inpt);
 		ConstDescr cns = new ConstDescr(tag);

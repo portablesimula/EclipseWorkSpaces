@@ -28,6 +28,8 @@ import svm.value.ProgramAddress;
 /// @author Øystein Myhre Andersen
 public abstract class BJUMP extends Instruction {
 
+	/** Default Constructor */ public BJUMP() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_JUMP instruction and update the destination table

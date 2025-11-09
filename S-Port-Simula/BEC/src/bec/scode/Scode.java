@@ -22,7 +22,9 @@ import java.io.IOException;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class Scode {
-	
+
+	/** Default Constructor */ public Scode() {} 
+
 	/// All input bytes
 	private static byte[] SBUF;
 	
@@ -159,6 +161,7 @@ public class Scode {
 	
 	/// Expect next instruction == instr.
 	/// Otherwise: Error
+	/// @param instr S-code instruction
 	public static void expect(final int instr) {
 		if(nextByte() == instr) {
 			Scode.inputInstr();
@@ -167,6 +170,7 @@ public class Scode {
 	
 	/// Expect 'curinstr' == instr.
 	/// Otherwise: Error
+	/// @param instr S-code instruction
 	public static void checkEqual(final int instr) {
 		if(curinstr != instr)
 			Util.IERR("Missing " + Sinstr.edInstr(instr) + " - Got " + Sinstr.edInstr(curinstr));
@@ -175,6 +179,8 @@ public class Scode {
 	/// Check if next instruction == 'instr'
 	/// If so: read it and return true,
 	/// Otherwise return false
+	/// @param instr S-code instruction
+	/// @return true if it matched
 	public static boolean accept(final int instr) {
 		if(nextByte() == instr) {
 			Scode.inputInstr();
@@ -252,6 +258,7 @@ public class Scode {
 	
 	/// Returns a edited Tag 
 	/// @param t the Tag index
+	/// @return the edited Tag 
 	public static String edTag(final int t) {
 		return "T[" + t + ':' + TAGIDENT.get(t) + ']';		
 	}

@@ -4,8 +4,13 @@ import bec.BecCompiler;
 import bec.Global;
 import java.util.Vector;
 
+/// RunMake RTS
 public class RunMake_RTS {
 	
+	/** Default Constructor */ public RunMake_RTS() {} 
+
+	/// Main
+	/// @param argv arguments
 	public static void main(String[] argv) {
 		Vector<String> names=new Vector<String>();
 		

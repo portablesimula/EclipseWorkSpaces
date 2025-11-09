@@ -30,6 +30,8 @@ import svm.instruction.SVM_AND;
 /// @author Øystein Myhre Andersen
 public abstract class AND extends Instruction {
 	
+	/** Default Constructor */ public AND() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_AND instruction.

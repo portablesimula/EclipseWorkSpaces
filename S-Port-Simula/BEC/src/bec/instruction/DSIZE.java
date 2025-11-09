@@ -38,6 +38,8 @@ import svm.value.IntegerValue;
 /// @author Øystein Myhre Andersen
 public abstract class DSIZE extends Instruction {
 	
+	/** Default Constructor */ public DSIZE() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit instructions to evaluate the DSIZE.

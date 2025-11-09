@@ -18,10 +18,28 @@ import svm.value.ObjectAddress;
 import svm.value.ProgramAddress;
 import svm.value.Value;
 
+/// SVM-INSTRUCTION: RETURN rutID returAddr
+/// 
+///		Runtime Stack
+///			..., ??? →
+///			..., ???
+///
+///
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/instruction/SVM_RETURN.java"><b>Source File</b></a>.
+/// 
+/// @author S-Port: Definition of S-code
+/// @author Øystein Myhre Andersen
 public class SVM_RETURN extends SVM_Instruction {
+	
+	/// The Routine ident
 	private final String rutID;
+	
+	/// The retur address
 	private final ObjectAddress returAddr;
 
+	/// Construct a new SVM_RETURN instruction
+	/// @param rutID the Routine ident
+	/// @param returAddr the retur address
 	public SVM_RETURN(String rutID, ObjectAddress returAddr) {
 		this.opcode = SVM_Instruction.iRETURN;
 		this.rutID = rutID;
@@ -37,21 +55,10 @@ public class SVM_RETURN extends SVM_Instruction {
 	
 	@Override	
 	public void execute() {
-//		RTStack.printCallTrace("SVM_RETURN.execute: RETURN From "+ rutID);
 		ProgramAddress padr = (ProgramAddress) returAddr.load(0);
 		if(Option.CALL_TRACE_LEVEL > 0) {
 			IO.println("SVM_RETURN.execute: RETURN From "+ rutID + " and Continue at " + padr);
 			RTStack.printCallTrace("SVM_RETURN.execute: RETURN From "+ rutID + " and Continue at " + padr);
-//			if(rutID.equals("CONCAT")) {
-//				RTStack.dumpRTStack("SVM_RETURN.execute: ");
-//				int idx = 0;
-//				Value txtent = RTStack.load(idx);
-//				IO.println("SVM_RETURN.execute: TOS="+txtent);
-//				ObjectAddress obj = (ObjectAddress) txtent.value();
-//				IO.println("SVM_RETURN.execute: obj="+obj);
-//				RTUtil.dumpEntity(obj);
-//				Util.IERR("");
-//			}
 		}
 		RTStack.checkStackEmpty();
 		CallStackFrame callStackTop = RTStack.callStack_TOP();
@@ -64,20 +71,12 @@ public class SVM_RETURN extends SVM_Instruction {
 		
 		RTStack.callStack.pop();
 		
-//		if(Option.EXEC_TRACE > 1) {
-		if(Option.EXEC_TRACE > 0) {
-//			if(rutID.equals("GTINTA")) {
-//				RTUtil.dumpCurins();
-//				Util.IERR("");
-//			}
-//			IO.println("SVM_RETURN.execute: RETURN From "+ rutID + " and Continue at " + padr);
-			if(Option.EXEC_TRACE > 1) {
-				callStackTop = RTStack.callStack_TOP();
-				if(callStackTop == null) {
-					RTStack.dumpRTStack("SVM_RETURN: From "+ rutID + " and Continue at " + padr);
-				} else {
-					callStackTop.dump("SVM_RETURN: From "+ rutID + " and Continue at " + padr);
-				}
+		if(Option.EXEC_TRACE > 1) {
+			callStackTop = RTStack.callStack_TOP();
+			if(callStackTop == null) {
+				RTStack.dumpRTStack("SVM_RETURN: From "+ rutID + " and Continue at " + padr);
+			} else {
+				callStackTop.dump("SVM_RETURN: From "+ rutID + " and Continue at " + padr);
 			}
 		}
 		Global.PSC = padr.copy();
@@ -87,6 +86,9 @@ public class SVM_RETURN extends SVM_Instruction {
 	// ***********************************************************************************************
 	// *** Attribute File I/O
 	// ***********************************************************************************************
+	/// Construct an SVM_RETURN instruction from the given input.
+	/// @param inpt the input stream
+	/// @throws IOException if IOException occur
 	private SVM_RETURN(AttributeInputStream inpt) throws IOException {
 		this.opcode = SVM_Instruction.iRETURN;
 		this.rutID = inpt.readString();
@@ -102,6 +104,10 @@ public class SVM_RETURN extends SVM_Instruction {
 		returAddr.write(oupt);
 	}
 
+	/// Reads an SVM_RETURN instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM_RETURN instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {
 		return new SVM_RETURN(inpt);
 	}

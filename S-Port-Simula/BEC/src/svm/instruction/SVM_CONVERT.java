@@ -84,9 +84,16 @@ import svm.value.Value;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class SVM_CONVERT extends SVM_Instruction {
+	
+	/// The fromType
 	private final int fromType;
+	
+	/// The toType
 	private final int toType;
 		
+	/// Construct a new SVM_CONVERT instruction
+	/// @param fromType the fromType
+	/// @param toType the toType
 	public SVM_CONVERT(int fromType, int toType) {
 		this.opcode = SVM_Instruction.iCONVERT;
 		this.fromType = fromType;
@@ -107,6 +114,11 @@ public class SVM_CONVERT extends SVM_Instruction {
 	}
 	
 
+	/// Convert a Value
+	/// @param fromValue the Value to convert
+	/// @param fromtype the fromType
+	/// @param totype the toType
+	/// @return the converted Value
 	private static Value convValue(Value fromValue, int fromtype, int totype) {
 		Value toValue = null;
 		boolean ILL = false;
@@ -241,6 +253,10 @@ public class SVM_CONVERT extends SVM_Instruction {
 		oupt.writeShort(toType);
 	}
 
+	/// Reads an SVM_CONVERT instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM_CONVERT instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {
 		SVM_CONVERT instr = new SVM_CONVERT(inpt.readShort(), inpt.readShort());
 		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);

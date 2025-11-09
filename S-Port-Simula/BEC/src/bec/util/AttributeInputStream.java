@@ -23,6 +23,7 @@ public class AttributeInputStream extends DataInputStream {
 
     /// Read String or null
     /// @return String or null
+	/// @throws IOException if IOException occur
     public String readString() throws IOException {
     	int lng = super.readShort();
     	if(lng < 0) return null;

@@ -18,6 +18,8 @@ package bec.instruction;
 /// @author Øystein Myhre Andersen
 public abstract class EVAL extends Instruction {
 
+	/** Default Constructor */ public EVAL() {} 
+
 	/// NOTE: In this implementation  EVAL == NOOP
 	public static void ofScode() {}
 

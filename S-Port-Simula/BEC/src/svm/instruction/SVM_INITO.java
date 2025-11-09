@@ -51,12 +51,19 @@ import svm.value.Value;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class SVM_INITO extends SVM_Instruction {
+	
+	/// The object address to the SAVE_OBJECT
 	private static ObjectAddress SAVE_OBJECT;
+	
+	/// The SAVE_INDEX so far
 	private static int SAVE_INDEX;
+	
+	/// The SAVE_LENGTH
 	private static int SAVE_LENGTH;
 	
-	private static final boolean DEBUG = false;
+//	private static final boolean DEBUG = false;
 
+	/// Construct a new SVM_INITO instruction
 	public SVM_INITO() {
 		this.opcode = SVM_Instruction.iINITO;
 	}
@@ -78,19 +85,21 @@ public class SVM_INITO extends SVM_Instruction {
 //	 end;
 
 	/// Used by SVM_GETO
+	/// @return the object address saved according to SAVE_INDEX
 	static ObjectAddress get() {
 		while(SAVE_INDEX < SAVE_LENGTH) {
 			Value value = SAVE_OBJECT.addOffset(SAVE_INDEX++).load(0);
-			if(DEBUG) IO.println("SVM_INITO.get: SAVE_OBJECT["+(SAVE_INDEX-1)+"] = "+value);
+//			if(DEBUG) IO.println("SVM_INITO.get: SAVE_OBJECT["+(SAVE_INDEX-1)+"] = "+value);
 			if(value instanceof ObjectAddress oaddr) return oaddr;
 		}
-		if(DEBUG) IO.println("SVM_INITO.get: FINISHED !");
+//		if(DEBUG) IO.println("SVM_INITO.get: FINISHED !");
 		return null;
 	}
 	
 	/// Used by SVM_SETO
+	/// @param oaddr the object address to save according to SAVE_INDEX
 	static void set(ObjectAddress oaddr) {
-		if(DEBUG) IO.println("SVM_INITO.set: SAVE_OBJECT["+(SAVE_INDEX-1)+"] = "+oaddr);
+//		if(DEBUG) IO.println("SVM_INITO.set: SAVE_OBJECT["+(SAVE_INDEX-1)+"] = "+oaddr);
 		SAVE_OBJECT.store(SAVE_INDEX - 1, oaddr);
 	}
 
@@ -99,14 +108,14 @@ public class SVM_INITO extends SVM_Instruction {
 		try {
 			SAVE_OBJECT = RTStack.popOADDR().addOffset(-7); // 7 == Size of Object Head
 			SAVE_INDEX = 0+6;
-			if(DEBUG) {
-				IO.println("SVM_INITO: " + SAVE_OBJECT.getClass().getSimpleName() + " " + SAVE_OBJECT);
-				RTUtil.dumpEntity(SAVE_OBJECT);
-			}
+//			if(DEBUG) {
+//				IO.println("SVM_INITO: " + SAVE_OBJECT.getClass().getSimpleName() + " " + SAVE_OBJECT);
+//				RTUtil.dumpEntity(SAVE_OBJECT);
+//			}
 			IntegerValue sort = (IntegerValue) SAVE_OBJECT.load(1);
 			if(sort.value != RTUtil.S_SAV) Util.IERR("NOT A SAVE OBJECT");
 			IntegerValue lng = (IntegerValue) SAVE_OBJECT.load(3);
-			if(DEBUG) IO.println("SVM_INITO: sort="+sort+", lng="+lng);
+//			if(DEBUG) IO.println("SVM_INITO: sort="+sort+", lng="+lng);
 			SAVE_LENGTH = lng.value;
 		} catch(Exception e) {
 			IO.println("SVM_INITO: FAILED: " + e);
@@ -131,6 +140,10 @@ public class SVM_INITO extends SVM_Instruction {
 		oupt.writeByte(opcode);
 	}
 
+	/// Reads an SVM_INITO instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM_INITO instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {
 		SVM_INITO instr = new SVM_INITO();
 		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);

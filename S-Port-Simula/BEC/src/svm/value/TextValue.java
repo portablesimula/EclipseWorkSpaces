@@ -27,11 +27,13 @@ import svm.segment.DataSegment;
 /// @author Øystein Myhre Andersen
 public class TextValue extends Value {
 	
+	/** Default Constructor */ public TextValue() {} 
+
 	/// The text value string
 	public String textValue;
 	
 	/// Construct a new TextValue with the given parameter string
-	/// @param the textValue value string
+	/// @param textValue the textValue value string
 	private TextValue(final String textValue) {
 		this.type = Type.T_TEXT;
 		this.textValue = textValue;
@@ -46,6 +48,7 @@ public class TextValue extends Value {
 	
 	/// Emit the characters of this TextValue
 	/// @param dseg the DataSegment to receive the chars
+	/// @return the address of the emitted value
 	public ObjectAddress emitChars(final DataSegment dseg) {
 		return dseg.emitChars(textValue);			
 	}
@@ -76,7 +79,9 @@ public class TextValue extends Value {
 	}
 
 	/// Reads a TextValue from the given input.
+	/// @param inpt the AttributeInputStream
 	/// @return the TextValue read
+	/// @throws IOException if IOException occur
 	public static TextValue read(final AttributeInputStream inpt) throws IOException {
 		return new TextValue(inpt.readString());
 	}

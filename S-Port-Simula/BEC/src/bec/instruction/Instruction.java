@@ -38,6 +38,8 @@ import bec.util.Util;
 /// @author Øystein Myhre Andersen
 public abstract class Instruction {
 		
+	/** Default Constructor */ public Instruction() {} 
+
 	public static void inInstructions() {
 		LOOP:while(true) {
 			if(! inInstruction()) break LOOP;

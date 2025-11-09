@@ -26,6 +26,8 @@ import svm.instruction.SVM_INCO;
 /// @author Øystein Myhre Andersen
 public abstract class INCO extends Instruction {
 	
+	/** Default Constructor */ public INCO() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_INCO instruction.

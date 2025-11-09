@@ -29,6 +29,8 @@ import svm.instruction.SVM_CALL_SYS;
 /// @author Øystein Myhre Andersen
 public abstract class ZEROAREA extends Instruction {
 	
+	/** Default Constructor */ public ZEROAREA() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_CALL_SYS(ZEROAREA) instruction.

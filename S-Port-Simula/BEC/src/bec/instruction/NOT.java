@@ -28,6 +28,8 @@ import svm.instruction.SVM_NOT;
 /// @author Øystein Myhre Andersen
 public abstract class NOT extends Instruction {
 	
+	/** Default Constructor */ public NOT() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_NOT instruction.

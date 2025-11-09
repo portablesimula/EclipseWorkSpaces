@@ -43,7 +43,7 @@ public class Terminal extends JFrame {
 	// ****************************************************************
     /// SimulaEditor: Main Entry for TESTING ONLY.
     /// @param args the arguments
-    /// @throws IOException 
+    /// @throws IOException if an IOException occur
 	public static void main(String[] args) throws IOException {
 		Terminal terminal = new Terminal("TESTING");
 		terminal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

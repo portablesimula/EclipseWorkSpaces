@@ -42,9 +42,16 @@ import svm.value.ObjectAddress;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class SVM_LOADA extends SVM_Instruction {
+	
+	/// The object address
 	private final ObjectAddress objadr;
+	
+	/// The extra offset
 	private final int offset;
 
+	/// Construct a new SVM_LOADA instruction
+	/// @param objadr the object address
+	/// @param offset the extra offset
 	public SVM_LOADA(ObjectAddress objadr, int offset) {
 		this.opcode = SVM_Instruction.iLOADA;
 		this.objadr = objadr;
@@ -73,21 +80,27 @@ public class SVM_LOADA extends SVM_Instruction {
 	// *** Attribute File I/O
 	// ***********************************************************************************************
 
+	/// Construct an SVM_LOADA instruction from the given input.
+	/// @param inpt the input stream
+	/// @throws IOException if IOException occur
 	private SVM_LOADA(AttributeInputStream inpt) throws IOException {
 		this.opcode = SVM_Instruction.iLOADA;
 		this.objadr = ObjectAddress.read(inpt);
 		this.offset = inpt.readShort();
-//		this.indexed = inpt.readBoolean();
 	}
 
+	@Override	
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeByte(opcode);
 		objadr.writeBody(oupt);
 		oupt.writeShort(offset);
-//		oupt.writeBoolean(indexed);
 	}
 
+	/// Reads an SVM_LOADA instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM_LOADA instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_LOADA read(AttributeInputStream inpt) throws IOException {
 		SVM_LOADA instr = new SVM_LOADA(inpt);
 		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);

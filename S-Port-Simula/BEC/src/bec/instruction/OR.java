@@ -33,6 +33,8 @@ import svm.instruction.SVM_OR;
 /// @author Øystein Myhre Andersen
 public abstract class OR extends Instruction {
 	
+	/** Default Constructor */ public OR() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_OR instruction.

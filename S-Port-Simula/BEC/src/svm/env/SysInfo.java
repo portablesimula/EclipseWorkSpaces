@@ -25,6 +25,8 @@ import svm.value.IntegerValue;
 /// @author Øystein Myhre Andersen
 public abstract class SysInfo {
 
+	/** Default Constructor */ public SysInfo() {} 
+
 	/// Get integer valued information from the environment
 	///
 	///		Visible sysroutine("GINTIN") GINTIN;

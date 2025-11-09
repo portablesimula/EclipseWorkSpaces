@@ -41,9 +41,16 @@ import svm.value.Value;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class SVM_LOAD extends SVM_Instruction {
+	
+	/// The object address
 	private final ObjectAddress objadr;
+	
+	/// The value size
 	private final int size;
 
+	/// Construct a new SVM_LOAD instruction
+	/// @param objadr the object address
+	/// @param size the value size
 	public SVM_LOAD(ObjectAddress objadr, int size) {
 		this.opcode = SVM_Instruction.iLOAD;
 		this.objadr = objadr;
@@ -71,6 +78,9 @@ public class SVM_LOAD extends SVM_Instruction {
 	// ***********************************************************************************************
 	// *** Attribute File I/O
 	// ***********************************************************************************************
+	/// Construct an SVM_LOAD instruction from the given input.
+	/// @param inpt the input stream
+	/// @throws IOException if IOException occur
 	private SVM_LOAD(AttributeInputStream inpt) throws IOException {
 		this.opcode = SVM_Instruction.iLOAD;
 		this.objadr = ObjectAddress.read(inpt);
@@ -86,6 +96,10 @@ public class SVM_LOAD extends SVM_Instruction {
 		oupt.writeShort(size);
 	}
 
+	/// Reads an SVM_LOAD instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM_LOAD instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {
 		return new SVM_LOAD(inpt);
 	}

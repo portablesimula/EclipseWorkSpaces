@@ -24,6 +24,7 @@ public class AttributeOutputStream extends DataOutputStream{
     /// Write a String to the underlying OutputStream.
     /// If argument 's' is null a length -1 is written informing
     /// AttributeInputStream.readString to return null.
+	/// @throws IOException if IOException occur
     public void writeString(final String s) throws IOException {
 		if(s == null) {
 			super.writeShort(-1);

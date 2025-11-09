@@ -10,25 +10,33 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import bec.util.Util;
 import svm.RTUtil;
 
+/// Outfile Bridge.
+///
+///
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/env/dataset/Outfile.java"><b>Source File</b></a>.
+/// 
+/// @author Simula Standard
+/// @author S-Port: The Environment Interface
+/// @author Øystein Myhre Andersen
 public class Outfile extends ImageFile {
 	
 	FileWriter writer;
 
+	/// Construct a new Outfile with the given arguments.
+	/// @param fileName the fileName
+	/// @param type the fileType
+	/// @param action the action string
+	/// @param imglng the image length
 	public Outfile(String fileName, int type, String action, int imglng) {
 		super(fileName, type, action, imglng);
 		File file = fileAction.doCreateAction(fileName);
 		if (!file.exists()) {
-//			File selected = trySelectFile(file.getAbsoluteFile().toString());
-//			if (selected != null)
-//				file = selected;
 			RTUtil.set_STATUS(3); // File does not exist;
 			return;
 		}
 		try {
-//			IO.println("NEW RTOutfile: fileName=" + fileName);
 			writer = new FileWriter(file, this.fileAction._APPEND);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -60,7 +68,6 @@ public class Outfile extends ImageFile {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//		Util.IERR(""+image);
 	}
 
 	@Override
@@ -69,7 +76,6 @@ public class Outfile extends ImageFile {
 			writer.write(image);
 			writer.write("\n");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 //		Util.IERR(""+image);

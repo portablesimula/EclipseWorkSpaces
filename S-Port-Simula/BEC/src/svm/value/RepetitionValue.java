@@ -59,6 +59,8 @@ import svm.segment.DataSegment;
 /// @author Øystein Myhre Andersen
 public class RepetitionValue extends Value {
 	
+	/** Default Constructor */ public RepetitionValue() {} 
+
 	/// The values
 	public Vector<Value> values;
 	
@@ -72,6 +74,7 @@ public class RepetitionValue extends Value {
 
 	/// Create a new RepetitionValue of the given value.
 	/// @param value the value
+	/// @return a new RepetitionValue with the value
 	public static RepetitionValue ofValue(final Value value) {
 		Vector<Value> values = new Vector<Value>();
 		values.add(value);

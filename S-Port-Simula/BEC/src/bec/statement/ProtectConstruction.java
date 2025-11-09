@@ -28,6 +28,8 @@ import svm.instruction.SVM_SAVE;
 /// @author Øystein Myhre Andersen
 public class ProtectConstruction {
 
+	/** Default Constructor */ public ProtectConstruction() {} 
+
 	/// Scans the remaining S-Code belonging to this statement.
 	/// Perform the specified operations (which may result in code generation).
 	public static void ofStatement() {

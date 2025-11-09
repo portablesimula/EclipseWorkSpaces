@@ -30,6 +30,8 @@ import svm.value.ProgramAddress;
 /// @author Øystein Myhre Andersen
 public abstract class SysEdit {
 
+	/** Default Constructor */ public SysEdit() {} 
+
 	/// Unicode minus sign.
 	/// See: https://en.wikipedia.org/wiki/Plus_and_minus_signs
 	private static final char UNICODE_MINUS_SIGN = 0x2212;
@@ -122,7 +124,7 @@ public abstract class SysEdit {
 		int val = RTStack.popInt();
 		int itemNchr = RTStack.popInt();
 		ObjectAddress itemAddr = RTStack.popGADDRasOADDR();
-		String sval = putfrac(itemNchr, val, n);
+		String sval = putfrac(val, n);
 		int nchr = sval.length();
 		if(nchr > itemNchr) {
 			RTUtil.set_STATUS(24); // Text string too short
@@ -686,6 +688,7 @@ public abstract class SysEdit {
 	/// 
 	/// @param r the long real value to be edited
 	/// @param n the number of digits after decimal sign
+	/// @return the edited value
 	private static String putfix(double r, int n) {
 		if (n < 0)
 			Util.IERR("putfix(r,n) - n < 0");
@@ -712,6 +715,7 @@ public abstract class SysEdit {
 	/// 
 	/// @param r the real value to be edited
 	/// @param n the number of digits after decimal sign
+	/// @return the edited value
 	private static String putfix(float r, int n) {
 //		putfix(T, (double) r, n);
 		return putfix((double) r, n);
@@ -727,6 +731,7 @@ public abstract class SysEdit {
 	/// 
 	/// @param r the long real value to be edited
 	/// @param n the number of digits after decimal sign
+	/// @return the edited value
 	private static String putreal(double r, int n) {
 		if (n < 0)
 			Util.IERR("putreal(r,n) - n < 0");
@@ -756,6 +761,7 @@ public abstract class SysEdit {
 	/// 
 	/// @param r the real value to be edited
 	/// @param n the number of digits after decimal sign
+	/// @return the edited value
 	private static String putreal(float r, int n) {
 		if (n < 0)
 //			throw new RTS_SimulaRuntimeError("putreal(r,n) - n < 0");
@@ -786,7 +792,8 @@ public abstract class SysEdit {
 	/// 
 	/// @param val an integer value
 	/// @param n number of digits after a decimal mark
-	private static String putfrac(final int lng, final int val, final int n) {
+	/// @return the edited value
+	private static String putfrac(final int val, final int n) {
 		int v; // Scaled value (abs)
 		int d; // Number of digits written
 		int r; // Remaining digits in current group

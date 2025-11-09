@@ -34,6 +34,8 @@ import svm.value.Value;
 /// @author Øystein Myhre Andersen
 public abstract class SysBase {
 	
+	/** Default Constructor */ public SysBase() {} 
+
 	/// Initialisation of the environment
 	///
 	///		Visible sysroutine("INITIA") INITIA;
@@ -314,6 +316,21 @@ public abstract class SysBase {
 		SVM_CALL_SYS.EXIT("CMOVE: ");
 	}
 
+	/// Verbose
+	///
+	///		Visible sysroutine("VERBOSE") VERBOSE;
+	///		export integer result  end;
+	///
+	/// 	Runtime Stack
+	/// 	   ... →
+	/// 	   ..., result
+	///
+	public static void verbose() {
+		SVM_CALL_SYS.ENTER("VERBOSE: ", 1, 0); // exportSize, importSize
+		boolean RUNTIME_VERBOSE = false;
+		RTStack.push(BooleanValue.of(RUNTIME_VERBOSE));
+		SVM_CALL_SYS.EXIT("VERBOSE: ");
+	}
 
 	/// Visible sysroutine("DMPSEG") DMPSEG;
 	/// import infix(string) segnam; integer start,lng  end;

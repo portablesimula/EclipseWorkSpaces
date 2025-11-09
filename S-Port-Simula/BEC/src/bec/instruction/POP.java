@@ -25,6 +25,8 @@ import svm.instruction.SVM_POPK;
 /// @author Øystein Myhre Andersen
 public abstract class POP extends Instruction {
 	
+	/** Default Constructor */ public POP() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_POPK instruction.

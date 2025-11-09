@@ -52,10 +52,20 @@ import svm.value.Value;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class SVM_ASSIGN extends SVM_Instruction {
-	private final boolean update; // false: ASSIGN, true: UPDATE
+	
+	/// true:UPDATE, otherwise ASSIGN instruction
+	private final boolean update;
+	
+	/// The target address
 	private final ObjectAddress objadr;
+	
+	/// The value size
 	private final int size;
 
+	/// Construct a new SVM_ASSIGN instruction
+	/// @param update true:UPDATE, otherwise ASSIGN instruction
+	/// @param objadr the target address
+	/// @param size the value size
 	public SVM_ASSIGN(boolean update, ObjectAddress objadr, int size) {
 		this.opcode = SVM_Instruction.iASSIGN;
 		this.update = update;
@@ -87,6 +97,9 @@ public class SVM_ASSIGN extends SVM_Instruction {
 	// ***********************************************************************************************
 	// *** Attribute File I/O
 	// ***********************************************************************************************
+	/// Construct an SVM_ASSIGN instruction from the given input.
+	/// @param inpt the input stream
+	/// @throws IOException if IOException occur
 	private SVM_ASSIGN(AttributeInputStream inpt) throws IOException {
 		this.opcode = SVM_Instruction.iSTORE;
 		this.update = inpt.readBoolean();
@@ -104,6 +117,10 @@ public class SVM_ASSIGN extends SVM_Instruction {
 		oupt.writeShort(size);
 	}
 	
+	/// Reads an SVM_ASSIGN instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM_ASSIGN instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_ASSIGN read(AttributeInputStream inpt) throws IOException {
 		return new SVM_ASSIGN(inpt);
 	}

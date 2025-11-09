@@ -15,8 +15,12 @@ package svm.env.dataset;
 /// @author Øystein Myhre Andersen
 public class ByteFile extends Dataset {
 
-	public ByteFile(String spec, int type, String action) {
-		super(spec, type, action);
+	/// Construct a new Bytefile with the given arguments.
+	/// @param fileName the fileName
+	/// @param type the fileType
+	/// @param action the action string
+	public ByteFile(String fileName, int type, String action) {
+		super(fileName, type, action);
 	}
 
 }

@@ -26,11 +26,24 @@ import svm.RTStack;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class SVM_PRECALL extends SVM_Instruction {
+	
+	/// The Routine ident
 	private final String rutIdent;
+	
+	/// The number of Parameter Slots
 	private final int nParSlots;
+	
+	/// The Export size
 	private final int exportSize;
+	
+	/// The Import size
 	private final int importSize;
 
+	/// Construct a new SVM_PRECALL instruction
+	/// @param rutIdent the Routine ident
+	/// @param nParSlots the number of Parameter Slots
+	/// @param exportSize the Export size
+	/// @param importSize the Import size
 	public SVM_PRECALL(String rutIdent, int nParSlots, int exportSize, int importSize) {
 		this.opcode = SVM_Instruction.iPRECALL;
 		this.rutIdent = rutIdent;
@@ -44,10 +57,7 @@ public class SVM_PRECALL extends SVM_Instruction {
 		RTStack.precallStack.push(new CallStackFrame(rutIdent, RTStack.size() - nParSlots, exportSize, importSize));
 		if(exportSize > 0) {
 			if(nParSlots > 0) {
-//				RTStack.dumpRTStack("SVM_PRECALL.execute-1");
 				RTStack.addExport(nParSlots, exportSize);
-//				RTStack.dumpRTStack("SVM_PRECALL.execute-2");
-//				Util.IERR("");
 			} else {
 				for(int i=0;i<exportSize;i++) {
 					RTStack.push(null); // Export slots		
@@ -66,6 +76,7 @@ public class SVM_PRECALL extends SVM_Instruction {
 	// *** Attribute File I/O
 	// ***********************************************************************************************
 
+	@Override	
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeByte(opcode);
@@ -75,6 +86,10 @@ public class SVM_PRECALL extends SVM_Instruction {
 		oupt.writeShort(importSize);
 	}
 
+	/// Reads an SVM_PRECALL instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM_PRECALL instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_PRECALL read(AttributeInputStream inpt) throws IOException {
 		String rutIdent = inpt.readString();
 		int nParSlots = inpt.readShort();

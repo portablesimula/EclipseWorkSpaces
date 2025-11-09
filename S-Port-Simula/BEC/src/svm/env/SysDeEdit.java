@@ -23,6 +23,8 @@ import svm.value.LongRealValue;
 /// @author Øystein Myhre Andersen
 public abstract class SysDeEdit {
 
+	/** Default Constructor */ public SysDeEdit() {} 
+
 	/// Scan the input text for an integer item.
 	/// <pre>
 	/// INTEGER-ITEM = SIGN-PART DIGITS

@@ -26,13 +26,19 @@ import svm.value.Value;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class SVM_JUMP extends SVM_Instruction {
+	
+	/// The jump destination address
 	protected ProgramAddress destination;
 
+	/// Construct a new SVM_JUMP instruction
+	/// @param destination the jump destination address
 	public SVM_JUMP(ProgramAddress destination) {
 		this.opcode = SVM_Instruction.iJUMP;
 		this.destination = destination;
 	}
 	
+	/// Set the destination address
+	/// @param destination the jump destination address
 	public void setDestination(ProgramAddress destination) {
 		if(this.destination != null) Util.IERR("");
 		this.destination = destination;
@@ -53,6 +59,9 @@ public class SVM_JUMP extends SVM_Instruction {
 	// ***********************************************************************************************
 	// *** Attribute File I/O
 	// ***********************************************************************************************
+	/// Construct an SVM_JUMP instruction from the given input.
+	/// @param inpt the input stream
+	/// @throws IOException if IOException occur
 	protected SVM_JUMP(AttributeInputStream inpt) throws IOException {
 		this.opcode = SVM_Instruction.iJUMP;
 		this.destination = (ProgramAddress) Value.read(inpt);
@@ -66,6 +75,10 @@ public class SVM_JUMP extends SVM_Instruction {
 		destination.write(oupt);
 	}
 
+	/// Reads an SVM_JUMP instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM_JUMP instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {
 		return new SVM_JUMP(inpt);
 	}

@@ -28,6 +28,8 @@ import svm.instruction.SVM_INITO;
 /// @author Øystein Myhre Andersen
 public abstract class INITO extends Instruction {
 	
+	/** Default Constructor */ public INITO() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_INITO instruction.

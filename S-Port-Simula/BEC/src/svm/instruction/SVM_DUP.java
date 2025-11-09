@@ -27,8 +27,12 @@ import svm.RTStack;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class SVM_DUP extends SVM_Instruction {
+	
+	/// The number of stack items to duplicate
 	private final int n;
 	
+	/// Construct a new SVM_DUP instruction
+	/// @param n the number of stack items to duplicate
 	public SVM_DUP(int n) {
 		this.opcode = SVM_Instruction.iDUP;
 		this.n = n;
@@ -53,12 +57,17 @@ public class SVM_DUP extends SVM_Instruction {
 	// *** Attribute File I/O
 	// ***********************************************************************************************
 
+	@Override	
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeByte(opcode);
 		oupt.writeShort(n);
 	}
 
+	/// Reads an SVM_DUP instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM_DUP instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_DUP read(AttributeInputStream inpt) throws IOException {
 		int n = inpt.readShort();
 		SVM_DUP instr = new SVM_DUP(n);

@@ -11,15 +11,26 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import bec.util.Util;
 import svm.RTUtil;
 
+/// Outbytefile Bridge.
+///
+///
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/env/dataset/Outbytefile.java"><b>Source File</b></a>.
+/// 
+/// @author Simula Standard
+/// @author S-Port: The Environment Interface
+/// @author Øystein Myhre Andersen
 public class Outbytefile extends ByteFile {
 	
 	/// The OutputStream used.
 	private OutputStream outputStream;
 
-	public Outbytefile(String fileName, int type, String action, int imglng) {
+	/// Construct a new Outbytefile with the given arguments.
+	/// @param fileName the fileName
+	/// @param type the fileType
+	/// @param action the action string
+	public Outbytefile(String fileName, int type, String action) {
 		super(fileName, type, action);
 		File file = fileAction.doCreateAction(fileName);
 		if (!file.exists()) {
@@ -50,6 +61,8 @@ public class Outbytefile extends ByteFile {
 		}
 	}
 
+	/// Writes a byte through the underlying OutputStream
+	/// @param b the byte to be written
 	public void outbyte(final int b) {
 		try {
 			outputStream.write(b);
@@ -59,7 +72,6 @@ public class Outbytefile extends ByteFile {
 			IO.println("Outbyte failed" + e);
 			RTUtil.set_STATUS(17);
 		}
-//		Util.IERR("");
 	}
 
 }

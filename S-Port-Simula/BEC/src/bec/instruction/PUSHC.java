@@ -78,6 +78,8 @@ import svm.value.Value;
 /// @author Øystein Myhre Andersen
 public abstract class PUSHC extends Instruction {
 	
+	/** Default Constructor */ public PUSHC() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_LOADC instruction.

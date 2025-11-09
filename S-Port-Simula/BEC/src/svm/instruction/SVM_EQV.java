@@ -5,7 +5,12 @@
 /// page: https://creativecommons.org/licenses/by/4.0/
 package svm.instruction;
 
+import java.io.IOException;
+
 import bec.Global;
+import bec.Option;
+import bec.util.AttributeInputStream;
+import bec.util.AttributeOutputStream;
 import svm.RTStack;
 import svm.value.Value;
 
@@ -35,6 +40,7 @@ import svm.value.Value;
 /// @author Øystein Myhre Andersen
 public class SVM_EQV extends SVM_Instruction {
 
+	/// Construct a new SVM_EQV instruction
 	public SVM_EQV() {
 		this.opcode = SVM_Instruction.iEQV;
 	}
@@ -51,6 +57,26 @@ public class SVM_EQV extends SVM_Instruction {
 	@Override	
 	public String toString() {
 		return "EQV      ";
+	}
+
+	// ***********************************************************************************************
+	// *** Attribute File I/O
+	// ***********************************************************************************************
+
+	@Override	
+	public void write(AttributeOutputStream oupt) throws IOException {
+		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
+		oupt.writeByte(opcode);
+	}
+
+	/// Reads an SVM_EQV instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM_EQV instruction read
+	/// @throws IOException if IOException occur
+	public static SVM_EQV read(AttributeInputStream inpt) throws IOException {
+		SVM_EQV instr = new SVM_EQV();
+		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
+		return instr;
 	}
 
 }

@@ -28,6 +28,8 @@ import svm.instruction.SVM_STORE;
 /// @author Øystein Myhre Andersen
 public abstract class RUPDATE extends Instruction {
 	
+	/** Default Constructor */ public RUPDATE() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_STORE instruction.

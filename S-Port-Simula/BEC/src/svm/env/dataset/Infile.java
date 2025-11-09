@@ -21,6 +21,14 @@ import svm.RTUtil;
 import svm.value.IntegerValue;
 import svm.value.ObjectAddress;
 
+/// Infile Bridge.
+///
+///
+/// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/env/dataset/Infile.java"><b>Source File</b></a>.
+/// 
+/// @author Simula Standard
+/// @author S-Port: The Environment Interface
+/// @author Øystein Myhre Andersen
 public class Infile extends ImageFile {
 	
 	/// The BufferedReader used.
@@ -30,18 +38,19 @@ public class Infile extends ImageFile {
 	private String rest = null;
 
 
+	/// Construct a new Infile with the given arguments.
+	/// @param fileName the fileName
+	/// @param type the fileType
+	/// @param action the action string
+	/// @param imglng the image length
 	public Infile(String fileName, int type, String action, int imglng) {
 		super(fileName, type, action, imglng);
 		File file = fileAction.doCreateAction(fileName);
 		if (!file.exists()) {
-//			File selected = trySelectFile(file.getAbsoluteFile().toString());
-//			if (selected != null)
-//				file = selected;
 			RTUtil.set_STATUS(3); // File does not exist;
 			return;
 		}
 		try {
-//			IO.println("NEW RTInfile: fileName=" + fileName);
 			lineReader = new BufferedReader(new FileReader(file));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -62,6 +71,8 @@ public class Infile extends ImageFile {
 
 	/// Procedure inimage.
 	///
+	/// Reads a line from the underlying file into a character area
+	///
 	/// A record is read from the current position of the data set into the image. If the number of characters
 	/// in the record exceeds the image length, the action taken is system dependent:
 	///
@@ -80,10 +91,11 @@ public class Infile extends ImageFile {
 	/// If the status returned is non-zero, filled must be zero, except for the partial read case discussed
 	/// above (status 12).
 	/// 
+	/// @param chrAddr the start of the area
+	/// @param nchr the length of the area
 	public int inimage(ObjectAddress chrAddr, int nchr) {
 		try {
 			String line = (rest != null) ? rest : lineReader.readLine();
-//			IO.println("RTInfile.inimage: line=\"" + line + '"');
 			rest = null;
 			if(line == null) {
 				RTUtil.set_STATUS(13); // End of file on input";
@@ -102,14 +114,16 @@ public class Infile extends ImageFile {
 				return nchr;
 			}
 		} catch (IOException e) {
-//			throw new RTS_SimulaRuntimeError("Inimage failed", e);
 			Util.IERR("Inimage failed: " + e);
 		}
 		return 0;
 	}
 	
+	/// Utility variable
 	private static String sysinRest = null;
 	
+	/// Utility: read a line
+	/// @return the line string read
 	private static String readLine() throws IOException, TimeoutException {
 		StringBuilder sb = new StringBuilder();
 		if(Global.console != null) {
@@ -128,6 +142,11 @@ public class Infile extends ImageFile {
 		return sb.toString();
 	}
 	
+	/// Utility: read a character with timeout
+	/// @param timeout the timeout duration
+	/// @param unit the TimeUnit
+	/// @return the line string read
+	/// @throws IOException if IOException occur
 	private static int IO_read(int timeout, TimeUnit unit) throws IOException, TimeoutException {
 		long sleep = unit.toMillis(timeout);
 		LOOP: while(true) {
@@ -140,10 +159,12 @@ public class Infile extends ImageFile {
 		throw new TimeoutException();
 	}
 
+	/// Reads a line from the underlying file into a character area
+	/// @param chrAddr the start of the area
+	/// @param nchr the length of the area
 	public static int sysinInimage(ObjectAddress chrAddr, int nchr) {
 		try {
 			String line = (sysinRest != null) ? sysinRest : readLine();
-//			IO.println("RTInfile.sysinInimage: line=\"" + line + '"');
 			sysinRest = null;
 			if(line == null) {
 				RTUtil.set_STATUS(13); // End of file on input";
@@ -162,7 +183,6 @@ public class Infile extends ImageFile {
 				return nchr;
 			}
 		} catch (Exception e) {
-//			throw new RTS_SimulaRuntimeError("Inimage failed", e);
 			Util.IERR("sysinInimage failed: " + e);
 		}
 		return 0;

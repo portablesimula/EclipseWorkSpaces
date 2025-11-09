@@ -32,7 +32,9 @@ import svm.segment.Segment;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class ObjectAddress extends Value {
-	
+
+	/** Default Constructor */ public ObjectAddress() {} 
+
 	/// Address kind
 	public int kind;
 	
@@ -315,6 +317,7 @@ public class ObjectAddress extends Value {
 
 	/// Writes the body of this ObjectAddress to the given output.
 	/// @param oupt the output stream
+	/// @throws IOException if IOException occur
 	public void writeBody(final AttributeOutputStream oupt) throws IOException {
 		oupt.writeByte(kind);
 		oupt.writeString(segID);
@@ -323,7 +326,9 @@ public class ObjectAddress extends Value {
 	}
 	
 	/// Reads a ObjectAddress from the given input.
+	/// @param inpt the AttributeInputStream
 	/// @return the ObjectAddress read
+	/// @throws IOException if IOException occur
 	public static ObjectAddress read(final AttributeInputStream inpt) throws IOException {
 		int kind = inpt.readUnsignedByte();
 		String segID = inpt.readString();

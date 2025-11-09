@@ -28,6 +28,8 @@ import bec.scode.Scode;
 /// @author Øystein Myhre Andersen
 public abstract class POPALL extends Instruction {
 	
+	/** Default Constructor */ public POPALL() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations.
 	public static void ofScode() {

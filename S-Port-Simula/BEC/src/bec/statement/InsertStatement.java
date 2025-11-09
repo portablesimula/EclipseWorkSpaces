@@ -41,6 +41,8 @@ import svm.segment.ProgramSegment;
 /// @author Øystein Myhre Andersen
 public class InsertStatement {
 	
+	/** Default Constructor */ public InsertStatement() {} 
+
 	// The Module ident
     String modid;
 
@@ -77,6 +79,7 @@ public class InsertStatement {
 	
 	/// Read all Segments, Descriptors and Data Types
     /// @param sysmod true: when SYSINSERT
+	/// @throws IOException if IOException occur
 	private void readDescriptors(final boolean sysmod) throws IOException {
 		String fileName = null;
 		if(sysmod) {

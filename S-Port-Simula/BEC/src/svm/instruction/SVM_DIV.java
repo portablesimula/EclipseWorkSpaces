@@ -34,6 +34,7 @@ import svm.value.Value;
 /// @author Øystein Myhre Andersen
 public class SVM_DIV extends SVM_Instruction {
 
+	/// Construct a new SVM_DIV instruction
 	public SVM_DIV() {
 		this.opcode = SVM_Instruction.iDIV;
 	}
@@ -57,11 +58,16 @@ public class SVM_DIV extends SVM_Instruction {
 	// *** Attribute File I/O
 	// ***********************************************************************************************
 
+	@Override	
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeByte(opcode);
 	}
 
+	/// Reads an SVM_DIV instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM_DIV instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_DIV read(AttributeInputStream inpt) throws IOException {
 		SVM_DIV instr = new SVM_DIV();
 		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);

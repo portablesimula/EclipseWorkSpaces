@@ -42,6 +42,8 @@ import svm.value.IntegerValue;
 /// @author Øystein Myhre Andersen
 public abstract class INDEX extends Instruction {
 
+	/** Default Constructor */ public INDEX() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit SVM instructions.

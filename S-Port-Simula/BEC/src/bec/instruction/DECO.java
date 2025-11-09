@@ -31,6 +31,8 @@ import svm.instruction.SVM_DECO;
 /// @author Øystein Myhre Andersen
 public abstract class DECO extends Instruction {
 	
+	/** Default Constructor */ public DECO() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_DECO instruction.

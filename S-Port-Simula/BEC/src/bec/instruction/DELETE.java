@@ -27,6 +27,8 @@ import bec.scode.Tag;
 /// @author Øystein Myhre Andersen
 public abstract class DELETE extends Instruction {
 
+	/** Default Constructor */ public DELETE() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Delete the specified tags.

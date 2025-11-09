@@ -64,7 +64,8 @@ public class Variable extends Descriptor {
 	/// The repCount of this Variable
 	public int repCount;
 
-	/// Create a new Attribute with the given 'tag'
+	/// Create a new Attribute with the given 'kind' and 'tag'
+	/// @param kind the kind
 	/// @param tag used to lookup descriptors
 	private Variable(final int kind, final Tag tag) {
 		super(kind, tag);
@@ -104,6 +105,7 @@ public class Variable extends Descriptor {
 	
 	/// Scans the remaining S-Code (if any) belonging to this descriptor.
 	/// Then construct a new Variable instance.
+	///@param returAddr the return address
 	/// @return an Variable instance.
 	public static Variable ofRETUR(final ObjectAddress returAddr) {
 		Variable var = new Variable(Kind.K_Retur, null);
@@ -114,6 +116,7 @@ public class Variable extends Descriptor {
 	
 	/// Scans the remaining S-Code (if any) belonging to this descriptor.
 	/// Then construct a new Variable instance.
+	/// @param rela the relative address
 	/// @return an Variable instance.
 	public static Variable ofLocal(final int rela) {
 		Tag tag = Tag.ofScode();
@@ -126,6 +129,7 @@ public class Variable extends Descriptor {
 	
 	/// Scans the remaining S-Code (if any) belonging to this descriptor.
 	/// Then construct a new Variable instance.
+	/// @param seg the DataSegment
 	/// @return an Variable instance.
 	public static Variable ofGlobal(final DataSegment seg) {
 		Tag tag = Tag.ofScode();
@@ -195,6 +199,8 @@ public class Variable extends Descriptor {
 	/// Reads a Variable from the given input.
 	/// @param inpt the input stream
 	/// @param kind the Variable kind: Import, Export, Exit, Retur, LovalVar
+	/// @return The Variable read
+	/// @throws IOException if IOException occur
 	public static Variable read(final AttributeInputStream inpt, int kind) throws IOException {
 		Tag tag = Tag.read(inpt);
 		Variable var = new Variable(kind, tag);

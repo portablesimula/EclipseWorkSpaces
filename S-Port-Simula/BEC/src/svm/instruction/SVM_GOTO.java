@@ -30,6 +30,7 @@ import svm.value.ProgramAddress;
 /// @author Øystein Myhre Andersen
 public class SVM_GOTO extends SVM_Instruction {
 
+	/// Construct a new SVM_GOTO instruction
 	public SVM_GOTO() {
 		this.opcode = SVM_Instruction.iGOTO;
 	}
@@ -49,10 +50,6 @@ public class SVM_GOTO extends SVM_Instruction {
 	// ***********************************************************************************************
 	// *** Attribute File I/O
 	// ***********************************************************************************************
-	protected SVM_GOTO(AttributeInputStream inpt) throws IOException {
-		this.opcode = SVM_Instruction.iGOTO;
-		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + this);
-	}
 
 	@Override
 	public void write(AttributeOutputStream oupt) throws IOException {
@@ -60,8 +57,14 @@ public class SVM_GOTO extends SVM_Instruction {
 		oupt.writeByte(opcode);
 	}
 
+	/// Reads an SVM_GOTO instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM_GOTO instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {
-		return new SVM_GOTO(inpt);
+		SVM_GOTO instr = new SVM_GOTO();
+		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);
+		return instr;
 	}
 
 }

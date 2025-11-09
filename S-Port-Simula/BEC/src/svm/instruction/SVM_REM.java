@@ -44,6 +44,7 @@ import svm.value.Value;
 /// @author Øystein Myhre Andersen
 public class SVM_REM extends SVM_Instruction {
 
+	/// Construct a new SVM_REM instruction
 	public SVM_REM() {
 		this.opcode = SVM_Instruction.iREM;
 	}
@@ -66,11 +67,16 @@ public class SVM_REM extends SVM_Instruction {
 	// *** Attribute File I/O
 	// ***********************************************************************************************
 
+	@Override	
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeByte(SVM_Instruction.iREM);
 	}
 
+	/// Reads an SVM_REM instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM_REM instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_REM read(AttributeInputStream inpt) throws IOException {
 		SVM_REM instr = new SVM_REM();
 		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);

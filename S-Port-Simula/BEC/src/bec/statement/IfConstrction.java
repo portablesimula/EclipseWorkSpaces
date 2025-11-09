@@ -80,8 +80,10 @@ import svm.value.ProgramAddress;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public abstract class IfConstrction {
-	
-	private static final boolean DEBUG = false;
+
+	/** Default Constructor */ public IfConstrction() {} 
+
+//	private static final boolean DEBUG = false;
 
 	/// Treat a complete If Statement.
 	public static void ofScode() {
@@ -104,10 +106,10 @@ public abstract class IfConstrction {
 		CTStack.pop();
 		NamedStack<CTStackItem> IF_Stack = CTStack.copy("IF-Stack-Copy-"+Global.ifDepth);
 		String indent = "";
-		if(DEBUG) {
-			for(int i=0;i<Global.ifDepth;i++) indent = indent + "      ";
-			IF_Stack.dumpStack(Global.ifDepth, "IF: SAVE IF_Stack");
-		}
+//		if(DEBUG) {
+//			for(int i=0;i<Global.ifDepth;i++) indent = indent + "      ";
+//			IF_Stack.dumpStack(Global.ifDepth, "IF: SAVE IF_Stack");
+//		}
 		
 		ProgramAddress IF_LABEL = Global.PSEG.nextAddress();
 		ProgramAddress ELSE_LABEL = null;
@@ -129,10 +131,10 @@ public abstract class IfConstrction {
 			FETCH.doFetch();
 			ELSE_Stack = CTStack.copy("ELSE-Stack-Copy-"+Global.ifDepth);
 			CTStack.reestablish(IF_Stack);
-			if(DEBUG) {
-				ELSE_Stack.dumpStack(Global.ifDepth, "ELSE: SAVE ELSE_Stack");
-				IF_Stack.dumpStack(Global.ifDepth, "ELSE: reestablish IF_Stack");
-			}
+//			if(DEBUG) {
+//				ELSE_Stack.dumpStack(Global.ifDepth, "ELSE: SAVE ELSE_Stack");
+//				IF_Stack.dumpStack(Global.ifDepth, "ELSE: reestablish IF_Stack");
+//			}
 			
 			ELSE_LABEL = Global.PSEG.nextAddress();
 			Global.PSEG.emit(new SVM_JUMP(null));
@@ -172,10 +174,10 @@ public abstract class IfConstrction {
 		}
 		
 		if(ELSE_Stack != null) {
-			if(DEBUG) {
-				ELSE_Stack.dumpStack(Global.ifDepth, "ENDIF: resulting ELSE_Stack");
-				CTStack.current().dumpStack(Global.ifDepth, "ENDIF: current Stack");
-			}
+//			if(DEBUG) {
+//				ELSE_Stack.dumpStack(Global.ifDepth, "ENDIF: resulting ELSE_Stack");
+//				CTStack.current().dumpStack(Global.ifDepth, "ENDIF: current Stack");
+//			}
 			if(! CTStack.equals(CTStack.current(), ELSE_Stack)) {
 				Util.IERR("Merge IF-Stack and ELSE-Stack FAILED !");
 			}

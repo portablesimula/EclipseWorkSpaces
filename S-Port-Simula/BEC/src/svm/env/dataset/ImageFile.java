@@ -23,11 +23,11 @@ public class ImageFile extends Dataset {
 
 	/// Construct a new ImageFile with the given arguments.
 	/// @param fileName the fileName
-	/// @param fileType the fileType
+	/// @param type the fileType
 	/// @param action the action string
 	/// @param imglng the image length
-	public ImageFile(String spec, int type, String action, int imglng) {
-		super(spec, type, action);
+	public ImageFile(String fileName, int type, String action, int imglng) {
+		super(fileName, type, action);
 		this.imglng = imglng;
 	}
 
@@ -45,7 +45,8 @@ public class ImageFile extends Dataset {
 
 	/// Reads a line from the underlying file into a character area
 	/// @param chrAddr the start of the area
-	/// @param the length of the area
+	/// @param nchr the length of the area
+	/// @return the number of characters filled
 	public int inimage(ObjectAddress chrAddr, int nchr) {
 		Util.IERR("Routine inimage need a redefinition in "+this.getClass().getSimpleName());
 		return 0;

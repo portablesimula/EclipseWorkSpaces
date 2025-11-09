@@ -31,6 +31,7 @@ import svm.value.ObjectAddress;
 /// @author Øystein Myhre Andersen
 public class SVM_DECO extends SVM_Instruction {
 
+	/// Construct a new SVM_DECO instruction
 	public SVM_DECO() {
 		this.opcode = SVM_Instruction.iDECO;
 	}
@@ -53,11 +54,16 @@ public class SVM_DECO extends SVM_Instruction {
 	// *** Attribute File I/O
 	// ***********************************************************************************************
 
+	@Override	
 	public void write(AttributeOutputStream oupt) throws IOException {
 		if(Option.ATTR_OUTPUT_TRACE) IO.println("SVM.Write: " + this);
 		oupt.writeByte(opcode);
 	}
 
+	/// Reads an SVM_DECO instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM_DECO instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_DECO read(AttributeInputStream inpt) throws IOException {
 		SVM_DECO instr = new SVM_DECO();
 		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);

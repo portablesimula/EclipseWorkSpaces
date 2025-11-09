@@ -32,7 +32,9 @@ import svm.segment.DataSegment;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class RealValue extends Value {
-	
+
+	/** Default Constructor */ public RealValue() {} 
+
 	/// The float value
 	public float value;
 	
@@ -163,7 +165,9 @@ public class RealValue extends Value {
 	}
 
 	/// Reads a BooleanValue from the given input.
+	/// @param inpt the AttributeInputStream
 	/// @return the BooleanValue read
+	/// @throws IOException if IOException occur
 	public static RealValue read(final AttributeInputStream inpt) throws IOException {
 		return new RealValue(inpt.readFloat());
 	}

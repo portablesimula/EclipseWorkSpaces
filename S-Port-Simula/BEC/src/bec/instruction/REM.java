@@ -34,6 +34,8 @@ import svm.instruction.SVM_REM;
 /// @author Øystein Myhre Andersen
 public abstract class REM extends Instruction {
 	
+	/** Default Constructor */ public REM() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_REM instruction.

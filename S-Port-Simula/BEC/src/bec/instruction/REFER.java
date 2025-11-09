@@ -38,6 +38,8 @@ import svm.value.ObjectAddress;
 /// @author Øystein Myhre Andersen
 public abstract class REFER extends Instruction {
 
+	/** Default Constructor */ public REFER() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	public static void ofScode() {

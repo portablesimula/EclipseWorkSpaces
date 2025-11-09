@@ -41,9 +41,9 @@ public class Dataset {
 
 	/// Construct a new DatasetSpec with the given arguments.
 	/// @param fileName the fileName
-	/// @param fileType the fileType
+	/// @param type the fileType
 	/// @param action the action string
-	public Dataset(String fileName, int fileType, String action) {
+	public Dataset(String fileName, int type, String action) {
 		this.fileName = fileName;
 		this.fileType = fileType;
 		fileAction = new FileAction(action);

@@ -41,6 +41,8 @@ import svm.value.Value;
 /// @author Øystein Myhre Andersen
 public abstract class RTStack {
 	
+	/** Default Constructor */ public RTStack() {} 
+
 	/// The Runtime Stack
 	private static Stack<Value> stack = new Stack<Value>();
 	
@@ -123,11 +125,11 @@ public abstract class RTStack {
 	/// @param index the index
 	/// @param value the value
 	public static void store(int index, Value value) {
-		if(index == GUARD) {
-			Global.PSC.segment().dump("STACK GUARD TRAPPED: " + index, 0, 10);
-			RTStack.dumpRTStack("STACK GUARD TRAPPED: " + index);
-			Util.IERR("Attempt to store " + value + " into guarded location RTStack[" + index + ']');
-		}
+//		if(index == GUARD) {
+//			Global.PSC.segment().dump("STACK GUARD TRAPPED: " + index, 0, 10);
+//			RTStack.dumpRTStack("STACK GUARD TRAPPED: " + index);
+//			Util.IERR("Attempt to store " + value + " into guarded location RTStack[" + index + ']');
+//		}
 		stack.set(index, value);
 	}
 	
@@ -145,14 +147,14 @@ public abstract class RTStack {
 		}		
 	}
 	
-	/// Debug Utility
-	private static int GUARD = -1;
-
-	/// Debug Utility
-	public static void guard(int index) {
-		RTStack.dumpRTStack("RTStack.guard: "+index);
-		GUARD = index;
-	}
+//	/// Debug Utility
+//	private static int GUARD = -1;
+//
+//	/// Debug Utility
+//	public static void guard(int index) {
+//		RTStack.dumpRTStack("RTStack.guard: "+index);
+//		GUARD = index;
+//	}
 
 	/// Push a value onto the stack
 	/// @param value the value
@@ -208,6 +210,7 @@ public abstract class RTStack {
 	}
 	
 	/// Pop the top 'n' values off this stack.
+	/// @param n number of pop
 	/// @return the set of values popped off the stack
 	public static Vector<Value> popx(int n) {
 		Vector<Value> values = new Vector<Value>();

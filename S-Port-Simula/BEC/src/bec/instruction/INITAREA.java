@@ -25,6 +25,8 @@ import bec.scode.Type;
 /// @author Øystein Myhre Andersen
 public abstract class INITAREA extends Instruction {
 	
+	/** Default Constructor */ public INITAREA() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// NOTE: In this implementation  INITAREA == NOOP

@@ -57,7 +57,9 @@ import svm.value.ProgramAddress;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public abstract class SkipifConstruction {
-	
+
+	/** Default Constructor */ public SkipifConstruction() {} 
+
 	/// Treat a complete Skipif Statement.
 	public static void ofScode() {
 		FETCH.doFetch(); CTStack.checkTypesEqual(); CTStack.checkSosValue();

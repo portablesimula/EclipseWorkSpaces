@@ -48,8 +48,11 @@ import svm.value.ObjectAddress;
 /// @author Øystein Myhre Andersen
 public abstract class REMOTE extends Instruction {
 	
+	/** Default Constructor */ public REMOTE() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
+	/// @param instr which instruction
 	public static void ofScode(int instr) {
 		Tag tag = Tag.ofScode();
 		Attribute attr = (Attribute) tag.getMeaning();

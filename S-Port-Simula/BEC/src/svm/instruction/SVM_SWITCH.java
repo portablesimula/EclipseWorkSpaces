@@ -32,8 +32,12 @@ import svm.value.Value;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class SVM_SWITCH extends SVM_Instruction {
+	
+	/// The destination table
 	private final ProgramAddress[] DESTAB;
 
+	/// Construct a new SVM_STORE instruction
+	/// @param DESTAB the destination table
 	public SVM_SWITCH(ProgramAddress[] DESTAB) {
 		this.opcode = SVM_Instruction.iSWITCH;
 		this.DESTAB = DESTAB;
@@ -57,6 +61,9 @@ public class SVM_SWITCH extends SVM_Instruction {
 	// ***********************************************************************************************
 	// *** Attribute File I/O
 	// ***********************************************************************************************
+	/// Construct SVM_SWITCH instruction from the given input.
+	/// @param inpt the input stream
+	/// @throws IOException if IOException occur
 	private SVM_SWITCH(AttributeInputStream inpt) throws IOException {
 		this.opcode = SVM_Instruction.iSWITCH;
 		int n = inpt.readShort();
@@ -78,6 +85,10 @@ public class SVM_SWITCH extends SVM_Instruction {
 		}
 	}
 
+	/// Reads an SVM_SWITCH instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM_SWITCH instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {
 		return new SVM_SWITCH(inpt);
 	}

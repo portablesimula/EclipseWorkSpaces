@@ -29,6 +29,8 @@ import svm.instruction.SVM_SETO;
 /// @author Øystein Myhre Andersen
 public abstract class SETO extends Instruction {
 	
+	/** Default Constructor */ public SETO() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_SETO instruction.

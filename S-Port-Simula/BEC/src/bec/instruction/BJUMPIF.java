@@ -36,6 +36,8 @@ import svm.value.ProgramAddress;
 /// @author Øystein Myhre Andersen
 public abstract class BJUMPIF extends Instruction {
 
+	/** Default Constructor */ public BJUMPIF() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Update the destination table.

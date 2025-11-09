@@ -32,6 +32,8 @@ import svm.instruction.SVM_DIV;
 /// @author Øystein Myhre Andersen
 public abstract class DIV extends Instruction {
 
+	/** Default Constructor */ public DIV() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_DIV instruction.

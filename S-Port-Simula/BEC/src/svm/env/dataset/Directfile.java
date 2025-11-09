@@ -44,7 +44,7 @@ public class Directfile extends ImageFile {
 
 	/// Construct a new DirectfileSpec with the given arguments.
 	/// @param fileName the fileName
-	/// @param fileType the fileType
+	/// @param type the fileType
 	/// @param action the action string
 	/// @param imglng the image length
 	public Directfile(String fileName, int type, String action, int imglng) {
@@ -128,9 +128,9 @@ public class Directfile extends ImageFile {
 
 	/// Locate the given 'pos' on the underlying RandomAccessFile
 	/// @param pos the position to locate
-	public void locate(int p) {
+	public void locate(int pos) {
 		try {
-			randomAccessFile.seek((p - 1) * RECORDSIZE);
+			randomAccessFile.seek((pos - 1) * RECORDSIZE);
 		} catch (IOException e) {
 			RTUtil.set_STATUS(99);
 		}

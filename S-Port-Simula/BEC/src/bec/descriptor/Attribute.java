@@ -104,6 +104,8 @@ public final class Attribute extends Descriptor {
 
 	/// Reads an Attribute from the given input.
 	/// @param inpt the input stream
+	/// @return The Attribute read
+	/// @throws IOException if IOException occur
 	public static Attribute read(final AttributeInputStream inpt) throws IOException {
 		Attribute attr = new Attribute(Tag.read(inpt));
 		attr.type = Type.read(inpt);

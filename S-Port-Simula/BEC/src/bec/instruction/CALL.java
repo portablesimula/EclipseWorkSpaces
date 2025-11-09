@@ -48,6 +48,8 @@ import svm.instruction.SVM_PRECALL;
 /// @author Øystein Myhre Andersen
 public abstract class CALL extends Instruction {
 	
+	/** Default Constructor */ public CALL() {} 
+
 	/// Treat a complete Call Instruction including parameters stacking and
 	/// finally emit a SVM_CALL instruction.
 	public static void ofScode(int nParStacked) {

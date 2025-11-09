@@ -23,6 +23,8 @@ import bec.compileTimeStack.CTStack;
 /// @author Øystein Myhre Andersen
 public abstract class EMPTY extends Instruction {
 	
+	/** Default Constructor */ public EMPTY() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Check stack empty.
 	public static void ofScode() {

@@ -21,7 +21,9 @@ import svm.value.Value;
 /// 
 /// @author Øystein Myhre Andersen
 public class RTUtil {
-	
+
+	/** Default Constructor */ public RTUtil() {} 
+
 	/// Points to RTS-Module RT's DataSegment
 	private static DataSegment DSEG_RT;
 	
@@ -53,8 +55,9 @@ public class RTUtil {
 		DSEG_RT.store(offset_STATUS, IntegerValue.of(Type.T_INT, status));	
 	}
 	
-	/// Return the String description of the given 'status'
-	/// @param status the status text
+	/// Returns the String description of the given 'status'
+	/// @param status the status code
+	/// @return the String description of the given 'status'
 	public static String edStatus(int status) {
 		switch(status) {
 			case 0: return"(not used)";
@@ -160,31 +163,31 @@ public class RTUtil {
 	}
 
 	// Instance sorts:  instances must be first
-	public static final int S_NOSORT =  0; //  no sort
-	public static final int S_SUB    =  1; //  Sub-Block
-	public static final int S_PRO    =  2; //  Procedure
-	public static final int S_ATT    =  3; //  Attached Class
-	public static final int S_DET    =  4; //  Detached Class
-	public static final int S_RES    =  5; //  Resumed Class
-	public static final int S_TRM    =  6; //  Terminated Class
-	public static final int S_PRE    =  7; //  Prefixed Block
-	public static final int S_THK    =  8; //  Thunk
-	public static final int S_SAV    =  9; //  Save Object
-	public static final int S_ALLOC  = 10; //  object allocated on request (not SIMULA)
+	/** Instance sort code */ public static final int S_NOSORT =  0; //  no sort
+	/** Instance sort code */ public static final int S_SUB    =  1; //  Sub-Block
+	/** Instance sort code */ public static final int S_PRO    =  2; //  Procedure
+	/** Instance sort code */ public static final int S_ATT    =  3; //  Attached Class
+	/** Instance sort code */ public static final int S_DET    =  4; //  Detached Class
+	/** Instance sort code */ public static final int S_RES    =  5; //  Resumed Class
+	/** Instance sort code */ public static final int S_TRM    =  6; //  Terminated Class
+	/** Instance sort code */ public static final int S_PRE    =  7; //  Prefixed Block
+	/** Instance sort code */ public static final int S_THK    =  8; //  Thunk
+	/** Instance sort code */ public static final int S_SAV    =  9; //  Save Object
+	/** Instance sort code */ public static final int S_ALLOC  = 10; //  object allocated on request (not SIMULA)
 	// Special entity sorts:
-	public static final int S_GAP    = 11; //  Dynamic Storage Gap
-	public static final int S_TXTENT = 12; //  Text Entity
-	public static final int S_ARHEAD = 13; //  Array Head Entity
-	public static final int S_ARBODY = 14; //  Array Body Entity      (3 or more dimensions)
-	public static final int S_ARBREF = 15; //  ref-Array Body Entity  (3 or more dimensions)
-	public static final int S_ARBTXT = 16; //  text-Array Body Entity (3 or more dimensions)
-	public static final int S_ARENT2 = 17; //  Array Body Entity      (two dimensions)
-	public static final int S_ARREF2 = 18; //  ref-Array Body Entity  (two dimensions)
-	public static final int S_ARTXT2 = 19; //  text-Array Body Entity (two dimensions)
-	public static final int S_ARENT1 = 20; //  Array Body Entity      (one dimension)
-	public static final int S_ARREF1 = 21; //  ref-Array Body Entity  (one dimension)
-	public static final int S_ARTXT1 = 22; //  text-Array Body Entity (one dimension)
-	public static final int MAX_SORT = 22;
+	/** Instance sort code */ public static final int S_GAP    = 11; //  Dynamic Storage Gap
+	/** Instance sort code */ public static final int S_TXTENT = 12; //  Text Entity
+	/** Instance sort code */ public static final int S_ARHEAD = 13; //  Array Head Entity
+	/** Instance sort code */ public static final int S_ARBODY = 14; //  Array Body Entity      (3 or more dimensions)
+	/** Instance sort code */ public static final int S_ARBREF = 15; //  ref-Array Body Entity  (3 or more dimensions)
+	/** Instance sort code */ public static final int S_ARBTXT = 16; //  text-Array Body Entity (3 or more dimensions)
+	/** Instance sort code */ public static final int S_ARENT2 = 17; //  Array Body Entity      (two dimensions)
+	/** Instance sort code */ public static final int S_ARREF2 = 18; //  ref-Array Body Entity  (two dimensions)
+	/** Instance sort code */ public static final int S_ARTXT2 = 19; //  text-Array Body Entity (two dimensions)
+	/** Instance sort code */ public static final int S_ARENT1 = 20; //  Array Body Entity      (one dimension)
+	/** Instance sort code */ public static final int S_ARREF1 = 21; //  ref-Array Body Entity  (one dimension)
+	/** Instance sort code */ public static final int S_ARTXT1 = 22; //  text-Array Body Entity (one dimension)
+	/** Instance sort code */ public static final int MAX_SORT = 22;
 
 //	 Visible record entity;  info "DYNAMIC";
 //	 begin ref(inst)                sl;   -- during GC used as GCL!!!!
@@ -274,7 +277,7 @@ public class RTUtil {
 	}
 	
 	/// Returns an 'idfier' String
-	/// @param idr address to the first character
+	/// @param idt address to the first character
 	/// @param ncha the number of characters
 	/// @return an 'idfier' String
 	private static String edIDT(ObjectAddress idt, int ncha) {
@@ -288,6 +291,7 @@ public class RTUtil {
 	
 	/// Debug utility: Print an Entity
 	/// @param ent the Entity
+	/// @return false: no more to print
 	public static boolean printEntity(ObjectAddress ent) {
 		ObjectAddress sl = (ObjectAddress) ent.load(0);
 		IntegerValue sort = (IntegerValue) ent.addOffset(1).load(0);
@@ -512,7 +516,11 @@ public class RTUtil {
 		IO.println("============ endof BasicIO ============");
 	}
 	
-	/// Internal utility
+	/// Internal utility: prt
+	/// @param dseg the DataSegment
+	/// @param ent the Enity
+	/// @param ident the ident
+	/// @param ofst the offset
 	private static void prt(DataSegment dseg, ObjectAddress ent, String ident, int ofst) {
 		Value value = dseg.load(ofst);
 		IO.println(""+ent.addOffset(ofst) + ": " + ident + " " + value);

@@ -30,8 +30,12 @@ import svm.value.ProgramAddress;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class SVM_CALL_SYS extends SVM_Instruction {
+	
+	/// The routine kind code
 	private final int kind;
 
+	/// Construct a new SVM_CALL_SYS instruction
+	/// @param kind the routine kind code
 	public SVM_CALL_SYS(int kind) {
 		this.opcode = SVM_Instruction.iCALLSYS;
 		if(kind == 0) Util.IERR("Undefined System Routine: " + kind);
@@ -41,7 +45,7 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 	@Override
 	public void execute() {
 		switch(kind) {
-			case P_VERBOSE:  verbose(); break;
+			case P_VERBOSE:  SysBase.verbose(); break;
 			case P_INITIA:   SysBase.initia(); break;
 			case P_DWAREA:   SysBase.dwarea(); break;
 			case P_ZEROAREA: SysBase.zeroarea(); break;
@@ -130,6 +134,10 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 		Global.PSC.ofst++;
 	}
 	
+	/// System Routine prolog
+	/// @param ident the Routine ident
+	/// @param exportSize the Export size
+	/// @param importSize the Import size
 	public static void ENTER(String ident, int exportSize, int importSize) {
 		if(Option.EXEC_TRACE > 4)
 			RTStack.dumpRTStack(ident+"ENTER: ");
@@ -147,6 +155,8 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 			RTStack.printCallTrace("SVM_CALLSYS.ENTER: ");
 	}
 	
+	/// System Routine epilog
+	/// @param ident the Routine ident
 	public static void EXIT(String ident) {
 		if(Option.CALL_TRACE_LEVEL > 0)
 			RTStack.printCallTrace("SVM_CALLSYS.EXIT: ");
@@ -161,170 +171,155 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 		return "CALLSYS  " + edKind(kind);
 	}
 	
-	public static boolean RUNTIME_VERBOSE = false;
-	
-	/**
-	 * Visible sysroutine("VERBOSE") VERBOSE;
-	 *  import range(0:127) index; export integer result  end;
-	 */
-	private void verbose() {
-		RTStack.push(BooleanValue.of(RUNTIME_VERBOSE));
-		ENTER("VERBOSE: ", 1, 0); // exportSize, importSize
-		EXIT("VERBOSE: ");
-	}
-	
 
-	public static int getSysKind(String s) {
-//		IO.println("ProfileDescr.getSysKind: "+s);
-//		Thread.dumpStack();
-		
-		//--- Search for inline index ---
-		if(s.equalsIgnoreCase("TERMIN")) return SVM_CALL_SYS.P_TERMIN;
-		if(s.equalsIgnoreCase("INTRHA")) return SVM_CALL_SYS.P_INTRHA;
-		if(s.equalsIgnoreCase("PXCHDL")) return SVM_CALL_SYS.P_PXCHDL;
-//		if(s.equalsIgnoreCase("PEXERR")) return SVM_CALL_SYS.P_PEXERR;
-		if(s.equalsIgnoreCase("PSIMOB")) return SVM_CALL_SYS.P_PSIMOB;
-		if(s.equalsIgnoreCase("PobSML")) return SVM_CALL_SYS.P_PobSML;
-		if(s.equalsIgnoreCase("Palloc")) return SVM_CALL_SYS.P_Palloc;
-		if(s.equalsIgnoreCase("Pfree"))  return SVM_CALL_SYS.P_Pfree;
-		if(s.equalsIgnoreCase("Pmovit")) return SVM_CALL_SYS.P_Pmovit;
+	/// Search for System Routine kind code
+	/// @param rutID the routine ident
+	/// @return the kind code found or zero
+	public static int getSysKind(String rutID) {
+		if(rutID.equalsIgnoreCase("TERMIN")) return SVM_CALL_SYS.P_TERMIN;
+		if(rutID.equalsIgnoreCase("INTRHA")) return SVM_CALL_SYS.P_INTRHA;
+		if(rutID.equalsIgnoreCase("PXCHDL")) return SVM_CALL_SYS.P_PXCHDL;
+//		if(rutID.equalsIgnoreCase("PEXERR")) return SVM_CALL_SYS.P_PEXERR;
+		if(rutID.equalsIgnoreCase("PSIMOB")) return SVM_CALL_SYS.P_PSIMOB;
+		if(rutID.equalsIgnoreCase("PobSML")) return SVM_CALL_SYS.P_PobSML;
+		if(rutID.equalsIgnoreCase("Palloc")) return SVM_CALL_SYS.P_Palloc;
+		if(rutID.equalsIgnoreCase("Pfree"))  return SVM_CALL_SYS.P_Pfree;
+		if(rutID.equalsIgnoreCase("Pmovit")) return SVM_CALL_SYS.P_Pmovit;
 
-		if(s.equalsIgnoreCase("STREQL")) return SVM_CALL_SYS.P_STREQL;
-		if(s.equalsIgnoreCase("PRINTO")) return SVM_CALL_SYS.P_PRINTO;
-		if(s.equalsIgnoreCase("INITIA")) return SVM_CALL_SYS.P_INITIA;
-		if(s.equalsIgnoreCase("SETOPT")) return SVM_CALL_SYS.P_SETOPT;
-		if(s.equalsIgnoreCase("DMPSEG")) return SVM_CALL_SYS.P_DMPSEG;
-		if(s.equalsIgnoreCase("DMPENT")) return SVM_CALL_SYS.P_DMPENT;
-		if(s.equalsIgnoreCase("DMPOOL")) return SVM_CALL_SYS.P_DMPOOL;
-		if(s.equalsIgnoreCase("VERBOSE")) return SVM_CALL_SYS.P_VERBOSE;
-		if(s.equalsIgnoreCase("GINTIN")) return SVM_CALL_SYS.P_GINTIN;
-		if(s.equalsIgnoreCase("GTEXIN")) return SVM_CALL_SYS.P_GTEXIN;
-		if(s.equalsIgnoreCase("SIZEIN")) return SVM_CALL_SYS.P_SIZEIN;
-		if(s.equalsIgnoreCase("GVIINF")) return SVM_CALL_SYS.P_GVIINF;
-		if(s.equalsIgnoreCase("GIVINF")) return SVM_CALL_SYS.P_GIVINF;
-		if(s.equalsIgnoreCase("CPUTIM")) return SVM_CALL_SYS.P_CPUTIM;
-		if(s.equalsIgnoreCase("DWAREA")) return SVM_CALL_SYS.P_DWAREA;
-		if(s.equalsIgnoreCase("MOVEIN")) return SVM_CALL_SYS.P_MOVEIN;
-		if(s.equalsIgnoreCase("OPFILE")) return SVM_CALL_SYS.P_OPFILE;
-		if(s.equalsIgnoreCase("CLFILE")) return SVM_CALL_SYS.P_CLFILE;
-		if(s.equalsIgnoreCase("LSTLOC")) return SVM_CALL_SYS.P_LSTLOC;
-		if(s.equalsIgnoreCase("MAXLOC")) return SVM_CALL_SYS.P_MAXLOC;
-		if(s.equalsIgnoreCase("CHKPNT")) return SVM_CALL_SYS.P_CHKPNT;
-		if(s.equalsIgnoreCase("LOCKFI")) return SVM_CALL_SYS.P_LOCKFI;
-		if(s.equalsIgnoreCase("UNLOCK")) return SVM_CALL_SYS.P_UNLOCK;
-		if(s.equalsIgnoreCase("INIMAG")) return SVM_CALL_SYS.P_INIMAG;
-		if(s.equalsIgnoreCase("OUTIMA")) return SVM_CALL_SYS.P_OUTIMA;
-		if(s.equalsIgnoreCase("BREAKO")) return SVM_CALL_SYS.P_BREAKO;
-		if(s.equalsIgnoreCase("LOCATE")) return SVM_CALL_SYS.P_LOCATE;
-		if(s.equalsIgnoreCase("DELETE")) return SVM_CALL_SYS.P_DELETE;
-		if(s.equalsIgnoreCase("GDSNAM")) return SVM_CALL_SYS.P_GDSNAM;
-		if(s.equalsIgnoreCase("GDSPEC")) return SVM_CALL_SYS.P_GDSPEC;
-		if(s.equalsIgnoreCase("GETLPP")) return SVM_CALL_SYS.P_GETLPP;
-		if(s.equalsIgnoreCase("NEWPAG")) return SVM_CALL_SYS.P_NEWPAG;
-		if(s.equalsIgnoreCase("PRINTO")) return SVM_CALL_SYS.P_PRINTO;
-		if(s.equalsIgnoreCase("STREQL")) return SVM_CALL_SYS.P_STREQL;
-		if(s.equalsIgnoreCase("INBYTE")) return SVM_CALL_SYS.P_INBYTE;
-		if(s.equalsIgnoreCase("OUTBYT")) return SVM_CALL_SYS.P_OUTBYT;
-		if(s.equalsIgnoreCase("GETINT")) return SVM_CALL_SYS.P_GETINT;
-		if(s.equalsIgnoreCase("GTREAL")) return SVM_CALL_SYS.P_GTREAL;
-		if(s.equalsIgnoreCase("GTFRAC")) return SVM_CALL_SYS.P_GTFRAC;
-		if(s.equalsIgnoreCase("PUTSTR")) return SVM_CALL_SYS.P_PUTSTR;
-		if(s.equalsIgnoreCase("PUTINT")) return SVM_CALL_SYS.P_PUTINT;
-		if(s.equalsIgnoreCase("PUTINT2")) return SVM_CALL_SYS.P_PUTINT2;
-		if(s.equalsIgnoreCase("PUTSIZE")) return SVM_CALL_SYS.P_PUTSIZE;
-		if(s.equalsIgnoreCase("PUTHEX")) return SVM_CALL_SYS.P_PUTHEX;
-		if(s.equalsIgnoreCase("PUTFIX")) return SVM_CALL_SYS.P_PUTFIX;
-		if(s.equalsIgnoreCase("PUTFIX2")) return SVM_CALL_SYS.P_PUTFIX2;
-		if(s.equalsIgnoreCase("PTLFIX")) return SVM_CALL_SYS.P_PTLFIX;
-		if(s.equalsIgnoreCase("PTLFIX2")) return SVM_CALL_SYS.P_PTLFIX2;
-		if(s.equalsIgnoreCase("PTREAL")) return SVM_CALL_SYS.P_PTREAL;
-		if(s.equalsIgnoreCase("PTREAL2")) return SVM_CALL_SYS.P_PTREAL2;
-		if(s.equalsIgnoreCase("PLREAL")) return SVM_CALL_SYS.P_PLREAL;
-		if(s.equalsIgnoreCase("PLREAL2")) return SVM_CALL_SYS.P_PLREAL2;
-		if(s.equalsIgnoreCase("PTFRAC")) return SVM_CALL_SYS.P_PTFRAC;
-		if(s.equalsIgnoreCase("PTSIZE")) return SVM_CALL_SYS.P_PTSIZE;
-		if(s.equalsIgnoreCase("PTOADR")) return SVM_CALL_SYS.P_PTOADR;
-		if(s.equalsIgnoreCase("PTOADR2")) return SVM_CALL_SYS.P_PTOADR2;
-		if(s.equalsIgnoreCase("PTAADR")) return SVM_CALL_SYS.P_PTAADR;
-		if(s.equalsIgnoreCase("PTAADR2")) return SVM_CALL_SYS.P_PTAADR2;
-		if(s.equalsIgnoreCase("PTGADR")) return SVM_CALL_SYS.P_PTGADR;
-		if(s.equalsIgnoreCase("PTGADR2")) return SVM_CALL_SYS.P_PTGADR2;
-		if(s.equalsIgnoreCase("PTPADR")) return SVM_CALL_SYS.P_PTPADR;
-		if(s.equalsIgnoreCase("PTPADR2")) return SVM_CALL_SYS.P_PTPADR2;
-		if(s.equalsIgnoreCase("PTRADR")) return SVM_CALL_SYS.P_PTRADR;
-		if(s.equalsIgnoreCase("PTRADR2")) return SVM_CALL_SYS.P_PTRADR2;
-		if(s.equalsIgnoreCase("DRAWRP")) return SVM_CALL_SYS.P_DRAWRP;
-		if(s.equalsIgnoreCase("DATTIM")) return SVM_CALL_SYS.P_DATTIM;
-		if(s.equalsIgnoreCase("LOWTEN")) return SVM_CALL_SYS.P_LOWTEN;
-		if(s.equalsIgnoreCase("DCMARK")) return SVM_CALL_SYS.P_DCMARK;
-		if(s.equalsIgnoreCase("RSQROO")) return SVM_CALL_SYS.P_RSQROO;
-		if(s.equalsIgnoreCase("SQROOT")) return SVM_CALL_SYS.P_SQROOT;
-		if(s.equalsIgnoreCase("RLOGAR")) return SVM_CALL_SYS.P_RLOGAR;
-		if(s.equalsIgnoreCase("LOGARI")) return SVM_CALL_SYS.P_LOGARI;
-		if(s.equalsIgnoreCase("RLOG10")) return SVM_CALL_SYS.P_RLOG10;
-		if(s.equalsIgnoreCase("DLOG10")) return SVM_CALL_SYS.P_DLOG10;
-		if(s.equalsIgnoreCase("REXPON")) return SVM_CALL_SYS.P_REXPON;
-		if(s.equalsIgnoreCase("EXPONE")) return SVM_CALL_SYS.P_EXPONE;
-		if(s.equalsIgnoreCase("RSINUS")) return SVM_CALL_SYS.P_RSINUS;
-		if(s.equalsIgnoreCase("SINUSR")) return SVM_CALL_SYS.P_SINUSR;
-		if(s.equalsIgnoreCase("RCOSIN")) return SVM_CALL_SYS.P_RCOSIN;
-		if(s.equalsIgnoreCase("COSINU")) return SVM_CALL_SYS.P_COSINU;
-		if(s.equalsIgnoreCase("RTANGN")) return SVM_CALL_SYS.P_RTANGN;
-		if(s.equalsIgnoreCase("TANGEN")) return SVM_CALL_SYS.P_TANGEN;
-		if(s.equalsIgnoreCase("RCOTAN")) return SVM_CALL_SYS.P_RCOTAN;
-		if(s.equalsIgnoreCase("COTANG")) return SVM_CALL_SYS.P_COTANG;
-		if(s.equalsIgnoreCase("RARTAN")) return SVM_CALL_SYS.P_RARTAN;
-		if(s.equalsIgnoreCase("ARCTAN")) return SVM_CALL_SYS.P_ARCTAN;
-		if(s.equalsIgnoreCase("RARCOS")) return SVM_CALL_SYS.P_RARCOS;
-		if(s.equalsIgnoreCase("ARCCOS")) return SVM_CALL_SYS.P_ARCCOS;
-		if(s.equalsIgnoreCase("RARSIN")) return SVM_CALL_SYS.P_RARSIN;
-		if(s.equalsIgnoreCase("ARCSIN")) return SVM_CALL_SYS.P_ARCSIN;
-		if(s.equalsIgnoreCase("RATAN2")) return SVM_CALL_SYS.P_RATAN2;
-		if(s.equalsIgnoreCase("ATAN2")) return SVM_CALL_SYS.P_ATAN2;
-		if(s.equalsIgnoreCase("RSINH")) return SVM_CALL_SYS.P_RSINH;
-		if(s.equalsIgnoreCase("SINH")) return SVM_CALL_SYS.P_SINH;
-		if(s.equalsIgnoreCase("RCOSH")) return SVM_CALL_SYS.P_RCOSH;
-		if(s.equalsIgnoreCase("COSH")) return SVM_CALL_SYS.P_COSH;
-		if(s.equalsIgnoreCase("RTANH")) return SVM_CALL_SYS.P_RTANH;
-		if(s.equalsIgnoreCase("TANH")) return SVM_CALL_SYS.P_TANH;
-		if(s.equalsIgnoreCase("BEGDEB")) return SVM_CALL_SYS.P_BEGDEB;
-		if(s.equalsIgnoreCase("ENDDEB")) return SVM_CALL_SYS.P_ENDDEB;
-		if(s.equalsIgnoreCase("BEGTRP")) return SVM_CALL_SYS.P_BEGTRP;
-		if(s.equalsIgnoreCase("ENDTRP")) return SVM_CALL_SYS.P_ENDTRP;
-		if(s.equalsIgnoreCase("GTPADR")) return SVM_CALL_SYS.P_GTPADR;
-		if(s.equalsIgnoreCase("GTOUTM")) return SVM_CALL_SYS.P_GTOUTM;
-		if(s.equalsIgnoreCase("GTLNID")) return SVM_CALL_SYS.P_GTLNID;
-		if(s.equalsIgnoreCase("GTLNO")) return SVM_CALL_SYS.P_GTLNO;
-		if(s.equalsIgnoreCase("BRKPNT")) return SVM_CALL_SYS.P_BRKPNT;
-		if(s.equalsIgnoreCase("STMNOT")) return SVM_CALL_SYS.P_STMNOT;
-		if(s.equalsIgnoreCase("DMPOBJ")) return SVM_CALL_SYS.P_DMPOBJ;
+		if(rutID.equalsIgnoreCase("STREQL")) return SVM_CALL_SYS.P_STREQL;
+		if(rutID.equalsIgnoreCase("PRINTO")) return SVM_CALL_SYS.P_PRINTO;
+		if(rutID.equalsIgnoreCase("INITIA")) return SVM_CALL_SYS.P_INITIA;
+		if(rutID.equalsIgnoreCase("SETOPT")) return SVM_CALL_SYS.P_SETOPT;
+		if(rutID.equalsIgnoreCase("DMPSEG")) return SVM_CALL_SYS.P_DMPSEG;
+		if(rutID.equalsIgnoreCase("DMPENT")) return SVM_CALL_SYS.P_DMPENT;
+		if(rutID.equalsIgnoreCase("DMPOOL")) return SVM_CALL_SYS.P_DMPOOL;
+		if(rutID.equalsIgnoreCase("VERBOSE")) return SVM_CALL_SYS.P_VERBOSE;
+		if(rutID.equalsIgnoreCase("GINTIN")) return SVM_CALL_SYS.P_GINTIN;
+		if(rutID.equalsIgnoreCase("GTEXIN")) return SVM_CALL_SYS.P_GTEXIN;
+		if(rutID.equalsIgnoreCase("SIZEIN")) return SVM_CALL_SYS.P_SIZEIN;
+		if(rutID.equalsIgnoreCase("GVIINF")) return SVM_CALL_SYS.P_GVIINF;
+		if(rutID.equalsIgnoreCase("GIVINF")) return SVM_CALL_SYS.P_GIVINF;
+		if(rutID.equalsIgnoreCase("CPUTIM")) return SVM_CALL_SYS.P_CPUTIM;
+		if(rutID.equalsIgnoreCase("DWAREA")) return SVM_CALL_SYS.P_DWAREA;
+		if(rutID.equalsIgnoreCase("MOVEIN")) return SVM_CALL_SYS.P_MOVEIN;
+		if(rutID.equalsIgnoreCase("OPFILE")) return SVM_CALL_SYS.P_OPFILE;
+		if(rutID.equalsIgnoreCase("CLFILE")) return SVM_CALL_SYS.P_CLFILE;
+		if(rutID.equalsIgnoreCase("LSTLOC")) return SVM_CALL_SYS.P_LSTLOC;
+		if(rutID.equalsIgnoreCase("MAXLOC")) return SVM_CALL_SYS.P_MAXLOC;
+		if(rutID.equalsIgnoreCase("CHKPNT")) return SVM_CALL_SYS.P_CHKPNT;
+		if(rutID.equalsIgnoreCase("LOCKFI")) return SVM_CALL_SYS.P_LOCKFI;
+		if(rutID.equalsIgnoreCase("UNLOCK")) return SVM_CALL_SYS.P_UNLOCK;
+		if(rutID.equalsIgnoreCase("INIMAG")) return SVM_CALL_SYS.P_INIMAG;
+		if(rutID.equalsIgnoreCase("OUTIMA")) return SVM_CALL_SYS.P_OUTIMA;
+		if(rutID.equalsIgnoreCase("BREAKO")) return SVM_CALL_SYS.P_BREAKO;
+		if(rutID.equalsIgnoreCase("LOCATE")) return SVM_CALL_SYS.P_LOCATE;
+		if(rutID.equalsIgnoreCase("DELETE")) return SVM_CALL_SYS.P_DELETE;
+		if(rutID.equalsIgnoreCase("GDSNAM")) return SVM_CALL_SYS.P_GDSNAM;
+		if(rutID.equalsIgnoreCase("GDSPEC")) return SVM_CALL_SYS.P_GDSPEC;
+		if(rutID.equalsIgnoreCase("GETLPP")) return SVM_CALL_SYS.P_GETLPP;
+		if(rutID.equalsIgnoreCase("NEWPAG")) return SVM_CALL_SYS.P_NEWPAG;
+		if(rutID.equalsIgnoreCase("PRINTO")) return SVM_CALL_SYS.P_PRINTO;
+		if(rutID.equalsIgnoreCase("STREQL")) return SVM_CALL_SYS.P_STREQL;
+		if(rutID.equalsIgnoreCase("INBYTE")) return SVM_CALL_SYS.P_INBYTE;
+		if(rutID.equalsIgnoreCase("OUTBYT")) return SVM_CALL_SYS.P_OUTBYT;
+		if(rutID.equalsIgnoreCase("GETINT")) return SVM_CALL_SYS.P_GETINT;
+		if(rutID.equalsIgnoreCase("GTREAL")) return SVM_CALL_SYS.P_GTREAL;
+		if(rutID.equalsIgnoreCase("GTFRAC")) return SVM_CALL_SYS.P_GTFRAC;
+		if(rutID.equalsIgnoreCase("PUTSTR")) return SVM_CALL_SYS.P_PUTSTR;
+		if(rutID.equalsIgnoreCase("PUTINT")) return SVM_CALL_SYS.P_PUTINT;
+		if(rutID.equalsIgnoreCase("PUTINT2")) return SVM_CALL_SYS.P_PUTINT2;
+		if(rutID.equalsIgnoreCase("PUTSIZE")) return SVM_CALL_SYS.P_PUTSIZE;
+		if(rutID.equalsIgnoreCase("PUTHEX")) return SVM_CALL_SYS.P_PUTHEX;
+		if(rutID.equalsIgnoreCase("PUTFIX")) return SVM_CALL_SYS.P_PUTFIX;
+		if(rutID.equalsIgnoreCase("PUTFIX2")) return SVM_CALL_SYS.P_PUTFIX2;
+		if(rutID.equalsIgnoreCase("PTLFIX")) return SVM_CALL_SYS.P_PTLFIX;
+		if(rutID.equalsIgnoreCase("PTLFIX2")) return SVM_CALL_SYS.P_PTLFIX2;
+		if(rutID.equalsIgnoreCase("PTREAL")) return SVM_CALL_SYS.P_PTREAL;
+		if(rutID.equalsIgnoreCase("PTREAL2")) return SVM_CALL_SYS.P_PTREAL2;
+		if(rutID.equalsIgnoreCase("PLREAL")) return SVM_CALL_SYS.P_PLREAL;
+		if(rutID.equalsIgnoreCase("PLREAL2")) return SVM_CALL_SYS.P_PLREAL2;
+		if(rutID.equalsIgnoreCase("PTFRAC")) return SVM_CALL_SYS.P_PTFRAC;
+		if(rutID.equalsIgnoreCase("PTSIZE")) return SVM_CALL_SYS.P_PTSIZE;
+		if(rutID.equalsIgnoreCase("PTOADR")) return SVM_CALL_SYS.P_PTOADR;
+		if(rutID.equalsIgnoreCase("PTOADR2")) return SVM_CALL_SYS.P_PTOADR2;
+		if(rutID.equalsIgnoreCase("PTAADR")) return SVM_CALL_SYS.P_PTAADR;
+		if(rutID.equalsIgnoreCase("PTAADR2")) return SVM_CALL_SYS.P_PTAADR2;
+		if(rutID.equalsIgnoreCase("PTGADR")) return SVM_CALL_SYS.P_PTGADR;
+		if(rutID.equalsIgnoreCase("PTGADR2")) return SVM_CALL_SYS.P_PTGADR2;
+		if(rutID.equalsIgnoreCase("PTPADR")) return SVM_CALL_SYS.P_PTPADR;
+		if(rutID.equalsIgnoreCase("PTPADR2")) return SVM_CALL_SYS.P_PTPADR2;
+		if(rutID.equalsIgnoreCase("PTRADR")) return SVM_CALL_SYS.P_PTRADR;
+		if(rutID.equalsIgnoreCase("PTRADR2")) return SVM_CALL_SYS.P_PTRADR2;
+		if(rutID.equalsIgnoreCase("DRAWRP")) return SVM_CALL_SYS.P_DRAWRP;
+		if(rutID.equalsIgnoreCase("DATTIM")) return SVM_CALL_SYS.P_DATTIM;
+		if(rutID.equalsIgnoreCase("LOWTEN")) return SVM_CALL_SYS.P_LOWTEN;
+		if(rutID.equalsIgnoreCase("DCMARK")) return SVM_CALL_SYS.P_DCMARK;
+		if(rutID.equalsIgnoreCase("RSQROO")) return SVM_CALL_SYS.P_RSQROO;
+		if(rutID.equalsIgnoreCase("SQROOT")) return SVM_CALL_SYS.P_SQROOT;
+		if(rutID.equalsIgnoreCase("RLOGAR")) return SVM_CALL_SYS.P_RLOGAR;
+		if(rutID.equalsIgnoreCase("LOGARI")) return SVM_CALL_SYS.P_LOGARI;
+		if(rutID.equalsIgnoreCase("RLOG10")) return SVM_CALL_SYS.P_RLOG10;
+		if(rutID.equalsIgnoreCase("DLOG10")) return SVM_CALL_SYS.P_DLOG10;
+		if(rutID.equalsIgnoreCase("REXPON")) return SVM_CALL_SYS.P_REXPON;
+		if(rutID.equalsIgnoreCase("EXPONE")) return SVM_CALL_SYS.P_EXPONE;
+		if(rutID.equalsIgnoreCase("RSINUS")) return SVM_CALL_SYS.P_RSINUS;
+		if(rutID.equalsIgnoreCase("SINUSR")) return SVM_CALL_SYS.P_SINUSR;
+		if(rutID.equalsIgnoreCase("RCOSIN")) return SVM_CALL_SYS.P_RCOSIN;
+		if(rutID.equalsIgnoreCase("COSINU")) return SVM_CALL_SYS.P_COSINU;
+		if(rutID.equalsIgnoreCase("RTANGN")) return SVM_CALL_SYS.P_RTANGN;
+		if(rutID.equalsIgnoreCase("TANGEN")) return SVM_CALL_SYS.P_TANGEN;
+		if(rutID.equalsIgnoreCase("RCOTAN")) return SVM_CALL_SYS.P_RCOTAN;
+		if(rutID.equalsIgnoreCase("COTANG")) return SVM_CALL_SYS.P_COTANG;
+		if(rutID.equalsIgnoreCase("RARTAN")) return SVM_CALL_SYS.P_RARTAN;
+		if(rutID.equalsIgnoreCase("ARCTAN")) return SVM_CALL_SYS.P_ARCTAN;
+		if(rutID.equalsIgnoreCase("RARCOS")) return SVM_CALL_SYS.P_RARCOS;
+		if(rutID.equalsIgnoreCase("ARCCOS")) return SVM_CALL_SYS.P_ARCCOS;
+		if(rutID.equalsIgnoreCase("RARSIN")) return SVM_CALL_SYS.P_RARSIN;
+		if(rutID.equalsIgnoreCase("ARCSIN")) return SVM_CALL_SYS.P_ARCSIN;
+		if(rutID.equalsIgnoreCase("RATAN2")) return SVM_CALL_SYS.P_RATAN2;
+		if(rutID.equalsIgnoreCase("ATAN2")) return SVM_CALL_SYS.P_ATAN2;
+		if(rutID.equalsIgnoreCase("RSINH")) return SVM_CALL_SYS.P_RSINH;
+		if(rutID.equalsIgnoreCase("SINH")) return SVM_CALL_SYS.P_SINH;
+		if(rutID.equalsIgnoreCase("RCOSH")) return SVM_CALL_SYS.P_RCOSH;
+		if(rutID.equalsIgnoreCase("COSH")) return SVM_CALL_SYS.P_COSH;
+		if(rutID.equalsIgnoreCase("RTANH")) return SVM_CALL_SYS.P_RTANH;
+		if(rutID.equalsIgnoreCase("TANH")) return SVM_CALL_SYS.P_TANH;
+		if(rutID.equalsIgnoreCase("BEGDEB")) return SVM_CALL_SYS.P_BEGDEB;
+		if(rutID.equalsIgnoreCase("ENDDEB")) return SVM_CALL_SYS.P_ENDDEB;
+		if(rutID.equalsIgnoreCase("BEGTRP")) return SVM_CALL_SYS.P_BEGTRP;
+		if(rutID.equalsIgnoreCase("ENDTRP")) return SVM_CALL_SYS.P_ENDTRP;
+		if(rutID.equalsIgnoreCase("GTPADR")) return SVM_CALL_SYS.P_GTPADR;
+		if(rutID.equalsIgnoreCase("GTOUTM")) return SVM_CALL_SYS.P_GTOUTM;
+		if(rutID.equalsIgnoreCase("GTLNID")) return SVM_CALL_SYS.P_GTLNID;
+		if(rutID.equalsIgnoreCase("GTLNO")) return SVM_CALL_SYS.P_GTLNO;
+		if(rutID.equalsIgnoreCase("BRKPNT")) return SVM_CALL_SYS.P_BRKPNT;
+		if(rutID.equalsIgnoreCase("STMNOT")) return SVM_CALL_SYS.P_STMNOT;
+		if(rutID.equalsIgnoreCase("DMPOBJ")) return SVM_CALL_SYS.P_DMPOBJ;
 
 		// KNOWN 
-		if(s.equalsIgnoreCase("MODULO")) return SVM_CALL_SYS.P_MODULO;
-		if(s.equalsIgnoreCase("RADDEP")) return SVM_CALL_SYS.P_RADDEP;
-		if(s.equalsIgnoreCase("DADDEP")) return SVM_CALL_SYS.P_DADDEP;
-		if(s.equalsIgnoreCase("RSUBEP")) return SVM_CALL_SYS.P_RSUBEP;
-		if(s.equalsIgnoreCase("DSUBEP")) return SVM_CALL_SYS.P_DSUBEP;
-		if(s.equalsIgnoreCase("IIPOWR")) return SVM_CALL_SYS.P_IIPOWR;
-		if(s.equalsIgnoreCase("RIPOWR")) return SVM_CALL_SYS.P_RIPOWR;
-		if(s.equalsIgnoreCase("RRPOWR")) return SVM_CALL_SYS.P_RRPOWR;
-		if(s.equalsIgnoreCase("RDPOWR")) return SVM_CALL_SYS.P_RDPOWR;
-		if(s.equalsIgnoreCase("DIPOWR")) return SVM_CALL_SYS.P_DIPOWR;
-		if(s.equalsIgnoreCase("DRPOWR")) return SVM_CALL_SYS.P_DRPOWR;
-		if(s.equalsIgnoreCase("DDPOWR")) return SVM_CALL_SYS.P_DDPOWR;
+		if(rutID.equalsIgnoreCase("MODULO")) return SVM_CALL_SYS.P_MODULO;
+		if(rutID.equalsIgnoreCase("RADDEP")) return SVM_CALL_SYS.P_RADDEP;
+		if(rutID.equalsIgnoreCase("DADDEP")) return SVM_CALL_SYS.P_DADDEP;
+		if(rutID.equalsIgnoreCase("RSUBEP")) return SVM_CALL_SYS.P_RSUBEP;
+		if(rutID.equalsIgnoreCase("DSUBEP")) return SVM_CALL_SYS.P_DSUBEP;
+		if(rutID.equalsIgnoreCase("IIPOWR")) return SVM_CALL_SYS.P_IIPOWR;
+		if(rutID.equalsIgnoreCase("RIPOWR")) return SVM_CALL_SYS.P_RIPOWR;
+		if(rutID.equalsIgnoreCase("RRPOWR")) return SVM_CALL_SYS.P_RRPOWR;
+		if(rutID.equalsIgnoreCase("RDPOWR")) return SVM_CALL_SYS.P_RDPOWR;
+		if(rutID.equalsIgnoreCase("DIPOWR")) return SVM_CALL_SYS.P_DIPOWR;
+		if(rutID.equalsIgnoreCase("DRPOWR")) return SVM_CALL_SYS.P_DRPOWR;
+		if(rutID.equalsIgnoreCase("DDPOWR")) return SVM_CALL_SYS.P_DDPOWR;
 
-//		Util.IERR(""+s);
 		return 0;
 	}
 
 
-	public static int getKnownKind(String s) {
-//		IO.println("ProfileDescr.getKnownKind: "+s);
-//		Thread.dumpStack();
-		
-		//--- Search for inline index ---
-		if(s.equalsIgnoreCase("CBLNK")) return SVM_CALL_SYS.P_CBLNK;
-		if(s.equalsIgnoreCase("CMOVE")) return SVM_CALL_SYS.P_CMOVE;
+	/// Search for Known Routine kind code
+	/// @param rutID the routine ident
+	/// @return the kind code found or zero
+	public static int getKnownKind(String rutID) {
+		if(rutID.equalsIgnoreCase("CBLNK")) return SVM_CALL_SYS.P_CBLNK;
+		if(rutID.equalsIgnoreCase("CMOVE")) return SVM_CALL_SYS.P_CMOVE;
 
 //		Util.IERR(""+s);
 		return 0;
@@ -332,6 +327,9 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 
 //	---------     S y s t e m    K i n d    C o d e s      ---------
 	
+	/// Edit system routine kind
+	/// @param kind the kind code
+	/// @return the edited string
 	public static String edKind(int kind) {
 		switch(kind) {
 		case P_TERMIN: return "TERMIN";
@@ -476,277 +474,142 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 		return "UNKNOWN:" + kind;
 	}
 
-	public static final int P_TERMIN=1; // System profile
-	public static final int P_INTRHA=2; // System profile
-	public static final int P_PXCHDL=140; // System profile
-	public static final int P_PEXERR=141; // System profile
-	public static final int P_PSIMOB=142; // System profile
-	public static final int P_PobSML=143; // System profile
-	public static final int P_Palloc=144; // System profile
-	public static final int P_Pfree =145; // System profile
-	public static final int P_Pmovit=146; // System profile
-	public static final int P_STREQL=3; // System routine
-	public static final int P_PRINTO=4; // System routine
-	public static final int P_INITIA=5; // System routine
-	public static final int P_SETOPT=6; // System routine
-	public static final int P_DMPSEG=7; // System routine
-	public static final int P_DMPENT=8; // System routine
-	public static final int P_DMPOOL=9; // System routine
-	public static final int P_VERBOSE=10; // System routine
-	public static final int P_GINTIN=11; // System routine
-	public static final int P_GTEXIN=12; // System routine
-	public static final int P_SIZEIN=13; // System routine
-	public static final int P_GVIINF=14; // System routine
-	public static final int P_GIVINF=15; // System routine
-	public static final int P_CPUTIM=16; // System routine
-	public static final int P_DWAREA=17; // System routine
-	public static final int P_MOVEIN=18; // System routine
+	/** System Routine kind */ public static final int P_TERMIN=1; // System profile
+	/** System Routine kind */ public static final int P_INTRHA=2; // System profile
+	/** System Routine kind */ public static final int P_PXCHDL=140; // System profile
+	/** System Routine kind */ public static final int P_PEXERR=141; // System profile
+	/** System Routine kind */ public static final int P_PSIMOB=142; // System profile
+	/** System Routine kind */ public static final int P_PobSML=143; // System profile
+	/** System Routine kind */ public static final int P_Palloc=144; // System profile
+	/** System Routine kind */ public static final int P_Pfree =145; // System profile
+	/** System Routine kind */ public static final int P_Pmovit=146; // System profile
+	/** System Routine kind */ public static final int P_STREQL=3; // System routine
+	/** System Routine kind */ public static final int P_PRINTO=4; // System routine
+	/** System Routine kind */ public static final int P_INITIA=5; // System routine
+	/** System Routine kind */ public static final int P_SETOPT=6; // System routine
+	/** System Routine kind */ public static final int P_DMPSEG=7; // System routine
+	/** System Routine kind */ public static final int P_DMPENT=8; // System routine
+	/** System Routine kind */ public static final int P_DMPOOL=9; // System routine
+	/** System Routine kind */ public static final int P_VERBOSE=10; // System routine
+	/** System Routine kind */ public static final int P_GINTIN=11; // System routine
+	/** System Routine kind */ public static final int P_GTEXIN=12; // System routine
+	/** System Routine kind */ public static final int P_SIZEIN=13; // System routine
+	/** System Routine kind */ public static final int P_GVIINF=14; // System routine
+	/** System Routine kind */ public static final int P_GIVINF=15; // System routine
+	/** System Routine kind */ public static final int P_CPUTIM=16; // System routine
+	/** System Routine kind */ public static final int P_DWAREA=17; // System routine
+	/** System Routine kind */ public static final int P_MOVEIN=18; // System routine
 
-	public static final int P_OPFILE=19; // OPFILE;
-	public static final int P_CLFILE=20; // CLFILE;
-	public static final int P_LSTLOC=21; // LSTLOC;
-	public static final int P_MAXLOC=22; // MXLOC;
-	public static final int P_CHKPNT=23; // CHECKP;
-	public static final int P_LOCKFI=24; // LOCKFI;
-	public static final int P_UNLOCK=25; // UPLOCK;
-	public static final int P_INIMAG=26; // INIMAG;
-	public static final int P_OUTIMA=27; // OUTIMA;
-	public static final int P_BREAKO=28; // BREAKO;
-	public static final int P_LOCATE=29; // LOCATE;
-	public static final int P_DELETE=30; // DELETE;
-	public static final int P_GDSNAM=31; // GDSNAM;
-	public static final int P_GDSPEC=32; // GDSPEC;
-	public static final int P_GETLPP=33; // GETLPP;
-	public static final int P_NEWPAG=34; // NEWPAG;
-	public static final int P_INBYTE=35; // INBYTE;
-	public static final int P_OUTBYT=36; // OUTBYT;
-	public static final int P_GETINT=37; // GETINT;
-	public static final int P_GTREAL=38; // GTREAL;
-	public static final int P_GTFRAC=39; // GTFRAC;
-	public static final int P_PUTSTR=40; // PUTSTR;
-	public static final int P_PUTINT=41; // PUTINT;
-	public static final int P_PUTINT2=42; // PUTINT2;
-	public static final int P_PUTSIZE=43; // PUTSIZE;
-	public static final int P_PUTHEX=44; // PUTHEX;
-	public static final int P_PUTFIX=45; // PUTFIX;
-	public static final int P_PUTFIX2=46; // PUTFIX2;
-	public static final int P_PTLFIX=47; // PTLFIX;
-	public static final int P_PTLFIX2=48; // PTLFIX2;
-	public static final int P_PTREAL=49; // PTREAL;
-	public static final int P_PTREAL2=50; // PTREAL2;
-	public static final int P_PLREAL=51; // PLREAL;
-	public static final int P_PLREAL2=52; // PLREAL2;
-	public static final int P_PTFRAC=53; // PTFRAC;
-	public static final int P_PTSIZE=54; // PTSIZE;
-	public static final int P_PTOADR=55; // PTOADR;
-	public static final int P_PTOADR2=56; // PTOADR2;
-	public static final int P_PTAADR=57; // PTAADR;
-	public static final int P_PTAADR2=58; // PTAADR2;
-	public static final int P_PTGADR=59; // PTGADR;
-	public static final int P_PTGADR2=60; // PTGADR2;
-	public static final int P_PTPADR=61; // PTPADR;
-	public static final int P_PTPADR2=62; // PTPADR2;
-	public static final int P_PTRADR=63; // PTRADR;
-	public static final int P_PTRADR2=64; // PTRADR2;
-	public static final int P_DRAWRP=65; // DRAWRP;
-	public static final int P_DATTIM=66; // DATTIM;
-	public static final int P_LOWTEN=67; // LTEN;
-	public static final int P_DCMARK=68; // DECMRK;
-	public static final int P_RSQROO=69; // RSQROO;
-	public static final int P_SQROOT=70; // SQROOT;
-	public static final int P_RLOGAR=71; // RLOGAR;
-	public static final int P_LOGARI=72; // LOGARI;
-	public static final int P_RLOG10=73; // RLOG10;
-	public static final int P_DLOG10=74; // DLOG10;
-	public static final int P_REXPON=75; // REXPON;
-	public static final int P_EXPONE=76; // EXPONE;
-	public static final int P_RSINUS=77; // RSINUS;
-	public static final int P_SINUSR=78; // SINUSR;
-	public static final int P_RCOSIN=79; // RCOSIN;
-	public static final int P_COSINU=80; // COSINU;
-	public static final int P_RTANGN=81; // RTANGN;
-	public static final int P_TANGEN=82; // TANGEN;
-	public static final int P_RCOTAN=83; // COTANR;
-	public static final int P_COTANG=84; // COTANG;
-	public static final int P_RARTAN=85; // RARTAN;
-	public static final int P_ARCTAN=86; // ARCTAN;
-	public static final int P_RARCOS=87; // RARCOS;
-	public static final int P_ARCCOS=88; // ARCCOS;
-	public static final int P_RARSIN=89; // RARSIN;
-	public static final int P_ARCSIN=90; // ARCSIN;
-	public static final int P_RATAN2=91; // ATAN2R;
-	public static final int P_ATAN2=92; // ATAN2;
-	public static final int P_RSINH=93; // SINHR;
-	public static final int P_SINH=94; // SINH;
-	public static final int P_RCOSH=95; // COSHR;
-	public static final int P_COSH=96; // COSH;
-	public static final int P_RTANH=97; // TANHR;
-	public static final int P_TANH=98; // TANH;
-	public static final int P_BEGDEB=99; // BEGDEB;
-	public static final int P_ENDDEB=100; // ENDDEB;
-	public static final int P_BEGTRP=101; // BEGTRP;
-	public static final int P_ENDTRP=102; // ENDTRP;
-	public static final int P_GTPADR=103; // GTPADR;
-	public static final int P_GTOUTM=104; // GTOUTM;
-	public static final int P_GTLNID=105; //  GTLNID;
-	public static final int P_GTLNO=106; // GTLNO;
-	public static final int P_BRKPNT=107; // BRKPNT;
-	public static final int P_STMNOT=108; // STMNOT;
-	public static final int P_DMPOBJ=109; //  DMPOBJ;
+	/** System Routine kind */ public static final int P_OPFILE=19; // OPFILE;
+	/** System Routine kind */ public static final int P_CLFILE=20; // CLFILE;
+	/** System Routine kind */ public static final int P_LSTLOC=21; // LSTLOC;
+	/** System Routine kind */ public static final int P_MAXLOC=22; // MXLOC;
+	/** System Routine kind */ public static final int P_CHKPNT=23; // CHECKP;
+	/** System Routine kind */ public static final int P_LOCKFI=24; // LOCKFI;
+	/** System Routine kind */ public static final int P_UNLOCK=25; // UPLOCK;
+	/** System Routine kind */ public static final int P_INIMAG=26; // INIMAG;
+	/** System Routine kind */ public static final int P_OUTIMA=27; // OUTIMA;
+	/** System Routine kind */ public static final int P_BREAKO=28; // BREAKO;
+	/** System Routine kind */ public static final int P_LOCATE=29; // LOCATE;
+	/** System Routine kind */ public static final int P_DELETE=30; // DELETE;
+	/** System Routine kind */ public static final int P_GDSNAM=31; // GDSNAM;
+	/** System Routine kind */ public static final int P_GDSPEC=32; // GDSPEC;
+	/** System Routine kind */ public static final int P_GETLPP=33; // GETLPP;
+	/** System Routine kind */ public static final int P_NEWPAG=34; // NEWPAG;
+	/** System Routine kind */ public static final int P_INBYTE=35; // INBYTE;
+	/** System Routine kind */ public static final int P_OUTBYT=36; // OUTBYT;
+	/** System Routine kind */ public static final int P_GETINT=37; // GETINT;
+	/** System Routine kind */ public static final int P_GTREAL=38; // GTREAL;
+	/** System Routine kind */ public static final int P_GTFRAC=39; // GTFRAC;
+	/** System Routine kind */ public static final int P_PUTSTR=40; // PUTSTR;
+	/** System Routine kind */ public static final int P_PUTINT=41; // PUTINT;
+	/** System Routine kind */ public static final int P_PUTINT2=42; // PUTINT2;
+	/** System Routine kind */ public static final int P_PUTSIZE=43; // PUTSIZE;
+	/** System Routine kind */ public static final int P_PUTHEX=44; // PUTHEX;
+	/** System Routine kind */ public static final int P_PUTFIX=45; // PUTFIX;
+	/** System Routine kind */ public static final int P_PUTFIX2=46; // PUTFIX2;
+	/** System Routine kind */ public static final int P_PTLFIX=47; // PTLFIX;
+	/** System Routine kind */ public static final int P_PTLFIX2=48; // PTLFIX2;
+	/** System Routine kind */ public static final int P_PTREAL=49; // PTREAL;
+	/** System Routine kind */ public static final int P_PTREAL2=50; // PTREAL2;
+	/** System Routine kind */ public static final int P_PLREAL=51; // PLREAL;
+	/** System Routine kind */ public static final int P_PLREAL2=52; // PLREAL2;
+	/** System Routine kind */ public static final int P_PTFRAC=53; // PTFRAC;
+	/** System Routine kind */ public static final int P_PTSIZE=54; // PTSIZE;
+	/** System Routine kind */ public static final int P_PTOADR=55; // PTOADR;
+	/** System Routine kind */ public static final int P_PTOADR2=56; // PTOADR2;
+	/** System Routine kind */ public static final int P_PTAADR=57; // PTAADR;
+	/** System Routine kind */ public static final int P_PTAADR2=58; // PTAADR2;
+	/** System Routine kind */ public static final int P_PTGADR=59; // PTGADR;
+	/** System Routine kind */ public static final int P_PTGADR2=60; // PTGADR2;
+	/** System Routine kind */ public static final int P_PTPADR=61; // PTPADR;
+	/** System Routine kind */ public static final int P_PTPADR2=62; // PTPADR2;
+	/** System Routine kind */ public static final int P_PTRADR=63; // PTRADR;
+	/** System Routine kind */ public static final int P_PTRADR2=64; // PTRADR2;
+	/** System Routine kind */ public static final int P_DRAWRP=65; // DRAWRP;
+	/** System Routine kind */ public static final int P_DATTIM=66; // DATTIM;
+	/** System Routine kind */ public static final int P_LOWTEN=67; // LTEN;
+	/** System Routine kind */ public static final int P_DCMARK=68; // DECMRK;
+	/** System Routine kind */ public static final int P_RSQROO=69; // RSQROO;
+	/** System Routine kind */ public static final int P_SQROOT=70; // SQROOT;
+	/** System Routine kind */ public static final int P_RLOGAR=71; // RLOGAR;
+	/** System Routine kind */ public static final int P_LOGARI=72; // LOGARI;
+	/** System Routine kind */ public static final int P_RLOG10=73; // RLOG10;
+	/** System Routine kind */ public static final int P_DLOG10=74; // DLOG10;
+	/** System Routine kind */ public static final int P_REXPON=75; // REXPON;
+	/** System Routine kind */ public static final int P_EXPONE=76; // EXPONE;
+	/** System Routine kind */ public static final int P_RSINUS=77; // RSINUS;
+	/** System Routine kind */ public static final int P_SINUSR=78; // SINUSR;
+	/** System Routine kind */ public static final int P_RCOSIN=79; // RCOSIN;
+	/** System Routine kind */ public static final int P_COSINU=80; // COSINU;
+	/** System Routine kind */ public static final int P_RTANGN=81; // RTANGN;
+	/** System Routine kind */ public static final int P_TANGEN=82; // TANGEN;
+	/** System Routine kind */ public static final int P_RCOTAN=83; // COTANR;
+	/** System Routine kind */ public static final int P_COTANG=84; // COTANG;
+	/** System Routine kind */ public static final int P_RARTAN=85; // RARTAN;
+	/** System Routine kind */ public static final int P_ARCTAN=86; // ARCTAN;
+	/** System Routine kind */ public static final int P_RARCOS=87; // RARCOS;
+	/** System Routine kind */ public static final int P_ARCCOS=88; // ARCCOS;
+	/** System Routine kind */ public static final int P_RARSIN=89; // RARSIN;
+	/** System Routine kind */ public static final int P_ARCSIN=90; // ARCSIN;
+	/** System Routine kind */ public static final int P_RATAN2=91; // ATAN2R;
+	/** System Routine kind */ public static final int P_ATAN2=92; // ATAN2;
+	/** System Routine kind */ public static final int P_RSINH=93; // SINHR;
+	/** System Routine kind */ public static final int P_SINH=94; // SINH;
+	/** System Routine kind */ public static final int P_RCOSH=95; // COSHR;
+	/** System Routine kind */ public static final int P_COSH=96; // COSH;
+	/** System Routine kind */ public static final int P_RTANH=97; // TANHR;
+	/** System Routine kind */ public static final int P_TANH=98; // TANH;
+	/** System Routine kind */ public static final int P_BEGDEB=99; // BEGDEB;
+	/** System Routine kind */ public static final int P_ENDDEB=100; // ENDDEB;
+	/** System Routine kind */ public static final int P_BEGTRP=101; // BEGTRP;
+	/** System Routine kind */ public static final int P_ENDTRP=102; // ENDTRP;
+	/** System Routine kind */ public static final int P_GTPADR=103; // GTPADR;
+	/** System Routine kind */ public static final int P_GTOUTM=104; // GTOUTM;
+	/** System Routine kind */ public static final int P_GTLNID=105; //  GTLNID;
+	/** System Routine kind */ public static final int P_GTLNO=106; // GTLNO;
+	/** System Routine kind */ public static final int P_BRKPNT=107; // BRKPNT;
+	/** System Routine kind */ public static final int P_STMNOT=108; // STMNOT;
+	/** System Routine kind */ public static final int P_DMPOBJ=109; //  DMPOBJ;
 
 	// KNOWN
-	public static final int P_MODULO=110; //  KNOWN
-	public static final int P_RADDEP=111; //  KNOWN
-	public static final int P_DADDEP=112; //  KNOWN
-	public static final int P_RSUBEP=113;
-	public static final int P_DSUBEP=114;
-	public static final int P_IIPOWR=115;
-	public static final int P_RIPOWR=116;
-	public static final int P_RRPOWR=117;
-	public static final int P_RDPOWR=118;
-	public static final int P_DIPOWR=119;
-	public static final int P_DRPOWR=120;
-	public static final int P_DDPOWR=121;
-	public static final int P_STRIP=122;  // Known("STRIP")
-	public static final int P_TRFREL=123; // Known("TRFREL")
-	public static final int P_ZEROAREA=124; // Known("TRFREL")
-//
-//	 Define P_RLOG10=32      -- Known("RLOG10")
-//	 Define P_DLOG10=33      -- Known("DLOG10")
-//	 Define P_RCOSIN=34      -- Known("RCOSIN")
-//	 Define P_COSINU=35      -- Known("COSINU")
-//	 Define P_RTANGN=36      -- Known("RTANGN")
-//	 Define P_TANGEN=37      -- Known("TANGEN")
-//	 Define P_RARCOS=38      -- Known("RARCOS")
-//	 Define P_ARCCOS=39      -- Known("ARCCOS")
-//	 Define P_RARSIN=40      -- Known("RARSIN")
-//	 Define P_ARCSIN=41      -- Known("ARCSIN")
-//
-//	 Define P_ERRNON=42      -- Known("ERRNON")
-//	 Define P_ERRQUA=43      -- Known("ERRQUA")
-//	 Define P_ERRSWT=44      -- Known("ERRSWT")
-//	 Define P_ERROR=45       -- Known("ERROR")
-//
-	public static final int P_CBLNK=125; // Known("CBLNK")
-	public static final int P_CMOVE=126; // Known("CMOVE")
-//	 Define P_TXTREL=49      -- Known("TXTREL")
-//
-//	 Define P_AR1IND=51      -- Known("AR1IND")
-//	 Define P_AR2IND=52      -- Known("AR2IND")
-//	 Define P_ARGIND=53      -- Known("ARGIND")
-//
-//	 Define P_IABS=54        -- Known("IABS")
-//	 Define P_RABS=55        -- Known("RABS")
-//	 Define P_DABS=56        -- Known("DABS")
-//	 Define P_RSIGN=57       -- Known("RSIGN")
-//	 Define P_DSIGN=58       -- Known("DSIGN")
-//	 Define P_MODULO=59      -- Known("MODULO")
-//	 Define P_RENTI=60       -- Known("RENTI")
-//	 Define P_DENTI=61       -- Known("DENTI")
-//	 Define P_DIGIT=62       -- Known("DIGIT")
-//	 Define P_LETTER=63      -- Known("LETTER")
-//
-//	 Define P_RIPOWR=64      -- Known("RIPOWR")
-//	 Define P_RRPOWR=65      -- Known("RRPOWR")
-//	 Define P_RDPOWR=66      -- Known("RDPOWR")
-//	 Define P_DIPOWR=67      -- Known("DIPOWR")
-//	 Define P_DRPOWR=68      -- Known("DRPOWR")
-//	 Define P_DDPOWR=69      -- Known("DDPOWR")
-//	 Define P_max=125
-
-//	 Visible sysroutine("OPFILE") OPFILE;
-//	 Visible sysroutine("CLFILE") CLFILE;
-//	 Visible sysroutine("LSTLOC") LSTLOC;
-//	 Visible sysroutine("MAXLOC") MXLOC;
-//	 Visible sysroutine("CHKPNT") CHECKP;
-//	 Visible sysroutine("LOCKFI") LOCKFI;
-//	 Visible sysroutine("UNLOCK") UPLOCK;
-//	 Visible sysroutine("INIMAG") INIMAG;
-//	 Visible sysroutine("OUTIMA") OUTIMA;
-//	 Visible sysroutine("BREAKO") BREAKO;
-//	 Visible sysroutine("LOCATE") LOCATE;
-//	 Visible sysroutine("DELETE") DELETE;
-//	 Visible sysroutine("GDSNAM") GDSNAM;
-//	 Visible sysroutine("GDSPEC") GDSPEC;
-//	 Visible sysroutine("GETLPP") GETLPP;
-//	 Visible sysroutine("NEWPAG") NEWPAG;
-//	 Visible sysroutine("PRINTO") PRINTO;
-//	 Visible sysroutine("STREQL") STREQL;
-//	 Visible sysroutine("INBYTE") INBYTE;
-//	 Visible sysroutine("OUTBYT") OUTBYT;
-//	 Visible sysroutine("GETINT") GETINT;
-//	 Visible sysroutine("GTREAL") GTREAL;
-//	 Visible sysroutine("GTFRAC") GTFRAC;
-//	 Visible sysroutine("PUTSTR") PUTSTR;
-//	 Visible sysroutine("PUTINT") PUTINT;
-//	 Visible sysroutine("PUTINT2") PUTINT2;
-//	 Visible sysroutine("PUTSIZE") PUTSIZE;
-//	 Visible sysroutine("PUTHEX") PUTHEX;
-//	 Visible sysroutine("PUTFIX") PUTFIX;
-//	 Visible sysroutine("PUTFIX2") PUTFIX2;
-//	 Visible sysroutine("PTLFIX") PTLFIX;
-//	 Visible sysroutine("PTLFIX2") PTLFIX2;
-//	 Visible sysroutine("PTREAL") PTREAL;
-//	 Visible sysroutine("PTREAL2") PTREAL2;
-//	 Visible sysroutine("PLREAL") PLREAL;
-//	 Visible sysroutine("PLREAL2") PLREAL2;
-//	 Visible sysroutine("PTFRAC") PTFRAC;
-//	 Visible sysroutine ("PTSIZE") PTSIZE;
-//	 Visible sysroutine ("PTOADR") PTOADR;
-//	 Visible sysroutine ("PTOADR2") PTOADR2;
-//	 Visible sysroutine ("PTAADR") PTAADR;
-//	 Visible sysroutine ("PTAADR2") PTAADR2;
-//	 Visible sysroutine ("PTGADR") PTGADR;
-//	 Visible sysroutine ("PTGADR2") PTGADR2;
-//	 Visible sysroutine ("PTPADR") PTPADR;
-//	 Visible sysroutine ("PTPADR2") PTPADR2;
-//	 Visible sysroutine ("PTRADR") PTRADR;
-//	 Visible sysroutine ("PTRADR2") PTRADR2;
-//	 Visible sysroutine("DRAWRP") DRAWRP;
-//	 Visible sysroutine("DATTIM") DATTIM;
-//	 Visible sysroutine("LOWTEN") LTEN;
-//	 Visible sysroutine("DCMARK") DECMRK;
-//	 Visible sysroutine ("RSQROO") RSQROO;
-//	 Visible sysroutine("SQROOT") SQROOT;
-//	 Visible sysroutine ("RLOGAR") RLOGAR;
-//	 Visible sysroutine("LOGARI") LOGARI;
-//	 Visible sysroutine("RLOG10") RLOG10;
-//	 Visible sysroutine("DLOG10") DLOG10;
-//	 Visible sysroutine ("REXPON") REXPON;
-//	 Visible sysroutine("EXPONE") EXPONE;
-//	 Visible sysroutine("RSINUS") RSINUS;
-//	 Visible sysroutine("SINUSR") SINUSR;
-//	 Visible sysroutine("RCOSIN") RCOSIN;
-//	 Visible sysroutine("COSINU") COSINU;
-//	 Visible sysroutine("RTANGN") RTANGN;
-//	 Visible sysroutine("TANGEN") TANGEN;
-//	 Visible sysroutine("RCOTAN") COTANR;
-//	 Visible sysroutine("COTANG") COTANG;
-//	 Visible sysroutine("RARTAN") RARTAN;
-//	 Visible sysroutine("ARCTAN") ARCTAN;
-//	 Visible sysroutine("RARCOS") RARCOS;
-//	 Visible sysroutine("ARCCOS") ARCCOS;
-//	 Visible sysroutine("RARSIN") RARSIN;
-//	 Visible sysroutine("ARCSIN") ARCSIN;
-//	 Visible sysroutine("RATAN2") ATAN2R;
-//	 Visible sysroutine("ATAN2") ATAN2;
-//	 Visible sysroutine("RSINH") SINHR;
-//	 Visible sysroutine("SINH") SINH;
-//	 Visible sysroutine("RCOSH") COSHR;
-//	 Visible sysroutine("COSH") COSH;
-//	 Visible sysroutine("RTANH") TANHR;
-//	 Visible sysroutine("TANH") TANH;
-//	 Visible sysroutine ("BEGDEB") BEGDEB;
-//	 Visible sysroutine ("ENDDEB") ENDDEB;
-//	 Visible sysroutine ("BEGTRP") BEGTRP;
-//	 Visible sysroutine ("ENDTRP") ENDTRP;
-//	 Visible sysroutine ("GTPADR") GTPADR;
-//	 Visible sysroutine("GTOUTM") GTOUTM;
-//	 Visible sysroutine("GTLNID")  GTLNID;
-//	 Visible sysroutine("GTLNO") GTLNO;
-//	 Visible sysroutine("BRKPNT") BRKPNT;
-//	 Visible sysroutine("STMNOT") STMNOT;
-//	 Visible sysroutine("DMPOBJ")  DMPOBJ;
+	/** System Routine kind */ public static final int P_MODULO=110; //  KNOWN
+	/** System Routine kind */ public static final int P_RADDEP=111; //  KNOWN
+	/** System Routine kind */ public static final int P_DADDEP=112; //  KNOWN
+	/** System Routine kind */ public static final int P_RSUBEP=113;
+	/** System Routine kind */ public static final int P_DSUBEP=114;
+	/** System Routine kind */ public static final int P_IIPOWR=115;
+	/** System Routine kind */ public static final int P_RIPOWR=116;
+	/** System Routine kind */ public static final int P_RRPOWR=117;
+	/** System Routine kind */ public static final int P_RDPOWR=118;
+	/** System Routine kind */ public static final int P_DIPOWR=119;
+	/** System Routine kind */ public static final int P_DRPOWR=120;
+	/** System Routine kind */ public static final int P_DDPOWR=121;
+	/** System Routine kind */ public static final int P_STRIP=122;  // Known("STRIP")
+	/** System Routine kind */ public static final int P_TRFREL=123; // Known("TRFREL")
+	/** System Routine kind */ public static final int P_ZEROAREA=124; // Known("TRFREL")
+	/** System Routine kind */ public static final int P_CBLNK=125; // Known("CBLNK")
+	/** System Routine kind */ public static final int P_CMOVE=126; // Known("CMOVE")
 
 	// ***********************************************************************************************
 	// *** Attribute File I/O
@@ -759,6 +622,10 @@ public class SVM_CALL_SYS extends SVM_Instruction {
 		oupt.writeByte(kind);
 	}
 
+	/// Reads an SVM_CALL_SYS instruction from the given input.
+	/// @param inpt the input stream
+	/// @return the SVM_CALL_SYS instruction read
+	/// @throws IOException if IOException occur
 	public static SVM_Instruction read(AttributeInputStream inpt) throws IOException {
 		SVM_CALL_SYS instr = new SVM_CALL_SYS(inpt.readUnsignedByte());
 		if(Option.ATTR_INPUT_TRACE) IO.println("SVM.Read: " + instr);

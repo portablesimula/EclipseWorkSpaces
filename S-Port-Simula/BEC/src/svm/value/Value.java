@@ -30,7 +30,9 @@ import svm.segment.DataSegment;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class Value {
-	
+
+	/** Default Constructor */ public Value() {} 
+
 	/// The type of the value
 	public Type type;
 
@@ -181,6 +183,7 @@ public class Value {
 
 	/// Writes this Value to the given output.
 	/// @param oupt the output stream
+	/// @throws IOException if IOException occur
 	public void write(final AttributeOutputStream oupt) throws IOException {
 		Util.IERR("Method 'write' needs a redefinition in "+this.getClass().getSimpleName());
 	}
@@ -188,6 +191,7 @@ public class Value {
 	/// Reads a Value from the given input.
 	/// @param inpt the input stream
 	/// @return the Value read
+	/// @throws IOException if IOException occur
 	public static Value read(final AttributeInputStream inpt) throws IOException {
 		int kind = inpt.readUnsignedByte();
 		return read(kind, inpt);
@@ -197,6 +201,7 @@ public class Value {
 	/// @param kind the value kind
 	/// @param inpt the input stream
 	/// @return the Value read
+	/// @throws IOException if IOException occur
 	public static Value read(final int kind, final AttributeInputStream inpt) throws IOException {
 		// IO.println("Value.read: kind="+Sinstr.edInstr(kind));
 		switch(kind) {

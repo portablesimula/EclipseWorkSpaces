@@ -70,16 +70,21 @@ public class ProfileDescr extends Descriptor {
 	/// Size of Frame on RTStack
 	public int frameSize; // Size of Frame
 	
-	private static final boolean DEBUG = false;
+//	private static final boolean DEBUG = false;
 	
 	//	NOT SAVED:
 //	private Vector<Variable> imports;
 //	public Variable export;
 //	public Variable exit;
 	
-	public int bodyTag;    // peculiar
-	private String nature; // peculiar
-	public String ident;   // peculiar
+	/// Peculiar body tag
+	public int bodyTag;
+	
+	/// Peculiar nature
+	private String nature;
+	
+	/// Peculiar ident
+	public String ident;
 	
 	/// Create a new ProfileDescr with the given 'tag'
 	/// @param tag used to lookup descriptors
@@ -87,16 +92,22 @@ public class ProfileDescr extends Descriptor {
 		super(Kind.K_ProfileDescr, tag);
 	}
 	
+	/// Returns the simple name
+	/// @return the simple name
 	public String getSimpleName() {
 		return tag.ident();
 	}
 	
+	/// Returns the export Variable
+	/// @return the export Variable
 	public Variable getExport() {
 		if(exportTag == null) return null;
 		Variable export = (Variable) exportTag.getMeaning();
 		return export;
 	}
 	
+	/// Returns the DataSegment ident
+	/// @return the DataSegment ident
 	public String dsegIdent() {
 		return "DSEG_" + Global.moduleID + '_' + tag.ident();
 
@@ -182,11 +193,10 @@ public class ProfileDescr extends Descriptor {
 			exit.address = prf.returSlot;
 		}
 		
-		if(DEBUG) {
-			prf.print("ProfileDescr.ofProfile: PROFILE: ");
-		}
+//		if(DEBUG) {
+//			prf.print("ProfileDescr.ofProfile: PROFILE: ");
+//		}
 		prf.frameSize = rela;
-//		prf.print("ProfileDescr.ofProfile: ");
 		return prf;
 	}
 
@@ -255,6 +265,8 @@ public class ProfileDescr extends Descriptor {
 
 	/// Reads a ProfileDescr from the given input.
 	/// @param inpt the input stream
+	/// @return The ProfileDescr read
+	/// @throws IOException if IOException occur
 	public static ProfileDescr read(final AttributeInputStream inpt) throws IOException {
 		ProfileDescr prf = new ProfileDescr(Tag.read(inpt));
 		if(Option.ATTR_INPUT_TRACE) IO.println("BEGIN ProfileDescr.Read: " + prf);

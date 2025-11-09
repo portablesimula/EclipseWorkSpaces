@@ -37,9 +37,12 @@ import svm.instruction.SVM_SHIFT;
 /// @author Øystein Myhre Andersen
 public abstract class SHIFT extends Instruction {
 
+	/** Default Constructor */ public SHIFT() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_SHIFT instruction.
+	/// @param instr which instruction
 	public static void ofScode(int instr) {
 		FETCH.doFetch();			
 		CTStack.checkTosInt(); CTStack.checkSosInt();

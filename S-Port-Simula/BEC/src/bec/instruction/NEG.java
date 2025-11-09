@@ -25,7 +25,9 @@ import svm.instruction.SVM_NEG;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public abstract class NEG extends Instruction {
-	
+
+	/** Default Constructor */ public NEG() {} 
+
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit an SVM_NEG instruction.
