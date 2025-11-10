@@ -56,6 +56,7 @@ public class Dataset {
 
 	/// Utility: edit the given fileType
 	/// @param fileType the fileType
+	/// @return the edited file type
 	public static String edFileType(int fileType) {
 		switch(fileType) {
 		case FIL_INFILE:         return("INFILE");

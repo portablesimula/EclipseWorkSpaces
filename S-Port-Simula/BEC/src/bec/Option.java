@@ -13,6 +13,8 @@ package bec;
 /// @author Øystein Myhre Andersen
 public abstract class Option {
 
+	/** Default Constructor */ public Option() {} 
+
 	/** BEC Option */ public static boolean INLINE_TESTING = false;
 	/** BEC Option */ public static boolean debugMode = false;
 	/** BEC Option */ public static boolean verbose = false;

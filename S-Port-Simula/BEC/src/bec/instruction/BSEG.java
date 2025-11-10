@@ -48,6 +48,8 @@ import svm.segment.ProgramSegment;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public abstract class BSEG extends Instruction {
+	
+	/// BSEG sequence number
 	private static int SEQU;
 	
 	/** Default Constructor */ public BSEG() {} 

@@ -52,6 +52,7 @@ public abstract class CALL extends Instruction {
 
 	/// Treat a complete Call Instruction including parameters stacking and
 	/// finally emit a SVM_CALL instruction.
+	/// @param nParStacked number of parameters stacked
 	public static void ofScode(int nParStacked) {
 		int profileTag = Scode.inTag();
 		Scode.inputInstr();
@@ -129,7 +130,10 @@ public abstract class CALL extends Instruction {
 		}
 	}
 	
-	private static int putPar(final ProfileItem pItm, final int nrep) {
+	/// Utility: treat and put parameter
+	/// @param pItm the Profile item
+	/// @param nrep the repetition count
+	private static void putPar(final ProfileItem pItm, final int nrep) {
 		Variable param = (Variable) pItm.spc.params.get(pItm.nasspar).getMeaning();
 		Type parType = param.type;
 		int repCount = param.repCount;
@@ -170,7 +174,6 @@ public abstract class CALL extends Instruction {
 				
 			}
 		}
-		return nrep;
 	}
 
 }

@@ -24,7 +24,9 @@ import svm.value.ProgramAddress;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public class Global {
-	
+
+	/** Default Constructor */ public Global() {} 
+
 	/// Initiate Global data
 	/// @param scodeSource the S-Code source file name
 	public static void init(final String scodeSource) {
@@ -39,7 +41,7 @@ public class Global {
 	/// Current S-Module
 	public static S_Module currentModule;
 	
-	// The S-Code source file name
+	/// The S-Code source file name
 	public static String scodeSource;
 	
 	/// S-Code PROG String
@@ -63,8 +65,9 @@ public class Global {
 	/// Attributes and SVM-Code output directory
 	public static String outputDIR = rtsDir;
 	
+	/// The current sourceLineNumber during execution
 	public static int sourceLineNumber;
-	public static int curline;		// Current source line number
+//	public static int curline;		// Current source line number
 	
 	/// Number of tags, see: INSERT
 	public static int nTags;

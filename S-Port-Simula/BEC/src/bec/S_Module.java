@@ -107,8 +107,10 @@ public abstract class S_Module {
 	///
 	/// @param type one of: decl, stmt, line
 	protected static void setLine(final int type) {
-		Global.curline = Scode.inNumber();
-		Global.PSEG.emit(new SVM_LINE(type, Global.curline));
+//		Global.curline = Scode.inNumber();
+//		Global.PSEG.emit(new SVM_LINE(type, Global.curline));
+		Scode.curline = Scode.inNumber();
+		Global.PSEG.emit(new SVM_LINE(type, Scode.curline));
 	}
 
 	/// Output Module.

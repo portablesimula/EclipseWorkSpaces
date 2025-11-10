@@ -12,6 +12,8 @@ package bec.descriptor;
 /// @author Øystein Myhre Andersen
 public class Kind {
 
+	/** Default Constructor */ public Kind() {} 
+
 //	---------     O b j e c t   K i n d   C o d e s      ---------
 //
 	/** Object kind code */ /** Object kind code */ public static final int K_Module=1;

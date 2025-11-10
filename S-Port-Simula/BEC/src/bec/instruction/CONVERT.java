@@ -39,6 +39,7 @@ public abstract class CONVERT extends Instruction {
 	}
 	
 	/// Test and possibly Emit an SVM_CONVERT instruction.
+	/// @param totype the expected result type 
 	public static void doConvert(final Type totype) {
 		CTStackItem TOS = CTStack.TOS();
 		Type fromtype = TOS.type;

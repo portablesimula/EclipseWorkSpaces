@@ -21,6 +21,7 @@ import bec.util.Util;
 public final class BecCompiler {
 	
 	/// Main method 
+	/// @param argv the arguments
 	public static void main(String[] argv) {
 		String scodeSource = null;
 		// Parse command line arguments.
@@ -98,6 +99,7 @@ public final class BecCompiler {
 	/// 		::= <module_definition>*
 	/// 		::= main <local_quantity>* < program_element >*
 	///
+	/// @param scodeSource source code filename
 	public BecCompiler(final String scodeSource) {
 		if(Option.verbose) Util.println("BEC: Start BecCompiler with " + scodeSource);
 		Global.init(scodeSource);

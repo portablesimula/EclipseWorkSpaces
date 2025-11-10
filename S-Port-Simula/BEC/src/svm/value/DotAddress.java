@@ -38,6 +38,7 @@ public abstract class DotAddress {
 	/// For Attribute addresses create an IntegerValue of type AADDR.
 	/// For General addresses create an GeneralAddress object.
 	/// Finally: Return a newly created Value.
+	/// @return the newly created Value.
 	public static Value ofScode() {
 		int offset = 0;
 		

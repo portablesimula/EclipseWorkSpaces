@@ -19,7 +19,9 @@ import bec.util.Util;
 /// @author S-Port: Definition of S-code
 /// @author Øystein Myhre Andersen
 public abstract class Display {
-	
+
+	/** Default Constructor */ public Display() {} 
+
 	/// The Descriptor Display
 	private static Array<Descriptor> DISPL;
 	
@@ -29,12 +31,14 @@ public abstract class Display {
 	}
 
 	/// Returns the Descriptor at the specified tag index
+	/// @param tag the tag index
 	/// @return the Descriptor at the specified tag index
 	public static Descriptor get(int tag) {
 		return DISPL.get(tag);
 	}
 	
 	/// Returns the non null Descriptor at the specified tag index.
+	/// @param tag the tag index
 	/// @return the non null Descriptor at the specified tag index
 	public static Descriptor getMeaning(int tag) {
 		Descriptor x = DISPL.get(tag);

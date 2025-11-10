@@ -81,6 +81,7 @@ public final class DataSegment extends Segment {
 	
 	/// Emit a value by adding it to this DataSegment.
 	/// @param value value to be added
+	/// @return the address of the value emitted
 	public ObjectAddress emit(final Value value) {
 		ObjectAddress addr = nextAddress();
 		values.add(value);
@@ -120,6 +121,7 @@ public final class DataSegment extends Segment {
 	
 	/// Emit the characters in the given String
 	/// @param chars the String
+	/// @return the address of the first character emitted
 	public ObjectAddress emitChars(final String chars) {
 		ObjectAddress addr = nextAddress();
 		int n = chars.length();
@@ -176,6 +178,7 @@ public final class DataSegment extends Segment {
 
 	/// Returns a DataSegment read from the given AttributeInputStream
 	/// @param inpt the AttributeInputStream
+	/// @param segmentKind the Segment kind code
 	/// @return a DataSegment read from the given AttributeInputStream
 	/// @throws IOException if IOException occur
 	public static DataSegment readObject(final AttributeInputStream inpt, final int segmentKind) throws IOException {

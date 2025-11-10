@@ -43,6 +43,7 @@ public class LabelDescr extends Descriptor {
 
 	/// Create a new LabelDescr with the given 'tag'
 	/// @param tag used to lookup descriptors
+	/// @param adr the label address
 	private LabelDescr(Tag tag, ProgramAddress adr) {
 		super(Kind.K_IntLabel, tag);
 		this.adr = adr;
@@ -61,6 +62,7 @@ public class LabelDescr extends Descriptor {
 	
 	/// Scans the remaining S-Code (if any) belonging to this descriptor.
 	/// Then construct or update the LabelDescr.
+	/// @param tag the label tag
 	/// @return the LabelDescr instance.
 	public static LabelDescr ofLabelDef(final Tag tag) {
 		LabelDescr lab = (LabelDescr) Display.get(tag.val);

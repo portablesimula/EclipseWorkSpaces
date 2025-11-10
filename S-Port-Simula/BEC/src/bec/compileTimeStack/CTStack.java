@@ -21,6 +21,9 @@ import svm.value.Value;
 /// 
 /// @author Øystein Myhre Andersen
 public final class CTStack {
+	
+	/** Default Constructor */ public CTStack() {} 
+
 	/// Current Compile-time Stack.
 	private static NamedStack<CTStackItem> stack = new NamedStack<CTStackItem>("MAIN");
 	
@@ -43,6 +46,7 @@ public final class CTStack {
 	}
 	
 	/// Returns copy of the current Stack
+	/// @param ident the NamedStack ident
 	/// @return copy of the current Stack
 	public static NamedStack<CTStackItem> copy(final String ident) {
 		NamedStack<CTStackItem> copy = new NamedStack<CTStackItem>(ident);
@@ -87,6 +91,7 @@ public final class CTStack {
 	///
 	/// * remember stack;
 	/// * purge stack;
+	/// @param ident the SAVE ident
 	public static void SAVE(final String ident) {
 		saveStack.push(stack);
 		stack = new NamedStack<CTStackItem>(ident);
@@ -104,6 +109,7 @@ public final class CTStack {
 	///
 	/// * remember stack;
 	/// * purge stack;
+	/// @param ident the Segment ident
 	public static void BSEG(final String ident) {
 		bsegStack.push(stack);
 		stack = new NamedStack<CTStackItem>(ident);
@@ -139,6 +145,7 @@ public final class CTStack {
 	}
 	
 	/// Returns the indexed item of the Compile-time stack
+	/// @param i the index
 	/// @return the indexed item of the Compile-time stack
 	public static CTStackItem getItem(final int i) {
 		return stack.get(i);
@@ -181,6 +188,7 @@ public final class CTStack {
 	}
 	
 	/// Utility: Print Stack related error message and exit.
+	/// @param msg a descriptive message
 	private static void STKERR(final String msg) {
 		IO.println("\nERROR: " + msg + " ================================================");
 		CTStack.dumpStack("STKERR: ");
@@ -254,6 +262,9 @@ public final class CTStack {
 	}
 
 	/// Convenient method: checkSosType2
+	/// @param t1 a Type
+	/// @param t2 another Type
+	/// @return SOS.type
 	public static Type checkSosType2(final Type t1, final Type t2) {
 		Type type = SOS().type;
 		if(type == t1) ; // OK

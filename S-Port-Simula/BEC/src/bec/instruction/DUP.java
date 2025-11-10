@@ -47,6 +47,9 @@ public abstract class DUP extends Instruction {
 		}
 	}
 	
+	/// Returns the size on Runtime stack
+	/// @param oaddr the ObjectAddress
+	/// @return the size on Runtime stack
 	private static int sizeOnStack(final ObjectAddress oaddr) {
 		int size =(oaddr.indexed)? 1 : 0;
 		switch(oaddr.kind) {

@@ -43,7 +43,7 @@ public class InsertStatement {
 	
 	/** Default Constructor */ public InsertStatement() {} 
 
-	// The Module ident
+	/// The Module ident
     String modid;
 
     /// The tag bias

@@ -30,7 +30,7 @@ import svm.segment.Segment;
 /// Link to GitHub: <a href="https://github.com/portablesimula/EclipseWorkSpaces/blob/main/S-Port-Simula/BEC/src/svm/value/ObjectAddress.java"><b>Source File</b></a>.
 /// 
 /// @author S-Port: Definition of S-code
-/// @author Øystein Myhre Andersen
+/// @author /** Address kind */ ystein Myhre Andersen
 public class ObjectAddress extends Value {
 
 	/** Default Constructor */ public ObjectAddress() {} 
@@ -47,11 +47,11 @@ public class ObjectAddress extends Value {
 	/// Signals 'indexed' address. In that case an index offset is pushed to the runtime stack.
 	public boolean indexed;
 	
-	public static final int SEGMNT_ADDR = 1; // Segment Address
-	public static final int REMOTE_ADDR = 2; // Remote Address
-	public static final int REFER_ADDR  = 3; // Refer Address
-	public static final int REL_ADDR    = 4; // Frame relative Addtess
-	public static final int STACK_ADDR  = 5; // Stack relative Address
+	/** Address kind */ public static final int SEGMNT_ADDR = 1; // Segment Address
+	/** Address kind */ public static final int REMOTE_ADDR = 2; // Remote Address
+	/** Address kind */ public static final int REFER_ADDR  = 3; // Refer Address
+	/** Address kind */ public static final int REL_ADDR    = 4; // Frame relative Addtess
+	/** Address kind */ public static final int STACK_ADDR  = 5; // Stack relative Address
 	
 	/// Construct a new ObjectAddress with the given parameters
 	/// @param kind the address kind
@@ -136,6 +136,7 @@ public class ObjectAddress extends Value {
 		
 	/// Increment the offset part by the given ofst
 	/// @param ofst the ofst to be added
+	/// @return the resulting ObjectAddress
 	public ObjectAddress addOffset(final int ofst) {
 		return new ObjectAddress(this.kind, segID, this.ofst + ofst, indexed);
 	}

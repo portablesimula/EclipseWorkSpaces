@@ -40,6 +40,7 @@ public abstract class Instruction {
 		
 	/** Default Constructor */ public Instruction() {} 
 
+	/// Read S-Code while encountering instruction
 	public static void inInstructions() {
 		LOOP:while(true) {
 			if(! inInstruction()) break LOOP;

@@ -159,6 +159,7 @@ public class Value {
 	/// Compare this Value with the given Value according to the given relation.
 	/// @param relation one of: LT, LE, EQ, GE, GT, NE
 	/// @param other the other Value
+	/// @return true: if the relation holds
 	public boolean compare(int relation, Value other) {
 		Util.IERR("Method 'compare' need a redefinition in " + this.getClass().getSimpleName());
 		return false;

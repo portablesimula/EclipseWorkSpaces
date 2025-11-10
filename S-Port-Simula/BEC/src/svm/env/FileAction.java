@@ -24,7 +24,7 @@ import svm.RTUtil;
 /// @author Øystein Myhre Andersen
 public class FileAction {
 	
-	private static final boolean DEBUG = false;
+//	private static final boolean DEBUG = false;
 
 	/// CREATE: Action is performed at 'open'
 	/// 
@@ -146,14 +146,15 @@ public class FileAction {
 	///  REWIND       norewind   norewind    NA           open,close
 	///  PURGE        nopurge    nopurge     nopurge      close
 	/// </pre>
+	/// @param action the action string
 	private void decodeActions(String action) {
 		if(action.length() != 10) Util.IERR("NOT IMPL");
 		int chr = getActionChar(action, 0);
-		if(DEBUG) IO.println("RTFileAction.decodeActions: shared/noshared = " + chr);
+//		if(DEBUG) IO.println("RTFileAction.decodeActions: shared/noshared = " + chr);
 		
 		chr = getActionChar(action, 1);
 		_APPEND = chr != 1;
-		if(DEBUG) IO.println("RTFileAction.decodeActions: append/noappend = " + chr + "              ===> APPEND = " + _APPEND);
+//		if(DEBUG) IO.println("RTFileAction.decodeActions: append/noappend = " + chr + "              ===> APPEND = " + _APPEND);
 		
 		chr = getActionChar(action, 2);
 		switch(chr) {
@@ -161,7 +162,7 @@ public class FileAction {
 			case 1: _CREATE = _CreateAction.noCreate; break;
 			case 2: _CREATE = _CreateAction.anyCreate;
 		}
-		if(DEBUG) IO.println("RTFileAction.decodeActions: create/nocreate/anycreate = " + chr + "    ===> CREATE = " + _CREATE);
+//		if(DEBUG) IO.println("RTFileAction.decodeActions: create/nocreate/anycreate = " + chr + "    ===> CREATE = " + _CREATE);
 		
 		chr = getActionChar(action, 3);
 		switch(chr) {
@@ -169,16 +170,17 @@ public class FileAction {
 			case 1: _CANWRITE = true;  _CANREAD = false; break;
 			case 2: _CANWRITE = true;  _CANREAD = true;
 		}
-		if(DEBUG) IO.println("RTFileAction.decodeActions: readonly/writeonly/readwrite = " + chr + " ===> CANREAD = " + _CANREAD + ", CANWRITE= " + _CANWRITE);
+//		if(DEBUG) IO.println("RTFileAction.decodeActions: readonly/writeonly/readwrite = " + chr + " ===> CANREAD = " + _CANREAD + ", CANWRITE= " + _CANWRITE);
 		
 		chr = getActionChar(action, 4);
 		_PURGE = chr != 1;
-		if(DEBUG) IO.println("RTFileAction.decodeActions: purge/nopurge = " + chr + "                ===> PURGE = " + _PURGE);
+//		if(DEBUG) IO.println("RTFileAction.decodeActions: purge/nopurge = " + chr + "                ===> PURGE = " + _PURGE);
 	}
 
 	/// Utility: to pick up a character from the 'action' string
 	/// @param action the action string
 	/// @param idx the index
+	/// @return the requested character
 	private int getActionChar(String action, int idx) {
 		int c = action.charAt(idx);
 		if(c == 46) return 0;

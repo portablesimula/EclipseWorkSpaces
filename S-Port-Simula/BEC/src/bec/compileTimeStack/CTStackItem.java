@@ -13,6 +13,10 @@ import bec.scode.Type;
 /// 
 /// @author Øystein Myhre Andersen
 public abstract class CTStackItem {
+	
+	/** Default Constructor */ public CTStackItem() {} 
+
+	/// The common type attribute
 	public Type type;
 	
 	/// Returns a copy of this stack item

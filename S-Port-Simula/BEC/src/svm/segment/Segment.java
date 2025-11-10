@@ -45,6 +45,7 @@ public abstract class Segment {
 	}
 
 	/// Lookup Segment by its ident
+	/// @param ident the Segment ident
 	/// @return the Segment found
 	public static Segment lookup(final String ident) {
 		Segment seg = Global.SEGMAP.get(ident);

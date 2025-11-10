@@ -43,6 +43,9 @@ public abstract class FETCH extends Instruction {
 		doFetch();
 	}
 
+	/// Scans the remaining S-Code (if any) belonging to this instruction.
+	/// Perform the specified stack operations (which may result in code generation).
+	/// Finally: If TOS mode = address, Emit an SVM_LOAD instruction.
 	public static void doFetch() {
 		if(CTStack.TOS() instanceof AddressItem addr) {
 			Type type = addr.type;

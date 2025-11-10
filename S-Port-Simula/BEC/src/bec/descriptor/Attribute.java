@@ -56,6 +56,7 @@ public final class Attribute extends Descriptor {
 
 	/// Scans the remaining S-Code (if any) belonging to this descriptor.
 	/// Then construct a new Attribute instance.
+	/// @param rela the relative address
 	/// @return an Attribute instance.
 	public static Attribute ofScode(final int rela) {
 		Attribute attr = new Attribute(Tag.ofScode());

@@ -124,6 +124,8 @@ public class Infile extends ImageFile {
 	
 	/// Utility: read a line
 	/// @return the line string read
+	/// @throws IOException if IOException occur
+	/// @throws TimeoutException if Timeout occur
 	private static String readLine() throws IOException, TimeoutException {
 		StringBuilder sb = new StringBuilder();
 		if(Global.console != null) {
@@ -147,6 +149,7 @@ public class Infile extends ImageFile {
 	/// @param unit the TimeUnit
 	/// @return the line string read
 	/// @throws IOException if IOException occur
+	/// @throws TimeoutException if Timeout occur
 	private static int IO_read(int timeout, TimeUnit unit) throws IOException, TimeoutException {
 		long sleep = unit.toMillis(timeout);
 		LOOP: while(true) {
@@ -162,6 +165,7 @@ public class Infile extends ImageFile {
 	/// Reads a line from the underlying file into a character area
 	/// @param chrAddr the start of the area
 	/// @param nchr the length of the area
+	/// @return the number of characters filled
 	public static int sysinInimage(ObjectAddress chrAddr, int nchr) {
 		try {
 			String line = (sysinRest != null) ? sysinRest : readLine();

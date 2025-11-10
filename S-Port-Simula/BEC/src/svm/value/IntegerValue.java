@@ -103,6 +103,7 @@ public class IntegerValue extends Value {
 	}
 	
 	/// Returns the int value of the given IntegerValue
+	/// @param val the IntegerValue
 	/// @return the int value of the given IntegerValue
 	public static int intValue(final IntegerValue val) {
 		if(val == null) return 0;

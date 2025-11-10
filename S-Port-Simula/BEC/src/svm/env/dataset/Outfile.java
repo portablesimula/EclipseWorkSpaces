@@ -22,6 +22,7 @@ import svm.RTUtil;
 /// @author Øystein Myhre Andersen
 public class Outfile extends ImageFile {
 	
+	/// The underlying Writer
 	FileWriter writer;
 
 	/// Construct a new Outfile with the given arguments.

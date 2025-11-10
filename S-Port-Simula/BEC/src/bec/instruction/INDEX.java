@@ -47,6 +47,7 @@ public abstract class INDEX extends Instruction {
 	/// Scans the remaining S-Code (if any) belonging to this instruction.
 	/// Perform the specified stack operations (which may result in code generation).
 	/// Finally: Emit SVM instructions.
+	/// @param instr which S-Code instruction
 	public static void ofScode(int instr) {
 		FETCH.doFetch();			
 		CTStack.checkTosInt(); CTStack.checkSosRef();

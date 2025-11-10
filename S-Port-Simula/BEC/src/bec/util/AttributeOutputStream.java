@@ -17,6 +17,8 @@ import java.io.OutputStream;
 public class AttributeOutputStream extends DataOutputStream{
 
 	/// Create a new AttributeOutputStream
+	/// @param oupt the underlying output stream
+	/// @throws IOException if IOException occur
     public AttributeOutputStream(final OutputStream oupt) throws IOException {
     	super(oupt);
     }
@@ -24,6 +26,7 @@ public class AttributeOutputStream extends DataOutputStream{
     /// Write a String to the underlying OutputStream.
     /// If argument 's' is null a length -1 is written informing
     /// AttributeInputStream.readString to return null.
+    /// @param s the string to write
 	/// @throws IOException if IOException occur
     public void writeString(final String s) throws IOException {
 		if(s == null) {
@@ -32,9 +35,6 @@ public class AttributeOutputStream extends DataOutputStream{
 			int lng = s.length();
 			if(lng > Short.MAX_VALUE) Util.IERR("");
 			super.writeShort(lng);
-//			for(int i=0;i<lng;i++) {
-//				super.writeChar(s.charAt(i));
-//			}
 			super.writeChars(s);
 		}
 	}

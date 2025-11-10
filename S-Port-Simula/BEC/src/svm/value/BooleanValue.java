@@ -41,6 +41,7 @@ public class BooleanValue extends Value {
 	/// Create an Object to represent a boolean value.
 	/// true: new BooleanValue, otherwise null
 	/// @param value true or false
+	/// @return the newly created BooleanValue
 	public static BooleanValue of(final boolean value) {
 		if(value) return new BooleanValue(true);
 		return null;

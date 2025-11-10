@@ -102,7 +102,8 @@ public final class ModuleDefinition extends S_Module {
 		outputModule(nXtag);
 	}
 
-
+	/// Returns true if a 'visible' was encountered
+	///
 	/// 	visible
 	/// 		::= record_descriptor | routine_profile
 	/// 		::= routine_specification | label_specification
