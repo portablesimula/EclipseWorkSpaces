@@ -162,9 +162,11 @@ public final class Global {
 		if (SIMULA_HOME != null) {
 			String SIMULA_VERSION = getSimulaProperty("simula.version", null);
 			if (SIMULA_VERSION != null) {
-				File simdir = new File(SIMULA_HOME, SIMULA_VERSION);
-				simIcon = new ImageIcon(new File(simdir, "icons/sim2.png").toString());
-				sIcon = new ImageIcon(new File(simdir, "icons/sim.png").toString());
+				try {
+					File simdir = new File(SIMULA_HOME, SIMULA_VERSION);
+					simIcon = new ImageIcon(new File(simdir, "icons/sim2.png").toString());
+					sIcon = new ImageIcon(new File(simdir, "icons/sim.png").toString());
+				} catch(Exception e) {}
 			}
 		}
 	}
