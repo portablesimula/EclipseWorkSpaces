@@ -1,5 +1,6 @@
 package main;
 
+import lang.IElementType;
 import lang.lexer.Lexer;
 import lang.lexer.SimpleManualLexer;
 
@@ -16,6 +17,13 @@ public class Main {
 		lexer.start(buffer, startOffset, endOffset, initialState);
 		
 		while(true) {
+			IElementType type = lexer.getTokenType();
+			int start = lexer.getTokenStart();
+			int end = lexer.getTokenEnd();
+			
+			// NEW TOKEN
+			
+			lexer.advance();
 			
 		}
 	}
