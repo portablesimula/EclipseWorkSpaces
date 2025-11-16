@@ -11,7 +11,6 @@ public class Global {
 //    static public Language simulaLanguage = new SimulaLanguage();
 
     public static Console console;
-    public static int sourceLineNumber;
 
     public static void println(String s){
         console.printf(s);

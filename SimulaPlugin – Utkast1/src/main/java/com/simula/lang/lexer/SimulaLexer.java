@@ -1,45 +1,25 @@
 package com.simula.lang.lexer;
 
 import com.intellij.lexer.Lexer;
-import com.intellij.lexer.LexerBase;
 import com.intellij.lexer.LexerPosition;
 import com.intellij.psi.tree.IElementType;
-import com.simula.lang.scanner.TestToken;
-import com.simula.lang.scanner.Tester;
-import com.simula.util.Global;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 
-public class SimulaLexer extends LexerBase {
+public class SimulaLexer extends Lexer {
 
-//    CharSequence buffer; // character data for lexing.
-//    int startOffset;     // offset to start lexing from
-//    int endOffset;       // offset to stop lexing at
+    CharSequence buffer; // character data for lexing.
+    int startOffset;     // offset to start lexing from
+    int endOffset;       // offset to stop lexing at
     int state;           // the initial state of the lexer.
-
-    TestToken current;
 
     public SimulaLexer() {
         System.out.println("NEW SimulaLexer: ");
-        Global.popUpMessage("NEW SimulaLexer:");
 //        throw new RuntimeException("NEW SimulaLexer: start="+startOffset+", end="+endOffset+", state="+state+", chars=\""+buffer+'"');
-        this.current = Tester.nullToken();
     }
 
-    /*
-    BTW, there is an ambiguity in the API documentation.  For method Lexer.start(), it says:
-
-        * @param endOffset    offset to stop lexing at
-
-    But I have found that I expected it to be the last good offset when in fact it is the first bad offset ;).
-    In other words it is the length of the buffer not the last offset.
-    it is not incorrect, just ambiguous.
-    It should say something like "The last valid index + 1" or something, which is awkward but unambiguous.
-    I would also like to know when this is ever called with something other than a start offset
-    of zero and end offset of len(buffer).
-     */
     /**
      * Prepare for lexing character data from {@code buffer} passed. Internal lexer state is supposed to be {@code initialState}. It is guaranteed
      * that the value of initialState is the same as returned by {@link #getState()} method of this lexer at condition {@code startOffset=getTokenStart()}.
@@ -53,16 +33,11 @@ public class SimulaLexer extends LexerBase {
     @Override
     public void start(@NotNull CharSequence buffer, int startOffset, int endOffset, int initialState) {
         System.out.println("SimulaLexer.start: start="+startOffset+", end="+endOffset+", state="+initialState+", chars="+buffer);
-        Global.popUpMessage("SimulaLexer.start: start="+startOffset+", end="+endOffset+", state="+initialState+", chars="+buffer);
-//        this.buffer=buffer;
-//        this.startOffset = startOffset;
-//        this.endOffset = endOffset;
+        this.buffer=buffer;
+        this.startOffset = startOffset;
+        this.endOffset = endOffset;
         this.state = initialState;
-        if(buffer.length() > 0) {
-//            throw new RuntimeException("SimulaLexer.start: start="+startOffset+", end="+endOffset+", state="+initialState+", chars=\""+buffer+'"');
-            Tester.addSource(buffer, startOffset, endOffset);
-        }
-        this.current = Tester.nextToken();
+//        throw new RuntimeException("SimulaLexer.start: start="+startOffset+", end="+endOffset+", state="+initialState+", chars=\""+buffer+'"');
     }
 
     /**
@@ -72,8 +47,7 @@ public class SimulaLexer extends LexerBase {
      */
     @Override
     public int getState() {
-        System.out.println("SimulaLexer.getState: state="+state);
-        Global.popUpMessage("SimulaLexer.getState: state="+state);
+        System.out.println("SimulaLexer.getState: start="+startOffset+", end="+endOffset+", state="+state+", chars=\""+buffer+'"');
 //        throw new RuntimeException("SimulaLexer.getState: start="+startOffset+", end="+endOffset+", state="+state+", chars=\""+buffer+'"');
         return state;
     }
@@ -85,41 +59,30 @@ public class SimulaLexer extends LexerBase {
      */
     @Override
     public @Nullable IElementType getTokenType() {
-//        throw new RuntimeException("SimulaLexer.getTokenType: start="+startOffset+", end="+endOffset+", state="+state+", chars=\""+buffer+'"');
+        throw new RuntimeException("SimulaLexer.getTokenType: start="+startOffset+", end="+endOffset+", state="+state+", chars=\""+buffer+'"');
 //       return null;
-//        return Tester.getElement();
-        if(current == null) current = Tester.nullToken();
-        Global.popUpMessage("SimulaLexer.getTokenType: "+current.type);
-        return current.type;
     }
 
     @Override
     public int getTokenStart() {
         System.out.println("SimulaLexer.getTokenStart: ");
-        Global.popUpMessage("SimulaLexer.getTokenStart: start="+current.start);
-//        throw new RuntimeException("SimulaLexer.getTokenStart: start="+startOffset+", end="+endOffset+", state="+state+", chars=\""+buffer+'"');
+        throw new RuntimeException("SimulaLexer.getTokenStart: start="+startOffset+", end="+endOffset+", state="+state+", chars=\""+buffer+'"');
 //        return startOffset;
-        return current.start;
     }
 
     @Override
     public int getTokenEnd() {
         System.out.println("SimulaLexer.getTokenEnd: ");
-        Global.popUpMessage("SimulaLexer.getTokenEnd: "+current.end);
-//        throw new RuntimeException("SimulaLexer.getTokenEnd: start="+startOffset+", end="+endOffset+", state="+state+", chars=\""+buffer+'"');
+        throw new RuntimeException("SimulaLexer.getTokenEnd: start="+startOffset+", end="+endOffset+", state="+state+", chars=\""+buffer+'"');
 //        return endOffset;
-        return current.end;
-   }
+    }
 
     /**
      * Advances the lexer to the next token.
      */
     @Override
     public void advance() {
-//       throw new RuntimeException("SimulaLexer.ZZ_advance: start="+startOffset+", end="+endOffset+", state="+state+", chars=\""+buffer+'"');
-        Global.popUpMessage("SimulaLexer.ZZ_advance: FROM "+current);
-        current = Tester.nextToken();
-        Global.popUpMessage("SimulaLexer.ZZ_advance: TO "+current);
+        throw new RuntimeException("SimulaLexer.ZZ_advance: start="+startOffset+", end="+endOffset+", state="+state+", chars=\""+buffer+'"');
 
     }
 
@@ -130,7 +93,7 @@ public class SimulaLexer extends LexerBase {
      */
     @Override
     public @NotNull LexerPosition getCurrentPosition() {
-        throw new RuntimeException("SimulaLexer.getCurrentPosition: ");
+        throw new RuntimeException("SimulaLexer.getCurrentPosition: start="+startOffset+", end="+endOffset+", state="+state+", chars=\""+buffer+'"');
 //        return null;
     }
 
@@ -141,7 +104,7 @@ public class SimulaLexer extends LexerBase {
      */
     @Override
     public void restore(@NotNull LexerPosition position) {
-        throw new RuntimeException("SimulaLexer.restore: ");
+        throw new RuntimeException("SimulaLexer.restore: start="+startOffset+", end="+endOffset+", state="+state+", chars=\""+buffer+'"');
 
     }
 
@@ -153,7 +116,7 @@ public class SimulaLexer extends LexerBase {
      */
     @Override
     public @NotNull CharSequence getBufferSequence() {
-        throw new RuntimeException("SimulaLexer.getBufferSequence: ");
+        throw new RuntimeException("SimulaLexer.getBufferSequence: start="+startOffset+", end="+endOffset+", state="+state+", chars=\""+buffer+'"');
 //       return buffer;
     }
 
@@ -166,7 +129,7 @@ public class SimulaLexer extends LexerBase {
      */
     @Override
     public int getBufferEnd() {
-        throw new RuntimeException("SimulaLexer.getBufferEnd: ");
+        throw new RuntimeException("SimulaLexer.getBufferEnd: start="+startOffset+", end="+endOffset+", state="+state+", chars=\""+buffer+'"');
 //        return endOffset;
     }
 

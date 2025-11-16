@@ -5,11 +5,11 @@ package com.simula.lang.psi;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.PsiElement;
 import com.intellij.lang.ASTNode;
-//import com.simula.lang.psi.impl.SimulaPropertyImpl;
+import com.simula.lang.psi.impl.SimulaPropertyImpl;
 
 public interface SimulaTypes {
 
-//    IElementType PROPERTY = new SimulaElementType("PROPERTY");
+    IElementType PROPERTY = new SimulaElementType("PROPERTY");
 
     IElementType COMMENT = new SimulaTokenType("COMMENT");
     IElementType WHITE_SPACES = new SimulaTokenType("WHITE_SPACES");
@@ -19,13 +19,13 @@ public interface SimulaTypes {
     IElementType SEPARATOR = new SimulaTokenType("SEPARATOR");
     IElementType VALUE = new SimulaTokenType("VALUE");
 
-//    class Factory {
-//        public static PsiElement createElement(ASTNode node) {
-//            IElementType type = node.getElementType();
-//            if (type == PROPERTY) {
-//                return new SimulaPropertyImpl(node);
-//            }
-//            throw new AssertionError("Unknown element type: " + type);
-//        }
-//    }
+    class Factory {
+        public static PsiElement createElement(ASTNode node) {
+            IElementType type = node.getElementType();
+            if (type == PROPERTY) {
+                return new SimulaPropertyImpl(node);
+            }
+            throw new AssertionError("Unknown element type: " + type);
+        }
+    }
 }
