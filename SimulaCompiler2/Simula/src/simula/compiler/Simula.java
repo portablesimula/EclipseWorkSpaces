@@ -55,6 +55,8 @@ import simula.editor.SimulaEditor;
 ///                              
 ///      -verbose                Output messages about what the compiler is doing
 ///      
+///      -version                Print Simula version and exit
+///      
 ///      -keepJava directory     Specify where to place generated .java files
 ///                              Default: Temp directory which is deleted upon exit
 ///                              
@@ -115,6 +117,7 @@ public final class Simula {
 		Util.println("  -nowarn                    Generate no warnings");
 		Util.println("  -noPopup                   Don't create popUps at runtime");
 		Util.println("  -verbose                   Output messages about what the compiler is doing");
+		Util.println("  -version                   Print Simula version and exit");
 		Util.println("  -select characters         First, all selectors are reset.");
 		Util.println("                             Then, for each character, the corresponding selector is set");		
 		Util.println("  -keepJava <directory>      Specify where to place generated .java files");
@@ -175,6 +178,7 @@ public final class Simula {
 				else if (arg.equalsIgnoreCase("-noPopup")) Option.noPopup = true;
 				else if (arg.equalsIgnoreCase("-nowarn")) Option.WARNINGS=false;
 				else if (arg.equalsIgnoreCase("-verbose")) Option.verbose=true;
+				else if (arg.equalsIgnoreCase("-version")) printVersion();
 				else if (arg.equalsIgnoreCase("-select")) setSelectors(argv[++i]);				
 				else if (arg.equalsIgnoreCase("-keepJava")) setKeepJava(argv[++i]);
 				else if (arg.equalsIgnoreCase("-output")) setOutputDir(argv[++i]);
@@ -213,6 +217,14 @@ public final class Simula {
 		}
 	}
 
+	private static void printVersion() {
+    	String revision=Global.getSimulaProperty("simula.revision","?");
+    	String dated=Global.getSimulaProperty("simula.setup.dated","?");
+        String releaseID=Global.simulaReleaseID+'R'+revision;
+		String simulaVersion="SimulaVersion: "+releaseID+ " built "+dated+" using "+Util.getJavaID()+")";
+		IO.println(simulaVersion);
+		System.exit(0);
+	}
 
 	/// Set selectors for conditional compilation.
 	/// 

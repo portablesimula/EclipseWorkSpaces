@@ -23,7 +23,15 @@ import javax.swing.UIManager;
 public final class Util { 
 	/// Default constructor.
 	Util(){}
+
 	
+	/// Utility: get Java ID
+	/// @return the Java ID string
+	public static String getJavaID() {
+		String javaID="Java version "+System.getProperty("java.version");
+        return(javaID);
+	}
+
 	/// Pop up a message box.
 	/// @param msg the message
 	public static void popUpMessage(final Object msg) {

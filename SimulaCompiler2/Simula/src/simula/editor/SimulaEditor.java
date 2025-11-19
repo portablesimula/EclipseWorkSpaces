@@ -109,7 +109,7 @@ public class SimulaEditor extends JFrame {
     	String revision=Global.getSimulaProperty("simula.revision","?");
     	String dated=Global.getSimulaProperty("simula.setup.dated","?");
         String releaseID=Global.simulaReleaseID+'R'+revision;
-		Global.simulaVersion="SimulaEditor ("+releaseID+ " built "+dated+" using "+getJavaID()+")";
+		Global.simulaVersion="SimulaEditor ("+releaseID+ " built "+dated+" using "+Util.getJavaID()+")";
         Global.console.write(Global.simulaVersion+"\n");
         
         // Set the initial size of the window
@@ -195,13 +195,6 @@ public class SimulaEditor extends JFrame {
 			return (Integer.parseInt(ver));
 		} catch (Exception e) {}
 		return (0);
-	}
-	
-	/// Utility: get Java ID
-	/// @return the Java ID string
-	private static String getJavaID() {
-		String javaID="Java version "+System.getProperty("java.version");
-        return(javaID);
 	}
 
 	// ****************************************************************

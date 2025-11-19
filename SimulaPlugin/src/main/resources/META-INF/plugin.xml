@@ -25,16 +25,26 @@
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
 
-        <fileType name="Simula File" implementationClass="com.simula.lang.SimulaFileType"
+        <fileType name="Simula File" implementationClass="com.simula.extension.lang.SimulaFileType"
                 fieldName="INSTANCE" language="Simula" extensions="sim"/>
 
         <lang.syntaxHighlighterFactory
                 language="Simula"
-                implementationClass="com.simula.lang.highlighter.SimulaSyntaxHighlighterFactory"/>
+                implementationClass="com.simula.extension.SyntaxHighlighterExtension.highlighter.SimulaSyntaxHighlighterFactory"/>
 
         <!--lang.parserDefinition
                 language="Simula"
                 implementationClass="com.simula.lang.parser.SimulaParserDefinition"/-->
+
+
+        <!--runConfigurationExtension implementation="com.simula.extension.RunConfigurationExtension.SimulaRunConfiguration"/-->
+        <configurationType implementation="com.simula.extension.ConfigurationType.SimulaRunConfigurationType_draft1"/>
+
+        <executor implementation="com.simula.extension.programRunner.InCmdExecutor"/>
+        <programRunner implementation="com.simula.extension.programRunner.InCmdRunner"/>
+        <projectConfigurable instance="com.simula.extension.programRunner.InCmdConfigurable"/>
+        <projectService serviceImplementation="com.simula.extension.programRunner.OptionsPatchConfiguration"/>
+
 
     </extensions>
 </idea-plugin>

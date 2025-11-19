@@ -2,7 +2,9 @@ package main;
 
 import lang.IElementType;
 import lang.lexer.Lexer;
-import lang.lexer.SimpleManualLexer;
+import lang.scanner.SimpleManualLexer;
+import lang.scanner.SimulaLexer;
+import tester.Tester;
 
 public class Main {
 	static CharSequence buffer;
@@ -11,6 +13,11 @@ public class Main {
 	static int initialState;
 
 	public static void main(String[] argv) {
+//		tester1();
+		tester2();
+	}
+	
+	static void tester1() {
 		Lexer lexer = new SimpleManualLexer();
 		buffer = "abra ca dab";
 		endOffset = buffer.length();
@@ -27,4 +34,20 @@ public class Main {
 			
 		}
 	}
+	
+	static void tester2() {
+//		Lexer lexer = new SimpleManualLexer();
+		Lexer lexer = new SimulaLexer();
+		Tester tester = new Tester(lexer);
+//		buffer = "abra ca dab";
+		
+//		buffer = "begin\r\n"
+//				+ "   outtext(\"Hello World!\");\r\n"
+//				+ "--   outimage;\r\n"
+//				+ "end; ";
+		
+		buffer = "begin\r\n   outtext(\"Hello World!\");\r\n--   outimage;\r\nend; ";
+		tester.doSetText(buffer);
+	}
+
 }
