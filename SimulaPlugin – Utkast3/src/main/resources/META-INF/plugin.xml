@@ -12,10 +12,10 @@
 
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/best-practices-for-listing.html#plugin-description -->
-    <!--description><![CDATA[
+    <description><![CDATA[
         Enter short description for your plugin here.<br>
         <em>most HTML tags may be used</em>
-    ]]></description-->
+    ]]></description>
 
     <!-- Product and plugin compatibility requirements.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
@@ -25,43 +25,34 @@
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
 
-        <fileType name="Simula File" implementationClass="com.simula.extensions.lang.SimulaFileType"
+        <fileType name="Simula File" implementationClass="com.simula.extension.lang.SimulaFileType"
                 fieldName="INSTANCE" language="Simula" extensions="sim"/>
 
         <lang.syntaxHighlighterFactory
                 language="Simula"
-                implementationClass="com.simula.extensions.highlighterExtension.zz_highlighter.SimulaSyntaxHighlighterFactory"/>
+                implementationClass="com.simula.extension.SyntaxHighlighterExtension.highlighter.SimulaSyntaxHighlighterFactory"/>
 
         <!--lang.parserDefinition
                 language="Simula"
                 implementationClass="com.simula.lang.parser.SimulaParserDefinition"/-->
 
         <!-- New Project -->
-        <newProjectWizard.languageGenerator implementation="com.simula.extensions.newProject.SimulaNewProjectWizard"/>
+        <newProjectWizard.languageGenerator implementation="com.simula.extension.NewSimulaProject.SimulaNewProjectWizard"/>
+        <!--newProjectWizard.generator
+                implementation="miroshka.allayideplugin.project.AllayGeneratorNewProjectWizard"/-->
 
-        <!-- Run Configuration -->
+        <!--newProjectWizardBuilders>
+            <builder implementation="com.yourplugin.MyProjectWizardBuilder"/>
+        </-->
+
         <!--runConfigurationExtension implementation="com.simula.extension.RunConfigurationExtension.SimulaRunConfiguration"/-->
-        <!--configurationType implementation="com.simula.extension.newProject.SimulaRunConfigurationType"/-->
-        <configurationType implementation="com.simula.extensions.runConfigurationExtension.SimulaRunConfigurationType"/>
-        <runConfigurationProducer implementation="com.simula.extensions.runConfigurationExtension.SimulaRunConfigurationProducer"/>
+        <configurationType implementation="com.simula.extension.ConfigurationType.SimulaRunConfigurationType_draft1"/>
 
-        <executor implementation="com.simula.extensions.programRunner.InCmdExecutor"/>
-        <programRunner implementation="com.simula.extensions.programRunner.InCmdRunner"/>
-        <projectConfigurable instance="com.simula.extensions.programRunner.InCmdConfigurable"/>
-        <projectService serviceImplementation="com.simula.extensions.programRunner.OptionsPatchConfiguration"/>
+        <executor implementation="com.simula.extension.programRunner.InCmdExecutor"/>
+        <programRunner implementation="com.simula.extension.programRunner.InCmdRunner"/>
+        <projectConfigurable instance="com.simula.extension.programRunner.InCmdConfigurable"/>
+        <projectService serviceImplementation="com.simula.extension.programRunner.OptionsPatchConfiguration"/>
 
 
     </extensions>
-
-    <actions>
-
-        <action id="MyPlugin.MyAction"
-                class="com.simula.actions.toolsMenu.SimulaOptions"
-                text="My Plugin Menu Item"
-                description="A description for my plugin's menu item">
-            <add-to-group group-id="ToolsMenu" anchor="first"/>
-            <!-- Or other group-id like "FileMenu", "EditMenu", "ProjectViewPopupMenu", etc. -->
-            <!-- Anchor can be "first", "last", "before", or "after" with a specific action ID -->
-        </action>
-    </actions>
 </idea-plugin>

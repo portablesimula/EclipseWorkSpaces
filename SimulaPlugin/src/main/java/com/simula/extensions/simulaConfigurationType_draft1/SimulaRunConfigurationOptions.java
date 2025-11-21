@@ -1,0 +1,19 @@
+package com.simula.extensions.simulaConfigurationType_draft1;
+
+import com.intellij.execution.configurations.RunConfigurationOptions;
+import com.intellij.openapi.components.StoredProperty;
+
+public class SimulaRunConfigurationOptions extends RunConfigurationOptions {
+
+    private final StoredProperty<String> myScriptName =
+            string("").provideDelegate(this, "scriptName");
+
+    public String getScriptName() {
+        return myScriptName.getValue(this);
+    }
+
+    public void setScriptName(String scriptName) {
+        myScriptName.setValue(this, scriptName);
+    }
+
+}
