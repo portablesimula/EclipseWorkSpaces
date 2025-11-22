@@ -5,10 +5,8 @@
 /// page: https://creativecommons.org/licenses/by/4.0/
 package com.simula.util;
 
-import com.intellij.execution.configurations.RunConfiguration;
 import com.intellij.openapi.project.Project;
 import com.simula.extensions.runConfigurationExtension.SimulaRunConfiguration;
-import com.simula.extensions.runConfigurationExtension.test2.TestSimulaRunConfiguration;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -79,15 +77,8 @@ public final class RTOption {
 	}
     
 	/// Editor Utility: Select Runtime Options.
-    public static void selectRuntimeOptions(TestSimulaRunConfiguration settings) {
-        selectRuntimeOptions(settings.project, settings);
-        }
     public static void selectRuntimeOptions(SimulaRunConfiguration settings) {
-        selectRuntimeOptions(settings.project, settings);
-    }
-//    public static void selectRuntimeOptions(SimulaRunConfiguration settings) {
-    public static void selectRuntimeOptions(Project project, RunConfiguration settings) {
-//        Project project = settings.project;
+        Project project = settings.project;
         System.out.println("PresentableUrl: " + project.getPresentableUrl());
         System.out.println("getProjectFile: " + project.getProjectFile());
         System.out.println("getProjectFilePath: " + project.getProjectFilePath());
@@ -115,7 +106,7 @@ public final class RTOption {
 	/// Editor Utility: Create a checkBox without tooltips.
 	/// @param id option id
 	/// @return the resulting check box
-	public static JCheckBox checkBox(String id) {
+	private static JCheckBox checkBox(String id) {
         JCheckBox item = new JCheckBox(id);
     	item.setBackground(Color.white);
         item.setSelected(RTOption.getOption(id));

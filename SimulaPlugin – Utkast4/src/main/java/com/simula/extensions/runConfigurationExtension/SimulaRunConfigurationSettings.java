@@ -1,5 +1,7 @@
 package com.simula.extensions.runConfigurationExtension;
 
+import org.jetbrains.annotations.NotNull;
+
 public class SimulaRunConfigurationSettings {
 //    @Override
 //    protected @NotNull PestRunnerSettings createDefault() {

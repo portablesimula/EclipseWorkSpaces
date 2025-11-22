@@ -11,7 +11,7 @@ import com.intellij.openapi.options.SettingsEditor;
 import com.intellij.openapi.options.SettingsEditorGroup;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.NlsSafe;
-import com.simula.extensions.runConfigurationExtension.editor.SimulaRunConfigurationEditor;
+import com.simula.extensions.runConfigurationExtension_Pest.PestRunConfigurationType;
 import com.simula.util.Util;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -23,7 +23,7 @@ public class SimulaRunConfiguration implements RunConfiguration {
     SimulaRunConfigurationType simulaRunConfigurationType;
     String name;
 
-    public SimulaRunConfigurationSettings settings;
+    SimulaRunConfigurationSettings settings;
 
     public SimulaRunConfiguration(@NotNull Project project, SimulaRunConfigurationType simulaRunConfigurationType) {
         this.project = project;
@@ -73,7 +73,7 @@ public class SimulaRunConfiguration implements RunConfiguration {
 
 //        throw new RuntimeException("SimulaRunConfiguration.getConfigurationEditor: ");
 //        return null;
-        return new SimulaRunConfigurationEditor(this);
+        return new PestTestRunConfigurationEditor(this);
     }
 
     /**

@@ -1,4 +1,4 @@
-package com.simula.extensions.runConfigurationExtension;
+package com.simula.extensions.runConfigurationExtension.test2;
 
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.Executor;
@@ -11,21 +11,28 @@ import com.intellij.openapi.options.SettingsEditor;
 import com.intellij.openapi.options.SettingsEditorGroup;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.NlsSafe;
-import com.simula.extensions.runConfigurationExtension.editor.SimulaRunConfigurationEditor;
+import com.simula.extensions.runConfigurationExtension.SimulaRunConfigurationSettings;
 import com.simula.util.Util;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 
-public class SimulaRunConfiguration implements RunConfiguration {
+public class TestSimulaRunConfiguration implements RunConfiguration {
     public Project project;
-    SimulaRunConfigurationType simulaRunConfigurationType;
+    TestSimulaConfigurationType simulaRunConfigurationType;
     String name;
 
-    public SimulaRunConfigurationSettings settings;
+    SimulaRunConfigurationSettings settings;
 
-    public SimulaRunConfiguration(@NotNull Project project, SimulaRunConfigurationType simulaRunConfigurationType) {
+    public void dump() {
+        System.out.println("========= TestSimulaRunConfiguration.dump ======================================");
+        System.out.println("TestSimulaRunConfiguration.name: " + this.name);
+        System.out.println("TestSimulaRunConfiguration.name: " + this.project);
+
+    }
+
+    public TestSimulaRunConfiguration(@NotNull Project project, TestSimulaConfigurationType simulaRunConfigurationType) {
         this.project = project;
         this.simulaRunConfigurationType = simulaRunConfigurationType;
     }
@@ -73,7 +80,7 @@ public class SimulaRunConfiguration implements RunConfiguration {
 
 //        throw new RuntimeException("SimulaRunConfiguration.getConfigurationEditor: ");
 //        return null;
-        return new SimulaRunConfigurationEditor(this);
+        return new TestSimulaRunConfigurationEditor(this);
     }
 
     /**
@@ -95,7 +102,7 @@ public class SimulaRunConfiguration implements RunConfiguration {
     public RunConfiguration clone() {
 //        throw new RuntimeException("SimulaRunConfiguration.clone: ");
 //        return null;
-        return new SimulaRunConfiguration(project, simulaRunConfigurationType);
+        return new TestSimulaRunConfiguration(project, simulaRunConfigurationType);
     }
 
     /**

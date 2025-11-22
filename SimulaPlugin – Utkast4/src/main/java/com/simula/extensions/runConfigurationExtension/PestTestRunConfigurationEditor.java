@@ -49,7 +49,7 @@ public class PestTestRunConfigurationEditor extends SettingsEditor<SimulaRunConf
 //        myMainPanel.add(coveragePanel);
 //        myMainPanel.add(parallelPanel);
         myMainPanel.add(new JLabel("HURRA !"));
-        resetEditorFrom(settings);
+//        resetEditorFrom(settings);
     }
 
     private void doReset(SimulaRunConfiguration configuration) {

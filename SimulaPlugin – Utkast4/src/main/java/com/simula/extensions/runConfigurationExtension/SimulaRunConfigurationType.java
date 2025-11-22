@@ -4,7 +4,7 @@ import com.intellij.execution.configurations.ConfigurationTypeBase;
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.util.NotNullLazyValue;
 
-public final class SimulaRunConfigurationType extends ConfigurationTypeBase {
+final class SimulaRunConfigurationType extends ConfigurationTypeBase {
 
     static final String ID = "SimulaRunConfiguration";
     SimulaConfigurationFactory simulaConfigurationFactory;

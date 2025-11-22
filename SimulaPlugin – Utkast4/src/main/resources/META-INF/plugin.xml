@@ -40,14 +40,10 @@
         <newProjectWizard.languageGenerator implementation="com.simula.extensions.newProject.SimulaNewProjectWizard"/>
 
         <!-- Run Configuration -->
-    <!-- test1 -->
+        <!--runConfigurationExtension implementation="com.simula.extension.RunConfigurationExtension.SimulaRunConfiguration"/-->
+        <!--configurationType implementation="com.simula.extension.newProject.SimulaRunConfigurationType"/-->
         <configurationType implementation="com.simula.extensions.runConfigurationExtension.SimulaRunConfigurationType"/>
         <runConfigurationProducer implementation="com.simula.extensions.runConfigurationExtension.SimulaRunConfigurationProducer"/>
-    -->
-    <!-- test2
-        <configurationType implementation="com.simula.extensions.runConfigurationExtension.test2.TestSimulaConfigurationType"/>
-        <runConfigurationProducer implementation="com.simula.extensions.runConfigurationExtension.test2.TestSimulaRunConfigurationProducer"/>
-    -->
 
         <executor implementation="com.simula.extensions.programRunner.InCmdExecutor"/>
         <programRunner implementation="com.simula.extensions.programRunner.InCmdRunner"/>
