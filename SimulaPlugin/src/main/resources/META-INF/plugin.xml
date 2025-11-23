@@ -1,14 +1,14 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
     <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
-    <id>com.example.SimulaPlugin</id>
+    <id>com.portablesimula.SimulaPlugin</id>
 
     <!-- Public plugin name should be written in Title Case.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/best-practices-for-listing.html#plugin-name -->
     <name>SimulaPlugin</name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor url="https://www.yourcompany.com">YourCompany</vendor>
+    <vendor url="https://portablesimula.github.io/github.io/">Portable Simula</vendor>
 
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/best-practices-for-listing.html#plugin-description -->
@@ -57,6 +57,10 @@
 
     </extensions>
 
+    <applicationListeners>
+        <listener class="com.simula.actions.MyActionLogger" topic="com.intellij.openapi.actionSystem.ex.AnActionListener"/>
+    </applicationListeners>
+
     <actions>
 
         <action id="MyPlugin.MyAction"
@@ -67,5 +71,14 @@
             <!-- Or other group-id like "FileMenu", "EditMenu", "ProjectViewPopupMenu", etc. -->
             <!-- Anchor can be "first", "last", "before", or "after" with a specific action ID -->
         </action>
+
+        <!-- Build Actions -->
+        <action id="MyBuildPlugin.MyBuild"
+                class="com.simula.actions.build.SimulaBuildAction"
+                text="Simula Build"
+                description="Triggers a simula build for the plugin">
+            <add-to-group group-id="BuildMenu" anchor="last"/>
+        </action>
+
     </actions>
 </idea-plugin>

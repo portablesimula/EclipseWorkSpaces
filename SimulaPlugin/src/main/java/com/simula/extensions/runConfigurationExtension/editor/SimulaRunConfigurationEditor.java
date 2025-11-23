@@ -122,7 +122,7 @@ public class SimulaRunConfigurationEditor extends SettingsEditor<SimulaRunConfig
     }
 
     private void doApply(SimulaRunConfiguration configuration) {
-        if(true) throw new RuntimeException("PestTestRunConfigurationEditor.doApply: " + configuration);
+        if(true) throw new RuntimeException("SimulaRunConfigurationEditor.doApply: " + configuration);
        SimulaRunConfigurationSettings settings = configuration.settings;
 //    val runnerSettings = settings.pestRunnerSettings
 //
