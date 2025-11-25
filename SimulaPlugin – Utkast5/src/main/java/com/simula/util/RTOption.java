@@ -5,7 +5,11 @@
 /// page: https://creativecommons.org/licenses/by/4.0/
 package com.simula.util;
 
-import com.simula.extensions.runConfigurationExtension.MyRunConfiguration;
+import com.intellij.execution.configurations.RunConfiguration;
+import com.intellij.openapi.project.Project;
+import com.simula.extensions.runConfigurationExtension.SimulaRunConfiguration;
+import com.simula.extensions.runConfigurationExtension.test2.TestSimulaRunConfiguration;
+import com.simula.extensions.runConfigurationExtension.test3.MyRunConfiguration;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -76,6 +80,38 @@ public final class RTOption {
 	}
     
 	/// Editor Utility: Select Runtime Options.
+    public static void selectRuntimeOptions(TestSimulaRunConfiguration settings) {
+        selectRuntimeOptions(settings.project, settings);
+        }
+    public static void selectRuntimeOptions(SimulaRunConfiguration settings) {
+        selectRuntimeOptions(settings.project, settings);
+    }
+//    public static void selectRuntimeOptions(SimulaRunConfiguration settings) {
+    public static void selectRuntimeOptions(Project project, RunConfiguration settings) {
+//        Project project = settings.project;
+        System.out.println("PresentableUrl: " + project.getPresentableUrl());
+        System.out.println("getProjectFile: " + project.getProjectFile());
+        System.out.println("getProjectFilePath: " + project.getProjectFilePath());
+        System.out.println("getName: " + project.getName());
+        System.out.println("getBasePath: " + project.getBasePath());
+        System.out.println("getWorkspaceFile: " + project.getWorkspaceFile());
+        System.out.println("getLocationHash: " + project.getLocationHash());
+        System.out.println("isDefault: " + project.isDefault());
+        System.out.println("isInitialized: " + project.isInitialized());
+        System.out.println("isOpen: " + project.isOpen());
+        System.out.println("getActualComponentManager: " + project.getActualComponentManager());
+        System.out.println("Project: " + project);
+    	JPanel panel=new JPanel();
+    	panel.setBackground(Color.white);
+    	panel.add(checkBox("Verbose"));        panel.add(checkBox("BLOCK_TRACING"));
+        panel.add(checkBox("GOTO_TRACING"));
+        panel.add(checkBox("QPS_TRACING"));
+        panel.add(checkBox("SML_TRACING"));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		Util.optionDialog(panel,"Select Runtime Options",JOptionPane.OK_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,"Ok");
+//    	Global.storeWorkspaceProperties();
+    }
 
 //    public static void selectRuntimeOptions(Project project, MyRunConfiguration settings) {
       public static void selectRuntimeOptions(MyRunConfiguration settings) {

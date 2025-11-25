@@ -45,7 +45,9 @@ public class SimulaRunConfigurationEditor extends SettingsEditor<SimulaRunConfig
         myMainPanel = new JPanel();
         myMainPanel.setLayout(new BoxLayout(myMainPanel, BoxLayout.Y_AXIS));
 //        myMainPanel = new JPanel(new BorderLayout());
+
 //        myMainPanel.add(parentEditor.component);
+
 //        myMainPanel.add(coveragePanel);
 //        myMainPanel.add(parallelPanel);
         myMainPanel.add(new JLabel("Edit: com.simula.extensions.test1.SimulaRunConfigurationEditor"));

@@ -1,4 +1,4 @@
-package com.simula.extensions.runConfigurationExtension;
+package com.simula.extensions.runConfigurationExtension.test3;
 
 import com.intellij.execution.configurations.ConfigurationFactory;
 import com.intellij.execution.configurations.ConfigurationType;
@@ -6,13 +6,14 @@ import com.intellij.execution.configurations.ConfigurationTypeBase;
 import com.intellij.execution.configurations.RunConfiguration;
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.project.Project;
+import groovy.util.FactoryBuilderSupport;
 import org.jetbrains.annotations.NotNull;
 
-public class SimulaRunConfigurationType extends ConfigurationTypeBase {
+public class MyRunConfigurationType_draft1 extends ConfigurationTypeBase {
     private static MyConfigurationFactory myConfigurationFactory;
-    private static SimulaRunConfigurationType INSTANCE;
+    private static MyRunConfigurationType_draft1 INSTANCE;
 
-    public SimulaRunConfigurationType() {
+    public MyRunConfigurationType_draft1() {
         // ID, Name, Description, Icon
         super("Simula",
                 "Simula",
@@ -23,14 +24,14 @@ public class SimulaRunConfigurationType extends ConfigurationTypeBase {
         addFactory(myConfigurationFactory);
     }
 
-    public static @NotNull SimulaRunConfigurationType getInstance() {
-        if(SimulaRunConfigurationType.INSTANCE == null)
-            SimulaRunConfigurationType.INSTANCE = new SimulaRunConfigurationType();
-        return SimulaRunConfigurationType.INSTANCE;
+    public static @NotNull MyRunConfigurationType_draft1 getInstance() {
+        if(MyRunConfigurationType_draft1.INSTANCE == null)
+            MyRunConfigurationType_draft1.INSTANCE = new MyRunConfigurationType_draft1();
+        return MyRunConfigurationType_draft1.INSTANCE;
     }
 
     public static ConfigurationFactory myFactory() {
-        return SimulaConfigurationFactory.getInstance();
+        return com.simula.extensions.runConfigurationExtension.test3.MyConfigurationFactory.getInstance();
     }
 
 //    public static FactoryBuilderSupport getInstance() {

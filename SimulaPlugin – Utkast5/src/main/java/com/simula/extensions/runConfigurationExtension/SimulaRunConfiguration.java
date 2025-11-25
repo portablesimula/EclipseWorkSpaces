@@ -10,8 +10,11 @@ import com.intellij.execution.runners.ExecutionEnvironment;
 import com.intellij.openapi.options.SettingsEditor;
 import com.intellij.openapi.options.SettingsEditorGroup;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.roots.ProjectFileIndex;
 import com.intellij.openapi.util.NlsSafe;
 import com.simula.extensions.runConfigurationExtension.editor.SimulaRunConfigurationEditor;
+import com.simula.extensions.runConfigurationExtension.run.MyRunProfileState;
+import com.simula.extensions.runConfigurationExtension.run.SimulaRunProfileState;
 import com.simula.util.Util;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -24,6 +27,11 @@ public class SimulaRunConfiguration implements RunConfiguration {
     String name;
 
     public SimulaRunConfigurationSettings settings;
+
+    @Override
+    public String toString() {
+        return "SimulaRunConfiguration["+name+", project:"+project.getName()+", "+simulaRunConfigurationType+"]";
+    }
 
     public SimulaRunConfiguration(@NotNull Project project, SimulaRunConfigurationType simulaRunConfigurationType) {
         this.project = project;
@@ -111,8 +119,24 @@ public class SimulaRunConfiguration implements RunConfiguration {
                                               @NotNull ExecutionEnvironment environment) throws ExecutionException {
 //        executor.
 //        environment.
-        throw new RuntimeException("SimulaRunConfiguration.getState: ");
-//       return null;
+//          public @NotNull Project getProject()
+//          public @NotNull ExecutionTarget getExecutionTarget()
+//          public @NotNull RunProfile getRunProfile()
+
+
+        // Iterate through all content files in the project
+        System.out.println("SimulaRunConfiguration.getState: Iterate through all content files in the project");
+        ProjectFileIndex.SERVICE.getInstance(project).iterateContent(virtualFile -> {
+            // Process the virtualFile
+            System.out.println(virtualFile.getPath());
+            return true; // Continue iteration
+        });
+
+//        Util.askRunSimula(virtualFile.getPath());
+
+//        throw new RuntimeException("SimulaRunConfiguration.getState: ");
+//        return new SimulaRunProfileState();
+        return new MyRunProfileState(environment, this);
     }
 
     /**

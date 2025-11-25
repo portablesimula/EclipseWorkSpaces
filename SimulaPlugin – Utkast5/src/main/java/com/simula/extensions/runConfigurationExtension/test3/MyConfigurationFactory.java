@@ -1,20 +1,20 @@
-package com.simula.extensions.runConfigurationExtension;
+package com.simula.extensions.runConfigurationExtension.test3;
 
 import com.intellij.execution.configurations.ConfigurationFactory;
 import com.intellij.execution.configurations.RunConfiguration;
 import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.NotNull;
 
-public class SimulaConfigurationFactory extends ConfigurationFactory {
-    private static SimulaConfigurationFactory INSTANCE;
+public class MyConfigurationFactory extends ConfigurationFactory {
+    private static MyConfigurationFactory INSTANCE;
 
-    protected SimulaConfigurationFactory() {
-        super(SimulaRunConfigurationType.getInstance());
+    protected MyConfigurationFactory() {
+        super(MyRunConfigurationType_draft1.getInstance());
     }
 
-    public static @NotNull SimulaConfigurationFactory getInstance() {
-        if(SimulaConfigurationFactory.INSTANCE == null) SimulaConfigurationFactory.INSTANCE = new SimulaConfigurationFactory();
-        return SimulaConfigurationFactory.INSTANCE;
+    public static @NotNull MyConfigurationFactory getInstance() {
+        if(MyConfigurationFactory.INSTANCE == null) MyConfigurationFactory.INSTANCE = new MyConfigurationFactory();
+        return MyConfigurationFactory.INSTANCE;
     }
 
     /**

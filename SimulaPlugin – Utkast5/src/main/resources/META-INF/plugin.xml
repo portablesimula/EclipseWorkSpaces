@@ -51,10 +51,10 @@
 
     <!-- test3 -->
         <!-- Register your main configuration type first -->
-        <configurationType implementation="com.simula.extensions.runConfigurationExtension.SimulaRunConfigurationType"/>
+        <configurationType implementation="com.simula.extensions.runConfigurationExtension.test3.MyRunConfigurationType_draft1"/>
 
         <!-- Register the producer to link it to the context menu -->
-        <runConfigurationProducer implementation="com.simula.extensions.runConfigurationExtension.MyFileRunConfigurationProducer"/>
+        <runConfigurationProducer implementation="com.simula.extensions.runConfigurationExtension.test3.MyFileRunConfigurationProducer"/>
     -->
 
         <executor implementation="com.simula.extensions.programRunner.InCmdExecutor"/>
