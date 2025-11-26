@@ -4,20 +4,26 @@ import com.intellij.execution.configurations.ConfigurationFactory;
 import com.intellij.execution.configurations.ConfigurationType;
 import com.intellij.execution.configurations.ConfigurationTypeBase;
 import com.intellij.execution.configurations.RunConfiguration;
-import com.intellij.icons.AllIcons;
 import com.intellij.openapi.project.Project;
+import com.simula.util.Util;
 import org.jetbrains.annotations.NotNull;
 
 public class SimulaRunConfigurationType extends ConfigurationTypeBase {
     private static MyConfigurationFactory myConfigurationFactory;
     private static SimulaRunConfigurationType INSTANCE;
 
+//    public MyConfigurationType() {
+//        super("MY_RUN_CONFIGURATION_TYPE_ID", "My Configuration", null, () -> MyIcons.MyIcon);
+//        addFactory(new MyConfigurationFactory(this));
+//    }
+
     public SimulaRunConfigurationType() {
         // ID, Name, Description, Icon
         super("Simula",
                 "Simula",
                 "A custom run configuration type for Simula",
-                AllIcons.General.Information); // Use a relevant icon
+//                AllIcons.General.Information); // Use a relevant icon
+                Util.getSimulaIcon()); // Use a relevant icon
 //        addFactory(new MyConfigurationFactory(this));
         myConfigurationFactory = new MyConfigurationFactory(this);
         addFactory(myConfigurationFactory);
@@ -34,21 +40,21 @@ public class SimulaRunConfigurationType extends ConfigurationTypeBase {
     }
 
 //    public static FactoryBuilderSupport getInstance() {
-//        if(true) throw new RuntimeException("MyRunConfigurationType.getInstance: FactoryBuilderSupport");
+//        if(true) throw new RuntimeException("SimulaRunConfigurationType.getInstance: FactoryBuilderSupport");
 //        return null;
 //    }
 
     public static @NotNull ConfigurationFactory getFactory() {
 //        if (true) throw new RuntimeException("MyRunConfigurationType_saved.getFactory: FactoryBuilderSupport");
-        System.out.println("MyRunConfigurationType.getFactory: ");
+        System.out.println("SimulaRunConfigurationType.getFactory: ");
 //        ConfigurationFactory[] factories = INSTANCE.getFactories();
 //        return factories[0];
         return myFactory();
     }
 
 //    public static @NotNull ConfigurationFactory getFactory() {
-//        if(true) throw new RuntimeException("MyRunConfigurationType.getFactory: FactoryBuilderSupport");
-//        System.out.println("MyRunConfigurationType.getFactory: FactoryBuilderSupport");
+//        if(true) throw new RuntimeException("SimulaRunConfigurationType.getFactory: FactoryBuilderSupport");
+//        System.out.println("SimulaRunConfigurationType.getFactory: FactoryBuilderSupport");
 //
 ////        Retrieves an enumeration of factory classes/object specified by a property. The property is gotten from the environment and the provider resource file associated with the given context and concatenated. See getProperty(). The resulting property value is a list of class names.
 ////        This method then loads each class using the current thread's context class loader and keeps them in a list. Any class that cannot be loaded is ignored. The resulting list is then cached in a two-level hash table, keyed first by the context class loader and then by the property's value. The next time threads of the same context class loader call this method, they can use the cached list.
@@ -71,23 +77,24 @@ public class SimulaRunConfigurationType extends ConfigurationTypeBase {
     private static class MyConfigurationFactory extends ConfigurationFactory {
         protected MyConfigurationFactory(ConfigurationType type) {
             super(type);
-//            if(true) throw new RuntimeException("NEW MyRunConfigurationType: ");
-            System.out.println("NEW MyRunConfigurationType: ");
+//            if(true) throw new RuntimeException("NEW SimulaRunConfigurationType: ");
+            System.out.println("NEW SimulaRunConfigurationType: ");
         }
 
         @Override
         public String getId(){
-//            if(true) throw new RuntimeException("MyRunConfigurationType.getId: ");
-            System.out.println("MyRunConfigurationType.getId: ");
+//            if(true) throw new RuntimeException("SimulaRunConfigurationType.getId: ");
+            System.out.println("SimulaRunConfigurationType.getId: -> Simula");
+            Thread.dumpStack();
             return("Simula");
         }
 
         @NotNull
         @Override
         public RunConfiguration createTemplateConfiguration(@NotNull Project project) {
-            System.out.println("MyRunConfigurationType.createTemplateConfiguration: ");
-//            if(true) throw new RuntimeException("MyRunConfigurationType.createTemplateConfiguration: ");
-            return new MyRunConfiguration(project, this, "My Run Config");
+            System.out.println("SimulaRunConfigurationType.createTemplateConfiguration: ");
+//            if(true) throw new RuntimeException("SimulaRunConfigurationType.createTemplateConfiguration: ");
+            return new SimulaRunConfiguration(project, this, "My Run Config");
         }
     }
 }

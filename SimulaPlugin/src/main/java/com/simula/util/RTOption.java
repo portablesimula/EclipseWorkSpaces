@@ -5,7 +5,7 @@
 /// page: https://creativecommons.org/licenses/by/4.0/
 package com.simula.util;
 
-import com.simula.extensions.runConfigurationExtension.MyRunConfiguration;
+import com.simula.extensions.runConfigurationExtension.SimulaRunConfiguration;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -78,7 +78,7 @@ public final class RTOption {
 	/// Editor Utility: Select Runtime Options.
 
 //    public static void selectRuntimeOptions(Project project, MyRunConfiguration settings) {
-      public static void selectRuntimeOptions(MyRunConfiguration settings) {
+      public static void selectRuntimeOptions(SimulaRunConfiguration settings) {
 //        Project project = settings.project;
 //        System.out.println("PresentableUrl: " + project.getPresentableUrl());
 //        System.out.println("getProjectFile: " + project.getProjectFile());

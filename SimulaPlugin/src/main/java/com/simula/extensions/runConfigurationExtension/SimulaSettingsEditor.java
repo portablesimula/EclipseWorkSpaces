@@ -9,11 +9,11 @@ import org.jetbrains.annotations.NotNull;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SimulaSettingsEditor extends SettingsEditor<MyRunConfiguration> {
+public class SimulaSettingsEditor extends SettingsEditor<SimulaRunConfiguration> {
     private final JPanel myPanel;
 //    private final JTextField scriptPathField;
 
-    public SimulaSettingsEditor(MyRunConfiguration settings) {
+    public SimulaSettingsEditor(SimulaRunConfiguration settings) {
 //        myPanel = new JPanel();
 //        scriptPathField = new JTextField();
 //        myPanel.add(new JLabel("Script Path:"));
@@ -41,13 +41,13 @@ public class SimulaSettingsEditor extends SettingsEditor<MyRunConfiguration> {
     }
 
     @Override
-    protected void resetEditorFrom(@NotNull MyRunConfiguration settings) {
+    protected void resetEditorFrom(@NotNull SimulaRunConfiguration settings) {
         // Update UI from configuration settings
         // scriptPathField.setText(s.getOptions().getScriptPath());
     }
 
     @Override
-    protected void applyEditorTo(@NotNull MyRunConfiguration settings) {
+    protected void applyEditorTo(@NotNull SimulaRunConfiguration settings) {
         // Update configuration settings from UI
         // s.getOptions().setScriptPath(scriptPathField.getText());
     }

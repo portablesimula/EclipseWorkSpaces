@@ -8,7 +8,11 @@ import org.jetbrains.annotations.NotNull;
 public class SimulaConfigurationFactory extends ConfigurationFactory {
     private static SimulaConfigurationFactory INSTANCE;
 
-    protected SimulaConfigurationFactory() {
+    protected SimulaConfigurationFactory(SimulaRunConfigurationType type) {
+        super(type);
+    }
+
+   protected SimulaConfigurationFactory() {
         super(SimulaRunConfigurationType.getInstance());
     }
 
@@ -28,7 +32,7 @@ public class SimulaConfigurationFactory extends ConfigurationFactory {
 //        if(true) throw new RuntimeException("MyConfigurationFactory.createTemplateConfiguration: ");
         // Instantiate your custom RunConfiguration with default settings
         // The name "Template" is a common convention for the template instance
-        return new MyRunConfiguration(project, this, "Template");
+        return new SimulaRunConfiguration(project, this, "Template");
     }
 
     @Override

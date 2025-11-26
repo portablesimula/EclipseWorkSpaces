@@ -60,6 +60,7 @@ public class InCmdRunner extends GenericProgramRunner<RunnerSettings> {
     @NotNull
     @Override
     public String getRunnerId() {
+        if(true) throw new RuntimeException("InCmdRunner.getRunnerId: ");
         return "InCmdRunner";
     }
 
@@ -67,10 +68,12 @@ public class InCmdRunner extends GenericProgramRunner<RunnerSettings> {
     public boolean canRun(@NotNull String executorId, @NotNull RunProfile profile) {
 //        return executorId.equals(InCmdExecutor.executorId) &&
 //                (profile instanceof ApplicationConfiguration || profile instanceof JavaTestConfigurationBase);
+        if(true) throw new RuntimeException("InCmdRunner.canRun: ");
         return true;
     }
 
     private boolean isTerminalPluginEnabled() {
+        if(true) throw new RuntimeException("InCmdRunner.isTerminalPluginEnabled: ");
         if (terminalPluginEnabled != null) return terminalPluginEnabled;
         IdeaPluginDescriptor terminalPlugin = PluginManager.getPlugin(PluginId.getId("org.jetbrains.plugins.terminal"));
         this.terminalPluginEnabled = terminalPlugin != null && terminalPlugin.isEnabled();
@@ -80,9 +83,10 @@ public class InCmdRunner extends GenericProgramRunner<RunnerSettings> {
     @Nullable
     @Override
     protected RunContentDescriptor doExecute(@NotNull RunProfileState runProfileState, @NotNull ExecutionEnvironment environment) throws ExecutionException {
+        if(true) throw new RuntimeException("InCmdRunner.doExecute: ");
         FileDocumentManager.getInstance().saveAllDocuments();
 
-        if(true) throw new RuntimeException("InCmdRunner.RunContentDescriptor: runProfileState="+runProfileState);
+        if(true) throw new RuntimeException("InCmdRunner.doExecute: runProfileState="+runProfileState);
 
 //        JavaCommandLineState state = (JavaCommandLineState) runProfileState;
 //        JavaParameters javaParameters = state.getJavaParameters();
@@ -146,6 +150,7 @@ public class InCmdRunner extends GenericProgramRunner<RunnerSettings> {
                                          boolean passParentEnv,
                                          @NotNull Map<String, String> env) throws ProcessNotCreatedException {
         Process process;
+        if(true) throw new RuntimeException("InCmdRunner.runInExternalCmd: ");
         try {
             String[] command = createCommand(true, commandLine, workingDirectory, classPathPathsString);
             ProcessBuilder builder = new ProcessBuilder().command(command);
@@ -175,6 +180,7 @@ public class InCmdRunner extends GenericProgramRunner<RunnerSettings> {
 
     private static String[] createCommand(boolean external, String commandLine, String workingDirectory,
                                           String classPathPathsString) throws IOException {
+        if(true) throw new RuntimeException("InCmdRunner.createCommand: ");
         if (SystemInfo.isWindows) {
             return external ?
                     new String[]{"cmd.exe", "/C", "\"start cmd.exe /K \"" + commandLine + "\"\""} :
@@ -205,6 +211,7 @@ public class InCmdRunner extends GenericProgramRunner<RunnerSettings> {
     }
 
     private void showWarning(@NotNull String htmlContent, @NotNull ExecutionEnvironment environment) {
+        if(true) throw new RuntimeException("InCmdRunner.showWarning: ");
         StatusBar statusBar = WindowManager.getInstance().getStatusBar(environment.getProject());
         JBPopupFactory.getInstance()
                 .createHtmlTextBalloonBuilder(htmlContent, MessageType.WARNING, null)
@@ -214,6 +221,7 @@ public class InCmdRunner extends GenericProgramRunner<RunnerSettings> {
     }
 
     private static void clear(PathsList classPath) {
+        if(true) throw new RuntimeException("InCmdRunner.clear: ");
         List<String> pathList = new ArrayList<>(classPath.getPathList());
         for (String path : pathList) {
             classPath.remove(path);
@@ -221,6 +229,7 @@ public class InCmdRunner extends GenericProgramRunner<RunnerSettings> {
     }
 
     private static void patchParameterList(ParametersList parametersList, String toAdd, String toRemove, Integer startPort) {
+        if(true) throw new RuntimeException("InCmdRunner.patchParameterList: ");
         if (!toAdd.isEmpty()) {
             if (startPort != null && toAdd.contains("$freePort")) {
                 Integer freePort = findFreePort(startPort);
@@ -250,6 +259,7 @@ public class InCmdRunner extends GenericProgramRunner<RunnerSettings> {
 
     //Adapted from org.jetbrains.jps.incremental.java.JavaBuilder.findFreePort()
     private static Integer findFreePort(int startFrom) {
+        if(true) throw new RuntimeException("InCmdRunner.findFreePort: ");
         for (int i = 0; i < 100; i++) {
             try {
                 int tryPort = startFrom + i;

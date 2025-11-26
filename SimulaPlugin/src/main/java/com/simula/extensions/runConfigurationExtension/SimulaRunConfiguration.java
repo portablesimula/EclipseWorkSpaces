@@ -10,12 +10,13 @@ import com.intellij.execution.runners.ExecutionEnvironment;
 import com.intellij.openapi.options.SettingsEditor;
 import com.intellij.openapi.options.SettingsEditorGroup;
 import com.intellij.openapi.project.Project;
+import com.simula.extensions.runConfigurationExtension.run.MyCommandLineState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class MyRunConfiguration extends LocatableConfigurationBase<MyRunConfigurationOptions> {
+public class SimulaRunConfiguration extends LocatableConfigurationBase<MyRunConfigurationOptions> {
 
-    protected MyRunConfiguration(@NotNull Project project, @NotNull ConfigurationFactory factory, String name) {
+    protected SimulaRunConfiguration(@NotNull Project project, @NotNull ConfigurationFactory factory, String name) {
         super(project, factory, name);
         System.out.println("NEW MyRunConfiguration: ");
 //        if(true) throw new RuntimeException("NEW MyRunConfiguration: ");
@@ -30,7 +31,8 @@ public class MyRunConfiguration extends LocatableConfigurationBase<MyRunConfigur
         System.out.println("MyRunConfiguration.getState: environment.getModulePath: " + environment.getModulePath());
 
 
-        if(true) throw new RuntimeException("MyRunConfiguration.getState: ");
+        System.out.println("MyRunConfiguration.getState: ");
+//        if(true) throw new RuntimeException("MyRunConfiguration.getState: ");
         // Return the execution logic (see step 5)
         return new MyCommandLineState(environment);
     }

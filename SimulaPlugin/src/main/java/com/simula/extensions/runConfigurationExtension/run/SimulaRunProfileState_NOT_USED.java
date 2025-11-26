@@ -9,7 +9,7 @@ import com.intellij.execution.runners.ProgramRunner;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class SimulaRunProfileState implements RunProfileState {
+public class SimulaRunProfileState_NOT_USED implements RunProfileState {
     /**
      * Starts the process.
      *

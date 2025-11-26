@@ -21,11 +21,13 @@ public class OptionsPatchConfiguration implements PersistentStateComponent<Optio
     @NotNull
     @Override
     public OptionsPatchConfiguration getState() {
+        if(true) throw new RuntimeException("OptionsPatchConfiguration.getState: ");
         return this;
     }
 
     @Override
     public void loadState(OptionsPatchConfiguration state) {
+        if(true) throw new RuntimeException("OptionsPatchConfiguration.loadState: ");
         toAddVmOptions = state.toAddVmOptions;
         toRemoveVmOptions = state.toRemoveVmOptions;
         toAddProgramOptions = state.toAddProgramOptions;

@@ -21,6 +21,10 @@
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
 
+    <!-- Following line: Cannot resolve plugin 'com.intellij.modules.java' in dependencies  -->
+    <depends>com.intellij.modules.java</depends>
+
+
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
@@ -54,7 +58,7 @@
         <configurationType implementation="com.simula.extensions.runConfigurationExtension.SimulaRunConfigurationType"/>
 
         <!-- Register the producer to link it to the context menu -->
-        <runConfigurationProducer implementation="com.simula.extensions.runConfigurationExtension.MyFileRunConfigurationProducer"/>
+        <runConfigurationProducer implementation="com.simula.extensions.runConfigurationExtension.SimulaFileRunConfigurationProducer"/>
     -->
 
         <executor implementation="com.simula.extensions.programRunner.InCmdExecutor"/>

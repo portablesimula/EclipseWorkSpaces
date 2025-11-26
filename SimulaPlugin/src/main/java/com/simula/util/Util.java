@@ -1,5 +1,7 @@
 package com.simula.util;
 
+import com.intellij.openapi.project.Project;
+
 import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
@@ -88,4 +90,14 @@ public class Util {
         return (answer);
     }
 
+    public static void printProject(String title, Project project) {
+        String id = "Util.printProject'"+title+": ";
+        System.out.println(id+project);
+        System.out.println(id+"Name: "+project.getName());
+        System.out.println(id+"Name: "+project.isOpen());
+        System.out.println(id+"Name: "+project.isInitialized());
+        System.out.println(id+"Name: "+project.isDefault());
+        System.out.println(id+"Name: "+project.getBasePath());
+        System.out.println(id+"Name: "+project.getName());
+    }
 }
