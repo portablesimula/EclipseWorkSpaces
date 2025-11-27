@@ -17,14 +17,15 @@ public class InCmdExecutor extends Executor {
     @NotNull
     @Override
     public String getToolWindowId() {
-        if(true) throw new RuntimeException("InCmdExecutor.getToolWindowId: ");
+        System.out.println("InCmdExecutor.getToolWindowId: ");
+//        if(true) throw new RuntimeException("InCmdExecutor.getToolWindowId: ");
     return ToolWindowId.DEBUG;
     }
 
     @NotNull
     @Override
     public Icon getToolWindowIcon() {
-        if(true) throw new RuntimeException("InCmdExecutor.getToolWindowId: ");
+        if(true) throw new RuntimeException("InCmdExecutor.getToolWindowIcon: ");
         return cmdExecutorIcon;
     }
 
@@ -58,20 +59,23 @@ public class InCmdExecutor extends Executor {
     @NotNull
     @Override
     public String getId() {
-        if(true) throw new RuntimeException("InCmdExecutor.getId: ");
+        System.out.println("InCmdExecutor.getId: ");
+//        if(true) throw new RuntimeException("InCmdExecutor.getId: ");
         return executorId;
     }
 
     @NotNull
     @Override
     public String getStartActionText() {
-        if(true) throw new RuntimeException("InCmdExecutor.getStartActionText: ");
+        System.out.println("InCmdExecutor.getStartActionText: ");
+//        if(true) throw new RuntimeException("InCmdExecutor.getStartActionText: ");
         return "Run in cmd";
     }
 
     @Override
     public String getContextActionId() {
-        if(true) throw new RuntimeException("InCmdExecutor.getContextActionId: ");
+        System.out.println("InCmdExecutor.getContextActionId: ");
+//        if(true) throw new RuntimeException("InCmdExecutor.getContextActionId: ");
         return "RunInCmd";
     }
 

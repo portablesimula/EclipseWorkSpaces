@@ -1,10 +1,8 @@
 plugins {
     id("java")
-//    id("org.jetbrains.kotlin.jvm") version "2.1.0"
-//    id("org.jetbrains.intellij.platform") version "2.7.1"
+    id("org.jetbrains.kotlin.jvm") version "2.1.0"
+    id("org.jetbrains.intellij.platform") version "2.7.1"
 
-    id("org.jetbrains.kotlin.jvm") version "2.2.21"
-    id("org.jetbrains.intellij.platform") version "2.10.5"
 }
 
 group = "com.example"
@@ -50,17 +48,16 @@ intellijPlatform {
     }
 }
 
-// MYH tasks {
-//    // Set the JVM compatibility versions
-//    withType<JavaCompile> {
-//        sourceCompatibility = "21"
-//        targetCompatibility = "21"
-//    }
-//}
+tasks {
+    // Set the JVM compatibility versions
+    withType<JavaCompile> {
+        sourceCompatibility = "21"
+        targetCompatibility = "21"
+    }
+}
 
 kotlin {
     compilerOptions {
-// MYH        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
-        jvmToolchain(21)
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
     }
 }

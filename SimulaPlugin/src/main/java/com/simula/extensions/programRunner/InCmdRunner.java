@@ -1,5 +1,9 @@
 package com.simula.extensions.programRunner;
 
+import com.intellij.execution.ExecutionResult;
+import com.intellij.execution.executors.DefaultRunExecutor;
+import com.jetbrains.cef.remote.thrift_codegen.Server;
+import com.simula.extensions.runConfigurationExtension.SimulaRunConfiguration;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import com.intellij.execution.ExecutionException;
@@ -60,15 +64,39 @@ public class InCmdRunner extends GenericProgramRunner<RunnerSettings> {
     @NotNull
     @Override
     public String getRunnerId() {
-        if(true) throw new RuntimeException("InCmdRunner.getRunnerId: ");
+        System.out.println("InCmdRunner.getRunnerId: ");
+//        if(true) throw new RuntimeException("InCmdRunner.getRunnerId: ");
         return "InCmdRunner";
     }
 
     @Override
     public boolean canRun(@NotNull String executorId, @NotNull RunProfile profile) {
+        System.out.println("InCmdRunner.canRun: ");
+//       if(true) throw new RuntimeException("InCmdRunner.canRun: ");
+
 //        return executorId.equals(InCmdExecutor.executorId) &&
 //                (profile instanceof ApplicationConfiguration || profile instanceof JavaTestConfigurationBase);
-        if(true) throw new RuntimeException("InCmdRunner.canRun: ");
+
+        // 1. Check if the executor is the one we support (e.g., the default "Run" executor)
+        if (!DefaultRunExecutor.EXECUTOR_ID.equals(executorId)) {
+           System.out.println("InCmdRunner.canRun: Check1: executorId="+executorId);
+//           if(true) throw new RuntimeException("InCmdRunner.canRun: Check1: executorId="+executorId);
+           return false;
+        }
+
+        // 2. Check if the configuration is an instance of your custom configuration type
+//        if (!(configuration instanceof SimulaRunConfiguration)) {
+//            return false;
+//        }
+
+        // 3. Perform specific validation of your configuration
+//        SimulaRunConfiguration myConfig = (SimulaRunConfiguration) configuration;
+//        // Example: Check if a required field like "main script path" is set
+//        if (myConfig.getScriptPath() == null || myConfig.getScriptPath().isEmpty()) {
+//            return false;
+//        }
+
+        // If all checks pass, the runner can handle this configuration
         return true;
     }
 
@@ -82,12 +110,44 @@ public class InCmdRunner extends GenericProgramRunner<RunnerSettings> {
 
     @Nullable
     @Override
-    protected RunContentDescriptor doExecute(@NotNull RunProfileState runProfileState, @NotNull ExecutionEnvironment environment) throws ExecutionException {
-        if(true) throw new RuntimeException("InCmdRunner.doExecute: ");
+    protected RunContentDescriptor doExecute(
+            @NotNull RunProfileState runProfileState,
+//            @NotNull ExecutionEnvironment environment) throws ExecutionException {
+            @NotNull ExecutionEnvironment env) throws ExecutionException {
+        System.out.println("InCmdRunner.doExecute: ");
+//        if(true) throw new RuntimeException("InCmdRunner.doExecute: ");
+
         FileDocumentManager.getInstance().saveAllDocuments();
 
-        if(true) throw new RuntimeException("InCmdRunner.doExecute: runProfileState="+runProfileState);
 
+        // 1. Save all documents
+        FileDocumentManager.getInstance().saveAllDocuments();
+        System.out.println("InCmdRunner.doExecute: Step1 Done - runProfileState="+runProfileState);
+//        if(true) throw new RuntimeException("InCmdRunner.doExecute: runProfileState="+runProfileState);
+
+        // 2. The state is responsible for setting up the command line and creating the process handler
+        // ExecutionResult holds the ProcessHandler and the ConsoleView
+        final ExecutionResult executionResult = runProfileState.execute(env.getExecutor(), this);
+        if (executionResult == null) {
+            return null; // Execution failed or was cancelled
+        }
+
+        // 3. Create the RunContentDescriptor
+        final RunContentDescriptor descriptor = new RunContentDescriptor(
+                executionResult.getExecutionConsole(),
+                executionResult.getProcessHandler(),
+                executionResult.getExecutionConsole().getComponent(),
+                env.getRunProfile().getName()
+        );
+
+        // Optional: Set the reuse of the run content descriptor if needed
+        env.setContentToReuse(descriptor);
+        // Optional: Set the reuse of the run content descriptor if needed
+        env.setContentToReuse(descriptor);
+
+        return descriptor;
+
+        // TIDLIGERE KODE FORSLAG
 //        JavaCommandLineState state = (JavaCommandLineState) runProfileState;
 //        JavaParameters javaParameters = state.getJavaParameters();
 //        javaParameters.setUseDynamicClasspath(false);
@@ -140,7 +200,6 @@ public class InCmdRunner extends GenericProgramRunner<RunnerSettings> {
 //            }
 //            runInExternalCmd(classPathPathsString, generalCommandLine, workingDirectory, newCommandLine, passParentEnvs, env);
 //        }
-        return null;
     }
 
     private static void runInExternalCmd(@NotNull String classPathPathsString,

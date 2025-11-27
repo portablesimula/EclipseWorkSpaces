@@ -39,7 +39,7 @@ public class MyCommandLineState extends CommandLineState {
     protected @NotNull ProcessHandler startProcess() throws ExecutionException {
         // 1. Create a GeneralCommandLine object
         System.out.println("MyCommandLineState.startProcess: 1. Create a GeneralCommandLine object");
-        if (true) throw new RuntimeException("MyCommandLineState.startProcess: 1. Create a GeneralCommandLine object");
+//        if (true) throw new RuntimeException("MyCommandLineState.startProcess: 1. Create a GeneralCommandLine object");
         String workDirectory = getEnvironment().getProject().getBasePath();
         GeneralCommandLine commandLine = new GeneralCommandLine()
             .withExePath("/path/to/your/executable") // Set the path to your executable

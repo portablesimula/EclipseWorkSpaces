@@ -16,7 +16,9 @@
         Enter short description for your plugin here.<br>
         <em>most HTML tags may be used</em>
     ]]></description-->
-
+    <description>
+        Text ... xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    </description>
     <!-- Product and plugin compatibility requirements.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
