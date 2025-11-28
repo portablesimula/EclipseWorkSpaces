@@ -25,60 +25,60 @@ import javax.swing.JPanel;
 /// 
 /// @author Øystein Myhre Andersen
 public final class RTOption {
-	/** Runtime Option */ public static boolean VERBOSE = false;
-	/** Runtime Option */ public static boolean BLOCK_TRACING = false;
-	/** Runtime Option */ public static boolean GOTO_TRACING = false;
-	/** Runtime Option */ public static boolean QPS_TRACING = false;
-	/** Runtime Option */ public static boolean SML_TRACING = false;
+	/** Runtime Option */ public boolean VERBOSE = false;
+	/** Runtime Option */ public boolean BLOCK_TRACING = false;
+	/** Runtime Option */ public boolean GOTO_TRACING = false;
+	/** Runtime Option */ public boolean QPS_TRACING = false;
+	/** Runtime Option */ public boolean SML_TRACING = false;
 
 
 	/// The default constructor
-	private RTOption() {}
+    public RTOption() {}
 
 	/// Initiate Runtime options with default values.
-    public static void InitRuntimeOptions() {
-		RTOption.VERBOSE = false;
-//		RTOption.USE_CONSOLE=true;
-		RTOption.BLOCK_TRACING = false;
-		RTOption.GOTO_TRACING = false;
-		RTOption.QPS_TRACING = false;
-		RTOption.SML_TRACING = false;
+    public void InitRuntimeOptions() {
+		VERBOSE = false;
+//		USE_CONSOLE=true;
+		BLOCK_TRACING = false;
+		GOTO_TRACING = false;
+		QPS_TRACING = false;
+		SML_TRACING = false;
 	}
 
     /// Add Runtime options to the argument vector.
     /// @param args the argument vector
-	public static void addRTArguments(Vector<String> args) {
-		if(RTOption.VERBOSE) args.add("-verbose");
-		if(RTOption.BLOCK_TRACING) args.add("-blockTracing");
-		if(RTOption.GOTO_TRACING) args.add("-gotoTracing");
-		if(RTOption.QPS_TRACING) args.add("-qpsTracing");
-		if(RTOption.SML_TRACING) args.add("-smlTracing");
+	public void addRTArguments(Vector<String> args) {
+		if(VERBOSE) args.add("-verbose");
+		if(BLOCK_TRACING) args.add("-blockTracing");
+		if(GOTO_TRACING) args.add("-gotoTracing");
+		if(QPS_TRACING) args.add("-qpsTracing");
+		if(SML_TRACING) args.add("-smlTracing");
 	}
 	
-	/// Get Compiler options from property file.
-	/// @param properties the properties to decode.
-	public static void getRuntimeOptions(Properties properties) {
-		RTOption.VERBOSE = properties.getProperty("simula.runtime.option.VERBOSE", "false").equalsIgnoreCase("true");
-		RTOption.BLOCK_TRACING = properties.getProperty("simula.runtime.option.BLOCK_TRACING", "false").equalsIgnoreCase("true");
-		RTOption.GOTO_TRACING = properties.getProperty("simula.runtime.option.GOTO_TRACING", "false").equalsIgnoreCase("true");
-		RTOption.QPS_TRACING = properties.getProperty("simula.runtime.option.QPS_TRACING", "false").equalsIgnoreCase("true");
-		RTOption.SML_TRACING = properties.getProperty("simula.runtime.option.SML_TRACING", "false").equalsIgnoreCase("true");
-	}
+//	/// Get Compiler options from property file.
+//	/// @param properties the properties to decode.
+//	public void getRuntimeOptions(Properties properties) {
+//		VERBOSE = properties.getProperty("simula.runtime.option.VERBOSE", "false").equalsIgnoreCase("true");
+//		BLOCK_TRACING = properties.getProperty("simula.runtime.option.BLOCK_TRACING", "false").equalsIgnoreCase("true");
+//		GOTO_TRACING = properties.getProperty("simula.runtime.option.GOTO_TRACING", "false").equalsIgnoreCase("true");
+//		QPS_TRACING = properties.getProperty("simula.runtime.option.QPS_TRACING", "false").equalsIgnoreCase("true");
+//		SML_TRACING = properties.getProperty("simula.runtime.option.SML_TRACING", "false").equalsIgnoreCase("true");
+//	}
 	
-	/// Set Compiler options in property file.
-	/// @param properties the properties to encode.
-	public static void setRuntimeOptions(Properties properties) {
-		properties.setProperty("simula.runtime.option.VERBOSE", ""+RTOption.VERBOSE);
-		properties.setProperty("simula.runtime.option.BLOCK_TRACING", ""+RTOption.BLOCK_TRACING);
-		properties.setProperty("simula.runtime.option.GOTO_TRACING", ""+RTOption.GOTO_TRACING);
-		properties.setProperty("simula.runtime.option.QPS_TRACING", ""+RTOption.QPS_TRACING);
-		properties.setProperty("simula.runtime.option.SML_TRACING", ""+RTOption.SML_TRACING);
-	}
+//	/// Set Compiler options in property file.
+//	/// @param properties the properties to encode.
+//	public void setRuntimeOptions(Properties properties) {
+//		properties.setProperty("simula.runtime.option.VERBOSE", ""+VERBOSE);
+//		properties.setProperty("simula.runtime.option.BLOCK_TRACING", ""+BLOCK_TRACING);
+//		properties.setProperty("simula.runtime.option.GOTO_TRACING", ""+GOTO_TRACING);
+//		properties.setProperty("simula.runtime.option.QPS_TRACING", ""+QPS_TRACING);
+//		properties.setProperty("simula.runtime.option.SML_TRACING", ""+SML_TRACING);
+//	}
     
 	/// Editor Utility: Select Runtime Options.
 
 //    public static void selectRuntimeOptions(Project project, MyRunConfiguration settings) {
-      public static void selectRuntimeOptions(SimulaRunConfiguration settings) {
+      public void selectRuntimeOptions(SimulaRunConfiguration settings) {
 //        Project project = settings.project;
 //        System.out.println("PresentableUrl: " + project.getPresentableUrl());
 //        System.out.println("getProjectFile: " + project.getProjectFile());
@@ -107,13 +107,13 @@ public final class RTOption {
     /// Editor Utility: Create a checkBox without tooltips.
 	/// @param id option id
 	/// @return the resulting check box
-	public static JCheckBox checkBox(String id) {
+	public JCheckBox checkBox(String id) {
         JCheckBox item = new JCheckBox(id);
     	item.setBackground(Color.white);
-        item.setSelected(RTOption.getOption(id));
+        item.setSelected(getOption(id));
         item.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		RTOption.setOption(id,item.isSelected());
+        		setOption(id,item.isSelected());
 		}});
         return(item);
 	}
@@ -121,24 +121,33 @@ public final class RTOption {
 	/// Returns the option name 'id'
 	/// @param id option id
 	/// @return the option name 'id'
-	private static boolean getOption(String id) {
-		if(id.equalsIgnoreCase("VERBOSE")) return(VERBOSE); 
-		if(id.equalsIgnoreCase("BLOCK_TRACING")) return(BLOCK_TRACING); 
-		if(id.equalsIgnoreCase("GOTO_TRACING")) return(GOTO_TRACING); 
-		if(id.equalsIgnoreCase("QPS_TRACING")) return(QPS_TRACING); 
-		if(id.equalsIgnoreCase("SML_TRACING")) return(SML_TRACING); 
+	private boolean getOption(String id) {
+		if(id.equalsIgnoreCase("VERBOSE")) return(VERBOSE);
+		if(id.equalsIgnoreCase("BLOCK_TRACING")) return(BLOCK_TRACING);
+		if(id.equalsIgnoreCase("GOTO_TRACING")) return(GOTO_TRACING);
+		if(id.equalsIgnoreCase("QPS_TRACING")) return(QPS_TRACING);
+		if(id.equalsIgnoreCase("SML_TRACING")) return(SML_TRACING);
 		return(false);
 	}
 
 	/// Set the option named 'id' to the given value
 	/// @param id option id
 	/// @param val new option value
-	private static void setOption(String id,boolean val) {
-		if(id.equalsIgnoreCase("VERBOSE")) VERBOSE=val; 
-		if(id.equalsIgnoreCase("BLOCK_TRACING")) BLOCK_TRACING=val; 
-		if(id.equalsIgnoreCase("GOTO_TRACING")) GOTO_TRACING=val; 
-		if(id.equalsIgnoreCase("QPS_TRACING")) QPS_TRACING=val; 
-		if(id.equalsIgnoreCase("SML_TRACING")) SML_TRACING=val; 
+	private void setOption(String id,boolean val) {
+		if(id.equalsIgnoreCase("VERBOSE")) VERBOSE=val;
+		if(id.equalsIgnoreCase("BLOCK_TRACING")) BLOCK_TRACING=val;
+		if(id.equalsIgnoreCase("GOTO_TRACING")) GOTO_TRACING=val;
+		if(id.equalsIgnoreCase("QPS_TRACING")) QPS_TRACING=val;
+		if(id.equalsIgnoreCase("SML_TRACING")) SML_TRACING=val;
 	}
+
+    public void print(String title) {
+        Util.log("====== " + title + " ======");
+        Util.log(title + "VERBOSE=" + VERBOSE);
+        Util.log(title + "BLOCK_TRACING" + BLOCK_TRACING);
+        Util.log(title + "GOTO_TRACING" + GOTO_TRACING);
+        Util.log(title + "QPS_TRACING" + QPS_TRACING);
+        Util.log(title + "SML_TRACING" + SML_TRACING);
+    }
 
 }

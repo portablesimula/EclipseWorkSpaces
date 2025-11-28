@@ -17,11 +17,6 @@ public class SimulaFileRunConfigurationProducer extends LazyRunConfigurationProd
 //        if(true) throw new RuntimeException("MyFileRunConfigurationProducer.getConfigurationFactory: ");
         System.out.println("MyFileRunConfigurationProducer.getConfigurationFactory: ");
 
-//        // Return the factory defined in your ConfigurationType implementation
-////        return MyRunConfigurationType.getInstance().getFactories()[0];
-//        // Return the factory associated with your configuration type
-//        return SimulaRunConfigurationType.getFactory();
-
         // Return an instance of your ConfigurationFactory
         // The type associated with this factory should be the one you want this producer to create
         return new SimulaConfigurationFactory(new SimulaRunConfigurationType());

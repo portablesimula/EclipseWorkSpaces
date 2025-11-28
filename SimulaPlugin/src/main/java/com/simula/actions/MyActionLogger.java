@@ -49,7 +49,7 @@ public class MyActionLogger implements AnActionListener {
             System.out.println("MyActionLogger: InputEvent=" + ie);
             // Build project menu item was selected
             Project project = event.getProject();
-            throw new RuntimeException("MyActionLogger.beforeActionPerformed: CompileDirtyAction, project="+project);
+//            throw new RuntimeException("MyActionLogger.beforeActionPerformed: CompileDirtyAction, project="+project);
         }
 //        throw new RuntimeException("MyActionLogger.beforeActionPerformed: ");
     }
@@ -58,7 +58,12 @@ public class MyActionLogger implements AnActionListener {
 //    public void afterActionPerformed(@NotNull AnAction action, @NotNull AnActionEvent event) {
     public void afterActionPerformed(@NotNull AnAction action, @NotNull AnActionEvent event, @NotNull AnActionResult result) {
         // This method is called after an action has been performed
-        System.out.println("MyActionLogger: Action '" + action.getClass().getSimpleName() + "' has been performed.");
+        ActionManager actionManager = ActionManager.getInstance();
+        System.out.println("MyActionLogger: Action '"
+                + action.getClass().getSimpleName()
+                + "' ActionID='"
+                + actionManager.getId(action)
+                + "' has been performed.");
 //      throw new RuntimeException("MyActionLogger.afterActionPerformed: ");
     }
 

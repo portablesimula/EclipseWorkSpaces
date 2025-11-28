@@ -1,4 +1,4 @@
-package com.simula.extensions.programRunner;
+package com.simula.extensions.runConfigurationExtension.run.cmdRunner;
 
 import javax.swing.Box;
 import javax.swing.JCheckBox;
@@ -35,7 +35,7 @@ public class InCmdConfigurable implements Configurable {
     private JCheckBox findFreePort;
 
     public InCmdConfigurable(Project project) {
-        if(true) throw new RuntimeException("NEW InCmdConfigurable: ");
+//        if(true) throw new RuntimeException("NEW InCmdConfigurable: ");
         myProject = project;
     }
 

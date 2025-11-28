@@ -1,4 +1,4 @@
-package com.simula.extensions.programRunner;
+package com.simula.extensions.runConfigurationExtension.run.cmdRunner;
 
 import javax.swing.Icon;
 

@@ -1,10 +1,17 @@
 package com.simula.util;
 
+import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.Messages;
+import org.jetbrains.annotations.NonNls;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.FileNotFoundException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.net.URL;
+import java.util.List;
 
 public class Util {
     static Util INSTANCE = new Util();
@@ -53,7 +60,68 @@ public class Util {
     public static void warning(String s) {
     }
 
+    private static PrintStream logstream;
+    public static void log(String s) {
+        if(logstream == null) {
+            try {
+                logstream = new PrintStream("C:\\MYLOGS\\logfile.txt");
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        logstream.println(s); logstream.flush();
+    }
+
+    public static void logActionList(String prefix) {
+        ActionManager actionManager = ActionManager.getInstance();
+        List<@NonNls String> list = actionManager.getActionIdList(prefix);
+        for(String id:list) {
+            log(id);
+        }
+
+    }
+
+    public static void logActionGroupList() {
+        logActionGroupList("A");
+        logActionGroupList("B");
+        logActionGroupList("C");
+        logActionGroupList("D");
+        logActionGroupList("E");
+        logActionGroupList("F");
+        logActionGroupList("G");
+        logActionGroupList("H");
+        logActionGroupList("I");
+        logActionGroupList("J");
+        logActionGroupList("K");
+        logActionGroupList("L");
+        logActionGroupList("M");
+        logActionGroupList("N");
+        logActionGroupList("O");
+        logActionGroupList("P");
+        logActionGroupList("Q");
+        logActionGroupList("R");
+        logActionGroupList("S");
+        logActionGroupList("T");
+        logActionGroupList("U");
+        logActionGroupList("V");
+        logActionGroupList("W");
+        logActionGroupList("X");
+        logActionGroupList("Y");
+        logActionGroupList("Z");
+
+     }
+
+    public static void logActionGroupList(String prefix) {
+        ActionManager actionManager = ActionManager.getInstance();
+        List<@NonNls String> list = actionManager.getActionIdList(prefix);
+        for(String id:list) {
+            if(actionManager.isGroup(id)) log(id);
+        }
+    }
+
     public static void TRACE(String s) {
+//        Messages.showMessageDialog(project, "The 'Build Project' action could not be found.",
+//                "Error", Messages.getErrorIcon());
     }
 
     public static void error(String s) {

@@ -5,22 +5,7 @@
 /// page: https://creativecommons.org/licenses/by/4.0/
 package com.simula.util;
 
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.File;
-import java.util.Enumeration;
-import java.util.Properties;
-
-import javax.swing.AbstractButton;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 /// Compile Time Options.
 /// 
@@ -28,7 +13,7 @@ import javax.swing.JPanel;
 /// "https://github.com/portablesimula/EclipseWorkSpaces/blob/main/SimulaCompiler2/Simula/src/simula/compiler/utilities/Option.java"><b>Source File</b></a>.
 /// 
 /// @author Øystein Myhre Andersen
-public final class Option {
+public final class CTOption {
 
 	/// The Compiler Modes.
 	public enum CompilerMode { 
@@ -135,18 +120,18 @@ public final class Option {
 	}
 	
 	/// The default constructor
-	private Option() {}
+    public CTOption() {}
 	
 	/// Initiate Compiler options.
 	public static void InitCompilerOptions() {
 //		CompilerMode compilerMode=CompilerMode.viaJavaSource;
 		compilerMode=CompilerMode.directClassFiles;
 //		compilerMode=CompilerMode.simulaClassLoader;
-		Option.CaseSensitive=false;
-		Option.verbose = false;
-		Option.noExecution = false;
-		Option.WARNINGS=true;
-		Option.EXTENSIONS=true;
+		CTOption.CaseSensitive=false;
+		CTOption.verbose = false;
+		CTOption.noExecution = false;
+		CTOption.WARNINGS=true;
+		CTOption.EXTENSIONS=true;
 		
 		internal.InitCompilerOptions();
 	}

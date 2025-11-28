@@ -11,15 +11,23 @@ import com.intellij.openapi.options.SettingsEditor;
 import com.intellij.openapi.options.SettingsEditorGroup;
 import com.intellij.openapi.project.Project;
 import com.simula.extensions.runConfigurationExtension.run.SimulaCommandLineState;
+import com.simula.extensions.runConfigurationExtension.run.simulaCompiler.SimulaCompiler;
+import com.simula.util.CTOption;
+import com.simula.util.RTOption;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class SimulaRunConfiguration extends LocatableConfigurationBase<MyRunConfigurationOptions> {
+    public CTOption ctOption;
+    public RTOption rtOption;
 
     protected SimulaRunConfiguration(@NotNull Project project, @NotNull ConfigurationFactory factory, String name) {
         super(project, factory, name);
         System.out.println("NEW MyRunConfiguration: ");
 //        if(true) throw new RuntimeException("NEW MyRunConfiguration: ");
+
+        ctOption = new CTOption();
+        rtOption = new RTOption();
     }
 
     @Nullable
@@ -29,6 +37,8 @@ public class SimulaRunConfiguration extends LocatableConfigurationBase<MyRunConf
         System.out.println("MyRunConfiguration.getState: executor.getActionName: " + executor.getActionName());
 
         System.out.println("MyRunConfiguration.getState: environment.getModulePath: " + environment.getModulePath());
+
+        SimulaCompiler.call(environment.getProject(), ctOption);
 
 
         System.out.println("MyRunConfiguration.getState: ");

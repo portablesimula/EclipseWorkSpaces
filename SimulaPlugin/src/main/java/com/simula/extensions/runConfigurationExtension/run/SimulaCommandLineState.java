@@ -17,16 +17,16 @@ public class SimulaCommandLineState extends CommandLineState {
 
     public SimulaCommandLineState(@NotNull ExecutionEnvironment environment) {
         super(environment);
-        System.out.println("NEW MyCommandLineState: ");
-        System.out.println("NEW MyCommandLineState: ModulePath: "+environment.getModulePath());
-        System.out.println("NEW MyCommandLineState: ModulePath: "+environment.getUserDataString());
-        System.out.println("NEW MyCommandLineState: ModulePath: "+environment.isRunningCurrentFile());
-        System.out.println("NEW MyCommandLineState: ModulePath: "+environment.isHeadless());
+        System.out.println("NEW SimulaCommandLineState: ");
+        System.out.println("NEW SimulaCommandLineState: ModulePath: "+environment.getModulePath());
+        System.out.println("NEW SimulaCommandLineState: ModulePath: "+environment.getUserDataString());
+        System.out.println("NEW SimulaCommandLineState: ModulePath: "+environment.isRunningCurrentFile());
+        System.out.println("NEW SimulaCommandLineState: ModulePath: "+environment.isHeadless());
         Project project = environment.getProject();
-        Util.printProject("NEW MyCommandLineState: ", project);
+        Util.printProject("NEW SimulaCommandLineState: ", project);
 
-        Thread.dumpStack();
-//        if(true) throw new RuntimeException("NEW MyCommandLineState: ");
+//        Thread.dumpStack();
+//        if(true) throw new RuntimeException("NEW SimulaCommandLineState: ");
     }
 
     @Override
@@ -38,20 +38,20 @@ public class SimulaCommandLineState extends CommandLineState {
     @Override
     protected @NotNull ProcessHandler startProcess() throws ExecutionException {
         // 1. Create a GeneralCommandLine object
-        System.out.println("MyCommandLineState.startProcess: 1. Create a GeneralCommandLine object");
-//        if (true) throw new RuntimeException("MyCommandLineState.startProcess: 1. Create a GeneralCommandLine object");
+        System.out.println("SimulaCommandLineState.startProcess: 1. Create a GeneralCommandLine object");
+//        if (true) throw new RuntimeException("SimulaCommandLineState.startProcess: 1. Create a GeneralCommandLine object");
         String workDirectory = getEnvironment().getProject().getBasePath();
-        System.out.println("MyCommandLineState.startProcess: workDirectory="+workDirectory);
+        System.out.println("SimulaCommandLineState.startProcess: workDirectory="+workDirectory);
 
         // TODO: DETTE MÅ RETTES FØR ENDELIG VERSJON
-//        String exePath = "java";
-        String exePath = "C:\\Program Files\\Java\\jdk-25\\bin\\java.exe";
+//        String javaExePath = "java";
+        String javaExePath = "C:\\Program Files\\Java\\jdk-25\\bin\\java.exe";
 
         GeneralCommandLine commandLine = new GeneralCommandLine()
-            .withExePath(exePath) // Set the path to your executable
+            .withExePath(javaExePath) // Set the path to your executable
 
-                .withParameters("-version") // Add arguments
-//                .withParameters("-jar", "bin/FittingRoom.jar") // Add arguments
+//                .withParameters("-version") // Add arguments
+                .withParameters("-jar", "bin/FittingRoom.jar", "-SPORT:noConsole") // Add arguments
 
                 .withWorkDirectory(workDirectory) // Set working directory
             .withCharset(Charset.forName("UTF-8")) // Set character set
@@ -69,23 +69,4 @@ public class SimulaCommandLineState extends CommandLineState {
         return processHandler;
     }
 
-//    @NotNull
-//    @Override
-    protected ProcessHandler ZZ_startProcess() throws ExecutionException {
-        SimulaRunConfiguration configuration = (SimulaRunConfiguration) getEnvironment().getRunProfile();
-        // Get settings, build the command line
-
-        String cmnd = "java -version";
-        System.out.println("MyCommandLineState.startProcess: " + cmnd);
-        if(true) throw new RuntimeException("MyCommandLineState.startProcess: " + cmnd);
-
-//        GeneralCommandLine commandLine = new GeneralCommandLine("path/to/your/executable");
-//        // commandLine.addParameter(configuration.getOptions().getScriptPath());
-
-        GeneralCommandLine commandLine = new GeneralCommandLine(cmnd);
-
-        System.out.println("MyCommandLineState.startProcess: " + commandLine);
-
-        return new OSProcessHandler(commandLine);
-    }
 }

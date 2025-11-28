@@ -1,9 +1,7 @@
-package com.simula.extensions.programRunner;
+package com.simula.extensions.runConfigurationExtension.run.cmdRunner;
 
 import com.intellij.execution.ExecutionResult;
 import com.intellij.execution.executors.DefaultRunExecutor;
-import com.jetbrains.cef.remote.thrift_codegen.Server;
-import com.simula.extensions.runConfigurationExtension.SimulaRunConfiguration;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import com.intellij.execution.ExecutionException;

@@ -14,13 +14,6 @@ public class SimulaSettingsEditor extends SettingsEditor<SimulaRunConfiguration>
 //    private final JTextField scriptPathField;
 
     public SimulaSettingsEditor(SimulaRunConfiguration settings) {
-//        myPanel = new JPanel();
-//        scriptPathField = new JTextField();
-//        myPanel.add(new JLabel("Script Path:"));
-//        myPanel.add(scriptPathField);
-
-        // ======================================================================
-
         myPanel = new JPanel();
         myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
         myPanel.add(new JLabel("Edit: com.simula.extensions.test1.SimulaRunConfigurationEditor"));
@@ -30,9 +23,9 @@ public class SimulaSettingsEditor extends SettingsEditor<SimulaRunConfiguration>
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Button clicked!");
+                System.out.println("SimulaSettingsEditor'Button clicked!");
                 // You can add more complex logic here, like updating a label, opening a new window, etc.
-                RTOption.selectRuntimeOptions(settings);
+                settings.rtOption.selectRuntimeOptions(settings);
             }
         });
         myPanel.add(button);

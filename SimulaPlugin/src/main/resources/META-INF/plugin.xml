@@ -31,6 +31,8 @@
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
 
+        <postStartupActivity implementation="com.simula.extensions.startup.SimulaStartupActivity"/>
+
         <fileType name="Simula File" implementationClass="com.simula.extensions.lang.SimulaFileType"
                 fieldName="INSTANCE" language="Simula" extensions="sim"/>
 
@@ -63,10 +65,10 @@
         <runConfigurationProducer implementation="com.simula.extensions.runConfigurationExtension.SimulaFileRunConfigurationProducer"/>
     -->
 
-        <executor implementation="com.simula.extensions.programRunner.InCmdExecutor"/>
-        <programRunner implementation="com.simula.extensions.programRunner.InCmdRunner"/>
-        <projectConfigurable instance="com.simula.extensions.programRunner.InCmdConfigurable"/>
-        <projectService serviceImplementation="com.simula.extensions.programRunner.OptionsPatchConfiguration"/>
+        <executor implementation="com.simula.extensions.runConfigurationExtension.run.cmdRunner.InCmdExecutor"/>
+        <programRunner implementation="com.simula.extensions.runConfigurationExtension.run.cmdRunner.InCmdRunner"/>
+        <projectConfigurable instance="com.simula.extensions.runConfigurationExtension.run.cmdRunner.InCmdConfigurable"/>
+        <projectService serviceImplementation="com.simula.extensions.runConfigurationExtension.run.cmdRunner.OptionsPatchConfiguration"/>
 
 
     </extensions>
@@ -86,13 +88,6 @@
             <!-- Anchor can be "first", "last", "before", or "after" with a specific action ID -->
         </action>
 
-        <!-- Build Actions -->
-        <action id="MyBuildPlugin.MyBuild"
-                class="com.simula.actions.build.SimulaBuildAction"
-                text="Simula Build"
-                description="Triggers a simula build for the plugin">
-            <add-to-group group-id="BuildMenu" anchor="last"/>
-        </action>
 
     </actions>
 </idea-plugin>

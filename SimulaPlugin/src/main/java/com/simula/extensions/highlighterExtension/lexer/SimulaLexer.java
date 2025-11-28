@@ -8,7 +8,7 @@ import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.TokenType;
 import com.simula.extensions.lang.SimulaLanguage;
 import com.simula.util.Global;
-import com.simula.util.Option;
+import com.simula.util.CTOption;
 import com.simula.util.Util;
 
 public class SimulaLexer extends LexerBase {
@@ -122,7 +122,7 @@ public class SimulaLexer extends LexerBase {
     /// Scan basic Token
     /// @return next Token
     private IElementType scanBasic() {
-        if(Option.internal.TRACE_SCAN) Util.TRACE("SimulaScanner.scanBasic, "+edcurrent());
+        if(CTOption.internal.TRACE_SCAN) Util.TRACE("SimulaScanner.scanBasic, "+edcurrent());
         while(true)	{
             getNext(); if(current == EOF_MARK) return(null);
 
@@ -215,8 +215,8 @@ public class SimulaLexer extends LexerBase {
     /// @return next Token
     private IElementType scanIdentifier() {
         String name=scanName();
-        if(Option.internal.TRACE_SCAN) Util.TRACE("scanIdentifier: name=\""+name+"\"");
-        String ident=(Option.CaseSensitive)?name:name.toLowerCase();
+        if(CTOption.internal.TRACE_SCAN) Util.TRACE("scanIdentifier: name=\""+name+"\"");
+        String ident=(CTOption.CaseSensitive)?name:name.toLowerCase();
         switch(Character.toLowerCase(ident.charAt(0))) {
             case 'a':
                 if(ident.equals("activate"))     return(SimulaElementTypes.KEYWORD);
@@ -364,20 +364,20 @@ public class SimulaLexer extends LexerBase {
     private IElementType scanNumber() {
         int radix=10;
         char firstChar=(char)current;
-        if(Option.internal.TRACE_SCAN) Util.TRACE("scanNumber, "+edcurrent());
+        if(CTOption.internal.TRACE_SCAN) Util.TRACE("scanNumber, "+edcurrent());
         Util.ASSERT(Character.isDigit((char)(current)),"scanNumber:Expecting a Digit");
         StringBuilder number=new StringBuilder();
 
         number.append((char)current);
         if(getNext() == 'R' && (firstChar == '2' | firstChar == '4' | firstChar == '8')) {
             radix=firstChar - '0';
-            if(Option.internal.TRACE_SCAN) Util.TRACE("scanNumber, radix="+radix);
+            if(CTOption.internal.TRACE_SCAN) Util.TRACE("scanNumber, radix="+radix);
             number.setLength(0);
         } else if(firstChar == '1' && current == '6') {
             number.append((char)current);
             if(getNext() == 'R') {
                 radix=16;
-                if(Option.internal.TRACE_SCAN) Util.TRACE("scanNumber, radix="+radix);
+                if(CTOption.internal.TRACE_SCAN) Util.TRACE("scanNumber, radix="+radix);
                 number.setLength(0);
             } else pushBack(current);
         } else pushBack (current);
@@ -390,7 +390,7 @@ public class SimulaLexer extends LexerBase {
         if(current == '&' && radix == 10) { getNext(); return(scanDigitsExp(number)); }
 
         String result=number.toString(); number=null;
-        if(Option.internal.TRACE_SCAN) Util.TRACE("scanNumber, result='"+result+"' radix="+radix);
+        if(CTOption.internal.TRACE_SCAN) Util.TRACE("scanNumber, result='"+result+"' radix="+radix);
 
         pushBack(current);
         long res = 0;
@@ -420,7 +420,7 @@ public class SimulaLexer extends LexerBase {
     /// @param number The edited number so far
     /// @return next Token
     private IElementType scanDotDigit(StringBuilder number) {
-        if(Option.internal.TRACE_SCAN) Util.TRACE("scanDotDigit, "+edcurrent());
+        if(CTOption.internal.TRACE_SCAN) Util.TRACE("scanDotDigit, "+edcurrent());
         number.append('.');
         if(Character.isDigit(current)) number.append((char)current);
         while(Character.isDigit(getNext()) || current == '_')
@@ -429,7 +429,7 @@ public class SimulaLexer extends LexerBase {
         if(current == '&') { getNext(); return(scanDigitsExp(number)); }
 
         String result=number.toString(); number=null;
-        if(Option.internal.TRACE_SCAN) Util.TRACE("scanDotDigit, result='"+result);
+        if(CTOption.internal.TRACE_SCAN) Util.TRACE("scanDotDigit, result='"+result);
         pushBack(current);
         return SimulaElementTypes.NUMBER;
     }
@@ -453,7 +453,7 @@ public class SimulaLexer extends LexerBase {
     private IElementType scanDigitsExp(StringBuilder number) {
         String result;
         boolean doubleAmpersand=false;
-        if(Option.internal.TRACE_SCAN) Util.TRACE("scanDigitsExp, "+edcurrent());
+        if(CTOption.internal.TRACE_SCAN) Util.TRACE("scanDigitsExp, "+edcurrent());
         if(number==null) { number=new StringBuilder(); number.append('1'); }
         if(current == '&') { getNext(); doubleAmpersand=true; }
         number.append('e');
@@ -463,7 +463,7 @@ public class SimulaLexer extends LexerBase {
         while(Character.isDigit(getNext()) || current == '_') number.append((char)current);
 
         result=number.toString(); number=null;
-        if(Option.internal.TRACE_SCAN) Util.TRACE("scanDigitsExp, result='"+result);
+        if(CTOption.internal.TRACE_SCAN) Util.TRACE("scanDigitsExp, result='"+result);
         pushBack(current);
         return SimulaElementTypes.NUMBER;
     }
@@ -485,13 +485,13 @@ public class SimulaLexer extends LexerBase {
     /// @return the resulting identifier
     private String scanName() {
         StringBuilder name=new StringBuilder();
-        if(Option.internal.TRACE_SCAN) Util.TRACE("scanName, "+edcurrent());
+        if(CTOption.internal.TRACE_SCAN) Util.TRACE("scanName, "+edcurrent());
         Util.ASSERT(Character.isLetter((char)(current)),"Expecting a Letter");
         name.append((char)current);
         while ((Character.isLetter(getNext()) || Character.isDigit(current) || current == '_'))
             name.append((char)current);
         pushBack(current);
-        if(Option.internal.TRACE_SCAN) Util.TRACE("scanName, name="+name+",current="+edcurrent());
+        if(CTOption.internal.TRACE_SCAN) Util.TRACE("scanName, name="+name+",current="+edcurrent());
         return(name.toString());
     }
 
@@ -519,7 +519,7 @@ public class SimulaLexer extends LexerBase {
     /// @return next Token
     private IElementType scanCharacterConstant() {
         char result=0;
-        if(Option.internal.TRACE_SCAN) Util.TRACE("scanCharacterConstant, "+edcurrent());
+        if(CTOption.internal.TRACE_SCAN) Util.TRACE("scanCharacterConstant, "+edcurrent());
         Util.ASSERT((char)(current)=='\'',"Expecting a character quote '");
         if((isPrintable(getNext())) && current != '!') {
             result=(char)current; getNext();
@@ -531,7 +531,7 @@ public class SimulaLexer extends LexerBase {
             Util.error("Character constant is not terminated. "+edcurrent());
             pushBack(current);
         }
-        if(Option.internal.TRACE_SCAN) Util.TRACE("END scanCharacterConstant, result='"+result+"', "+edcurrent());
+        if(CTOption.internal.TRACE_SCAN) Util.TRACE("END scanCharacterConstant, result='"+result+"', "+edcurrent());
         return SimulaElementTypes.NUMBER;
     }
 
@@ -563,7 +563,7 @@ public class SimulaLexer extends LexerBase {
     /// </pre>
     /// @return next Token
     private IElementType scanTextConstant() {
-        if(Option.internal.TRACE_SCAN) Util.TRACE("scanTextConstant, "+edcurrent());
+        if(CTOption.internal.TRACE_SCAN) Util.TRACE("scanTextConstant, "+edcurrent());
         StringBuilder accumulatedTextConstant=new StringBuilder();
         LOOP:while(true) {
             int firstLine= Global.sourceLineNumber;
@@ -577,7 +577,7 @@ public class SimulaLexer extends LexerBase {
                 else if(current == EOF_MARK) {
                     Util.error("Text constant is not terminated.");
                     String result=accumulatedTextConstant.toString(); accumulatedTextConstant=null;
-                    if(Option.internal.TRACE_SCAN) Util.TRACE("scanTextConstant(1): Result=\""+result+"\", "+edcurrent());
+                    if(CTOption.internal.TRACE_SCAN) Util.TRACE("scanTextConstant(1): Result=\""+result+"\", "+edcurrent());
                     tokenQueue.add(SimulaElementTypes.TEXTCONST);
                     break LOOP;
                 } else accumulatedTextConstant.append((char)current);
@@ -590,11 +590,11 @@ public class SimulaLexer extends LexerBase {
             } else {
                 // Skip string-separator
                 while(currentIsStringSeparator()) getNext();
-                if(Option.internal.TRACE_SCAN) Util.TRACE("scanTextConstant(2): "+edcurrent());
+                if(CTOption.internal.TRACE_SCAN) Util.TRACE("scanTextConstant(2): "+edcurrent());
                 if(current!='"') {
                     pushBack(current);
                     String result=accumulatedTextConstant.toString(); accumulatedTextConstant=null;
-                    if(Option.internal.TRACE_SCAN) Util.TRACE("scanTextConstant(2): Result=\""+result+"\", "+edcurrent());
+                    if(CTOption.internal.TRACE_SCAN) Util.TRACE("scanTextConstant(2): Result=\""+result+"\", "+edcurrent());
                     if(firstLine<lastLine)
                         Util.warning("Illegal Text constant. Simple string span mutiple source lines ("+firstLine+':'+lastLine+"). See Simula Standard 1.6");
                     tokenQueue.add(SimulaElementTypes.TEXTCONST);
@@ -668,7 +668,7 @@ public class SimulaLexer extends LexerBase {
     /// @return the resulting iso-code
     private int scanPossibleIsoCode() {
         char firstchar, secondchar, thirdchar;
-        if (Option.internal.TRACE_SCAN) Util.TRACE("scanPossibleIsoCode, " + edcurrent());
+        if (CTOption.internal.TRACE_SCAN) Util.TRACE("scanPossibleIsoCode, " + edcurrent());
         Util.ASSERT((char) (current) == '!', "Expecting a character !");
         if (Character.isDigit(getNext())) {
             firstchar = (char) current;
@@ -678,7 +678,7 @@ public class SimulaLexer extends LexerBase {
                     thirdchar = (char) current;
                     if (getNext() == '!') { // ! digit digit digit ! Found
                         int value = (((firstchar - '0') * 10 + secondchar - '0') * 10 + thirdchar - '0');
-                        if (Option.internal.TRACE_SCAN)
+                        if (CTOption.internal.TRACE_SCAN)
                             Util.TRACE("scanPossibleIsoCode:Got three digits: "+(char)firstchar+(char)secondchar+(char)thirdchar+"value="+value);
                         if (value < 256)
                             return (value);
@@ -835,7 +835,7 @@ public class SimulaLexer extends LexerBase {
     /// @return a Comment Token
     private IElementType scanComment() {
         StringBuilder skipped = new StringBuilder();
-        if (Option.internal.TRACE_SCAN) Util.TRACE("BEGIN scanComment, " + edcurrent());
+        if (CTOption.internal.TRACE_SCAN) Util.TRACE("BEGIN scanComment, " + edcurrent());
         while ((getNext() != ';') && current != EOF_MARK)
             skipped.append((char) current);
         skipped.append((char) current);
@@ -845,8 +845,8 @@ public class SimulaLexer extends LexerBase {
             Util.error("Comment is not terminated with ';'.");
             pushBack(current);
         }
-        if (Option.internal.TRACE_SCAN) Util.TRACE("END scanComment: " + edcurrent() + "  skipped=\"" + skipped + '"');
-        if (Option.internal.TRACE_COMMENTS) Util.TRACE("COMMENT:\"" + skipped + "\" Skipped and replaced with a SPACE");
+        if (CTOption.internal.TRACE_SCAN) Util.TRACE("END scanComment: " + edcurrent() + "  skipped=\"" + skipped + '"');
+        if (CTOption.internal.TRACE_COMMENTS) Util.TRACE("COMMENT:\"" + skipped + "\" Skipped and replaced with a SPACE");
         return SimulaElementTypes.COMMENT;
     }
 
@@ -866,12 +866,12 @@ public class SimulaLexer extends LexerBase {
     /// @return a Comment Token
     private IElementType scanCommentToEndOfLine() {
         StringBuilder skipped = new StringBuilder();
-        if (Option.internal.TRACE_SCAN) Util.TRACE("BEGIN scanCommentToEndOfLine, " + edcurrent());
+        if (CTOption.internal.TRACE_SCAN) Util.TRACE("BEGIN scanCommentToEndOfLine, " + edcurrent());
         while ((getNext() != '\n') && current != EOF_MARK)
             skipped.append((char) current);
         skipped.append((char) current);
-        if (Option.internal.TRACE_SCAN) Util.TRACE("END scanCommentToEndOfLine: " + edcurrent() + "  skipped=\"" + skipped + '"');
-        if (Option.internal.TRACE_COMMENTS) Util.TRACE("COMMENT:\"" + skipped + "\" Skipped and replaced with a SPACE");
+        if (CTOption.internal.TRACE_SCAN) Util.TRACE("END scanCommentToEndOfLine: " + edcurrent() + "  skipped=\"" + skipped + '"');
+        if (CTOption.internal.TRACE_COMMENTS) Util.TRACE("COMMENT:\"" + skipped + "\" Skipped and replaced with a SPACE");
         return SimulaElementTypes.COMMENT;
     }
 
@@ -899,7 +899,7 @@ public class SimulaLexer extends LexerBase {
         //Util.println("SimulaScanner.scanEndComment");
         tokenQueue.add(SimulaElementTypes.KEYWORD);
         StringBuilder skipped = new StringBuilder();
-        if (Option.internal.TRACE_SCAN) Util.TRACE("scanEndComment, " + edcurrent());
+        if (CTOption.internal.TRACE_SCAN) Util.TRACE("scanEndComment, " + edcurrent());
         int firstLine = Global.sourceLineNumber;
         int lastLine = firstLine;
         LOOP:while (getNext() != EOF_MARK) {
@@ -912,7 +912,7 @@ public class SimulaLexer extends LexerBase {
 //				Util.warning("END-Comment span mutiple source lines");
 //			}
             if (current == ';') {
-                if (Option.internal.TRACE_COMMENTS) Util.TRACE("ENDCOMMENT:\"" + skipped + '"');
+                if (CTOption.internal.TRACE_COMMENTS) Util.TRACE("ENDCOMMENT:\"" + skipped + '"');
                 if (firstLine < lastLine && (skipped.length() > 0))
                     Util.warning("END-Comment span mutiple source lines");
 //				if(editorMode && accum.length()>0) tokenQueue.add(SimulaTokenType.COMMENT);
@@ -923,7 +923,7 @@ public class SimulaLexer extends LexerBase {
                 if (Util.equals(name, "end") || Util.equals(name, "else")
                         || Util.equals(name, "when") || Util.equals(name, "otherwise")) {
                     pushBack(name);
-                    if (Option.internal.TRACE_COMMENTS) Util.TRACE("END-COMMENT:\"" + skipped + '"');
+                    if (CTOption.internal.TRACE_COMMENTS) Util.TRACE("END-COMMENT:\"" + skipped + '"');
                     if (firstLine < lastLine && (skipped.length() > 0))
                         Util.warning("END-Comment span mutiple source lines");
                     tokenQueue.add(SimulaElementTypes.COMMENT); break LOOP;
@@ -938,7 +938,7 @@ public class SimulaLexer extends LexerBase {
 //		if(editorMode && accum.length()>0) tokenQueue.add(SimulaTokenType.COMMENT);
         tokenQueue.add(SimulaElementTypes.COMMENT);
 
-        if (Option.internal.TRACE_COMMENTS)
+        if (CTOption.internal.TRACE_COMMENTS)
             Util.TRACE("ENDCOMMENT:\"" + skipped + '"');
         IElementType res=tokenQueue.remove();
         return(res);

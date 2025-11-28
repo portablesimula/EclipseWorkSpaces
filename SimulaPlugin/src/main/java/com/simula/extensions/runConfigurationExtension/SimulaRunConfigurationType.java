@@ -12,10 +12,6 @@ public class SimulaRunConfigurationType extends ConfigurationTypeBase {
     private static MyConfigurationFactory myConfigurationFactory;
     private static SimulaRunConfigurationType INSTANCE;
 
-//    public MyConfigurationType() {
-//        super("MY_RUN_CONFIGURATION_TYPE_ID", "My Configuration", null, () -> MyIcons.MyIcon);
-//        addFactory(new MyConfigurationFactory(this));
-//    }
 
     public SimulaRunConfigurationType() {
         // ID, Name, Description, Icon
@@ -39,11 +35,6 @@ public class SimulaRunConfigurationType extends ConfigurationTypeBase {
         return SimulaConfigurationFactory.getInstance();
     }
 
-//    public static FactoryBuilderSupport getInstance() {
-//        if(true) throw new RuntimeException("SimulaRunConfigurationType.getInstance: FactoryBuilderSupport");
-//        return null;
-//    }
-
     public static @NotNull ConfigurationFactory getFactory() {
 //        if (true) throw new RuntimeException("MyRunConfigurationType_saved.getFactory: FactoryBuilderSupport");
         System.out.println("SimulaRunConfigurationType.getFactory: ");
@@ -51,27 +42,6 @@ public class SimulaRunConfigurationType extends ConfigurationTypeBase {
 //        return factories[0];
         return myFactory();
     }
-
-//    public static @NotNull ConfigurationFactory getFactory() {
-//        if(true) throw new RuntimeException("SimulaRunConfigurationType.getFactory: FactoryBuilderSupport");
-//        System.out.println("SimulaRunConfigurationType.getFactory: FactoryBuilderSupport");
-//
-////        Retrieves an enumeration of factory classes/object specified by a property. The property is gotten from the environment and the provider resource file associated with the given context and concatenated. See getProperty(). The resulting property value is a list of class names.
-////        This method then loads each class using the current thread's context class loader and keeps them in a list. Any class that cannot be loaded is ignored. The resulting list is then cached in a two-level hash table, keyed first by the context class loader and then by the property's value. The next time threads of the same context class loader call this method, they can use the cached list.
-////                After obtaining the list either from the cache or by creating one from the property value, this method then creates and returns a FactoryEnumeration using the list. As the FactoryEnumeration is traversed, the cached Class object in the list is instantiated and replaced by an instance of the factory object itself. Both class objects and factories are wrapped in weak references so as not to prevent GC of the class loader.
-////        Note that multiple threads can be accessing the same cached list via FactoryEnumeration, which locks the list during each next(). The size of the list will not change, but a cached Class object might be replaced by an instantiated factory object.
-////        Params:
-////        propName – The non-null property name
-////        env – The possibly null environment properties
-////        ctx – The possibly null context
-////        Returns:
-////        An enumeration of factory classes/objects; null if none.
-////                Throws:
-////        NamingException – If encounter problem while reading the provider property file.
-////        Object xxx = getFactories();
-//
-//        return myConfigurationFactory;
-//    }
 
     // Inner class for the factory
     private static class MyConfigurationFactory extends ConfigurationFactory {
@@ -85,7 +55,7 @@ public class SimulaRunConfigurationType extends ConfigurationTypeBase {
         public String getId(){
 //            if(true) throw new RuntimeException("SimulaRunConfigurationType.getId: ");
             System.out.println("SimulaRunConfigurationType.getId: -> Simula");
-            Thread.dumpStack();
+//            Thread.dumpStack();
             return("Simula");
         }
 
