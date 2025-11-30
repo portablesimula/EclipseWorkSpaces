@@ -8,8 +8,8 @@ package simula.compiler.parsing;
 import java.io.Reader;
 
 import simula.compiler.syntaxClass.Type;
-import simula.compiler.utilities.Global;
 import simula.compiler.utilities.KeyWord;
+import simula.compiler.utilities.Option;
 import simula.compiler.utilities.Token;
 import simula.compiler.utilities.Util;
 
@@ -66,7 +66,7 @@ public final class Parse {
 
 	/// Initiate Parsing utilities.
 	/// @param reader the source file reader.
-	public static void initiate(final Reader reader) {
+	public static void initiateParser(final Reader reader) {
 		simulaScanner = new SimulaScanner(reader,false);
 		prevToken = null;
 		currentToken = null;

@@ -27,8 +27,10 @@ public class SimulaCompiler {
     private static String sourceFile;
 
     private static String userHomeDir;
+    private static String workDirectory;
     private static Properties simulaProperties;
     private static String simulaHomeDir;
+    private static String simulaOutDir;
 
     public static int call(Project prj, CTOption optn) {
         project = prj;
@@ -39,8 +41,11 @@ public class SimulaCompiler {
         userHomeDir = System.getProperty("user.home");
 
         loadSimulaProperties();
-        simulaHomeDir =simulaProperties.getProperty("simula.home");
-        Util.TRACE("simula.home: "+simulaHomeDir);
+        simulaHomeDir = simulaProperties.getProperty("simula.home");
+//        Util.TRACE("simulaHomeDir: "+simulaHomeDir);
+        workDirectory =  project.getBasePath();
+        simulaOutDir = workDirectory + "/bin";
+//        Util.TRACE("simulaOutDir: "+simulaOutDir);
 
         sourceFile = getCurrentFilePath(project);
         askRunSimula();
@@ -62,37 +67,23 @@ public class SimulaCompiler {
         String title = "TITLE";
         String msg = "Source File: " + sourceFile;
         msg +="\nUser dir: " + userHomeDir;
-        msg +="\nWorkDirectory: " + project.getBasePath();
+        msg +="\nWorkDirectory: " + workDirectory;
         msg +="\n\nDo you want to start Simula Compiling now ?\n\n";
         int answer = Util.optionDialog(msg,title, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, "Start Simula", "Exit");
 
 //        if(DEBUG)
 //            IO.println("SimulaExtractor.extract: answer="+answer); // TODO: MYH
-//        if(answer==0) {
+        if(answer==0) {
             System.out.println("SimulaCompiler.askRunSimula: DO RUN SIMULA");
-//            new Thread() {
-//                public void run() {	startJar(simulaJarFileName); }
-//            }.start();
             runCommandFromPlugin(project);
-//        }
+        }
     }
 
     public static void runCommandFromPlugin(Project project) {
 
-        Util.TRACE("SimulaCompiler.runCommandFromPlugin: "+project);
+//        Util.TRACE("SimulaCompiler.runCommandFromPlugin: "+project);
         if (project == null) return;
-
-        // 1. Create GeneralCommandLine (example: running 'echo Hello World' in cmd/sh)
         GeneralCommandLine commandLine = new GeneralCommandLine();
-
-//        // Adjust command based on OS:
-//        if (System.getProperty("os.name").toLowerCase().contains("win")) {
-//            commandLine.setExePath("cmd.exe");
-//            commandLine.addParameters("/c", "echo", "Hello World from Plugin");
-//        } else {
-//            commandLine.setExePath("/bin/sh");
-//            commandLine.addParameters("-c", "echo 'Hello World from Plugin'");
-//        }
 
         // TODO: DETTE MÅ RETTES FØR ENDELIG VERSJON
 //        String javaExePath = "java";
@@ -102,6 +93,8 @@ public class SimulaCompiler {
 //        commandLine.addParameters("-version");
         commandLine.addParameters("-jar"
                 , "C:/Users/omyhr/Simula/Simula-2.0/simula.jar"
+                , "-output", simulaOutDir
+                , "-noexec"
                 , "-verbose"
                 , sourceFile
         );

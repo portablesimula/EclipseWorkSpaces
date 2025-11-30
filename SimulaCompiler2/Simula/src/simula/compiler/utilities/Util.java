@@ -6,7 +6,12 @@
 package simula.compiler.utilities;
 
 import java.awt.Color;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.lang.classfile.CodeBuilder;
 import java.lang.classfile.constantpool.ConstantPoolBuilder;
 import java.lang.constant.ClassDesc;
@@ -14,6 +19,8 @@ import java.lang.constant.MethodTypeDesc;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+
+import simula.compiler.SimulaCompiler;
 
 /// A set of all static Utility Methods
 /// 
@@ -134,7 +141,7 @@ public final class Util {
 	/// Return the base name part of a File Name
 	/// @param fileName a File Name.
 	/// @return the base name part of a File Name
-	public static String getBaseName(String fileName) {
+	public static String getBaseName(final String fileName) {
 		int p=fileName.lastIndexOf(".");
 		return (p > 0)? fileName.substring(0, p) : fileName;
 	}

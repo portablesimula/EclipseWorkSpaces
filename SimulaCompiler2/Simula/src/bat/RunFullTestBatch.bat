@@ -5,7 +5,7 @@
 ::set OPTION=-compilerMode directClassFiles
 set OPTION=-compilerMode simulaClassLoader
 
-set OPTION=%OPTION% -noConsole
+::set OPTION=%OPTION% -noConsole
 set OPTION=%OPTION% -runtimeUserDir C:\GitHub\SimulaCompiler2\SimulaTestBatch\src\simulaSamples
 set OPTION=%OPTION% -sourceFileDir C:\GitHub\SimulaCompiler2\SimulaTestBatch/src/simulaTestBatch
 ::echo The Options used: %OPTION%

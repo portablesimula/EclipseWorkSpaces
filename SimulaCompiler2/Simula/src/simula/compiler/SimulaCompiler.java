@@ -62,26 +62,27 @@ public final class SimulaCompiler {
 	/// The output .jar file
 	private File outputJarFile;
 
-	/// Create a new SimulaCompiler.
-	/// @param inputFileName the source file name
-	public SimulaCompiler(final String inputFileName) {
-		this(inputFileName, null);
-	}
+//	/// Create a new SimulaCompiler.
+//	/// @param inputFileName the source file name
+//	public SimulaCompiler(final String inputFileName) {
+//		this(inputFileName, null);
+//	}
 
 	/// Create a new SimulaCompiler.
 	/// @param inputFileName the source file name
 	/// @param reader        Reader in case of SimulaEditor
-	public SimulaCompiler(final String inputFileName, Reader reader) {
+	public SimulaCompiler(final String inputFileName, final Reader reader) {
 		Global.initiate();
-		if (reader == null) {
-			try {
-				File file = new File(inputFileName);
-				reader = new InputStreamReader(new FileInputStream(file), Global._CHARSET);
-			} catch (IOException e) {
-				Util.error("can't open " + inputFileName + ", reason: " + e);
-			}
-		}
+//		if (pReader == null) {
+//			try {
+//				File file = new File(inputFileName);
+//				pReader = new InputStreamReader(new FileInputStream(file), Global._CHARSET);
+//			} catch (IOException e) {
+//				Util.error("can't open " + inputFileName + ", reason: " + e);
+//			}
+//		}
 		this.reader = reader;
+		if(Option.verbose) Util.println("Input Source File: " + inputFileName);
 		if (!inputFileName.toLowerCase().endsWith(".sim"))
 			Util.warning("Simula source file should, by convention be extended by .sim: " + inputFileName);
 
@@ -221,7 +222,7 @@ public final class SimulaCompiler {
 		// *** Scanning and Parsing
 		// ***************************************************************
 		Global.javaSourceFileCoders = new Vector<JavaSourceFileCoder>();
-		Parse.initiate(reader);
+		Parse.initiateParser(reader);
 		programModule = new ProgramModule();
 		Global.programModule = programModule;
 		if (Option.internal.TRACING) {

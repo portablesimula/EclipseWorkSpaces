@@ -7,7 +7,10 @@
 package simula.compiler;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.Vector;
 
 import simula.compiler.parsing.SimulaScanner;
@@ -206,12 +209,13 @@ public final class Simula {
 			editor.setVisible(true);
 		} else {
 	        for(String fileName:fileNames) {
-				// *** STARTING SIMULA COMPILER ***
+				if(sourceFileDir != null) fileName = sourceFileDir + '/' + fileName;
 				try {
-					if(sourceFileDir != null) fileName = sourceFileDir + '/' + fileName;
-					new SimulaCompiler(fileName).doCompile();
+					File file = new File(fileName);
+					InputStreamReader reader = new InputStreamReader(new FileInputStream(file), Global._CHARSET);
+					new SimulaCompiler(fileName, reader).doCompile();
 				} catch (IOException e) {
-					Util.IERR("Compiler Error: ", e);
+					Util.error("can't open " + fileName + ", reason: " + e);
 				}
 			}
 		}

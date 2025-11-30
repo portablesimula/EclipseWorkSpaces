@@ -38,7 +38,7 @@
 
         <lang.syntaxHighlighterFactory
                 language="Simula"
-                implementationClass="simula.plugin.extensions.highlighterExtension.zz_highlighter.SimulaSyntaxHighlighterFactory"/>
+                implementationClass="simula.plugin.extensions.highlighterExtension.highlighter.SimulaSyntaxHighlighterFactory"/>
 
         <!--lang.parserDefinition
                 language="Simula"

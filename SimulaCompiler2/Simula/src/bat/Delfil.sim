@@ -1,0 +1,12 @@
+begin
+	ref(infile) inpt;
+	ref(outfile) out1, out2;
+	integer i, j;
+	
+	outtext("STARTING ....");
+	i := j + 44;
+	outtext(" INPUT: ");
+	breakoutimage;
+	i := inint;
+
+end;

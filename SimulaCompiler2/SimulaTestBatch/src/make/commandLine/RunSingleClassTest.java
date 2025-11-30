@@ -43,15 +43,17 @@ public final class RunSingleClassTest {
 //		cmds.add("-noexec");
 //		cmds.add("-nowarn");
 //		cmds.add("-noextension");
-//		cmds.add("-verbose");
+		cmds.add("-verbose");
 		
 	}
 
 	public static void runFullTestBatch(String compilerMode) {
 
 		Vector<String> names=new Vector<String>();
-		names.add("SimulaTest.sim"); // Simula TestBatch Framework
-		names.add("simtst01.sim"); // OK:  Meaningless test of conditional statements
+		names.add("Delfil.sim");
+		
+//		names.add("SimulaTest.sim"); // Simula TestBatch Framework
+//		names.add("simtst01.sim"); // OK:  Meaningless test of conditional statements
 //		names.add("simtst02.sim"); // OK:  Test boolean operators/expressions
 //		names.add("simtst03.sim"); // OK:  Test Text Value Relations
 //		names.add("simtst04.sim"); // OK:  To test putint and putreal.
@@ -294,7 +296,7 @@ public final class RunSingleClassTest {
 		cmds.add("-jar");
 		cmds.add(simulaJar); // E.G. "C:\\Users\\omyhr\\Simula\\Simula-2.0\\simula.jar"
 
-		cmds.add("-noConsole");
+		cmds.add("-noPopup");
 		cmds.add("-compilerMode"); cmds.add(compilerMode);	
 		cmds.add("-runtimeUserDir"); cmds.add(runtimeUserDir);	
 

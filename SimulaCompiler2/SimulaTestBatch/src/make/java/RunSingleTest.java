@@ -8,12 +8,16 @@
 package make.java;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Vector;
 
 import simula.compiler.Simula;
 import simula.compiler.SimulaCompiler;
 import simula.compiler.utilities.Global;
 import simula.compiler.utilities.Option;
+import simula.compiler.utilities.Util;
 import simula.editor.RTOption;
 
 /**
@@ -322,12 +326,12 @@ public final class RunSingleTest {
 		
 		for(String name:names) {
 			String fileName = sourceDir+name;
-//			Option.internal.RUNTIME_USER_DIR=new File(fileName).getParent();
-			try { SimulaCompiler compiler = new SimulaCompiler(fileName);
-				  compiler.doCompile();
-			}
-			catch(Throwable t) {
-				System.out.print("RunSingleTest CATCHED: "); t.printStackTrace(System.out);
+			try {
+				File file = new File(fileName);
+				InputStreamReader reader = new InputStreamReader(new FileInputStream(file), Global._CHARSET);
+				new SimulaCompiler(fileName, reader).doCompile();
+			} catch (IOException e) {
+				Util.error("can't open " + fileName + ", reason: " + e);
 			}
 		}
 	}
