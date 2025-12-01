@@ -2,11 +2,16 @@ begin
 	ref(infile) inpt;
 	ref(outfile) out1, out2;
 	integer i, j;
+	text res;
 	
 	outtext("STARTING ....");
 	i := j + 44;
 	outtext(" INPUT: ");
 	breakoutimage;
+%	inimage;
+%	outtext(sysin.image); outimage;
 	i := inint;
+	outtext("Delfil got: "); outint(i,0); outimage;
+%	res :- prompt("TITLE", "input name: ");
 
 end;

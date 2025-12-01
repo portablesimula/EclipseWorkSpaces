@@ -38,13 +38,13 @@ public final class RunSimulaSample {
 //		String name="HexDump.sim";
 //		String name="InfectionDisease.sim";
 //		String name="JensensDevice.sim";
-		String name="LiftSimulation.sim";
+//		String name="LiftSimulation.sim";
 //		String name="NormalDrawing.sim";
 //		String name="PrimeUnder.sim";
 //		String name="Quine.sim";
 //		String name="Sudoku.sim";
 //		String name="SudokuPuzzle.sim";
-//		String name="TQueens.sim";
+		String name="TQueens.sim";
 
 		// Set Compiler Options.
 //		Option.compilerMode = Option.CompilerMode.viaJavaSource;
@@ -69,7 +69,7 @@ public final class RunSimulaSample {
 		File userDir=new File("C:/GitHub/EclipseWorkSpaces/SimulaCompiler2/SimulaTestBatch");
 				
 		Global.packetName="simulaSamples";
-//		Option.internal.keepJava=userDir; // Generated .java Source is then found in Eclipse Package simulaTestPrograms
+		Option.internal.keepJava=userDir; // Generated .java Source is then found in Eclipse Package simulaTestPrograms
 		Global.simulaRtsLib=new File(simulaDir,"bin"); // To use Eclipse Project's simula.runtime
 //		Option.outputDir=new File("C:/GitHub/EclipseWorkSpaces/SimulaCompiler2/Simula/src/simulaTestPrograms/samples/simula/bin");
 //		Global.outputDir=new File("C:/GitHub/EclipseWorkSpaces/SimulaCompiler2/TestBatch/src/simulaTestPrograms/samples/simula/bin");

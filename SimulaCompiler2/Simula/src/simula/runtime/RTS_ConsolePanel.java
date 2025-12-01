@@ -102,7 +102,7 @@ public final class RTS_ConsolePanel extends JPanel {
 
 	/// popup this Console Panel
 	/// @param title for the Panel
-	public void popup(int dum,String title) {
+	public void popup(String title) {
 		RTS_Frame frame = new RTS_Frame();
 		frame.setSize(950, 500); // Initial frame size
 		frame.setTitle(title);

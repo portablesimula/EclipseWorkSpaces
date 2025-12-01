@@ -50,7 +50,7 @@ public final class RunSingleClassTest {
 		Option.noPopup = true;
 		Option.internal.TESTING_STACK_SIZE = true;
 //		Option.internal.DEBUGGING=true;
-//		Option.internal.LIST_GENERATED_CLASS_FILES=true;
+		Option.internal.LIST_GENERATED_CLASS_FILES=true;
 //		Option.internal.TRACE_CODING=true;
 
 		// Overall TRACING Options
@@ -73,7 +73,7 @@ public final class RunSingleClassTest {
 
 		Global.packetName="simulaTestBatch";
 
-//		Option.internal.keepJava=userDir; // Generated .java Source is then found in Eclipse Package simulaTestBatch
+		Option.internal.keepJava=userDir; // Generated .java Source is then found in Eclipse Package simulaTestBatch
 		Global.simulaRtsLib=new File(simulaDir,"bin"); // To use Eclipse Project's simula.runtime
 //		Global.extLib="C:/GitHub/EclipseWorkSpaces/SimulaCompiler2/Simula/src/simulaTestBatch/sim/bin";
 		
@@ -93,12 +93,12 @@ public final class RunSingleClassTest {
 //		names.add("adHoc00.sim"); // For ad'hoc testing
 //		names.add("adHoc01.sim"); // For ad'hoc testing
 //		names.add("adHoc02.sim"); // For ad'hoc testing
-//		names.add("adHoc03.sim"); // For ad'hoc testing
+		names.add("adHoc03.sim"); // For ad'hoc testing
 		
 		// *** SIMULA TEST BATCH TIL EKSEKVERING
 		// String name=Global.packetName+"/sim/InspectionSamples.sim";
 		
-		names.add("SimulaTest.sim"); // Simula TestBatch Framework
+//		names.add("SimulaTest.sim"); // Simula TestBatch Framework
 //		names.add("simtst00.sim"); // OK:  Empty test
 //		names.add("simtst01.sim"); // OK:  Meaningless test of conditional statements,
 //		names.add("simtst02.sim"); // OK:  Test boolean operators/expressions
@@ -320,13 +320,6 @@ public final class RunSingleClassTest {
 		
 		for(String name:names) {
 			String fileName = sourceDir+name;
-//			Option.internal.RUNTIME_USER_DIR=new File(fileName).getParent();
-//			try { SimulaCompiler compiler = new SimulaCompiler(fileName);
-//				  compiler.doCompile();
-//			}
-//			catch(Throwable t) {
-//				System.out.print("RunSingleClassTest CATCHED: "); t.printStackTrace(System.out);
-//			}
 			try {
 				File file = new File(fileName);
 				InputStreamReader reader = new InputStreamReader(new FileInputStream(file), Global._CHARSET);

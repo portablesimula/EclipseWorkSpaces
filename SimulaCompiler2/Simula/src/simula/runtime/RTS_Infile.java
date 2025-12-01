@@ -10,6 +10,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import javax.swing.JOptionPane;
+
+import simula.compiler.utilities.Util;
 
 /// System class Infile.
 /// 
@@ -222,13 +225,74 @@ public class RTS_Infile extends RTS_Imagefile {
 		}
 		setpos(1);
 	}
-	
+    
+    private static String prompt(String title, String msg) {
+        // Prompt the user for input
+        String name = JOptionPane.showInputDialog(null, msg, title, JOptionPane.QUESTION_MESSAGE);
+
+//    	JOptionPane optionPane = new JOptionPane(msg,
+//        		JOptionPane.QUESTION_MESSAGE,
+//        		JOptionPane.OK_CANCEL_OPTION,
+//        		 Global.simIcon);
+//    	
+//		Object obj = JOptionPane.showInputDialog(null, msg, title, JOptionPane.QUESTION_MESSAGE, Global.simIcon, null, "NY TEXT");
+//		String name = obj.toString();
+
+//        String name = JOptionPane(msg,
+//        		JOptionPane.QUESTION_MESSAGE,
+//        		JOptionPane.OK_CANCEL_OPTION,
+//        		 Global.simIcon).showInputDialog(null, msg, title, JOptionPane.QUESTION_MESSAGE);
+        
+//        String name = (String) JOptionPane.showInputDialog(
+//                null, // parentComponent - may be null
+//              msg,    // Message to display
+//              title,          // Dialog title
+//                JOptionPane.QUESTION_MESSAGE,           // messageType (can be any of the standard types)
+//                Global.simIcon,                             // icon (your custom ImageIcon)
+//                null,                                   // selectionValues (set to null for free text input)
+//                "Enter Input here"                       // initialSelectionValue (default text in the input field)
+//            );
+
+        return name;
+    }
+
 	/// Read and return next line.
 	/// @return line String.
 	/// @throws IOException if something went wrong.
 	private String readLine() throws IOException {
-		ensureSysinOpened();
-		return lineReader.readLine();
+		if (FILE_NAME.edText().equalsIgnoreCase("#sysin")) {
+			if(RTS_Option.noPopup) {
+//				String line = readSystemInput();
+		    	String line = prompt("Sorry - Sysin.inimage is Unavailable.", "Enter Input here:");
+		    	System.out.println("You entered: " + line);
+		    	return line;
+				
+			} else {
+				ensureSysinOpened();
+				return lineReader.readLine();
+			}
+		} else {
+			return lineReader.readLine();			
+		}
+	}
+	
+	private static String readSystemInput() {
+		boolean done = false;
+		new Thread() {
+			public void run() {
+				System.out.println("Do some INPUT HERE:");
+				try {
+					int c = System.in.read();
+					System.out.println("Got a CHAR: "+c);
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}.start();
+		while(! done) ;
+		return "OK";
 	}
 	
 	/// Ensure that Sysin is open.

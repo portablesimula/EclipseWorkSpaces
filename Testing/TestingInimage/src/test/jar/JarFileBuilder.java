@@ -3,7 +3,7 @@
 /// 
 /// You find a copy of the License on the following
 /// page: https://creativecommons.org/licenses/by/4.0/
-package simula.compiler;
+package test.jar;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -26,14 +26,6 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
 import java.util.jar.Manifest;
-
-import simula.compiler.syntaxClass.declaration.ClassDeclaration;
-import simula.compiler.syntaxClass.statement.ProgramModule;
-import simula.compiler.utilities.ClassHierarchy;
-import simula.compiler.utilities.Global;
-import simula.compiler.utilities.Option;
-import simula.compiler.utilities.SimulaClassLoader;
-import simula.compiler.utilities.Util;
 
 /// Utilities to build and manipulate jarFiles.
 ///
@@ -72,27 +64,27 @@ public class JarFileBuilder {
 	/// @throws IOException if something went wrong
 	public void open(final ProgramModule program) throws IOException {
 		if(TESTING) IO.println("JarFileBuilder.open: " + program);
-		if(jarOutputStream != null) Util.IERR();
+		if(jarOutputStream != null) IO.println();
 		this.programModule = program;
-		if (Option.internal.TRACING)
-			Util.println("BEGIN Create .jar File");
+//		if (Option.internal.TRACING)
+			IO.println("BEGIN Create .jar File");
 		outputJarFile = new File(Global.outputDir, program.getIdentifier() + ".jar");
 		outputJarFile.getParentFile().mkdirs();
 		Manifest manifest = new Manifest();
 		mainEntry = Global.packetName + '/' + program.getIdentifier();
 		mainEntry = mainEntry.replace('/', '.');
-		if (Option.internal.TRACING)
-			Util.println("Output " + outputJarFile + " MANIFEST'mainEntry=\"" + mainEntry + "\"");
+//		if (Option.internal.TRACING)
+			IO.println("Output " + outputJarFile + " MANIFEST'mainEntry=\"" + mainEntry + "\"");
 		manifest.getMainAttributes().put(Attributes.Name.MANIFEST_VERSION, "1.0");
 		manifest.getMainAttributes().putValue("Created-By", Global.simulaReleaseID + " (Portable Simula)");
-		if (program.isExecutable()) {
+//		if (program.isExecutable()) {
 			manifest.getMainAttributes().put(Attributes.Name.MAIN_CLASS, mainEntry);
-//			manifest.getMainAttributes().put(Attributes.Name.CLASS_PATH, ".");
-		} else {
-			String relativeAttributeFileName = program.getRelativeAttributeFileName();
-			if (relativeAttributeFileName != null)
-				manifest.getMainAttributes().putValue("SIMULA-INFO", relativeAttributeFileName);
-		}
+			manifest.getMainAttributes().put(Attributes.Name.CLASS_PATH, ".");
+//		} else {
+//			String relativeAttributeFileName = program.getRelativeAttributeFileName();
+//			if (relativeAttributeFileName != null)
+//				manifest.getMainAttributes().putValue("SIMULA-INFO", relativeAttributeFileName);
+//		}
 		jarOutputStream = new JarOutputStream(new FileOutputStream(outputJarFile), manifest);
 		
 		if(Option.compilerMode != Option.CompilerMode.viaJavaSource) {
@@ -109,8 +101,8 @@ public class JarFileBuilder {
 		if(TESTING)	IO.println("JarOutputSet.putMapEntry: "+entryName);
 		byte[] prev = classFileMap.put(entryName,bytes);
 		if(prev != null) {
-			if(Option.verbose)
-				Util.println("JarOutputSet.putMapEntry: "+entryName+" WAS REPLACED");
+//			if(Option.verbose)
+				IO.println("JarOutputSet.putMapEntry: "+entryName+" WAS REPLACED");
 		}
 	}
 	
@@ -138,34 +130,34 @@ public class JarFileBuilder {
             writeJarEntry(entryName, bytes);
         }
        
-		if (programModule.isExecutable()) {
+//		if (programModule.isExecutable()) {
 			if(TESTING) IO.println("JarFileBuilder.close: Executable "+programModule);
 			// Add the Runtime System
 			File rtsHome = new File(Global.simulaRtsLib, "simula/runtime");
 			add(false, rtsHome, Global.simulaRtsLib.toString().length());
-		} else {
-			String id = programModule.getIdentifier();
-			String kind = (programModule.mainModule instanceof ClassDeclaration) ? "Class " : "Procedure ";
-			Util.warning("No execution - Separate Compiled " + kind + id + " is written to: \"" + outputJarFile + "\"");
-		}
+//		} else {
+//			String id = programModule.getIdentifier();
+//			String kind = (programModule.mainModule instanceof ClassDeclaration) ? "Class " : "Procedure ";
+//			Util.warning("No execution - Separate Compiled " + kind + id + " is written to: \"" + outputJarFile + "\"");
+//		}
         
         jarOutputStream.close();
-		if(Option.verbose) Util.println("JarFileBuilder.close: " + Global.sourceName + ": JarFile " + outputJarFile);
+		if(Option.verbose) IO.println("JarFileBuilder.close: " + Global.sourceName + ": JarFile " + outputJarFile);
 		
 		if(TESTING) {
 			IO.println("JarFileBuilder.close: ");
 			listJarFile(outputJarFile);
 		}
 
-		if (Option.internal.TRACING)
-			Util.println("END Create .jar File: " + outputJarFile);
+//		if (Option.internal.TRACING)
+			IO.println("END Create .jar File: " + outputJarFile);
 		return (outputJarFile);
 	}
 	
 	/// Add temp .class files to jarOutputStream.
 	/// @throws IOException if something went wrong
 	public void addTempClassFiles() throws IOException {
-		if(Option.compilerMode != Option.CompilerMode.viaJavaSource) Util.IERR();
+		if(Option.compilerMode != Option.CompilerMode.viaJavaSource) IO.println();
 		add(true, new File(Global.tempClassFileDir, Global.packetName), Global.tempClassFileDir.toString().length());
 	}	
 	
@@ -177,7 +169,7 @@ public class JarFileBuilder {
 	/// @throws IOException if something went wrong
 	private void add(final boolean doPut, final File source, final int pathSize) throws IOException {
 		if(!source.exists())
-			Util.IERR("SimulaCompiler.add: source="+source+", exists="+source.exists());
+			IO.println("SimulaCompiler.add: source="+source+", exists="+source.exists());
 		if (source.isDirectory()) {
 			String name = source.getPath().replace("\\", "/");
 			if (!name.isEmpty()) {
@@ -198,7 +190,7 @@ public class JarFileBuilder {
 			if (entryName.startsWith("/"))
 				entryName = entryName.substring(1);
 			if (Option.internal.TRACING && (!entryName.startsWith("simula/runtime")))
-				Util.println("ADD-TO-JAR: "+entryName);
+				IO.println("ADD-TO-JAR: "+entryName);
 
 			try (InputStream inpt = new FileInputStream(source)) {
 				byte[] bytes = inpt.readAllBytes();
@@ -214,8 +206,8 @@ public class JarFileBuilder {
 	/// @throws IOException if something went wrong
 	public void expandJarFile(final JarFile jarFile) throws IOException {
 		if(TESTING) IO.println("JarFileBuilder.expandJarFile: JarFileName="+jarFile.getName());
-		if (Option.verbose)
-			Util.println("---------  INCLUDE .jar File: " + jarFile.getName() + "  ---------");
+//		if (Option.verbose)
+			IO.println("---------  INCLUDE .jar File: " + jarFile.getName() + "  ---------");
 		Enumeration<JarEntry> entries = jarFile.entries();
 		LOOP: while (entries.hasMoreElements()) {
 			JarEntry inputEntry = entries.nextElement();
@@ -270,9 +262,9 @@ public class JarFileBuilder {
 					return (jarFile);
 			}
 		} catch (Exception e) {
-			Util.IERR("Can't find attribute file: " + jarFile, e);
+			IO.println("Can't find attribute file: " + jarFile + e);
 		}
-		Util.error("Can't find attribute file: " + identifier + '[' + externalIdentifier + ']');
+		IO.println("ERROR: Can't find attribute file: " + identifier + '[' + externalIdentifier + ']');
 		return (null);
 	}
 
@@ -327,7 +319,7 @@ public class JarFileBuilder {
 	private static void loadJarEntries(final JarFile jarFile, final String packetName, final SimulaClassLoader loader) throws IOException {
 		if(TESTING) IO.println("\nJarFileBuilder.loadJarEntries: JarFileName="+jarFile.getName());
 		if (Option.verbose)
-			Util.println("---------  INCLUDE .jar File: " + jarFile.getName() + "  ---------");
+			IO.println("---------  INCLUDE .jar File: " + jarFile.getName() + "  ---------");
 		Enumeration<JarEntry> entries = jarFile.entries();
 		Map<String,byte[]> delayedLoadings = null;
 
@@ -366,7 +358,7 @@ public class JarFileBuilder {
 
 		int NNN = 4000;
 		while(delayedLoadings != null) {
-			if(--NNN < 0) Util.IERR();
+			if(--NNN < 0) IO.println();
 			if(TESTING)
 				IO.println("\nJarFileBuilder.loadJarEntries: delayedLoadings +++++++++++++++++++");
 			Vector<String> loaded = new Vector<String>();
@@ -392,7 +384,7 @@ public class JarFileBuilder {
 				}
 			}
 
-			if(loaded.size() == 0) Util.IERR();
+			if(loaded.size() == 0) IO.println();
 			for(String name:loaded) {
 				if(TESTING)
 					IO.println("JarFileBuilder.loadJarEntries: Remove: "+name);
@@ -409,9 +401,9 @@ public class JarFileBuilder {
 	/// Debug utility: List .jar file
 	/// @param file the .jar file
 	public static void listJarFile(final File file) {
-		Util.println("---------  LIST .jar File: " + file + "  ---------");
+		IO.println("---------  LIST .jar File: " + file + "  ---------");
 		if (!(file.exists() && file.canRead())) {
-			Util.error("Can't read .jar file: " + file);
+			IO.println("ERROR: Can't read .jar file: " + file);
 			return;
 		}
 		JarFile jarFile = null;
@@ -422,7 +414,7 @@ public class JarFileBuilder {
 			Set<Object> keys = mainAttributes.keySet();
 			for (Object key : keys) {
 				String val = mainAttributes.getValue(key.toString());
-				Util.println(key.toString() + "=\"" + val + "\"");
+				IO.println(key.toString() + "=\"" + val + "\"");
 			}
 
 			Enumeration<JarEntry> entries = jarFile.entries();
@@ -434,10 +426,10 @@ public class JarFileBuilder {
 				FileTime fileTime = entry.getLastModifiedTime();
 				String date = DateTimeFormatter.ofPattern("uuuu-MMM-dd HH:mm:ss", Locale.getDefault())
 						.withZone(ZoneId.systemDefault()).format(fileTime.toInstant());
-				Util.println("Jar-Entry: " + size + "  " + date + "  \"" + entry + "\"");
+				IO.println("Jar-Entry: " + size + "  " + date + "  \"" + entry + "\"");
 			}
 		} catch (IOException e) {
-			Util.IERR("Caused by:", e);
+			IO.println("Caused by:" + e);
 		} finally {
 			if (jarFile != null)
 				try {

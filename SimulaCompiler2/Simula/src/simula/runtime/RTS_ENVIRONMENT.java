@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+import javax.swing.JOptionPane;
+
 /// System class ENVIRONMENT.
 /// 
 /// The purpose of the environmental class is to encapsulate all constants,
@@ -446,6 +448,14 @@ public class RTS_ENVIRONMENT extends RTS_RTObject {
 		RTS_UTIL._ASGTXT(U, T);
 		return (U);
 	}
+
+    public static RTS_TXT prompt(RTS_TXT title, RTS_TXT msg) {
+    	String tit = title.edText();
+    	String mss = msg.edText();
+        String result = JOptionPane.showInputDialog(null, mss, tit, JOptionPane.QUESTION_MESSAGE);
+		return new RTS_TXT(result);
+    	
+    }
 
 	/// Standard Procedure blanks.
 	/// <pre>

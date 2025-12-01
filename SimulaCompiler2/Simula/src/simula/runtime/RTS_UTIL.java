@@ -368,7 +368,7 @@ public final class RTS_UTIL {
 			
 		} else if (e instanceof Error) {
 			String msg = e.getClass().getSimpleName();
-			RTS_UTIL.printError(threadID + "SIMULA RUNTIME(3) ERROR: " + msg);
+			RTS_UTIL.printError(threadID + "SIMULA RUNTIME(3) ERROR: " + e);
 			RTS_UTIL.printSimulaStackTrace(e, 0);
 			if (RTS_Option.VERBOSE)
 				e.printStackTrace();

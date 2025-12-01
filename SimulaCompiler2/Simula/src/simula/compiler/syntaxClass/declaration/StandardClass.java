@@ -315,6 +315,7 @@ public final class StandardClass extends ClassDeclaration {
 			ENVIRONMENT.addStandardProcedure(ObjectKind.ContextFreeMethod,null,"exit",parameter("status",Type.Integer)); 
 			ENVIRONMENT.addStandardProcedure(ObjectKind.ContextFreeMethod,Type.Integer,"hash",parameter("t",Type.Text));
 			ENVIRONMENT.addStandardProcedure(ObjectKind.ContextFreeMethod,null,"DEFEXCEPTION",parameter("erh",Parameter.Kind.Procedure,Parameter.Mode.value,null));
+			ENVIRONMENT.addStandardProcedure(ObjectKind.ContextFreeMethod,Type.Text,"prompt",parameter("title",Type.Text),parameter("msg",Type.Text));
 		}
 	}
 
@@ -474,6 +475,9 @@ public final class StandardClass extends ClassDeclaration {
 		Infile.addStandardProcedure(ObjectKind.MemberMethod,Type.Integer,"inint");  
 		Infile.addStandardProcedure(ObjectKind.MemberMethod,Type.LongReal,"inreal");  
 		Infile.addStandardProcedure(ObjectKind.MemberMethod,Type.Integer,"infrac");  
+//		if(Option.EXTENSIONS) {
+//			Infile.addStandardProcedure(ObjectKind.MemberMethod,Type.Text,"prompt",parameter("msg",Type.Text));
+//		}
 	}  
 
 	// ******************************************************************

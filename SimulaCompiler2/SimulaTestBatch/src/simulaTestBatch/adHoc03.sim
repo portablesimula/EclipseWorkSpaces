@@ -1,73 +1,8 @@
-Simulation BEGIN
-   Process CLASS Kunde (nr);
-   INTEGER nr;
-   BEGIN
-      REAL ankomsttid, brukt_tid;
-
-      ! Noter ankomsttid ;
-      ankomsttid := Time;
-
-      OutFix(Time, 2, 6);  OutText(" Kunde ");  OutInt(nr, 0);
-      OutText(" ankommer.");  OutImage;
-
-      ! Vekk ekspeditøren (om nødvendig) og vent i køen;
-      ACTIVATE ekspeditører(1) AFTER Current;
-
-      Wait(køer(1));
-
-      ! Ferdig. Noter ventetid ;
-      brukt_tid := Time - ankomsttid;
-
-      OutFix(Time, 2, 6);  OutText(" Kunde ");  OutInt(nr, 0);
-      OutText(" er ferdig etter ");  OutFix(brukt_tid, 1, 0);
-      OutText(" min.");  OutImage;
-   END Kunde;
-
-   Process CLASS Ekspeditør (nr);
-   INTEGER nr;
-   BEGIN
-      REF(Kunde) kx;
-      WHILE TRUE DO BEGIN
-	 ! Ta en pause om ingenting å gjøre ;
-	    WHILE køer(nr).Empty DO BEGIN
-	       OutFix(Time, 2, 6);  OutText(" Ekspeditoer ");
-	       OutInt(nr, 0);  OutText(" kan ta en pause.");  OutImage;
-
-	       Passivate;
-
-	       OutFix(Time, 2, 6);  OutText(" Ekspeditoer ");
-	       OutInt(nr, 0);  OutText(" avslutter pausen.");  OutImage;
-	    END WHILE;
-
-	    ! Hent første fra køen og betjen ham/henne ;
-	    kx :- køer(nr).First;  kx.Out;
-
-	    OutFix(Time, 2, 6);  OutText(" Ekspeditoer ");
-	    OutInt(nr, 0);  OutText(" betjener kunde ");
-	    OutInt(kx.nr, 0);  OutChar('.');  OutImage;
-	       
-	    Hold(Uniform(0.5, 5, u));
-
-	    OutFix(Time, 2, 6);  OutText(" Ekspeditoer ");
-	    OutInt(nr, 0);  OutText(" er ferdig med kunde ");
-	    OutInt(kx.nr, 0);  OutChar('.');  OutImage;
-	       
-	    ! Etterpå kan kunden gå ;
-	    ACTIVATE kx;
-	 END WHILE;
-   END Ekspeditør;
-
-   REF(Head) ARRAY køer(1:2);
-   REF(Ekspeditør) ARRAY ekspeditører(1:2);
-   INTEGER ix, u;
-
-   u := 987123;
-   FOR ix := 1 STEP 1 UNTIL 2 DO BEGIN
-      køer(ix) :- NEW Head;
-      ekspeditører(ix) :- NEW Ekspeditør(ix);
-      ACTIVATE ekspeditører(ix);
-   END FOR;
-
-   ACTIVATE NEW Kunde(1) AT 10;
-   Hold(999999);
-END Simulation.
+begin
+	text res;
+	outtext("Input: "); breakoutimage; inimage;
+	res :- copy("abra ca dab");
+%	res :- prompt("TITLE", "Hvor mange: ");
+	outtext(res);
+	
+end;
