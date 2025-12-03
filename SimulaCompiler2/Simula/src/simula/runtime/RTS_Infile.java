@@ -9,10 +9,19 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
 import javax.swing.JOptionPane;
 
-import simula.compiler.utilities.Util;
+import simula.compiler.utilities.Option;
 
 /// System class Infile.
 /// 
@@ -226,34 +235,15 @@ public class RTS_Infile extends RTS_Imagefile {
 		setpos(1);
 	}
     
+	/// Utility: prompt.
+    /// @param title the dialog title
+    /// @param msg the prompt message
+    /// @return the text entered or "?CANCELLED"
     private static String prompt(String title, String msg) {
         // Prompt the user for input
-        String name = JOptionPane.showInputDialog(null, msg, title, JOptionPane.QUESTION_MESSAGE);
-
-//    	JOptionPane optionPane = new JOptionPane(msg,
-//        		JOptionPane.QUESTION_MESSAGE,
-//        		JOptionPane.OK_CANCEL_OPTION,
-//        		 Global.simIcon);
-//    	
-//		Object obj = JOptionPane.showInputDialog(null, msg, title, JOptionPane.QUESTION_MESSAGE, Global.simIcon, null, "NY TEXT");
-//		String name = obj.toString();
-
-//        String name = JOptionPane(msg,
-//        		JOptionPane.QUESTION_MESSAGE,
-//        		JOptionPane.OK_CANCEL_OPTION,
-//        		 Global.simIcon).showInputDialog(null, msg, title, JOptionPane.QUESTION_MESSAGE);
-        
-//        String name = (String) JOptionPane.showInputDialog(
-//                null, // parentComponent - may be null
-//              msg,    // Message to display
-//              title,          // Dialog title
-//                JOptionPane.QUESTION_MESSAGE,           // messageType (can be any of the standard types)
-//                Global.simIcon,                             // icon (your custom ImageIcon)
-//                null,                                   // selectionValues (set to null for free text input)
-//                "Enter Input here"                       // initialSelectionValue (default text in the input field)
-//            );
-
-        return name;
+        String result = JOptionPane.showInputDialog(null, msg, title, JOptionPane.QUESTION_MESSAGE);
+    	if(result == null) result = "?CANCELLED";
+        return result;
     }
 
 	/// Read and return next line.
@@ -262,11 +252,14 @@ public class RTS_Infile extends RTS_Imagefile {
 	private String readLine() throws IOException {
 		if (FILE_NAME.edText().equalsIgnoreCase("#sysin")) {
 			if(RTS_Option.noPopup) {
-//				String line = readSystemInput();
-		    	String line = prompt("Sorry - Sysin.inimage is Unavailable.", "Enter Input here:");
-		    	System.out.println("You entered: " + line);
-		    	return line;
-				
+				try {
+					return readInputWithTimeout(30, TimeUnit.SECONDS);
+				} catch (Exception e) {
+					IO.println("RTS_Infile.readLine: got" + e);
+			    	String line = prompt("Sorry - Sysin.inimage is Unavailable.", "Enter Input here:");
+			    	System.out.println("You entered: " + line);
+			    	return line;
+				}
 			} else {
 				ensureSysinOpened();
 				return lineReader.readLine();
@@ -276,25 +269,57 @@ public class RTS_Infile extends RTS_Imagefile {
 		}
 	}
 	
-	private static String readSystemInput() {
-		boolean done = false;
-		new Thread() {
-			public void run() {
-				System.out.println("Do some INPUT HERE:");
-				try {
-					int c = System.in.read();
-					System.out.println("Got a CHAR: "+c);
-					
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}.start();
-		while(! done) ;
-		return "OK";
-	}
-	
+	/// Utility: read line of characters from System.in with timeout
+	/// <p>
+	/// Obtained by Google AI Search
+	/// @param timeout the timeout duration
+	/// @param unit the TimeUnit
+	/// @return the line string read
+    private static String readInputWithTimeout(long timeout, TimeUnit unit) {
+        // ExecutorService with one thread for the input task
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        // The task to read from the console
+        Callable<String> inputTask = new Callable<String>() {
+            @Override
+            public String call() throws IOException {
+                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+                String input = "";
+                try {
+                    // This loop with br.ready() avoids blocking indefinitely within the callable itself
+                    while (!br.ready()) {
+                        Thread.sleep(100); // Sleep briefly to prevent busy-waiting
+                    }
+                    input = br.readLine();
+                } catch (InterruptedException e) {
+                    return null; // Task was cancelled/interrupted
+                }
+                return input;
+            }
+        };
+
+        Future<String> future = executor.submit(inputTask);
+        String result = null;
+
+        try {
+//            System.out.println("Please enter input within " + timeout + " seconds:");
+            result = future.get(timeout, unit); // Wait with a timeout
+        } catch (TimeoutException e) {
+            System.out.println("\nTimeout occurred. No input received within the time limit.");
+            future.cancel(true); // Cancel the running task
+        } catch (InterruptedException | ExecutionException e) {
+            System.out.println("An error occurred while reading input.");
+            e.printStackTrace();
+        } finally {
+            executor.shutdownNow(); // Always shut down the executor
+        }
+//    	IO.println("readInputWithTimeout: result="+result);
+        if(result == null) {
+        	IO.println("Throw RuntimeException !!!");
+        	throw new RuntimeException("");
+        }
+        return result;
+    }
+        
 	/// Ensure that Sysin is open.
 	private void ensureSysinOpened() {
 		if (FILE_NAME.edText().equalsIgnoreCase("#sysin")) {

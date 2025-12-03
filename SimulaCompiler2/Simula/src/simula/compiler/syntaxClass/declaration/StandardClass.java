@@ -316,6 +316,8 @@ public final class StandardClass extends ClassDeclaration {
 			ENVIRONMENT.addStandardProcedure(ObjectKind.ContextFreeMethod,Type.Integer,"hash",parameter("t",Type.Text));
 			ENVIRONMENT.addStandardProcedure(ObjectKind.ContextFreeMethod,null,"DEFEXCEPTION",parameter("erh",Parameter.Kind.Procedure,Parameter.Mode.value,null));
 			ENVIRONMENT.addStandardProcedure(ObjectKind.ContextFreeMethod,Type.Text,"prompt",parameter("title",Type.Text),parameter("msg",Type.Text));
+			ENVIRONMENT.addStandardProcedure(ObjectKind.ContextFreeMethod,Type.Boolean,"confirmDialog",parameter("title",Type.Text),parameter("msg",Type.Text));
+			ENVIRONMENT.addStandardProcedure(ObjectKind.ContextFreeMethod,Type.Text,"fileChooser",parameter("title",Type.Text),parameter("dir",Type.Text));
 		}
 	}
 

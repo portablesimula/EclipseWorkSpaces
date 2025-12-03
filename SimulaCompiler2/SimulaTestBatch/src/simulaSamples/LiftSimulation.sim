@@ -34,7 +34,8 @@ real decelerationTime=0.001; -- Deceleration time for lift
 real startTime=7.0;          -- Starting time in the morning
 real endTime=19.0;           -- Ending time in the evening
 
-outtext("Number of lifts: "); breakoutimage; nLifts := inint;
+% outtext("Number of lifts: "); breakoutimage; nLifts := inint;
+nLifts := prompt("LiftSimulation", "Number of lifts:").getInt;
 if(nLifts < 2)  then nLifts := 2;
 if(nLifts > 10) then nLifts := 10;
 

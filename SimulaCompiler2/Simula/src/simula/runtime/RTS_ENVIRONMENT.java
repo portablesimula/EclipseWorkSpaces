@@ -5,12 +5,16 @@
 /// page: https://creativecommons.org/licenses/by/4.0/
 package simula.runtime;
 
+import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+
+import simula.compiler.utilities.Global;
 
 /// System class ENVIRONMENT.
 /// 
@@ -448,14 +452,6 @@ public class RTS_ENVIRONMENT extends RTS_RTObject {
 		RTS_UTIL._ASGTXT(U, T);
 		return (U);
 	}
-
-    public static RTS_TXT prompt(RTS_TXT title, RTS_TXT msg) {
-    	String tit = title.edText();
-    	String mss = msg.edText();
-        String result = JOptionPane.showInputDialog(null, mss, tit, JOptionPane.QUESTION_MESSAGE);
-		return new RTS_TXT(result);
-    	
-    }
 
 	/// Standard Procedure blanks.
 	/// <pre>
@@ -1622,6 +1618,65 @@ public class RTS_ENVIRONMENT extends RTS_RTObject {
 			e.printStackTrace();
 		}
 	}
+
+
+	///// *********************************************************************
+	///// ** Utility: Procedure prompt
+	///// *********************************************************************
+
+	/// Extended Standard procedure prompt.
+    /// @param title the dialog title
+    /// @param msg the prompt message
+    /// @return the text entered or "?CANCELLED"
+    public static RTS_TXT prompt(RTS_TXT title, RTS_TXT msg) {
+    	String tit = (title == null)? "Prompt" : title.edText();
+    	String mss = (msg == null)? "Input" : msg.edText();
+        String result = JOptionPane.showInputDialog(null, mss, tit, JOptionPane.QUESTION_MESSAGE);
+    	if(result == null) result = "?CANCELLED";
+		return new RTS_TXT(result);
+    	
+    }
+
+
+	///// *********************************************************************
+	///// ** Utility: Procedure confirmDialog
+	///// *********************************************************************
+
+	/// Extended Standard procedure confirmDialog.
+    /// @param title the dialog title
+    /// @param msg the dialog message
+    /// @return true if the YES button was pressed; false otherwise
+    public static boolean confirmDialog(RTS_TXT title, RTS_TXT msg) {
+    	String tit = (title == null)? "Prompt" : title.edText();
+    	String mss = (msg == null)? "Input" : msg.edText();
+    	int result = JOptionPane.showConfirmDialog(null, mss, tit, JOptionPane.YES_NO_OPTION);
+		return result == JOptionPane.YES_OPTION;
+    	
+    }
+
+	///// *********************************************************************
+	///// ** Utility: Procedure fileChooser
+	///// *********************************************************************
+
+	/// Extended Standard procedure fileChooser.
+    /// @param title the dialog title
+    /// @param startDir the starting directory
+    /// @return the file selected or "?CANCELLED"
+    public static RTS_TXT fileChooser(RTS_TXT title, RTS_TXT startDir) {
+    	IO.println("fileChooser.title: "+title);
+    	String tit = (title == null)? "Select File" : title.edText();
+    	String dir = (startDir == null)? null : startDir.edText();
+    	String result = null;
+		JFileChooser fileChooser = new JFileChooser(dir);
+		fileChooser.setDialogTitle(tit);
+		int answer = fileChooser.showDialog(null, "Select");
+		if (answer == JFileChooser.APPROVE_OPTION) {
+			File selected = fileChooser.getSelectedFile();
+			result = selected.getPath();
+		}
+    	if(result == null) result = "?CANCELLED";
+        return new RTS_TXT(result);
+    }
 
 	///// *********************************************************************
 	///// ** Utility: Procedure printThreadList

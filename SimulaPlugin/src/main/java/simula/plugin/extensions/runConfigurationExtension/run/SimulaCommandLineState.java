@@ -7,9 +7,12 @@ import com.intellij.execution.process.OSProcessHandler;
 import com.intellij.execution.process.ProcessHandler;
 import com.intellij.execution.runners.ExecutionEnvironment;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.Messages;
+import simula.plugin.util.Global;
 import simula.plugin.util.Util;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.nio.charset.Charset;
 
 public class SimulaCommandLineState extends CommandLineState {
@@ -39,8 +42,20 @@ public class SimulaCommandLineState extends CommandLineState {
         // 1. Create a GeneralCommandLine object
         System.out.println("SimulaCommandLineState.startProcess: 1. Create a GeneralCommandLine object");
 //        if (true) throw new RuntimeException("SimulaCommandLineState.startProcess: 1. Create a GeneralCommandLine object");
-        String workDirectory = getEnvironment().getProject().getBasePath();
+        Project project = getEnvironment().getProject();
+
+        String workDirectory = project.getBasePath();
         System.out.println("SimulaCommandLineState.startProcess: workDirectory="+workDirectory);
+
+        String sourceFile = Global.currentSourceFile;
+        Util.TRACE("SimulaCommandLineState.startProcess: sourceFile=" + sourceFile);
+        File file = new File(sourceFile);
+        String name = file.getName();
+        Util.TRACE("SimulaCommandLineState.startProcess: name=" + name);
+        String ident = name.substring(0, name.length()-4);
+        Util.TRACE("SimulaCommandLineState.startProcess: ident=" + ident);
+        String jarName = ident + ".jar";
+        Util.TRACE("SimulaCommandLineState.startProcess: jarName=" + jarName);
 
         // TODO: DETTE MÅ RETTES FØR ENDELIG VERSJON
 //        String javaExePath = "java";
@@ -50,7 +65,8 @@ public class SimulaCommandLineState extends CommandLineState {
             .withExePath(javaExePath) // Set the path to your executable
 
 //                .withParameters("-version") // Add arguments
-                .withParameters("-jar", "bin/FittingRoom.jar", "-SPORT:noConsole") // Add arguments
+//                .withParameters("-jar", "bin/FittingRoom.jar", "-SPORT:noConsole") // Add arguments
+                .withParameters("-jar", "bin/" + jarName, "-noPopup") // Add arguments
 
                 .withWorkDirectory(workDirectory) // Set working directory
             .withCharset(Charset.forName("UTF-8")) // Set character set

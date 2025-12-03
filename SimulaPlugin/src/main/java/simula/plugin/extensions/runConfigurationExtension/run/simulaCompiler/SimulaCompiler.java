@@ -11,6 +11,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
 import simula.plugin.util.CTOption;
+import simula.plugin.util.Global;
 import simula.plugin.util.Util;
 
 import javax.swing.*;
@@ -48,6 +49,7 @@ public class SimulaCompiler {
 //        Util.TRACE("simulaOutDir: "+simulaOutDir);
 
         sourceFile = getCurrentFilePath(project);
+        Global.currentSourceFile = sourceFile;
         askRunSimula();
 
         RunManager runManager = RunManager.getInstance(project);

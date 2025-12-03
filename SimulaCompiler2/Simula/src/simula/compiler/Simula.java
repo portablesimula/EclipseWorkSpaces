@@ -221,6 +221,7 @@ public final class Simula {
 		}
 	}
 
+	/// Print the current Simula Version and exit
 	private static void printVersion() {
     	String revision=Global.getSimulaProperty("simula.revision","?");
     	String dated=Global.getSimulaProperty("simula.setup.dated","?");

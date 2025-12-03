@@ -11,16 +11,18 @@ import test.rts.RTS_UTIL;
 
 public class Main {
 	
-	JPanel paneL;
+	JPanel panel;
 
 	public static void main(String[] args) {
 //		testPrompt();
 	
-        RTS_UTIL.BPRG("adHoc02", args);
-        RTS_UTIL.RUN_STM(new adHoc02(RTS_RTObject._CTX));
+//        RTS_UTIL.BPRG("adHoc02", args);
+//        RTS_UTIL.RUN_STM(new adHoc02(RTS_RTObject._CTX));
 
-		Util.listJarFile(new File("C:/SPORT/Test.jar"));
-		Util.doListClassFile("C:/SPORT/Test/module-info.class");
+//		Util.listJarFile(new File("C:/SPORT/Test.jar"));
+//		Util.listJarFile(new File("C:/users/omyhr/IdeaProjects/Samples/bin/Delfil.jar"));
+		Util.listJarFile(new File("C:/GitHub/EclipseWorkSpaces/SimulaCompiler2/Simula/src/bat/bin/Delfil.jar"));
+//		Util.doListClassFile("C:/SPORT/Test/module-info.class");
 	}
 
 

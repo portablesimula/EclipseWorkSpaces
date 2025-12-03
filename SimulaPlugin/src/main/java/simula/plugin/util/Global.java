@@ -10,6 +10,8 @@ public class Global {
     public static Console console;
     public static int sourceLineNumber;
 
+    public static String currentSourceFile;
+
     public static void println(String s){
         console.printf(s);
     }
