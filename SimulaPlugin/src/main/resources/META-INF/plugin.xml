@@ -16,9 +16,9 @@
         Enter short description for your plugin here.<br>
         <em>most HTML tags may be used</em>
     ]]></description-->
-    <description>
-        Text ... xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    </description>
+    <description><![CDATA[
+    Provides simple development tools for <a href="https://portablesimula.github.io/github.io/">Simula</a> language.
+  ]]></description>
     <!-- Product and plugin compatibility requirements.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
@@ -47,29 +47,18 @@
         <!-- New Project -->
         <newProjectWizard.languageGenerator implementation="simula.plugin.extensions.newProject.SimulaNewProjectWizard"/>
 
-        <toolWindow
-                id="Simula"
-                anchor="bottom"
+        <!-- Console tool Window -->
+        <toolWindow id="Simula" anchor="bottom"
                 factoryClass="simula.plugin.extensions.runConfigurationExtension.run.simulaCompiler.ConsoleToolWindowFactory"
-                icon="/images/favico.png"
-        />
+                icon="/images/favico.png" />
+
         <!-- Run Configuration -->
-    <!-- test1
-        <configurationType implementation="runConfigurationExtension.extensions.simula.plugin.SimulaRunConfigurationType"/>
-        <runConfigurationProducer implementation="com.simula.extensions.runConfigurationExtension.SimulaRunConfigurationProducer"/>
-    -->
-    <!-- test2
-        <configurationType implementation="com.simula.extensions.runConfigurationExtension.test2.TestSimulaConfigurationType"/>
-        <runConfigurationProducer implementation="com.simula.extensions.runConfigurationExtension.test2.TestSimulaRunConfigurationProducer"/>
-    -->
+            <!-- Register your main configuration type first -->
+            <configurationType implementation="simula.plugin.extensions.runConfigurationExtension.SimulaRunConfigurationType"/>
 
-    <!-- test3 -->
-        <!-- Register your main configuration type first -->
-        <configurationType implementation="simula.plugin.extensions.runConfigurationExtension.SimulaRunConfigurationType"/>
+            <!-- Register the producer to link it to the context menu -->
+            <runConfigurationProducer implementation="simula.plugin.extensions.runConfigurationExtension.SimulaFileRunConfigurationProducer"/>
 
-        <!-- Register the producer to link it to the context menu -->
-        <runConfigurationProducer implementation="simula.plugin.extensions.runConfigurationExtension.SimulaFileRunConfigurationProducer"/>
-    -->
 
         <executor implementation="simula.plugin.extensions.runConfigurationExtension.run.cmdRunner.InCmdExecutor"/>
         <programRunner implementation="simula.plugin.extensions.runConfigurationExtension.run.cmdRunner.InCmdRunner"/>

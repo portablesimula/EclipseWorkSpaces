@@ -10,7 +10,7 @@ import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
-import simula.plugin.util.CTOption;
+import simula.plugin.util.SimOption;
 import simula.plugin.util.Global;
 import simula.plugin.util.Util;
 
@@ -20,11 +20,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
-import java.util.Vector;
 
 public class SimulaCompiler {
     private static Project project;
-    private static CTOption ctOption;
+    private static SimOption ctOption;
     private static String sourceFile;
 
     private static String userHomeDir;
@@ -33,7 +32,7 @@ public class SimulaCompiler {
     private static String simulaHomeDir;
     private static String simulaOutDir;
 
-    public static int call(Project prj, CTOption optn) {
+    public static int call(Project prj, SimOption optn) {
         project = prj;
         ctOption = optn;
         System.out.println("SimulaCompiler.call: Project=" + project);

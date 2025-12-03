@@ -12,10 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
 
-import javax.swing.BoxLayout;
-import javax.swing.JCheckBox;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 /// Runtime Options
 /// 
@@ -77,30 +74,20 @@ public final class RTOption {
 	/// Editor Utility: Select Runtime Options.
 
 //    public static void selectRuntimeOptions(Project project, MyRunConfiguration settings) {
-      public void selectRuntimeOptions(SimulaRunConfiguration settings) {
-//        Project project = settings.project;
-//        System.out.println("PresentableUrl: " + project.getPresentableUrl());
-//        System.out.println("getProjectFile: " + project.getProjectFile());
-//        System.out.println("getProjectFilePath: " + project.getProjectFilePath());
-//        System.out.println("getName: " + project.getName());
-//        System.out.println("getBasePath: " + project.getBasePath());
-//        System.out.println("getWorkspaceFile: " + project.getWorkspaceFile());
-//        System.out.println("getLocationHash: " + project.getLocationHash());
-//        System.out.println("isDefault: " + project.isDefault());
-//        System.out.println("isInitialized: " + project.isInitialized());
-//        System.out.println("isOpen: " + project.isOpen());
-//        System.out.println("getActualComponentManager: " + project.getActualComponentManager());
-//        System.out.println("Project: " + project);
+      public JPanel selectRTOptions() {
         JPanel panel=new JPanel();
-        panel.setBackground(Color.white);
-        panel.add(checkBox("Verbose"));        panel.add(checkBox("BLOCK_TRACING"));
+//        panel.setBackground(Color.white);
+        panel.add(new JLabel("ZZZ Runtime Options:"));
+        panel.add(checkBox("Verbose"));
+        panel.add(checkBox("BLOCK_TRACING"));
         panel.add(checkBox("GOTO_TRACING"));
         panel.add(checkBox("QPS_TRACING"));
         panel.add(checkBox("SML_TRACING"));
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        Util.optionDialog(panel,"Select Runtime Options",JOptionPane.OK_OPTION,
-                JOptionPane.INFORMATION_MESSAGE,"Ok");
+//        Util.optionDialog(panel,"Select Runtime Options",JOptionPane.OK_OPTION,
+//                JOptionPane.INFORMATION_MESSAGE,"Ok");
 //    	Global.storeWorkspaceProperties();
+        return panel;
     }
 
     /// Editor Utility: Create a checkBox without tooltips.
@@ -132,7 +119,7 @@ public final class RTOption {
 	/// Set the option named 'id' to the given value
 	/// @param id option id
 	/// @param val new option value
-	private void setOption(String id,boolean val) {
+	private void setOption(String id, boolean val) {
 		if(id.equalsIgnoreCase("VERBOSE")) VERBOSE=val;
 		if(id.equalsIgnoreCase("BLOCK_TRACING")) BLOCK_TRACING=val;
 		if(id.equalsIgnoreCase("GOTO_TRACING")) GOTO_TRACING=val;

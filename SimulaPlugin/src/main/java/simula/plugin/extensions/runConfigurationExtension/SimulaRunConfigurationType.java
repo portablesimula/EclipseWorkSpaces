@@ -54,7 +54,7 @@ public class SimulaRunConfigurationType extends ConfigurationTypeBase {
         @Override
         public String getId(){
 //            if(true) throw new RuntimeException("SimulaRunConfigurationType.getId: ");
-            System.out.println("SimulaRunConfigurationType.getId: -> Simula");
+//            System.out.println("SimulaRunConfigurationType.getId: -> Simula");
 //            Thread.dumpStack();
             return("Simula");
         }
