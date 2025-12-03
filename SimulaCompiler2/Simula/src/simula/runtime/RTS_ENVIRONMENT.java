@@ -1663,7 +1663,6 @@ public class RTS_ENVIRONMENT extends RTS_RTObject {
     /// @param startDir the starting directory
     /// @return the file selected or "?CANCELLED"
     public static RTS_TXT fileChooser(RTS_TXT title, RTS_TXT startDir) {
-    	IO.println("fileChooser.title: "+title);
     	String tit = (title == null)? "Select File" : title.edText();
     	String dir = (startDir == null)? null : startDir.edText();
     	String result = null;
